@@ -1,0 +1,219 @@
+<?php
+
+namespace App\Http\Controllers;
+
+use App\Pais;
+use App\Personal;
+use Illuminate\Http\Request;
+
+class PersonalController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        $personales=Personal::all();
+        return view('maestro.otros.personal.index',compact('personales'));
+    }
+
+    /**
+     * Show the form for creating a new resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function create()
+    {
+        $paises=Pais::all();
+        return view('maestro.otros.personal.create',compact('paises'));
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @return \Illuminate\Http\Response
+     */
+    public function store(Request $request)
+    {
+        if($request->hasfile('foto')){
+            $image =$request->file('foto');
+            $nr_documento= $request->get('numero_documento');
+            $name = $nr_documento."-".$image->getClientOriginalName();
+            $image->move(public_path().'/profile/images',$name);
+        }
+        // Personal::create(request()->all());
+        $personal=new Personal;
+        $personal->nombres=$request->get('nombres');
+        $personal->apellidos=$request->get('apellidos');
+        $personal->fecha_nacimiento=$request->get('fecha_nacimiento');
+        $personal->celular=$request->get('celular');
+        $personal->telefono=$request->get('telefono');
+        $personal->email=$request->get('email');
+        $personal->genero=$request->get('genero');
+        $personal->documento_identificacion=$request->get('documento_identificacion');
+        $personal->numero_documento=$request->get('numero_documento');
+        $personal->nacionalidad=$request->get('nacionalidad');
+        $personal->estado_civil=$request->get('estado_civil');
+        $personal->nivel_educativo=$request->get('nivel_educativo');
+        $personal->profesion=$request->get('profesion');
+        $personal->direccion=$request->get('direccion');
+        $personal->foto=$name;
+
+        $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
+        $personal->fecha_retiro=$request->get('fecha_retiro');
+        $personal->forma_pago=$request->get('forma_pago');
+        $personal->salario=$request->get('salario');
+        $personal->categoria_ocupacional=$request->get('categoria_ocupacional');
+        $personal->estado_trabajador=$request->get('estado_trabajador');
+        $personal->sede=$request->get('sede');
+        $personal->turno=$request->get('turno');
+        $personal->departamento_area=$request->get('departamento_area');
+        $personal->cargo=$request->get('cargo');
+        $personal->tipo_trabajador=$request->get('tipo_trabajador');
+        $personal->tipo_contrato=$request->get('tipo_contrato');
+        $personal->regimen_pensionario=$request->get('regimen_pensionario');
+        $personal->afiliacion_salud=$request->get('afiliacion_salud');
+        $personal->banco_renumeracion=$request->get('banco_renumeracion');
+        $personal->numero_cuenta=$request->get('numero_cuenta');
+        $personal->notas=$request->get('notas');
+        $personal->save();
+        return redirect()->route('personal.index');
+    }
+
+    /**
+     * Display the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function show($id)
+    {
+        $personales=Personal::find($id);
+        return view('maestro.otros.personal.show',compact('personales'));
+    }
+
+    /**
+     * Show the form for editing the specified resource.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function edit($id)
+    {
+        $paises=Pais::all();
+        $personales=Personal::find($id);
+        return view('maestro.otros.personal.edit',compact('personales','paises'));
+    }
+
+    /**
+     * Update the specified resource in storage.
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function update(Request $request, $id)
+    {
+
+
+
+        $personal=Personal::find($id);
+        if($request->hasfile('foto')){
+            $foto= $request->file('foto');
+            $nr_documento= $request->get('numero_documento');
+            $name = $nr_documento."-".$foto->getClientOriginalName();
+            $foto->move(public_path().'/profile/images/',$name);
+
+            $personal->nombres=$request->get('nombres');
+            $personal->apellidos=$request->get('apellidos');
+            $personal->fecha_nacimiento=$request->get('fecha_nacimiento');
+            $personal->celular=$request->get('celular');
+            $personal->telefono=$request->get('telefono');
+            $personal->email=$request->get('email');
+            $personal->genero=$request->get('genero');
+            $personal->documento_identificacion=$request->get('documento_identificacion');
+            $personal->numero_documento=$request->get('numero_documento');
+            $personal->nacionalidad=$request->get('nacionalidad');
+            $personal->estado_civil=$request->get('estado_civil');
+            $personal->nivel_educativo=$request->get('nivel_educativo');
+            $personal->profesion=$request->get('profesion');
+            $personal->direccion=$request->get('direccion');
+            $personal->foto=$name;
+
+            $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
+            $personal->fecha_retiro=$request->get('fecha_retiro');
+            $personal->forma_pago=$request->get('forma_pago');
+            $personal->salario=$request->get('salario');
+            $personal->categoria_ocupacional=$request->get('categoria_ocupacional');
+            $personal->estado_trabajador=$request->get('estado_trabajador');
+            $personal->sede=$request->get('sede');
+            $personal->turno=$request->get('turno');
+            $personal->departamento_area=$request->get('departamento_area');
+            $personal->cargo=$request->get('cargo');
+            $personal->tipo_trabajador=$request->get('tipo_trabajador');
+            $personal->tipo_contrato=$request->get('tipo_contrato');
+            $personal->regimen_pensionario=$request->get('regimen_pensionario');
+            $personal->afiliacion_salud=$request->get('afiliacion_salud');
+            $personal->banco_renumeracion=$request->get('banco_renumeracion');
+            $personal->numero_cuenta=$request->get('numero_cuenta');
+            $personal->notas=$request->get('notas');
+            $personal->save();
+        }else{
+
+            $file_path=(public_path().'profile/images/'.$personal->image);
+
+            $personal->nombres=$request->get('nombres');
+            $personal->apellidos=$request->get('apellidos');
+            $personal->fecha_nacimiento=$request->get('fecha_nacimiento');
+            $personal->celular=$request->get('celular');
+            $personal->telefono=$request->get('telefono');
+            $personal->email=$request->get('email');
+            $personal->genero=$request->get('genero');
+            $personal->documento_identificacion=$request->get('documento_identificacion');
+            $personal->numero_documento=$request->get('numero_documento');
+            $personal->nacionalidad=$request->get('nacionalidad');
+            $personal->estado_civil=$request->get('estado_civil');
+            $personal->nivel_educativo=$request->get('nivel_educativo');
+            $personal->profesion=$request->get('profesion');
+            $personal->direccion=$request->get('direccion');
+            $personal->foto=$file_path;
+
+            $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
+            $personal->fecha_retiro=$request->get('fecha_retiro');
+            $personal->forma_pago=$request->get('forma_pago');
+            $personal->salario=$request->get('salario');
+            $personal->categoria_ocupacional=$request->get('categoria_ocupacional');
+            $personal->estado_trabajador=$request->get('estado_trabajador');
+            $personal->sede=$request->get('sede');
+            $personal->turno=$request->get('turno');
+            $personal->departamento_area=$request->get('departamento_area');
+            $personal->cargo=$request->get('cargo');
+            $personal->tipo_trabajador=$request->get('tipo_trabajador');
+            $personal->tipo_contrato=$request->get('tipo_contrato');
+            $personal->regimen_pensionario=$request->get('regimen_pensionario');
+            $personal->afiliacion_salud=$request->get('afiliacion_salud');
+            $personal->banco_renumeracion=$request->get('banco_renumeracion');
+            $personal->numero_cuenta=$request->get('numero_cuenta');
+            $personal->notas=$request->get('notas');
+            $personal->save();
+        }
+        return redirect()->route('personal.index');
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     *
+     * @param  int  $id
+     * @return \Illuminate\Http\Response
+     */
+    public function destroy($id)
+    {
+        $personal=Personal::findOrFail($id);
+        $personal->delete();
+
+        return redirect()->route('personal.index');
+    }
+}

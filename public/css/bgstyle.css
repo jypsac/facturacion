@@ -1,0 +1,13 @@
+@import url('https://fonts.googleapis.com/css?family=Dosis');
+
+.side-nav{background-color: #24242d; color: white;}
+.side-nav li a, .side-nav li a i.fas, i.material-icons.menu{
+	color: white;
+	margin-top: 4px;
+}
+
+.space{padding-top: 50px;}
+
+.side-nav li.active{background: #e62f2d;}
+
+
