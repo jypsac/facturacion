@@ -151,7 +151,7 @@
                         </li>
                         <li>
                             <a href="{{-- {{route('home')}} --}}">
-                                <i class="fa fa-barsign-out"></i> Cerrar Sección
+                                <i class="fa fa-barsign-out"></i> Cerrar Secciónes
                             </a>
                         </li>
                     </ul>
