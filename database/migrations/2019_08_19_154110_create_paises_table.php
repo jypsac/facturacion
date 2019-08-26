@@ -6,7 +6,7 @@ use Illuminate\Database\Migrations\Migration;
 
 class CreatePaisesTable extends Migration
 {
-    /**
+    /**dasdsa
      * Run the migrations.
      *
      * @return void
