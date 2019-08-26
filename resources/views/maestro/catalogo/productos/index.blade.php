@@ -1,9 +1,9 @@
 @extends('layout')
 
-@section('title', 'Catalogo')
-@section('breadcrumb', 'Catalogo')
-@section('breadcrumb2', 'Catalogo')
-@section('href_accion', route('catalogo.create'))
+@section('title', 'productos')
+@section('breadcrumb', 'productos')
+@section('breadcrumb2', 'productos')
+@section('href_accion', route('productos.create'))
 @section('value_accion', 'Agregar')
 
 @section('content')
