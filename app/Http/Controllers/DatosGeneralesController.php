@@ -13,7 +13,7 @@ class DatosGeneralesController extends Controller
      */
     public function index()
     {
-        return view('planilla.datos_generale.index');
+        return view('planilla.datos_generales.index');
     }
 
     /**º
@@ -23,7 +23,7 @@ class DatosGeneralesController extends Controller
      */
     public function create()
     {
-        //
+        return view('planilla.datos_generales.create');
     }
 
     /**

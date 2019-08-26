@@ -23,7 +23,7 @@ class ProductosController extends Controller
      */
     public function create()
     {
-        //
+        return view('maestro.catalogo.productos.create');
     }
 
     /**
