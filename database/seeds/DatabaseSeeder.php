@@ -15,5 +15,6 @@ class DatabaseSeeder extends Seeder
         $this->call(EmpresaSeeder::class);
         $this->call(IgvSeeder::class);
         $this->call(MonedasSeeder::class);
+        $this->call(UnidadMedidaSeeder::class);
     }
 }

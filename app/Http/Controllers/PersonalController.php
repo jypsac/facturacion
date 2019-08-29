@@ -118,8 +118,6 @@ class PersonalController extends Controller
     public function update(Request $request, $id)
     {
 
-
-
         $personal=Personal::find($id);
         if($request->hasfile('foto')){
             $foto= $request->file('foto');

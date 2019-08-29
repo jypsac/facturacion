@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Producto;
+use App\Unidad_medida;
 use Illuminate\Http\Request;
 
 class ProductosController extends Controller
@@ -13,7 +15,9 @@ class ProductosController extends Controller
      */
     public function index()
     {
-        return view('maestro.catalogo.productos.index');
+
+        $productos=Producto::all();
+        return view('maestro.catalogo.productos.index',compact('productos'));
     }
 
     /**
@@ -23,7 +27,8 @@ class ProductosController extends Controller
      */
     public function create()
     {
-        return view('maestro.catalogo.productos.create');
+        $unidad_medidas=Unidad_medida::all();
+        return view('maestro.catalogo.productos.create',compact('unidad_medidas'));
     }
 
     /**
@@ -34,7 +39,24 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $image =$request->file('foto');
+        $codigo= $request->get('codigo_barras');
+        $name = $codigo."-".$image->getClientOriginalName();
+        $image->move(public_path().'/archivos/imagenes/productos',$name);
+
+        $producto=new Producto;
+        $producto->nombre=$request->get('nombre');
+        $producto->categoria=$request->get('categoria');
+        $producto->marca=$request->get('marca');
+        $producto->modelo=$request->get('modelo');
+        $producto->unidad_medida=$request->get('unidad_medida');
+        $producto->codigo_barras=$request->get('codigo_barras');
+        $producto->activo=$request->get('activo');
+        $producto->foto=$name;
+        $producto->descripcion=$request->get('descripcion');
+        $producto->save();
+        return redirect()->route('productos.index');
+
     }
 
     /**
@@ -45,7 +67,8 @@ class ProductosController extends Controller
      */
     public function show($id)
     {
-        //
+        $producto=Producto::find($id);
+        return view('maestro.catalogo.productos.show',compact('producto'));
     }
 
     /**
@@ -56,7 +79,9 @@ class ProductosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $producto=Producto::find($id);
+        $unidad_medidas=Unidad_medida::all();
+        return view('maestro.catalogo.productos.edit',compact('unidad_medidas','producto'));
     }
 
     /**
@@ -68,7 +93,23 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $image =$request->file('foto');
+        $codigo= $request->get('codigo_barras');
+        $name = $codigo."-".$image->getClientOriginalName();
+        $image->move(public_path().'/archivos/imagenes/productos',$name);
+
+        $producto=Producto::find($id);
+        $producto->nombre=$request->get('nombre');
+        $producto->categoria=$request->get('categoria');
+        $producto->marca=$request->get('marca');
+        $producto->modelo=$request->get('modelo');
+        $producto->unidad_medida=$request->get('unidad_medida');
+        $producto->codigo_barras=$request->get('codigo_barras');
+        $producto->activo=$request->get('activo');
+        $producto->foto=$name;
+        $producto->descripcion=$request->get('descripcion');
+        $producto->save();
+        return redirect()->route('productos.index');
     }
 
     /**
@@ -79,6 +120,9 @@ class ProductosController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $producto=Producto::findOrFail($id);
+        $producto->delete();
+
+        return redirect()->route('productos.index');
     }
 }
