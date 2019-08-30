@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Kardex_entrada;
 use Illuminate\Http\Request;
 
 class KardexEntradaController extends Controller
@@ -13,7 +14,8 @@ class KardexEntradaController extends Controller
      */
     public function index()
     {
-        return view('inventario.kardex.entrada.index');
+        $kardex_entradas=Kardex_entrada::all();
+        return view('inventario.kardex.entrada.index' ,compact('kardex_entradas'));
     }
 
     /**
@@ -23,7 +25,7 @@ class KardexEntradaController extends Controller
      */
     public function create()
     {
-        //
+        return view('inventario.kardex.entrada.create');
     }
 
     /**
@@ -45,7 +47,7 @@ class KardexEntradaController extends Controller
      */
     public function show($id)
     {
-        //
+        return view('inventario.kardex.entrada.show');
     }
 
     /**
@@ -56,7 +58,7 @@ class KardexEntradaController extends Controller
      */
     public function edit($id)
     {
-        //
+        return view('inventario.kardex.entrada.edit');
     }
 
     /**
