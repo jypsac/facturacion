@@ -15,12 +15,15 @@ class CreateKardexEntradaTable extends Migration
     {
         Schema::create('kardex_entrada', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre');
-            $table->integer('precio');
+            $table->string('nombre');//obtiene el modelo
+            $table->integer('precio');//precio de compra
+            //los comentarios iran en facturacion
+            // $table->integer('precio_venta');//precio de venta
+            $table->text('serie_producto');//numero de serie el cual son varios codigos del producto que dependen de la cantidad de productos aingresar; se seprn por un punto y coma
             $table->integer('cantidad');
             $table->string('provedor');
             $table->string('informacion');
-            $table->string('nuevo_costo');
+            // $table->string('nuevo_costo');//precio costo promedio ;depende del modelo del producto()() //promedio de venta
             $table->string('almacen');
             $table->timestamps();
         });

@@ -58,7 +58,8 @@ class KardexEntradaController extends Controller
      */
     public function edit($id)
     {
-        return view('inventario.kardex.entrada.edit');
+        $kardex_entrada=Kardex_entrada::find($id);
+        return view('inventario.kardex.entrada.edit' ,compact('kardex_entrada'));
     }
 
     /**
