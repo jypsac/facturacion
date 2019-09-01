@@ -46,11 +46,13 @@ class ProductosController extends Controller
 
         $producto=new Producto;
         $producto->nombre=$request->get('nombre');
+        $producto->utilidad=$request->get('utilidad');
+        $producto->descuento=$request->get('descuento');
+        $producto->descuento2=$request->get('descuento2');
         $producto->categoria=$request->get('categoria');
         $producto->marca=$request->get('marca');
         $producto->modelo=$request->get('modelo');
         $producto->unidad_medida=$request->get('unidad_medida');
-        $producto->codigo_barras=$request->get('codigo_barras');
         $producto->activo=$request->get('activo');
         $producto->foto=$name;
         $producto->descripcion=$request->get('descripcion');
@@ -100,11 +102,13 @@ class ProductosController extends Controller
 
         $producto=Producto::find($id);
         $producto->nombre=$request->get('nombre');
+        $producto->utilidad=$request->get('utilidad');
+        $producto->descuento=$request->get('descuento');
+        $producto->descuento2=$request->get('descuento2');
         $producto->categoria=$request->get('categoria');
         $producto->marca=$request->get('marca');
         $producto->modelo=$request->get('modelo');
         $producto->unidad_medida=$request->get('unidad_medida');
-        $producto->codigo_barras=$request->get('codigo_barras');
         $producto->activo=$request->get('activo');
         $producto->foto=$name;
         $producto->descripcion=$request->get('descripcion');

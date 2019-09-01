@@ -32,7 +32,7 @@
                     </div>
 				</div>
 				<div class="ibox-content">
-					<form action="{{ route('productos.store') }}"  enctype="multipart/form-data" method="post">
+					<form action="{{ route('kardex-entrada.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
@@ -42,16 +42,16 @@
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="precio"></div>
 		                </div>
 
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Serie del producto:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="serie_producto"></div>
+		                </div>
+
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Cantidad:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="cantidad"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Provedor:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="provedor"></div>
-		                </div>
-
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Nuevo Costo:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="nuevo_costo"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Almacen:</label>

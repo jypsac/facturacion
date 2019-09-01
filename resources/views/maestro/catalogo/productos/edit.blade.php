@@ -39,6 +39,18 @@
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre" value="{{$producto->nombre}}"></div>
 		                </div>
 
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Utilidad:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="utilidad" value="{{$producto->utilidad}}"></div>
+		                </div>
+
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 1:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento" value="{{$producto->descuento}}"></div>
+		                </div>
+
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 2:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento2" value="{{$producto->descuento2}}"></div>
+		                </div>
+
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Categoria:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="categoria" value="{{$producto->categoria}}"></div>
 		                </div>
@@ -69,9 +81,7 @@
 		                    </div>
 		                </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo de barras:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_barras" value="{{$producto->codigo_barras}}"></div>
-		                </div>
+
 
 						<div class="form-group row"><label class="col-sm-2 col-form-label">Estado:</label>
 							<div class="col-sm-10">

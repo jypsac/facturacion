@@ -40,8 +40,7 @@
                                 <th>NOMBRE</th>
                                 <th>Precio</th>
                                 <th>Cantidad</th>
-                                <th>Informacion</th>
-                                <th>Costo Final</th>
+                                <th>Provedor</th>
                                 <th>Almacen</th>
                                 <th>Ver</th>
                                 <th>EDITAR</th>
@@ -53,12 +52,10 @@
                             <tr class="gradeX">
                                 <td>{{$kardex_entrada->id}}</td>
                                 <td>{{$kardex_entrada->nombre}}</td>
-                                <td>{{$kardex_entrada->categoria}}</td>
-                                <td>{{$kardex_entrada->marca}}</td>
-                                <td>{{$kardex_entrada->modelo}}</td>
-                                <td>{{$kardex_entrada->activo}}</td>
-                                <td>new
-                                </td>
+                                <td>{{$kardex_entrada->precio}}</td>
+                                <td>{{$kardex_entrada->cantidad}}</td>
+                                <td>{{$kardex_entrada->provedor}}</td>
+                                <td>{{$kardex_entrada->almacen}}</td>
                                 <td><center><a href="{{ route('kardex-entrada.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 <td><center><a href="{{ route('kardex-entrada.edit', $kardex_entrada->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                 <td>

@@ -36,7 +36,9 @@ class KardexEntradaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Kardex_entrada::create(request()->all());
+
+        return redirect()->route('kardex-entrada.index');
     }
 
     /**
@@ -71,7 +73,17 @@ class KardexEntradaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $update=Kardex_entrada::find($id);
+        $update->nombre=$request->get('nombre');
+        $update->precio=$request->get('precio');
+        $update->serie_producto=$request->get('serie_producto');
+        $update->cantidad=$request->get('cantidad');
+        $update->provedor=$request->get('provedor');
+        $update->almacen=$request->get('almacen');
+        $update->informacion=$request->get('informacion');
+        $update->save();
+
+        return redirect()->route('kardex-entrada.index');
     }
 
     /**
@@ -82,6 +94,9 @@ class KardexEntradaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $destroy=Kardex_entrada::findOrFail($id);
+        $destroy->delete();
+
+        return redirect()->route('kardex-entrada.index');
     }
 }

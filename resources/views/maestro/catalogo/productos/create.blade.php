@@ -38,6 +38,18 @@
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
 		                </div>
 
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Utilidad:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="utilidad"></div>
+		                </div>
+
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 1:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento"></div>
+		                </div>
+
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 2:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento2"></div>
+		                </div>
+
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Categoria:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="categoria"></div>
 		                </div>
@@ -68,9 +80,7 @@
 		                    </div>
 		                </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo de barras:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_barras"></div>
-		                </div>
+
 
 						<div class="form-group row"><label class="col-sm-2 col-form-label">Estado:</label>
 							<div class="col-sm-10">

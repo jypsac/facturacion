@@ -32,34 +32,36 @@
                     </div>
 				</div>
 				<div class="ibox-content">
-					<form action="{{ route('productos.update') }}"  enctype="multipart/form-data" method="post">
+					<form action="{{ route('kardex-entrada.update', $kardex_entrada->id) }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
+					 	@method('PATCH')
 					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre" value="{{$kardex_entrada->nombre}}"></div>
 		                </div>
 
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Precio:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="precio"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="precio" value="{{$kardex_entrada->precio}}"></div>
+		                </div>
+
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Serie del producto:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="serie_producto" value="{{$kardex_entrada->serie_producto}}"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Cantidad:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="cantidad"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="cantidad" value="{{$kardex_entrada->cantidad}}"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Provedor:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="provedor"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="provedor" value="{{$kardex_entrada->provedor}}"></div>
 		                </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Nuevo Costo:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="nuevo_costo"></div>
-		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Almacen:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="almacen"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="almacen" value="{{$kardex_entrada->almacen}}"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Informacion:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="informacion"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="informacion" value="{{$kardex_entrada->informacion}}"></div>
 		                </div>
 
                 		<button class="btn btn-primary" type="submit">Guardar</button>
