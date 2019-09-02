@@ -16,6 +16,7 @@ class CreateProductosTable extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
+            // $table->integer('precio');//la compra al provedor pero sin igv (precio de compra al provedor 118 pero sin igv es 100 soles)
             $table->integer('utilidad');
             $table->integer('descuento');
             $table->integer('descuento2');
@@ -23,7 +24,8 @@ class CreateProductosTable extends Migration
             $table->string('marca');
             $table->string('modelo');
             $table->string('unidad_medida');
-            $table->boolean('activo')->default(0);
+            $table->boolean('producto_estado')->default(0);//activo o desactivado el producto
+
             //$table->string('codigo_barras');
             $table->string('foto');
             $table->text('descripcion');

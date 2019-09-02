@@ -25,6 +25,7 @@ class CreateKardexEntradaTable extends Migration
             $table->string('informacion');
             // $table->string('nuevo_costo');//precio costo promedio ;depende del modelo del producto()() //promedio de venta
             $table->string('almacen');
+
             $table->timestamps();
         });
     }

@@ -1,0 +1,1 @@
+crear una vista donde se pueda observar el almacen

@@ -23,7 +23,7 @@ class TransaccionCompraController extends Controller
      */
     public function create()
     {
-        //
+        return view('transaccion.compra.create');
     }
 
     /**
