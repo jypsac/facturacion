@@ -57,7 +57,7 @@
                                     <li><a href="{{route('pedidos.index')}}">Pedidos</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{route('compra.index')}}">Compras</a></li>
+                            <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li>
                         </ul>
                     </li>
                     <li>
@@ -189,5 +189,116 @@
                 </div>
             </div>
     </div>
+    <script>
+        var self = this;
+
+        // Detalle del comprobante
+        self.client_id = 0;
+        self.detail = [];
+        self.iva = 0;
+        self.subTotal = 0;
+        self.total = 0;
+
+        self.on('mount', function(){
+            __clientAutocomplete();
+            __productAutocomplete();
+        })
+
+        __removeProductFromDetail(e) {
+            var item = e.item,
+                index = this.detail.indexOf(item);
+
+            this.detail.splice(index, 1);
+            __calculate();
+        }
+
+        __addProductToDetail() {
+            self.detail.push({
+                id: self.product_id,
+                name: self.product.value,
+                quantity: parseFloat(self.quantity.value),
+                price: parseFloat(self.price),
+                total: parseFloat(self.price * self.quantity.value)
+            });
+
+            self.product_id = 0;
+            self.product.value = '';
+            self.quantity.value = '';
+            self.price = '';
+
+            __calculate();
+        }
+
+        __save() {
+            $.post(baseUrl('invoice/save'), {
+                client_id: self.client_id,
+                iva: self.iva,
+                subTotal: self.subTotal,
+                total: self.total,
+                detail: self.detail
+            }, function(r){
+                if(r.response) {
+                    window.location.href = baseUrl('invoice');
+                } else {
+                    alert('Ocurrio un error');
+                }
+            }, 'json')
+        }
+
+        function __calculate() {
+            var total = 0;
+
+            self.detail.forEach(function(e){
+                total += e.total;
+            });
+
+            self.total = total;
+            self.subTotal = parseFloat(total / 1.18);
+            self.iva = parseFloat(total - self.subTotal);
+        }
+
+        function __clientAutocomplete(){
+            var client = $("#client"),
+                options = {
+                url: function(q) {
+                    return baseUrl('invoice/findClient?q=' + q);
+                },
+                getValue: 'name',
+                list: {
+                    onClickEvent: function() {
+                        var e = client.getSelectedItemData();
+                        self.client_id = e.id;
+                        self.ruc = e.ruc;
+                        self.address = e.address;
+
+                        self.update();
+                    }
+                }
+            };
+
+            client.easyAutocomplete(options);
+        }
+
+        function __productAutocomplete(){
+            var product = $("#product"),
+                options = {
+                url: function(q) {
+                    return baseUrl('invoice/findProduct?q=' + q);
+                },
+                getValue: 'name',
+                list: {
+                    onClickEvent: function() {
+                        var e = product.getSelectedItemData();
+                        self.product_id = e.id;
+                        self.price = e.price;
+
+                        self.update();
+                    }
+                }
+            };
+
+            product.easyAutocomplete(options);
+        }
+    </script>
 </body>
 </html>
