@@ -189,7 +189,7 @@
                 </div>
             </div>
     </div>
-    <script>
+   {{--  <script>
         var self = this;
 
         // Detalle del comprobante
@@ -299,6 +299,6 @@
 
             product.easyAutocomplete(options);
         }
-    </script>
+    </script> --}}
 </body>
 </html>

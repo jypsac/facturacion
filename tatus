@@ -1,0 +1,71 @@
+[33mcommit 299c8bfbe8a69fe59f3f4c0cab21a1f99cc895bf[m[33m ([m[1;36mHEAD -> [m[1;32mmaster[m[33m, [m[1;31morigin/master[m[33m, [m[1;31morigin/HEAD[m[33m)[m
+Author: christopher <christojhg@gmail.com>
+Date:   Thu Sep 5 22:03:07 2019 -0500
+
+    ingresando vista de facturador
+
+[33mcommit 342f982c8a9f950395cab1adcf42f1c4de060791[m
+Author: Christopher <christojhg@gmail.com>
+Date:   Mon Sep 2 16:18:29 2019 -0500
+
+    Datos extra!
+
+[33mcommit 09dfed74047b5725862e9d3b02d02340558bd265[m
+Author: christopher <christojhg@gmail.com>
+Date:   Sun Sep 1 16:21:18 2019 -0500
+
+    Modificaciones realizadas
+
+[33mcommit 77b9546312c40264ce5c84721968e785970570ff[m
+Author: Christopher <christojhg@gmail.com>
+Date:   Fri Aug 30 13:06:27 2019 -0500
+
+    configurar productos y ingreso: revisar las migraciones
+
+[33mcommit 9c73a14df3b4a83fc6f5c555fcd390a017cc92b4[m
+Author: christopher <christojhg@gmail.com>
+Date:   Thu Aug 29 20:46:22 2019 -0500
+
+    Vista de entradas 50%
+
+[33mcommit febea3e98c7e623857beb743c485fc9fe6fc1802[m
+Author: christopher <christojhg@gmail.com>
+Date:   Wed Aug 28 21:52:43 2019 -0500
+
+    Productos listo -sin vista show
+
+[33mcommit 25db75240865a56b675e120e5b25b0191d51fe45[m
+Author: Christopher <christojhg@gmail.com>
+Date:   Mon Aug 26 16:55:01 2019 -0500
+
+    index productos solucionado
+
+[33mcommit e2c038790d424293c47d71f9bef4dcd823f16b4a[m
+Author: Christopher <christojhg@gmail.com>
+Date:   Mon Aug 26 15:29:31 2019 -0500
+
+    acabo de hacer un comentario
+
+[33mcommit 466a4c170f82f671cd01cabae69fb13dae263fa9[m
+Author: Christopher <christojhg@gmail.com>
+Date:   Mon Aug 26 15:25:33 2019 -0500
+
+    subiendo index.productos
+
+[33mcommit 1d00809404c1296aa798a2c1c78292f409c1b484[m
+Author: Jyp <53505434+jypsac@users.noreply.github.com>
+Date:   Fri Aug 23 14:19:12 2019 -0500
+
+    Update artisan
+
+[33mcommit bebbcaec0f479147f0ecbfbb4c2d50fcdf72b48b[m
+Author: christopher <christojhg@gmail.com>
+Date:   Fri Aug 23 10:47:58 2019 -0500
+
+    modificado cerrar seccion a cerrar secciones
+
+[33mcommit d5666b7fb7c87e93f3ae22cb04f3ec1aa63bc8b5[m
+Author: christopher <christojhg@gmail.com>
+Date:   Fri Aug 23 10:42:22 2019 -0500
+
+    Subida de proyecto laravel por git
