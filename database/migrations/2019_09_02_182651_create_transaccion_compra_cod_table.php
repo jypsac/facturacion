@@ -22,7 +22,7 @@ class CreateTransaccionCompraCodTable extends Migration
             $table->integer('cantidad');
             $table->integer('precio_unitario');
             $table->integer('descuento');
-            $table->stintegerring('importe');
+            $table->integer('importe');
             $table->timestamps();
         });
     }
