@@ -12,8 +12,8 @@
 
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <script src="https://code.jquery.com/jquery-1.11.3.js" type="text/javascript"></script>
-    {{-- <script src="insertar.js" type="text/javascript"></script> --}}
+
+
 
 </head>
 
@@ -302,6 +302,6 @@
             product.easyAutocomplete(options);
         }
     </script> --}}
-    <script src="//code.jquery.com/jquery-1.11.2.min.js"></script>
+
 </body>
 </html>
