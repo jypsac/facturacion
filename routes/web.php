@@ -32,3 +32,7 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/usuario','UsuarioController');
 	Route::resource('/venta','VentaController');
 
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
