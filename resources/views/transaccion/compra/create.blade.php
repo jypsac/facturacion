@@ -5,7 +5,7 @@
 @section('breadcrumb2', 'Transaccion')
 @section('href_accion', route('transaccion-compra.index'))
 @section('value_accion', 'Agregar')
-
+@section('vue_js',  asset('js/app.js') )
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -72,8 +72,9 @@
             </div>
             <div class="ibox-content forum-container">
                 <div id="app">
-                    <example-component>
-                </example-component>
+                    <invoice-compra-component>
+
+                    </invoice-compra-component>
                 </div>
 
             </div>
@@ -97,8 +98,7 @@
     <script src="{{ asset('js/plugins/jqGrid/jquery.jqGrid.min.js') }}"></script>
 
     <!-- Custom and plugin javascript -->
-    <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
 
     <script src="{{ asset('js/plugins/jquery-ui/jquery-ui.min.js') }}"></script>
 

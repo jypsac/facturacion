@@ -1887,9 +1887,93 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  mounted: function mounted() {
-    console.log('Component mounted.');
+  data: {
+    invoice_subtotal: 0,
+    invoice_total: 0,
+    invoice_tax: 5,
+    invoice_products: [{
+      product_no: '',
+      product_name: '',
+      product_price: '',
+      product_qty: '',
+      line_total: 0
+    }]
+  },
+  methods: {
+    saveInvoice: function saveInvoice() {
+      console.log(JSON.stringify(this.invoice_products));
+    },
+    calculateTotal: function calculateTotal() {
+      var subtotal, total;
+      subtotal = this.invoice_products.reduce(function (sum, product) {
+        var lineTotal = parseFloat(product.line_total);
+
+        if (!isNaN(lineTotal)) {
+          return sum + lineTotal;
+        }
+      }, 0);
+      this.invoice_subtotal = subtotal.toFixed(2);
+      total = subtotal * (this.invoice_tax / 100) + subtotal;
+      total = parseFloat(total);
+
+      if (!isNaN(total)) {
+        this.invoice_total = total.toFixed(2);
+      } else {
+        this.invoice_total = '0.00';
+      }
+    },
+    calculateLineTotal: function calculateLineTotal(invoice_product) {
+      var total = parseFloat(invoice_product.product_price) * parseFloat(invoice_product.product_qty);
+
+      if (!isNaN(total)) {
+        invoice_product.line_total = total.toFixed(2);
+      }
+
+      this.calculateTotal();
+    },
+    deleteRow: function deleteRow(index, invoice_product) {
+      var idx = this.invoice_products.indexOf(invoice_product);
+      console.log(idx, index);
+
+      if (idx > -1) {
+        this.invoice_products.splice(idx, 1);
+      }
+
+      this.calculateTotal();
+    },
+    addNewRow: function addNewRow() {
+      this.invoice_products.push({
+        product_no: '',
+        product_name: '',
+        product_price: '',
+        product_qty: '',
+        line_total: 0
+      });
+    }
   }
 });
 
@@ -37236,28 +37320,181 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _vm._m(0)
+  return _c(
+    "table",
+    [
+      _vm._m(0),
+      _vm._v(" "),
+      _vm._l(_vm.invoice_products, function(invoice_product, k) {
+        return _c("tr", { key: k }, [
+          _c(
+            "td",
+            { staticClass: "trashIconContainer", attrs: { scope: "row" } },
+            [
+              _c("i", {
+                staticClass: "far fa-trash-alt",
+                on: {
+                  click: function($event) {
+                    return _vm.deleteRow(k, invoice_product)
+                  }
+                }
+              })
+            ]
+          ),
+          _vm._v(" "),
+          _c("td", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: invoice_product.product_no,
+                  expression: "invoice_product.product_no"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: invoice_product.product_no },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(invoice_product, "product_no", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: invoice_product.product_name,
+                  expression: "invoice_product.product_name"
+                }
+              ],
+              staticClass: "form-control",
+              attrs: { type: "text" },
+              domProps: { value: invoice_product.product_name },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(invoice_product, "product_name", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: invoice_product.product_price,
+                  expression: "invoice_product.product_price"
+                }
+              ],
+              staticClass: "form-control text-right",
+              attrs: { type: "number", min: "0", step: ".01" },
+              domProps: { value: invoice_product.product_price },
+              on: {
+                change: function($event) {
+                  return _vm.calculateLineTotal(invoice_product)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(
+                    invoice_product,
+                    "product_price",
+                    $event.target.value
+                  )
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: invoice_product.product_qty,
+                  expression: "invoice_product.product_qty"
+                }
+              ],
+              staticClass: "form-control text-right",
+              attrs: { type: "number", min: "0", step: ".01" },
+              domProps: { value: invoice_product.product_qty },
+              on: {
+                change: function($event) {
+                  return _vm.calculateLineTotal(invoice_product)
+                },
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(invoice_product, "product_qty", $event.target.value)
+                }
+              }
+            })
+          ]),
+          _vm._v(" "),
+          _c("td", [
+            _c("input", {
+              directives: [
+                {
+                  name: "model",
+                  rawName: "v-model",
+                  value: invoice_product.line_total,
+                  expression: "invoice_product.line_total"
+                }
+              ],
+              staticClass: "form-control text-right",
+              attrs: { readonly: "", type: "number", min: "0", step: ".01" },
+              domProps: { value: invoice_product.line_total },
+              on: {
+                input: function($event) {
+                  if ($event.target.composing) {
+                    return
+                  }
+                  _vm.$set(invoice_product, "line_total", $event.target.value)
+                }
+              }
+            })
+          ])
+        ])
+      })
+    ],
+    2
+  )
 }
 var staticRenderFns = [
   function() {
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("div", { staticClass: "container" }, [
-      _c("div", { staticClass: "row justify-content-center" }, [
-        _c("div", { staticClass: "col-md-8" }, [
-          _c("div", { staticClass: "card" }, [
-            _c("div", { staticClass: "card-header" }, [
-              _vm._v("Example Component")
-            ]),
-            _vm._v(" "),
-            _c("div", { staticClass: "card-body" }, [
-              _vm._v(
-                "\n                    I'm an example component.\n                "
-              )
-            ])
-          ])
-        ])
+    return _c("thead", [
+      _c("tr", [
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("ITEM NUMERO")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("ITEM NAME")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col text-rigth" } }, [_vm._v("PRECIO")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("QUANTITY")]),
+        _vm._v(" "),
+        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("TOTAL")])
       ])
     ])
   }
@@ -49411,32 +49648,11 @@ module.exports = function(module) {
 /*! no static exports found */
 /***/ (function(module, exports, __webpack_require__) {
 
-/**
- * First we will load all of this project's JavaScript dependencies which
- * includes Vue and other libraries. It is a great starting point when
- * building robust, powerful web applications using Vue and Laravel.
- */
 __webpack_require__(/*! ./bootstrap */ "./resources/js/bootstrap.js");
 
 window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.js");
-/**
- * The following block of code may be used to automatically register your
- * Vue components. It will recursively scan this directory for the Vue
- * components and automatically register them with their "basename".
- *
- * Eg. ./components/ExampleComponent.vue -> <example-component></example-component>
- */
-// const files = require.context('./', true, /\.vue$/i)
-// files.keys().map(key => Vue.component(key.split('/').pop().split('.')[0], files(key).default))
-
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('invoice-compra-component', __webpack_require__(/*! ./components/InvoiceCreateCompra.vue */ "./resources/js/components/InvoiceCreateCompra.vue")["default"]);
-/**
- * Next, we will create a fresh Vue application instance and attach it to
- * the page. Then, you may begin adding components to this application
- * or customize the JavaScript scaffolding to fit your unique needs.
- */
-
 var app = new Vue({
   el: '#app'
 });
@@ -49574,14 +49790,15 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/InvoiceCreateCompra.vue ***!
   \*********************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _InvoiceCreateCompra_vue_vue_type_template_id_267ca3cc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InvoiceCreateCompra.vue?vue&type=template&id=267ca3cc& */ "./resources/js/components/InvoiceCreateCompra.vue?vue&type=template&id=267ca3cc&");
 /* harmony import */ var _InvoiceCreateCompra_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InvoiceCreateCompra.vue?vue&type=script&lang=js& */ "./resources/js/components/InvoiceCreateCompra.vue?vue&type=script&lang=js&");
-/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _InvoiceCreateCompra_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _InvoiceCreateCompra_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
+/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -49611,7 +49828,7 @@ component.options.__file = "resources/js/components/InvoiceCreateCompra.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/InvoiceCreateCompra.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! exports provided: default */
+/*! no static exports found */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
