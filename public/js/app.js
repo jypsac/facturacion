@@ -1910,23 +1910,46 @@ __webpack_require__.r(__webpack_exports__);
 //
 //
 //
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
 /* harmony default export */ __webpack_exports__["default"] = ({
-  data: {
-    invoice_subtotal: 0,
-    invoice_total: 0,
-    invoice_tax: 5,
-    invoice_products: [{
-      product_no: '',
-      product_name: '',
-      product_price: '',
-      product_qty: '',
-      line_total: 0
-    }]
+  data: function data() {
+    return {
+      invoice_subtotal: 0,
+      invoice_total: 0,
+      invoice_tax: 5,
+      invoice_products: [{
+        product_no: '',
+        product_name: '',
+        product_price: '',
+        product_qty: '',
+        line_total: 0
+      }]
+    };
   },
   methods: {
-    saveInvoice: function saveInvoice() {
-      console.log(JSON.stringify(this.invoice_products));
-    },
     calculateTotal: function calculateTotal() {
       var subtotal, total;
       subtotal = this.invoice_products.reduce(function (sum, product) {
@@ -1946,14 +1969,14 @@ __webpack_require__.r(__webpack_exports__);
         this.invoice_total = '0.00';
       }
     },
-    calculateLineTotal: function calculateLineTotal(invoice_product) {
-      var total = parseFloat(invoice_product.product_price) * parseFloat(invoice_product.product_qty);
-
-      if (!isNaN(total)) {
-        invoice_product.line_total = total.toFixed(2);
-      }
-
-      this.calculateTotal();
+    addNewRow: function addNewRow() {
+      this.invoice_products.push({
+        product_no: '',
+        product_name: '',
+        product_price: '',
+        product_qty: '',
+        line_total: 0
+      });
     },
     deleteRow: function deleteRow(index, invoice_product) {
       var idx = this.invoice_products.indexOf(invoice_product);
@@ -1965,14 +1988,14 @@ __webpack_require__.r(__webpack_exports__);
 
       this.calculateTotal();
     },
-    addNewRow: function addNewRow() {
-      this.invoice_products.push({
-        product_no: '',
-        product_name: '',
-        product_price: '',
-        product_qty: '',
-        line_total: 0
-      });
+    calculateLineTotal: function calculateLineTotal(invoice_product) {
+      var total = parseFloat(invoice_product.product_price) * parseFloat(invoice_product.product_qty);
+
+      if (!isNaN(total)) {
+        invoice_product.line_total = total.toFixed(2);
+      }
+
+      this.calculateTotal();
     }
   }
 });
@@ -37320,162 +37343,221 @@ var render = function() {
   var _vm = this
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
-  return _c(
-    "table",
-    [
-      _vm._m(0),
-      _vm._v(" "),
-      _vm._l(_vm.invoice_products, function(invoice_product, k) {
-        return _c("tr", { key: k }, [
-          _c(
-            "td",
-            { staticClass: "trashIconContainer", attrs: { scope: "row" } },
-            [
-              _c("i", {
-                staticClass: "far fa-trash-alt",
+  return _c("div", [
+    _c(
+      "table",
+      [
+        _vm._m(0),
+        _vm._v(" "),
+        _vm._l(_vm.invoice_products, function(invoice_product, k) {
+          return _c("tr", { key: k }, [
+            _c(
+              "td",
+              { staticClass: "trashIconContainer", attrs: { scope: "row" } },
+              [
+                _c(
+                  "i",
+                  {
+                    staticClass: "far fa-trash-alt",
+                    on: {
+                      click: function($event) {
+                        return _vm.deleteRow(k, invoice_product)
+                      }
+                    }
+                  },
+                  [_vm._v("hola")]
+                )
+              ]
+            ),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: invoice_product.product_no,
+                    expression: "invoice_product.product_no"
+                  }
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: invoice_product.product_no },
                 on: {
-                  click: function($event) {
-                    return _vm.deleteRow(k, invoice_product)
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(invoice_product, "product_no", $event.target.value)
                   }
                 }
               })
-            ]
-          ),
-          _vm._v(" "),
-          _c("td", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: invoice_product.product_no,
-                  expression: "invoice_product.product_no"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: invoice_product.product_no },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: invoice_product.product_name,
+                    expression: "invoice_product.product_name"
                   }
-                  _vm.$set(invoice_product, "product_no", $event.target.value)
+                ],
+                staticClass: "form-control",
+                attrs: { type: "text" },
+                domProps: { value: invoice_product.product_name },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      invoice_product,
+                      "product_name",
+                      $event.target.value
+                    )
+                  }
                 }
-              }
-            })
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: invoice_product.product_price,
+                    expression: "invoice_product.product_price"
+                  }
+                ],
+                staticClass: "form-control text-right",
+                attrs: { type: "number", min: "0", step: ".01" },
+                domProps: { value: invoice_product.product_price },
+                on: {
+                  change: function($event) {
+                    return _vm.calculateLineTotal(invoice_product)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      invoice_product,
+                      "product_price",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: invoice_product.product_qty,
+                    expression: "invoice_product.product_qty"
+                  }
+                ],
+                staticClass: "form-control text-right",
+                attrs: { type: "number", min: "0", step: ".01" },
+                domProps: { value: invoice_product.product_qty },
+                on: {
+                  change: function($event) {
+                    return _vm.calculateLineTotal(invoice_product)
+                  },
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(
+                      invoice_product,
+                      "product_qty",
+                      $event.target.value
+                    )
+                  }
+                }
+              })
+            ]),
+            _vm._v(" "),
+            _c("td", [
+              _c("input", {
+                directives: [
+                  {
+                    name: "model",
+                    rawName: "v-model",
+                    value: invoice_product.line_total,
+                    expression: "invoice_product.line_total"
+                  }
+                ],
+                staticClass: "form-control text-right",
+                attrs: { readonly: "", type: "number", min: "0", step: ".01" },
+                domProps: { value: invoice_product.line_total },
+                on: {
+                  input: function($event) {
+                    if ($event.target.composing) {
+                      return
+                    }
+                    _vm.$set(invoice_product, "line_total", $event.target.value)
+                  }
+                }
+              })
+            ])
+          ])
+        }),
+        _vm._v(" "),
+        _c("tfoot", [
+          _c("tr", [
+            _c("td", { staticClass: "text-right", attrs: { colspan: "5" } }, [
+              _vm._v("Sub Total")
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.invoice_subtotal))
+            ])
           ]),
           _vm._v(" "),
-          _c("td", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: invoice_product.product_name,
-                  expression: "invoice_product.product_name"
-                }
-              ],
-              staticClass: "form-control",
-              attrs: { type: "text" },
-              domProps: { value: invoice_product.product_name },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(invoice_product, "product_name", $event.target.value)
-                }
-              }
-            })
+          _c("tr", [
+            _c("td", { staticClass: "text-right", attrs: { colspan: "5" } }, [
+              _vm._v("Tax")
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.invoice_tax))
+            ])
           ]),
           _vm._v(" "),
-          _c("td", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: invoice_product.product_price,
-                  expression: "invoice_product.product_price"
-                }
-              ],
-              staticClass: "form-control text-right",
-              attrs: { type: "number", min: "0", step: ".01" },
-              domProps: { value: invoice_product.product_price },
-              on: {
-                change: function($event) {
-                  return _vm.calculateLineTotal(invoice_product)
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(
-                    invoice_product,
-                    "product_price",
-                    $event.target.value
-                  )
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: invoice_product.product_qty,
-                  expression: "invoice_product.product_qty"
-                }
-              ],
-              staticClass: "form-control text-right",
-              attrs: { type: "number", min: "0", step: ".01" },
-              domProps: { value: invoice_product.product_qty },
-              on: {
-                change: function($event) {
-                  return _vm.calculateLineTotal(invoice_product)
-                },
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(invoice_product, "product_qty", $event.target.value)
-                }
-              }
-            })
-          ]),
-          _vm._v(" "),
-          _c("td", [
-            _c("input", {
-              directives: [
-                {
-                  name: "model",
-                  rawName: "v-model",
-                  value: invoice_product.line_total,
-                  expression: "invoice_product.line_total"
-                }
-              ],
-              staticClass: "form-control text-right",
-              attrs: { readonly: "", type: "number", min: "0", step: ".01" },
-              domProps: { value: invoice_product.line_total },
-              on: {
-                input: function($event) {
-                  if ($event.target.composing) {
-                    return
-                  }
-                  _vm.$set(invoice_product, "line_total", $event.target.value)
-                }
-              }
-            })
+          _c("tr", [
+            _c("td", { staticClass: "text-right", attrs: { colspan: "5" } }, [
+              _vm._v("Total")
+            ]),
+            _vm._v(" "),
+            _c("td", { staticClass: "text-right" }, [
+              _vm._v(_vm._s(_vm.invoice_total))
+            ])
           ])
         ])
-      })
-    ],
-    2
-  )
+      ],
+      2
+    ),
+    _vm._v(" "),
+    _c(
+      "button",
+      {
+        staticClass: "btn btn-info",
+        attrs: { type: "button" },
+        on: { click: _vm.addNewRow }
+      },
+      [
+        _c("i", { staticClass: "fas fa-plus-circle" }),
+        _vm._v("\n                Add\n            ")
+      ]
+    )
+  ])
 }
 var staticRenderFns = [
   function() {
@@ -37486,15 +37568,15 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("ITEM NUMERO")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Item no")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("ITEM NAME")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Item name")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col text-rigth" } }, [_vm._v("PRECIO")]),
+        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("Price")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("QUANTITY")]),
+        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("Quantity")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("TOTAL")])
+        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("Total")])
       ])
     ])
   }
