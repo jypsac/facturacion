@@ -1939,7 +1939,7 @@ __webpack_require__.r(__webpack_exports__);
     return {
       invoice_subtotal: 0,
       invoice_total: 0,
-      invoice_tax: 5,
+      invoice_tax: 18,
       invoice_products: [{
         product_no: '',
         product_name: '',
@@ -37365,7 +37365,7 @@ var render = function() {
                       }
                     }
                   },
-                  [_vm._v("hola")]
+                  [_vm._v("Eliminar")]
                 )
               ]
             ),
@@ -37523,7 +37523,7 @@ var render = function() {
           _vm._v(" "),
           _c("tr", [
             _c("td", { staticClass: "text-right", attrs: { colspan: "5" } }, [
-              _vm._v("Tax")
+              _vm._v("igv")
             ]),
             _vm._v(" "),
             _c("td", { staticClass: "text-right" }, [
@@ -37568,13 +37568,13 @@ var staticRenderFns = [
       _c("tr", [
         _c("th", { attrs: { scope: "col" } }, [_vm._v("#")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Item no")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Codigo")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col" } }, [_vm._v("Item name")]),
+        _c("th", { attrs: { scope: "col" } }, [_vm._v("Nombre")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("Price")]),
+        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("Precio")]),
         _vm._v(" "),
-        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("Quantity")]),
+        _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("Cantidad")]),
         _vm._v(" "),
         _c("th", { attrs: { scope: "col text-right" } }, [_vm._v("Total")])
       ])
@@ -49872,15 +49872,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!*********************************************************!*\
   !*** ./resources/js/components/InvoiceCreateCompra.vue ***!
   \*********************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _InvoiceCreateCompra_vue_vue_type_template_id_267ca3cc___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./InvoiceCreateCompra.vue?vue&type=template&id=267ca3cc& */ "./resources/js/components/InvoiceCreateCompra.vue?vue&type=template&id=267ca3cc&");
 /* harmony import */ var _InvoiceCreateCompra_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./InvoiceCreateCompra.vue?vue&type=script&lang=js& */ "./resources/js/components/InvoiceCreateCompra.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _InvoiceCreateCompra_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _InvoiceCreateCompra_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -49910,7 +49909,7 @@ component.options.__file = "resources/js/components/InvoiceCreateCompra.vue"
 /*!**********************************************************************************!*\
   !*** ./resources/js/components/InvoiceCreateCompra.vue?vue&type=script&lang=js& ***!
   \**********************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

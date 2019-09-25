@@ -4,16 +4,16 @@
             <thead>
                 <tr>
                     <th scope="col">#</th>
-                    <th scope="col">Item no</th>
-                    <th scope="col">Item name</th>
-                    <th scope="col text-right">Price</th>
-                    <th scope="col text-right">Quantity</th>
+                    <th scope="col">Codigo</th>
+                    <th scope="col">Nombre</th>
+                    <th scope="col text-right">Precio</th>
+                    <th scope="col text-right">Cantidad</th>
                     <th scope="col text-right">Total</th>
                 </tr>
             </thead>
             <tr v-for="(invoice_product, k) in invoice_products" :key="k">
                 <td scope="row" class="trashIconContainer">
-                    <i class="far fa-trash-alt" @click="deleteRow(k, invoice_product)">hola</i>
+                    <i class="far fa-trash-alt" @click="deleteRow(k, invoice_product)">Eliminar</i>
                 </td>
                 <td>
                     <input class="form-control" type="text" v-model="invoice_product.product_no" />
@@ -40,7 +40,7 @@
                     <td class="text-right">{{invoice_subtotal}}</td>
                 </tr>
                 <tr>
-                    <td colspan="5" class="text-right">Tax</td>
+                    <td colspan="5" class="text-right">igv</td>
                     <td class="text-right">{{invoice_tax}}</td>
                 </tr>
                 <tr>
@@ -68,7 +68,7 @@
             return{
                 invoice_subtotal: 0,
                 invoice_total: 0,
-                invoice_tax: 5,
+                invoice_tax: 18,
                 invoice_products:
                     [{
                         product_no: '',
