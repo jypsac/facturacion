@@ -53,7 +53,7 @@ class ProductosController extends Controller
         $producto->marca=$request->get('marca');
         $producto->modelo=$request->get('modelo');
         $producto->unidad_medida=$request->get('unidad_medida');
-        $producto->activo=$request->get('activo');
+        $producto->producto_estado=$request->get('activo');
         $producto->foto=$name;
         $producto->descripcion=$request->get('descripcion');
         $producto->save();
@@ -109,7 +109,7 @@ class ProductosController extends Controller
         $producto->marca=$request->get('marca');
         $producto->modelo=$request->get('modelo');
         $producto->unidad_medida=$request->get('unidad_medida');
-        $producto->activo=$request->get('activo');
+        $producto->producto_estado=$request->get('activo');
         $producto->foto=$name;
         $producto->descripcion=$request->get('descripcion');
         $producto->save();
