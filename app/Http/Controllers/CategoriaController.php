@@ -13,7 +13,7 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        return view('otros.categoria.index');
+        return view('maestro.otros.categoria.index');
     }
 
     /**
