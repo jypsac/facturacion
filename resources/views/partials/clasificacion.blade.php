@@ -20,12 +20,12 @@
                         		<div class="col-lg-6">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            Marcas
+                                            Categorias
                                         </div>
                                         <div class="panel-body">
                                             <center><a href="{{route('marca.index')}}"><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></a></center>
                                             <center>
-                                                <p>marcas</p>
+                                                <p>DEscripcion</p>
                                             </center>
                                         </div>
                                     </div>
@@ -34,12 +34,25 @@
                                 <div class="col-lg-6">
                                     <div class="panel panel-primary">
                                         <div class="panel-heading">
-                                            Categorias
+                                            Familias
                                         </div>
                                         <div class="panel-body">
                                             <center><a href="{{route('categoria.index')}}"><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></a></center>
                                             <center>
-                                                <p>Categorias</p>
+                                                <p>DEscripcion</p>
+                                            </center>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="panel panel-primary">
+                                        <div class="panel-heading">
+                                            Marcas
+                                        </div>
+                                        <div class="panel-body">
+                                            <center><a href="{{route('categoria.index')}}"><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></a></center>
+                                            <center>
+                                                <p>DEscripcion</p>
                                             </center>
                                         </div>
                                     </div>

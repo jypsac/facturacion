@@ -13,6 +13,8 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/documento','DocumentoController');
 	Route::resource('/empresa','EmpresaController')->only(['index']);
 	Route::resource('/facturacion','FacturacionController');
+	Route::resource('/garantia_guia_ingreso','GarantiaGuiaIngresoController');
+	Route::resource('/garantia_guia_egreso','GarantiaGuiaEgresoController');
 	Route::resource('/guia','GuiaController');
 	Route::resource('/horarios','HorariosController');
 	Route::resource('/igv','IgvController')->only(['index','edit','update']);

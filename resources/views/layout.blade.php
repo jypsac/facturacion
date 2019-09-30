@@ -12,10 +12,8 @@
 
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/plugins/summernote/summernote-bs4.css')}}" rel="stylesheet">
     <script src="@yield('vue_js', '#')" defer></script>
-
-
-
 
 </head>
 
@@ -62,6 +60,15 @@
                                 </ul>
                             </li>
                             <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li>
+                            <li><a href="{{ route('almacen.index') }}">Almacenes</a></li>
+                            <li>
+                                <a href="#">Garantias</a>
+                                <ul class="nav nav-third-level">
+                                    <li><a href="{{route('garantia_guia_ingreso.index')}}">Guias Ingreso</a></li>
+                                    <li><a href="{{route('garantia_guia_egreso.index')}}">Guia Egreso</a></li>
+                                    <li><a href="#">Informe Tecnico</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li>
@@ -111,7 +118,7 @@
                                     <li><a href="{{route('categoria.index')}}">Categorias</a></li>
                                 </ul>
                             </li> --}}
-                            <li><a href="{{ route('almacen.index') }}">Almacenes</a></li>
+
                             <li>
                                 <a href="#">Catalogo</a>
                                 <ul class="nav nav-third-level">
