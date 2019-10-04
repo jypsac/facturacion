@@ -36,7 +36,6 @@
 					<form action="{{ route('familia.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 
-
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo"></div>
 		                </div>

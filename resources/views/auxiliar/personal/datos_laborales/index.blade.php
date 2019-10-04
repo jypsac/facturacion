@@ -1,18 +1,19 @@
- @extends('layout')
+@extends('layout')
 
-@section('title', 'Familia')
-@section('breadcrumb', 'Familia')
-@section('breadcrumb2', 'Familia')
-@section('href_accion' ,route('familia.create'))
-@section('value_accion', 'agregar')
+@section('title', 'Personal')
+@section('breadcrumb', 'Personal')
+@section('breadcrumb2', 'Personal')
+@section('href_accion', route('personal-datos-laborales.create'))
+@section('value_accion', 'Agregar')
+
 @section('content')
 
-<div class="wrapper wrapper-content animated fadeInRight">
+        <div class="wrapper wrapper-content animated fadeInRight">
                     <div class="row">
                         <div class="col-lg-12">
                         <div class="ibox ">
                             <div class="ibox-title">
-                                <h5>Familias</h5>
+                                <h5>Creacion de Almacen</h5>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
                                         <i class="fa fa-chevron-up"></i>
@@ -36,24 +37,29 @@
                                     <table class="table table-striped table-bordered table-hover dataTables-example" >
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>codigo</th>
-                                                <th>Descripcion</th>
+                                                <th>NR Documentacion</th>
+                                                <th>Fecha Vinculacion</th>
+                                                <th>cat.Ocupacional</th>
+                                                <th>Estado</th>
+                                                <th>Banco Renumeracion</th>
+                                                <th>Nr Cuenta</th>
                                                 <th>EDITAR</th>
                                                 <th>Eliminar</th>
                                             </tr>
                                         </thead>
                                     <tbody>
-                                        @foreach($familias as $familia)
+                                        @foreach($personales as $personal)
                                             <tr class="gradeX">
-                                                <td>{{$familia->id}}</td>
-                                                <td>{{$familia->codigo}}</td>
-                                                <td>{{$familia->descripcion}}</td>
-
-                                                <td><center><a href="{{ route('familia.edit', $familia->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
+                                                <td>{{$personal->id_personal}}</td>
+                                                <td>{{$personal->fecha_vinculacion}}</td>
+                                                <td>{{$personal->categoria_ocupacional}}</td>
+                                                <td>{{$personal->estado_trabajador}}</td>
+                                                <td>{{$personal->banco_renumeracion}}</td>
+                                                <td>{{$personal->numero_cuenta}}</td>
+                                                <td><center><a href="{{ route('personal-datos-laborales.edit', $personal->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                                 <td>
                                                     <center>
-                                                        <form action="{{ route('familia.destroy', $familia->id)}}" method="POST">
+                                                        <form action="{{ route('personal-datos-laborales.destroy', $personal->id)}}" method="POST">
                                                             @csrf
                                                             @method('delete')
                                                             <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
@@ -71,27 +77,49 @@
                     </div>
         </div>
 
-	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+
+    <!-- Mainly scripts -->
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
     <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    <!-- Custom and plugin javascript -->
+    <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+ <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-<script>
+    <!-- Page-Level Scripts -->
+    <script>
+        $(document).ready(function(){
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                    { extend: 'copy'},
+                    {extend: 'csv'},
+                    {extend: 'excel', title: 'ExampleFile'},
+                    {extend: 'pdf', title: 'ExampleFile'},
 
-    $(document).ready(function () {
+                    {extend: 'print',
+                     customize: function (win){
+                            $(win.document.body).addClass('white-bg');
+                            $(win.document.body).css('font-size', '10px');
 
-        // Add slimscroll to element
-        $('.scroll_content').slimscroll({
-            height: '200px'
-        })
+                            $(win.document.body).find('table')
+                                    .addClass('compact')
+                                    .css('font-size', 'inherit');
+                    }
+                    }
+                ]
 
-    });
+            });
 
-</script>
+        });
+
+    </script>
 
 @endsection

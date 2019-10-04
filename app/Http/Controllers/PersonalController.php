@@ -16,7 +16,7 @@ class PersonalController extends Controller
     public function index()
     {
         $personales=Personal::all();
-        return view('auxiliar.personal.index',compact('personales'));
+        return view('auxiliar.personal.datos_generales.index',compact('personales'));
     }
 
     /**
@@ -27,7 +27,7 @@ class PersonalController extends Controller
     public function create()
     {
         $paises=Pais::all();
-        return view('auxiliar.personal.create',compact('paises'));
+        return view('auxiliar.personal.datos_generales.create',compact('paises'));
     }
 
     /**
@@ -61,26 +61,9 @@ class PersonalController extends Controller
         $personal->profesion=$request->get('profesion');
         $personal->direccion=$request->get('direccion');
         $personal->foto=$name;
-
-        $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
-        $personal->fecha_retiro=$request->get('fecha_retiro');
-        $personal->forma_pago=$request->get('forma_pago');
-        $personal->salario=$request->get('salario');
-        $personal->categoria_ocupacional=$request->get('categoria_ocupacional');
-        $personal->estado_trabajador=$request->get('estado_trabajador');
-        $personal->sede=$request->get('sede');
-        $personal->turno=$request->get('turno');
-        $personal->departamento_area=$request->get('departamento_area');
-        $personal->cargo=$request->get('cargo');
-        $personal->tipo_trabajador=$request->get('tipo_trabajador');
-        $personal->tipo_contrato=$request->get('tipo_contrato');
-        $personal->regimen_pensionario=$request->get('regimen_pensionario');
-        $personal->afiliacion_salud=$request->get('afiliacion_salud');
-        $personal->banco_renumeracion=$request->get('banco_renumeracion');
-        $personal->numero_cuenta=$request->get('numero_cuenta');
-        $personal->notas=$request->get('notas');
         $personal->save();
         return redirect()->route('personal.index');
+
     }
 
     /**
@@ -92,7 +75,7 @@ class PersonalController extends Controller
     public function show($id)
     {
         $personales=Personal::find($id);
-        return view('auxiliar.personal.show',compact('personales'));
+        return view('auxiliar.personal.datos_generales.show',compact('personales'));
     }
 
     /**
@@ -105,7 +88,7 @@ class PersonalController extends Controller
     {
         $paises=Pais::all();
         $personales=Personal::find($id);
-        return view('auxiliar.personal.edit',compact('personales','paises'));
+        return view('auxiliar.personal.datos_generales.edit',compact('personales','paises'));
     }
 
     /**
@@ -124,7 +107,6 @@ class PersonalController extends Controller
             $nr_documento= $request->get('numero_documento');
             $name = $nr_documento."-".$foto->getClientOriginalName();
             $foto->move(public_path().'/profile/images/',$name);
-
             $personal->nombres=$request->get('nombres');
             $personal->apellidos=$request->get('apellidos');
             $personal->fecha_nacimiento=$request->get('fecha_nacimiento');
@@ -140,29 +122,9 @@ class PersonalController extends Controller
             $personal->profesion=$request->get('profesion');
             $personal->direccion=$request->get('direccion');
             $personal->foto=$name;
-
-            $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
-            $personal->fecha_retiro=$request->get('fecha_retiro');
-            $personal->forma_pago=$request->get('forma_pago');
-            $personal->salario=$request->get('salario');
-            $personal->categoria_ocupacional=$request->get('categoria_ocupacional');
-            $personal->estado_trabajador=$request->get('estado_trabajador');
-            $personal->sede=$request->get('sede');
-            $personal->turno=$request->get('turno');
-            $personal->departamento_area=$request->get('departamento_area');
-            $personal->cargo=$request->get('cargo');
-            $personal->tipo_trabajador=$request->get('tipo_trabajador');
-            $personal->tipo_contrato=$request->get('tipo_contrato');
-            $personal->regimen_pensionario=$request->get('regimen_pensionario');
-            $personal->afiliacion_salud=$request->get('afiliacion_salud');
-            $personal->banco_renumeracion=$request->get('banco_renumeracion');
-            $personal->numero_cuenta=$request->get('numero_cuenta');
-            $personal->notas=$request->get('notas');
             $personal->save();
         }else{
-
             $file_path=(public_path().'profile/images/'.$personal->image);
-
             $personal->nombres=$request->get('nombres');
             $personal->apellidos=$request->get('apellidos');
             $personal->fecha_nacimiento=$request->get('fecha_nacimiento');
@@ -178,24 +140,6 @@ class PersonalController extends Controller
             $personal->profesion=$request->get('profesion');
             $personal->direccion=$request->get('direccion');
             $personal->foto=$file_path;
-
-            $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
-            $personal->fecha_retiro=$request->get('fecha_retiro');
-            $personal->forma_pago=$request->get('forma_pago');
-            $personal->salario=$request->get('salario');
-            $personal->categoria_ocupacional=$request->get('categoria_ocupacional');
-            $personal->estado_trabajador=$request->get('estado_trabajador');
-            $personal->sede=$request->get('sede');
-            $personal->turno=$request->get('turno');
-            $personal->departamento_area=$request->get('departamento_area');
-            $personal->cargo=$request->get('cargo');
-            $personal->tipo_trabajador=$request->get('tipo_trabajador');
-            $personal->tipo_contrato=$request->get('tipo_contrato');
-            $personal->regimen_pensionario=$request->get('regimen_pensionario');
-            $personal->afiliacion_salud=$request->get('afiliacion_salud');
-            $personal->banco_renumeracion=$request->get('banco_renumeracion');
-            $personal->numero_cuenta=$request->get('numero_cuenta');
-            $personal->notas=$request->get('notas');
             $personal->save();
         }
         return redirect()->route('personal.index');

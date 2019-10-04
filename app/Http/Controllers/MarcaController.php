@@ -66,7 +66,8 @@ class MarcaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $marca=Marca::find($id);
+        return view('maestro.catalogo.clasificacion.marca.edit',compact('marca'));
     }
 
     /**
@@ -78,7 +79,15 @@ class MarcaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $marca=Marca::find($id);
+        $marca->nombre=$request->get('nombre');
+        $marca->codigo=$request->get('codigo');
+        $marca->abreviatura=$request->get('abreviatura');
+        $marca->nombre_empresa=$request->get('nombre_empresa');
+        $marca->descripcion=$request->get('descripcion');
+        $marca->save();
+
+        return redirect()->route('marca.index');
     }
 
     /**

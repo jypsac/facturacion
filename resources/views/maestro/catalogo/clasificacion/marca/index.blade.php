@@ -1,10 +1,10 @@
-@extends('layout')
+ @extends('layout')
 
-@section('title', 'Marca')
-@section('breadcrumb', 'Marca')
-@section('breadcrumb2', 'Marca')
-@section('href_accion', route('marca.create'))
-@section('value_accion', 'Agregar')
+@section('title', 'Familia')
+@section('breadcrumb', 'Familia')
+@section('breadcrumb2', 'Familia')
+@section('href_accion' ,route('familia.create'))
+@section('value_accion', 'agregar')
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -12,7 +12,7 @@
                         <div class="col-lg-12">
                         <div class="ibox ">
                             <div class="ibox-title">
-                                <h5>Marcass</h5>
+                                <h5>Familias</h5>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
                                         <i class="fa fa-chevron-up"></i>
@@ -37,10 +37,10 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>nombre</th>
+                                                <th>Nombre</th>
+                                                <th>Abreviatura</th>
+                                                <th>Empresa</th>
                                                 <th>codigo</th>
-                                                <th>abreviatura</th>
-                                                <th>nombre de empresa</th>
                                                 <th>Descripcion</th>
                                                 <th>EDITAR</th>
                                                 <th>Eliminar</th>
@@ -51,9 +51,9 @@
                                             <tr class="gradeX">
                                                 <td>{{$marca->id}}</td>
                                                 <td>{{$marca->nombre}}</td>
-                                                <td>{{$marca->codigo}}</td>
                                                 <td>{{$marca->abreviatura}}</td>
                                                 <td>{{$marca->nombre_empresa}}</td>
+                                                <td>{{$marca->codigo}}</td>
                                                 <td>{{$marca->descripcion}}</td>
 
                                                 <td><center><a href="{{ route('marca.edit', $marca->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
@@ -77,9 +77,7 @@
                     </div>
         </div>
 
-
-@endsection
-	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
@@ -88,3 +86,18 @@
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+<script>
+
+    $(document).ready(function () {
+
+        // Add slimscroll to element
+        $('.scroll_content').slimscroll({
+            height: '200px'
+        })
+
+    });
+
+</script>
+
+@endsection

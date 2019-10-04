@@ -104,20 +104,18 @@
                         <ul class="nav nav-second-level collapse">
                             <li><a href="{{route('cliente.index')}}">Clientes</a></li>
                             <li><a href="{{route('provedor.index')}}">Provedores</a></li>
-                            <li><a href="{{route('personal.index')}}">Personal</a></li>
+                            <li>
+                                <a href="#">Personal</a>
+                                <ul class="nav nav-third-level">
+                                    <li><a href="{{route('personal.index')}}">Datos Generales</a></li>
+                                    <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-magic"></i> <span class="nav-label">Maestro</span></a>
                         <ul class="nav nav-second-level collapse">
-                            {{-- <li>
-                                <a href="#">Otros <span class="fa arrow"></span></a>
-                                <ul class="nav nav-third-level">
-
-                                    <li><a href="{{route('marca.index')}}">Marcas</a></li>
-                                    <li><a href="{{route('categoria.index')}}">Categorias</a></li>
-                                </ul>
-                            </li> --}}
 
                             <li>
                                 <a href="#">Catalogo</a>

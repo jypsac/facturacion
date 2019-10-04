@@ -37,7 +37,6 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>Familia</th>
                                                 <th>codigo</th>
                                                 <th>Descripcion</th>
                                                 <th>EDITAR</th>
@@ -48,7 +47,6 @@
                                         @foreach($categorias as $categoria)
                                             <tr class="gradeX">
                                                 <td>{{$categoria->id}}</td>
-                                                <td>{{$categoria->familia}}</td>
                                                 <td>{{$categoria->codigo}}</td>
                                                 <td>{{$categoria->descripcion}}</td>
 

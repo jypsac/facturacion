@@ -63,7 +63,8 @@ class FamiliaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $familia=Familia::find($id);
+        return view('maestro.catalogo.clasificacion.familia.edit',compact('familia'));
     }
 
     /**
@@ -75,7 +76,12 @@ class FamiliaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $familia=Familia::find($id);
+        $familia->codigo=$request->get('codigo');
+        $familia->descripcion=$request->get('descripcion');
+        $familia->save();
+
+        return redirect()->route('familia.index');
     }
 
     /**

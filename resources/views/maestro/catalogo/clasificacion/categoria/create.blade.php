@@ -36,16 +36,6 @@
 					<form action="{{ route('categoria.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 
-					 	<div class="form-group row"><label class="col-sm-2 col-form-label">Familia:</label>
-							<div class="col-sm-10">
-								<select class="form-control m-b" name="familia">
-								@foreach($familias as $familia)
-						    		<option >{{$familia->descripcion}}</option>
-					    		@endforeach
-					    		</select>
-		                    </div>
-		                </div>
-
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo"></div>
 		                </div>

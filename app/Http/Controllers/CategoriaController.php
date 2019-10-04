@@ -26,8 +26,8 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        $familias=Familia::all();
-        return view('maestro.catalogo.clasificacion.categoria.create',compact('familias'));
+
+        return view('maestro.catalogo.clasificacion.categoria.create');
     }
 
     /**
@@ -39,7 +39,6 @@ class CategoriaController extends Controller
     public function store(Request $request)
     {
         $categoria=new Categoria;
-        $categoria->familia=$request->get('familia');
         $categoria->codigo=$request->get('codigo');
         $categoria->descripcion=$request->get('descripcion');
         $categoria->save();
@@ -55,7 +54,7 @@ class CategoriaController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -66,7 +65,8 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        //
+        $categoria=Categoria::find($id);
+        return view('maestro.catalogo.clasificacion.categoria.edit',compact('categoria'));
     }
 
     /**
@@ -78,7 +78,12 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $categoria=Categoria::find($id);
+        $categoria->codigo=$request->get('codigo');
+        $categoria->descripcion=$request->get('descripcion');
+        $categoria->save();
+
+        return redirect()->route('categoria.index');
     }
 
     /**
