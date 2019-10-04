@@ -23,9 +23,9 @@
                                             Categorias
                                         </div>
                                         <div class="panel-body">
-                                            <center><a href="{{route('marca.index')}}"><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></a></center>
+                                            <center><a href="{{route('categoria.index')}}"><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></a></center>
                                             <center>
-                                                <p>DEscripcion</p>
+                                                <p>Descripcion</p>
                                             </center>
                                         </div>
                                     </div>
@@ -37,9 +37,9 @@
                                             Familias
                                         </div>
                                         <div class="panel-body">
-                                            <center><a href="{{route('categoria.index')}}"><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></a></center>
+                                            <center><a href="{{route('familia.index')}}"><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></a></center>
                                             <center>
-                                                <p>DEscripcion</p>
+                                                <p>Descripcion</p>
                                             </center>
                                         </div>
                                     </div>
@@ -50,9 +50,9 @@
                                             Marcas
                                         </div>
                                         <div class="panel-body">
-                                            <center><a href="{{route('categoria.index')}}"><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></a></center>
+                                            <center><a href="{{route('marca.index')}}"><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></a></center>
                                             <center>
-                                                <p>DEscripcion</p>
+                                                <p>Descripcion</p>
                                             </center>
                                         </div>
                                     </div>

@@ -114,54 +114,19 @@
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <div class="col-lg-12">
+						<div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
-	                                General
+	                                Descripcion del Problema
 	                            </div>
 	                            <div class="panel-body">
-									 	<div class="form-group row">
-									 		<label class="col-sm-1 col-form-label">Motivo :</label>
-												<div class="col-sm-4">
-													<select class="form-control m-b" name="">
-										    		<option value="Tecnico">Tecnico</option>
-										    		<option value="Servicio">Servicio</option>
-										    		<option value="Informativo">Informativo</option>
-										    		<option value="Reingreso">Reingreso</option>
-										    		</select>
-							                    </div>
-						                    <label class="col-sm-2 col-form-label">Ing. Asignado:</label>
-							                    <div class="col-sm-4">
-							                     	<input type="text" class="form-control" name="">
-							                    </div>
+						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Falla Reportada:</label>
+						                     <div class="col-sm-11">
+						                     	<textarea class="form-control" rows="5" id="comment"></textarea>
+						                     </div>
 						                </div>
+									</form>
 	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-12">
-	                        <div class="panel panel-primary">
-	                            <div class="panel-heading">
-	                                Descripción del Problema
-	                            </div>
-	                            <div class="panel-body">
-									 	<div class="form-group row">
-									 		<div class="ibox-content no-padding">
-							                    <div class="summernote">
-							                        <h3>Falla Reportada</h3>
-							                        dummy text of the printing and typesetting industry. <strong>Lorem Ipsum has been the industry's</strong> standard dummy text ever since the 1500s,
-							                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
-							                        typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-							                        <br/>
-							                        <br/>
-							                        <ul>
-							                            <li>Remaining essentially unchanged</li>
-							                            <li>Make a type specimen book</li>
-							                            <li>Unknown printer</li>
-							                        </ul>
-							                    </div>
-						                	</div>
-	                            		</div>
-	                        	</div>
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-12">
@@ -170,23 +135,12 @@
 	                                Revision Y Diagnostico
 	                            </div>
 	                            <div class="panel-body">
-									 	<div class="form-group row">
-									 		<div class="ibox-content no-padding">
-							                    <div class="summernote">
-							                        <h3>Falla Detectada</h3>
-							                        dummy text of the printing and typesetting industry. <strong>Lorem Ipsum has been the industry's</strong> standard dummy text ever since the 1500s,
-							                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
-							                        typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-							                        <br/>
-							                        <br/>
-							                        <ul>
-							                            <li>Remaining essentially unchanged</li>
-							                            <li>Make a type specimen book</li>
-							                            <li>Unknown printer</li>
-							                        </ul>
-							                    </div>
-							                </div>
+						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Fallo Detectado:</label>
+						                     <div class="col-sm-11">
+						                     	<textarea class="form-control" rows="5" id="comment"></textarea>
+						                     </div>
 						                </div>
+									</form>
 	                            </div>
 	                        </div>
 	                    </div>
@@ -196,26 +150,16 @@
 	                                Estetica
 	                            </div>
 	                            <div class="panel-body">
-									 	<div class="form-group row">
-									 		<div class="ibox-content no-padding">
-							                    <div class="summernote">
-							                        <h3>Lorem</h3>
-							                        dummy text of the printing and typesetting industry. <strong>Lorem Ipsum has been the industry's</strong> standard dummy text ever since the 1500s,
-							                        when an unknown printer took a galley of type and scrambled it to make a type specimen book. It has survived not only five centuries, but also the leap into electronic
-							                        typesetting, remaining essentially unchanged. It was popularised in the 1960s with the release of Letraset sheets containing Lorem Ipsum passages, and more recently with
-							                        <br/>
-							                        <br/>
-							                        <ul>
-							                            <li>Remaining essentially unchanged</li>
-							                            <li>Make a type specimen book</li>
-							                            <li>Unknown printer</li>
-							                        </ul>
-							                    </div>
-							                </div>
+						                <div class="form-group  row">
+						                     <div class="col-sm-12">
+						                     	<textarea class="form-control" rows="5" id="comment"></textarea>
+						                     </div>
 						                </div>
+									</form>
 	                            </div>
 	                        </div>
 	                    </div>
+
                     </div>
 	            </div>
 	        </div>
@@ -234,13 +178,5 @@
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-    <script src="{{ asset('js/plugins/summernote/summernote-bs4.js')}}"></script>
 
-    <script>
-        $(document).ready(function(){
-
-            $('.summernote').summernote();
-
-       });
-    </script>
 @stop

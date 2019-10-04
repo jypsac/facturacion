@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Marca;
 use Illuminate\Http\Request;
 
 class GarantiaGuiaIngresoController extends Controller
@@ -13,7 +14,8 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function index()
     {
-        return view('transaccion.garantias.guia_ingreso.index');
+        $marcas=Marca::all();
+        return view('transaccion.garantias.guia_ingreso.index',compact('marcas'));
     }
 
     /**
@@ -23,6 +25,7 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function create()
     {
+
         return view('transaccion.garantias.guia_ingreso.create');
     }
 

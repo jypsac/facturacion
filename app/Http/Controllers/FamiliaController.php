@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Marca;
+use App\Familia;
 use Illuminate\Http\Request;
 
-class MarcaController extends Controller
+class FamiliaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -14,8 +14,8 @@ class MarcaController extends Controller
      */
     public function index()
     {
-        $marcas=Marca::all();
-        return view('maestro.catalogo.clasificacion.marca.index',compact('marcas'));
+        $familias=Familia::all();
+        return view('maestro.catalogo.clasificacion.familia.index',compact('familias'));
     }
 
     /**
@@ -25,7 +25,7 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        return view('maestro.catalogo.clasificacion.marca.create');
+        return view('maestro.catalogo.clasificacion.familia.create');
     }
 
     /**
@@ -36,15 +36,12 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
-        $marca=new Marca;
-        $marca->nombre=$request->get('nombre');
-        $marca->codigo=$request->get('codigo');
-        $marca->abreviatura=$request->get('abreviatura');
-        $marca->nombre_empresa=$request->get('nombre_empresa');
-        $marca->descripcion=$request->get('descripcion');
-        $marca->save();
+        $familia=new Familia;
+        $familia->codigo=$request->get('codigo');
+        $familia->descripcion=$request->get('descripcion');
+        $familia->save();
 
-        return redirect()->route('marca.index');
+        return redirect()->route('familia.index');
     }
 
     /**
@@ -89,9 +86,9 @@ class MarcaController extends Controller
      */
     public function destroy($id)
     {
-        $marca=Marca::findOrFail($id);
-        $marca->delete();
+        $familia=Familia::findOrFail($id);
+        $familia->delete();
 
-        return redirect()->route('marca.index');
+        return redirect()->route('familia.index');
     }
 }

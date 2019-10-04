@@ -13,7 +13,7 @@ class AlmacenController extends Controller
      */
     public function index()
     {
-        return view('maestro.almacen.index');
+        return view('transaccion.almacen.index');
     }
 
     /**
@@ -23,7 +23,7 @@ class AlmacenController extends Controller
      */
     public function create()
     {
-        return view('maestro.almacen.create');
+        return view('transaccion.almacen.create');
     }
 
     /**
@@ -45,7 +45,7 @@ class AlmacenController extends Controller
      */
     public function show($id)
     {
-        return view('maestro.almacen.show');
+        return view('transaccion.almacen.show');
     }
 
     /**
@@ -56,7 +56,7 @@ class AlmacenController extends Controller
      */
     public function edit($id)
     {
-        return view('maestro.almacen.edit');
+        return view('transaccion.almacen.edit');
     }
     /**
      * Update the specified resource in storage.

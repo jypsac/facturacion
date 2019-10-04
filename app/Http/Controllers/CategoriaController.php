@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Categoria;
+use App\Familia;
 use Illuminate\Http\Request;
 
 class CategoriaController extends Controller
@@ -13,7 +15,8 @@ class CategoriaController extends Controller
      */
     public function index()
     {
-        return view('maestro.otros.categoria.index');
+        $categorias=Categoria::all();
+        return view('maestro.catalogo.clasificacion.categoria.index',compact('categorias'));
     }
 
     /**
@@ -23,7 +26,8 @@ class CategoriaController extends Controller
      */
     public function create()
     {
-        //
+        $familias=Familia::all();
+        return view('maestro.catalogo.clasificacion.categoria.create',compact('familias'));
     }
 
     /**
@@ -34,7 +38,13 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $categoria=new Categoria;
+        $categoria->familia=$request->get('familia');
+        $categoria->codigo=$request->get('codigo');
+        $categoria->descripcion=$request->get('descripcion');
+        $categoria->save();
+
+        return redirect()->route('categoria.index');
     }
 
     /**
@@ -79,6 +89,9 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $categoria=Categoria::findOrFail($id);
+        $categoria->delete();
+
+        return redirect()->route('categoria.index');
     }
 }

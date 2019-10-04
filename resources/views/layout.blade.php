@@ -12,7 +12,7 @@
 
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/plugins/summernote/summernote-bs4.css')}}" rel="stylesheet">
+
     <script src="@yield('vue_js', '#')" defer></script>
 
 </head>

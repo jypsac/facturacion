@@ -16,7 +16,7 @@ class PersonalController extends Controller
     public function index()
     {
         $personales=Personal::all();
-        return view('maestro.otros.personal.index',compact('personales'));
+        return view('auxiliar.personal.index',compact('personales'));
     }
 
     /**
@@ -27,7 +27,7 @@ class PersonalController extends Controller
     public function create()
     {
         $paises=Pais::all();
-        return view('maestro.otros.personal.create',compact('paises'));
+        return view('auxiliar.personal.create',compact('paises'));
     }
 
     /**
@@ -92,7 +92,7 @@ class PersonalController extends Controller
     public function show($id)
     {
         $personales=Personal::find($id);
-        return view('maestro.otros.personal.show',compact('personales'));
+        return view('auxiliar.personal.show',compact('personales'));
     }
 
     /**
@@ -105,7 +105,7 @@ class PersonalController extends Controller
     {
         $paises=Pais::all();
         $personales=Personal::find($id);
-        return view('maestro.otros.personal.edit',compact('personales','paises'));
+        return view('auxiliar.personal.edit',compact('personales','paises'));
     }
 
     /**
