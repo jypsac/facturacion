@@ -18,8 +18,8 @@ class CreatePersonalTable extends Migration
             $table->string('nombres');
             $table->string('apellidos');
             $table->date('fecha_nacimiento');
-            $table->integer('celular');
-            $table->integer('telefono');
+            $table->string('celular');
+            $table->string('telefono');
             $table->string('email')->unique();
             $table->string('genero');
             $table->string('documento_identificacion');

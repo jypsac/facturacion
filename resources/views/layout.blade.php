@@ -87,8 +87,8 @@
                     <li>
                         <a href="#"><i class="fa fa-file-archive-o"></i> <span class="nav-label">Planilla</span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="{{route('datos-generales.index')}}">Datos Generales</a></li>
-                            <li><a href="{{route('datos-laborales.index')}}">Datos Laborales</a></li>
+                            <li><a href="{{route('personal.index')}}">Datos Generales</a></li>
+                            <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li>
                             <li><a href="{{route('horarios.index')}}">Horarios</a></li>
                         </ul>
                     </li>
@@ -104,13 +104,6 @@
                         <ul class="nav nav-second-level collapse">
                             <li><a href="{{route('cliente.index')}}">Clientes</a></li>
                             <li><a href="{{route('provedor.index')}}">Provedores</a></li>
-                            <li>
-                                <a href="#">Personal</a>
-                                <ul class="nav nav-third-level">
-                                    <li><a href="{{route('personal.index')}}">Datos Generales</a></li>
-                                    <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li>
-                                </ul>
-                            </li>
                         </ul>
                     </li>
                     <li>

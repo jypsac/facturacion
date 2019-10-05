@@ -16,7 +16,7 @@ class PersonalController extends Controller
     public function index()
     {
         $personales=Personal::all();
-        return view('auxiliar.personal.datos_generales.index',compact('personales'));
+        return view('planilla.datos_generales.index',compact('personales'));
     }
 
     /**
@@ -27,7 +27,7 @@ class PersonalController extends Controller
     public function create()
     {
         $paises=Pais::all();
-        return view('auxiliar.personal.datos_generales.create',compact('paises'));
+        return view('planilla.datos_generales.create',compact('paises'));
     }
 
     /**
@@ -75,7 +75,7 @@ class PersonalController extends Controller
     public function show($id)
     {
         $personales=Personal::find($id);
-        return view('auxiliar.personal.datos_generales.show',compact('personales'));
+        return view('planilla.datos_generales.show',compact('personales'));
     }
 
     /**
@@ -88,7 +88,7 @@ class PersonalController extends Controller
     {
         $paises=Pais::all();
         $personales=Personal::find($id);
-        return view('auxiliar.personal.datos_generales.edit',compact('personales','paises'));
+        return view('planilla.datos_generales.edit',compact('personales','paises'));
     }
 
     /**

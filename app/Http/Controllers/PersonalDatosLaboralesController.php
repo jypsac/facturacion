@@ -16,7 +16,7 @@ class PersonalDatosLaboralesController extends Controller
     public function index()
     {
         $personales=Personal_datos_laborales::all();
-        return view('auxiliar.personal.datos_laborales.index',compact('personales'));
+        return view('planilla.datos_generales.index',compact('personales'));
     }
 
     /**
@@ -27,7 +27,7 @@ class PersonalDatosLaboralesController extends Controller
     public function create()
     {
         $personales=Personal::all();
-        return view('auxiliar.personal.datos_laborales.create',compact('personales'));
+        return view('planilla.datos_generales.create',compact('personales'));
     }
 
     /**
@@ -81,7 +81,7 @@ class PersonalDatosLaboralesController extends Controller
     public function edit($id)
     {
         $personales=Personal_datos_laborales::find($id);
-        return view('auxiliar.personal.datos_laborales.edit',compact('personales'));
+        return view('planilla.datos_generales.edit',compact('personales'));
     }
 
     /**
