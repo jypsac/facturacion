@@ -38,7 +38,7 @@
 					 	@method('PATCH')
 
 					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Numero de Documentacion:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="id_personal" value="{{$personales->id_personal}}" readonly></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="personal_id" value="{{$personales->personal_id}}" readonly></div>
 		                </div>
 
 					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Fecha de vinculacion:</label>

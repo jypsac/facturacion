@@ -15,7 +15,7 @@ class CreatePersonalDatosLaboralesTable extends Migration
     {
         Schema::create('personal_datos_laborales', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('id_personal')->nullable();
+            $table->string('personal_id')->nullable();
             //Datos Laborales
             $table->date('fecha_vinculacion')->nullable();
             $table->date('fecha_retiro')->nullable();

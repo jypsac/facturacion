@@ -38,7 +38,7 @@
 
 					 	<div class="form-group row"><label class="col-sm-2 col-form-label">Seleccionar Personal:</label>
 							<div class="col-sm-10">
-								<select class="form-control m-b" name="id_personal">
+								<select class="form-control m-b" name="personal_id">
 				          			@foreach($personales as $personal)
 						    		<option value="{{ $personal->numero_documento }}">{{ $personal->nombres}}</option>
 						    		@endforeach

@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title', 'Personal')
-@section('breadcrumb', 'Personal')
-@section('breadcrumb2', 'Personal')
+@section('title', 'Personal Datos Laborales')
+@section('breadcrumb', 'Personal Datos Laborales')
+@section('breadcrumb2', 'Personal Datos Laborales')
 @section('href_accion', route('personal-datos-laborales.create'))
 @section('value_accion', 'Agregar')
 
@@ -50,7 +50,7 @@
                                     <tbody>
                                         @foreach($personales as $personal)
                                             <tr class="gradeX">
-                                                <td>{{$personal->id_personal}}</td>
+                                                <td>{{$personal->personal_id}}</td>
                                                 <td>{{$personal->fecha_vinculacion}}</td>
                                                 <td>{{$personal->categoria_ocupacional}}</td>
                                                 <td>{{$personal->estado_trabajador}}</td>

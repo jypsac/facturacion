@@ -97,31 +97,43 @@
                                 <table class="table table-striped table-bordered table-hover dataTables-example" >
                                     <thead>
                                         <tr>
-                                            <th>Nombre</th>
-                                            <th>EMAIL</th>
-                                            <th>FOTO</th>
+                                            <th>ID</th>
+                                            <th>Marca</th>
+                                            <th>Motivo</th>
+                                            <th>Ing Asignado</th>
+                                            <th>fecha</th>
+                                            <th>Orden servicio</th>
+                                            <th>Asunto</th>
+                                            <th>Cliente</th>
                                             <th>Ver</th>
-                                            <th>EDITAR</th>
-                                            <th>Eliminar</th>
+                                            <th>Editar</th>
+                                            {{-- <th>Eliminar</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
                                         <tr class="gradeX">
-                                            <td>1</td>
-                                            <td>2</td>
-                                            <td>3</td>
+                                            <td>{{$garantias_guias_ingreso->id}}</td>
+                                            <td>{{$garantias_guias_ingreso->marca}}</td>
+                                            <td>{{$garantias_guias_ingreso->motivo}}</td>
+                                            <td>{{$garantias_guias_ingreso->ing_asignado}}</td>
+                                            <td>{{$garantias_guias_ingreso->fecha}}</td>
+                                            <td>{{$garantias_guias_ingreso->orden_servicio}}</td>
+                                            <td>{{$garantias_guias_ingreso->asunto}}</td>
+                                            <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
                                             <td><center><a href="#"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                             <td><center><a href="#" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td>
-                                            <td>
+                                            {{-- <td>
                                                 <center>
-                                                    {{-- <form action="#" method="POST">
+                                                    <form action="#" method="POST">
                                                       @csrf
                                                       @method('delete')
                                                       <button type="submit" class="btn btn-w-m btn-danger">Eliminar</button>
-                                                    </form> --}}
+                                                    </form>
                                                 </center>
-                                            </td>
+                                            </td> --}}
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

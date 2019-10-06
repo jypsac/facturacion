@@ -20,12 +20,13 @@ class CreateGarantiaGuiaIngresoTable extends Migration
             $table->string('motivo');
             $table->string('ing_asignado');
             $table->date('fecha');
-            $table->integer('orden_servicio');
+            $table->string('orden_servicio');
             $table->string('asunto');
             //DATOS DEL CLIENTE
             $table->string('nombre_cliente');
             $table->string('direccion');
             $table->string('telefono');
+            $table->string('correo');
             $table->string('contacto');
             //DATOS DEL EQUIPO
             $table->string('nombre_equipo');

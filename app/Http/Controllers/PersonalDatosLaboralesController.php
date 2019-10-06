@@ -16,7 +16,7 @@ class PersonalDatosLaboralesController extends Controller
     public function index()
     {
         $personales=Personal_datos_laborales::all();
-        return view('planilla.datos_generales.index',compact('personales'));
+        return view('planilla.datos_laborales.index',compact('personales'));
     }
 
     /**
@@ -27,7 +27,7 @@ class PersonalDatosLaboralesController extends Controller
     public function create()
     {
         $personales=Personal::all();
-        return view('planilla.datos_generales.create',compact('personales'));
+        return view('planilla.datos_laborales.create',compact('personales'));
     }
 
     /**
@@ -39,7 +39,7 @@ class PersonalDatosLaboralesController extends Controller
     public function store(Request $request)
     {
         $personal=new Personal_datos_laborales;
-        $personal->id_personal=$request->get('id_personal');
+        $personal->personal_id=$request->get('personal_id');
         $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
         $personal->fecha_retiro=$request->get('fecha_retiro');
         $personal->forma_pago=$request->get('forma_pago');
@@ -81,7 +81,7 @@ class PersonalDatosLaboralesController extends Controller
     public function edit($id)
     {
         $personales=Personal_datos_laborales::find($id);
-        return view('planilla.datos_generales.edit',compact('personales'));
+        return view('planilla.datos_laborales.edit',compact('personales'));
     }
 
     /**
@@ -94,7 +94,7 @@ class PersonalDatosLaboralesController extends Controller
     public function update(Request $request, $id)
     {
         $personal=Personal_datos_laborales::find($id);
-        $personal->id_personal=$request->get('id_personal');
+        $personal->personal_id=$request->get('personal_id');
         $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
         $personal->fecha_retiro=$request->get('fecha_retiro');
         $personal->forma_pago=$request->get('forma_pago');
