@@ -130,7 +130,7 @@
                                             <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
                                             <td><center><a href="#"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                             <td><center>
-                                                @if($garantias_guias_ingreso->estado==1)
+                                                {{-- @if($garantias_guias_ingreso->estado==1)
                                                 <form action="{{ route('garantia_guia_ingreso.update',$garantias_guias_ingreso->id) }}"  enctype="multipart/form-data" method="post">
                                                     @csrf
                                                     @method('PATCH')
@@ -138,7 +138,34 @@
                                                 </form>
                                                 @else
                                                     <button class="btn btn-w-m btn-secondary">ANULADO</button>
-                                                @endif
+                                                @endif --}}
+
+                                                    <a data-toggle="modal" class="btn btn-warning" href="#modal-form1">Anular</a>
+                                                    <div id="modal-form1" class="modal fade" aria-hidden="true">
+                                                        <div class="modal-dialog">
+                                                            <div class="modal-content">
+                                                                <div class="modal-body">
+                                                                    <div class="row">
+                                                                        <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">¿Seguro que desea ANULAR esta guia? {{$garantias_guias_ingreso->id }}</h3>
+                                                                            <p>Esta guia se anulara inmediatamente. Esta acción no se puede deshacer</p>
+                                                                            <form action="{{ route('garantia_guia_ingreso.update',$garantias_guias_ingreso->id) }}"  enctype="multipart/form-data" method="post">
+                                                                                @csrf
+                                                                                @method('PATCH')
+                                                                                <button type="submit" class="btn btn-w-m btn-danger">ANULAR</button>
+                                                                            </form>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+
+
+
+
+
+
                                             </center></td>
                                         </tr>
                                         @endforeach
