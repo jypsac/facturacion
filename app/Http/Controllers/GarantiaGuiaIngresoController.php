@@ -57,6 +57,7 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->ing_asignado=$request->get('ing_asignado');
         $garantia_guia_ingreso->fecha=$request->get('fecha');
         $garantia_guia_ingreso->orden_servicio=$request->get('orden_servicio');
+        $garantia_guia_ingreso->estado=1;
         $garantia_guia_ingreso->asunto=$request->get('asunto');
         $garantia_guia_ingreso->nombre_cliente=$request->get('nombre_cliente');
         $garantia_guia_ingreso->direccion=$request->get('direccion');
@@ -94,7 +95,7 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function edit($id)
     {
-        //
+
     }
 
     /**
@@ -106,7 +107,12 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        // ACTUALIZACION DE ESTADO
+        $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
+        $garantia_guia_ingreso->estado=0;
+        $garantia_guia_ingreso->save();
+
+        return redirect()->route('garantia_guia_ingreso.index');
     }
 
     /**

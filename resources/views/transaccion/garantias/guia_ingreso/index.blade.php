@@ -99,6 +99,7 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Marca</th>
+                                            <th>Estado</th>
                                             <th>Motivo</th>
                                             <th>Ing Asignado</th>
                                             <th>fecha</th>
@@ -107,7 +108,6 @@
                                             <th>Cliente</th>
                                             <th>Ver</th>
                                             <th>Editar</th>
-                                            {{-- <th>Eliminar</th> --}}
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -115,6 +115,13 @@
                                         <tr class="gradeX">
                                             <td>{{$garantias_guias_ingreso->id}}</td>
                                             <td>{{$garantias_guias_ingreso->marca}}</td>
+                                            <td>
+                                                @if($garantias_guias_ingreso->estado==1)
+                                                    Activo
+                                                @else
+                                                    Anulado
+                                                @endif
+                                            </td>
                                             <td>{{$garantias_guias_ingreso->motivo}}</td>
                                             <td>{{$garantias_guias_ingreso->ing_asignado}}</td>
                                             <td>{{$garantias_guias_ingreso->fecha}}</td>
@@ -122,16 +129,17 @@
                                             <td>{{$garantias_guias_ingreso->asunto}}</td>
                                             <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
                                             <td><center><a href="#"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
-                                            <td><center><a href="#" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td>
-                                            {{-- <td>
-                                                <center>
-                                                    <form action="#" method="POST">
-                                                      @csrf
-                                                      @method('delete')
-                                                      <button type="submit" class="btn btn-w-m btn-danger">Eliminar</button>
-                                                    </form>
-                                                </center>
-                                            </td> --}}
+                                            <td><center>
+                                                @if($garantias_guias_ingreso->estado==1)
+                                                <form action="{{ route('garantia_guia_ingreso.update',$garantias_guias_ingreso->id) }}"  enctype="multipart/form-data" method="post">
+                                                    @csrf
+                                                    @method('PATCH')
+                                                    <button type="submit" class="btn btn-w-m btn-danger">ANULAR</button>
+                                                </form>
+                                                @else
+                                                    <button class="btn btn-w-m btn-secondary">ANULADO</button>
+                                                @endif
+                                            </center></td>
                                         </tr>
                                         @endforeach
                                     </tbody>
