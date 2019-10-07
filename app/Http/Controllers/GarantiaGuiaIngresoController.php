@@ -28,8 +28,19 @@ class GarantiaGuiaIngresoController extends Controller
     public function create(Request $request)
     {
         $name = $request->input('familia');
+        $marca = Marca::where("nombre","=",$name)->first();
+        $marca=(string)$marca->abreviatura;
+        $guion='-';
+        $marca_cantidad= GarantiaGuiaIngreso::where("marca","=",$name)->count();
+        $marca_cantidad++;
+        $contador=1000000;
+        $marca_cantidad=$contador+$marca_cantidad;
+        $marca_cantidad=(string)$marca_cantidad;
+        $marca_cantidad=substr($marca_cantidad,1);
+        $orden_servicio=$marca.$guion.$marca_cantidad;
+
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
-        return view('transaccion.garantias.guia_ingreso.create',compact('name'));
+        return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio'));
     }
 
     /**
@@ -61,7 +72,7 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->estetica=$request->get('estetica');
         $garantia_guia_ingreso->save();
 
-        return redirect()->route('marca.index');
+        return redirect()->route('garantia_guia_ingreso.index');
     }
 
     /**

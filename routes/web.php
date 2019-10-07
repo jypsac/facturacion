@@ -7,8 +7,6 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/compra','CompraController');
 	Route::resource('/cotizacion','CotizacionController');
 	Route::resource('/credito','CreditoController');
-	Route::resource('/datos-generales','DatosGeneralesController');
-	Route::resource('/datos-laborales','DatosLaboralesController');
 	Route::resource('/debito','DebitoController');
 	Route::resource('/documento','DocumentoController');
 	Route::resource('/empresa','EmpresaController')->only(['index']);

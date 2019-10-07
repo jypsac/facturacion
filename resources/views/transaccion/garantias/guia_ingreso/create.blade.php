@@ -23,7 +23,7 @@
 	                                General
 	                            </div>
 	                            <div class="panel-body">
-	                                <form action="garantia_guia_ingreso.store"  enctype="multipart/form-data" method="post">
+	                                <form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" method="post">
 									 	@csrf
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
@@ -51,11 +51,11 @@
 								        <div class="form-group  row">
 								        	<label class="col-sm-1 col-form-label">Fecha:</label>
 						                    <div class="col-sm-4">
-						                     	<input type="text" class="form-control" name="fecha">
+						                     	<input type="date" class="form-control" name="fecha">
 						                    </div>
 						                    <label class="col-sm-2 col-form-label">Orden de servicio:</label>
 						                    <div class="col-sm-4">
-						                    	<input type="text" class="form-control" name="orden_servicio" value="{{$name}}" readonly>
+						                    	<input type="text" class="form-control" name="orden_servicio" value="{{$orden_servicio}}" readonly>
 						                    </div>
 						                </div>
 
@@ -116,7 +116,7 @@
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3">Fecha de Compra:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="fecha_compra"></div>
+						                     <div class="col-sm-9"><input type="date" class="form-control" name="fecha_compra"></div>
 						                </div>
 
 	                            </div>
