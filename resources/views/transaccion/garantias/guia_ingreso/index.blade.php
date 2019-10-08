@@ -130,18 +130,20 @@
                                             <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
                                             <td><center><a href="#"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                             <td><center>
-                                                {{-- @if($garantias_guias_ingreso->estado==1)
-                                                <form action="{{ route('garantia_guia_ingreso.update',$garantias_guias_ingreso->id) }}"  enctype="multipart/form-data" method="post">
-                                                    @csrf
-                                                    @method('PATCH')
-                                                    <button type="submit" class="btn btn-w-m btn-danger">ANULAR</button>
-                                                </form>
-                                                @else
-                                                    <button class="btn btn-w-m btn-secondary">ANULADO</button>
-                                                @endif --}}
+                                                {{strtotime($garantias_guias_ingreso->created_at)}}-{{
+                                                    $hora
+                                                }}
 
-                                                    <a data-toggle="modal" class="btn btn-warning" href="#modal-form1">Anular</a>
-                                                    <div id="modal-form1" class="modal fade" aria-hidden="true">
+
+
+
+
+
+
+
+                                                @if($garantias_guias_ingreso->estado==1)
+                                                <a data-toggle="modal" class="btn btn-warning" href="#modal-form{{$garantias_guias_ingreso->id}}">Anular</a>
+                                                    <div id="modal-form{{$garantias_guias_ingreso->id}}" class="modal fade" aria-hidden="true">
                                                         <div class="modal-dialog">
                                                             <div class="modal-content">
                                                                 <div class="modal-body">
@@ -159,13 +161,9 @@
                                                             </div>
                                                         </div>
                                                     </div>
-
-
-
-
-
-
-
+                                                @else
+                                                    <button class="btn btn-w-m btn-secondary">ANULADO</button>
+                                                @endif
                                             </center></td>
                                         </tr>
                                         @endforeach
