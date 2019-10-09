@@ -15,7 +15,10 @@ Route::view('/' , 'home')->name('inicio');
 	//GARANTIA
 	Route::resource('/garantia_guia_ingreso','GarantiaGuiaIngresoController');
 
+	Route::get('garantia_guia_egreso/guias', 'GarantiaGuiaEgresoController@guias')->name('garantia_guia_egreso.guias');
 	Route::resource('/garantia_guia_egreso','GarantiaGuiaEgresoController');
+
+	
 	Route::resource('/guia','GuiaController');
 	Route::resource('/horarios','HorariosController');
 	Route::resource('/igv','IgvController')->only(['index','edit','update']);

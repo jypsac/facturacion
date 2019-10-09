@@ -17,12 +17,7 @@ class GarantiaGuiaIngresoController extends Controller
     {
         $marcas=Marca::all();
         $garantias_guias_ingresos=GarantiaGuiaIngreso::all();
-
-
-
-
-
-        return view('transaccion.garantias.guia_ingreso.index',compact('marcas','garantias_guias_ingresos','hora'));
+        return view('transaccion.garantias.guia_ingreso.index',compact('marcas','garantias_guias_ingresos'));
     }
 
     /**
@@ -63,6 +58,7 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->fecha=$request->get('fecha');
         $garantia_guia_ingreso->orden_servicio=$request->get('orden_servicio');
         $garantia_guia_ingreso->estado=1;
+        $garantia_guia_ingreso->egresado=0;
         $garantia_guia_ingreso->asunto=$request->get('asunto');
         $garantia_guia_ingreso->nombre_cliente=$request->get('nombre_cliente');
         $garantia_guia_ingreso->direccion=$request->get('direccion');
@@ -74,8 +70,8 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
         $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
         $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
-        $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
-        $garantia_guia_ingreso->estetica=$request->get('estetica');
+        $garantia_guia_ingreso->diagnostico_solucion=$request->get('diagnostico_solucion');
+        $garantia_guia_ingreso->recomendaciones=$request->get('recomendaciones');
         $garantia_guia_ingreso->save();
 
         return redirect()->route('garantia_guia_ingreso.index');
@@ -89,7 +85,8 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function show($id)
     {
-        //
+        $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
+        return view('transaccion.garantias.guia_ingreso.show',compact('garantia_guia_ingreso'));
     }
 
     /**

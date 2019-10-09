@@ -22,6 +22,7 @@ class CreateGarantiaGuiaIngresoTable extends Migration
             $table->date('fecha');
             $table->string('orden_servicio');
             $table->boolean('estado');
+            $table->boolean('egresado');
             $table->string('asunto');
             //DATOS DEL CLIENTE
             $table->string('nombre_cliente');

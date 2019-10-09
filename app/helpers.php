@@ -1,13 +1,5 @@
 <?php
 
-// function tiempo(){
-//             $today = strtotime('today 12:00');
-//             $tomorrow = strtotime('tomorrow 12:00');
-//             $time_now = time();
-//             $timeLeft = ($time_now > $today ? $tomorrow : $today) - $time_now;
-//             $hora= gmdate("H:i:s", $timeLeft);
-// }
-
 function tiempo($actual){
     $hoy = $actual;
     $hoy=$hoy->format('Y-m-d');
