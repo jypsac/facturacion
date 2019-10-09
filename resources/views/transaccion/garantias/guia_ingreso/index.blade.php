@@ -130,9 +130,7 @@
                                             <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
                                             <td><center><a href="#"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                             <td><center>
-                                                {{strtotime($garantias_guias_ingreso->created_at)}}-{{
-                                                    $hora
-                                                }}
+                                                {{ tiempo($garantias_guias_ingreso->created_at) }}
 
 
 

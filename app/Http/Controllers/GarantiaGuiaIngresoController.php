@@ -19,11 +19,7 @@ class GarantiaGuiaIngresoController extends Controller
         $garantias_guias_ingresos=GarantiaGuiaIngreso::all();
 
 
-            $today = strtotime('today 12:00');
-            $tomorrow = strtotime('tomorrow 12:00');
-            $time_now = time();
-            $timeLeft = ($time_now > $today ? $tomorrow : $today) - $time_now;
-            $hora= gmdate("H:i:s", $timeLeft);
+
 
 
         return view('transaccion.garantias.guia_ingreso.index',compact('marcas','garantias_guias_ingresos','hora'));
