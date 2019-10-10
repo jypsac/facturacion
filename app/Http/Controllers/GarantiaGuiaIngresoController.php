@@ -70,8 +70,8 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
         $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
         $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
-        $garantia_guia_ingreso->diagnostico_solucion=$request->get('diagnostico_solucion');
-        $garantia_guia_ingreso->recomendaciones=$request->get('recomendaciones');
+        $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
+        $garantia_guia_ingreso->estetica=$request->get('estetica');
         $garantia_guia_ingreso->save();
 
         return redirect()->route('garantia_guia_ingreso.index');
