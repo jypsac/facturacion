@@ -51,7 +51,7 @@
 								        <div class="form-group  row">
 								        	<label class="col-sm-1 col-form-label">Fecha:</label>
 						                    <div class="col-sm-4">
-						                     	<input type="date" class="form-control" name="fecha">
+											<input type="text" class="form-control" name="fecha" value="{{$tiempo_actual}}" readonly> 
 						                    </div>
 						                    <label class="col-sm-2 col-form-label">Orden de servicio:</label>
 						                    <div class="col-sm-4">
@@ -86,7 +86,7 @@
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Correo:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="correo"></div>
+						                     <div class="col-sm-9"><input type="email" class="form-control" name="correo"></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Contacto:</label>
@@ -116,7 +116,7 @@
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3">Fecha de Compra:</label>
-						                     <div class="col-sm-9"><input type="date" class="form-control" name="fecha_compra"></div>
+										<div class="col-sm-9"><input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}"></div>
 						                </div>
 
 	                            </div>
@@ -128,8 +128,8 @@
 	                                Descripcion del Problema
 	                            </div>
 	                            <div class="panel-body">
-						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Falla Reportada:</label>
-						                     <div class="col-sm-11">
+						                <div class="form-group  row">
+						                     <div class="col-sm-12">
 						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema"></textarea>
 						                     </div>
 						                </div>
@@ -142,8 +142,8 @@
 	                                Revision Y Diagnostico
 	                            </div>
 	                            <div class="panel-body">
-						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Fallo Detectado:</label>
-						                     <div class="col-sm-11">
+						                <div class="form-group  row">
+						                     <div class="col-sm-12">
 						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico"></textarea>
 						                     </div>
 						                </div>
@@ -161,10 +161,7 @@
 						                     	<textarea class="form-control" rows="5" id="comment" name="estetica"></textarea>
 						                     </div>
 						                </div>
-
-
 	                            </div>
-
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-12">

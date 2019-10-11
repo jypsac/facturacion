@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GarantiaGuiaIngreso;
 use App\Marca;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class GarantiaGuiaIngresoController extends Controller
@@ -27,6 +28,8 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function create(Request $request)
     {
+        $tiempo_actual = Carbon::now();
+        $tiempo_actual = $tiempo_actual->format('Y-m-d');
         $name = $request->input('familia');
         $marca = Marca::where("nombre","=",$name)->first();
         $marca=(string)$marca->abreviatura;
@@ -39,8 +42,10 @@ class GarantiaGuiaIngresoController extends Controller
         $marca_cantidad=substr($marca_cantidad,1);
         $orden_servicio=$marca.$guion.$marca_cantidad;
 
+
+
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
-        return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio'));
+        return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual'));
     }
 
     /**

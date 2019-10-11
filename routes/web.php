@@ -38,6 +38,8 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/unidad-medida','UnidadMedidaController');
 	Route::resource('/usuario','UsuarioController');
 	Route::resource('/venta','VentaController');
+
+	
 //
 	Route::view('/clasificacion' , 'partials.clasificacion')->name('Clasificacion');
 //

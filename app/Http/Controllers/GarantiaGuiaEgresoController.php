@@ -46,6 +46,16 @@ class GarantiaGuiaEgresoController extends Controller
      */
     public function store(Request $request)
     {
+
+        $orden_servicio=$request->get('orden_servicio');
+        $orden_servicio=(string)$orden_servicio;
+
+        // //GUIA INGRESO
+        $garantia_guia_ingreso=GarantiaGuiaIngreso::where('orden_servicio',$orden_servicio)->first();
+        $garantia_guia_ingreso->egresado=1;
+        $garantia_guia_ingreso->save();
+
+        //GUIA EGRESO
         $garantia_guia_egreso=new GarantiaGuiaEgreso;
         $garantia_guia_egreso->marca=$request->get('marca');
         $garantia_guia_egreso->motivo=$request->get('motivo');

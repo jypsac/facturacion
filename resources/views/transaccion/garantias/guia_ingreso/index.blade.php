@@ -112,7 +112,9 @@
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        
                                         @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
+                                        {{tiempo($garantias_guias_ingreso->created_at)}}
                                         <tr class="gradeX">
                                             <td>{{$garantias_guias_ingreso->id}}</td>
                                             <td>{{$garantias_guias_ingreso->marca}}</td>
@@ -120,7 +122,7 @@
                                                 @if($garantias_guias_ingreso->estado==1)
                                                     Activo
                                                 @else
-                                                    Anulado
+                                                    Anulado 
                                                 @endif
                                             </td>
                                             <td>{{$garantias_guias_ingreso->motivo}}</td>
@@ -131,8 +133,11 @@
                                             <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
                                             <td><center><a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                             <td><center>
-                                                @if( tiempo($garantias_guias_ingreso->created_at) ==0 )
+
+                                                @if( tiempo($garantias_guias_ingreso->created_at) ==1)
+
                                                     @if($garantias_guias_ingreso->estado==1)
+
                                                     <a data-toggle="modal" class="btn btn-warning" href="#modal-form{{$garantias_guias_ingreso->id}}">Anular</a>
                                                         <div id="modal-form{{$garantias_guias_ingreso->id}}" class="modal fade" aria-hidden="true">
                                                             <div class="modal-dialog">
@@ -152,13 +157,17 @@
                                                                 </div>
                                                             </div>
                                                         </div>
+
                                                     @else
                                                         <button class="btn btn-w-m btn-secondary">ANULADO</button>
                                                     @endif
+
                                                 @else
                                                     <button class="btn btn-w-m btn-info">FUERA DE FUNCION</button>
                                                 @endif
-                                            </center></td>
+                                            </center>
+                                        
+                                        </td>
                                             
                                         </tr>
                                         @endforeach

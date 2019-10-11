@@ -13,6 +13,6 @@ class PersonalTableSeeder extends Seeder
      */
     public function run()
     {
-        factory(Personal::class, 100)->create();
+        factory(Personal::class, 10)->create();
     }
 }
