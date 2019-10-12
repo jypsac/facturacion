@@ -102,7 +102,8 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function edit($id)
     {
-
+        $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
+        return view('transaccion.garantias.guia_ingreso.edit',compact('garantia_guia_ingreso'));
     }
 
     /**
@@ -117,6 +118,35 @@ class GarantiaGuiaIngresoController extends Controller
         // ACTUALIZACION DE ESTADO
         $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
         $garantia_guia_ingreso->estado=0;
+        $garantia_guia_ingreso->save();
+
+        return redirect()->route('garantia_guia_ingreso.index');
+    }
+
+    public function actualizar(Request $request, $id)
+    {
+        // ACTUALIZACION DE GUIA DE INGRESO
+        $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
+        $garantia_guia_ingreso->marca=$request->get('marca');
+        $garantia_guia_ingreso->motivo=$request->get('motivo');
+        $garantia_guia_ingreso->ing_asignado=$request->get('ing_asignado');
+        $garantia_guia_ingreso->fecha=$request->get('fecha');
+        $garantia_guia_ingreso->orden_servicio=$request->get('orden_servicio');
+        $garantia_guia_ingreso->estado=1;
+        $garantia_guia_ingreso->egresado=0;
+        $garantia_guia_ingreso->asunto=$request->get('asunto');
+        $garantia_guia_ingreso->nombre_cliente=$request->get('nombre_cliente');
+        $garantia_guia_ingreso->direccion=$request->get('direccion');
+        $garantia_guia_ingreso->telefono=$request->get('telefono');
+        $garantia_guia_ingreso->correo=$request->get('correo');
+        $garantia_guia_ingreso->contacto=$request->get('contacto');
+        $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipo');
+        $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
+        $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
+        $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
+        $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
+        $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
+        $garantia_guia_ingreso->estetica=$request->get('estetica');
         $garantia_guia_ingreso->save();
 
         return redirect()->route('garantia_guia_ingreso.index');

@@ -107,12 +107,13 @@
                                             <th>Asunto</th>
                                             <th>Cliente</th>
                                             <th>Ver</th>
+                                            <th>Editar</th>
                                             <th>Anular</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
                                         @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
                                         {{tiempo($garantias_guias_ingreso->created_at)}}
                                         <tr class="gradeX">
@@ -122,7 +123,7 @@
                                                 @if($garantias_guias_ingreso->estado==1)
                                                     Activo
                                                 @else
-                                                    Anulado 
+                                                    Anulado
                                                 @endif
                                             </td>
                                             <td>{{$garantias_guias_ingreso->motivo}}</td>
@@ -132,6 +133,21 @@
                                             <td>{{$garantias_guias_ingreso->asunto}}</td>
                                             <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
                                             <td><center><a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+
+                                            <td>@if( tiempo($garantias_guias_ingreso->created_at) ==1)
+
+                                                    @if($garantias_guias_ingreso->estado==1)
+                                                        <center><a href="{{ route('garantia_guia_ingreso.edit', $garantias_guias_ingreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">Editar</button></a></center>
+                                                    @else
+                                                        <button class="btn btn-w-m btn-info">FUERA DE FUNCION</button>
+                                                    @endif
+
+                                                @else
+                                                    <button class="btn btn-w-m btn-info">FUERA DE FUNCION</button>
+                                                @endif
+                                            </td>
+
+
                                             <td><center>
 
                                                 @if( tiempo($garantias_guias_ingreso->created_at) ==1)
@@ -159,16 +175,16 @@
                                                         </div>
 
                                                     @else
-                                                        <button class="btn btn-w-m btn-secondary">ANULADO</button>
+                                                        <button class="btn btn-w-m btn-secondary">PROCESADO</button>
                                                     @endif
 
                                                 @else
                                                     <button class="btn btn-w-m btn-info">FUERA DE FUNCION</button>
                                                 @endif
                                             </center>
-                                        
+
                                         </td>
-                                            
+
                                         </tr>
                                         @endforeach
                                     </tbody>

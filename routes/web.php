@@ -13,12 +13,13 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/facturacion','FacturacionController');
 	Route::resource('/familia','FamiliaController');
 	//GARANTIA
+	Route::put('garantia_guia_ingreso/{guia}', 'GarantiaGuiaIngresoController@actualizar')->name('garantia_guia_ingreso.actualizar');
 	Route::resource('/garantia_guia_ingreso','GarantiaGuiaIngresoController');
 
 	Route::get('garantia_guia_egreso/guias', 'GarantiaGuiaEgresoController@guias')->name('garantia_guia_egreso.guias');
 	Route::resource('/garantia_guia_egreso','GarantiaGuiaEgresoController');
 
-	
+
 	Route::resource('/guia','GuiaController');
 	Route::resource('/horarios','HorariosController');
 	Route::resource('/igv','IgvController')->only(['index','edit','update']);
@@ -39,7 +40,7 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/usuario','UsuarioController');
 	Route::resource('/venta','VentaController');
 
-	
+
 //
 	Route::view('/clasificacion' , 'partials.clasificacion')->name('Clasificacion');
 //
