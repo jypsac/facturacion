@@ -3,7 +3,7 @@
 @section('title', 'Garantia - Guia de egreso')
 @section('breadcrumb', 'Guia de egreso')
 @section('breadcrumb2', 'Garantia')
-@section('href_accion', route('garantia_informe_tecnico.guias'))
+@section('href_accion', route('garantia_guia_egreso.guias'))
 @section('value_accion', 'Agregar')
 
 @section('content')
@@ -45,35 +45,31 @@
                                             <th>Orden servicio</th>
                                             <th>Asunto</th>
                                             <th>Cliente</th>
-                                            <th>Ver</th>
-                                            <th>Editar</th>
+                                            <th>Agregar</th>
                                             
                                             
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($garantias_informe_tecnicos as $garantias_informe_tecnico)
+                                        @foreach($garantias_guias_egresos as $garantias_guias_egreso)
                                         <tr class="gradeX">
-                                            <td>{{$garantias_informe_tecnico->id}}</td>
-                                            <td>{{$garantias_informe_tecnico->marca}}</td>
+                                            <td>{{$garantias_guias_egreso->id}}</td>
+                                            <td>{{$garantias_guias_egreso->marca}}</td>
                                             <td>
-                                                @if($garantias_informe_tecnico->estado==1)
+                                                @if($garantias_guias_egreso->estado==1)
                                                     Activo
                                                 @else
                                                     Anulado
                                                 @endif
                                             </td>
-                                            <td>{{$garantias_informe_tecnico->motivo}}</td>
-                                            <td>{{$garantias_informe_tecnico->ing_asignado}}</td>
-                                            <td>{{$garantias_informe_tecnico->fecha}}</td>
-                                            <td>{{$garantias_informe_tecnico->orden_servicio}}</td>
-                                            <td>{{$garantias_informe_tecnico->asunto}}</td>
-                                            <td>{{$garantias_informe_tecnico->nombre_cliente}}</td>
+                                            <td>{{$garantias_guias_egreso->motivo}}</td>
+                                            <td>{{$garantias_guias_egreso->ing_asignado}}</td>
+                                            <td>{{$garantias_guias_egreso->fecha}}</td>
+                                            <td>{{$garantias_guias_egreso->orden_servicio}}</td>
+                                            <td>{{$garantias_guias_egreso->asunto}}</td>
+                                            <td>{{$garantias_guias_egreso->nombre_cliente}}</td>
                                             <td>
-                                                <center><a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>
-                                            </td>
-                                            <td>
-                                                    <center><a href="{{ route('garantia_informe_tecnico.edit', $garantias_informe_tecnico->id) }}"><button type="button" class="btn btn-w-m btn-primary">EDITAR</button></a></center>
+                                                <center><a href="{{ route('garantia_informe_tecnico.edit', $garantias_guias_egreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">Agregar</button></a></center>
                                             </td>
                                             
                                         </tr>
@@ -88,6 +84,10 @@
     </div>
 
 
+
+
+
+
     <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -97,7 +97,7 @@
 
     <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
     <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
-    <!-- Custom and plugin javascript -->
+ <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 

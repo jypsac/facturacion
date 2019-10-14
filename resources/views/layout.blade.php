@@ -66,7 +66,7 @@
                                 <ul class="nav nav-third-level">
                                     <li><a href="{{route('garantia_guia_ingreso.index')}}">Guias Ingreso</a></li>
                                     <li><a href="{{route('garantia_guia_egreso.index')}}">Guia Egreso</a></li>
-                                    <li><a href="#">Informe Tecnico</a></li>
+                                    <li><a href="{{route('garantia_informe_tecnico.index')}}">Informe Tecnico</a></li>
                                 </ul>
                             </li>
                         </ul>

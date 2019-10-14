@@ -85,9 +85,9 @@
                     <div class="tab-content">
                         <div id="tab-10" class="tab-pane active">
                             <div class="panel-body">
-                                <strong>Falla Reportada</strong>
+                                
 
-                                <p>{{$garantia_guia_ingreso->descripcion_problema}}</p>
+                                {!! nl2br($garantia_guia_ingreso->descripcion_problema)!!}
                             </div>
                         </div>
                     </div>
@@ -106,9 +106,9 @@
                         <div class="tab-content">
                             <div id="tab-10" class="tab-pane active">
                                 <div class="panel-body">
-                                    <strong>Falla Detectada</strong>
+                                    
     
-                                    <p>{{$garantia_guia_ingreso->revision_diagnostico}}</p>
+                                    {!! nl2br($garantia_guia_ingreso->revision_diagnostico)!!}
                                 </div>
                             </div>
                         </div>
@@ -128,7 +128,7 @@
                             <div id="tab-10" class="tab-pane active">
                                 <div class="panel-body">
     
-                                    <p>{{$garantia_guia_ingreso->estetica}}</p>
+                                    {!! nl2br($garantia_guia_ingreso->estetica)!!}
                                 </div>
                             </div>
                         </div>

@@ -12,13 +12,17 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/empresa','EmpresaController')->only(['index']);
 	Route::resource('/facturacion','FacturacionController');
 	Route::resource('/familia','FamiliaController');
-	//GARANTIA
+	
+	//GARANTIAS
 	Route::put('garantia_guia_ingreso/{guia}', 'GarantiaGuiaIngresoController@actualizar')->name('garantia_guia_ingreso.actualizar');
 	Route::resource('/garantia_guia_ingreso','GarantiaGuiaIngresoController');
 
 	Route::get('garantia_guia_egreso/guias', 'GarantiaGuiaEgresoController@guias')->name('garantia_guia_egreso.guias');
 	Route::resource('/garantia_guia_egreso','GarantiaGuiaEgresoController');
 
+	Route::get('garantia_informe_tecnico/guias', 'GarantiaInformeTecnicoController@guias')->name('garantia_informe_tecnico.guias');
+	Route::resource('/garantia_informe_tecnico','GarantiaInformeTecnicoController');
+	//GARANTIAS
 
 	Route::resource('/guia','GuiaController');
 	Route::resource('/horarios','HorariosController');
