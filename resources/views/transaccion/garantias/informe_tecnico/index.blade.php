@@ -73,7 +73,7 @@
                                                 <center><a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>
                                             </td>
                                             <td>
-                                                    <center><a href="{{ route('garantia_informe_tecnico.edit', $garantias_informe_tecnico->id) }}"><button type="button" class="btn btn-w-m btn-primary">EDITAR</button></a></center>
+                                                <center><a href="{{ route('garantia_informe_tecnico.actualizar', $garantias_informe_tecnico->id) }}"><button type="button" class="btn btn-w-m btn-primary">EDITAR</button></a></center>
                                             </td>
 
                                         </tr>

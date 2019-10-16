@@ -69,7 +69,11 @@
                                             <td>{{$garantias_guias_egreso->asunto}}</td>
                                             <td>{{$garantias_guias_egreso->nombre_cliente}}</td>
                                             <td>
-                                                <center><a href="{{ route('garantia_informe_tecnico.edit', $garantias_guias_egreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">Agregar</button></a></center>
+                                                @if($garantias_guias_egreso->informe_tecnico==0)
+                                                    <center><a href="{{ route('garantia_informe_tecnico.edit', $garantias_guias_egreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">Agregar</button></a></center>
+                                                @else
+                                                    <center><a><button type="button" class="btn btn-w-m btn-secondary">Procesado</button></a></center>
+                                                @endif
                                             </td>
 
                                         </tr>

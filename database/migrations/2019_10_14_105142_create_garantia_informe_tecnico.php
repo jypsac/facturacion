@@ -43,6 +43,15 @@ class CreateGarantiaInformeTecnico extends Migration
             $table->text('revision_diagnostico');
             //TEXTO
             $table->text('informe');
+            //imagenes
+            $table->string('image1');
+            $table->string('image2');
+            $table->string('image3');
+            $table->string('image4');
+            $table->string('image5');
+            $table->string('image6');
+            $table->string('image7');
+            $table->string('image8');
 
             $table->timestamps();
         });

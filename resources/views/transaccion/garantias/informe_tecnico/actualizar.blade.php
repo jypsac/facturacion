@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title', ' Crear - Guia de Egreso')
-@section('breadcrumb', 'Crear Guia de egreso')
-@section('breadcrumb2', 'Garantia')
+@section('title', ' Actualizar - Informe Tecnico')
+@section('breadcrumb', 'Actualizar Informe')
+@section('breadcrumb2', 'Informe Tecnico')
 @section('href_accion', route('garantia_informe_tecnico.index'))
 @section('value_accion', 'Atras')
 
@@ -23,8 +23,9 @@
 	                                General
 	                            </div>
 	                            <div class="panel-body">
-	                                <form action="{{route('garantia_informe_tecnico.store')}}"  enctype="multipart/form-data" method="post">
-									 	@csrf
+                                    <form action="{{route('garantia_informe_tecnico.update', $garantia_guia_egreso->id)}}"  enctype="multipart/form-data" method="post">
+                                            @csrf
+                                            @method('put')
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
 							                    <div class="col-sm-11">
@@ -139,7 +140,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico">{{$garantia_guia_egreso->revision_diagnostico}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -153,7 +154,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="informe"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="informe">{{$garantia_guia_egreso->informe}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -164,7 +165,7 @@
 						<div class="col-lg-6">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
-	                                Fotos
+	                                Fotos 
 	                            </div>
 	                            <div class="panel-body">
 						                <div class="form-group  row">
@@ -221,10 +222,6 @@
 	                            </div>
 	                        </div>
 						</div>
-
-
-
-
 
 	                    <div class="col-lg-12">
 	                        <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Enviar</strong></button>

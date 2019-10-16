@@ -42,8 +42,6 @@ class GarantiaGuiaIngresoController extends Controller
         $marca_cantidad=substr($marca_cantidad,1);
         $orden_servicio=$marca.$guion.$marca_cantidad;
 
-
-
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
         return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual'));
     }
