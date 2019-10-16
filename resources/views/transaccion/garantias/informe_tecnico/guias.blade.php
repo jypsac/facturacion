@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Garantia - Guia de egreso')
-@section('breadcrumb', 'Guia de egreso')
+@section('title', 'Garantia - Informe Tecnico - GUIAS')
+@section('breadcrumb', 'Informe Tecnico')
 @section('breadcrumb2', 'Garantia')
-@section('href_accion', route('garantia_guia_egreso.guias'))
-@section('value_accion', 'Agregar')
+@section('href_accion', route('garantia_informe_tecnico.index'))
+@section('value_accion', 'Atras')
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -46,8 +46,8 @@
                                             <th>Asunto</th>
                                             <th>Cliente</th>
                                             <th>Agregar</th>
-                                            
-                                            
+
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -71,7 +71,7 @@
                                             <td>
                                                 <center><a href="{{ route('garantia_informe_tecnico.edit', $garantias_guias_egreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">Agregar</button></a></center>
                                             </td>
-                                            
+
                                         </tr>
                                         @endforeach
                                     </tbody>

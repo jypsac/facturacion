@@ -159,7 +159,61 @@
 	                            </div>
 
 	                        </div>
-                        </div>
+						</div>
+
+						<div class="col-lg-6">
+	                        <div class="panel panel-primary">
+	                            <div class="panel-heading">
+	                                Fotos
+	                            </div>
+	                            <div class="panel-body">
+						                <div class="form-group  row">
+												<div class="col-sm-12">
+													<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto 1 :</label>
+														<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="image1"></div>
+													</div>
+
+													<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto 2 :</label>
+														<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="image2"></div>
+													</div>
+
+													<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto 3 :</label>
+														<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="image3"></div>
+													</div>
+												</div>
+						                </div>
+	                            </div>
+	                        </div>
+						</div>
+
+						<div class="col-lg-6">
+	                        <div class="panel panel-primary">
+	                            <div class="panel-heading">
+	                                Fotos
+	                            </div>
+	                            <div class="panel-body">
+						                <div class="form-group  row">
+												<div class="col-sm-12">
+													<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto 4 :</label>
+														<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="image4"></div>
+													</div>
+
+													<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto 5 :</label>
+														<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="image5"></div>
+													</div>
+
+													<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto 6 :</label>
+														<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="image6"></div>
+													</div>
+												</div>
+						                </div>
+	                            </div>
+	                        </div>
+						</div>
+
+
+
+
 
 	                    <div class="col-lg-12">
 	                        <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Enviar</strong></button>

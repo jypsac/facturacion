@@ -1,7 +1,7 @@
 @extends('layout')
 
-@section('title', 'Garantia - Guia de egreso')
-@section('breadcrumb', 'Guia de egreso')
+@section('title', 'Garantia - Informe Tecnico')
+@section('breadcrumb', 'Informe Tecnico')
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_informe_tecnico.guias'))
 @section('value_accion', 'Agregar')
@@ -47,8 +47,8 @@
                                             <th>Cliente</th>
                                             <th>Ver</th>
                                             <th>Editar</th>
-                                            
-                                            
+
+
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -75,7 +75,7 @@
                                             <td>
                                                     <center><a href="{{ route('garantia_informe_tecnico.edit', $garantias_informe_tecnico->id) }}"><button type="button" class="btn btn-w-m btn-primary">EDITAR</button></a></center>
                                             </td>
-                                            
+
                                         </tr>
                                         @endforeach
                                     </tbody>

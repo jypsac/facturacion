@@ -37,6 +37,40 @@ class GarantiaInformeTecnicoController extends Controller
      */
     public function store(Request $request)
     {
+
+        if($request->hasfile('image1')){
+            $image =$request->file('image1');
+            $name = time().$image->getClientOriginalName();
+            $image->move(public_path().'/profile/images',$name);
+        }
+        if($request->hasfile('image2')){
+            $image =$request->file('image2');
+            $name = time().$image->getClientOriginalName();
+            $image->move(public_path().'/profile/images',$name);
+        }
+        if($request->hasfile('image3')){
+            $image =$request->file('image3');
+            $name = time().$image->getClientOriginalName();
+            $image->move(public_path().'/profile/images',$name);
+        }
+        if($request->hasfile('image4')){
+            $image =$request->file('image4');
+            $name = time().$image->getClientOriginalName();
+            $image->move(public_path().'/profile/images',$name);
+        }
+        if($request->hasfile('image5')){
+            $image =$request->file('image5');
+            $name = time().$image->getClientOriginalName();
+            $image->move(public_path().'/profile/images',$name);
+        }
+        if($request->hasfile('image6')){
+            $image =$request->file('image6');
+            $name = time().$image->getClientOriginalName();
+            $image->move(public_path().'/profile/images',$name);
+        }
+        $user->image=$name;
+
+
         $garantia_informe_tecnico= new GarantiaInformeTecnico;
         $garantia_informe_tecnico->marca=$request->get('marca');
         $garantia_informe_tecnico->motivo=$request->get('motivo');
@@ -96,7 +130,7 @@ class GarantiaInformeTecnicoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+
     }
 
     /**
