@@ -4,8 +4,6 @@ use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
 {
-
-
     /**
      * Seed the application's database.
      *
@@ -23,5 +21,6 @@ class DatabaseSeeder extends Seeder
         $this->call(UnidadMedidaSeeder::class);
         $this->call(PersonalTableSeeder::class);
         $this->call(GarantiaTableSeeder::class);
+        $this->call(ClientesSeeder::class);
     }
 }
