@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\GarantiaGuiaIngreso;
 use App\Marca;
+use App\Cliente;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -42,8 +43,10 @@ class GarantiaGuiaIngresoController extends Controller
         $marca_cantidad=substr($marca_cantidad,1);
         $orden_servicio=$marca.$guion.$marca_cantidad;
 
+        $clientes=Cliente::all();
+
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
-        return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual'));
+        return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes'));
     }
 
     /**
@@ -101,7 +104,8 @@ class GarantiaGuiaIngresoController extends Controller
     public function edit($id)
     {
         $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
-        return view('transaccion.garantias.guia_ingreso.edit',compact('garantia_guia_ingreso'));
+        $clientes=Cliente::all();
+        return view('transaccion.garantias.guia_ingreso.edit',compact('garantia_guia_ingreso','clientes'));
     }
 
     /**

@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Garantia - Guia de egreso')
-@section('breadcrumb', 'Guia de egreso')
+@section('title', 'Garantia - Guia de ingreso')
+@section('breadcrumb', 'Guia de ingreso')
 @section('breadcrumb2', 'Garantia')
-@section('href_accion', route('garantia_guia_egreso.guias'))
-@section('value_accion', 'Agregar')
+@section('href_accion', route('consultas.garantias.guias_ingreso'))
+@section('value_accion', 'Actualizar')
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -45,33 +45,28 @@
                                             <th>Orden servicio</th>
                                             <th>Asunto</th>
                                             <th>Cliente</th>
-                                            <th>Ver</th>
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        @foreach($garantias_guias_egresos as $garantias_guias_egreso)
+
+                                        @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
+                                        {{tiempo($garantias_guias_ingreso->created_at)}}
                                         <tr class="gradeX">
-                                            <td>{{$garantias_guias_egreso->id}}</td>
-                                            <td>{{$garantias_guias_egreso->marca}}</td>
+                                            <td>{{$garantias_guias_ingreso->id}}</td>
+                                            <td>{{$garantias_guias_ingreso->marca}}</td>
                                             <td>
-                                                @if($garantias_guias_egreso->estado==1)
+                                                @if($garantias_guias_ingreso->estado==1)
                                                     Activo
                                                 @else
                                                     Anulado
                                                 @endif
                                             </td>
-                                            <td>{{$garantias_guias_egreso->motivo}}</td>
-                                            <td>{{$garantias_guias_egreso->ing_asignado}}</td>
-                                            <td>{{$garantias_guias_egreso->fecha}}</td>
-                                            <td>{{$garantias_guias_egreso->orden_servicio}}</td>
-                                            <td>{{$garantias_guias_egreso->asunto}}</td>
-                                            <td>{{$garantias_guias_egreso->nombre_cliente}}</td>
-                                            <td>
-                                                <center><a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_egreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>
-                                            </td>
-
+                                            <td>{{$garantias_guias_ingreso->motivo}}</td>
+                                            <td>{{$garantias_guias_ingreso->ing_asignado}}</td>
+                                            <td>{{$garantias_guias_ingreso->fecha}}</td>
+                                            <td>{{$garantias_guias_ingreso->orden_servicio}}</td>
+                                            <td>{{$garantias_guias_ingreso->asunto}}</td>
+                                            <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

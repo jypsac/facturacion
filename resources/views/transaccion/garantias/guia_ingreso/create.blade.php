@@ -51,7 +51,7 @@
 								        <div class="form-group  row">
 								        	<label class="col-sm-1 col-form-label">Fecha:</label>
 						                    <div class="col-sm-4">
-											<input type="text" class="form-control" name="fecha" value="{{$tiempo_actual}}" readonly> 
+											<input type="text" class="form-control" name="fecha" value="{{$tiempo_actual}}" readonly>
 						                    </div>
 						                    <label class="col-sm-2 col-form-label">Orden de servicio:</label>
 						                    <div class="col-sm-4">
@@ -73,8 +73,14 @@
 	                            </div>
 	                            <div class="panel-body">
 
-									 	<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_cliente"></div>
+										<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
+						                     <div class="col-sm-9">
+												<select class="form-control m-b" name="nombre_cliente">
+													@foreach($clientes as $cliente)
+													<option value="Tecnico">{{$cliente->nombres}}</option>
+													@endforeach
+										    	</select>
+											</div>
 						                </div>
 
 								        <div class="form-group  row"><label class="col-sm-3">Direccion:</label>
