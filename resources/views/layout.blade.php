@@ -98,7 +98,7 @@
                             <li><a href="{{route('venta.index')}}">Ventas</a></li>
                             <li><a href="{{route('compra.index')}}">Compras</a></li>
                             <li>
-                                <a href="#">Almacen</a>
+                                <a href="#">Garantias</a>
                                 <ul class="nav nav-third-level">
                                     <li><a href="{{route('consultas.garantias.guias_ingreso')}}">Guia Ingreso</a></li>
                                     <li><a href="{{route('consultas.garantias.guias_egreso')}}">Guia Egreso</a></li>

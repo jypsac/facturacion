@@ -48,6 +48,7 @@
                                             <p>Telefono : {{$garantia_guia_ingreso->telefono}}</p>
                                             <p>Correo : {{$garantia_guia_ingreso->correo}}</p>
                                             <p>Contacto : {{$garantia_guia_ingreso->contacto}}</p>
+                                            <p>Numero de Documentacion : {{$garantia_guia_ingreso->numero_documento}}</p>
                                     </div>
                                 </div>
                             </div>

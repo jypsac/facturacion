@@ -47,6 +47,7 @@
                                         <p>Telefono : {{$garantias_informe_tecnico->telefono}}</p>
                                         <p>Correo : {{$garantias_informe_tecnico->correo}}</p>
                                         <p>Contacto : {{$garantias_informe_tecnico->contacto}}</p>
+                                        <p>Numero de Documento : {{$garantias_informe_tecnico->numero_documento}}</p>
                                 </div>
                             </div>
                         </div>

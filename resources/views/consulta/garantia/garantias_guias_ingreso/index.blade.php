@@ -7,6 +7,7 @@
 @section('value_accion', 'Actualizar')
 
 @section('content')
+
     <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
@@ -45,28 +46,57 @@
                                             <th>Orden servicio</th>
                                             <th>Asunto</th>
                                             <th>Cliente</th>
+                                            <th>Nr Documento Cliente</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-
+                                        
                                         @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
-                                        {{tiempo($garantias_guias_ingreso->created_at)}}
-                                        <tr class="gradeX">
-                                            <td>{{$garantias_guias_ingreso->id}}</td>
-                                            <td>{{$garantias_guias_ingreso->marca}}</td>
+                                        <tr class="">
+                                            <td>
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}" >{{$garantias_guias_ingreso->id}}</a>
+                                            </td>
+
+                                            <td>
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}">{{$garantias_guias_ingreso->marca}}</a>
+                                            </td>
+
                                             <td>
                                                 @if($garantias_guias_ingreso->estado==1)
-                                                    Activo
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}">Activo</a>
                                                 @else
-                                                    Anulado
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}">Anulado</a>
                                                 @endif
                                             </td>
-                                            <td>{{$garantias_guias_ingreso->motivo}}</td>
-                                            <td>{{$garantias_guias_ingreso->ing_asignado}}</td>
-                                            <td>{{$garantias_guias_ingreso->fecha}}</td>
-                                            <td>{{$garantias_guias_ingreso->orden_servicio}}</td>
-                                            <td>{{$garantias_guias_ingreso->asunto}}</td>
-                                            <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
+
+                                            <td>
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}">{{$garantias_guias_ingreso->motivo}}</a>
+                                            </td>
+
+                                            <td>
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}">{{$garantias_guias_ingreso->ing_asignado}}</a>
+                                            </td>
+
+                                            <td>
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}">{{$garantias_guias_ingreso->fecha}}</a>
+                                            </td>
+
+                                            <td>
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}">{{$garantias_guias_ingreso->orden_servicio}}</a>
+                                            </td>
+
+                                            <td>
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}">{{$garantias_guias_ingreso->asunto}}</a>
+                                            </td>
+
+                                            <td>
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}">{{$garantias_guias_ingreso->nombre_cliente}}</a>
+                                            </td>
+
+                                            <td>
+                                                <a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}">{{$garantias_guias_ingreso->numero_documento}}</a>
+                                            </td>
+
                                         </tr>
                                         @endforeach
                                     </tbody>

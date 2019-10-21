@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\GarantiaInformeTecnico;
 use App\GarantiaGuiaEgreso;
+use App\Cliente;
 
 class GarantiaInformeTecnicoController extends Controller
 {
@@ -110,6 +111,10 @@ class GarantiaInformeTecnicoController extends Controller
             $name8="sin_foto";
         }
 
+        $nombre_cliente=$request->get('nombre_cliente');
+        $cliente= Cliente::where("nombres","=",$nombre_cliente)->first();
+        $numero_doc=$cliente->numero_documento;
+
         //Informe tecnico Listo en Egresado
         $orden_servicio_egreso=$request->get('orden_servicio');
         $orden_servicio_egreso=(string)$orden_servicio_egreso;
@@ -132,6 +137,7 @@ class GarantiaInformeTecnicoController extends Controller
         $garantia_informe_tecnico->nombre_cliente=$request->get('nombre_cliente');
         $garantia_informe_tecnico->direccion=$request->get('direccion');
         $garantia_informe_tecnico->telefono=$request->get('telefono');
+        $garantia_informe_tecnico->numero_documento=$numero_doc;
         $garantia_informe_tecnico->correo=$request->get('correo');
         $garantia_informe_tecnico->contacto=$request->get('contacto');
         $garantia_informe_tecnico->nombre_equipo=$request->get('nombre_equipo');
@@ -258,6 +264,7 @@ class GarantiaInformeTecnicoController extends Controller
         }else{
             $name8="sin_foto";
         }
+        
 
         $garantia_informe_tecnico=GarantiaInformeTecnico::find($id);
         $garantia_informe_tecnico->revision_diagnostico=$request->get('revision_diagnostico');

@@ -29,6 +29,7 @@ class CreateGarantiaGuiaEgresoTable extends Migration
             $table->string('nombre_cliente');
             $table->string('direccion');
             $table->string('telefono');
+            $table->string('numero_documento');
             $table->string('correo');
             $table->string('contacto');
             //DATOS DEL EQUIPO

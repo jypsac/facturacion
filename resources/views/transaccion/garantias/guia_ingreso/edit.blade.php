@@ -82,7 +82,7 @@
 						                     <div class="col-sm-9">
 												<select class="form-control m-b" name="nombre_cliente">
 													@foreach($clientes as $cliente)
-													<option value="Tecnico">{{$cliente->nombres}}</option>
+													<option>{{$cliente->nombres}}</option>
 													@endforeach
 										    	</select>
 											</div>

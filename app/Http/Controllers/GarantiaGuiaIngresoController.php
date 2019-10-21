@@ -57,6 +57,10 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function store(Request $request)
     {
+        $nombre_cliente=$request->get('nombre_cliente');
+        $cliente= Cliente::where("nombres","=",$nombre_cliente)->first();
+        $numero_doc=$cliente->numero_documento;
+
         $garantia_guia_ingreso=new GarantiaGuiaIngreso;
         $garantia_guia_ingreso->marca=$request->get('marca');
         $garantia_guia_ingreso->motivo=$request->get('motivo');
@@ -69,6 +73,7 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->nombre_cliente=$request->get('nombre_cliente');
         $garantia_guia_ingreso->direccion=$request->get('direccion');
         $garantia_guia_ingreso->telefono=$request->get('telefono');
+        $garantia_guia_ingreso->numero_documento=$numero_doc;
         $garantia_guia_ingreso->correo=$request->get('correo');
         $garantia_guia_ingreso->contacto=$request->get('contacto');
         $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipo');
@@ -81,6 +86,8 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->save();
 
         return redirect()->route('garantia_guia_ingreso.index');
+
+        
     }
 
     /**
@@ -127,6 +134,10 @@ class GarantiaGuiaIngresoController extends Controller
 
     public function actualizar(Request $request, $id)
     {
+        $nombre_cliente=$request->get('nombre_cliente');
+        $cliente= Cliente::where("nombres","=",$nombre_cliente)->first();
+        $numero_doc=$cliente->numero_documento;
+
         // ACTUALIZACION DE GUIA DE INGRESO
         $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
         $garantia_guia_ingreso->marca=$request->get('marca');
@@ -140,7 +151,8 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->nombre_cliente=$request->get('nombre_cliente');
         $garantia_guia_ingreso->direccion=$request->get('direccion');
         $garantia_guia_ingreso->telefono=$request->get('telefono');
-        $garantia_guia_ingreso->correo=$request->get('correo');
+        $garantia_guia_ingreso->telefono=$request->get('telefono');
+        $garantia_guia_ingreso->numero_documento=$numero_doc;
         $garantia_guia_ingreso->contacto=$request->get('contacto');
         $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipo');
         $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');

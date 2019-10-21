@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\GarantiaGuiaIngreso;
 use App\GarantiaGuiaEgreso;
 use App\Marca;
+use App\Cliente;
 
 class GarantiaGuiaEgresoController extends Controller
 {
@@ -47,6 +48,10 @@ class GarantiaGuiaEgresoController extends Controller
     public function store(Request $request)
     {
 
+        $nombre_cliente=$request->get('nombre_cliente');
+        $cliente= Cliente::where("nombres","=",$nombre_cliente)->first();
+        $numero_doc=$cliente->numero_documento;
+
         $orden_servicio=$request->get('orden_servicio');
         $orden_servicio=(string)$orden_servicio;
 
@@ -70,6 +75,7 @@ class GarantiaGuiaEgresoController extends Controller
         $garantia_guia_egreso->nombre_cliente=$request->get('nombre_cliente');
         $garantia_guia_egreso->direccion=$request->get('direccion');
         $garantia_guia_egreso->telefono=$request->get('telefono');
+        $garantia_guia_egreso->numero_documento=$numero_doc;
         $garantia_guia_egreso->correo=$request->get('correo');
         $garantia_guia_egreso->contacto=$request->get('contacto');
         $garantia_guia_egreso->nombre_equipo=$request->get('nombre_equipo');
@@ -92,7 +98,8 @@ class GarantiaGuiaEgresoController extends Controller
      */
     public function show($id)
     {
-        //
+        $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
+        return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso'));
     }
 
     /**
@@ -103,7 +110,7 @@ class GarantiaGuiaEgresoController extends Controller
      */
     public function edit($id)
     {
-
+        // Enviando vista para crear guia de egreso con datos de ingreso para egresar
         $garantias_guias_ingresos=GarantiaGuiaIngreso::find($id);
         return view('transaccion.garantias.guia_egreso.edit',compact('garantias_guias_ingresos'));
     }

@@ -69,7 +69,7 @@
                                             <td>{{$garantias_guias_egreso->asunto}}</td>
                                             <td>{{$garantias_guias_egreso->nombre_cliente}}</td>
                                             <td>
-                                                <center><a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_egreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>
+                                                <center><a href="{{ route('garantia_guia_egreso.show', $garantias_guias_egreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>
                                             </td>
 
                                         </tr>
