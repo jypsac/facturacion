@@ -13,20 +13,22 @@ class EmpresaSeeder extends Seeder
     {
         DB::table('empresa')->insert([
 			'id' => 1 ,
-			'nombre' => 'JYP PERIFERICOS',
-			'razon_social' => 'J y P Perifericos SAC',
-			'ruc' => 75237849,
-			'telefono' => 983272362,
-			'movil' => 789456123,
-			'correo' => 'julio@jypsac.com',
+			'nombre' => 's&r solution service',
+			'razon_social' => 'S & R SOLUTION SERVICE S.A.C.',
+			'ruc' => '20524840902',
+			'telefono' => '4235390',
+			'movil' => '981145518',
+			'correo' => 'esolis@srsac.com',
 			'pais' => 'Peru',
 			'region_provincia' => 'Lima',
-			'ciudad' => 'Lince',
-			'calle' => 'Arenales',
-			'codigo_postal' => '12584',
-			'rubro' => 'Computación y Informática',
+			'ciudad' => 'Lima',
+			'calle' => 'Av. Bolivia Nro. 180 Of-306 C.C Wilson Plaza',
+			'codigo_postal' => '15001',
+			'rubro' => ' soluciones de problemas de operatividad informática',
 			'moneda_principal' => 'Soles',
-			'descripcion' => 'Empresa de mantenimiento informático, venta de computadoras, hardware, software Erp, elaboración de páginas web, redes y comunicaciones, utilizando la tecnología actual para servirlos mejor. Capacitación, asesoría para las pequeñas, medianas y empresas corporativas, en sus diferentes áreas implementando así su potencial de crecimiento empresarial.',
+			'descripcion' => 'S&R Solution Service S.A.C., es una empresa orientada a las soluciones de problemas de operatividad informática, principalmente de temas ligados a Hardware de impresión de distintas marca, siendo una de nuestras principales la marca EPSON..
+
+			Gracias a una organización flexible, al desarrollo de nuevas ventajas competitivas y a la permanente optimización de nuestros servicios, buscaremos adecuarnos a las necesidades y requerimientos de colaboración de cada cliente, desde el inicio de sus necesidades.',
 			'foto' => 'logo.jpg',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')

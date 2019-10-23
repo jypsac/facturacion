@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Provedor;
 use Illuminate\Http\Request;
 
 class ProvedorController extends Controller
@@ -13,7 +13,8 @@ class ProvedorController extends Controller
      */
     public function index()
     {
-
+        $provedores=Provedor::all();
+        return view('auxiliar.provedor.index',compact('provedores'));
     }
 
     /**
@@ -23,7 +24,7 @@ class ProvedorController extends Controller
      */
     public function create()
     {
-
+        return view('auxiliar.provedor.create');
     }
 
     /**
@@ -34,7 +35,20 @@ class ProvedorController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $provedor=new Provedor;
+        $provedor->ruc=$request->get('ruc');
+        $provedor->empresa=$request->get('empresa');
+        $provedor->direccion=$request->get('direccion');
+        $provedor->telefonos=$request->get('telefonos');
+        $provedor->email=$request->get('email');
+        $provedor->contacto_provedor=$request->get('contacto_provedor');
+        $provedor->celular_provedor=$request->get('celular_provedor');
+        $provedor->email_provedor=$request->get('email_provedor');
+        $provedor->observacion=$request->get('observacion');
+        $provedor->save();
+        return redirect()->route('provedor.index');
+
+        
     }
 
     /**
@@ -45,7 +59,8 @@ class ProvedorController extends Controller
      */
     public function show($id)
     {
-
+        $provedor=Provedor::find($id);
+        return view('auxiliar.provedor.create',compact('provedor'));
     }
 
     /**
@@ -56,7 +71,8 @@ class ProvedorController extends Controller
      */
     public function edit($id)
     {
-        //
+        $provedor=Provedor::find($id);
+        return view('auxiliar.provedor.edit',compact('provedor'));
     }
 
     /**
@@ -68,7 +84,18 @@ class ProvedorController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $provedor=Provedor::find($id);
+        $provedor->ruc=$request->get('ruc');
+        $provedor->empresa=$request->get('empresa');
+        $provedor->direccion=$request->get('direccion');
+        $provedor->telefonos=$request->get('telefonos');
+        $provedor->email=$request->get('email');
+        $provedor->contacto_provedor=$request->get('contacto_provedor');
+        $provedor->celular_provedor=$request->get('celular_provedor');
+        $provedor->email_provedor=$request->get('email_provedor');
+        $provedor->observacion=$request->get('observacion');
+        $provedor->save();
+        return redirect()->route('provedor.index');
     }
 
     /**
@@ -79,6 +106,9 @@ class ProvedorController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $provedor=Provedor::findOrFail($id);
+        $provedor->delete();
+
+        return redirect()->route('provedor.index');
     }
 }

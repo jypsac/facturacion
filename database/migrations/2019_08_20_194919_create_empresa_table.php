@@ -17,9 +17,9 @@ class CreateEmpresaTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('razon_social');
-            $table->integer('ruc');
-            $table->integer('telefono');
-            $table->integer('movil');
+            $table->string('ruc');
+            $table->string('telefono');
+            $table->string('movil');
             $table->string('correo');
             $table->string('pais');
             $table->string('region_provincia');
