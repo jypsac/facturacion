@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Almacen;
 use Illuminate\Http\Request;
 
 class AlmacenController extends Controller
@@ -13,7 +13,8 @@ class AlmacenController extends Controller
      */
     public function index()
     {
-        return view('transaccion.almacen.index');
+        $almacenes=Almacen::all();
+        return view('transaccion.almacen.index',compact('almacenes'));
     }
 
     /**
@@ -34,7 +35,15 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $almacen=new Almacen;
+        $almacen->nombre=$request->get('nombre');
+        $almacen->abreviatura=$request->get('abreviatura');
+        $almacen->responsable=$request->get('responsable');
+        $almacen->direccion=$request->get('direccion');
+        $almacen->descripcion=$request->get('descripcion');
+        $almacen->save();
+
+        return redirect()->route('almacen.index');
     }
 
     /**
@@ -56,7 +65,8 @@ class AlmacenController extends Controller
      */
     public function edit($id)
     {
-        return view('transaccion.almacen.edit');
+        $almacen=Almacen::find($id);
+        return view('transaccion.almacen.edit',compact('almacen'));
     }
     /**
      * Update the specified resource in storage.
@@ -67,7 +77,15 @@ class AlmacenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $almacen=Almacen::find($id);
+        $almacen->nombre=$request->get('nombre');
+        $almacen->abreviatura=$request->get('abreviatura');
+        $almacen->responsable=$request->get('responsable');
+        $almacen->direccion=$request->get('direccion');
+        $almacen->descripcion=$request->get('descripcion');
+        $almacen->save();
+
+        return redirect()->route('almacen.index');
     }
 
     /**
@@ -78,6 +96,8 @@ class AlmacenController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $almacen=Almacen::findorFail($id);
+        $almacen->delete();
+        return redirect()->route('almacen.index');
     }
 }

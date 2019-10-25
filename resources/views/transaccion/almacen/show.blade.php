@@ -1,14 +1,14 @@
 @extends('layout')
 
-@section('title', 'Inicio')
-@section('breadcrumb', 'Inicio')
-@section('breadcrumb2', 'Inicio')
-@section('href_accion', 'hola.html')
-@section('value_accion', 'Agregar')
+@section('title', 'Almacen')
+@section('breadcrumb', 'Almacen-VER')
+@section('breadcrumb2', 'Almacen-VER')
+@section('href_accion', route('almacen.index') )
+@section('value_accion', 'Atras')
 
 @section('content')
 
-	{{-- <h2>Bienvenido {{ $nombre ?? "invitado" }}</h2>--}}
+	<h1>EN PROCESO</h1>
 
 @endsection
 @include('partials.page_script_general')

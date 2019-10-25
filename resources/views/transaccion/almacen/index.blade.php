@@ -36,29 +36,37 @@
                                 <table class="table table-striped table-bordered table-hover dataTables-example" >
                                     <thead>
                                         <tr>
+                                            <th>Id</th>
                                             <th>Nombre</th>
-                                            <th>EMAIL</th>
-                                            <th>FOTO</th>
+                                            <th>Abreviatura</th>
+                                            <th>Direccion</th>
+                                            <th>Responsable</th>
+                                            <th>Descripcion</th>
                                             <th>Ver</th>
                                             <th>EDITAR</th>
                                             <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
+                                        @foreach($almacenes as $almacen)
                                         <tr class="gradeX">
-                                            <td>1</td>
-                                            <td>2</td>
-                                            <td>3</td>
+                                            <td>{{$almacen->id}}</td>
+                                            <td>{{$almacen->nombre}}</td>
+                                            <td>{{$almacen->abreviatura}}</td>
+                                            <td>{{$almacen->direccion}}</td>
+                                            <td>{{$almacen->responsable}}</td>
+                                            <td>{{$almacen->descripcion}}</td>
                                             <td><center><a href="#"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
-                                            <td><center><a href="#" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td>
+                                            <td><center><a href="{{route('almacen.edit',$almacen->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td>
                                             <td><center>
-                                            <form action="#" method="POST">
+                                            <form action="{{route('almacen.destroy',$almacen->id)}}" method="POST">
                                               @csrf
                                               @method('delete')
                                               <button type="submit" class="btn btn-w-m btn-danger">Eliminar</button>
                                             </form></center>
                                             </td>
                                         </tr>
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

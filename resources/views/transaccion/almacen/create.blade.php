@@ -33,39 +33,27 @@
                     </div>
 				</div>
 				<div class="ibox-content">
-					<form action=""  enctype="multipart/form-data" method="post">
+				<form action="{{route('almacen.store')}}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Abreviatura:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="abrev"></div>
+					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
 		                </div>
 
-				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="name"></div>
-		                </div>
+				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Abreviatura:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="abreviatura"></div>
+						</div>
+						
+						<div class="form-group  row"><label class="col-sm-2 col-form-label">Responsable:</label>
+							<div class="col-sm-10"><input type="text" class="form-control" name="responsable"></div>
+					   	</div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Dirección:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="direccion"></div>
-		                </div>
-
-		                <div class="form-group row"><label class="col-sm-2 col-form-label">Seleccionar Responsable:</label>
-							<div class="col-sm-10">
-								<select class="form-control m-b" name="responsable">
-			          			<option>Seleccione</option>
-					    		<option value="100">100MB</option>
-					    		<option value="500">500MB</option>
-					    		<option value="1000">1GB</option>
-					    		<option value="2000">2GB</option>
-					    		<option value="5000">5GB</option>
-					    		<option value="10000">10GB</option>
-					    		<option value="20000">20GB</option>
-					    		<option value="50000">50GB</option>
-		                        <option value="75000">75GB</option>
-		                        <option value="100000">100GB</option>
-		                        <option value="250000">250GB</option>
-					    		</select>
-		                    </div>
-		                </div>
+						</div>
+						
+						<div class="form-group  row"><label class="col-sm-2 col-form-label">Descripcion:</label>
+							<div class="col-sm-10"><input type="text" class="form-control" name="descripcion"></div>
+					   	</div>
 
 				    	<button class="btn btn-primary" type="submit" name="action">Guardar</button>
 

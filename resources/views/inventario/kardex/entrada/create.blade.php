@@ -35,31 +35,43 @@
 					<form action="{{ route('kardex-entrada.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
 		                </div>
 
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Precio:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="precio"></div>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="precio"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Serie del producto:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="serie_producto"></div>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="serie_producto"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Cantidad:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="cantidad"></div>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="cantidad"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Provedor:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="provedor"></div>
+		                    <div class="col-sm-10">
+								<select class="form-control" name="provedor">
+									@foreach($provedores as $provedor)
+									<option>{{$provedor->empresa}}</option>
+									@endforeach
+								</select>	
+							</div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Almacen:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="almacen"></div>
+							<div class="col-sm-10">
+								<select class="form-control" name="almacen">
+									@foreach($almacenes as $almacen)
+									<option value="{{$almacen->abreviatura}}">{{$almacen->abreviatura}} -> {{$almacen->descripcion}}</option>
+									@endforeach
+								</select>	
+							</div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Informacion:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="informacion"></div>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="informacion"></div>
 		                </div>
 
                 		<button class="btn btn-primary" type="submit">Guardar</button>

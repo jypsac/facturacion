@@ -45,7 +45,10 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/personal-datos-laborales','PersonalDatosLaboralesController');
 	Route::resource('/productos','ProductosController');
 	Route::resource('/promedios','PromediosController');
+
+	Route::post('/provedor/ruc', 'ProvedorController@ruc')->name('provedor.ruc');
 	Route::resource('/provedor','ProvedorController');
+
 	Route::resource('/servicios','ServiciosController');
 	Route::resource('/transaccion-compra','TransaccionCompraController');
 	Route::resource('/unidad-medida','UnidadMedidaController');
