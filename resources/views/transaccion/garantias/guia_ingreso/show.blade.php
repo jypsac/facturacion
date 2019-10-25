@@ -54,11 +54,12 @@
                             </div>
                         </div>
                     </div>
+                    <!-- <center><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></center>
+                                            <center> -->
                     <div class="col-lg-6">
                             <div class="tabs-container">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Datos del Equipo</a></li>
-                                    
                                 </ul>
                                 <div class="tab-content">
                                     <div role="tabpanel" id="tab-1" class="tab-pane active">
