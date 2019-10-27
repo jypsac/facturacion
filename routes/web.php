@@ -46,7 +46,7 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/productos','ProductosController');
 	Route::resource('/promedios','PromediosController');
 
-	Route::post('/provedor/ruc', 'ProvedorController@ruc')->name('provedor.ruc');
+	Route::get('provedorruc', 'ProvedorController@ruc');
 	Route::resource('/provedor','ProvedorController');
 
 	Route::resource('/servicios','ServiciosController');
