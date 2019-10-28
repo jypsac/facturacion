@@ -7,8 +7,7 @@ use Faker\Generator as Faker;
 
 $factory->define(Cliente::class, function (Faker $faker) {
     return [
-        'nombres' => $faker->firstNameMale,
-        'apellidos' => $faker->lastName,
+        'nombre' => $faker->firstNameMale,
         'direccion' => $faker->address,
         'email' => $faker->email,
         'telefono' => $faker->biasedNumberBetween($min = 1000000, $max = 9999999, $function = 'sqrt'),

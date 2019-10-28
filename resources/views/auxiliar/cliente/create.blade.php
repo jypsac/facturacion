@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title', 'crear cliente')
-@section('breadcrumb', 'crear cliente')
-@section('breadcrumb2', 'crear cliente')
+@section('title', 'Crear Cliente')
+@section('breadcrumb', 'Crear Cliente')
+@section('breadcrumb2', 'Crear Cliente')
 @section('href_accion', route('cliente.index'))
 @section('value_accion', 'atras')
 
@@ -35,12 +35,8 @@
 				<div class="ibox-content">
 					<form action="{{ route('cliente.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombres"></div>
-		                </div>
-
-				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Apellidos:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="apellidos"></div>
+					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Direccion:</label>
@@ -68,7 +64,8 @@
 							<div class="col-sm-10">
 								<select class="form-control m-b" name="documento_identificacion">
 					    		<option value="dni">DNI</option>
-					    		<option value="pasaporte">Pasaporte</option>
+								<option value="pasaporte">Pasaporte</option>
+								<option value="ruc">Ruc</option>
 					    		</select>
 		                    </div>
 		                </div>

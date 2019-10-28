@@ -77,7 +77,7 @@
 						                     <div class="col-sm-9">
 												<select class="form-control m-b" name="nombre_cliente">
 													@foreach($clientes as $cliente)
-													<option>{{$cliente->nombres}}</option>
+													<option>{{$cliente->nombre}}</option>
 													@endforeach
 										    	</select>
 											</div>

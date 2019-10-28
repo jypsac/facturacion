@@ -36,12 +36,9 @@
                          @csrf
                        @method('PATCH')
 					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
-                         <div class="col-sm-10"><input type="text" class="form-control" name="nombres" value="{{$cliente->nombres}}"></div>
+                         <div class="col-sm-10"><input type="text" class="form-control" name="nombre" value="{{$cliente->nombre}}"></div>
 		                </div>
 
-				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Apellidos:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="apellidos" value="{{$cliente->apellidos}}"></div>
-		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Direccion:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="direccion" value="{{$cliente->direccion}}"></div>

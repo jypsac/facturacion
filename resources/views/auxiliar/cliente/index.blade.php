@@ -39,7 +39,6 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Nombre</th>
-                                <th>Aoellidos</th>
                                 <th>Tipo Documento</th>
                                 <th>Nro Documento</th>
                                 <th>Correo</th>
@@ -53,8 +52,7 @@
                         @foreach($clientes as $cliente)
                             <tr class="gradeX">
                                 <td>{{$cliente->id}}</td>
-                                <td>{{$cliente->nombres}}</td>
-                                <td>{{$cliente->apellidos}}</td>
+                                <td>{{$cliente->nombre}}</td>
                                 <td>{{$cliente->documento_identificacion}}</td>
                                 <td>{{$cliente->numero_documento}}</td>
                                 <td>{{$cliente->email}}</td>

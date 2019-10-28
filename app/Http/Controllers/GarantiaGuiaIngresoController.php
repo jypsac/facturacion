@@ -59,7 +59,7 @@ class GarantiaGuiaIngresoController extends Controller
     public function store(Request $request)
     {
         $nombre_cliente=$request->get('nombre_cliente');
-        $cliente= Cliente::where("nombres","=",$nombre_cliente)->first();
+        $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
         $numero_doc=$cliente->numero_documento;
 
         $garantia_guia_ingreso=new GarantiaGuiaIngreso;
@@ -137,7 +137,7 @@ class GarantiaGuiaIngresoController extends Controller
     public function actualizar(Request $request, $id)
     {
         $nombre_cliente=$request->get('nombre_cliente');
-        $cliente= Cliente::where("nombres","=",$nombre_cliente)->first();
+        $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
         $numero_doc=$cliente->numero_documento;
 
         // ACTUALIZACION DE GUIA DE INGRESO
