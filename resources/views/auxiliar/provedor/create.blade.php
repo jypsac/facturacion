@@ -6,6 +6,8 @@
 @section('href_accion', route('provedor.index'))
 @section('value_accion', 'atras')
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">

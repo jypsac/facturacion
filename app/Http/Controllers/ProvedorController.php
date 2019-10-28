@@ -112,7 +112,7 @@ class ProvedorController extends Controller
         return redirect()->route('provedor.index');
     }
 
-     function ruc(Request $request){
+    function ruc(Request $request){
 
         $ruc=$request->get('ruc');
         $data = file_get_contents("https://api.sunat.cloud/ruc/".$ruc);
