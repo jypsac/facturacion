@@ -142,6 +142,6 @@ class ClientesSeeder extends Seeder
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		]);
-
+/*hola peee xD*/
     }
 }
