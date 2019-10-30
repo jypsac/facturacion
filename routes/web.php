@@ -32,6 +32,7 @@ Route::view('/' , 'home')->name('inicio');
 	Route::get('consultas/garantias-informe-tecnico', 'ConsultasController@garantias_informe_tecnico')->name('consultas.garantias.informe_tecnico');
 	//CONSULTAS
 
+	Route::resource('/contacto','ContactoController');
 	Route::resource('/guia','GuiaController');
 	Route::resource('/horarios','HorariosController');
 	Route::resource('/igv','IgvController')->only(['index','edit','update']);
