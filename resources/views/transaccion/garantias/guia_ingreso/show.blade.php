@@ -8,114 +8,58 @@
 
 @section('content')
 
+<div class="ibox">
+    <div class="table-responsive">
+        <img align="right" src="{{asset('img/logos/logo.jpg')}}" style="width: 150px;height: 100px">
+        <img align="left" src="{{asset('img/logos/epson.png')}}" style="width: 180px;height: 100px">
+    </div>
+</div>
+
+<h2 style="text-align: center;"> <strong>Guía de Ingreso</strong></h2>
+
 <div class="wrapper wrapper-content animated fadeIn">
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="tabs-container">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Datos Generales</a></li>
 
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" id="tab-1" class="tab-pane active">
-                        <div class="panel-body">
-                            <strong>Motivo : {{$garantia_guia_ingreso->motivo}}</strong><br><br>
-                            <strong>Asunto : {{$garantia_guia_ingreso->asunto}}</strong><br><br>
-                            <p>Ing. Asigando : {{$garantia_guia_ingreso->ing_asignado}}</p>
-                            <p>Marca : {{$garantia_guia_ingreso->marca}}</p>
-                            <p>Orden de Servicio : {{$garantia_guia_ingreso->orden_servicio}}</p>
-                            <p>Fecha : {{$garantia_guia_ingreso->fecha}}</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    {{-- <div class="row m-t-lg">
-        <div class="col-lg-6">
-            <div class="tabs-container">
-                <ul class="nav nav-tabs" role="tablist">
-                    <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Datos de Cientes</a></li>
-
-                </ul>
-                <div class="tab-content">
-                    <div role="tabpanel" id="tab-1" class="tab-pane active">
-                        <div class="panel-body">
-                            <p>Nombre o Empresa : {{$garantia_guia_ingreso->nombre_cliente}}</p>
-    <p>Direccion : {{$garantia_guia_ingreso->direccion}}</p>
-    <p>Telefono : {{$garantia_guia_ingreso->telefono}}</p>
-    <p>Correo : {{$garantia_guia_ingreso->correo}}</p>
-    <p>Contacto : {{$garantia_guia_ingreso->contacto}}</p>
-    <p>Numero de Documentacion : {{$garantia_guia_ingreso->numero_documento}}</p>
-</div>
-</div>
-</div>
-</div>
-</div>
-<!-- <center><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></center>
-                                            <center> -->
-<div class="col-lg-6">
-    <div class="tabs-container">
-        <ul class="nav nav-tabs" role="tablist">
-            <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Datos del Equipo</a></li>
-        </ul>
-        <div class="tab-content">
-            <div role="tabpanel" id="tab-1" class="tab-pane active">
-                <div class="panel-body">
-                    <p>Modelo : {{$garantia_guia_ingreso->nombre_equipo}}</p>
-                    <p>Numero de Serie : {{$garantia_guia_ingreso->numero_serie}}</p>
-                    <p>Codigo Interno : {{$garantia_guia_ingreso->codigo_interno}}</p>
-                    <p>Fecha de Compra : {{$garantia_guia_ingreso->fecha_compra}}</p>
-                    <p>-</p>
-                </div>
-            </div>
-        </div>
-    </div>
-</div>
-</div> --}}
-
-
-<div class="ibox ">
-    <div class="ibox-content">
-        
-
-        <div class="table-responsive">
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <td style="width: 70px;">Ing. Asigando</td>
-                    <th style="width: 200px;">{{$garantia_guia_ingreso->ing_asignado}}</th>
-                    <td style="width: 70px;">Fecha</td>
-                    <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
-                    <td style="width: 70px;">Marca</td>
-                    <th style="width: 70px;">{{$garantia_guia_ingreso->marca}}</th>
-                    <td style="width: 80px;">Orden de Servicio</td>
-                    <th style="width: 120px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
-                </tr>
-                </thead>
-            </table>
-            <table class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                    <td style="width: 100px;">Asunto</td>
-                    <th>{{$garantia_guia_ingreso->asunto}}</th>
-                </tr>
-                </thead>
-            </table>
-        </div>
-
-    </div>
+<div class="table-responsive">
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td style="width: 100px;">Motivo</td>
+                <th>{{$garantia_guia_ingreso->motivo}}</th>
+            </tr>
+        </thead>
+    </table>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td style="width: 70px;">Ing. Asigando</td>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->ing_asignado}}</th>
+                <td style="width: 70px;">Fecha</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
+                <td style="width: 70px;">Marca</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->marca}}</th>
+                <td style="width: 80px;">Orden de Servicio</td>
+                <th style="width: 120px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
+            </tr>
+        </thead>
+    </table>
+    <table class="table table-bordered table-striped">
+        <thead>
+            <tr>
+                <td style="width: 100px;">Asunto</td>
+                <th>{{$garantia_guia_ingreso->asunto}}</th>
+            </tr>
+        </thead>
+    </table>
 </div>
 
 
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox ">
-            <div class="ibox-title">
-                <h5>Datos del Ciente</h5>
-            </div>
+            {{-- <div class="ibox-title"> --}}
+            <h4>Datos del Ciente</h4>
+            {{-- </div> --}}
             <div>
                 <table class="table table-bordered white-bg">
                     <tbody>
@@ -179,9 +123,9 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox ">
-            <div class="ibox-title">
-                <h5>Datos del Equipo</h5>
-            </div>
+            {{-- <div class="ibox-title"> --}}
+            <h4>Datos del Equipo</h4>
+            {{-- </div> --}}
             <div>
                 <table class="table table-bordered white-bg">
                     <tbody>
@@ -226,124 +170,110 @@
 </div>
 
 
-{{-- <div class="row m-t-lg">
-    <div class="col-lg-12">
-        <div class="tabs-container">
-            <ul class="nav nav-tabs">
-                <li><a class="nav-link active" data-toggle="tab" href="#tab-10">
-                        Descripcion Del Problema
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div id="tab-10" class="tab-pane active">
+
+<div class="col-lg-13">
+    <div class="ibox">
+        {{-- <div class="ibox-title"> --}}
+        <h4>Descripcion Del Problema</h4>
+        {{-- </div> --}}
+        <div class="border">
+            <div class="ibox-content text-left h-10">
+                <span id="sparkline8">
                     <div class="panel-body">
-
-
                         {!! nl2br($garantia_guia_ingreso->descripcion_problema)!!}
                     </div>
-                </div>
+                </span>
             </div>
-        </div>
-    </div>
-</div> --}}
-<div class="col-lg-13">
-    <div class="ibox ">
-        <div class="ibox-title">
-            <h5>Descripcion Del Problema</h5>
-        </div>
-        <div class="ibox-content text-left h-200">
-            <span id="sparkline8">
-                <div class="panel-body">
-                    {!! nl2br($garantia_guia_ingreso->descripcion_problema)!!}
-                </div>
-            </span>
         </div>
     </div>
 </div>
 
 
-{{-- <div class="row m-t-lg">
-    <div class="col-lg-12">
-        <div class="tabs-container">
-            <ul class="nav nav-tabs">
-                <li><a class="nav-link active" data-toggle="tab" href="#tab-10">
-                        Revicion y Diagnostico
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div id="tab-10" class="tab-pane active">
-                    <div class="panel-body">
 
-
-                        {!! nl2br($garantia_guia_ingreso->revision_diagnostico)!!}
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-</div> --}}
 <div class="col-lg-13">
     <div class="ibox ">
-        <div class="ibox-title">
-            <h5>Revicion y Diagnostico</h5>
-        </div>
-        <div class="ibox-content text-left h-200">
-            <span id="sparkline8">
-                <div class="panel-body">
+        {{-- <div class="ibox-title"> --}}
+        <h4>Revicion y Diagnostico</h4>
+        {{-- </div> --}}
+        <div class="border">
+            <div class="ibox-content text-left h-10">
+                <span id="sparkline8">
+                    {{-- <div class="panel-body"> --}}
                     {!! nl2br($garantia_guia_ingreso->revision_diagnostico)!!}
-                </div>
-            </span>
+                    {{-- </div> --}}
+                </span>
+            </div>
         </div>
     </div>
 </div>
 
-{{-- <div class="row m-t-lg">
-    <div class="col-lg-12">
-        <div class="tabs-container">
-            <ul class="nav nav-tabs">
-                <li><a class="nav-link active" data-toggle="tab" href="#tab-10">
-                        Estetica
-                    </a>
-                </li>
-            </ul>
-            <div class="tab-content">
-                <div id="tab-10" class="tab-pane active">
-                    <div class="panel-body">
 
+<div class="col-lg-13">
+    <div class="ibox">
+
+        {{-- <div class="ibox-title"> --}}
+        <h4>Estetica</h4>
+        {{-- </div> --}}
+        <div class="border">
+            <div class="ibox-content text-left h-50">
+                <span id="sparkline8">
+                    <div class="panel-body">
                         {!! nl2br($garantia_guia_ingreso->estetica)!!}
                     </div>
-                </div>
+                </span>
+
             </div>
         </div>
     </div>
-</div> --}}
-<div class="col-lg-13">
-    <div class="ibox ">
-        <div class="ibox-title">
-            <h5>Estetica</h5>
-        </div>
-        <div class="ibox-content text-left h-200">
-            <span id="sparkline8">
-                <div class="panel-body">
-                    {!! nl2br($garantia_guia_ingreso->estetica)!!}
-                </div>
-            </span>
-        </div>
+</div>
+
+
+<div class="container">
+    <div class="child1"><br>
+        <hr />
+        <td>Departamento de Servicio Tecnico</td>
+        <p style="width:200px;" align="center">Fernndo Franco Solia</p>
+        <p style="width:200px;" align="center">S&R SAC-CSA EPSON</p>
+    </div>
+    <div class="child2"><br>
+        <hr />
+        <p style="width:200px;" align="center">Cliente (Firma y DNI)</p>
     </div>
 </div>
 
 
-{{-- new view --}}
 
-
-
-{{-- the end --}}
 </div>
+<style>
+    .container {
+        /* background: #e0e0e0; */
+        margin: 1 1 1rem;
+        height: 7rem;
+        display: flex;
+        align-items: start;
+    }
 
+    .child1 {
+        /* background: #60e0b0; */
+        height: 7rem;
+        padding: .2rem;
 
+    }
 
+    .child2 {
+        /* background: #60e0b0; */
+        padding: .2rem;
+        height: 7rem;
+        margin-left: 30%;
+    }
+
+    .border {
+        border-color: #aaaaaa;
+        border-width: 1px;
+        border-style: solid;
+    }
+
+</style>
 
 
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
