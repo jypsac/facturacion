@@ -37,7 +37,7 @@
 				<div class="ibox-content">
 					<form>
                         {{ csrf_field() }}
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Introducir Ruc:</label>
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Introducir Ruc (Inestable):</label>
                             <div class="col-sm-10">
                                 <input type="text" class="form-control" class="ruc" id="ruc" name="ruc">
                             </div>

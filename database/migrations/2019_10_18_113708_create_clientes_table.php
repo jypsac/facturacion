@@ -25,6 +25,18 @@ class CreateClientesTable extends Migration
             $table->string('numero_documento')->nullable();
             $table->timestamps();
         });
+
+        Schema::create('contactos', function (Blueprint $table) {
+            $table->bigIncrements('id');
+            $table->string('nombre');
+            $table->string('cargo');
+            $table->string('telefono');
+            $table->string('celular');
+            $table->string('email');
+            $table->unsignedBigInteger('clientes_id');
+            $table->foreign('clientes_id')->references('id')->on('clientes');
+            $table->timestamps();
+        });
     }
 
     /**
@@ -34,6 +46,7 @@ class CreateClientesTable extends Migration
      */
     public function down()
     {
+        Schema::dropIfExists('contactos');
         Schema::dropIfExists('clientes');
     }
 }
