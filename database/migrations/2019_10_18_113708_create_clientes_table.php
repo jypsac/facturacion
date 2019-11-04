@@ -34,7 +34,7 @@ class CreateClientesTable extends Migration
             $table->string('celular');
             $table->string('email');
             $table->unsignedBigInteger('clientes_id');
-            $table->foreign('clientes_id')->references('id')->on('clientes');
+            $table->foreign('clientes_id')->references('id')->on('clientes')->onDelete('cascade');
             $table->timestamps();
         });
     }

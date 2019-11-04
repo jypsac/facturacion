@@ -49,7 +49,7 @@ class GarantiaGuiaEgresoController extends Controller
     {
 
         $nombre_cliente=$request->get('nombre_cliente');
-        $cliente= Cliente::where("nombres","=",$nombre_cliente)->first();
+        $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
         $numero_doc=$cliente->numero_documento;
 
         $orden_servicio=$request->get('orden_servicio');
