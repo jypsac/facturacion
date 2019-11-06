@@ -50,7 +50,7 @@
                                                                 <div class="col-sm-10">
                                                                     <select class="form-control m-b" name="familia">
                                                                     @foreach($marcas as $marca)
-                                                                        <option >{{$marca->nombre}}</option>
+                                                                    <option value="{{$marca->id}}" >{{$marca->nombre}}</option>
                                                                     @endforeach
                                                                     </select>
                                                                 </div>

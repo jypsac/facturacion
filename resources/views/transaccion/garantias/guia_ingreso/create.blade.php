@@ -28,7 +28,7 @@
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
 							                    <div class="col-sm-11">
-							                     	<input type="text" class="form-control" name="marca" value="{{$name}}" readonly>
+							                     	<input type="text" class="form-control" name="marca_id" value="{{$marca_nombre}}" readonly>
 							                    </div>
 						                </div>
 
@@ -43,9 +43,13 @@
 										    		</select>
 							                    </div>
 						                    <label class="col-sm-2 col-form-label">Ing. Asignado:</label>
-							                    <div class="col-sm-4">
-							                     	<input type="text" class="form-control" name="ing_asignado">
-							                    </div>
+												<div class="col-sm-4">
+													<select class="form-control m-b" name="personal_lab_id">
+														@foreach($personales as $personal)
+														<option>{{$personal->cargo}}</option>
+														@endforeach
+													</select>
+												</div>
 						                </div>
 
 								        <div class="form-group  row">
@@ -75,7 +79,7 @@
 
 										<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
 						                     <div class="col-sm-9">
-												<select class="form-control m-b" name="nombre_cliente">
+												<select class="form-control m-b" name="cliente_id">
 													@foreach($clientes as $cliente)
 													<option>{{$cliente->nombre}}</option>
 													@endforeach
@@ -84,19 +88,19 @@
 						                </div>
 
 								        <div class="form-group  row"><label class="col-sm-3">Direccion:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="direccion"></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control"></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Telefono:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="telefono"></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control"></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Correo:</label>
-						                     <div class="col-sm-9"><input type="email" class="form-control" name="correo"></div>
+						                     <div class="col-sm-9"><input type="email" class="form-control"></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Contacto:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="contacto"></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="contacto_id"></div>
 						                </div>
 
 	                            </div>

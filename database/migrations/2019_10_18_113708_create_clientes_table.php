@@ -39,6 +39,7 @@ class CreateClientesTable extends Migration
         });
     }
 
+
     /**
      * Reverse the migrations.
      *

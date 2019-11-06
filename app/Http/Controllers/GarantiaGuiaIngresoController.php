@@ -6,6 +6,7 @@ use App\GarantiaGuiaIngreso;
 use App\Marca;
 use App\Cliente;
 use App\Empresa;
+use App\Personal_datos_laborales;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -32,11 +33,13 @@ class GarantiaGuiaIngresoController extends Controller
     {
         $tiempo_actual = Carbon::now();
         $tiempo_actual = $tiempo_actual->format('Y-m-d');
+
         $name = $request->input('familia');
-        $marca = Marca::where("nombre","=",$name)->first();
+        $marca = Marca::where("id","=",$name)->first();
+        $marca_nombre=(string)$marca->nombre;
         $marca=(string)$marca->abreviatura;
         $guion='-';
-        $marca_cantidad= GarantiaGuiaIngreso::where("marca","=",$name)->count();
+        $marca_cantidad= GarantiaGuiaIngreso::where("marca_id","=",$name)->count();
         $marca_cantidad++;
         $contador=1000000;
         $marca_cantidad=$contador+$marca_cantidad;
@@ -45,9 +48,10 @@ class GarantiaGuiaIngresoController extends Controller
         $orden_servicio=$marca.$guion.$marca_cantidad;
 
         $clientes=Cliente::all();
+        $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
 
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
-        return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes'));
+        return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales'));
     }
 
     /**
@@ -63,20 +67,12 @@ class GarantiaGuiaIngresoController extends Controller
         $numero_doc=$cliente->numero_documento;
 
         $garantia_guia_ingreso=new GarantiaGuiaIngreso;
-        $garantia_guia_ingreso->marca=$request->get('marca');
         $garantia_guia_ingreso->motivo=$request->get('motivo');
-        $garantia_guia_ingreso->ing_asignado=$request->get('ing_asignado');
         $garantia_guia_ingreso->fecha=$request->get('fecha');
         $garantia_guia_ingreso->orden_servicio=$request->get('orden_servicio');
         $garantia_guia_ingreso->estado=1;
         $garantia_guia_ingreso->egresado=0;
         $garantia_guia_ingreso->asunto=$request->get('asunto');
-        $garantia_guia_ingreso->nombre_cliente=$request->get('nombre_cliente');
-        $garantia_guia_ingreso->direccion=$request->get('direccion');
-        $garantia_guia_ingreso->telefono=$request->get('telefono');
-        $garantia_guia_ingreso->numero_documento=$numero_doc;
-        $garantia_guia_ingreso->correo=$request->get('correo');
-        $garantia_guia_ingreso->contacto=$request->get('contacto');
         $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipo');
         $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
         $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
@@ -84,6 +80,12 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
         $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
         $garantia_guia_ingreso->estetica=$request->get('estetica');
+
+        $garantia_guia_ingreso->marca_id=$request->get('marca_id');
+        $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
+        $garantia_guia_ingreso->cliente_id=$request->get('cliente_id');
+        $garantia_guia_ingreso->contacto_id=$request->get('contacto_id');
+
         $garantia_guia_ingreso->save();
 
         return redirect()->route('garantia_guia_ingreso.index');
