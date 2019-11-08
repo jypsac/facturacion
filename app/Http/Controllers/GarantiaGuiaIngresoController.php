@@ -62,9 +62,14 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function store(Request $request)
     {
-        $nombre_cliente=$request->get('nombre_cliente');
-        $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
-        $numero_doc=$cliente->numero_documento;
+        // $nombre_cliente=$request->get('nombre_cliente');
+        // $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
+        // $numero_doc=$cliente->numero_documento;
+
+        //TRAANSFORMNADO CON VALUE DE MARCA A UN ID
+        $marca_nombre=$request->get('marca_id');
+        $marca= Marca::where("nombre","=",$marca_nombre)->first();
+        $marca_id_var=$marca->id;
 
         $garantia_guia_ingreso=new GarantiaGuiaIngreso;
         $garantia_guia_ingreso->motivo=$request->get('motivo');
@@ -81,16 +86,19 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
         $garantia_guia_ingreso->estetica=$request->get('estetica');
 
-        $garantia_guia_ingreso->marca_id=$request->get('marca_id');
+        $garantia_guia_ingreso->marca_id=$marca_id_var;
+
         $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
         $garantia_guia_ingreso->cliente_id=$request->get('cliente_id');
-        $garantia_guia_ingreso->contacto_id=$request->get('contacto_id');
+        // $garantia_guia_ingreso->contacto_id=$request->get('cliente_id');
 
         $garantia_guia_ingreso->save();
 
         return redirect()->route('garantia_guia_ingreso.index');
 
-        
+
+
+
     }
 
     /**

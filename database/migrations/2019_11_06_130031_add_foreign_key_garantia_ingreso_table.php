@@ -23,14 +23,14 @@ class AddForeignKeyGarantiaIngresoTable extends Migration
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
 
-            $table->unsignedBigInteger('contacto_id');
-            $table->foreign('contacto_id')->references('id')->on('contactos')->onDelete('cascade');
+            // $table->unsignedBigInteger('contacto_id');
+            // $table->foreign('contacto_id')->references('id')->on('contactos')->onDelete('cascade');
 
             $table->timestamps();
         });
     }
 
-    /** 
+    /**
      * Reverse the migrations.
      *
      * @return void
@@ -40,7 +40,7 @@ class AddForeignKeyGarantiaIngresoTable extends Migration
         // Schema::table('garantia_guia_ingreso', function (Blueprint $table) {
         //     // dropIfExists('garantia_guia_ingreso');
         // });
-        
+
         Schema::dropIfExists('garantia_guia_ingreso');
 
     }

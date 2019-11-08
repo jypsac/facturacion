@@ -46,7 +46,7 @@
 												<div class="col-sm-4">
 													<select class="form-control m-b" name="personal_lab_id">
 														@foreach($personales as $personal)
-														<option>{{$personal->cargo}}</option>
+													<option value="{{$personal->id}}">{{$personal->cargo}}</option>
 														@endforeach
 													</select>
 												</div>
@@ -81,7 +81,7 @@
 						                     <div class="col-sm-9">
 												<select class="form-control m-b" name="cliente_id">
 													@foreach($clientes as $cliente)
-													<option>{{$cliente->nombre}}</option>
+													<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
 													@endforeach
 										    	</select>
 											</div>
@@ -100,7 +100,7 @@
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Contacto:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="contacto_id"></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" ></div>
 						                </div>
 
 	                            </div>

@@ -9,11 +9,11 @@ class GarantiaGuiaIngreso extends Model
     protected $table = 'garantia_guia_ingreso';
 
     protected $guarded = [];
-    
+
     public function marcas(){
         return $this->belongsTo(Marca::class);
     }
-    
+
     public function personal_laborales(){
         return $this->belongsTo(Personal_datos_laborales::class);
     }
@@ -22,7 +22,7 @@ class GarantiaGuiaIngreso extends Model
         return $this->belongsTo(Cliente::class);
     }
 
-    public function contactos(){
-        return $this->belongsTo(Contacto::class);
-    }
+    // public function contactos(){
+    //     return $this->belongsTo(Contacto::class);
+    // }
 }
