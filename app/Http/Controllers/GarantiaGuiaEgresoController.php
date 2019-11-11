@@ -63,25 +63,12 @@ class GarantiaGuiaEgresoController extends Controller
 
         //GUIA EGRESO
         $garantia_guia_egreso=new GarantiaGuiaEgreso;
-        $garantia_guia_egreso->marca=$request->get('marca');
-        $garantia_guia_egreso->motivo=$request->get('motivo');
-        $garantia_guia_egreso->ing_asignado=$request->get('ing_asignado');
-        $garantia_guia_egreso->fecha=$request->get('fecha');
-        $garantia_guia_egreso->orden_servicio=$request->get('orden_servicio');
+
+        $garantia_guia_egreso->garantia_ingreso_id=
         $garantia_guia_egreso->estado=1;
         $garantia_guia_egreso->egresado=1;
         $garantia_guia_egreso->informe_tecnico=0;
-        $garantia_guia_egreso->asunto=$request->get('asunto');
-        $garantia_guia_egreso->nombre_cliente=$request->get('nombre_cliente');
-        $garantia_guia_egreso->direccion=$request->get('direccion');
-        $garantia_guia_egreso->telefono=$request->get('telefono');
-        $garantia_guia_egreso->numero_documento=$numero_doc;
-        $garantia_guia_egreso->correo=$request->get('correo');
-        $garantia_guia_egreso->contacto=$request->get('contacto');
-        $garantia_guia_egreso->nombre_equipo=$request->get('nombre_equipo');
-        $garantia_guia_egreso->numero_serie=$request->get('numero_serie');
-        $garantia_guia_egreso->codigo_interno=$request->get('codigo_interno');
-        $garantia_guia_egreso->fecha_compra=$request->get('fecha_compra');
+
         $garantia_guia_egreso->descripcion_problema=$request->get('descripcion_problema');
         $garantia_guia_egreso->diagnostico_solucion=$request->get('diagnostico_solucion');
         $garantia_guia_egreso->recomendaciones=$request->get('recomendaciones');

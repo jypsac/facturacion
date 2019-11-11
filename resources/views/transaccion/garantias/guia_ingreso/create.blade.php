@@ -46,12 +46,11 @@
 												<div class="col-sm-4">
 													<select class="form-control m-b" name="personal_lab_id">
 														@foreach($personales as $personal)
-													<option value="{{$personal->id}}">{{$personal->cargo}}</option>
+													<option value="{{$personal->id}}">{{$personal->nombres}} {{$personal->apellidos}} </option>
 														@endforeach
 													</select>
 												</div>
 						                </div>
-
 								        <div class="form-group  row">
 								        	<label class="col-sm-1 col-form-label">Fecha:</label>
 						                    <div class="col-sm-4">

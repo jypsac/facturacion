@@ -7,6 +7,8 @@ use App\Marca;
 use App\Cliente;
 use App\Empresa;
 use App\Personal_datos_laborales;
+use App\Personal;
+use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -48,7 +50,9 @@ class GarantiaGuiaIngresoController extends Controller
         $orden_servicio=$marca.$guion.$marca_cantidad;
 
         $clientes=Cliente::all();
-        $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
+        // $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
+        // $personales=Personal::join("personal_datos_laborales","id","=","personal_datos_laborales.personal_id")->get();
+        $personales=DB::table('personal_datos_laborales')->where("cargo","=","ingeniero")->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
 
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
         return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales'));

@@ -10,19 +10,21 @@ class GarantiaGuiaIngreso extends Model
 
     protected $guarded = [];
 
-    public function marcas(){
-        return $this->belongsTo(Marca::class);
+    public function marcas_i(){
+        return $this->belongsTo(Marca::class,'marca_id');
     }
 
     public function personal_laborales(){
         return $this->belongsTo(Personal_datos_laborales::class);
     }
 
-    public function clientes(){
-        return $this->belongsTo(Cliente::class);
+    public function clientes_i(){
+        return $this->belongsTo(Cliente::class,'cliente_id');
     }
 
-    // public function contactos(){
-    //     return $this->belongsTo(Contacto::class);
-    // }
+    public function contactos(){
+        return $this->belongsTo(Contacto::class,'cliente_id');
+    }
+
+
 }

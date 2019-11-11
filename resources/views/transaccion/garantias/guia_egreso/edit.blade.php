@@ -28,7 +28,7 @@
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
 							                    <div class="col-sm-11">
-												<input type="text" class="form-control" name="marca" value="{{$garantias_guias_ingresos->marca}}" readonly>
+												<input type="text" class="form-control" name="marca" value="{{$garantias_guias_ingresos->marcas_i->nombre}}" readonly>
 							                    </div>
 						                </div>
 

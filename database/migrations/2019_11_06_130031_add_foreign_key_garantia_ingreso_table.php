@@ -25,7 +25,6 @@ class AddForeignKeyGarantiaIngresoTable extends Migration
 
             // $table->unsignedBigInteger('contacto_id');
             // $table->foreign('contacto_id')->references('id')->on('contactos')->onDelete('cascade');
-
             $table->timestamps();
         });
     }
