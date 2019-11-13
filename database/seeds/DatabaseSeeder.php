@@ -20,10 +20,11 @@ class DatabaseSeeder extends Seeder
         $this->call(MonedasSeeder::class);
         $this->call(UnidadMedidaSeeder::class);
         $this->call(PersonalTableSeeder::class);
-        $this->call(GarantiaTableSeeder::class);
         $this->call(ClientesSeeder::class);
         $this->call(ProvedorTableSeeder::class);
         $this->call(AlmacenTableSeeder::class);
         $this->call(Personal_laboralTableSeeder::class);
+        $this->call(GarantiaTableSeeder::class);
+        
     }
 }
