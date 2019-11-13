@@ -25,6 +25,7 @@ class DatabaseSeeder extends Seeder
         $this->call(AlmacenTableSeeder::class);
         $this->call(Personal_laboralTableSeeder::class);
         $this->call(GarantiaTableSeeder::class);
+        $this->call(ProductosTableSeeder::class);
         
     }
 }

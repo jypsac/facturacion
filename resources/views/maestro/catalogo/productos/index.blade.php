@@ -36,13 +36,13 @@
                     <table class="table table-striped table-bordered table-hover dataTables-example" >
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>COD. GENERAL</th>
+                                <th>COD. POR PRODUCTO</th>
                                 <th>NOMBRE</th>
-                                <th>Categoria</th>
-                                <th>Marca</th>
-                                <th>Modelo</th>
-                                <th>Activo</th>
-                                <th>Foto</th>
+                                <th>CATEGORIA</th>
+                                <th>MARCA</th>
+                                <th>ESTADO</th>
+                                <!-- <th>Foto</th> -->
                                 <th>Ver</th>
                                 <th>EDITAR</th>
                                 <th>Eliminar</th>
@@ -52,14 +52,14 @@
                         @foreach($productos as $producto)
                             <tr class="gradeX">
                                 <td>{{$producto->id}}</td>
+                                <td>{{$producto->cod_producto}}</td>
                                 <td>{{$producto->nombre}}</td>
-                                <td>{{$producto->categoria}}</td>
-                                <td>{{$producto->marca}}</td>
-                                <td>{{$producto->modelo}}</td>
-                                <td>{{$producto->activo}}</td>
-                                <td><img src="
+                                <td>{{$producto->categoria_i_producto->descripcion}}</td>
+                                <td>{{$producto->marcas_i_producto->nombre}}</td>
+                                <td>{{$producto->producto_estado}}</td>
+                              <!--   <td><img src="
                                     {{ asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" style="width: 45px;">
-                                </td>
+                                </td> -->
                                 <td><center><a href="{{ route('productos.show', $producto->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 <td><center><a href="{{ route('productos.edit', $producto->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                 <td>

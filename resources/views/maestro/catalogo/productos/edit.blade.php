@@ -52,7 +52,7 @@
 		                </div>
 
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Categoria:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="categoria" value="{{$producto->categoria}}"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="categoria" value="{{$producto->categoria_i_producto->descripcion}}"></div>
 		                </div>
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Marcas:</label>
@@ -66,9 +66,6 @@
 		                    </div>
 		                </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Modelo:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="modelo" value="{{$producto->modelo}}"></div>
-		                </div>
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Unida de medida:</label>
 							<div class="col-sm-10">
