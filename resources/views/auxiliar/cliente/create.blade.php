@@ -171,13 +171,13 @@
                 bodyTag: "fieldset",
                 onStepChanging: function (event, currentIndex, newIndex)
                 {
-                    // Always allow going backward even if the current step contains invalid fields!
+					// ¡Siempre permita retroceder incluso si el paso actual contiene campos no válidos!
                     if (currentIndex > newIndex)
                     {
                         return true;
                     }
 
-                    // Forbid suppressing "Warning" step if the user is to young
+                    // Prohibir suprimir el paso "Advertencia" si el usuario es demasiado joven
                     if (newIndex === 3 && Number($("#age").val()) < 18)
                     {
                         return false;
@@ -185,29 +185,29 @@
 
                     var form = $(this);
 
-                    // Clean up if user went backward before
+                    // Limpie si el usuario retrocedió antes
                     if (currentIndex < newIndex)
                     {
-                        // To remove error styles
+                        // Para eliminar estilos de error
                         $(".body:eq(" + newIndex + ") label.error", form).remove();
                         $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
                     }
 
-                    // Disable validation on fields that are disabled or hidden.
+                    // Deshabilite la validación en los campos que están deshabilitados u ocultos.
                     form.validate().settings.ignore = ":disabled,:hidden";
 
-                    // Start validation; Prevent going forward if false
+                    // Iniciar validación; Evite avanzar si es falso
                     return form.valid();
                 },
                 onStepChanged: function (event, currentIndex, priorIndex)
                 {
-                    // Suppress (skip) "Warning" step if the user is old enough.
+                    // Suprima (omita) el paso "Advertencia" si el usuario tiene edad suficiente.
                     if (currentIndex === 2 && Number($("#age").val()) >= 18)
                     {
                         $(this).steps("next");
                     }
 
-                    // Suppress (skip) "Warning" step if the user is old enough and wants to the previous step.
+                    // Suprima (omita) el paso "Advertencia" si el usuario tiene la edad suficiente y quiere el paso anterior.
                     if (currentIndex === 2 && priorIndex === 3)
                     {
                         $(this).steps("previous");
@@ -217,18 +217,18 @@
                 {
                     var form = $(this);
 
-                    // Disable validation on fields that are disabled.
-                    // At this point it's recommended to do an overall check (mean ignoring only disabled fields)
+					// Deshabilita la validación en los campos que están deshabilitados.
+                    // En este punto, se recomienda hacer una verificación general (significa ignorar solo los campos deshabilitados)
                     form.validate().settings.ignore = ":disabled";
 
-                    // Start validation; Prevent form submission if false
+                    // Iniciar validación; Evitar el envío del formulario si es falso
                     return form.valid();
                 },
                 onFinished: function (event, currentIndex)
                 {
                     var form = $(this);
 
-                    // Submit form input
+                    // Enviar entrada de formulario
                     form.submit();
                 }
             }).validate({
