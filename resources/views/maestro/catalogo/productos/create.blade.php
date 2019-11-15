@@ -34,8 +34,9 @@
 				<div class="ibox-content">
 					<form action="{{ route('productos.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
+				<legend>Clasificacion del Producto</legend>
 					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo Por Producto:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_prod"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_prod" placeholder="EPS-00001"></div>
 		                </div><!-- 1 -->
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Categoria:</label>
@@ -59,7 +60,7 @@
 					    	</div>
 		                </div><!-- 2 -->
 
-		                <div class="form-group row"><label class="col-sm-2 col-form-label">Marcas:</label>
+		                <div class="form-group row"><label class="col-sm-2 col-form-label">Marca:</label>
 							<div class="col-sm-10">
 								<select class="form-control m-b" name="marca">
 			          			<option>Seleccione una Marca</option>
@@ -69,12 +70,14 @@
 					    		</select>
 		                    </div>
 		                </div><!-- 3 -->
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
+				<legend>Datos del Producto</legend>
+
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto"></div>
 		                </div><!-- 4 -->
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descripcion:</label>
-		                     <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion"></textarea></div>
+		                     <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" placeholder=""></textarea></div>
 		                </div><!-- 5 -->
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Estado:</label>
@@ -88,11 +91,7 @@
 		                    </div>
 		                </div><!-- 6 -->
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento"></div>
-		                </div><!-- 7 -->
-
-		                <div class="form-group row"><label class="col-sm-2 col-form-label">Origen:</label>
+		                 <div class="form-group row"><label class="col-sm-2 col-form-label">Origen:</label>
 							<div class="col-sm-10">
 								<select class="form-control m-b" name="estado">
 			          			<option>Seleccione un Estado</option>
@@ -101,10 +100,15 @@
 			          			
 					    		</select>
 		                    </div>
-		                </div><!-- 8-->
+		                </div><!-- 7-->
+		            <legend>Precio del Producto</legend>
 
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento" placeholder="20%"></div>
+		                </div><!-- 8-->					
+		        	
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Utilidad:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="utilidad"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="utilidad" placeholder="10%"></div>
 		                </div><!-- 9 -->
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Unida de medida:</label>
@@ -127,16 +131,14 @@
 					    			@endforeach
 					    		</select>
 					    	</div>
-		                </div><!-- 9 -->
+		                </div><!-- 11 -->
 
-		                
-
-				        
-
-		               
-		                
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Precio:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="precio" placeholder="S/.100.00"></div>
+		                </div><!-- 12 -->
 
 
+		         
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Seleccionar Archivo :</label>
                      		<div class="col-sm-10"><input type="file" class="btn btn-success dim" name="foto"></div>
                 		</div>
