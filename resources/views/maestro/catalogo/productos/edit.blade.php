@@ -35,7 +35,10 @@
 					<form action="{{ route('productos.update',$producto->id) }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 					 	@method('PATCH')
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
+					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo por Producto:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="cod_producto" value="{{$producto->cod_producto}}"></div>
+		                </div>
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre" value="{{$producto->nombre}}"></div>
 		                </div>
 
@@ -44,11 +47,11 @@
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 1:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento" value="{{$producto->descuento}}"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento" value="{{$producto->descuento}}%"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 2:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento2" value="{{$producto->descuento2}}"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento2" value="{{$producto->descuento2}}%"></div>
 		                </div>
 
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Categoria:</label>
@@ -58,10 +61,9 @@
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Marcas:</label>
 							<div class="col-sm-10">
 								<select class="form-control m-b" name="marca">
-			          			<option>Seleccione la marca</option>
-			          			<option>GLORIA</option>
-			          			<option>nESTKLE</option>
-			          			<option>Hp</option>
+			          			<option value="{{$producto->marcas_i_producto->nombre}}">{{$producto->marcas_i_producto->nombre}}</option>
+
+
 					    		</select>
 		                    </div>
 		                </div>
