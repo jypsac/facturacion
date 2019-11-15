@@ -37,6 +37,19 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        $contador=Cliente::count();
+        $contador++;
+        
+        $contacto=new Contacto;
+        $contacto->nombre=$request->get('nombre_contacto');
+        $contacto->cargo=$request->get('cargo_contacto');
+        $contacto->telefono=$request->get('telefono_contacto');
+        $contacto->celular=$request->get('celular_contacto');
+        $contacto->email=$request->get('email_contacto');
+        $contacto->clientes_id=$contador;
+        $contacto->save();
+
+
         $cliente= new Cliente;
         $cliente->nombre=$request->get('nombre');
         $cliente->direccion=$request->get('direccion');
