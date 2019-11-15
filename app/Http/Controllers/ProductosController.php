@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\Producto;
 use App\Unidad_medida;
+use App\Categoria;
+use App\Marca;
+use App\Estado;
+use App\Familia;
+use App\Moneda;
 use Illuminate\Http\Request;
 
 class ProductosController extends Controller
@@ -27,8 +32,13 @@ class ProductosController extends Controller
      */
     public function create()
     {
+        $monedas=Moneda::all();
+        $familias=Familia::all();
+        $marcas=Marca::all();
+        $estados=Estado::all();
+        $categorias=Categoria::all();
         $unidad_medidas=Unidad_medida::all();
-        return view('maestro.catalogo.productos.create',compact('unidad_medidas'));
+        return view('maestro.catalogo.productos.create',compact('unidad_medidas','categorias','marcas','estados','familias','monedas'));
     }
 
     /**
