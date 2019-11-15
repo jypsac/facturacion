@@ -24,5 +24,7 @@ public function familia_i_producto(){
 public function moneda_i_producto(){
         return $this->belongsTo(Moneda::class,'moneda_id');
     } 
- 
+public function estado_i_producto(){
+        return $this->belongsTo(Estado::class,'estado_id');
+    }
 }

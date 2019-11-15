@@ -20,8 +20,7 @@ class CreateProductosTable extends Migration
             $table->integer('utilidad');
             $table->integer('descuento');
             $table->integer('descuento2');
-            $table->string('unidad_medida');
-            $table->string('producto_estado')->default(0);//activo o desactivado el producto
+           /* $table->string('producto_estado')->default(0);*///activo o desactivado el producto
             $table->text('descripcion');
             $table->text('origen');
             $table->text('precio');

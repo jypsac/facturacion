@@ -56,7 +56,7 @@
                                 <td>{{$producto->nombre}}</td>
                                 <td>{{$producto->categoria_i_producto->descripcion}}</td>
                                 <td>{{$producto->marcas_i_producto->nombre}}</td>
-                                <td>{{$producto->producto_estado}}</td>
+                                <td>{{$producto->estado_i_producto->nombre}}</td>
                               <!--   <td><img src="
                                     {{ asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" style="width: 45px;">
                                 </td> -->
