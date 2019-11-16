@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Crear Cliente')
-@section('breadcrumb', 'Crear Cliente')
-@section('breadcrumb2', 'Crear Cliente')
-@section('href_accion', route('cliente.index'))
-@section('value_accion', 'atras')
+@section('title', 'Crear Contacto')
+@section('breadcrumb', 'Crear Contacto')
+@section('breadcrumb2', 'Crear Contacto')
+@section('href_accion', route('contacto.index'))
+@section('value_accion', 'contacto')
 
 @section('content')
 
@@ -41,79 +41,45 @@
 					</p>
 
 
-					<form action="{{ route('cliente.store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post">
+					<form action="{{ route('cliente.storecontact') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post">
 						@csrf
 						<h1>Datos Personales</h1>
 						<fieldset>
 							<h2>Informacion I</h2>
 							<div class="row">
-
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label>Nombre *</label>
-										<input type="text" class="form-control" name="nombre" class="form-control required">
+										<input id="name" name="nombre_contacto" type="text" class="form-control required">
 									</div>
-
 									<div class="form-group">
-										<label>Direccion *</label>
-										<input type="text" class="form-control" name="direccion" class="form-control required">
+										<label>Cargo *</label>
+										<input id="surname" name="cargo_contacto" type="text" class="form-control required">
 									</div>
 								</div>
 								<div class="col-lg-6">
-
 									<div class="form-group">
-										<label>correo *</label>
-										<input id="email" name="email" type="text" class="form-control required email">
+										<label>	Telefono *</label>
+										<input id="email" name="telefono_contacto" type="text" class="form-control required">
 									</div>
-
-									<div class="form-group">
-										<label>Telefono *</label>
-										<input type="number" class="form-control" name="telefono" class="form-control required">
-									</div>
-
-								</div>
-
-							</div>
-
-						</fieldset>
-						<h1>Informacion</h1>
-						<fieldset>
-							<h2>Informacion II</h2>
-							<div class="row">
-								<div class="col-lg-6">
 									<div class="form-group">
 										<label>Celular *</label>
-										<input type="number" class="form-control" name="celular" class="form-control required">
-									</div>
-									<div class="form-group">
-										<label>Empresas *</label>
-										<input type="text" class="form-control" name="empresa" class="form-control required">
+										<input id="address" name="celular_contacto" type="text" class="form-control required">
 									</div>
 								</div>
 								<div class="col-lg-6">
 									<div class="form-group">
-										<label>Documento Identificacion *</label>
-										<select class="form-control m-b" name="documento_identificacion" >
-											<option value="dni">DNI</option>
-											<option value="pasaporte">Pasaporte</option>
-											<option value="ruc">Ruc</option>
-										</select>
-									</div>
-									<div class="form-group">
-										<label>Numero de Documento *</label>
-										<input type="text" class="form-control" name="numero_documento" class="form-control required">
+										<label>	Correo *</label>
+										<input id="email" name="email_contacto" type="text" class="form-control required email">
 									</div>
 								</div>
 							</div>
 						</fieldset>
-
-
-
-
 					</form>
 				</div>
 			</div>
 			</div>
+
 
 		</div>
 

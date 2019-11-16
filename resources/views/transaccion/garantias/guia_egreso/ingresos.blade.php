@@ -46,14 +46,14 @@
                                             <th>Asunto</th>
                                             <th>Cliente</th>
                                             <th>Egresar</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
                                         <tr class="gradeX">
                                             <td>{{$garantias_guias_ingreso->id}}</td>
-                                            <td>{{$garantias_guias_ingreso->marca}}</td>
+                                            <td>{{$garantias_guias_ingreso->marcas_i->nombre}}</td>
                                             <td>
                                                 @if($garantias_guias_ingreso->estado==1)
                                                     Activo
@@ -74,7 +74,7 @@
                                                     <button class="btn btn-w-m btn-secondary">Procesado</button>
                                                 @endif
                                             </center></td>
-                                            
+
                                         </tr>
                                         @endforeach
                                     </tbody>

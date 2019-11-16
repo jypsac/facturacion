@@ -64,68 +64,40 @@
 
 						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Asunto:</label>
 						                     <div class="col-sm-11"><input type="text" class="form-control" name="asunto"></div>
-						                </div>
+										</div>
 
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-6">
-	                        <div class="panel panel-primary">
-	                            <div class="panel-heading">
-	                                Datos del Cliente
-	                            </div>
-	                            <div class="panel-body">
-
-										<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
-						                     <div class="col-sm-9">
-												<select class="form-control m-b" name="cliente_id">
+										<div class="form-group  row"><label class="col-sm-1 col-form-label">Cliente:</label>
+						                     <div class="col-sm-11"><select class="form-control m-b" name="cliente_id">
 													@foreach($clientes as $cliente)
 													<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
 													@endforeach
-										    	</select>
-											</div>
+										    	</select></div>
 						                </div>
-
-								        <div class="form-group  row"><label class="col-sm-3">Direccion:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-3 ">Telefono:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-3 ">Correo:</label>
-						                     <div class="col-sm-9"><input type="email" class="form-control"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-3 ">Contacto:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" ></div>
-						                </div>
-
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <div class="col-lg-6">
+
+	                    <div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
 	                                Datos del Equipo
 	                            </div>
 	                            <div class="panel-body">
 
-									 	<div class="form-group  row"><label class="col-sm-3">Modelo :</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_equipo"></div>
+									 	<div class="form-group  row"><label class="col-sm-2">Modelo :</label>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre_equipo"></div>
 						                </div>
 
-								        <div class="form-group  row"><label class="col-sm-3">Nr Serie:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="numero_serie"></div>
+								        <div class="form-group  row"><label class="col-sm-2">Nr Serie:</label>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="numero_serie"></div>
 						                </div>
 
-						                <div class="form-group  row"><label class="col-sm-3">Codigo Interno:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="codigo_interno"></div>
+						                <div class="form-group  row"><label class="col-sm-2">Codigo Interno:</label>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_interno"></div>
 						                </div>
 
-						                <div class="form-group  row"><label class="col-sm-3">Fecha de Compra:</label>
-										<div class="col-sm-9"><input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}"></div>
+						                <div class="form-group  row"><label class="col-sm-2">Fecha de Compra:</label>
+										<div class="col-sm-10"><input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}"></div>
 						                </div>
 
 	                            </div>

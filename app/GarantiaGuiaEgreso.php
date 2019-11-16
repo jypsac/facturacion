@@ -13,4 +13,19 @@ class GarantiaGuiaEgreso extends Model
     public function garantia_ingreso_i(){
         return $this->belongsTo(GarantiaGuiaIngreso::class,'garantia_ingreso_id');
     }
+    public function marcas_i(){
+        return $this->belongsTo(Marca::class,'marca_id');
+    }
+
+    public function personal_laborales(){
+        return $this->belongsTo(Personal::class,'personal_id');
+    }
+
+    public function clientes_i(){
+        return $this->belongsTo(Cliente::class,'cliente_id');
+    }
+
+    public function contactos(){
+        return $this->belongsTo(Contacto::class,'cliente_id');
+    }
 }
