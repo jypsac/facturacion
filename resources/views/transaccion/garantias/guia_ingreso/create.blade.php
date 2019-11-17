@@ -17,6 +17,55 @@
 	        </div>
 	            <div class="ibox-content">
 	            	<div class="row">
+						<div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Tabla  <small>Agregado rapido</small></h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#" class="dropdown-item">Config option 1</a>
+                                    </li>
+                                    <li><a href="#" class="dropdown-item">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="text-center">
+                            <a data-toggle="modal" class="btn btn-primary" href="#modal-form">Agregar</a>
+                            </div>
+                            <div id="modal-form" class="modal fade" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
+
+                                                    <p>Selecciona a agregar</p>
+													<a href="{{route('cliente.create')}}"><button type="button" class="btn btn-primary btn-lg btn-block">Clientes</button></a>
+													<a href="{{route('marca.create')}}"><button type="button" class="btn btn-primary btn-lg btn-block">Marca</button></a>
+													<a href="{{route('personal.create')}}"><button type="button" class="btn btn-primary btn-lg btn-block">Personal</button></a>
+
+
+
+                                                </div>
+
+                                            </div>
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
 	            		<div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
@@ -64,68 +113,39 @@
 
 						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Asunto:</label>
 						                     <div class="col-sm-11"><input type="text" class="form-control" name="asunto"></div>
-						                </div>
+										</div>
 
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-6">
-	                        <div class="panel panel-primary">
-	                            <div class="panel-heading">
-	                                Datos del Cliente
-	                            </div>
-	                            <div class="panel-body">
-
-										<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
-						                     <div class="col-sm-9">
-												<select class="form-control m-b" name="cliente_id">
+										<div class="form-group  row"><label class="col-sm-1 col-form-label">Cliente:</label>
+						                     <div class="col-sm-11"><select class="form-control m-b" name="cliente_id">
 													@foreach($clientes as $cliente)
 													<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
 													@endforeach
-										    	</select>
-											</div>
+										    	</select></div>
 						                </div>
-
-								        <div class="form-group  row"><label class="col-sm-3">Direccion:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-3 ">Telefono:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-3 ">Correo:</label>
-						                     <div class="col-sm-9"><input type="email" class="form-control"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-3 ">Contacto:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" ></div>
-						                </div>
-
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <div class="col-lg-6">
+	                    <div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
 	                                Datos del Equipo
 	                            </div>
 	                            <div class="panel-body">
 
-									 	<div class="form-group  row"><label class="col-sm-3">Modelo :</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_equipo"></div>
+									 	<div class="form-group  row"><label class="col-sm-2">Modelo :</label>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre_equipo"></div>
 						                </div>
 
-								        <div class="form-group  row"><label class="col-sm-3">Nr Serie:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="numero_serie"></div>
+								        <div class="form-group  row"><label class="col-sm-2">Nr Serie:</label>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="numero_serie"></div>
 						                </div>
 
-						                <div class="form-group  row"><label class="col-sm-3">Codigo Interno:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="codigo_interno"></div>
+						                <div class="form-group  row"><label class="col-sm-2">Codigo Interno:</label>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_interno"></div>
 						                </div>
 
-						                <div class="form-group  row"><label class="col-sm-3">Fecha de Compra:</label>
-										<div class="col-sm-9"><input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}"></div>
+						                <div class="form-group  row"><label class="col-sm-2">Fecha de Compra:</label>
+										<div class="col-sm-10"><input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}"></div>
 						                </div>
 
 	                            </div>

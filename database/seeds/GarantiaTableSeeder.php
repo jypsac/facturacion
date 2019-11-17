@@ -65,27 +65,27 @@ class GarantiaTableSeeder extends Seeder
 		// ]);
 
 
- 		DB::table('garantia_guia_ingreso')->insert([
-			'id' => 1 ,
-			'motivo' => 'TECNICO',
-			'fecha' => date('2019-08-01'),
-			'orden_servicio' => 'EP-000001',
-			'estado' => 1,
-			'egresado'=> 0,
-			'asunto' => 'GARANTIA',
-			'nombre_equipo' => 'EPSON L3110',
-			'numero_serie' => 'X645008531',
-			'codigo_interno' => 'C0004393',
-			'fecha_compra' => date('2019-08-01'),
-			'descripcion_problema' => 'Falla Reportada: No toma el papel correctamente',
-			'revision_diagnostico' => 'Falla Detectada :',
-			'estetica' => 'Se observa en buen estado, Ingresa equipo con caja',
-			'marca_id' => 1,
-           	'personal_lab_id' => 1,
-			'cliente_id' => 1,
-			'created_at' => date('2019-08-01 00:00:00'),
-           	'updated_at' => date('2019-08-01 00:00:00')
-		]);
+ 		// DB::table('garantia_guia_ingreso')->insert([
+		// 	'id' => 1 ,
+		// 	'motivo' => 'TECNICO',
+		// 	'fecha' => date('2019-08-01'),
+		// 	'orden_servicio' => 'EP-000001',
+		// 	'estado' => 1,
+		// 	'egresado'=> 0,
+		// 	'asunto' => 'GARANTIA',
+		// 	'nombre_equipo' => 'EPSON L3110',
+		// 	'numero_serie' => 'X645008531',
+		// 	'codigo_interno' => 'C0004393',
+		// 	'fecha_compra' => date('2019-08-01'),
+		// 	'descripcion_problema' => 'Falla Reportada: No toma el papel correctamente',
+		// 	'revision_diagnostico' => 'Falla Detectada :',
+		// 	'estetica' => 'Se observa en buen estado, Ingresa equipo con caja',
+		// 	'marca_id' => 1,
+        //    	'personal_lab_id' => 1,
+		// 	'cliente_id' => 1,
+		// 	'created_at' => date('2019-08-01 00:00:00'),
+        //    	'updated_at' => date('2019-08-01 00:00:00')
+		// ]);
 
 
     }

@@ -27,6 +27,11 @@ class AddForeignKeyProductosTable extends Migration
             $table->unsignedBigInteger('monedas_id');
             $table->foreign('monedas_id')->references('id')->on('monedas')->onDelete('cascade');
 
+            $table->unsignedBigInteger('unidad_medida_id');
+            $table->foreign('unidad_medida_id')->references('id')->on('unidad_medida')->onDelete('cascade');
+            $table->unsignedBigInteger('estado_id');
+            $table->foreign('estado_id')->references('id')->on('estado')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
