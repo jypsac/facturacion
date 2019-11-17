@@ -15,17 +15,17 @@
                 <div class="tabs-container">
                     <ul class="nav nav-tabs" role="tablist">
                         <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Datos Generales</a></li>
-                        
+
                     </ul>
                     <div class="tab-content">
                         <div role="tabpanel" id="tab-1" class="tab-pane active">
                             <div class="panel-body">
-                                <strong>Motivo : {{$garantias_guias_egreso->motivo}}</strong><br><br>
-                                <strong>Asunto : {{$garantias_guias_egreso->asunto}}</strong><br><br>
-                                <p>Ing. Asigando : {{$garantias_guias_egreso->ing_asignado}}</p>
-                                <p>Marca : {{$garantias_guias_egreso->marca}}</p>
-                                <p>Orden de Servicio : {{$garantias_guias_egreso->orden_servicio}}</p>
-                                <p>Fecha : {{$garantias_guias_egreso->fecha}}</p>
+                                <strong>Motivo : {{$garantias_guias_egreso->garantia_ingreso_i->motivo}}</strong><br><br>
+                                <strong>Asunto : {{$garantias_guias_egreso->garantia_ingreso_i->asunto}}</strong><br><br>
+                                <p>Ing. Asigando : {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}</p>
+                                <p>Marca : {{$garantias_guias_egreso->garantia_ingreso_i->marcas_i->nombre}}</p>
+                                <p>Orden de Servicio : {{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</p>
+                                <p>Fecha : {{$garantias_guias_egreso->garantia_ingreso_i->fecha}}</p>
                             </div>
                         </div>
                     </div>
@@ -38,18 +38,18 @@
                         <div class="tabs-container">
                             <ul class="nav nav-tabs" role="tablist">
                                 <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Datos de Cientes</a></li>
-                                
+
                             </ul>
                             <div class="tab-content">
                                 <div role="tabpanel" id="tab-1" class="tab-pane active">
                                     <div class="panel-body">
-                                            <p>Nombre o Empresa : {{$garantias_guias_egreso->nombre_cliente}}</p>
-                                            <p>Direccion : {{$garantias_guias_egreso->direccion}}</p>
-                                            <p>Telefono : {{$garantias_guias_egreso->telefono}}</p>
-                                            <p>Correo : {{$garantias_guias_egreso->correo}}</p>
-                                            <p>Contacto : {{$garantias_guias_egreso->contacto}}</p>
-                                            <p>Numero de Documentacion : {{$garantias_guias_egreso->numero_documento}}</p>
-                                            
+                                            <p>Nombre o Empresa : {{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->nombre}}</p>
+                                            <p>Direccion : {{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->direccion}}</p>
+                                            <p>Telefono : {{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->telefono}}</p>
+                                            <p>Correo : {{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->email}}</p>
+                                            <p>Contacto : {{$garantias_guias_egreso->garantia_ingreso_i->contactos->nombre}}</p>
+                                            <p>Numero de Documentacion : {{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->numero_documento}}</p>
+
                                     </div>
                                 </div>
                             </div>
@@ -59,15 +59,15 @@
                             <div class="tabs-container">
                                 <ul class="nav nav-tabs" role="tablist">
                                     <li><a class="nav-link active" data-toggle="tab" href="#tab-1"> Datos del Equipo</a></li>
-                                    
+
                                 </ul>
                                 <div class="tab-content">
                                     <div role="tabpanel" id="tab-1" class="tab-pane active">
                                         <div class="panel-body">
-                                            <p>Modelo : {{$garantias_guias_egreso->nombre_equipo}}</p>
-                                            <p>Numero de Serie : {{$garantias_guias_egreso->numero_serie}}</p>
-                                            <p>Codigo Interno : {{$garantias_guias_egreso->codigo_interno}}</p>
-                                            <p>Fecha de Compra : {{$garantias_guias_egreso->fecha_compra}}</p>
+                                            <p>Modelo : {{$garantias_guias_egreso->garantia_ingreso_i->nombre_equipo}}</p>
+                                            <p>Numero de Serie : {{$garantias_guias_egreso->garantia_ingreso_i->numero_serie}}</p>
+                                            <p>Codigo Interno : {{$garantias_guias_egreso->garantia_ingreso_i->codigo_interno}}</p>
+                                            <p>Fecha de Compra : {{$garantias_guias_egreso->garantia_ingreso_i->fecha_compra}}</p>
                                             <p>-</p>
                                         </div>
                                     </div>
@@ -87,7 +87,7 @@
                     <div class="tab-content">
                         <div id="tab-10" class="tab-pane active">
                             <div class="panel-body">
-                                
+
 
                                 {!! nl2br($garantias_guias_egreso->descripcion_problema)!!}
                             </div>
@@ -108,8 +108,8 @@
                         <div class="tab-content">
                             <div id="tab-10" class="tab-pane active">
                                 <div class="panel-body">
-                                    
-    
+
+
                                     {!! nl2br($garantias_guias_egreso->diagnostico_solucion)!!}
                                 </div>
                             </div>
@@ -129,7 +129,7 @@
                         <div class="tab-content">
                             <div id="tab-10" class="tab-pane active">
                                 <div class="panel-body">
-    
+
                                     {!! nl2br($garantias_guias_egreso->recomendaciones)!!}
                                 </div>
                             </div>

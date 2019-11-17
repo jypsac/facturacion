@@ -14,6 +14,10 @@ class Contacto extends Model
       return $this->belongsTo(Cliente::class);
     }
 
+    public function clientes_i(){
+        return $this->belongsTo(Cliente::class,'cliente_id');
+    }
+
 }
 
 

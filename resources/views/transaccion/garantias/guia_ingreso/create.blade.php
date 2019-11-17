@@ -17,6 +17,55 @@
 	        </div>
 	            <div class="ibox-content">
 	            	<div class="row">
+						<div class="col-lg-12">
+                    <div class="ibox ">
+                        <div class="ibox-title">
+                            <h5>Tabla  <small>Agregado rapido</small></h5>
+                            <div class="ibox-tools">
+                                <a class="collapse-link">
+                                    <i class="fa fa-chevron-up"></i>
+                                </a>
+                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                                    <i class="fa fa-wrench"></i>
+                                </a>
+                                <ul class="dropdown-menu dropdown-user">
+                                    <li><a href="#" class="dropdown-item">Config option 1</a>
+                                    </li>
+                                    <li><a href="#" class="dropdown-item">Config option 2</a>
+                                    </li>
+                                </ul>
+                                <a class="close-link">
+                                    <i class="fa fa-times"></i>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="ibox-content">
+                            <div class="text-center">
+                            <a data-toggle="modal" class="btn btn-primary" href="#modal-form">Agregar</a>
+                            </div>
+                            <div id="modal-form" class="modal fade" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            <div class="row">
+                                                <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
+
+                                                    <p>Selecciona a agregar</p>
+													<a href="{{route('cliente.create')}}"><button type="button" class="btn btn-primary btn-lg btn-block">Clientes</button></a>
+													<a href="{{route('marca.create')}}"><button type="button" class="btn btn-primary btn-lg btn-block">Marca</button></a>
+													<a href="{{route('personal.create')}}"><button type="button" class="btn btn-primary btn-lg btn-block">Personal</button></a>
+
+
+
+                                                </div>
+
+                                            </div>
+                                    </div>
+                                    </div>
+                                </div>
+                        </div>
+                    </div>
+                </div>
 	            		<div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
@@ -76,7 +125,6 @@
 	                            </div>
 	                        </div>
 	                    </div>
-
 	                    <div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">

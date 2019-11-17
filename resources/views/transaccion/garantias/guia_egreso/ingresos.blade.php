@@ -62,11 +62,11 @@
                                                 @endif
                                             </td>
                                             <td>{{$garantias_guias_ingreso->motivo}}</td>
-                                            <td>{{$garantias_guias_ingreso->ing_asignado}}</td>
+                                            <td>{{$garantias_guias_ingreso->personal_laborales->nombre}}</td>
                                             <td>{{$garantias_guias_ingreso->fecha}}</td>
                                             <td>{{$garantias_guias_ingreso->orden_servicio}}</td>
                                             <td>{{$garantias_guias_ingreso->asunto}}</td>
-                                            <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
+                                            <td>{{$garantias_guias_ingreso->contactos->nombre}}</td>
                                             <td><center>
                                                 @if($garantias_guias_ingreso->egresado==0)
                                                     <a href="{{route('garantia_guia_egreso.edit', $garantias_guias_ingreso->id)}}"><button class="btn btn-w-m btn-info">Egresar</button></a>

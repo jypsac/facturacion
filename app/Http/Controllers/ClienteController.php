@@ -65,7 +65,7 @@ class ClienteController extends Controller
         $contacto->clientes_id=$contador;
         $contacto->save();
 
-        return redirect()->route('cliente.index');
+        return back();
     }
 
     /**

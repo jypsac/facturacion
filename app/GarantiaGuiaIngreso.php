@@ -15,7 +15,7 @@ class GarantiaGuiaIngreso extends Model
     }
 
     public function personal_laborales(){
-        return $this->belongsTo(Personal_datos_laborales::class);
+        return $this->belongsTo(Personal_datos_laborales::class,'personal_lab_id');
     }
 
     public function clientes_i(){
