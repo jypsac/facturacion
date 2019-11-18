@@ -39,7 +39,7 @@
 							                    </div>
 						                    <label class="col-sm-2 col-form-label">Ing. Asignado:</label>
 							                    <div class="col-sm-4">
-							                     	<input type="text" class="form-control" name="ing_asignado" value="{{$garantias_guias_ingresos->ing_asignado}}" readonly>
+							                     	<input type="text" class="form-control" name="ing_asignado" value="{{$garantias_guias_ingresos->contactos->nombre}}" readonly>
 							                    </div>
 						                </div>
 
@@ -69,19 +69,19 @@
 	                            <div class="panel-body">
 
 									 	<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_cliente" value="{{$garantias_guias_ingresos->nombre_cliente}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_cliente" value="{{$garantias_guias_ingresos->clientes_i->nombre}}" readonly></div>
 						                </div>
 
 								        <div class="form-group  row"><label class="col-sm-3">Direccion:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="direccion" value="{{$garantias_guias_ingresos->direccion}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="direccion" value="{{$garantias_guias_ingresos->clientes_i->direccion}}" readonly></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Telefono:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="telefono" value="{{$garantias_guias_ingresos->telefono}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="telefono" value="{{$garantias_guias_ingresos->clientes_i->telefono}}" readonly></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Correo:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="correo" value="{{$garantias_guias_ingresos->correo}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="correo" value="{{$garantias_guias_ingresos->clientes_i->email}}" readonly></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Contacto:</label>

@@ -37,19 +37,6 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-        $contador=Cliente::count();
-        $contador++;
-        
-        $contacto=new Contacto;
-        $contacto->nombre=$request->get('nombre_contacto');
-        $contacto->cargo=$request->get('cargo_contacto');
-        $contacto->telefono=$request->get('telefono_contacto');
-        $contacto->celular=$request->get('celular_contacto');
-        $contacto->email=$request->get('email_contacto');
-        $contacto->clientes_id=$contador;
-        $contacto->save();
-
-
         $cliente= new Cliente;
         $cliente->nombre=$request->get('nombre');
         $cliente->direccion=$request->get('direccion');
@@ -60,7 +47,25 @@ class ClienteController extends Controller
         $cliente->documento_identificacion=$request->get('documento_identificacion');
         $cliente->numero_documento=$request->get('numero_documento');
         $cliente->save();
-        return redirect()->route('cliente.index');
+
+        return view('auxiliar.cliente.contacto.cliente_new');
+    }
+
+    public function storecontact(Request $request)
+    {
+        $contador=Cliente::count();
+
+
+        $contacto=new Contacto;
+        $contacto->nombre=$request->get('nombre_contacto');
+        $contacto->cargo=$request->get('cargo_contacto');
+        $contacto->telefono=$request->get('telefono_contacto');
+        $contacto->celular=$request->get('celular_contacto');
+        $contacto->email=$request->get('email_contacto');
+        $contacto->clientes_id=$contador;
+        $contacto->save();
+
+        return back();
     }
     
     /**

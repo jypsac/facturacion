@@ -33,11 +33,11 @@
         <thead>
             <tr>
                 <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->ing_asignado}}</th>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}}</th>
                 <td style="width: 70px;">Fecha</td>
                 <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
                 <td style="width: 70px;">Marca</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->marca}}</th>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->marcas_i->nombre}}</th>
                 <td style="width: 80px;">Orden de Servicio</td>
                 <th style="width: 120px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
             </tr>
@@ -68,7 +68,7 @@
                                 <span data-diameter="40" class="updating-chart">Nombre o Empresa </span>
                             </td>
                             <td>
-                                <strong>{{$garantia_guia_ingreso->nombre_cliente}}<strong>
+                                <strong>{{$garantia_guia_ingreso->clientes_i->nombre}}<strong>
                             </td>
                         </tr>
                         <tr>
@@ -76,7 +76,7 @@
                                 <span class="line">Direccion</span>
                             </td>
                             <td>
-                                <strong>{{$garantia_guia_ingreso->direccion}}</strong>
+                                <strong>{{$garantia_guia_ingreso->clientes_i->direccion}}</strong>
                             </td>
                         </tr>
                         <tr>
@@ -84,7 +84,7 @@
                                 <span class="line">Telefono</span>
                             </td>
                             <td>
-                                <strong>{{$garantia_guia_ingreso->telefono}}</strong>
+                                <strong>{{$garantia_guia_ingreso->clientes_i->telefono}}</strong>
                             </td>
                         </tr>
                         <tr>
@@ -92,7 +92,7 @@
                                 <span class="line">Correo</span>
                             </td>
                             <td>
-                                <strong>{{$garantia_guia_ingreso->correo}}</strong>
+                                <strong>{{$garantia_guia_ingreso->clientes_i->email}}</strong>
                             </td>
                         </tr>
                         <tr>
@@ -100,7 +100,7 @@
                                 <span class="bar">Contacto</span>
                             </td>
                             <td>
-                                <strong>{{$garantia_guia_ingreso->contacto}}</strong>
+                                <strong>{{$garantia_guia_ingreso->contactos->nombre}}</strong>
                             </td>
                         </tr>
                         <tr>
@@ -108,7 +108,7 @@
                                 <span class="bar">Numero de Documentacion</span>
                             </td>
                             <td>
-                                <strong>{{$garantia_guia_ingreso->numero_documento}}</strong>
+                                <strong>{{$garantia_guia_ingreso->clientes_i->documento_identificacion}}</strong>
                             </td>
                         </tr>
                     </tbody>

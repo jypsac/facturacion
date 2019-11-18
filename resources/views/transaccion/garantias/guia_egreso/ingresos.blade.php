@@ -46,14 +46,14 @@
                                             <th>Asunto</th>
                                             <th>Cliente</th>
                                             <th>Egresar</th>
-                                            
+
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
                                         <tr class="gradeX">
                                             <td>{{$garantias_guias_ingreso->id}}</td>
-                                            <td>{{$garantias_guias_ingreso->marca}}</td>
+                                            <td>{{$garantias_guias_ingreso->marcas_i->nombre}}</td>
                                             <td>
                                                 @if($garantias_guias_ingreso->estado==1)
                                                     Activo
@@ -62,11 +62,11 @@
                                                 @endif
                                             </td>
                                             <td>{{$garantias_guias_ingreso->motivo}}</td>
-                                            <td>{{$garantias_guias_ingreso->ing_asignado}}</td>
+                                            <td>{{$garantias_guias_ingreso->personal_laborales->nombre}}</td>
                                             <td>{{$garantias_guias_ingreso->fecha}}</td>
                                             <td>{{$garantias_guias_ingreso->orden_servicio}}</td>
                                             <td>{{$garantias_guias_ingreso->asunto}}</td>
-                                            <td>{{$garantias_guias_ingreso->nombre_cliente}}</td>
+                                            <td>{{$garantias_guias_ingreso->contactos->nombre}}</td>
                                             <td><center>
                                                 @if($garantias_guias_ingreso->egresado==0)
                                                     <a href="{{route('garantia_guia_egreso.edit', $garantias_guias_ingreso->id)}}"><button class="btn btn-w-m btn-info">Egresar</button></a>
@@ -74,7 +74,7 @@
                                                     <button class="btn btn-w-m btn-secondary">Procesado</button>
                                                 @endif
                                             </center></td>
-                                            
+
                                         </tr>
                                         @endforeach
                                     </tbody>
