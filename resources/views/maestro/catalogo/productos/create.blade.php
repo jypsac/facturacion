@@ -35,13 +35,18 @@
 					<form action="{{ route('productos.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 				<legend>Clasificacion del Producto</legend>
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo Por Producto:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_prod" placeholder="EPS-00001"></div>
+						<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo Por Producto:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="cod_producto" value="EPS-00123XR" ></div>
+		                </div>
+
+
+					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo Alternativo:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="cod_alternativo" placeholder="EPS-00001"></div>
 		                </div><!-- 1 -->
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Categoria:</label>
 		                     <div class="col-sm-10">
-		                     	<select class="form-control m-b" name="categoria">
+		                     	<select class="form-control m-b" name="categoria_id">
 			          			<option>Seleccione una Categoria</option>
 			          			@foreach($categorias as $categoria)
 					    		<option value="{{ $categoria->id }}">{{ $categoria->descripcion}}</option>
@@ -51,7 +56,7 @@
 		                </div><!-- 2 -->
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Familia:</label>
 		                     <div class="col-sm-10">
-		                     	<select class="form-control m-b" name="familia">
+		                     	<select class="form-control m-b" name="familia_id">
 			          			<option>Seleccione una Familia</option>
 			          			@foreach($familias as $familia)
 					    		<option value="{{ $familia->id }}">{{ $familia->descripcion}}</option>
@@ -62,7 +67,7 @@
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Marca:</label>
 							<div class="col-sm-10">
-								<select class="form-control m-b" name="marca">
+								<select class="form-control m-b" name="marca_id">
 			          			<option>Seleccione una Marca</option>
 			          			@foreach($marcas as $marca)
 					    		<option value="{{ $marca->id }}">{{ $marca->nombre}}</option>
@@ -82,7 +87,7 @@
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Estado:</label>
 							<div class="col-sm-10">
-								<select class="form-control m-b" name="estado">
+								<select class="form-control m-b" name="estado_id">
 			          			<option>Seleccione un Estado</option>
 			          			@foreach($estados as $estado)
 					    		<option value="{{ $estado->id }}">{{ $estado->nombre}}</option>
@@ -93,7 +98,7 @@
 
 		                 <div class="form-group row"><label class="col-sm-2 col-form-label">Origen:</label>
 							<div class="col-sm-10">
-								<select class="form-control m-b" name="estado">
+								<select class="form-control m-b" name="origen">
 			          			<option>Seleccione un Estado</option>
 			          			<option value="Nacional" >Producto Nacional</option>
 			          			<option value="Importado">Producto Importado</option>
@@ -113,7 +118,7 @@
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Unida de medida:</label>
 							<div class="col-sm-10">
-								<select class="form-control m-b" name="unidad_medida">
+								<select class="form-control m-b" name="unidad_medida_id">
 			          			<option>Seleccione La Unidad de Medida</option>
 			          			@foreach($unidad_medidas as $unidad_medida)
 					    		<option value="{{ $unidad_medida->id }}">{{ $unidad_medida->medida}}</option>
@@ -124,7 +129,7 @@
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Moneda:</label>
 							<div class="col-sm-10">
-		                    	<select class="form-control m-b" name="moneda">
+		                    	<select class="form-control m-b" name="monedas_id">
 			          				<option>Seleccione la Moneda</option>
 			          				@foreach($monedas as $moneda)
 					    			<option value="{{ $moneda->id }}">{{ $moneda->nombre}}</option>
@@ -137,8 +142,6 @@
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="precio" placeholder="S/.100.00"></div>
 		                </div><!-- 12 -->
 
-
-		         
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Seleccionar Archivo :</label>
                      		<div class="col-sm-10"><input type="file" class="btn btn-success dim" name="foto"></div>
                 		</div>

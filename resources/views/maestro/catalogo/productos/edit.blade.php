@@ -35,8 +35,13 @@
 					<form action="{{ route('productos.update',$producto->id) }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 					 	@method('PATCH')
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo por Producto:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="cod_producto" value="{{$producto->cod_producto}}"></div>
+					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">
+					 	Codigo por Producto:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="cod_producto" value="{{$producto->cod_producto}}" readonly="readonly"></div>
+		                </div>
+					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">
+					 	Codigo por Alternativo:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="cod_alternativo" value="{{$producto->cod_alternativo}}"></div>
 		                </div>
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre" value="{{$producto->nombre}}"></div>
@@ -46,13 +51,10 @@
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="utilidad" value="{{$producto->utilidad}}"></div>
 		                </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 1:</label>
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento" value="{{$producto->descuento}}%"></div>
 		                </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 2:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento2" value="{{$producto->descuento2}}%"></div>
-		                </div>
 
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Categoria:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="categoria" value="{{$producto->categoria_i_producto->descripcion}}"></div>
