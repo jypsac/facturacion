@@ -61,20 +61,25 @@ class GarantiaGuiaEgresoController extends Controller
         $garantia_guia_ingreso->estado=0;
         $garantia_guia_ingreso->save();
 
+
+        //consulta
+        $id_garantia_ingreso=$garantia_guia_ingreso->id;
         //GUIA EGRESO
         $garantia_guia_egreso=new GarantiaGuiaEgreso;
 
-        $garantia_guia_egreso->garantia_ingreso_id=
+        $garantia_guia_egreso->garantia_ingreso_id=$id_garantia_ingreso;
         $garantia_guia_egreso->estado=1;
         $garantia_guia_egreso->egresado=1;
         $garantia_guia_egreso->informe_tecnico=0;
-
+        $garantia_guia_egreso->orden_servicio=$request->get('orden_servicio');
         $garantia_guia_egreso->descripcion_problema=$request->get('descripcion_problema');
         $garantia_guia_egreso->diagnostico_solucion=$request->get('diagnostico_solucion');
         $garantia_guia_egreso->recomendaciones=$request->get('recomendaciones');
         $garantia_guia_egreso->save();
 
         return redirect()->route('garantia_guia_egreso.index');
+
+
     }
 
     /**

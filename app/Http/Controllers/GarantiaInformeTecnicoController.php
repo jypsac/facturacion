@@ -47,7 +47,7 @@ class GarantiaInformeTecnicoController extends Controller
         }else{
             $name1="sin_foto";
         }
-        
+
         if($request->hasfile('image2')){
             $image2 =$request->file('image2');
             $orden_servicio=$request->get('orden_servicio');
@@ -104,7 +104,7 @@ class GarantiaInformeTecnicoController extends Controller
 
         if($request->hasfile('image8')){
             $image8 =$request->file('image8');
-            $orden_servicio=$request->get('orden_servicio');    
+            $orden_servicio=$request->get('orden_servicio');
             $name8 = $orden_servicio.'/'.time().$image8->getClientOriginalName();
             $image8->move(public_path().'/imagenes/'.$orden_servicio,$name8);
         }else{
@@ -124,27 +124,17 @@ class GarantiaInformeTecnicoController extends Controller
         $garantia_guia_egreso->informe_tecnico=1;
         $garantia_guia_egreso->save();
 
+        //consulta
+        $id_garantia_egreso=$garantia_guia_egreso->id;
+
         $garantia_informe_tecnico= new GarantiaInformeTecnico;
-        $garantia_informe_tecnico->marca=$request->get('marca');
-        $garantia_informe_tecnico->motivo=$request->get('motivo');
-        $garantia_informe_tecnico->ing_asignado=$request->get('ing_asignado');
-        $garantia_informe_tecnico->fecha=$request->get('fecha');
+        $garantia_informe_tecnico->garantia_egreso_id=$id_garantia_egreso;
         $garantia_informe_tecnico->orden_servicio=$request->get('orden_servicio');
         $garantia_informe_tecnico->estado=1;
         $garantia_informe_tecnico->egresado=1;
         $garantia_informe_tecnico->informe_tecnico=1;
-        $garantia_informe_tecnico->asunto=$request->get('asunto');
-        $garantia_informe_tecnico->nombre_cliente=$request->get('nombre_cliente');
-        $garantia_informe_tecnico->direccion=$request->get('direccion');
-        $garantia_informe_tecnico->telefono=$request->get('telefono');
-        $garantia_informe_tecnico->numero_documento=$numero_doc;
-        $garantia_informe_tecnico->correo=$request->get('correo');
-        $garantia_informe_tecnico->contacto=$request->get('contacto');
-        $garantia_informe_tecnico->nombre_equipo=$request->get('nombre_equipo');
-        $garantia_informe_tecnico->numero_serie=$request->get('numero_serie');
-        $garantia_informe_tecnico->codigo_interno=$request->get('codigo_interno');
-        $garantia_informe_tecnico->fecha_compra=$request->get('fecha_compra');
-        $garantia_informe_tecnico->descripcion_problema=$request->get('descripcion_problema');
+
+        //$garantia_informe_tecnico->descripcion_problema=$request->get('descripcion_problema');
         $garantia_informe_tecnico->revision_diagnostico=$request->get('revision_diagnostico');
         $garantia_informe_tecnico->informe=$request->get('informe');
         $garantia_informe_tecnico->image1=$name1;
@@ -201,7 +191,7 @@ class GarantiaInformeTecnicoController extends Controller
         }else{
             $name1="sin_foto";
         }
-        
+
         if($request->hasfile('image2')){
             $image2 =$request->file('image2');
             $orden_servicio=$request->get('orden_servicio');
@@ -258,13 +248,13 @@ class GarantiaInformeTecnicoController extends Controller
 
         if($request->hasfile('image8')){
             $image8 =$request->file('image8');
-            $orden_servicio=$request->get('orden_servicio');    
+            $orden_servicio=$request->get('orden_servicio');
             $name8 = $orden_servicio.'/'.time().$image8->getClientOriginalName();
             $image8->move(public_path().'/imagenes/'.$orden_servicio,$name8);
         }else{
             $name8="sin_foto";
         }
-        
+
 
         $garantia_informe_tecnico=GarantiaInformeTecnico::find($id);
         $garantia_informe_tecnico->revision_diagnostico=$request->get('revision_diagnostico');
@@ -301,8 +291,8 @@ class GarantiaInformeTecnicoController extends Controller
 
     public function actualizar($id)
     {
-        $garantia_guia_egreso=GarantiaGuiaEgreso::find($id);
-        return view('transaccion.garantias.informe_tecnico.actualizar',compact('garantia_guia_egreso'));
+        $garantia_informe_tecnico=GarantiaInformeTecnico::find($id);
+        return view('transaccion.garantias.informe_tecnico.actualizar',compact('garantia_informe_tecnico'));
     }
 
 }
