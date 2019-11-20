@@ -141,7 +141,7 @@ class ClientesSeeder extends Seeder
 		// 	'numero_documento' => "6575435",
 		// 	'created_at' => '2019-10-30 11:36:57',
 		// 	'updated_at' => "2019-10-30 11:36:57" ,
-		// ]);
-/*hola peee xD*/
+		//  ]);
+
     }
 }

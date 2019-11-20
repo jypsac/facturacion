@@ -15,6 +15,7 @@ class CreateGarantiaGuiaEgresoTable extends Migration
     {
         Schema::create('garantia_guia_egreso', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('orden_servicio');
             $table->boolean('estado');
             $table->boolean('egresado');
             $table->boolean('informe_tecnico');

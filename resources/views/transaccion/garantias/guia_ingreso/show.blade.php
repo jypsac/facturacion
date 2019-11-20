@@ -108,7 +108,7 @@
                                 <span class="bar">Numero de Documentacion</span>
                             </td>
                             <td>
-                                <strong>{{$garantia_guia_ingreso->clientes_i->documento_identificacion}}</strong>
+                                <strong>{{$garantia_guia_ingreso->clientes_i->numero_documento}}</strong>
                             </td>
                         </tr>
                     </tbody>
