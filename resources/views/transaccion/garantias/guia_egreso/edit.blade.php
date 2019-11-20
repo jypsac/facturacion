@@ -39,7 +39,7 @@
 							                    </div>
 						                    <label class="col-sm-2 col-form-label">Ing. Asignado:</label>
 							                    <div class="col-sm-4">
-							                     	<input type="text" class="form-control" name="ing_asignado" value="{{$garantias_guias_ingresos->contactos->nombre}}" readonly>
+							                     	<input type="text" class="form-control" name="ing_asignado" value="{{$garantias_guias_ingresos->personal_laborales->personal_l->nombres}}" readonly>
 							                    </div>
 						                </div>
 
@@ -85,7 +85,7 @@
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Contacto:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="contacto" value="{{$garantias_guias_ingresos->contacto}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="contacto" value="{{$garantias_guias_ingresos->contactos->nombre}}" readonly></div>
 						                </div>
 
 	                            </div>

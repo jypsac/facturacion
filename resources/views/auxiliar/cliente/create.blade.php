@@ -47,6 +47,20 @@
 						<fieldset>
 							<h2>Informacion I</h2>
 							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>Documento Identificacion *</label>
+										<select class="form-control m-b" name="documento_identificacion" >
+											<option value="dni">DNI</option>
+											<option value="pasaporte">Pasaporte</option>
+											<option value="ruc">Ruc</option>
+										</select>
+									</div>
+									<div class="form-group">
+										<label>Numero de Documento *</label>
+										<input type="text" class="form-control" name="numero_documento" class="form-control required">
+									</div>
+								</div>
 
 								<div class="col-lg-6">
 									<div class="form-group">
@@ -59,19 +73,7 @@
 										<input type="text" class="form-control" name="direccion" class="form-control required">
 									</div>
 								</div>
-								<div class="col-lg-6">
 
-									<div class="form-group">
-										<label>correo *</label>
-										<input id="email" name="email" type="text" class="form-control required email">
-									</div>
-
-									<div class="form-group">
-										<label>Telefono *</label>
-										<input type="number" class="form-control" name="telefono" class="form-control required">
-									</div>
-
-								</div>
 
 							</div>
 
@@ -90,20 +92,21 @@
 										<input type="text" class="form-control" name="empresa" class="form-control required">
 									</div>
 								</div>
+
 								<div class="col-lg-6">
+
 									<div class="form-group">
-										<label>Documento Identificacion *</label>
-										<select class="form-control m-b" name="documento_identificacion" >
-											<option value="dni">DNI</option>
-											<option value="pasaporte">Pasaporte</option>
-											<option value="ruc">Ruc</option>
-										</select>
+										<label>correo *</label>
+										<input id="email" name="email" type="text" class="form-control required email">
 									</div>
+
 									<div class="form-group">
-										<label>Numero de Documento *</label>
-										<input type="text" class="form-control" name="numero_documento" class="form-control required">
+										<label>Telefono *</label>
+										<input type="number" class="form-control" name="telefono" class="form-control required">
 									</div>
+
 								</div>
+
 							</div>
 						</fieldset>
 

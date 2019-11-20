@@ -23,40 +23,40 @@
 	                                General
 	                            </div>
 	                            <div class="panel-body">
-                                    <form action="{{route('garantia_informe_tecnico.update', $garantia_guia_egreso->id)}}"  enctype="multipart/form-data" method="post">
+                                    <form action="{{route('garantia_informe_tecnico.update', $garantia_informe_tecnico->id)}}"  enctype="multipart/form-data" method="post">
                                             @csrf
                                             @method('put')
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
 							                    <div class="col-sm-11">
-												<input type="text" class="form-control" name="marca" value="{{$garantia_guia_egreso->marca}}" readonly>
+												<input type="text" class="form-control" name="marca" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre}}" readonly>
 							                    </div>
 						                </div>
 
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Motivo :</label>
 												<div class="col-sm-4">
-													<input type="text" class="form-control" name="motivo" value="{{$garantia_guia_egreso->motivo}}" readonly>
+													<input type="text" class="form-control" name="motivo" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}" readonly>
 							                    </div>
 						                    <label class="col-sm-2 col-form-label">Ing. Asignado:</label>
 							                    <div class="col-sm-4">
-							                     	<input type="text" class="form-control" name="ing_asignado" value="{{$garantia_guia_egreso->ing_asignado}}" readonly>
+							                     	<input type="text" class="form-control" name="ing_asignado" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}}" readonly>
 							                    </div>
 						                </div>
 
 								        <div class="form-group  row">
 								        	<label class="col-sm-1 col-form-label">Fecha:</label>
 						                    <div class="col-sm-4">
-						                     	<input type="text" class="form-control" name="fecha" value="{{$garantia_guia_egreso->fecha}}" readonly>
+						                     	<input type="text" class="form-control" name="fecha" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha}}" readonly>
 						                    </div>
 						                    <label class="col-sm-2 col-form-label">Orden de servicio:</label>
 						                    <div class="col-sm-4">
-						                    	<input type="text" class="form-control" name="orden_servicio" value="{{$garantia_guia_egreso->orden_servicio}}" readonly>
+						                    	<input type="text" class="form-control" name="orden_servicio" value="{{$garantia_informe_tecnico->orden_servicio}}" readonly>
 						                    </div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Asunto:</label>
-						                     <div class="col-sm-11"><input type="text" class="form-control" name="asunto" value="{{$garantia_guia_egreso->asunto}}" readonly></div>
+						                     <div class="col-sm-11"><input type="text" class="form-control" name="asunto" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}" readonly></div>
 						                </div>
 
 	                            </div>
@@ -70,23 +70,23 @@
 	                            <div class="panel-body">
 
 									 	<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_cliente" value="{{$garantia_guia_egreso->nombre_cliente}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_cliente" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->nombre}}" readonly></div>
 						                </div>
 
 								        <div class="form-group  row"><label class="col-sm-3">Direccion:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="direccion" value="{{$garantia_guia_egreso->direccion}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="direccion" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->direccion}}" readonly></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Telefono:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="telefono" value="{{$garantia_guia_egreso->telefono}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="telefono" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->telefono}}" readonly></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Correo:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="correo" value="{{$garantia_guia_egreso->correo}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="correo" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}" readonly></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3 ">Contacto:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="contacto" value="{{$garantia_guia_egreso->contacto}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="contacto" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->contactos->nombre}}" readonly></div>
 						                </div>
 
 	                            </div>
@@ -100,19 +100,19 @@
 	                            <div class="panel-body">
 
 									 	<div class="form-group  row"><label class="col-sm-3">Modelo :</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_guia_egreso->nombre_equipo}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->nombre_equipo}}" readonly></div>
 						                </div>
 
 								        <div class="form-group  row"><label class="col-sm-3">Nr Serie:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="numero_serie" value="{{$garantia_guia_egreso->numero_serie}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="numero_serie" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->numero_serie}}" readonly></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3">Codigo Interno:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="codigo_interno" value="{{$garantia_guia_egreso->codigo_interno}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="codigo_interno" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->codigo_interno}}" readonly></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-3">Fecha de Compra:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="fecha_compra" value="{{$garantia_guia_egreso->fecha_compra}}" readonly></div>
+						                     <div class="col-sm-9"><input type="text" class="form-control" name="fecha_compra" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha_compra}}" readonly></div>
 						                </div>
 
 	                            </div>
@@ -126,7 +126,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" readonly>{{$garantia_guia_egreso->descripcion_problema}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" readonly>{{$garantia_informe_tecnico->garantia_egreso_i->descripcion_problema}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -140,7 +140,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico">{{$garantia_guia_egreso->revision_diagnostico}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico">{{$garantia_informe_tecnico->revision_diagnostico}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -154,7 +154,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="informe">{{$garantia_guia_egreso->informe}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="informe">{{$garantia_informe_tecnico->informe}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -165,7 +165,7 @@
 						<div class="col-lg-6">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
-	                                Fotos 
+	                                Fotos
 	                            </div>
 	                            <div class="panel-body">
 						                <div class="form-group  row">
