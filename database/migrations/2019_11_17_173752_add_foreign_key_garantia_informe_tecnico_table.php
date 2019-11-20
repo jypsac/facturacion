@@ -14,8 +14,8 @@ class AddForeignKeyGarantiaInformeTecnicoTable extends Migration
     public function up()
     {
          Schema::table('garantia_informe_tecnico', function (Blueprint $table) {
-            $table->unsignedBigInteger('garantia_ingreso_id');
-            $table->foreign('garantia_ingreso_id')->references('id')->on('garantia_guia_ingreso')->onDelete('cascade');
+            $table->unsignedBigInteger('garantia_egreso_id');
+            $table->foreign('garantia_egreso_id')->references('id')->on('garantia_guia_egreso')->onDelete('cascade');
 
             $table->timestamps();
         });
@@ -28,6 +28,6 @@ class AddForeignKeyGarantiaInformeTecnicoTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('garantia_informe_tecnico');
     }
 }
