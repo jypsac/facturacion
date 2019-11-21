@@ -8,14 +8,22 @@
 
 @section('content')
 
-<div class="ibox">
-    <div class="table-responsive">
-        <img align="right" src="{{asset('img/logos/logo.jpg')}}" style="width: 150px;height: 100px">
+<div class="ibox" style="margin-bottom:0px;">
+    <div class="table-responsive" ><!-- 
+        <img align="right" src="{{asset('img/logos/logo.jpg')}}" style="width: 150px;height: 100px"> -->
         <img align="left" src="{{asset('img/logos/epson.png')}}" style="width: 180px;height: 100px">
+        <img align="right" src="{{asset('img/logos/epson.png')}}" style="width: 180px;height: 100px">
     </div>
 </div>
+<div class="table-responsive" align="right">
+                    <div class="title-action" style="padding-top: 0;" >
+                        <a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Edit </a>
+                        <a href="#" class="btn btn-white"><i class="fa fa-check "></i> Save </a>
+                        <a href="{{route('impresiones_ingreso')}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
+                    </div>
+                </div>
 
-<h2 style="text-align: center;"> <strong>Guía de Ingreso</strong></h2>
+<h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2>
 
 <div class="wrapper wrapper-content animated fadeIn">
  
@@ -284,4 +292,6 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+
 @endsection

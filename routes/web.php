@@ -35,9 +35,9 @@ Route::view('/' , 'home')->name('inicio');
 	//CONSULTAS
 
 	//IMPRESIONES
-	Route::view('/impresiones' , 'transaccion.garantias.guia_ingreso.show_print')->name('xd');
-	Route::view('/url' , 'transaccion.garantias.guia_ingreso.show_print')->name('impresion7898');
-	Route::view('/guiasd' , 'transaccion.garantias.guia_ingreso.show_print')->name('impresion7898');
+	Route::view('/impresionIngreso' , 'transaccion.garantias.guia_ingreso.show_print')->name('impresiones_ingreso');
+	Route::view('/impresionEgreso' , 'transaccion.garantias.guia_ingreso.show_print')->name('impresiones_egreso');
+	Route::view('/impresionInformeTecnico' , 'transaccion.garantias.guia_ingreso.show_print')->name('impresiones_informe'); 
 
 	//IMPRESIONES
 
