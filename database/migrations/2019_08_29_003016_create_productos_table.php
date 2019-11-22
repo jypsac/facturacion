@@ -16,10 +16,10 @@ class CreateProductosTable extends Migration
         Schema::create('productos', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('cod_producto');
+            $table->string('cod_alternativo');
             $table->string('nombre');
             $table->integer('utilidad');
             $table->integer('descuento');
-            $table->integer('descuento2');
            /* $table->string('producto_estado')->default(0);*///activo o desactivado el producto
             $table->text('descripcion');
             $table->text('origen');

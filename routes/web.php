@@ -34,6 +34,13 @@ Route::view('/' , 'home')->name('inicio');
 	Route::get('consultas/garantias-informe-tecnico', 'ConsultasController@garantias_informe_tecnico')->name('consultas.garantias.informe_tecnico');
 	//CONSULTAS
 
+	//IMPRESIONES
+	Route::view('/impresionIngreso' , 'transaccion.garantias.guia_ingreso.show_print')->name('impresiones_ingreso');
+	Route::view('/impresionEgreso' , 'transaccion.garantias.guia_ingreso.show_print')->name('impresiones_egreso');
+	Route::view('/impresionInformeTecnico' , 'transaccion.garantias.guia_ingreso.show_print')->name('impresiones_informe'); 
+
+	//IMPRESIONES
+
 	Route::resource('/contacto','ContactoController');
 	Route::resource('/guia','GuiaController');
 	Route::resource('/horarios','HorariosController');

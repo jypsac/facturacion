@@ -35,9 +35,10 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover dataTables-example" >
                         <thead>
-                            <tr>
-                                <th>COD. GENERAL</th>
+                            <tr><!-- 
+                                <th>COD. GENERAL</th> -->
                                 <th>COD. POR PRODUCTO</th>
+                                <th>COD. ALTERNATIVO</th>
                                 <th>NOMBRE</th>
                                 <th>CATEGORIA</th>
                                 <th>MARCA</th>
@@ -51,8 +52,8 @@
                     <tbody>
                         @foreach($productos as $producto)
                             <tr class="gradeX">
-                                <td>{{$producto->id}}</td>
                                 <td>{{$producto->cod_producto}}</td>
+                                <td>{{$producto->cod_alternativo}}</td>
                                 <td>{{$producto->nombre}}</td>
                                 <td>{{$producto->categoria_i_producto->descripcion}}</td>
                                 <td>{{$producto->marcas_i_producto->nombre}}</td>
