@@ -120,12 +120,12 @@
 						<div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
-	                                Descripcion del Problema
+	                                Estetica
 	                            </div>
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" readonly>{{$garantia_guia_egreso->descripcion_problema}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" ></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -134,7 +134,21 @@
 	                    <div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
-	                                Revision Y diagnostico
+	                                Revision y Diagnostico
+	                            </div>
+	                            <div class="panel-body">
+						                <div class="form-group  row">
+						                     <div class="col-sm-12">
+						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" ></textarea>
+						                     </div>
+						                </div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-12">
+	                        <div class="panel panel-primary">
+	                            <div class="panel-heading">
+	                                Causas de problema
 	                            </div>
 	                            <div class="panel-body">
 						                <div class="form-group  row">
@@ -148,7 +162,7 @@
 	                    <div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
-	                                Informe
+	                                Solucion
 	                            </div>
 	                            <div class="panel-body">
 						                <div class="form-group  row">

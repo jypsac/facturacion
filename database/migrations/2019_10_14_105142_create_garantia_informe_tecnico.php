@@ -18,13 +18,14 @@ class CreateGarantiaInformeTecnico extends Migration
 
             $table->string('orden_servicio');
             $table->boolean('estado');
-            $table->boolean('egresado');
-            $table->boolean('informe_tecnico');
+            $table->boolean('egresado');/*
+            $table->boolean('informe_tecnico');*/
 
-            //DESCRIPCION DEL PROBLEMA
-            //$table->text('descripcion_problema');
+/*            DESCRIPCION DEL PROBLEMA*/
+            $table->text('estetica');
             $table->text('revision_diagnostico');
-            $table->text('informe');
+            $table->text('causas_del_problema');
+            $table->text('solucion');
             //imagenes
             $table->string('image1');
             $table->string('image2');

@@ -68,7 +68,7 @@
             <h4>Datos del Ciente</h4>
             {{-- </div> --}}
             <div>
-                <table class="table table-bordered white-bg">
+                <table class="table table-bordered white-bg" >
                     <tbody>
                         <tr>
                             <td>
@@ -235,21 +235,6 @@
 </div>
 
 
-<div class="container">
-    <div class="child1"><br>
-        <hr />
-        <td>Departamento de Servicio Tecnico</td>
-        <p style="width:200px;" align="center">Fernndo Franco Solia</p>
-        <p style="width:200px;" align="center">S&R SAC-CSA EPSON</p>
-    </div>
-    <div class="child2"><br>
-        <hr />
-        <p style="width:200px;" align="center">Cliente (Firma y DNI)</p>
-    </div>
-</div>
-
-
-
 </div>
 <style>
     .container {
@@ -260,25 +245,13 @@
         align-items: start;
     }
 
-    .child1 {
-        /* background: #60e0b0; */
-        height: 7rem;
-        padding: .2rem;
-
-    }
-
-    .child2 {
-        /* background: #60e0b0; */
-        padding: .2rem;
-        height: 7rem;
-        margin-left: 30%;
-    }
 
     .border {
         border-color: #aaaaaa;
         border-width: 1px;
         border-style: solid;
     }
+    td{background: white;}
 
 </style>
 
