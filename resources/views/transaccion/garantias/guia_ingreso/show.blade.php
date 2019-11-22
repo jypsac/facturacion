@@ -19,7 +19,7 @@
                     <div class="title-action" style="padding-top: 0;" >
                         <a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Edit </a>
                         <a href="#" class="btn btn-white"><i class="fa fa-check "></i> Save </a>
-                        <a href="{{route('impresiones_ingreso')}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
+                        <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
                     </div>
                 </div>
 

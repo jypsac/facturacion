@@ -40,7 +40,7 @@
         <thead>
             <tr>
                 <td style="width: 100px;">Motivo</td>
-                <th></th>
+                <th>{{$garantia_guia_ingreso->motivo}}</th>
             </tr>
         </thead>
     </table>
