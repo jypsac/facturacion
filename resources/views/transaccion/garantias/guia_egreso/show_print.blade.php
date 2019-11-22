@@ -1,14 +1,27 @@
-@extends('layout')
+<!DOCTYPE html>
+<html>
 
-@section('title', 'Ver - Guia de Egreso')
-@section('breadcrumb', 'Ver Guia de Egreso')
-@section('breadcrumb2', 'Garantia')
-@section('href_accion', route('garantia_guia_egreso.index'))
-@section('value_accion', 'Atras')
+<head>
 
-@section('content')
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Guia Egreso</title>
 
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <script src="@yield('vue_js', '#')" defer></script>
+
+    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
+
+</head>
+
+<body class="white-bg">
 <div class="ibox" style="margin-bottom:0px;">
     <div class="table-responsive" ><!-- 
         <img align="right" src="{{asset('img/logos/logo.jpg')}}" style="width: 150px;height: 100px"> -->
@@ -16,13 +29,6 @@
         <img align="right" src="{{asset('img/logos/epson.png')}}" style="width: 180px;height: 100px">
     </div>
 </div>
-<div class="table-responsive" align="right">
-                    <div class="title-action" style="padding-top: 0;" >
-                        <a href="#" class="btn btn-white"><i class="fa fa-envelope" ></i> Gmail </a>
-                        <a href="#" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a>
-                        <a href="{{route('impresiones_egreso' ,$garantias_guias_egreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
-                    </div>
-                </div>
 
 <h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2>
 
@@ -283,16 +289,15 @@
 
 </style>
 
+<!-- Mainly scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
 
-<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-<script src="{{ asset('js/popper.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.js') }}"></script>
-<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
 
-<!-- Custom and plugin javascript -->
-<script src="{{ asset('js/inspinia.js') }}"></script>
-<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-
-
-@endsection
+    <script type="text/javascript">
+        window.print();
+    </script>

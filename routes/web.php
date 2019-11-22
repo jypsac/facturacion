@@ -20,7 +20,7 @@ Route::view('/' , 'home')->name('inicio');
 	Route::put('garantia_guia_ingreso/{guia}', 'GarantiaGuiaIngresoController@actualizar')->name('garantia_guia_ingreso.actualizar');
 	Route::resource('/garantia_guia_ingreso','GarantiaGuiaIngresoController');
 
-	Route::view('/impresionEgreso' , 'transaccion.garantias.guia_ingreso.show_print')->name('impresiones_egreso');
+	Route::get('garantia_guia_egreso/impresionEgreso/{id}' , 'GarantiaGuiaEgresoController@print')->name('impresiones_egreso');
 	Route::get('garantia_guia_egreso/guias', 'GarantiaGuiaEgresoController@guias')->name('garantia_guia_egreso.guias');
 	Route::resource('/garantia_guia_egreso','GarantiaGuiaEgresoController');
 

@@ -17,8 +17,8 @@
 </div>
 <div class="table-responsive" align="right">
                     <div class="title-action" style="padding-top: 0;" >
-                        <a href="#" class="btn btn-white"><i class="fa fa-pencil"></i> Edit </a>
-                        <a href="#" class="btn btn-white"><i class="fa fa-check "></i> Save </a>
+                        <a href="#" class="btn btn-white"><i class="fa fa-envelope" ></i> Gmail </a>
+                        <a href="#" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a>
                         <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
                     </div>
                 </div>

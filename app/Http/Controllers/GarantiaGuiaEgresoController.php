@@ -130,5 +130,8 @@ class GarantiaGuiaEgresoController extends Controller
         //
     }
 
-
+      public function print($id){
+        $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
+        return view('transaccion.garantias.guia_egreso.show_print',compact('garantias_guias_egreso'));
+    }
 }

@@ -36,7 +36,7 @@
 <div class="wrapper wrapper-content animated fadeIn">
  
 <div class="table-responsive">
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped cero" >
         <thead>
             <tr>
                 <td style="width: 100px;">Motivo</td>
@@ -44,25 +44,25 @@
             </tr>
         </thead>
     </table>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped cero">
         <thead>
             <tr>
                 <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 200px;"></th>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</th>
                 <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;"></th>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
                 <td style="width: 70px;">Marca</td>
-                <th style="width: 70px;"></th>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->marcas_i->nombre}}</th>
                 <td style="width: 80px;">Orden de Servicio</td>
-                <th style="width: 120px;"></th>
+                <th style="width: 120px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
             </tr>
         </thead>
     </table>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped cero">
         <thead>
             <tr>
                 <td style="width: 100px;">Asunto</td>
-                <th></th>
+                <th>{{$garantia_guia_ingreso->asunto}}</th>
             </tr>
         </thead>
     </table>
@@ -78,54 +78,29 @@
             <div>
                 <table class="table table-bordered white-bg">
                     <tbody>
-                        <tr>
-                            <td>
-                                <span data-diameter="40" class="updating-chart">Nombre o Empresa </span>
-                            </td>
-                            <td>
-                                <strong> <strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Direccion</span>
-                            </td>
-                            <td>
-                                <strong> </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Telefono</span>
-                            </td>
-                            <td>
-                                <strong> </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Correo</span>
-                            </td>
-                            <td>
-                                <strong> </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="bar">Contacto</span>
-                            </td>
-                            <td>
-                                <strong> </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="bar">Numero de Documentacion</span>
-                            </td>
-                            <td>
-                                <strong> </strong>
-                            </td>
-                        </tr>
+            <tr>
+                <td style="width: 70px;">Nombre o Empresa</td>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
+                <td style="width: 70px;">Direccion</td>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->clientes_i->direccion}}</th>
+            </tr>           
+             <tr>
+                <td style="width: 70px;">Telefono</td>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->clientes_i->telefono}}</th>
+                <td style="width: 70px;">Correo</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
+            </tr>
+            <tr>
+                <td style="width: 70px;">Contacto</td>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->contactos->nombre}}</th>
+                <td style="width: 70px;">Numero de documento</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->clientes_i->numero_documento}}</th>
+            </tr>            <tr>
+                <td style="width: 70px;">Telefono</td>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->clientes_i->telefono}}</th>
+                <td style="width: 70px;">Correo</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
+            </tr>        
                     </tbody>
                 </table>
             </div>
@@ -136,46 +111,27 @@
 
 
 <div class="row">
-    <div class="col-lg-12">
+    <div class="col-lg-12" style="
+    height: 105px;
+">
         <div class="ibox ">
-            <div class="ibox-title">
+            {{-- <div class="ibox-title"> --}}
             <h4>Datos del Equipo</h4>
-            </div> 
+            {{-- </div> --}}
             <div>
                 <table class="table table-bordered white-bg">
                     <tbody>
-                        <tr>
-                            <td>
-                                <span data-diameter="40" class="updating-chart">Modelo</span>
-                            </td>
-                            <td>
-                                <strong>  </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Numero de Serie </span>
-                            </td>
-                            <td>
-                                <strong> </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Codigo Interno</span>
-                            </td>
-                            <td>
-                                <strong> </strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Fecha de Compra</span>
-                            </td>
-                            <td>
-                                <strong></strong>
-                            </td>
-                        </tr>
+            <tr>
+                <td style="width: 70px;">Modelo</td>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->nombre_equipo}}</th>
+                <td style="width: 70px;">Numero de Serie </td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->numero_serie}}</th>
+            </tr>            <tr>
+                <td style="width: 70px;">Codigo Interno</td>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->codigo_interno}}</th>
+                <td style="width: 70px;">Fecha de Compra</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha_compra}}</th>
+            </tr>      
                     </tbody>
                 </table>
             </div>
@@ -187,15 +143,15 @@
 
 
 <div class="col-lg-13">
-    <div class="ibox">
-         <div class="ibox-title"> 
+    <div class="ibox cero">
+        {{-- <div class="ibox-title"> --}}
         <h4>Descripcion Del Problema</h4>
-       </div> 
+        {{-- </div> --}}
         <div class="border">
-            <div class="ibox-content text-left h-10">
+            <div class="ibox-content text-left h-10" style="padding: 0px;">
                 <span id="sparkline8">
-                    <div class="panel-body">
-                       
+                    <div class="panel-body" style="padding:10px;">
+                        {!! nl2br($garantia_guia_ingreso->descripcion_problema)!!}
                     </div>
                 </span>
             </div>
@@ -206,16 +162,15 @@
 
 
 <div class="col-lg-13">
-    <div class="ibox ">
-        <div class="ibox-title"> 
+    <div class="ibox cero ">
+        {{-- <div class="ibox-title"> --}}
         <h4>Revicion y Diagnostico</h4>
-      </div>
-        <div class="border">
-            <div class="ibox-content text-left h-10">
+        {{-- </div> --}}
+        <div class="border"> <div class="ibox-content text-left h-10" style="padding: 0px;">
                 <span id="sparkline8">
-             <div class="panel-body"> 
-                    
-                    </div> 
+                    <div class="panel-body" style="padding: 10px;">
+                    {!! nl2br($garantia_guia_ingreso->revision_diagnostico)!!}
+                    </div>
                 </span>
             </div>
         </div>
@@ -224,16 +179,16 @@
 
 
 <div class="col-lg-13">
-    <div class="ibox">
+    <div class="ibox cero">
 
-        <div class="ibox-title">
+        {{-- <div class="ibox-title"> --}}
         <h4>Estetica</h4>
-       </div> 
+        {{-- </div> --}}
         <div class="border">
-            <div class="ibox-content text-left h-50">
+            <div class="ibox-content text-left h-70" style="padding: 0px;">
                 <span id="sparkline8">
-                    <div class="panel-body">
-                       
+                    <div class="panel-body" style="padding: 10px;">
+                        {!! nl2br($garantia_guia_ingreso->estetica)!!}
                     </div>
                 </span>
 
@@ -247,35 +202,63 @@
     <div class="child1"><br>
         <hr />
         <td>Departamento de Servicio Tecnico</td>
-        <p style="width:200px;" align="center">Fernndo Franco Solia</p>
-        <p style="width:200px;" align="center">S&R SAC-CSA EPSON</p>
+        <p style="width:200px;" align="center">Ing. {{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</p>
     </div>
-    <div class="child2" ><br>
+    <div class="child2"><br>
         <hr />
-        <p style="width:200px;" align="center">Cliente (Firma y DNI)</p>
+        <p style="width:200px;" align="center">{{$garantia_guia_ingreso->clientes_i->nombre}}<br> ({{$garantia_guia_ingreso->clientes_i->documento_identificacion}}: {{$garantia_guia_ingreso->clientes_i->numero_documento}})</p>
     </div>
-</div>
 </div>
 
 <div class="footer">
         <div >
-            <p><b>IMPORTANTE:</b> El plazo para el recojo del equipo es de 15 dias calendario. en caso de no recoger el equipo dentro de los plazos, esre será trasladado al almecen. debiendo pagar S/.20.00 por cada semana que transcurra por gastos administrativos, seguros y almacenaje. Asi mismo pasado los 90 dias el cliente pierde el derecho total sobre el equipo. </p>
+            <p><b>IMPORTANTE:</b> El plazo para el recojo del equipo es de 15 dias calendario. en caso de no recoger el equipo dentro de los plazos, este será trasladado al almecen. debiendo pagar S/.20.00 por cada semana que transcurra por gastos administrativos, seguros y almacenaje. Asi mismo pasado los 90 dias el cliente pierde el derecho total sobre el equipo. </p>
+         </div> 
+         <div>
+              <table class="table table-bordered white-bg">
+                    <tbody>
+            <tr>
+                <td >Nombre Cliente:</td>
+                <th >{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
+                <td >Numero de Guia </td>
+                <th >{{$garantia_guia_ingreso->orden_servicio}}</th>
+                <td >Nombre Cliente:</td>
+                <th >{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
+                <td >Numero de Guia </td>
+                <th>{{$garantia_guia_ingreso->orden_servicio}}</th>
+                <td >Nombre Cliente:</td>
+                <th >{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
+                <td >Numero de Guia </td>
+                <th >{{$garantia_guia_ingreso->orden_servicio}}</th>
+            </tr>      
+                    </tbody>
+                </table>
          </div>
 
 </div>
+
+
+</div>
 <style>
+    .cero{
+    margin-bottom: 0px;
+
+    }
     .container {
         /* background: #e0e0e0; */
         margin: 1 1 1rem;
         height: 7rem;
         display: flex;
         align-items: start;
+    margin-top:10rem;
+
     }
 
     .child1 {
         /* background: #60e0b0; */
         height: 7rem;
         padding: .2rem;
+    margin-left: 120px;
 
     }
 
@@ -283,7 +266,7 @@
         /* background: #60e0b0; */
         padding: .2rem;
         height: 7rem;
-        margin-left: 50%;
+        margin-left: 30%;
     }
 
     .border {
@@ -293,6 +276,7 @@
     }
 
 </style>
+
 
 <!-- Mainly scripts -->
     <script src="js/jquery-3.1.1.min.js"></script>
