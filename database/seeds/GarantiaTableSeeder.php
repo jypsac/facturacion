@@ -30,8 +30,8 @@ class GarantiaTableSeeder extends Seeder
 			'marca_id' => '1',
 			'personal_lab_id' => '1',
 			'cliente_id' => '1',
-			'created_at' => date('2019-11-22 00:00:00'),
-           	'updated_at' => date('2019-11-22 00:00:00')
+			'created_at' => date('2019-11-23 00:00:00'),
+           	'updated_at' => date('2019-11-23 00:00:00')
 		]);
 		 DB::table('garantia_guia_ingreso')->insert([
 			'id' =>2 ,
@@ -71,8 +71,8 @@ class GarantiaTableSeeder extends Seeder
 			'marca_id' => '3',
 			'personal_lab_id' => '3',
 			'cliente_id' => '3',
-			'created_at' => date('2019-11-22 00:00:00'),
-           	'updated_at' => date('2019-11-22 00:00:00')
+			'created_at' => date('2019-11-23 00:00:00'),
+           	'updated_at' => date('2019-11-23 00:00:00')
 		]);
     }
 }

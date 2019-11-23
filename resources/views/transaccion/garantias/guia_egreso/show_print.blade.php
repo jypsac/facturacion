@@ -35,7 +35,7 @@
 <div class="wrapper wrapper-content animated fadeIn">
  
 <div class="table-responsive">
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped cero" >
         <thead>
             <tr>
                 <td style="width: 100px;">Motivo</td>
@@ -43,11 +43,12 @@
             </tr>
         </thead>
     </table>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped cero">
         <thead>
             <tr>
                 <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 200px;"> {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}</th>
+                <th style="width: 200px;"> {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}
+                 {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
                 <td style="width: 70px;">Fecha</td>
                 <th style="width: 70px;">22-22--22</th>
                 <td style="width: 70px;">Marca</td>
@@ -57,7 +58,7 @@
             </tr>
         </thead>
     </table>
-    <table class="table table-bordered table-striped">
+    <table class="table table-bordered table-striped ceros">
         <thead>
             <tr>
                 <td style="width: 100px;">Asunto</td>
@@ -77,54 +78,24 @@
             <div>
                 <table class="table table-bordered white-bg">
                     <tbody>
-                        <tr>
-                            <td>
-                                <span data-diameter="40" class="updating-chart">Nombre o Empresa </span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->nombre}}<strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Direccion</span>
-                            </td>
-                            <td>
-                                <strong> {{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->direccion}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Telefono</span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->telefono}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Correo</span>
-                            </td>
-                            <td>
-                                <strong> {{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->email}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="bar">Contacto</span>
-                            </td>
-                            <td>
-                                <strong> {{$garantias_guias_egreso->garantia_ingreso_i->contactos->nombre}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="bar">Numero de Documentacion</span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->numero_documento}}</strong>
-                            </td>
-                        </tr>
+            <tr>
+                <td style="width: 70px;">Nombre o Empresa</td>
+                <th style="width: 200px;">{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->nombre}}</th>
+                <td style="width: 70px;">Direccion</td>
+                <th style="width: 200px;">{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->direccion}}</th>
+            </tr>  
+            <tr>
+                <td style="width: 70px;">Telefono</td>
+                <th style="width: 200px;">{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->telefono}}</th>
+                <td style="width: 70px;">Correo</td>
+                <th style="width: 200px;"> {{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->email}}</th>
+            </tr>   
+             <tr>
+                <td style="width: 70px;">Contacto</td>
+                <th style="width: 200px;"> {{$garantias_guias_egreso->garantia_ingreso_i->contactos->nombre}}</th>
+                <td style="width: 70px;">Numero de Documentacion</td>
+                <th style="width: 200px;">{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->numero_documento}}</th>
+            </tr>  
                     </tbody>
                 </table>
             </div>
@@ -143,38 +114,19 @@
             <div>
                 <table class="table table-bordered white-bg">
                     <tbody>
-                        <tr>
-                            <td>
-                                <span data-diameter="40" class="updating-chart">Modelo</span>
-                            </td>
-                            <td>
-                                <strong> {{$garantias_guias_egreso->garantia_ingreso_i->nombre_equipo}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Numero de Serie </span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_guias_egreso->garantia_ingreso_i->numero_serie}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Codigo Interno</span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_guias_egreso->garantia_ingreso_i->codigo_interno}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Fecha de Compra</span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_guias_egreso->garantia_ingreso_i->fecha_compra}}</strong>
-                            </td>
-                        </tr>
+            <tr>
+                <td style="width: 70px;">Modelo</td>
+                <th style="width: 200px;"> {{$garantias_guias_egreso->garantia_ingreso_i->nombre_equipo}}</th>
+                <td style="width: 70px;">Numero de Serie</td>
+                <th style="width: 200px;">{{$garantias_guias_egreso->garantia_ingreso_i->numero_serie}}</th>
+            </tr>  
+            <tr>
+                <td style="width: 70px;">Codigo Interno</td>
+                <th style="width: 200px;">{{$garantias_guias_egreso->garantia_ingreso_i->codigo_interno}}</th>
+                <td style="width: 70px;">Fecha de Compra</td>
+                <th style="width: 200px;">{{$garantias_guias_egreso->garantia_ingreso_i->fecha_compra}}</th>
+            </tr> 
+                        
                     </tbody>
                 </table>
             </div>
@@ -191,9 +143,9 @@
         <h4>Descripcion Del Problema</h4>
         {{-- </div> --}}
         <div class="border">
-            <div class="ibox-content text-left h-10">
+            <div class="ibox-content text-left h-10" style="padding: 0px;">
                 <span id="sparkline8">
-                    <div class="panel-body">
+                    <div class="panel-body" style="padding: 10px;">
                         {!! nl2br($garantias_guias_egreso->descripcion_problema)!!}
                     </div>
                 </span>
@@ -202,19 +154,16 @@
     </div>
 </div>
 
-
-
 <div class="col-lg-13">
-    <div class="ibox ">
+    <div class="ibox cero ">
         {{-- <div class="ibox-title"> --}}
         <h4>Revicion y Diagnostico</h4>
         {{-- </div> --}}
-        <div class="border">
-            <div class="ibox-content text-left h-10">
+        <div class="border"> <div class="ibox-content text-left h-10" style="padding: 0px;">
                 <span id="sparkline8">
-                    {{-- <div class="panel-body"> --}}
+                    <div class="panel-body" style="padding: 10px;">
                      {!! nl2br($garantias_guias_egreso->diagnostico_solucion)!!}
-                    {{-- </div> --}}
+                    </div>
                 </span>
             </div>
         </div>
@@ -229,9 +178,9 @@
         <h4>Recomendaciones</h4>
         {{-- </div> --}}
         <div class="border">
-            <div class="ibox-content text-left h-50">
+            <div class="ibox-content text-left h-70" style="padding: 0px;">
                 <span id="sparkline8">
-                    <div class="panel-body">
+                    <div class="panel-body" style="padding: 10px;">
                          {!! nl2br($garantias_guias_egreso->recomendaciones)!!}
                     </div>
                 </span>
@@ -246,12 +195,14 @@
     <div class="child1"><br>
         <hr />
         <td>Departamento de Servicio Tecnico</td>
-        <p style="width:200px;" align="center">Fernndo Franco Solia</p>
-        <p style="width:200px;" align="center">S&R SAC-CSA EPSON</p>
+        <p style="width:200px;" align="center">Ing. {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}
+                 {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</p>
     </div>
     <div class="child2"><br>
         <hr />
-        <p style="width:200px;" align="center">Cliente (Firma y DNI)</p>
+        <p style="width:200px;" align="center">{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->nombre}}<br>
+            ({{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->documento_identificacion}} :
+{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->numero_documento}})</p>
     </div>
 </div>
 
@@ -259,18 +210,25 @@
 
 </div>
 <style>
+    .cero{
+    margin-bottom: 0px;
+
+    }
     .container {
         /* background: #e0e0e0; */
         margin: 1 1 1rem;
         height: 7rem;
         display: flex;
         align-items: start;
+    margin-top:10rem;
+
     }
 
     .child1 {
         /* background: #60e0b0; */
         height: 7rem;
         padding: .2rem;
+    margin-left: 120px;
 
     }
 

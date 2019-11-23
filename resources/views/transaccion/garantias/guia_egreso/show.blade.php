@@ -236,20 +236,6 @@
 </div>
 
 
-<div class="container">
-    <div class="child1"><br>
-        <hr />
-        <td>Departamento de Servicio Tecnico</td>
-        <p style="width:200px;" align="center">Fernndo Franco Solia</p>
-        <p style="width:200px;" align="center">S&R SAC-CSA EPSON</p>
-    </div>
-    <div class="child2"><br>
-        <hr />
-        <p style="width:200px;" align="center">Cliente (Firma y DNI)</p>
-    </div>
-</div>
-
-
 
 </div>
 <style>
