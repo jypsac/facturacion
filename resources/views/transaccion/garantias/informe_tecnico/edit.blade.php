@@ -125,7 +125,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" ></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="630" ></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -139,7 +139,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" ></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico"  maxlength="630"></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -153,7 +153,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="causas_del_problema"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="causas_del_problema"  maxlength="630"></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -167,7 +167,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="solucion"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="solucion"  maxlength="630"></textarea>
 						                     </div>
 						                </div>
 	                            </div>

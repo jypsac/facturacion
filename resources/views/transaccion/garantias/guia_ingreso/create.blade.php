@@ -51,12 +51,10 @@
                                                 <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
 
                                                     <p>Selecciona a agregar</p>
-													<a href="{{route('cliente.create')}}"><button type="button" class="btn btn-primary btn-lg btn-block">Clientes</button></a>
-													<a href="{{route('marca.create')}}"><button type="button" class="btn btn-primary btn-lg btn-block">Marca</button></a>
-													<a href="{{route('personal.create')}}"><button type="button" class="btn btn-primary btn-lg btn-block">Personal</button></a>
-
-
-
+													<a href="{{route('cliente.create')}}"><button type="button" class="btn btnb btn-primary btn-lg btn-block">Clientes</button></a>
+													<a href="{{route('marca.create')}}"><button type="button" class="btn  btnb btn-primary btn-lg btn-block">Marca</button></a>
+													<a href="{{route('personal.create')}}"><button type="button" class="btn  btnb btn-primary btn-lg btn-block">Personal</button></a>
+													<style type="text/css">.btnb{margin-bottom: 10px}</style>
                                                 </div>
 
                                             </div>
