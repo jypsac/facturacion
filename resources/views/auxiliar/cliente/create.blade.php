@@ -109,7 +109,38 @@
 
 							</div>
 						</fieldset>
-
+						<h1>Contacto</h1>
+						<fieldset>
+							<h2>Informacion I</h2>
+							<div class="row">
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>Nombre *</label>
+										<input id="name" name="nombre_contacto" type="text" class="form-control required">
+									</div>
+									<div class="form-group">
+										<label>Cargo *</label>
+										<input id="surname" name="cargo_contacto" type="text" class="form-control required">
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>	Telefono *</label>
+										<input id="email" name="telefono_contacto" type="text" class="form-control required">
+									</div>
+									<div class="form-group">
+										<label>Celular *</label>
+										<input id="address" name="celular_contacto" type="text" class="form-control required">
+									</div>
+								</div>
+								<div class="col-lg-6">
+									<div class="form-group">
+										<label>	Correo *</label>
+										<input id="email" name="email_contacto" type="text" class="form-control required email">
+									</div>
+								</div>
+							</div>
+						</fieldset>
 
 
 

@@ -15,6 +15,10 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/facturacion','FacturacionController');
 	Route::resource('/familia','FamiliaController');
 
+	//Agregado rapido
+	Route::post('agregado_rapido/marcas','AgregadoRapidoController@marcas_store')->name('agregado_rapido.marca_store');
+	Route::post('agregado_rapido/cliente','AgregadoRapidoController@cliente_store')->name('agregado_rapido.cliente_store');
+
 	//GARANTIAS
 	Route::get('garantia_guia_ingreso/impresionIngreso/{id}' , 'GarantiaGuiaIngresoController@print')->name('impresiones_ingreso');
 	Route::put('garantia_guia_ingreso/{guia}', 'GarantiaGuiaIngresoController@actualizar')->name('garantia_guia_ingreso.actualizar');
