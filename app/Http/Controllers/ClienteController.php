@@ -37,6 +37,8 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+        $data = $request->all();
+
         $cliente= new Cliente;
         $cliente->nombre=$request->get('nombre');
         $cliente->direccion=$request->get('direccion');
@@ -48,26 +50,37 @@ class ClienteController extends Controller
         $cliente->numero_documento=$request->get('numero_documento');
         $cliente->save();
 
-        return view('auxiliar.cliente.contacto.cliente_new');
+        $this->storecontact($data);
+
+        // return view('auxiliar.cliente.contacto.cliente_new');
+        return redirect()->route('cliente.index');
     }
 
-    public function storecontact(Request $request)
+    public function storecontact($data)
     {
         $contador=Cliente::count();
 
+        // $contacto=new Contacto;
+        // $contacto->nombre=$request->get('nombre_contacto');
+        // $contacto->cargo=$request->get('cargo_contacto');
+        // $contacto->telefono=$request->get('telefono_contacto');
+        // $contacto->celular=$request->get('celular_contacto');
+        // $contacto->email=$request->get('email_contacto');
+        // $contacto->clientes_id=$contador;
+        // $contacto->save();
+
+        // return back();
 
         $contacto=new Contacto;
-        $contacto->nombre=$request->get('nombre_contacto');
-        $contacto->cargo=$request->get('cargo_contacto');
-        $contacto->telefono=$request->get('telefono_contacto');
-        $contacto->celular=$request->get('celular_contacto');
-        $contacto->email=$request->get('email_contacto');
+        $contacto->nombre=$data['nombre_contacto'];
+        $contacto->cargo=$data['cargo_contacto'];
+        $contacto->telefono=$data['telefono_contacto'];
+        $contacto->celular=$data['celular_contacto'];
+        $contacto->email=$data['email_contacto'];
         $contacto->clientes_id=$contador;
         $contacto->save();
-
-        return back();
     }
-    
+
     /**
      * Display the specified resource.
      *

@@ -41,27 +41,124 @@
                         </div>
                         <div class="ibox-content">
                             <div class="text-center">
-                            <a data-toggle="modal" class="btn btn-primary" href="#modal-form">Agregar</a>
-                            </div>
-                            <div id="modal-form" class="modal fade" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
+                            <!-- MODAL CLIENTE -->
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Cliente</button>
+							</div>
+							<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-lg">
+								  <div class="modal-content">
+									<form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post">
+										@csrf
+										<h1>Datos Personales</h1>
+										<fieldset>
+											<h2>Informacion I</h2>
+											<div class="row">
+												<div class="col-lg-6">
+													<div class="form-group">
+														<label>Documento Identificacion *</label>
+														<select class="form-control m-b" name="documento_identificacion" >
+															<option value="dni">DNI</option>
+															<option value="pasaporte">Pasaporte</option>
+															<option value="ruc">Ruc</option>
+														</select>
+													</div>
+													<div class="form-group">
+														<label>Numero de Documento *</label>
+														<input type="text" class="form-control" name="numero_documento" class="form-control required">
+													</div>
+												</div>
 
-                                                    <p>Selecciona a agregar</p>
-													<a href="{{route('cliente.create')}}"><button type="button" class="btn btnb btn-primary btn-lg btn-block">Clientes</button></a>
-													<a href="{{route('marca.create')}}"><button type="button" class="btn  btnb btn-primary btn-lg btn-block">Marca</button></a>
-													<a href="{{route('personal.create')}}"><button type="button" class="btn  btnb btn-primary btn-lg btn-block">Personal</button></a>
-													<style type="text/css">.btnb{margin-bottom: 10px}</style>
-                                                </div>
+												<div class="col-lg-6">
+													<div class="form-group">
+														<label>Nombre *</label>
+														<input type="text" class="form-control" name="nombre" class="form-control required">
+													</div>
 
-                                            </div>
-                                    </div>
-                                    </div>
-                                </div>
-                        </div>
+													<div class="form-group">
+														<label>Direccion *</label>
+														<input type="text" class="form-control" name="direccion" class="form-control required">
+													</div>
+												</div>
+
+
+											</div>
+
+										</fieldset>
+										<h1>Informacion</h1>
+										<fieldset>
+											<h2>Informacion II</h2>
+											<div class="row">
+												<div class="col-lg-6">
+													<div class="form-group">
+														<label>Celular *</label>
+														<input type="number" class="form-control" name="celular" class="form-control required">
+													</div>
+													<div class="form-group">
+														<label>Empresas *</label>
+														<input type="text" class="form-control" name="empresa" class="form-control required">
+													</div>
+												</div>
+
+												<div class="col-lg-6">
+
+													<div class="form-group">
+														<label>correo *</label>
+														<input id="email" name="email" type="text" class="form-control required email">
+													</div>
+
+													<div class="form-group">
+														<label>Telefono *</label>
+														<input type="number" class="form-control" name="telefono" class="form-control required">
+													</div>
+
+												</div>
+
+											</div>
+										</fieldset>
+										<h1>Contacto</h1>
+										<fieldset>
+											<h2>Informacion I</h2>
+											<div class="row">
+												<div class="col-lg-6">
+													<div class="form-group">
+														<label>Nombre *</label>
+														<input id="name" name="nombre_contacto" type="text" class="form-control required">
+													</div>
+													<div class="form-group">
+														<label>Cargo *</label>
+														<input id="surname" name="cargo_contacto" type="text" class="form-control required">
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="form-group">
+														<label>	Telefono *</label>
+														<input id="email" name="telefono_contacto" type="text" class="form-control required">
+													</div>
+													<div class="form-group">
+														<label>Celular *</label>
+														<input id="address" name="celular_contacto" type="text" class="form-control required">
+													</div>
+												</div>
+												<div class="col-lg-6">
+													<div class="form-group">
+														<label>	Correo *</label>
+														<input id="email" name="email_contacto" type="text" class="form-control required email">
+													</div>
+												</div>
+											</div>
+										</fieldset>
+										<input type="submit" value="Enviar">
+
+
+
+									</form>
+
+								  </div>
+								</div>
+							</div>
+							<br>
+
+
                     </div>
                 </div>
 	            		<div class="col-lg-12">
