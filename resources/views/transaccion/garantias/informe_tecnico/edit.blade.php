@@ -153,7 +153,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="causas_de_problema"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="causas_del_problema"></textarea>
 						                     </div>
 						                </div>
 	                            </div>

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\GarantiaInformeTecnico;
 use App\GarantiaGuiaEgreso;
 use App\Cliente;
+use App\Empresa;
 
 class GarantiaInformeTecnicoController extends Controller
 {
@@ -134,9 +135,14 @@ class GarantiaInformeTecnicoController extends Controller
         $garantia_informe_tecnico->egresado=1;
         $garantia_informe_tecnico->informe_tecnico=1;
 
+
+
+
         //$garantia_informe_tecnico->descripcion_problema=$request->get('descripcion_problema');
+        $garantia_informe_tecnico->estetica=$request->get('estetica');
         $garantia_informe_tecnico->revision_diagnostico=$request->get('revision_diagnostico');
-        $garantia_informe_tecnico->informe=$request->get('informe');
+        $garantia_informe_tecnico->causas_del_problema=$request->get('causas_del_problema');
+        $garantia_informe_tecnico->solucion=$request->get('solucion');
         $garantia_informe_tecnico->image1=$name1;
         $garantia_informe_tecnico->image2=$name2;
         $garantia_informe_tecnico->image3=$name3;
@@ -293,6 +299,12 @@ class GarantiaInformeTecnicoController extends Controller
     {
         $garantia_informe_tecnico=GarantiaInformeTecnico::find($id);
         return view('transaccion.garantias.informe_tecnico.actualizar',compact('garantia_informe_tecnico'));
+    }
+
+    public function print($id){
+        $mi_empresa=Empresa::first();
+        $garantias_informe_tecnico=GarantiaInformeTecnico::find($id);
+        return view('transaccion.garantias.informe_tecnico.show_print',compact('garantias_informe_tecnico','mi_empresa'));
     }
 
 }

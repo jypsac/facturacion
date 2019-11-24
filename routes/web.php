@@ -24,21 +24,21 @@ Route::view('/' , 'home')->name('inicio');
 	Route::get('garantia_guia_egreso/guias', 'GarantiaGuiaEgresoController@guias')->name('garantia_guia_egreso.guias');
 	Route::resource('/garantia_guia_egreso','GarantiaGuiaEgresoController');
 
-	Route::view('/impresionInformeTecnico' , 'transaccion.garantias.guia_ingreso.show_print')->name('impresiones_informe'); 
+	Route::get('garantia_informe_tecnico/impresionInformeTecnico/{id}' , 'GarantiaInformeTecnicoController@print')->name('impresiones_informe');
 	Route::get('garantia_informe_tecnico/{id}/actualizar', 'GarantiaInformeTecnicoController@actualizar')->name('garantia_informe_tecnico.actualizar');
 	Route::get('garantia_informe_tecnico/guias', 'GarantiaInformeTecnicoController@guias')->name('garantia_informe_tecnico.guias');
 
 	Route::resource('/garantia_informe_tecnico','GarantiaInformeTecnicoController');
 	//GARANTIAS
 
-	
+
 	//CONSULTAS
 	Route::get('consultas/garantias-guias-ingreso', 'ConsultasController@garantias_guias_ingreso')->name('consultas.garantias.guias_ingreso');
 	Route::get('consultas/garantias-guias-egreso', 'ConsultasController@garantias_guias_egreso')->name('consultas.garantias.guias_egreso');
 	Route::get('consultas/garantias-informe-tecnico', 'ConsultasController@garantias_informe_tecnico')->name('consultas.garantias.informe_tecnico');
 	//CONSULTAS
 
-	
+
 
 	Route::resource('/contacto','ContactoController');
 	Route::resource('/guia','GuiaController');
