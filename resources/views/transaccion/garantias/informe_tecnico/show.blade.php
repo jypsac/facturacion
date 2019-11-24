@@ -19,7 +19,7 @@
                     <div class="title-action" style="padding-top: 0;" >
                         <a href="#" class="btn btn-white"><i class="fa fa-envelope" ></i> Gmail </a>
                         <a href="#" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a>
-                        <a href="" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
+                        <a href="{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
                     </div>
                 </div>
 

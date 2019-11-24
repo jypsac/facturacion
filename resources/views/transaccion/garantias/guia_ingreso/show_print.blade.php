@@ -55,12 +55,6 @@
                 <th style="width: 70px;">{{$garantia_guia_ingreso->marcas_i->nombre}}</th>
                 <td style="width: 80px;">Orden de Servicio</td>
                 <th style="width: 120px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
-            </tr>
-        </thead>
-    </table>
-    <table class="table table-bordered table-striped cero">
-        <thead>
-            <tr>
                 <td style="width: 100px;">Asunto</td>
                 <th>{{$garantia_guia_ingreso->asunto}}</th>
             </tr>
@@ -88,7 +82,7 @@
                 <td style="width: 70px;">Telefono</td>
                 <th style="width: 200px;">{{$garantia_guia_ingreso->clientes_i->telefono}}</th>
                 <td style="width: 70px;">Correo</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->clientes_i->email}}</th>
             </tr>
             <tr>
                 <td style="width: 70px;">Contacto</td>
@@ -96,10 +90,10 @@
                 <td style="width: 70px;">Numero de documento</td>
                 <th style="width: 70px;">{{$garantia_guia_ingreso->clientes_i->numero_documento}}</th>
             </tr>            <tr>
-                <td style="width: 70px;">Telefono</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->clientes_i->telefono}}</th>
-                <td style="width: 70px;">Correo</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
+                <td style="width: 70px;">Telefono del Contacto</td>
+                <th style="width: 200px;">{{$garantia_guia_ingreso->contactos->telefono}}</th>
+                <td style="width: 70px;">Correo del contacto</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->contactos->email}}</th>
             </tr>        
                     </tbody>
                 </table>
