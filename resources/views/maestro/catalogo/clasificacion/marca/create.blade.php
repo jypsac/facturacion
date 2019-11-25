@@ -37,24 +37,31 @@
 					 	@csrf
 
 					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
 		                </div>
 
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo"></div>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="codigo"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Abreviatura:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="abreviatura"></div>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="abreviatura"></div>
 		                </div>
 
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre de Empresa:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre_empresa"></div>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre_empresa"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descripcion:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="descripcion"></div>
-		                </div>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="5" id="comment" name="descripcion">
+                                </textarea>
+                            </div>
+                        </div>
+
+						<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto:</label>
+							<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="imagen"></div>
+						</div>
 
 						<button class="btn btn-primary" type="submit">Guardar</button>
 

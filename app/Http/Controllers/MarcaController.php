@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Marca;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class MarcaController extends Controller
 {
@@ -36,12 +37,21 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
+        if($request->hasfile('imagen')){
+            $imagen =$request->file('imagen');
+            $nombre_imagen = time().$imagen->getClientOriginalName();
+            $imagen =$request->file('imagen')->storeAs('marcas',$nombre_imagen);
+        }else{
+            $nombre_imagen="defecto.png";
+        }
+
         $marca=new Marca;
         $marca->nombre=$request->get('nombre');
         $marca->codigo=$request->get('codigo');
         $marca->abreviatura=$request->get('abreviatura');
         $marca->nombre_empresa=$request->get('nombre_empresa');
         $marca->descripcion=$request->get('descripcion');
+        $marca->imagen=$nombre_imagen;
         $marca->save();
 
         return redirect()->route('marca.index');
@@ -79,12 +89,22 @@ class MarcaController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if($request->hasfile('imagen')){
+            $imagen =$request->file('imagen');
+            $nombre_imagen = time().$imagen->getClientOriginalName();
+            $imagen =$request->file('imagen')->storeAs('marcas',$nombre_imagen);
+        }else{
+            $nombre_imagen="defecto.png";
+        }
+
         $marca=Marca::find($id);
         $marca->nombre=$request->get('nombre');
         $marca->codigo=$request->get('codigo');
         $marca->abreviatura=$request->get('abreviatura');
         $marca->nombre_empresa=$request->get('nombre_empresa');
         $marca->descripcion=$request->get('descripcion');
+        $marca->imagen=$nombre_imagen;
         $marca->save();
 
         return redirect()->route('marca.index');

@@ -18,6 +18,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'HP',
 			'nombre_empresa' => 'Hewlett-Packard',
 			'descripcion' => 'más conocida como HP, fue una empresa de tecnología estadounidense',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -29,6 +30,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'AMD',
 			'nombre_empresa' => 'Advanced Micro Devices',
 			'descripcion' => 'es una compañía estadounidense de semiconductores establecida en Santa Clara, California, que desarrolla procesadores de cómputo y productos tecnológicos relacionados para el mercado de consumo.',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -40,6 +42,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'MSI',
 			'nombre_empresa' => 'Micro-Star International',
 			'descripcion' => ' es una corporación multinacional taiwanesa de tecnología de la información con sede en Nuevo Taipei, Taiwán (República de China). Diseña, desarrolla y proporciona equipo informático, productos y servicios relacionados',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -51,6 +54,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'ADV',
 			'nombre_empresa' => 'ADVANCE',
 			'descripcion' => 'empresa de tecnología con más de ocho años de presencia en Latinoamérica y el mundo',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -62,6 +66,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'WD',
 			'nombre_empresa' => 'Western Digital Corporation',
 			'descripcion' => 'es un fabricante mundial de discos duros, con una larga historia en la industria electrónica, es un fabricante de circuitos integrados y de productos de almacenamiento, actualmente es el primer fabricante de discos duros por delante de Seagate',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -73,6 +78,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'LE',
 			'nombre_empresa' => 'Lenovo Group, Ltd',
 			'descripcion' => 'es una compañía multinacional de tecnología china, fabricante de productos electrónicos, ordenadores, tabletas y smartphones.',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -84,6 +90,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'DLINK',
 			'nombre_empresa' => 'D-Link Corporation',
 			'descripcion' => 'es un proovedor global con sede en Taipei, Taiwan, cuyo principal negocio son las soluciones de redes y comunicaciones para consumidores y empresas',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -95,6 +102,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'TOSH',
 			'nombre_empresa' => 'Toshiba',
 			'descripcion' => ' es una compañía japonesa, con sede en Tokio, dedicada a la manufactura de aparatos eléctricos y electrónicos.',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -106,6 +114,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'KG',
 			'nombre_empresa' => 'Kingston Technology Corporation',
 			'descripcion' => 'es un fabricante estadounidense de productos de memorias de ordenadores',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -117,6 +126,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'NEX',
 			'nombre_empresa' => 'Nexxt Solutions Connectivity',
 			'descripcion' => 'desarrolla productos y soluciones que permiten conectar a gente y dispositivos, generando nuevas experiencias de conectividad inteligente',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -128,6 +138,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'HAL',
 			'nombre_empresa' => 'Halion International S.A',
 			'descripcion' => 'empresa dedicada a la venta de parlantes ,teclados ,mous ,auriculares y otros accesorios',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -139,6 +150,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'AVA',
 			'nombre_empresa' => 'ITD',
 			'descripcion' => 'empresa comercializadora de partes, accesorios y suministros de cómputo para consumidores, empresas e instituciones',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -150,6 +162,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'EP',
 			'nombre_empresa' => 'Seiko Epson Corporation',
 			'descripcion' => 'es una compañía japonesa y uno de los mayores fabricantes del mundo de impresoras de inyección de tinta, matricial y de impresoras láser, escáneres, ordenadores de escritorio, proyectores, home cinema, televisores, robots, equipamiento de automatismo industrial, TPV, máquinas registradoras, ordenadores portátiles, circuitos integrados, componentes de LCD y otros componentes electrónicos.',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -161,6 +174,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'DEL',
 			'nombre_empresa' => 'Dell Technologies',
 			'descripcion' => 'es una compañía multinacional estadounidense establecida en Round Rock (Texas), la cual desarrolla, fabrica, vende y da soporte a computadoras personales, servidores, switches de red, programas informáticos, periféricos y otros productos relacionados con la tecnología.',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -172,6 +186,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'INT',
 			'nombre_empresa' => 'Intel Corporation',
 			'descripcion' => 'es la creadora de la serie de procesadores x86, los procesadores más comúnmente encontrados en la mayoría de las computadoras personales',
+			'imagen'=>'defecto.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);

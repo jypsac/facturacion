@@ -1,9 +1,9 @@
  @extends('layout')
 
-@section('title', 'Familia')
-@section('breadcrumb', 'Familia')
-@section('breadcrumb2', 'Familia')
-@section('href_accion' ,route('familia.create'))
+@section('title', 'MARCA')
+@section('breadcrumb', 'Marca')
+@section('breadcrumb2', 'Marca')
+@section('href_accion' ,route('marca.create'))
 @section('value_accion', 'agregar')
 @section('content')
 
@@ -12,7 +12,7 @@
                         <div class="col-lg-12">
                         <div class="ibox ">
                             <div class="ibox-title">
-                                <h5>Familias</h5>
+                                <h5>Marcas</h5>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
                                         <i class="fa fa-chevron-up"></i>
@@ -43,6 +43,7 @@
                                                 <th>codigo</th>
                                                 <th>Descripcion</th>
                                                 <th>EDITAR</th>
+                                                <th>Foto</th>
                                                 <th>Eliminar</th>
                                             </tr>
                                         </thead>
@@ -55,6 +56,7 @@
                                                 <td>{{$marca->nombre_empresa}}</td>
                                                 <td>{{$marca->codigo}}</td>
                                                 <td>{{$marca->descripcion}}</td>
+                                                <td><img src="{{asset('storage/marcas/'.$marca->imagen)}}" style="width: 180px;height: 100px"></td>
 
                                                 <td><center><a href="{{ route('marca.edit', $marca->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                                 <td>

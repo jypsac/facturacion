@@ -53,14 +53,17 @@
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre_empresa" value="{{$marca->nombre_empresa}}"></div>
 		                </div>
 
-                        <div class="panel-body">
-                                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Falla Reportada:</label>
-                                             <div class="col-sm-10">
-                                                <textarea class="form-control" rows="5" id="comment" name="descripcion">{{$marca->descripcion}}
-                                                </textarea>
-                                             </div>
-                                        </div>
-                                </div>
+
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Descripcion:</label>
+                            <div class="col-sm-10">
+                                <textarea class="form-control" rows="5" id="comment" name="descripcion">{{$marca->descripcion}}
+                                </textarea>
+                            </div>
+                        </div>
+
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Foto:</label>
+							<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="imagen"></div>
+						</div>
 
 						<button class="btn btn-primary" type="submit">Guardar</button>
                 	</form>
