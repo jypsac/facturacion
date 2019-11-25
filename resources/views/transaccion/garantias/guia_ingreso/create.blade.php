@@ -42,14 +42,17 @@
                         <div class="ibox-content">
                             <div class="text-center">
                             <!-- MODAL CLIENTE -->
+
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Cliente</button>
 							</div>
 							<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-lg">
 								  <div class="modal-content">
-									<form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post">
+
+									<form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:20px">
+
 										@csrf
-										<h1>Datos Personales</h1>
+										<h1 >Datos Personales</h1>
 										<fieldset>
 											<h2>Informacion I</h2>
 											<div class="row">
@@ -147,7 +150,7 @@
 												</div>
 											</div>
 										</fieldset>
-										<input type="submit" value="Enviar">
+										<input type="submit"class="btn btn-primary" value="Enviar">
 
 
 
