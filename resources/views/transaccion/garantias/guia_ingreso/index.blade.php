@@ -222,6 +222,6 @@
             });
 
         });
-
     </script>
+    
 @endsection

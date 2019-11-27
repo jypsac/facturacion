@@ -29,7 +29,7 @@
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
 							                    <div class="col-sm-11">
-							                     	<input type="text" class="form-control" name="marca" value="{{$garantia_guia_ingreso->marca}}" readonly>
+							                     	<input type="text" class="form-control" name="marca" value="{{$garantia_guia_ingreso->marcas_i->nombre}}" readonly>
 							                    </div>
 						                </div>
 
@@ -44,9 +44,13 @@
 										    		</select>
 							                    </div>
 						                    <label class="col-sm-2 col-form-label">Ing. Asignado:</label>
-							                    <div class="col-sm-4">
-							                     	<input type="text" class="form-control" name="ing_asignado" value="{{$garantia_guia_ingreso->ing_asignado}}">
-							                    </div>
+											<div class="col-sm-4">
+												<select class="form-control m-b" name="personal_lab_id">
+													@foreach($personales as $personal)
+												<option value="{{$personal->id}}">{{$personal->nombres}} {{$personal->apellidos}} </option>
+													@endforeach
+												</select>
+											</div>
 						                </div>
 
 								        <div class="form-group  row">
@@ -62,72 +66,41 @@
 
 						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Asunto:</label>
 						                     <div class="col-sm-11"><input type="text" class="form-control" name="asunto" value="{{$garantia_guia_ingreso->asunto}}"></div>
-						                </div>
+										</div>
+										
+										<div class="form-group  row"><label class="col-sm-1 col-form-label">Cliente:</label>
+											<div class="col-sm-11"><select class="form-control m-b" name="cliente_id">
+												   @foreach($clientes as $cliente)
+												   <option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
+												   @endforeach
+											   </select></div>
+									   </div>
 
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <div class="col-lg-6">
-	                        <div class="panel panel-primary">
-	                            <div class="panel-heading">
-	                                Datos del Cliente
-	                            </div>
-	                            <div class="panel-body">
-
-									 	{{-- <div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_cliente" value="{{$garantia_guia_ingreso->nombre_cliente}}"></div>
-										</div> --}}
-
-										<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
-						                     <div class="col-sm-9">
-												<select class="form-control m-b" name="nombre_cliente">
-													@foreach($clientes as $cliente)
-													<option>{{$cliente->nombre}}</option>
-													@endforeach
-										    	</select>
-											</div>
-						                </div>
-
-								        <div class="form-group  row"><label class="col-sm-3">Direccion:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="direccion" value="{{$garantia_guia_ingreso->direccion}}"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-3 ">Telefono:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="telefono" value="{{$garantia_guia_ingreso->telefono}}"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-3 ">Correo:</label>
-						                     <div class="col-sm-9"><input type="email" class="form-control" name="correo" value="{{$garantia_guia_ingreso->correo}}"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-3 ">Contacto:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="contacto" value="{{$garantia_guia_ingreso->contacto}}"></div>
-						                </div>
-
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-6">
+	                    
+	                    <div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
 	                                Datos del Equipo
 	                            </div>
 	                            <div class="panel-body">
 
-									 	<div class="form-group  row"><label class="col-sm-3">Modelo :</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_guia_ingreso->nombre_equipo}}"></div>
+									 	<div class="form-group  row"><label class="col-sm-2">Modelo :</label>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_guia_ingreso->nombre_equipo}}"></div>
 						                </div>
 
-								        <div class="form-group  row"><label class="col-sm-3">Nr Serie:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="numero_serie" value="{{$garantia_guia_ingreso->numero_serie}}"></div>
+								        <div class="form-group  row"><label class="col-sm-2">Nr Serie:</label>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="numero_serie" value="{{$garantia_guia_ingreso->numero_serie}}"></div>
 						                </div>
 
-						                <div class="form-group  row"><label class="col-sm-3">Codigo Interno:</label>
-						                     <div class="col-sm-9"><input type="text" class="form-control" name="codigo_interno" value="{{$garantia_guia_ingreso->codigo_interno}}"></div>
+						                <div class="form-group  row"><label class="col-sm-2">Codigo Interno:</label>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_interno" value="{{$garantia_guia_ingreso->codigo_interno}}"></div>
 						                </div>
 
-						                <div class="form-group  row"><label class="col-sm-3">Fecha de Compra:</label>
-										<div class="col-sm-9"><input type="date" class="form-control" name="fecha_compra" max="{{$garantia_guia_ingreso->fecha_compra}}" value="{{$garantia_guia_ingreso->fecha_compra}}"></div>
+						                <div class="form-group  row"><label class="col-sm-2">Fecha de Compra:</label>
+										<div class="col-sm-10"><input type="date" class="form-control" name="fecha_compra" max="{{$garantia_guia_ingreso->fecha_compra}}" value="{{$garantia_guia_ingreso->fecha_compra}}"></div>
 						                </div>
 
 	                            </div>

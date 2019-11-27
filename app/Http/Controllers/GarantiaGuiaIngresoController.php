@@ -128,7 +128,8 @@ class GarantiaGuiaIngresoController extends Controller
     {
         $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
         $clientes=Cliente::all();
-        return view('transaccion.garantias.guia_ingreso.edit',compact('garantia_guia_ingreso','clientes'));
+        $personales=DB::table('personal_datos_laborales')->where("cargo","=","ingeniero")->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
+        return view('transaccion.garantias.guia_ingreso.edit',compact('garantia_guia_ingreso','clientes','personales'));
     }
 
     /**
@@ -150,26 +151,16 @@ class GarantiaGuiaIngresoController extends Controller
 
     public function actualizar(Request $request, $id)
     {
-        $nombre_cliente=$request->get('nombre_cliente');
-        $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
-        $numero_doc=$cliente->numero_documento;
+        // $nombre_cliente=$request->get('nombre_cliente');
+        // $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
+        // $numero_doc=$cliente->numero_documento;
 
         // ACTUALIZACION DE GUIA DE INGRESO
         $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
-        $garantia_guia_ingreso->marca=$request->get('marca');
+        
         $garantia_guia_ingreso->motivo=$request->get('motivo');
-        $garantia_guia_ingreso->ing_asignado=$request->get('ing_asignado');
-        $garantia_guia_ingreso->fecha=$request->get('fecha');
-        $garantia_guia_ingreso->orden_servicio=$request->get('orden_servicio');
-        $garantia_guia_ingreso->estado=1;
-        $garantia_guia_ingreso->egresado=0;
+        
         $garantia_guia_ingreso->asunto=$request->get('asunto');
-        $garantia_guia_ingreso->nombre_cliente=$request->get('nombre_cliente');
-        $garantia_guia_ingreso->direccion=$request->get('direccion');
-        $garantia_guia_ingreso->telefono=$request->get('telefono');
-        $garantia_guia_ingreso->telefono=$request->get('telefono');
-        $garantia_guia_ingreso->numero_documento=$numero_doc;
-        $garantia_guia_ingreso->contacto=$request->get('contacto');
         $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipo');
         $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
         $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
@@ -177,6 +168,10 @@ class GarantiaGuiaIngresoController extends Controller
         $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
         $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
         $garantia_guia_ingreso->estetica=$request->get('estetica');
+
+        $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
+        $garantia_guia_ingreso->cliente_id=$request->get('cliente_id');
+        
         $garantia_guia_ingreso->save();
 
         return redirect()->route('garantia_guia_ingreso.index');
