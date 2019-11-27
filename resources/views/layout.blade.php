@@ -174,14 +174,14 @@
                 <div class="row wrapper border-bottom white-bg page-heading">
                     <div class="col-sm-4">
                         <h2>@yield('title', 'Inicio')</h2>
-                        <ol class="breadcrumb">
+                        <!-- <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a>@yield('breadcrumb', '')</a>
                             </li>
                             <li class="breadcrumb-item active">
                                 <strong>@yield('breadcrumb2', '')</strong>
                             </li>
-                        </ol>
+                        </ol> -->
                     </div>
                     <div class="col-sm-8">
                         <div class="title-action">
