@@ -34,7 +34,7 @@
                             <div class="ibox-content">
                                 <div class="table-responsive">
                                     <table class="table table-striped table-bordered table-hover dataTables-example" >
-                                        <thead>
+                                        <thead align="center">
                                             <tr>
                                                 <th>ID</th>
                                                 <th>Nombre</th>
@@ -42,8 +42,8 @@
                                                 <th>Empresa</th>
                                                 <th>codigo</th>
                                                 <th>Descripcion</th>
-                                                <th>EDITAR</th>
                                                 <th>Foto</th>
+                                                <th>EDITAR</th>
                                                 <th>Eliminar</th>
                                             </tr>
                                         </thead>

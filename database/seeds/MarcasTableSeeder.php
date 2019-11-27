@@ -18,7 +18,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'HP',
 			'nombre_empresa' => 'Hewlett-Packard',
 			'descripcion' => 'más conocida como HP, fue una empresa de tecnología estadounidense',
-			'imagen'=>'defecto.png',
+			'imagen'=>'1574887723hp.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -30,7 +30,7 @@ class MarcasTableSeeder extends Seeder
 			'abreviatura' => 'AMD',
 			'nombre_empresa' => 'Advanced Micro Devices',
 			'descripcion' => 'es una compañía estadounidense de semiconductores establecida en Santa Clara, California, que desarrolla procesadores de cómputo y productos tecnológicos relacionados para el mercado de consumo.',
-			'imagen'=>'defecto.png',
+			'imagen'=>'1574887840amd.png',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
