@@ -3,38 +3,16 @@
 @section('title', 'Garantia - Guia de ingreso')
 @section('breadcrumb', 'Guia de ingreso')
 @section('breadcrumb2', 'Garantia')
-@section('href_accion', route('garantia_guia_ingreso.index'))
-@section('value_accion', 'Actualizar')
+@section('data-toggle', 'modal')
+@section('href_accion', '#modal-form')
+@section('value_accion', 'Agregar')
+
 
 @section('content')
-    <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>Crear  <small>Guia de ingreso</small></h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#" class="dropdown-item">Config option 1</a>
-                                    </li>
-                                    <li><a href="#" class="dropdown-item">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
-                            <div class="text-center">
-                            <a data-toggle="modal" class="btn btn-primary" href="#modal-form">Agregar</a>
-                            </div>
+
+<!-- modal -->
+
+                      
                             <div id="modal-form" class="modal fade" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -59,39 +37,16 @@
 
                                                             <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"><strong>Enviar</strong></button>
 
-                                                        </div>
-                                                    </form>
+                                                        </form>
+                                                   </div>
                                                 </div>
 
                                             </div>
                                     </div>
                                     </div>
                                 </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-lg-12">
-                    <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>Vista Previa</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#" class="dropdown-item">Config option 1</a>
-                                    </li>
-                                    <li><a href="#" class="dropdown-item">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
+                        
+<!--/ modal -->
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example" >
@@ -113,7 +68,7 @@
                                     </thead>
                                     <tbody>
                                         @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
-                                        {{tiempo($garantias_guias_ingreso->created_at)}}
+                                        <!-- {{tiempo($garantias_guias_ingreso->created_at)}} -->
                                         <tr class="gradeX">
                                             <td>{{$garantias_guias_ingreso->id}}</td>
                                             <td>{{$garantias_guias_ingreso->marcas_i->nombre}}</td>

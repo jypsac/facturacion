@@ -185,9 +185,10 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="title-action">
-                            <a href="@yield('href_accion', '#')" class="btn btn-primary">@yield('value_accion', '#')</a>
+                            <a data-toggle="@yield('data-toggle', '')"  href="@yield('href_accion', '#')" class="btn btn-primary">@yield('value_accion', '#')</a>
                         </div>
                     </div>
+
                 </div>
 
                 @yield('content')
