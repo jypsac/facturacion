@@ -25,7 +25,7 @@
 <h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2>
 
 <div class="wrapper wrapper-content animated fadeIn">
- 
+
 <div class="table-responsive">
     <table class="table table-bordered table-striped">
         <thead>
