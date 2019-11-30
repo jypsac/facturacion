@@ -24,10 +24,9 @@
 <body class="white-bg">
 
 <div class="ibox" style="margin-bottom:0px;">
-    <div class="table-responsive" ><!-- 
-        <img align="right" src="{{asset('img/logos/logo.jpg')}}" style="width: 150px;height: 100px"> -->
-        <img align="left" src="{{asset('img/logos/epson.png')}}" style="width: 180px;height: 100px">
-        <img align="right" src="{{asset('img/logos/epson.png')}}" style="width: 180px;height: 100px">
+    <div class="table-responsive" >
+        <img align="left" src="{{asset('img/logos/logo.jpg')}}" style="width:200px;height: 70px ;margin-top: 20px">
+        <img align="right" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 200px;height: 70;margin-top: 20px">
     </div>
 </div>
 

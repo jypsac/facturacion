@@ -56,7 +56,7 @@
                                                 <td>{{$marca->nombre_empresa}}</td>
                                                 <td>{{$marca->codigo}}</td>
                                                 <td>{{$marca->descripcion}}</td>
-                                                <td><img src="{{asset('storage/marcas/'.$marca->imagen)}}" style="width: 180px;height: 100px"></td>
+                                                <td><img src="{{asset('storage/marcas/'.$marca->imagen)}}" style="width: 150px;height:50px"></td>
 
                                                 <td><center><a href="{{ route('marca.edit', $marca->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                                 <td>

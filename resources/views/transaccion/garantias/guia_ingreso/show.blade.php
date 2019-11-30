@@ -10,8 +10,8 @@
 
 <div class="ibox" style="margin-bottom:0px;">
     <div class="table-responsive" >
-        <img align="left" src="{{asset('img/logos/epson.png')}}" style="width: 180px;height: 100px">
-        <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 180px;height: 100px">
+        <img align="left" src="{{asset('img/logos/logo.jpg')}}" style="width:200px;height: 70px ;margin-top: 20px">
+        <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 200px;height: 70;margin-top: 20px">
     </div>
 </div>
 <div class="table-responsive" align="right">

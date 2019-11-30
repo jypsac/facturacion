@@ -22,8 +22,8 @@
                                             Logo
                                         </div>
                                         <div class="panel-body">
-                                            <center><img src="{{asset('img/logos/logo.jpg')}}" style="width: 180px;height: 100px"></center>
-                                            <center>
+                                            <center><img src="{{asset('img/logos/logo.jpg')}}" style="width: 378px;height: 77px"></center>
+                                            <center> 
                                                 <p>{{$mi_empresa->descripcion}}</p>
                                             </center>
                                         </div>
