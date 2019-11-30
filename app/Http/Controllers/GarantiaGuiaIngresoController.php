@@ -189,7 +189,9 @@ class GarantiaGuiaIngresoController extends Controller
     }
 
     public function print($id){
+        $mi_empresa=Empresa::first();
         $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
-        return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','empresa'));
+        return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
     } 
+        
 }

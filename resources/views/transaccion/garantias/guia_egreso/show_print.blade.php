@@ -29,7 +29,7 @@
     </div>
 </div>
 
-<h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2>
+<h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Egreso</strong></h2>
 
 <div class="wrapper wrapper-content animated fadeIn">
  

@@ -10,8 +10,12 @@
 
 
 <div class="ibox" style="margin-bottom:0px;">
-    <div class="table-responsive" ><img align="left" src="{{asset('img/logos/logo.jpg')}}" style="width:200px;height: 70px ;margin-top: 20px">
-        <img align="right" src="{{asset('storage/marcas/'.$garantias_guias_egreso->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 200px;height: 70;margin-top: 20px">
+    <div class="table-responsive" >
+        <img align="left" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="width:200px;height: 70px ;margin-top: 20px">
+        <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 200px;height: 70;margin-top: 20px">
+    </div>
+    <div class="table-responsive" >
+        <p>{{$empresa->calle}}<br>{{$empresa->correo}} / {{$empresa->telefono}} - {{$empresa->movil}}</p>
     </div>
 </div>
 <div class="table-responsive" align="right">
@@ -22,7 +26,7 @@
                     </div>
                 </div>
 
-<h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2>
+<h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Egreso</strong></h2>
 
 <div class="wrapper wrapper-content animated fadeIn">
  
