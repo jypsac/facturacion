@@ -197,8 +197,8 @@
 <div class="container">
     <div class="child1"><br>
         <hr />
-        <td>Departamento de Servicio Tecnico</td>
-        <p style="width:200px;" align="center">Ing. {{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</p>
+        <p style="width:250px;" align="center">Departamento de Servicio Tecnico <br>
+        Ing. {{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</p>
     </div>
     <div class="child2"><br>
         <hr />
@@ -214,17 +214,11 @@
               <table class="table table-bordered white-bg">
                     <tbody>
             <tr>
-                <td >Nombre Cliente:</td>
                 <th >{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
-                <td >Numero de Guia </td>
                 <th >{{$garantia_guia_ingreso->orden_servicio}}</th>
-                <td >Nombre Cliente:</td>
                 <th >{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
-                <td >Numero de Guia </td>
                 <th>{{$garantia_guia_ingreso->orden_servicio}}</th>
-                <td >Nombre Cliente:</td>
                 <th >{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
-                <td >Numero de Guia </td>
                 <th >{{$garantia_guia_ingreso->orden_servicio}}</th>
             </tr>      
                     </tbody>
@@ -246,7 +240,7 @@
         height: 7rem;
         display: flex;
         align-items: start;
-    margin-top:10rem;
+    margin-top:8rem;
 
     }
 

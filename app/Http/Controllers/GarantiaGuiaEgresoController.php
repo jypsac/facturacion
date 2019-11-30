@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\GarantiaGuiaIngreso;
 use App\GarantiaGuiaEgreso;
 use App\Marca;
+use App\Empresa;
 use App\Cliente;
 
 class GarantiaGuiaEgresoController extends Controller
@@ -89,9 +90,10 @@ class GarantiaGuiaEgresoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
+    { 
+        $empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
-        return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso'));
+        return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso','empresa'));
     }
 
     /**
@@ -131,7 +133,8 @@ class GarantiaGuiaEgresoController extends Controller
     }
 
       public function print($id){
+        $mi_empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
-        return view('transaccion.garantias.guia_egreso.show_print',compact('garantias_guias_egreso'));
+        return view('transaccion.garantias.guia_egreso.show_print',compact('garantias_guias_egreso','mi_empresa'));
     }
 }

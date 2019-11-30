@@ -163,9 +163,10 @@ class GarantiaInformeTecnicoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
+    { 
+        $empresa=Empresa::first();
         $garantias_informe_tecnico=GarantiaInformeTecnico::find($id);
-        return view('transaccion.garantias.informe_tecnico.show',compact('garantias_informe_tecnico'));
+        return view('transaccion.garantias.informe_tecnico.show',compact('garantias_informe_tecnico','empresa'));
     }
 
     /**

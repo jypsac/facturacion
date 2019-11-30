@@ -24,8 +24,11 @@
 <body class="white-bg">
 <div class="ibox" style="margin-bottom:0px;">
     <div class="table-responsive" >
-        <img align="left" src="{{asset('img/logos/logo.jpg')}}" style="width:200px;height: 70px ;margin-top: 20px">
+        <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:200px;height: 70px ;margin-top: 20px">
         <img align="right" src="{{asset('storage/marcas/'.$garantias_guias_egreso->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 200px;height: 70;margin-top: 20px">
+    </div>
+    <div class="table-responsive" >
+        <p>{{$mi_empresa->calle}}<br>{{$mi_empresa->correo}} / {{$mi_empresa->telefono}} - {{$mi_empresa->movil}}</p>
     </div>
 </div>
 

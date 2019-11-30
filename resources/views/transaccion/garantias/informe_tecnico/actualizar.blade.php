@@ -118,15 +118,34 @@
 	                            </div>
 	                        </div>
 	                    </div>
+	                    <div class="col-lg-12">
+	                        <div class="panel panel-primary">
+	                            <div class="panel-heading">
+	                               ajjajajajja
+	                            </div>
+	                            <div class="panel-body">
+
+									 	<div class="form-group  row"><label class="col-sm-3">Descripcion Del Problema :</label>
+						                     <div class="col-sm-9">
+						                     	<textarea class="form-control" rows="5" id="comment" name="" readonly>{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->descripcion_problema}}</textarea></div>
+						                </div>
+
+								        <div class="form-group  row"><label class="col-sm-3">Revision y diagnostico:</label>
+						                     <div class="col-sm-9">
+						                     	<textarea class="form-control" rows="5" id="comment" name="" readonly>{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->revision_diagnostico}}</textarea></div>
+						                </div>
+	                            </div>
+	                        </div>
+	                    </div>
 						<div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
-	                                Descripcion del Problema
+	                                Estetica
 	                            </div>
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" readonly>{{$garantia_informe_tecnico->garantia_egreso_i->descripcion_problema}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" >{{$garantia_informe_tecnico->estetica}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -149,12 +168,27 @@
 	                    <div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
-	                                Informe
+	                                Causas Del Problema
 	                            </div>
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="informe">{{$garantia_informe_tecnico->informe}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="causas_del_problema">{{$garantia_informe_tecnico->causas_del_problema}}</textarea>
+						                     </div>
+						                </div>
+	                            </div>
+
+	                        </div>
+						</div>
+	                    <div class="col-lg-12">
+	                        <div class="panel panel-primary">
+	                            <div class="panel-heading">
+	                               Solucion
+	                            </div>
+	                            <div class="panel-body">
+						                <div class="form-group  row">
+						                     <div class="col-sm-12">
+						                     	<textarea class="form-control" rows="5" id="comment" name="solucion">{{$garantia_informe_tecnico->solucion}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
