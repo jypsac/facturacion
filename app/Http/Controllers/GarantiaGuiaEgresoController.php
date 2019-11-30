@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\GarantiaGuiaIngreso;
 use App\GarantiaGuiaEgreso;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Marca;
 use App\Empresa;
 use App\Cliente;
@@ -90,7 +91,7 @@ class GarantiaGuiaEgresoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    { 
+    {
         $empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
         return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso','empresa'));
@@ -137,4 +138,15 @@ class GarantiaGuiaEgresoController extends Controller
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
         return view('transaccion.garantias.guia_egreso.show_print',compact('garantias_guias_egreso','mi_empresa'));
     }
+
+    public function pdf($id){
+        $mi_empresa=Empresa::first();
+        $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
+        // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
+        // $pdf=App::make('dompdf.wrapper');
+        // $pdf=loadView('welcome');
+        $pdf=PDF::loadView('transaccion.garantias.guia_egreso.show_pdf',compact('garantias_guias_egreso','mi_empresa'));
+    //     return $pdf->download();
+        return $pdf->download();
+}
 }

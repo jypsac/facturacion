@@ -9,12 +9,12 @@
     <title>Guia Egreso</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet"> --}}
 
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/style.css') }}" rel="stylesheet"> --}}
 
-    <script src="@yield('vue_js', '#')" defer></script>
+    {{-- <script src="@yield('vue_js', '#')" defer></script> --}}
 
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
@@ -196,8 +196,8 @@
 <div class="container">
     <div class="child1"><br>
         <hr />
-        <td>Departamento de Servicio Tecnico</td>
-        <p style="width:200px;" align="center">Ing. {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}
+
+        <p style="width:200px;" align="center">Departamento de Servicio Tecnico<br>Ing. {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}
                  {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</p>
     </div>
     <div class="child2"><br>

@@ -8,6 +8,7 @@ use App\Cliente;
 use App\Empresa;
 use App\Personal_datos_laborales;
 use App\Personal;
+use Barryvdh\DomPDF\Facade as PDF;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -52,7 +53,7 @@ class GarantiaGuiaIngresoController extends Controller
         $clientes=Cliente::all();
         // $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
         // $personales=Personal::join("personal_datos_laborales","id","=","personal_datos_laborales.personal_id")->get();
-        $personales=DB::table('personal_datos_laborales')->where("cargo","=","ingeniero")->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
+        $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
 
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
         return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales'));
@@ -128,7 +129,7 @@ class GarantiaGuiaIngresoController extends Controller
     {
         $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
         $clientes=Cliente::all();
-        $personales=DB::table('personal_datos_laborales')->where("cargo","=","ingeniero")->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
+        $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
         return view('transaccion.garantias.guia_ingreso.edit',compact('garantia_guia_ingreso','clientes','personales'));
     }
 
@@ -157,9 +158,9 @@ class GarantiaGuiaIngresoController extends Controller
 
         // ACTUALIZACION DE GUIA DE INGRESO
         $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
-        
+
         $garantia_guia_ingreso->motivo=$request->get('motivo');
-        
+
         $garantia_guia_ingreso->asunto=$request->get('asunto');
         $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipo');
         $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
@@ -171,7 +172,7 @@ class GarantiaGuiaIngresoController extends Controller
 
         $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
         $garantia_guia_ingreso->cliente_id=$request->get('cliente_id');
-        
+
         $garantia_guia_ingreso->save();
 
         return redirect()->route('garantia_guia_ingreso.index');
@@ -192,6 +193,17 @@ class GarantiaGuiaIngresoController extends Controller
         $mi_empresa=Empresa::first();
         $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
         return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
-    } 
-        
+    }
+
+    public function pdf($id){
+        $mi_empresa=Empresa::first();
+        $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
+        // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
+        // $pdf=App::make('dompdf.wrapper');
+        // $pdf=loadView('welcome');
+        $pdf=PDF::loadView('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','mi_empresa'));
+    //     return $pdf->download();
+        return $pdf->download();
+}
+
 }
