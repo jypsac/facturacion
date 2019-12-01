@@ -9,12 +9,12 @@
     <title>Guia Egreso</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet"> --}}
 
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+    {{-- <link href="{{ asset('css/style.css') }}" rel="stylesheet"> --}}
 
-    <script src="@yield('vue_js', '#')" defer></script>
+    {{-- <script src="@yield('vue_js', '#')" defer></script> --}}
 
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
@@ -37,28 +37,34 @@
 <div class="wrapper wrapper-content animated fadeIn">
 
 <div class="table-responsive">
-    <table class="table table-bordered table-striped cero">
+    <table class="table table-bordered table-striped cero" >
         <thead>
             <tr>
-                <td style="width: 70px;">Motivo</td>
-                <th style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->motivo}}</th>
-                <td style="width: 70px;">Marca</td>
-                <th style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->marcas_i->nombre}}</th>
-                <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;">22-22--22</th>
-                <td style="width: 70px;">Orden de Servicio</td>
-                <th style="width: 70px;"> {{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</th>
-            </tr>   
+                <td style="width: 100px;">Motivo</td>
+                <th>{{$garantias_guias_egreso->garantia_ingreso_i->motivo}}</th>
+            </tr>
         </thead>
     </table>
     <table class="table table-bordered table-striped cero">
         <thead>
             <tr>
                 <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 70px;"> {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
-                <td style="width: 70px;">Asunto</td>
-                <th style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->asunto}}</th>
-                
+                <th style="width: 200px;"> {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}
+                 {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
+                <td style="width: 70px;">Fecha</td>
+                <th style="width: 70px;">22-22--22</th>
+                <td style="width: 70px;">Marca</td>
+                <th style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->marcas_i->nombre}}</th>
+                <td style="width: 80px;">Orden de Servicio</td>
+                <th style="width: 120px;"> {{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</th>
+            </tr>
+        </thead>
+    </table>
+    <table class="table table-bordered table-striped ceros">
+        <thead>
+            <tr>
+                <td style="width: 100px;">Asunto</td>
+                <th>{{$garantias_guias_egreso->garantia_ingreso_i->asunto}}</th>
             </tr>
         </thead>
     </table>
@@ -190,8 +196,8 @@
 <div class="container">
     <div class="child1"><br>
         <hr />
-        <td>Departamento de Servicio Tecnico</td>
-        <p style="width:200px;" align="center">Ing. {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}
+
+        <p style="width:200px;" align="center">Departamento de Servicio Tecnico<br>Ing. {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}
                  {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</p>
     </div>
     <div class="child2"><br>
