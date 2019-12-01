@@ -38,11 +38,18 @@
 <div class="wrapper wrapper-content animated fadeIn">
  
 <div class="table-responsive">
-    <table class="table table-bordered table-striped cero" >
+    <table class="table table-bordered table-striped cero">
         <thead>
             <tr>
                 <td style="width: 100px;">Motivo</td>
-                <th>{{$garantia_guia_ingreso->motivo}}</th>
+                <th style="width: 100px;">{{$garantia_guia_ingreso->motivo}}</th>
+                <td style="width: 70px;">Marca</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->marcas_i->nombre}}</th>
+                <td style="width: 70px;">Fecha</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
+                <td style="width: 70px;">Orden de Servicio</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
+                
             </tr>
         </thead>
     </table>
@@ -50,15 +57,9 @@
         <thead>
             <tr>
                 <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</th>
-                <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
-                <td style="width: 70px;">Marca</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->marcas_i->nombre}}</th>
-                <td style="width: 80px;">Orden de Servicio</td>
-                <th style="width: 120px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
-                <td style="width: 100px;">Asunto</td>
-                <th>{{$garantia_guia_ingreso->asunto}}</th>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</th>
+                <td style="width: 70px;">Asunto</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->asunto}}</th>
             </tr>
         </thead>
     </table>

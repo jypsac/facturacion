@@ -97,8 +97,9 @@ class GarantiaGuiaIngresoController extends Controller
         // $garantia_guia_ingreso->contacto_id=$request->get('cliente_id');
 
         $garantia_guia_ingreso->save();
+        $contar=GarantiaGuiaIngreso::all()->count();
 
-        return redirect()->route('garantia_guia_ingreso.index');
+        return redirect()->route('garantia_guia_ingreso.show',$contar);
 
 
 

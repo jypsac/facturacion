@@ -37,34 +37,28 @@
 <div class="wrapper wrapper-content animated fadeIn">
  
 <div class="table-responsive">
-    <table class="table table-bordered table-striped cero" >
+    <table class="table table-bordered table-striped cero">
         <thead>
             <tr>
-                <td style="width: 100px;">Motivo</td>
-                <th>{{$garantias_guias_egreso->garantia_ingreso_i->motivo}}</th>
-            </tr>
+                <td style="width: 70px;">Motivo</td>
+                <th style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->motivo}}</th>
+                <td style="width: 70px;">Marca</td>
+                <th style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->marcas_i->nombre}}</th>
+                <td style="width: 70px;">Fecha</td>
+                <th style="width: 70px;">22-22--22</th>
+                <td style="width: 70px;">Orden de Servicio</td>
+                <th style="width: 70px;"> {{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</th>
+            </tr>   
         </thead>
     </table>
     <table class="table table-bordered table-striped cero">
         <thead>
             <tr>
                 <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 200px;"> {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}
-                 {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
-                <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;">22-22--22</th>
-                <td style="width: 70px;">Marca</td>
-                <th style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->marcas_i->nombre}}</th>
-                <td style="width: 80px;">Orden de Servicio</td>
-                <th style="width: 120px;"> {{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</th>
-            </tr>
-        </thead>
-    </table>
-    <table class="table table-bordered table-striped ceros">
-        <thead>
-            <tr>
-                <td style="width: 100px;">Asunto</td>
-                <th>{{$garantias_guias_egreso->garantia_ingreso_i->asunto}}</th>
+                <th style="width: 70px;"> {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
+                <td style="width: 70px;">Asunto</td>
+                <th style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->asunto}}</th>
+                
             </tr>
         </thead>
     </table>

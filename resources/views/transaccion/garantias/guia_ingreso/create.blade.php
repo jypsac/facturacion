@@ -5,7 +5,6 @@
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_guia_ingreso.index') )
 @section('value_accion', 'Atras')
-
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -19,31 +18,11 @@
 	            	<div class="row">
 						<div class="col-lg-12">
                     <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>Tabla  <small>Agregado rapido</small></h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#" class="dropdown-item">Config option 1</a>
-                                    </li>
-                                    <li><a href="#" class="dropdown-item">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
-                        </div>
-                        <div class="ibox-content">
+                        <div class="ibox-content" style="border-top-width: 0px;padding: 0;height: 20px">
                             <div class="text-center">
                             <!-- MODAL CLIENTE -->
 
-								<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Cliente</button>
+								<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar-Cliente</button>
 							</div>
 							<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-lg">
@@ -174,14 +153,12 @@
 									 	@csrf
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
-							                    <div class="col-sm-11">
+							                    <div class="col-sm-5">
 							                     	<input type="text" class="form-control" name="marca_id" value="{{$marca_nombre}}" readonly>
 							                    </div>
-						                </div>
 
-									 	<div class="form-group row">
-									 		<label class="col-sm-1 col-form-label">Motivo :</label>
-												<div class="col-sm-4">
+							                    <label class="col-sm-1 col-form-label">Motivo :</label>
+												<div class="col-sm-5">
 													<select class="form-control m-b" name="motivo">
 										    		<option value="Tecnico">Tecnico</option>
 										    		<option value="Servicio">Servicio</option>
@@ -189,36 +166,42 @@
 										    		<option value="Reingreso">Reingreso</option>
 										    		</select>
 							                    </div>
-						                    <label class="col-sm-2 col-form-label">Ing. Asignado:</label>
-												<div class="col-sm-4">
+						                </div>
+
+									 	<div class="form-group row">
+									 		
+						                    <label class="col-sm-1 col-form-label">Ing. Asignado:</label>
+												<div class="col-sm-5">
 													<select class="form-control m-b" name="personal_lab_id">
 														@foreach($personales as $personal)
 													<option value="{{$personal->id}}">{{$personal->nombres}} {{$personal->apellidos}} </option>
 														@endforeach
 													</select>
 												</div>
+												<label class="col-sm-1 col-form-label">Fecha:</label>
+						                   		 <div class="col-sm-5">
+													<input type="text" class="form-control" name="fecha" value="{{$tiempo_actual}}" readonly>
+						                    	</div>
 						                </div>
 								        <div class="form-group  row">
-								        	<label class="col-sm-1 col-form-label">Fecha:</label>
-						                    <div class="col-sm-4">
-											<input type="text" class="form-control" name="fecha" value="{{$tiempo_actual}}" readonly>
-						                    </div>
-						                    <label class="col-sm-2 col-form-label">Orden de servicio:</label>
-						                    <div class="col-sm-4">
+								        	
+						                    <label class="col-sm-1 col-form-label">Orden de servicio:</label>
+						                    <div class="col-sm-5">
 						                    	<input type="text" class="form-control" name="orden_servicio" value="{{$orden_servicio}}" readonly>
 						                    </div>
+						                    <label class="col-sm-1 col-form-label">Cliente:</label>
+						                     <div class="col-sm-5"><select class="form-control m-b" name="cliente_id">
+													@foreach($clientes as $cliente)
+													<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
+													@endforeach
+										    	</select></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Asunto:</label>
 						                     <div class="col-sm-11"><input type="text" class="form-control" name="asunto"></div>
 										</div>
 
-										<div class="form-group  row"><label class="col-sm-1 col-form-label">Cliente:</label>
-						                     <div class="col-sm-11"><select class="form-control m-b" name="cliente_id">
-													@foreach($clientes as $cliente)
-													<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
-													@endforeach
-										    	</select></div>
+										<div class="form-group  row">
 						                </div>
 	                            </div>
 	                        </div>
@@ -230,20 +213,17 @@
 	                            </div>
 	                            <div class="panel-body">
 
-									 	<div class="form-group  row"><label class="col-sm-2">Modelo :</label>
-						                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre_equipo"></div>
+									 	<div class="form-group  row">
+									 		<label class="col-sm-1">Modelo :</label>
+						                     <div class="col-sm-5"><input type="text" class="form-control" name="nombre_equipo"></div>
+						                     <label class="col-sm-1">Nr Serie:</label>
+						                     <div class="col-sm-5"><input type="text" class="form-control" name="numero_serie"></div>
 						                </div>
 
-								        <div class="form-group  row"><label class="col-sm-2">Nr Serie:</label>
-						                     <div class="col-sm-10"><input type="text" class="form-control" name="numero_serie"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-2">Codigo Interno:</label>
-						                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_interno"></div>
-						                </div>
-
-						                <div class="form-group  row"><label class="col-sm-2">Fecha de Compra:</label>
-										<div class="col-sm-10"><input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}"></div>
+						                <div class="form-group  row"><label class="col-sm-1">Codigo Interno:</label>
+						                     <div class="col-sm-5"><input type="text" class="form-control" name="codigo_interno"></div>
+						                     <label class="col-sm-1">Fecha de Compra:</label>
+										<div class="col-sm-5"><input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}"></div>
 						                </div>
 
 	                            </div>
@@ -292,7 +272,7 @@
 	                        </div>
 	                    </div>
 	                    <div class="col-lg-12">
-	                        <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Enviar</strong></button>
+	                        <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
 	                        </form>
 	                    </div>
                     </div>

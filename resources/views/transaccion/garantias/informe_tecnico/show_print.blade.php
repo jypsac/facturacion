@@ -37,31 +37,34 @@
 <div class="wrapper wrapper-content animated fadeIn">
  
 <div class="table-responsive">
-    <table class="table table-bordered table-striped cero" >
+    <table class="table table-bordered table-striped correo">
         <thead>
             <tr>
-                <td style="width: 100px;">Motivo</td>
-                <th>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}</th>
+                <td style="width: 70px;">Motivo</td>
+                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}</th>
+                <td style="width: 70px;">Marca</td>
+                <th style="width: 70px;"> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre}}</th>
+                <td style="width: 70px;">Fecha</td>
+                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha}}</th>
+                <td style="width: 70px;">Orden de Servicio</td>
+                <th style="width: 70px;"> {{$garantias_informe_tecnico->orden_servicio}}</th>
+
             </tr>
         </thead>
     </table>
     <table class="table table-bordered table-striped cero">
         <thead>
             <tr>
+
                 <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 200px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
-                <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha}}</th>
-                <td style="width: 70px;">Marca</td>
-                <th style="width: 70px;"> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre}}</th>
-                <td style="width: 80px;">Orden de Servicio</td>
-                <th style="width: 120px;"> {{$garantias_informe_tecnico->orden_servicio}}</th>
-                <td style="width: 80px;">Asunto</td>
-                <th style="width: 120px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</th>
+                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
+                <td style="width: 70px;">Asunto</td>
+                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</th>
 
             </tr>
         </thead>
     </table>
+    
     
 </div>
 
@@ -196,6 +199,55 @@
 
                     </div>
                 </span>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="col-lg-13">
+    <div class="ibox">
+
+        {{-- <div class="ibox-title"> --}}
+        <h4>Fotos</h4>
+        {{-- </div> --}}
+        <div class="border">
+            <div class="ibox-content text-left h-50">
+                <span id="sparkline8">
+                    <div class="panel-body">
+                                 @if($garantias_informe_tecnico->image1<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image1}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image2<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image2}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image3<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image3}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image4<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image4}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image5<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image5}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image6<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image6}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image7<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image7}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image8<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image8}}" style="width: 250px;">
+                            @endif
+                    </div>
+                </span>
+
             </div>
         </div>
     </div>
