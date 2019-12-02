@@ -6,7 +6,12 @@
 @section('href_accion', route('garantia_guia_ingreso.index') )
 @section('value_accion', 'Atras')
 @section('content')
-
+<div class="social-bar">
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg">C</a>
+    <a class="icon icon-twitter" target="_blank">M</a>
+    <a class="icon icon-youtube" target="_blank">P</a>
+    <a class="icon icon-instagram" target="_blank">#</a>
+</div>
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -19,11 +24,11 @@
 						<div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-content" style="border-top-width: 0px;padding: 0;height: 20px">
-                            <div class="text-center">
+                            {{-- <div class="text-center">
                             <!-- MODAL CLIENTE -->
 
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar-Cliente</button>
-							</div>
+							</div> --}}
 							<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-lg">
 								  <div class="modal-content">
@@ -33,7 +38,7 @@
 										@csrf
 										<h1 >Datos Personales</h1>
 										<fieldset>
-											<h2>Informacion I</h2>
+											
 											<div class="row">
 												<div class="col-lg-6">
 													<div class="form-group">
@@ -66,9 +71,9 @@
 											</div>
 
 										</fieldset>
-										<h1>Informacion</h1>
+										
 										<fieldset>
-											<h2>Informacion II</h2>
+											
 											<div class="row">
 												<div class="col-lg-6">
 													<div class="form-group">
@@ -99,7 +104,7 @@
 										</fieldset>
 										<h1>Contacto</h1>
 										<fieldset>
-											<h2>Informacion I</h2>
+											
 											<div class="row">
 												<div class="col-lg-6">
 													<div class="form-group">

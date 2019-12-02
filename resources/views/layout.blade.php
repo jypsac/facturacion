@@ -18,6 +18,8 @@
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
 
+    <link href="{{ asset('main.css') }}" rel="stylesheet">
+
 </head>
 
 <body class="">

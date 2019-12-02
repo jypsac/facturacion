@@ -19,9 +19,17 @@
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
 
+    {{-- FUNCION CERRAR AUTOMATICAMENTE --}}
+    <SCRIPT LANGUAGE="JavaScript">
+        function cerrar() {
+        window.close();
+        }
+    </SCRIPT>
+
 </head>
 
-<body class="white-bg">
+{{-- LLAMADO AL BODY EN FUNCION CERRAR CON UNA DURACION DE 10 SEGUNDOS --}}
+<body class="white-bg" onLoad="setTimeout('cerrar()',10*1000)">
 
 <div class="ibox" style="margin-bottom:0px;">
     <div class="table-responsive" >
@@ -278,6 +286,7 @@
     <!-- Custom and plugin javascript -->
     <script src="js/inspinia.js"></script>
 
+    {{-- IMPRIMIR --}}
     <script type="text/javascript">
         window.print();
     </script>

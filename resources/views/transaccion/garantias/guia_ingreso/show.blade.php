@@ -22,8 +22,15 @@
                         <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Gmail </a>
                         <a href="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a>
                         <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
+                        {{-- <iframe src="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" style="display:none;" name="frame"></iframe>
+
+                        <input type="button" onclick="frames['frame'].print()" value="printletter"> --}}
+
+                        {{-- <a href="javascript:printExternal('{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}')">Print</a> --}}
+                        
+                        {{-- <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" onclick="w = window.open(this.href);w.print();w.close();return false;"><i class="fa fa-print"></i> Print Invoice </a> --}}
                     </div>
-                </div>
+                </div>  
 
 <h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2>
 
@@ -270,5 +277,14 @@
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
+{{-- <script>
+function printExternal(url) {
+    var printWindow = window.open( url, 'Print', 'left=200, top=200, width=950, height=500, toolbar=0, resizable=0');
+    printWindow.addEventListener('load', function(){
+        printWindow.print();
+        printWindow.close();
+    }, true);
+}
+</script> --}}
 
 @endsection
