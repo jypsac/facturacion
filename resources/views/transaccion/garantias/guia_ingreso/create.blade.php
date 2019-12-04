@@ -110,7 +110,7 @@
 							                    <div class="col-sm-4">
 														<input id="email" name="telefono_contacto" type="text" class="form-control required">
 							                     </div>
-
+{{--  --}}
 							                    <label class="col-sm-2 col-form-label">Celular:</label>
 												<div class="col-sm-4">
 														<input id="address" name="celular_contacto" type="text" class="form-control required">
