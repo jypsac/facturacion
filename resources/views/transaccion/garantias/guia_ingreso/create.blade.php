@@ -8,10 +8,10 @@
 @section('content')
 
 <div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i></a>
-    <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i class="fa fa-male" aria-hidden="true"></i></i></a>
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
+    <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i></i><span> personal</span></a>
     
-</div>
+</div><style type="text/css">span{font-size:15px;padding-left:4px}</style>
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -32,11 +32,11 @@
 								<div class="modal-dialog modal-lg">
 								  <div class="modal-content" style="width: 100%">
 
-									<form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:20px">
+									<form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
 
 										@csrf
 										<h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
-									 	<div class="form-group row">
+									 	<div class="form-group row ">
 									 		<label class="col-sm-2 col-form-label" >Tipo Documento:</label>
 							                    <div class="col-sm-4">
 							                     	<select class="form-control m-b" name="documento_identificacion" >
@@ -138,6 +138,10 @@
 										@csrf
 										<h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
 
+<style type="text/css">
+	.xd{    margin-bottom: 0px;}
+	h1{margin-bottom: 0px;}
+</style>
 									 	<div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Nombre:</label>
 							                    <div class="col-sm-4">
@@ -150,7 +154,7 @@
 							                    </div>
 						                </div>
 
-						                <div class="form-group row">
+						                <div class="form-group row xd">
 						                	<label class="col-sm-2 col-form-label">Fecha Nacimiento:</label>
 												<div class="col-sm-4">
 													<input type="date" class="form-control" name="fecha_nacimiento">
@@ -167,7 +171,7 @@
 						                </div>
 						                <h1><i class="fa fa-address-card-o" aria-hidden="true"></i></h1>
 
-						                <div class="form-group row">
+						                <div class="form-group row xd">
 
 									 		<label class="col-sm-2 col-form-label" >Tipo Documento:</label>
 							                    <div class="col-sm-4"><select class="form-control m-b" name="documento_identificacion">
@@ -184,7 +188,7 @@
 
 						                </div>
 
-						                <div class="form-group row">
+						                <div class="form-group row xd">
 									 		
 							                     <label class="col-sm-2 col-form-label" >Direccion:</label>
 							                    <div class="col-sm-4">
@@ -416,5 +420,3 @@
 
 
 @stop
-<style type="text/css">
-</style>
