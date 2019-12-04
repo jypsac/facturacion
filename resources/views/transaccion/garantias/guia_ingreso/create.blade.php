@@ -6,11 +6,11 @@
 @section('href_accion', route('garantia_guia_ingreso.index') )
 @section('value_accion', 'Atras')
 @section('content')
+
 <div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg">C</a>
-    <a class="icon icon-twitter" target="_blank">M</a>
-    <a class="icon icon-youtube" target="_blank">P</a>
-    <a class="icon icon-instagram" target="_blank">#</a>
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg"><i class="fa fa-user-o" aria-hidden="true"></i></a>
+    <a class="icon icon-twitter" target="_blank" data-toggle="modal1" data-target=".bd-example-modal1lg"><i class="fa fa-male" aria-hidden="true"></i></i></a>
+    
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
@@ -25,117 +25,107 @@
                     <div class="ibox ">
                         <div class="ibox-content" style="border-top-width: 0px;padding: 0;height: 20px">
                             {{-- <div class="text-center">
+
                             <!-- MODAL CLIENTE -->
 
 								<button type="button" class="btn btn-primary" data-toggle="modal" data-target=".bd-example-modal-lg">Agregar-Cliente</button>
 							</div> --}}
 							<div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-lg">
-								  <div class="modal-content">
+								  <div class="modal-content" style="width: 100%">
 
 									<form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:20px">
+
 										@csrf
-										<h1 >Datos Personales</h1>
-										<fieldset>
-											
-											<div class="row">
-												<div class="col-lg-6">
-													<div class="form-group">
-														<label>Documento Identificacion *</label>
-														<select class="form-control m-b" name="documento_identificacion" >
+										<h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
+									 	<div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >Tipo Documento:</label>
+							                    <div class="col-sm-4">
+							                     	<select class="form-control m-b" name="documento_identificacion" >
 															<option value="dni">DNI</option>
 															<option value="pasaporte">Pasaporte</option>
 															<option value="ruc">Ruc</option>
 														</select>
-													</div>
-													<div class="form-group">
-														<label>Numero de Documento *</label>
-														<input type="text" class="form-control" name="numero_documento" class="form-control required">
-													</div>
-												</div>
+							                    </div>
 
-												<div class="col-lg-6">
-													<div class="form-group">
-														<label>Nombre *</label>
+							                    <label class="col-sm-2 col-form-label">Numero de Documento:</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" name="numero_documento" class="form-control required">
+							                    </div>
+
+						                </div>
+						                <div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >Nombre:</label>
+							                    <div class="col-sm-4">
 														<input type="text" class="form-control" name="nombre" class="form-control required">
-													</div>
+							                    </div>
 
-													<div class="form-group">
-														<label>Direccion *</label>
+							                    <label class="col-sm-2 col-form-label">Direccion:</label>
+												<div class="col-sm-4">
 														<input type="text" class="form-control" name="direccion" class="form-control required">
-													</div>
-												</div>
+							                    </div>
+							                    
+						                </div>
 
+						                <div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >Celular:</label>
+							                    <div class="col-sm-4">
+							                    	<input type="number" class="form-control" name="celular" class="form-control required">							                    </div>
 
-											</div>
-
-										</fieldset>
-										
-										<fieldset>
-											
-											<div class="row">
-												<div class="col-lg-6">
-													<div class="form-group">
-														<label>Celular *</label>
-														<input type="number" class="form-control" name="celular" class="form-control required">
-													</div>
-													<div class="form-group">
-														<label>Empresas *</label>
+							                    <label class="col-sm-2 col-form-label">Empresas:</label>
+												<div class="col-sm-4">
 														<input type="text" class="form-control" name="empresa" class="form-control required">
-													</div>
-												</div>
+							                    </div>
+							                    
+						                </div>
+										
+						                <div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >correo:</label>
+							                    <div class="col-sm-4">
+							                    	<input type="number" class="form-control" name="celular" class="form-control required">							                    </div>
 
-												<div class="col-lg-6">
-
-													<div class="form-group">
-														<label>correo *</label>
-														<input id="email" name="email" type="text" class="form-control required email">
-													</div>
-
-													<div class="form-group">
-														<label>Telefono *</label>
+							                    <label class="col-sm-2 col-form-label">Telefono:</label>
+												<div class="col-sm-4">
 														<input type="number" class="form-control" name="telefono" class="form-control required">
-													</div>
-
-												</div>
-
-											</div>
-										</fieldset>
-										<h1>Contacto</h1>
-										<fieldset>
-											
-											<div class="row">
-												<div class="col-lg-6">
-													<div class="form-group">
-														<label>Nombre *</label>
+							                    </div>
+							                    
+						                </div>
+										<h1><i class="fa fa-address-book-o" aria-hidden="true"></i></h1>
+										
+						                <div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >Nombre:</label>
+							                    <div class="col-sm-4">
 														<input id="name" name="nombre_contacto" type="text" class="form-control required">
-													</div>
-													<div class="form-group">
-														<label>Cargo *</label>
+							                     </div>
+
+							                    <label class="col-sm-2 col-form-label">Cargo:</label>
+												<div class="col-sm-4">
 														<input id="surname" name="cargo_contacto" type="text" class="form-control required">
-													</div>
-												</div>
-												<div class="col-lg-6">
-													<div class="form-group">
-														<label>	Telefono *</label>
+							                    </div>
+							                    
+						                </div>
+
+						                <div class="form-group row" style="">
+									 		<label class="col-sm-2 col-form-label" >Telefono:</label>
+							                    <div class="col-sm-4">
 														<input id="email" name="telefono_contacto" type="text" class="form-control required">
-													</div>
-													<div class="form-group">
-														<label>Celular *</label>
+							                     </div>
+{{--  --}}
+							                    <label class="col-sm-2 col-form-label">Celular:</label>
+												<div class="col-sm-4">
 														<input id="address" name="celular_contacto" type="text" class="form-control required">
-													</div>
-												</div>
-												<div class="col-lg-6">
-													<div class="form-group">
-														<label>	Correo *</label>
+							                    </div>
+							                    
+						                </div>
+						                <div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >Correo:</label>
+							                    <div class="col-sm-4">
 														<input id="email" name="email_contacto" type="text" class="form-control required email">
-													</div>
-												</div>
-											</div>
-										</fieldset>
+							                     </div>
+
+						                </div>
+
 										<input type="submit"class="btn btn-primary" value="Enviar">
-
-
 
 									</form>
 
