@@ -161,7 +161,7 @@
 						@csrf
 						<div class="row">
 							<div class="col-lg-4">
-								<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
+								<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
 									<div class="col-sm-10"><input type="text" class="form-control" name="nombres"></div>
 								</div>
 
