@@ -189,5 +189,16 @@ class MarcasTableSeeder extends Seeder
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
+		DB::table('marcas')->insert([
+			'id' => 16 ,
+			'nombre' => 'CANON' ,
+			'codigo' => '00016',
+			'abreviatura' => 'CANON',
+			'nombre_empresa' => 'Intel Corporation',
+			'descripcion' => 'es la creadora de la serie de procesadores x86, los procesadores más comúnmente encontrados en la mayoría de las computadoras personales',
+			'imagen'=>'1575063475can.png',
+			'created_at' => date('2019-08-01 00:00:00'),
+           	'updated_at' => date('2019-08-01 00:00:00')
+		]);
     }
 }
