@@ -43,7 +43,7 @@
 }
 
 .icon:hover {
-	padding-right: 3rem;
+	padding-right: 6rem;
 	border-radius: 1rem 0 0 1rem;
 	box-shadow: 0 0 .5rem rgba(0, 0, 0, 0.42);
 }
