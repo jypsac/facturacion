@@ -8,7 +8,7 @@ use App\Cliente;
 use App\Contacto;
 class AgregadoRapidoController extends Controller
 {
-
+//Productos     
 
 //FUNCIONES PARA EJECUTAR CONSULTAS
 
