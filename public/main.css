@@ -15,14 +15,15 @@
 	padding: .7rem;
 	display: flex;
 	transition: all .5s;
+	width: 35px;
 }
 
 .icon-facebook {
-	background: #2E406E;
+	background: #BBE4E9;
 }
 
 .icon-twitter {
-	background: #339DC5;
+	background: #97F1D1;
 }
 
 .icon-youtube {
