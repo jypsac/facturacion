@@ -63,7 +63,6 @@ class AgregadoRapidoController extends Controller
 
     //FUNCION PARA CREAR PERSONAL
     public function personal_store(Request $request){
-        
         $personal=new Personal;
         $personal->nombres=$request->get('nombres');
         $personal->apellidos=$request->get('apellidos');
@@ -79,7 +78,6 @@ class AgregadoRapidoController extends Controller
         $personal->nivel_educativo=$request->get('nivel_educativo');
         $personal->profesion=$request->get('profesion');
         $personal->direccion=$request->get('direccion');
-        
         $personal->save();
         return back();
     }
