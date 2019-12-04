@@ -6,9 +6,9 @@ use Illuminate\Http\Request;
 use App\Marca;
 use App\Cliente;
 use App\Contacto;
+
 class AgregadoRapidoController extends Controller
 {
-//Productos     
 
 //FUNCIONES PARA EJECUTAR CONSULTAS
 
@@ -36,7 +36,6 @@ class AgregadoRapidoController extends Controller
     public function contactos_store($data){
 
         $contador=Cliente::count();
-
         $contacto=new Contacto;
         $contacto->nombre=$data['nombre_contacto'];
         $contacto->cargo=$data['cargo_contacto'];
@@ -81,4 +80,5 @@ class AgregadoRapidoController extends Controller
         $personal->save();
         return back();
     }
+    
 }
