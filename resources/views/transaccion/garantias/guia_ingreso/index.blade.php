@@ -39,7 +39,7 @@
                                                             </div>
                                                         </div>
 
-                                                            <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"><strong>Enviar</strong></button>
+                                                            <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
                                                     </form>
 
                                                         </div>
