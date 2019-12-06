@@ -51,6 +51,7 @@ Route::view('/' , 'home')->name('inicio');
 
 	Route::get('contacto/{id}', 'ContactoController@index_id')->name('contacto.index_id');
 	Route::get('contacto/crear/{id}', 'ContactoController@crear')->name('contacto.crear');
+	Route::get('contacto/editar/{id}/{id2}', 'ContactoController@editar')->name('contacto.editar');
 	Route::resource('/contacto','ContactoController');
 
 

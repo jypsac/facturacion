@@ -78,9 +78,11 @@ class ContactoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function editar($id_contacto,$id_cliente)
     {
-        return "aqui se edita";
+        $contacto=Contacto::where("clientes_id","=",$id)->first();
+        return view('auxiliar.cliente.contacto.edit',compact('id'));
+        
     }
 
     /**
