@@ -28,6 +28,7 @@ class CreateClientesTable extends Migration
 
         Schema::create('contactos', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->boolean('primer_contacto')->default('0');
             $table->string('nombre');
             $table->string('cargo');
             $table->string('telefono');

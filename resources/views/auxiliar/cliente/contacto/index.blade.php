@@ -3,8 +3,8 @@
 @section('title', 'Contacto')
 @section('breadcrumb', 'Contacto')
 @section('breadcrumb2', 'Contacto')
-@section('href_accion', route('contacto.create'))
-@section('value_accion', 'Agregar')
+@section('href_accion', route('contacto.crear',$id))
+@section('value_accion', 'Agregassr')
 
 @section('content')
 
@@ -57,15 +57,22 @@
                                 <td>{{$contacto->celular}}</td>
                                 <td>{{$contacto->email}}</td>
                                 <td><center><a href="{{ route('contacto.edit', $contacto->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
+                                
                                 <td>
                                     <center>
+                                        @if($contacto->primer_contacto==1)
+                                            <button class="btn btn-s-m btn-info">Sin funcion</button>  
+                                        @else
                                         <form action="{{ route('contacto.destroy', $contacto->id)}}" method="POST">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
                                         </form>
+                                        @endif
                                     </center>
                                 </td>
+                                
+                                
                             </tr>
                         @endforeach
                     </tbody>

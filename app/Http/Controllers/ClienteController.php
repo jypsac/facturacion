@@ -73,6 +73,7 @@ class ClienteController extends Controller
 
         $contacto=new Contacto;
         $contacto->nombre=$data['nombre_contacto'];
+        $contacto->primer_contacto=1;
         $contacto->cargo=$data['cargo_contacto'];
         $contacto->telefono=$data['telefono_contacto'];
         $contacto->celular=$data['celular_contacto'];

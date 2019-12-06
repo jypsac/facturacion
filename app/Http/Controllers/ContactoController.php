@@ -14,8 +14,14 @@ class ContactoController extends Controller
      */
     public function index()
     {
-        $contactos=Contacto::all();
-        return view('auxiliar.cliente.contacto.index',compact('contactos'));
+        // $contactos=Contacto::all();
+        // return view('auxiliar.cliente.contacto.index',compact('contactos'));
+    }
+
+    public function index_id($id)
+    {   
+        $contactos=Contacto::where("clientes_id","=",$id)->get();
+        return view('auxiliar.cliente.contacto.index',compact('contactos','id'));
     }
 
     /**
@@ -23,9 +29,14 @@ class ContactoController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    // public function create()
+    // {
+    //     return "hola0dsadsadsad";
+    // }
+
+    public function crear($id)
     {
-        //
+        return view('auxiliar.cliente.contacto.create',compact('id'));
     }
 
     /**
@@ -36,7 +47,18 @@ class ContactoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id=$request->get('clientes_id');
+
+        $contacto= new Contacto;
+        $contacto->nombre=$request->get('nombre');
+        $contacto->cargo=$request->get('cargo');
+        $contacto->telefono=$request->get('telefono');
+        $contacto->celular=$request->get('celular');
+        $contacto->email=$request->get('email');
+        $contacto->clientes_id=$request->get('clientes_id');
+        $contacto->save();
+
+        return redirect()->route('contacto.index_id',compact('id'));
     }
 
     /**
@@ -58,7 +80,7 @@ class ContactoController extends Controller
      */
     public function edit($id)
     {
-        //
+        return "aqui se edita";
     }
 
     /**
@@ -81,6 +103,9 @@ class ContactoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $contacto=Contacto::findOrFail($id);
+        $contacto->delete();
+
+        return redirect()->route('cliente.index');
     }
 }

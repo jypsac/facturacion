@@ -49,8 +49,11 @@ Route::view('/' , 'home')->name('inicio');
 	//CONSULTAS
 
 
-
+	Route::get('contacto/{id}', 'ContactoController@index_id')->name('contacto.index_id');
+	Route::get('contacto/crear/{id}', 'ContactoController@crear')->name('contacto.crear');
 	Route::resource('/contacto','ContactoController');
+
+
 	Route::resource('/guia','GuiaController');
 	Route::resource('/horarios','HorariosController');
 	Route::resource('/igv','IgvController')->only(['index','edit','update']);
