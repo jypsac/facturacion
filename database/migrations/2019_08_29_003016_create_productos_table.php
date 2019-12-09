@@ -15,16 +15,19 @@ class CreateProductosTable extends Migration
     {
         Schema::create('productos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('cod_producto');
-            $table->string('cod_alternativo');
+            $table->string('codigo_producto');
+            $table->string('codigo_original');
             $table->string('nombre');
             $table->integer('utilidad');
-            $table->integer('descuento');
+            $table->integer('descuento1');
+            $table->integer('descuento2');
+            $table->integer('descuento_maximo');
            /* $table->string('producto_estado')->default(0);*///activo o desactivado el producto
             $table->text('descripcion');
             $table->text('origen');
             $table->text('precio');
-
+            $table->integer('stock_minimo');
+            $table->integer('stock_maximo');
             $table->string('foto');
         });
     }
