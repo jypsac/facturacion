@@ -68,11 +68,11 @@
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Celular:</label>
 							                    <div class="col-sm-4">
-							                    	<input type="number" class="form-control" name="celular" class="form-control required">							        </div>
+							                    	<input type="telefono" class="form-control" name="celular" class="form-control required">							        </div>
 
 							                    <label class="col-sm-2 col-form-label">Telefono:</label>
 												<div class="col-sm-4">
-														<input type="number" class="form-control" name="telefono" class="form-control required">
+														<input type="telefono" class="form-control" name="telefono" class="form-control required">
 							                    </div>
 						                </div>
 										
@@ -119,7 +119,7 @@
 
 						                </div>
 
-										<input type="submit"class="btn btn-primary" value="Enviar">
+										<input type="submit"class="btn btn-primary" value="Grabar">
 
 									</form>
 
@@ -257,7 +257,7 @@
 							                    
 						                </div>
 
-										<input type="submit"class="btn btn-primary" value="Enviar">
+										<input type="submit"class="btn btn-primary" value="Grabar">
 
 									</form>
 

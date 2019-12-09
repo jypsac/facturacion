@@ -46,54 +46,31 @@
                                             <th>Asunto</th>
                                             <th>Cliente</th>
                                             <th>Nr Documento Cliente</th>
+                                            <th>Ver</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                             @foreach($garantias_informe_tecnicos as $garantias_informe_tecnico)
                                             <tr class="gradeX">
+                                                <td>{{$garantias_informe_tecnico->id}}</td>
+                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre}}</td>
+                                            <td>
+                                                @if($garantias_informe_tecnico->estado==1)
+                                                    Activo
+                                                @else
+                                                    Anulado
+                                                @endif
+                                            </td>
+                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}</td>
+                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}}</td>
+                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha}}</td>
+                                            <td>{{$garantias_informe_tecnico->orden_servicio}}</td>
+                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</td>
+                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->nombre}}</td>
+                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->numero_documento}}</td>
                                                 <td>
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >{{$garantias_informe_tecnico->id}}</a>
-                                                </td>
-    
-                                                <td>
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >{{$garantias_informe_tecnico->marca}}</a>
-                                                </td>
-    
-                                                <td>
-                                                    @if($garantias_informe_tecnico->estado==1)
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >Activo</a>
-                                                    @else
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >Anulado</a>
-                                                    @endif
-                                                </td>
-    
-                                                <td>
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >{{$garantias_informe_tecnico->motivo}}</a>
-                                                </td>
-    
-                                                <td>
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >{{$garantias_informe_tecnico->ing_asignado}}</a>
-                                                </td>
-    
-                                                <td>
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >{{$garantias_informe_tecnico->fecha}}</a>
-                                                </td>
-    
-                                                <td>
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >{{$garantias_informe_tecnico->orden_servicio}}</a>
-                                                </td>
-    
-                                                <td>
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >{{$garantias_informe_tecnico->asunto}}</a>
-                                                </td>
-    
-                                                <td>
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >{{$garantias_informe_tecnico->nombre_cliente}}</a>
-                                                </td>
-    
-                                                <td>
-                                                    <a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}" >{{$garantias_informe_tecnico->numero_documento}}</a>
-                                                </td>
+                                                <center><a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>
+                                            </td>
     
                                             </tr>
                                             @endforeach
