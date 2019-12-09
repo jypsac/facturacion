@@ -164,107 +164,134 @@
 					</form> --}}
 					<form action="{{ route('personal.store') }}"  enctype="multipart/form-data" method="post">
 						@csrf
-						<div class="row">
-							<div class="col-lg-4">
-								<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
-									<div class="col-sm-10"><input type="text" class="form-control" name="nombres"></div>
-								</div>
 
-								<div class="form-group  row"><label class="col-sm-2 col-form-label">Fecha Nac:</label>
-									<div class="col-sm-10"><input type="date" class="form-control" name="fecha_nacimiento"></div>
-								</div>
+						<div class="col-lg-12">
+	                        <div class="panel panel-primary">
+	                            <div class="panel-heading">
+	                                General
+	                            </div>
+	                            <div class="panel-body">
+									 
+									 	<div class="form-group row">
+									 		<label class="col-sm-1 col-form-label">Nombre:</label>
+							                    <div class="col-sm-5">
+							                     	<input type="text" class="form-control" name="nombres">
+							                    </div>
 
-								<div class="form-group  row"><label class="col-sm-2 col-form-label">Telefono:</label>
-									<div class="col-sm-10"><input type="number" class="form-control" name="telefono"></div>
-								</div>
-								
-								<div class="form-group row"><label class="col-sm-2 col-form-label">Genero:</label>
-									<div class="col-sm-10">
-										<select class="form-control m-b" name="genero">
-										<option value="masculino">masculino</option>
-										<option value="femenino">femenino</option>
-										</select>
-									</div>
-								</div>
+							                    <label class="col-sm-1 col-form-label">Apellidos:</label>
+												<div class="col-sm-5">
+													<input type="text" class="form-control" name="apellidos">
+							                    </div>
+						                </div>
+						                <div class="form-group row">
 
-								<div class="form-group row"><label class="col-sm-2 col-form-label">Doc.Id:</label>
-									<div class="col-sm-10">
-										<select class="form-control m-b" name="documento_identificacion">
-										<option value="dni">DNI</option>
-										<option value="pasaporte">Pasaporte</option>
-										</select>
-									</div>
-								</div>
+											<label class="col-sm-1 col-form-label">Fecha Nacimiento:</label>
+												<div class="col-sm-5">
+													<input type="date" class="form-control" name="nombres">
+							                    </div>
 
-								<div class="form-group row"><label class="col-sm-2 col-form-label">Pais:</label>
-									<div class="col-sm-10">
-										<select class="form-control m-b" name="nacionalidad">
+							                    <label class="col-sm-1 col-form-label">Genero:</label>
+												<div class="col-sm-5">
+													<select class="form-control m-b" name="genero">
+														<option value="masculino">masculino</option>
+														<option value="femenino">femenino</option>
+													</select>
+							                    </div>
+						                </div>
+						                <div class="form-group row">
+
+											<label class="col-sm-1 col-form-label">Tipo de Documento:</label>
+												<div class="col-sm-5">
+												<select class="form-control m-b" name="documento_identificacion">
+										 				<option>Seleccione</option>
+									  					<option value="Soltero">DNI</option>
+									  					<option value="Casado">Pasaporte</option>
+									  				</select>
+							                    </div>
+
+							                <label class="col-sm-1 col-form-label">Pais:</label>
+												<div class="col-sm-5">
+									  			<select class="form-control m-b" name="nacionalidad">
 										  <option>Seleccione</option>
 										  @foreach($paises as $pais)
 										<option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
 										@endforeach
 										</select>
-									</div>
-								</div>
+							                    </div>
+						                </div>
+						                 <div class="form-group row">
 
-								<div class="form-group  row"><label class="col-sm-2 col-form-label">Profesion:</label>
-									<div class="col-sm-10"><input type="text" class="form-control" name="profesion"></div>
-								</div>
-								   
-								
+											<label class="col-sm-1 col-form-label">N° de Documento:</label>
+												<div class="col-sm-5">
+												<input type="text" class="form-control" name="numero_documento">
+							                    </div>
 
-							</div>
+							                <label class="col-sm-1 col-form-label">Estado civil:</label>
+												<div class="col-sm-5">
+									  				<select class="form-control m-b" name="estado_civil">
+										 				<option>Seleccione</option>
+									  					<option value="Soltero">Soltero</option>
+									  					<option value="Casado">Casado</option>
+									  					<option value="Casado">Viudo con hijos</option>
+									  					<option value="Casado">Viudo sin hijos</option>
 
-							<div class="col-lg-4">
-								<div class="form-group  row"><label class="col-sm-2 col-form-label">Apellidos:</label>
-									<div class="col-sm-10"><input type="text" class="form-control" name="apellidos"></div>
-								</div>
+									  				</select>
+							                    </div>
+						                </div>
 
-								<div class="form-group  row"><label class="col-sm-2 col-form-label">Celular:</label>
-									<div class="col-sm-10"><input type="number" class="form-control" name="celular"></div>
-								</div>
+	                            </div>
+	                        </div>
+	                    </div>
+	                    <div class="col-lg-12">
+	                        <div class="panel panel-primary">
+	                            <div class="panel-heading">
+	                               Otro Datos
+	                            </div>
+	                            <div class="panel-body">
 
-								<div class="form-group  row"><label class="col-sm-2 col-form-label">Correo:</label>
-									<div class="col-sm-10"><input type="email" class="form-control" name="email"></div>
-								</div>
+									 	<div class="form-group row">
+									 		<label class="col-sm-1 col-form-label">Celular:</label>
+							                    <div class="col-sm-5">
+							                     	<input type="telefono" class="form-control" name="celular">
+							                    </div>
 
-								<div class="form-group  row"><label class="col-sm-2 col-form-label">Estado civil:</label>
-									<div class="col-sm-10">
-									   <select class="form-control m-b" name="estado_civil">
-										 <option>Seleccione</option>
-									   <option value="Soltero">Soltero</option>
-									   <option value="Casado">casado</option>
-									   </select>
-								   </div>
-							   	</div>
+							                    <label class="col-sm-1 col-form-label">Correo:</label>
+												<div class="col-sm-5">
+													<input type="email" class="form-control" name="email">
+							                    </div>
+						                </div>
 
-							   	<div class="form-group  row"><label class="col-sm-2 col-form-label">NR de Doc:</label>
-									<div class="col-sm-10"><input type="text" class="form-control" name="numero_documento"></div>
-								</div>
+						                <div class="form-group row">
+									 		<label class="col-sm-1 col-form-label">Profesion:</label>
+							                    <div class="col-sm-5">
+							                     	<input type="text" class="form-control" name="profesion">
+							                    </div>
 
-								<div class="form-group  row"><label class="col-sm-2 col-form-label">Nivel Educativo:</label>
-									<div class="col-sm-10"><input type="text" class="form-control" name="nivel_educativo"></div>
-							   	</div>
+							                    <label class="col-sm-1 col-form-label">Nivel Educativo:</label>
+												<div class="col-sm-5">
+													<input type="text" class="form-control" name="nivel_educativo">
+							                    </div>
+						                </div>
+						                  <div class="form-group row">
+									 		<label class="col-sm-1 col-form-label">Direccion:</label>
+							                    <div class="col-sm-5">
+							                    	<input type="text" class="form-control" name="direccion">
+							                    </div>
 
-							   	<div class="form-group  row"><label class="col-sm-2 col-form-label">Direccion:</label>
-									<div class="col-sm-10"><input type="text" class="form-control" name="direccion"></div>
-						   		</div>
-								
+							                    <label class="col-sm-1 col-form-label">Foto De Perfil:</label>
+												<div class="col-sm-5">
+													<input id="file-1" type="file" class="file" name="foto" value="Foto">
+							                    </div>
+						                </div>
 
-							</div>
+						        </div>
 
-							<div class="col-lg-4">
-								<div class="form-group  row">
-									<div class="col-sm-12">
-										<input id="file-1" type="file" class="file" name="foto" value="Foto">
-									</div>
-								</div>
-								
+	                           </div>
+	                        </div>
 
-						</div>folder
 		                
 
-                		<button class="btn btn-primary" type="submit">Guardar</button>
+                		<button class="btn btn-primary" type="submit">Grabar</button>
 
 					</form>
 

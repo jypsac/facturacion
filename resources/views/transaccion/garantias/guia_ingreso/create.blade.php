@@ -272,9 +272,11 @@
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
 	                                General
-	                            </div>
+	                            </div> 
+	                            <form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" method="post">
+
 	                            <div class="panel-body">
-	                                <form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" method="post">
+	                                
 									 	@csrf
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
