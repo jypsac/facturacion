@@ -9,9 +9,10 @@
 @section('content')
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
 <style type="text/css">
- .btn-file{position:relative;overflow:hidden}.btn-file input[type=file]{position:absolute;top:0;right:0;min-width:100%;min-height:100%;font-size:999px;text-align:right;filter:alpha(opacity=0);opacity:0;background:red;cursor:inherit;display:block}.file-caption-disabled{background-color:#eee;cursor:not-allowed;opacity:1}.file-input .btn[disabled],.file-input .btn .disabled{cursor:not-allowed}.file-preview{border-radius:5px;border:1px solid #ddd;padding:5px;width:100%;margin-bottom:5px}.file-preview-frame{display:table;margin:8px;height:160px;border:1px solid #ddd;box-shadow:1px 1px 5px 0 #a2958a;padding:6px;float:left;text-align:center}.file-preview-frame:hover{background-color:#eee;box-shadow:2px 2px 5px 0 #333}.file-preview-image{height:150px;vertical-align:text-center}.file-preview-text{display:table-cell;width:150px;height:150px;color:#428bca;font-size:11px;vertical-align:middle;text-align:center}.file-preview-other{display:table-cell;width:150px;height:150px;font-family:Monaco,Consolas,monospace;font-size:11px;vertical-align:middle;text-align:center}.file-input-new .file-preview,.file-input-new .close,.file-input-new .glyphicon-file,.file-input-new .fileinput-remove-button,.file-input-new .fileinput-upload-button{display:none}.loading{background:transparent url('../img/loading.gif') no-repeat scroll center center content-box!important}.wrap-indicator{font-weight:bold;color:#245269;cursor:pointer}
+ .btn-file{position:relative;overflow:hidden}.btn-file input[type=file]{position:absolute;top:0;right:0;min-width:100%;min-height:100%;font-size:999px;text-align:right;filter:alpha(opacity=0);opacity:0;background:red;cursor:inherit;display:block}.file-caption-disabled{background-color:#eee;cursor:not-allowed;opacity:1}.file-input .btn[disabled],.file-input .btn .disabled{cursor:not-allowed}.file-preview{border-radius:5px;border:1px solid #ddd;padding:5px;width:100%;margin-bottom:5px}.file-preview-frame{display:table;margin:8px;height:160px;border:1px solid #ddd;box-shadow:1px 1px 5px 0 #a2958a;padding:6px;float:left;text-align:center}.file-preview-frame:hover{background-color:#eee;box-shadow:2px 2px 5px 0 #333}.file-preview-image{height:150px;vertical-align:text-center}.file-preview-text{display:table-cell;width:150px;height:150px;color:#428bca;font-size:11px;vertical-align:middle;text-align:center}.file-preview-other{display:table-cell;width:150px;height:150px;font-family:Monaco,Consolas,monospace;font-size:11px;vertical-align:middle;text-align:center}.file-input-new .file-preview,.file-input-new .close,.file-input-new .glyphicon-file,.file-input-new .fileinput-remove-button,.file-input-new .fileinput-upload-button{display:none}.loading{background:transparent url('../img/loading.gif') no-repeat scroll center center content-box!important}.wrap-indicator{font-weight:bold;color:#245269;cursor:pointer}.fondo{background: red}
     	
     </style>
+
 
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
@@ -164,7 +165,7 @@
 					</form> --}}
 					<form action="{{ route('personal.store') }}"  enctype="multipart/form-data" method="post">
 						@csrf
-
+						<div class="row">
 						<div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
@@ -233,17 +234,17 @@
 	                            </div>
 	                        </div>
 	                    </div>
-	                    <div class="col-lg-12">
+	                    <div class="col-lg-6">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
 	                               Otro Datos
 	                            </div>
 	                            <div class="panel-body">
 
-									 	<div class="form-group row">
+									 	<div class="form-group row ">
 
-							                <label class="col-sm-1 col-form-label">Estado civil:</label>
-												<div class="col-sm-5">
+							                <label class="col-sm-2 col-form-label">Estado civil:</label>
+												<div class="col-sm-10">
 									  				<select class="form-control m-b" name="estado_civil">
 										 				<option>Seleccione</option>
 									  					<option value="Soltero">Soltero</option>
@@ -253,16 +254,13 @@
 
 									  				</select>
 							                    </div>
-							                    <label class="col-sm-1 col-form-label">Foto De Perfil:</label>
-												<div class="col-sm-5">
-													<input id="file-1" type="file" class="file" name="foto" value="Foto">
-							                    </div>
 
 							              
-						                </div><div class="form-group row">
+						                </div>
+						                <div class="form-group row ">
 
-							                <label class="col-sm-1 col-form-label">Estado civil:</label>
-												<div class="col-sm-5">
+							                <label class="col-sm-2 col-form-label">Estado civil:</label>
+												<div class="col-sm-10">
 									  				<select class="form-control m-b" name="estado_civil">
 										 				<option>Seleccione</option>
 									  					<option value="Soltero">Soltero</option>
@@ -277,8 +275,8 @@
 						                </div>
 
 						                <div class="form-group row">
-									 		<label class="col-sm-1 col-form-label">Profesion:</label>
-							                    <div class="col-sm-5">
+									 		<label class="col-sm-2 col-form-label">Profesion:</label>
+							                    <div class="col-sm-10">
 							                     	<input type="text" class="form-control" name="profesion">
 							                    </div>
 
@@ -286,22 +284,22 @@
 						                 <div class="form-group row">
 									 		
 
-							                    <label class="col-sm-1 col-form-label">Nivel Educativo:</label>
-												<div class="col-sm-5">
+							                    <label class="col-sm-2 col-form-label">Nivel Educativo:</label>
+												<div class="col-sm-10">
 													<input type="text" class="form-control" name="nivel_educativo">
 							                    </div>
 						                </div>
 						                  <div class="form-group row">
-									 		<label class="col-sm-1 col-form-label">Direccion:</label>
-							                    <div class="col-sm-5">
+									 		<label class="col-sm-2 col-form-label">Direccion:</label>
+							                    <div class="col-sm-10">
 							                    	<input type="text" class="form-control" name="direccion">
 							                    </div>
 
 							                    
 						                </div>
 						                 <div class="form-group row">
-									 		 <label class="col-sm-1 col-form-label">Pais:</label>
-												<div class="col-sm-5">
+									 		 <label class="col-sm-2 col-form-label">Pais:</label>
+												<div class="col-sm-10">
 									  			<select class="form-control m-b" name="nacionalidad">
 										  <option>Seleccione</option>
 										  @foreach($paises as $pais)
@@ -318,11 +316,27 @@
 
 	                           </div>
 	                        </div>
+	                        <div class="col-lg-6">
+
+	                        <div class="panel panel-primary">
+	                            <div class="panel-heading">
+	                                Foto Perfil
+	                            </div>
+	                            <div class="panel-body">
+									 
+									 
+	                        	
+							                    <label class=" col-form-label">Foto De Perfil:</label>
+												<div >
+													<input id="file-1" type="file" class="file" name="foto" value="Foto">
+							                    </div>
+	                        </div>
+	                        </div>
 
 		                
 
                 		<button class="btn btn-primary" type="submit">Grabar</button>
-
+</div>
 					</form>
 
 				</div>
@@ -450,7 +464,7 @@
     <script type="text/javascript">
     	(function ($) {
     var MAIN_TEMPLATE_1 = '{preview}\n' +
-        '<div class="input-group {class}">\n' +
+        '<div class="input-group {class}" >\n' +
         '   {caption}\n' +
         '   <div class="input-group-btn">\n' +     
         '       {browse}\n' +
@@ -466,7 +480,7 @@
         '   <div class="clearfix"></div>' +
         '</div>';
 
-    var CAPTION_TEMPLATE = '<div class="form-control file-caption {class}">\n' +
+    var CAPTION_TEMPLATE = '<div class="form-control file-caption  {class}">\n' +
         '   <span class="glyphicon glyphicon-file"></span> <span class="file-caption-name"></span>\n' +
         '</div>';
 
@@ -640,7 +654,7 @@
                                 content = '<div class="file-preview-frame"><div class="file-preview-text" title="' + caption + '">' + strText + '</div></div>' + modal;
                             }
                             else {
-                                content = '<div class="file-preview-frame"><img src="' + theFile.target.result + '" class="file-preview-image" title="' + caption + '" alt="' + caption + '"></div>';
+                                content = '<div class="file-preview-frame" style="margin-left: 15%;"> <img src="' + theFile.target.result + '" class="file-preview-image" title="' + caption + '" alt="' + caption + '" name="foto" style="width:300px ;height:200px ;"></div>';
                             }
                             preview.append("\n" + content);
                             if (i >= total - 1) {
