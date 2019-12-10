@@ -178,18 +178,19 @@
 							                     	<input type="text" class="form-control" name="nombres">
 							                    </div>
 
-							                    <label class="col-sm-1 col-form-label">Apellidos:</label>
-												<div class="col-sm-5">
-													<input type="text" class="form-control" name="apellidos">
-							                    </div>
-						                </div>
-						                <div class="form-group row">
-
 											<label class="col-sm-1 col-form-label">Fecha Nacimiento:</label>
 												<div class="col-sm-5">
 													<input type="date" class="form-control" name="nombres">
 							                    </div>
 
+
+							                    
+						                </div>
+						                <div class="form-group row">
+										<label class="col-sm-1 col-form-label">Apellidos:</label>
+												<div class="col-sm-5">
+													<input type="text" class="form-control" name="apellidos">
+							                    </div>
 							                    <label class="col-sm-1 col-form-label">Genero:</label>
 												<div class="col-sm-5">
 													<select class="form-control m-b" name="genero">
@@ -209,15 +210,11 @@
 									  				</select>
 							                    </div>
 
-							                <label class="col-sm-1 col-form-label">Pais:</label>
-												<div class="col-sm-5">
-									  			<select class="form-control m-b" name="nacionalidad">
-										  <option>Seleccione</option>
-										  @foreach($paises as $pais)
-										<option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
-										@endforeach
-										</select>
+							                    <label class="col-sm-1 col-form-label">Celular:</label>
+							                    <div class="col-sm-5">
+							                     	<input type="telefono" class="form-control" name="celular">
 							                    </div>
+
 						                </div>
 						                 <div class="form-group row">
 
@@ -226,16 +223,10 @@
 												<input type="text" class="form-control" name="numero_documento">
 							                    </div>
 
-							                <label class="col-sm-1 col-form-label">Estado civil:</label>
-												<div class="col-sm-5">
-									  				<select class="form-control m-b" name="estado_civil">
-										 				<option>Seleccione</option>
-									  					<option value="Soltero">Soltero</option>
-									  					<option value="Casado">Casado</option>
-									  					<option value="Casado">Viudo con hijos</option>
-									  					<option value="Casado">Viudo sin hijos</option>
 
-									  				</select>
+							                    <label class="col-sm-1 col-form-label">Correo:</label>
+												<div class="col-sm-5">
+													<input type="email" class="form-control" name="email">
 							                    </div>
 						                </div>
 
@@ -250,15 +241,39 @@
 	                            <div class="panel-body">
 
 									 	<div class="form-group row">
-									 		<label class="col-sm-1 col-form-label">Celular:</label>
-							                    <div class="col-sm-5">
-							                     	<input type="telefono" class="form-control" name="celular">
+
+							                <label class="col-sm-1 col-form-label">Estado civil:</label>
+												<div class="col-sm-5">
+									  				<select class="form-control m-b" name="estado_civil">
+										 				<option>Seleccione</option>
+									  					<option value="Soltero">Soltero</option>
+									  					<option value="Casado">Casado</option>
+									  					<option value="Casado">Viudo con hijos</option>
+									  					<option value="Casado">Viudo sin hijos</option>
+
+									  				</select>
+							                    </div>
+							                    <label class="col-sm-1 col-form-label">Foto De Perfil:</label>
+												<div class="col-sm-5">
+													<input id="file-1" type="file" class="file" name="foto" value="Foto">
 							                    </div>
 
-							                    <label class="col-sm-1 col-form-label">Correo:</label>
+							              
+						                </div><div class="form-group row">
+
+							                <label class="col-sm-1 col-form-label">Estado civil:</label>
 												<div class="col-sm-5">
-													<input type="email" class="form-control" name="email">
+									  				<select class="form-control m-b" name="estado_civil">
+										 				<option>Seleccione</option>
+									  					<option value="Soltero">Soltero</option>
+									  					<option value="Casado">Casado</option>
+									  					<option value="Casado">Viudo con hijos</option>
+									  					<option value="Casado">Viudo sin hijos</option>
+
+									  				</select>
 							                    </div>
+
+							              
 						                </div>
 
 						                <div class="form-group row">
@@ -266,6 +281,10 @@
 							                    <div class="col-sm-5">
 							                     	<input type="text" class="form-control" name="profesion">
 							                    </div>
+
+						                </div>
+						                 <div class="form-group row">
+									 		
 
 							                    <label class="col-sm-1 col-form-label">Nivel Educativo:</label>
 												<div class="col-sm-5">
@@ -278,11 +297,22 @@
 							                    	<input type="text" class="form-control" name="direccion">
 							                    </div>
 
-							                    <label class="col-sm-1 col-form-label">Foto De Perfil:</label>
-												<div class="col-sm-5">
-													<input id="file-1" type="file" class="file" name="foto" value="Foto">
-							                    </div>
+							                    
 						                </div>
+						                 <div class="form-group row">
+									 		 <label class="col-sm-1 col-form-label">Pais:</label>
+												<div class="col-sm-5">
+									  			<select class="form-control m-b" name="nacionalidad">
+										  <option>Seleccione</option>
+										  @foreach($paises as $pais)
+										<option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
+										@endforeach
+										</select>
+							                    </div>
+
+							                    
+						                </div>
+						                 
 
 						        </div>
 
