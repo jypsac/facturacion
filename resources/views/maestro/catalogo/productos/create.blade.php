@@ -34,15 +34,14 @@
 				<div class="ibox-content">
 					<form action="{{ route('productos.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-				<legend>Clasificacion del Producto</legend>
-						<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo Por Producto:</label>
+						<legend>Clasificacion del Producto</legend>
+						<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo del Producto:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto" value="EPS-00123XR" ></div>
 		                </div>
 
-
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo Alternativo:</label>
+					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo Original:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_original" placeholder="EPS-00001"></div>
-		                </div><!-- 1 -->
+		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Categoria:</label>
 		                     <div class="col-sm-10">
@@ -53,7 +52,7 @@
 					    		@endforeach
 					    		</select>
 					    	</div>
-		                </div><!-- 2 -->
+		                </div>
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Familia:</label>
 		                     <div class="col-sm-10">
 		                     	<select class="form-control m-b" name="familia_id">
@@ -63,7 +62,7 @@
 					    		@endforeach
 					    		</select>
 					    	</div>
-		                </div><!-- 2 -->
+		                </div>
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Marca:</label>
 							<div class="col-sm-10">
@@ -74,16 +73,16 @@
 					    		@endforeach
 					    		</select>
 		                    </div>
-		                </div><!-- 3 -->
-				<legend>Datos del Producto</legend>
+		                </div>
+						<legend>Datos del Producto</legend>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto"></div>
-		                </div><!-- 4 -->
+		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descripcion:</label>
 		                     <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" placeholder=""></textarea></div>
-		                </div><!-- 5 -->
+		                </div>
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Estado:</label>
 							<div class="col-sm-10">
@@ -94,7 +93,7 @@
 					    		@endforeach
 					    		</select>
 		                    </div>
-		                </div><!-- 6 -->
+		                </div>
 
 		                 <div class="form-group row"><label class="col-sm-2 col-form-label">Origen:</label>
 							<div class="col-sm-10">
@@ -105,8 +104,9 @@
 
 					    		</select>
 		                    </div>
-		                </div><!-- 7-->
-		            <legend>Precio del Producto</legend>
+						</div>
+						
+		            	<legend>Precio del Producto</legend>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 1:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento1" placeholder="20%"></div>
@@ -122,7 +122,7 @@
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Utilidad:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="utilidad" placeholder="10%"></div>
-		                </div><!-- 9 -->
+		                </div>
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Unida de medida:</label>
 							<div class="col-sm-10">
@@ -133,7 +133,7 @@
 					    		@endforeach
 					    		</select>
 		                    </div>
-		                </div><!-- 10 -->
+		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Moneda:</label>
 							<div class="col-sm-10">
@@ -144,7 +144,7 @@
 					    			@endforeach
 					    		</select>
 					    	</div>
-		                </div><!-- 11 -->
+		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Precio:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="precio" placeholder="S/.100.00"></div>

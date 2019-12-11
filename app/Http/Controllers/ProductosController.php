@@ -107,10 +107,15 @@ class ProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {   
         $producto=Producto::find($id);
+        $monedas=Moneda::all();
+        $familias=Familia::all();
+        $marcas=Marca::all();
+        $estados=Estado::all();
+        $categorias=Categoria::all();
         $unidad_medidas=Unidad_medida::all();
-        return view('maestro.catalogo.productos.edit',compact('unidad_medidas','producto'));
+        return view('maestro.catalogo.productos.edit',compact('unidad_medidas','categorias','marcas','estados','familias','monedas','producto'));
     }
 
     /**
