@@ -13,11 +13,13 @@ class ProductosTableSeeder extends Seeder
     {
     	DB::table('productos')->insert([
 			'id' => 1 ,
-			'cod_producto' => 'EP-0001',
-			'cod_alternativo' => 'EE-EE-0001',
+			'codigo_producto' => 'EP-0001',
+			'codigo_original' => 'EE-EE-0001',
 			'nombre' =>'Laptop Samsung Galaxy Book 12\"' ,
 			'utilidad' => '10',
-			'descuento' => "10" ,
+			'descuento1' => "10",
+			'descuento2' => "10",
+			'descuento_maximo' => "50",
 			'descripcion' => 'Procesador Intel Core i5-7th Gen de Dual-Core a 3,1 GHz
 							Memoria RAM de 4GB - Almacenamiento SSD de 128GB
 							Pantalla multitáctil de 12" x 2160 x 1440
@@ -29,6 +31,8 @@ class ProductosTableSeeder extends Seeder
 							SOLO SE EMITE BOLETA DE VENTA',
 			'origen' => "Importado",
 			'precio' => '20' ,
+			'stock_minimo' => '5',
+			'stock_maximo' => '100',
 			'foto' => '',
 			'categoria_id' =>"2" ,
 			'familia_id' => '8',
@@ -41,12 +45,14 @@ class ProductosTableSeeder extends Seeder
 		]);
 		DB::table('productos')->insert([
 			'id' => 2 ,
-			'cod_producto' => 'HP-0002',
-			'cod_alternativo' => 'AS-WW-0021',
+			'codigo_producto' => 'HP-0002',
+			'codigo_original' => 'AS-WW-0021',
 			'nombre' =>'HP LAPTOP 14-CM0007LA' ,
 			'utilidad' => '30',
-			'descuento' => "0" ,
-			'descripcion' => 'AMD Ryzen™ 3 2200UN.° de núcleos de CPU2N.° de subprocesos4N.° de núcleos de GPU3Reloj base2.5GHzReloj de aumento máx.3.4GHzCaché L1 total384KBCaché L2 total1MBCaché L3 total4MBWindows 10 edición de 64·bits           
+			'descuento1' => "10",
+			'descuento2' => "10",
+			'descuento_maximo' => "50",
+			'descripcion' => 'AMD Ryzen™ 3 2200UN.° de núcleos de CPU2N.° de subprocesos4N.° de núcleos de GPU3Reloj base2.5GHzReloj de aumento máx.3.4GHzCaché L1 total384KBCaché L2 total1MBCaché L3 total4MBWindows 10 edición de 64·bits
 				Velocidad máxima de memoria2400MHzTipo de memoriaDDR4Canales de memoria2
 				     Modelo de gráficosRadeon™                      Vega 3 Graphics
 				Conexion Inalambrica Wi-Fi 802.11b/g/n (1x1) y Bluetooth 4.2
@@ -56,6 +62,8 @@ class ProductosTableSeeder extends Seeder
 				Lector de tarjeta de memoria :Lector de tarjetas SD multimedia de múltiples formatos',
 			'origen' => "Importado",
 			'precio' => '130' ,
+			'stock_minimo' => '5',
+			'stock_maximo' => '100',
 			'foto' => '',
 			'categoria_id' =>"3" ,
 			'familia_id' => '9',
@@ -70,11 +78,13 @@ class ProductosTableSeeder extends Seeder
 
 		DB::table('productos')->insert([
 			'id' => 3 ,
-			'cod_producto' => 'ADVA-0002',
-			'cod_alternativo' => 'EE-ZZ-0002',
+			'codigo_producto' => 'ADVA-0002',
+			'codigo_original' => 'EE-ZZ-0002',
 			'nombre' =>'Celuar Xiaomi Mi8 Mi 8 6GB RAM 128GB ROM - Negro' ,
 			'utilidad' => '40',
-			'descuento' => "5" ,
+			'descuento1' => "10",
+			'descuento2' => "10",
+			'descuento_maximo' => "50",
 			'descripcion' => 'OC snapdragon 845, adreno 630
 								monitor 6.21 pulgadas 2248x1080 FHD + pantalla, 402 PPI
 								RAM 6GB
@@ -87,6 +97,8 @@ class ProductosTableSeeder extends Seeder
 								Global version',
 			'origen' => "NAcional",
 			'precio' => '230' ,
+			'stock_minimo' => '5',
+			'stock_maximo' => '100',
 			'foto' => '',
 			'categoria_id' =>"1" ,
 			'familia_id' => '8',
@@ -97,7 +109,7 @@ class ProductosTableSeeder extends Seeder
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		]);
-      
+
 
          }
 }

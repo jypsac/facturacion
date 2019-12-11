@@ -22,7 +22,6 @@ class CreateProductosTable extends Migration
             $table->integer('descuento1');
             $table->integer('descuento2');
             $table->integer('descuento_maximo');
-           /* $table->string('producto_estado')->default(0);*///activo o desactivado el producto
             $table->text('descripcion');
             $table->text('origen');
             $table->text('precio');

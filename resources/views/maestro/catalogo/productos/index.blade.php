@@ -35,32 +35,32 @@
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover dataTables-example" >
                         <thead>
-                            <tr><!-- 
+                            <tr><!--
                                 <th>COD. GENERAL</th> -->
-                                <th>COD. POR PRODUCTO</th>
-                                <th>COD. ALTERNATIVO</th>
-                                <th>NOMBRE</th>
-                                <th>CATEGORIA</th>
-                                <th>MARCA</th>
-                                <th>ESTADO</th>
-                                <!-- <th>Foto</th> -->
+                                <th>Codigo Producto</th>
+                                <th>Codigo Original</th>
+                                <th>Nombre</th>
+                                <th>Categoria</th>
+                                <th>Marca</th>
+                                <th>Estado</th>
+                                <th>Foto</th>
                                 <th>Ver</th>
-                                <th>EDITAR</th>
+                                <th>Editar</th>
                                 <th>Eliminar</th>
                             </tr>
                         </thead>
                     <tbody>
                         @foreach($productos as $producto)
                             <tr class="gradeX">
-                                <td>{{$producto->cod_producto}}</td>
-                                <td>{{$producto->cod_alternativo}}</td>
+                                <td>{{$producto->codigo_producto}}</td>
+                                <td>{{$producto->codigo_original}}</td>
                                 <td>{{$producto->nombre}}</td>
                                 <td>{{$producto->categoria_i_producto->descripcion}}</td>
                                 <td>{{$producto->marcas_i_producto->nombre}}</td>
                                 <td>{{$producto->estado_i_producto->nombre}}</td>
-                              <!--   <td><img src="
+                                <td><img src="
                                     {{ asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" style="width: 45px;">
-                                </td> -->
+                                </td>
                                 <td><center><a href="{{ route('productos.show', $producto->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 <td><center><a href="{{ route('productos.edit', $producto->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                 <td>

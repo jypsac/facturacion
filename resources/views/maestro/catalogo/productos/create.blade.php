@@ -36,12 +36,12 @@
 					 	@csrf
 				<legend>Clasificacion del Producto</legend>
 						<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo Por Producto:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="cod_producto" value="EPS-00123XR" ></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto" value="EPS-00123XR" ></div>
 		                </div>
 
 
 					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo Alternativo:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="cod_alternativo" placeholder="EPS-00001"></div>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_original" placeholder="EPS-00001"></div>
 		                </div><!-- 1 -->
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Categoria:</label>
@@ -102,16 +102,24 @@
 			          			<option>Seleccione un Estado</option>
 			          			<option value="Nacional" >Producto Nacional</option>
 			          			<option value="Importado">Producto Importado</option>
-			          			
+
 					    		</select>
 		                    </div>
 		                </div><!-- 7-->
 		            <legend>Precio del Producto</legend>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento" placeholder="20%"></div>
-		                </div><!-- 8-->					
-		        	
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 1:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento1" placeholder="20%"></div>
+						</div>
+
+						<div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 2:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento2" placeholder="20%"></div>
+						</div>
+
+						<div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento Maximo:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento_maximo" placeholder="20%"></div>
+		                </div>
+
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Utilidad:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="utilidad" placeholder="10%"></div>
 		                </div><!-- 9 -->
@@ -140,14 +148,22 @@
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Precio:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="precio" placeholder="S/.100.00"></div>
-		                </div><!-- 12 -->
+						</div>
+
+						<div class="form-group  row"><label class="col-sm-2 col-form-label">Stock Minimo:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="stock_minimo" ></div>
+						</div>
+
+						<div class="form-group  row"><label class="col-sm-2 col-form-label">Stock Maximo:</label>
+		                     <div class="col-sm-10"><input type="text" class="form-control" name="stock_maximo" ></div>
+		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Seleccionar Archivo :</label>
                      		<div class="col-sm-10"><input type="file" class="btn btn-success dim" name="foto"></div>
                 		</div>
 
 
-		                
+
 
                 		<button class="btn btn-primary" type="submit">Guardar</button>
 					</form>

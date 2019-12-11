@@ -49,14 +49,15 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        $image =$request->file('foto');
-        $codigo= $request->get('codigo_barras');
-        $name = $codigo."-".$image->getClientOriginalName();
-        $image->move(public_path().'/archivos/imagenes/productos',$name);
+        $name ="sin";
+        // $image =$request->file('foto');
+        // $codigo= $request->get('codigo_barras');
+        // $name = $codigo."-".$image->getClientOriginalName();
+        // $image->move(public_path().'/archivos/imagenes/productos',$name);
 
         $producto=new Producto;
-        $producto->cod_producto=$request->get('cod_producto');
-        $producto->cod_alternativo=$request->get('cod_alternativo');
+        $producto->codigo_producto=$request->get('codigo_producto');
+        $producto->codigo_original=$request->get('codigo_original');
         $producto->categoria_id=$request->get('categoria_id');
         $producto->familia_id=$request->get('familia_id');
         $producto->marca_id=$request->get('marca_id');
@@ -64,11 +65,15 @@ class ProductosController extends Controller
         $producto->descripcion=$request->get('descripcion');
         $producto->estado_id=$request->get('estado_id');
         $producto->origen=$request->get('origen');
-        $producto->descuento=$request->get('descuento');
+        $producto->descuento1=$request->get('descuento1');
+        $producto->descuento2=$request->get('descuento2');
+        $producto->descuento_maximo=$request->get('descuento_maximo');
         $producto->utilidad=$request->get('utilidad');
         $producto->unidad_medida_id=$request->get('unidad_medida_id');
         $producto->monedas_id=$request->get('monedas_id');
         $producto->precio=$request->get('precio');
+        $producto->stock_minimo=$request->get('stock_minimo');
+        $producto->stock_maximo=$request->get('stock_maximo');
         $producto->foto=$name;
         $producto->save();
 
@@ -117,23 +122,33 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $image =$request->file('foto');
-        $codigo= $request->get('codigo_barras');
-        $name = $codigo."-".$image->getClientOriginalName();
-        $image->move(public_path().'/archivos/imagenes/productos',$name);
+        $name ="sin";
+        // $name =$request->file('foto');
+        // $codigo= $request->get('codigo_barras');
+        // $name = $image->getClientOriginalName();
+        // $image->move(public_path().'/archivos/imagenes/productos',$name);
 
         $producto=Producto::find($id);
+        $producto=new Producto;
+        $producto->codigo_producto=$request->get('codigo_producto');
+        $producto->codigo_original=$request->get('codigo_original');
+        $producto->categoria_id=$request->get('categoria_id');
+        $producto->familia_id=$request->get('familia_id');
+        $producto->marca_id=$request->get('marca_id');
         $producto->nombre=$request->get('nombre');
-        $producto->utilidad=$request->get('utilidad');
-        $producto->descuento=$request->get('descuento');
-        $producto->descuento2=$request->get('descuento2');
-        $producto->categoria=$request->get('categoria');
-        $producto->marca=$request->get('marca');
-        $producto->modelo=$request->get('modelo');
-        $producto->unidad_medida=$request->get('unidad_medida');
-        $producto->producto_estado=$request->get('activo');
-        $producto->foto=$name;
         $producto->descripcion=$request->get('descripcion');
+        $producto->estado_id=$request->get('estado_id');
+        $producto->origen=$request->get('origen');
+        $producto->descuento1=$request->get('descuento1');
+        $producto->descuento2=$request->get('descuento2');
+        $producto->descuento_maximo=$request->get('descuento_maximo');
+        $producto->utilidad=$request->get('utilidad');
+        $producto->unidad_medida_id=$request->get('unidad_medida_id');
+        $producto->monedas_id=$request->get('monedas_id');
+        $producto->precio=$request->get('precio');
+        $producto->stock_minimo=$request->get('stock_minimo');
+        $producto->stock_maximo=$request->get('stock_maximo');
+        $producto->foto=$name;
         $producto->save();
         return redirect()->route('productos.index');
     }
