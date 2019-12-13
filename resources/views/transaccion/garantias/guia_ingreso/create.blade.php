@@ -138,10 +138,10 @@
 										@csrf
 										<h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
 
-<style type="text/css">
-	.xd{    margin-bottom: 0px;}
-	h1{margin-bottom: 0px;}
-</style>
+									<style type="text/css">
+										.xd{    margin-bottom: 0px;}
+										h1{margin-bottom: 0px;}
+									</style>
 									 	<div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Nombre:</label>
 							                    <div class="col-sm-4">
@@ -287,7 +287,7 @@
 							                    <label class="col-sm-1 col-form-label">Motivo :</label>
 												<div class="col-sm-5">
 													<select class="form-control m-b" name="motivo">
-										    		<option value="Tecnico">Tecnico</option>
+										    		<option value="Garantia">Garantia</option>
 										    		<option value="Servicio">Servicio</option>
 										    		<option value="Informativo">Informativo</option>
 										    		<option value="Reingreso">Reingreso</option>
