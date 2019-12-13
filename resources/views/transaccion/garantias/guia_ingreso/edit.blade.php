@@ -37,7 +37,7 @@
 									 		<label class="col-sm-1 col-form-label">Motivo :</label>
 												<div class="col-sm-4">
 													<select class="form-control m-b" name="motivo">
-										    		<option value="Tecnico">Tecnico</option>
+										    		<option value="Garantia">Garantia</option>
 										    		<option value="Servicio">Servicio</option>
 										    		<option value="Informativo">Informativo</option>
 										    		<option value="Reingreso">Reingreso</option>

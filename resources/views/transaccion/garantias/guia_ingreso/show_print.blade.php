@@ -29,7 +29,7 @@
 </head>
 
 {{-- LLAMADO AL BODY EN FUNCION CERRAR CON UNA DURACION DE 10 SEGUNDOS --}}
-<body class="white-bg" onLoad="setTimeout('cerrar()',10*1000)">
+<body class="white-bg" onLoad="setTimeout('cerrar()',1*1000)">
 
 <div class="ibox" style="margin-bottom:0px;">
     <div class="table-responsive" >
