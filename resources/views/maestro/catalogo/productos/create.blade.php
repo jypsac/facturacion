@@ -34,7 +34,7 @@
 				<div class="ibox-content">
 					<form action="{{ route('productos.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-						<legend>Clasificacion del Producto</legend>
+						<h3>Clasificacion del Producto</h3>
 						<div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo del Producto:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto" value="EPS-00123XR" ></div>
 		                </div>
@@ -73,8 +73,9 @@
 					    		@endforeach
 					    		</select>
 		                    </div>
-		                </div>
-						<legend>Datos del Producto</legend>
+						</div>
+						
+						<h3>Datos del Producto</h3>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
 		                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto"></div>
@@ -105,24 +106,52 @@
 					    		</select>
 		                    </div>
 						</div>
-						
-		            	<legend>Precio del Producto</legend>
+						<div class="hr-line-dashed"></div>
+		            	<h3>Precio del Producto</h3>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 1:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento1" placeholder="20%"></div>
+		                     <div class="col-sm-10">
+								<div class="input-group m-b">
+									<div class="input-group-prepend">
+										<span class="input-group-addon">%</span>
+									</div>
+									<input type="text" class="form-control" name="descuento1" >
+								</div>
+							</div>
 						</div>
 
 						<div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento 2:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento2" placeholder="20%"></div>
-						</div>
+							<div class="col-sm-10">
+							   	<div class="input-group m-b">
+									<div class="input-group-prepend">
+										<span class="input-group-addon">%</span>
+									</div>
+									<input type="text" class="form-control" name="descuento2" >
+							   	</div>
+						   	</div>
+					   	</div>
 
-						<div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento Maximo:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="descuento_maximo" placeholder="20%"></div>
-		                </div>
+					   <div class="form-group  row"><label class="col-sm-2 col-form-label">Descuento Maximo:</label>
+							<div class="col-sm-10">
+								<div class="input-group m-b">
+									<div class="input-group-prepend">
+										<span class="input-group-addon">%</span>
+									</div>
+									<input type="text" class="form-control" name="descuento_maximo" >
+								</div>
+							</div>
+				   		</div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Utilidad:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="utilidad" placeholder="10%"></div>
-		                </div>
+						<div class="form-group  row"><label class="col-sm-2 col-form-label">Utilidad:</label>
+							<div class="col-sm-10">
+								<div class="input-group m-b">
+									<div class="input-group-prepend">
+										<span class="input-group-addon">%</span>
+									</div>
+									<input type="text" class="form-control" name="utilidad" >
+								</div>
+							</div>
+				   		</div>
 
 		                <div class="form-group row"><label class="col-sm-2 col-form-label">Unida de medida:</label>
 							<div class="col-sm-10">
