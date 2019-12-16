@@ -5,35 +5,24 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Guia Ingreso</title>
-
+    <title>Guia Ingreso</title>{{-- 
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" > --}}
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    {{-- <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet"> --}}
-
-    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
-    {{-- <link href="{{ asset('css/style.css') }}" rel="stylesheet"> --}}
-
-    {{-- <script src="@yield('vue_js', '#')" defer></script> --}}
-
-    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
-
 </head>
 
 <body class="white-bg">
 
-<div class="ibox" style="margin-bottom:0px;">
+<div class="ibox" style=" margin-bottom:0px; width: 100%">
     <div class="table-responsive" >
-        <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:200px;height: 70px ;margin-top: 20px">
-        <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 200px;height: 70;margin-top: 20px">
+        <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:100px;height: 50px ;margin-top: 5px">
+        <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 100px;height: 50px;margin-top: 5px">
     </div>
-    <div class="table-responsive" >
-        <p>{{$mi_empresa->calle}}<br>{{$mi_empresa->correo}} / {{$mi_empresa->telefono}} - {{$mi_empresa->movil}}</p>
+    <div class="table-responsive" ><br><br><br><br><br>
+        <p align="left">{{$mi_empresa->calle}}<br>{{$mi_empresa->correo}} / {{$mi_empresa->telefono}} - {{$mi_empresa->movil}}</p>
     </div>
 </div>
 
-<h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2>
+<h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2><br><br>
 
 <div class="wrapper wrapper-content animated fadeIn">
 
@@ -41,23 +30,23 @@
     <table class="table table-bordered table-striped cero" >
         <thead>
             <tr>
-                <td style="width: 100px;">Motivo</td>
-                <th>{{$garantia_guia_ingreso->motivo}}</th>
+                <td style="width: 70px;">Motivo</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->motivo}}</th>
+                <td style="width: 70px;">Ing. Asigando</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</th>
+                <td style="width: 70px;">Fecha</td>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
             </tr>
         </thead>
     </table>
     <table class="table table-bordered table-striped cero">
         <thead>
             <tr>
-                <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</th>
-                <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
                 <td style="width: 70px;">Marca</td>
                 <th style="width: 70px;">{{$garantia_guia_ingreso->marcas_i->nombre}}</th>
-                <td style="width: 80px;">Orden de Servicio</td>
-                <th style="width: 120px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
-                <td style="width: 100px;">Asunto</td>
+                <td style="width: 70px;">Orden de Servicio</td>
+                <th style="width:  70px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
+                <td style="width:  70px;">Asunto</td>
                 <th>{{$garantia_guia_ingreso->asunto}}</th>
             </tr>
         </thead>
@@ -193,19 +182,28 @@
     </div>
 </div>
 
+<div style="height: 100px"></div>
 
-<div class="container">
-    <div class="child1"><br>
-        <hr />
-        <p style="width:250px;" align="center">Departamento de Servicio Tecnico <br>
-        Ing. {{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</p>
-    </div>
-    <div class="child2"><br>
-        <hr />
-        <p style="width:200px;" align="center">{{$garantia_guia_ingreso->clientes_i->nombre}}<br> ({{$garantia_guia_ingreso->clientes_i->documento_identificacion}}: {{$garantia_guia_ingreso->clientes_i->numero_documento}})</p>
-    </div>
+
+<div class="">
+    <table class="table  white-bg ">
+                    <tbody>
+            <tr>
+                <td class="blanco" style="width: 70px;border-top: none;" ><hr style="width:200px;"  /> </td>
+                <td class="blanco" style="border-top: none;"></td>
+                <td class="blanco" style="width: 70px; border-top: none;"><hr style="width:200px;"  /> </td>
+                
+            </tr>
+             <tr >
+               
+                <th class="blanco" style="width: 200px;border-top: none;"><center>    Departamento de Servicio Tecnico <br>Ing. {{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</center></th>
+                <th class="blanco" style="border-top: none;"></th>
+                <th class="blanco" style="width: 200px; border-top: none;"><center>{{$garantia_guia_ingreso->clientes_i->nombre}}<br> ({{$garantia_guia_ingreso->clientes_i->documento_identificacion}}: {{$garantia_guia_ingreso->clientes_i->numero_documento}})  </center></th>
+            </tr>
+                    </tbody>
+                </table>
 </div>
-
+<div style="height: 90px"></div>
 <div class="footer">
         <div >
             <p><b>IMPORTANTE:</b> El plazo para el recojo del equipo es de 15 dias calendario. en caso de no recoger el equipo dentro de los plazos, este será trasladado al almecen. debiendo pagar S/.20.00 por cada semana que transcurra por gastos administrativos, seguros y almacenaje. Asi mismo pasado los 90 dias el cliente pierde el derecho total sobre el equipo. </p>
@@ -230,35 +228,17 @@
 
 </div>
 <style>
+    *{font-size: 8px}
     .cero{
     margin-bottom: 0px;
 
     }
-    .container {
-        /* background: #e0e0e0; */
-        margin: 1 1 1rem;
-        height: 7rem;
-        display: flex;
-        align-items: start;
-    margin-top:8rem;
-
-    }
-
-    .child1 {
-        /* background: #60e0b0; */
-        height: 7rem;
-        padding: .2rem;
-    margin-left: 120px;
-
-    }
-
-    .child2 {
-        /* background: #60e0b0; */
-        padding: .2rem;
-        height: 7rem;
-        margin-left: 30%;
-    }
-
+     .table-bordered .blanco {
+    border: none;
+}
+    .blanco{border: none;
+        border: medium transparent;
+        }
     .border {
         border-color: #aaaaaa;
         border-width: 1px;
@@ -266,19 +246,4 @@
     }
 
 </style>
-
-
-<!-- Mainly scripts -->
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-
-    <script type="text/javascript">
-        window.print();
-    </script>
-
 

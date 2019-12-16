@@ -11,7 +11,7 @@
 <div class="ibox" style="margin-bottom:0px;">
     <div class="table-responsive" >
         <img align="left" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="width:200px;height: 70px ;margin-top: 20px">
-        <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 200px;height: 70;margin-top: 20px">
+        <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 200px;height: 70px;margin-top: 20px">
     </div>
     <div class="table-responsive" >
         <p>{{$empresa->calle}}<br>{{$empresa->correo}} / {{$empresa->telefono}} - {{$empresa->movil}}</p>
@@ -19,7 +19,7 @@
 </div>
 <div class="table-responsive" align="right">
                     <div class="title-action" style="padding-top: 0;" >
-                        <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Gmail </a>
+                        <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a>
                         <a href="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a>
                         <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
                         {{-- <iframe src="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" style="display:none;" name="frame"></iframe>
