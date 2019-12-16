@@ -65,7 +65,7 @@
                                 </ul>
                             </li>
                             <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li>
-                            <li><a href="{{ route('almacen.index') }}">Almacenes</a></li>
+                            
                             <li>
                                 <a href="#">Garantias</a>
                                 <ul class="nav nav-third-level">
@@ -143,6 +143,7 @@
                                     <li><a href="{{route('Clasificacion')}}">Clasificacion</a></li>
                                 </ul>
                             </li>
+                            <li><a href="{{ route('almacen.index') }}">Almacenes</a></li>
                             <li><a href="{{route('usuario.index')}}">Usuarios</a></li>
                             <li><a href="{{route('moneda.index')}}">Monedas</a></li>
                             <li><a href="{{route('documento.index')}}">Tipo de Documentos</a></li>

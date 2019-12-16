@@ -14,7 +14,7 @@ class AlmacenController extends Controller
     public function index()
     {
         $almacenes=Almacen::all();
-        return view('transaccion.almacen.index',compact('almacenes'));
+        return view('maestro.almacen.index',compact('almacenes'));
     }
 
     /**
@@ -24,7 +24,7 @@ class AlmacenController extends Controller
      */
     public function create()
     {
-        return view('transaccion.almacen.create');
+        return view('maestro.almacen.create');
     }
 
     /**
@@ -54,7 +54,7 @@ class AlmacenController extends Controller
      */
     public function show($id)
     {
-        return view('transaccion.almacen.show');
+        return view('maestro.almacen.show');
     }
 
     /**
@@ -66,7 +66,7 @@ class AlmacenController extends Controller
     public function edit($id)
     {
         $almacen=Almacen::find($id);
-        return view('transaccion.almacen.edit',compact('almacen'));
+        return view('maestro.almacen.edit',compact('almacen'));
     }
     /**
      * Update the specified resource in storage.
