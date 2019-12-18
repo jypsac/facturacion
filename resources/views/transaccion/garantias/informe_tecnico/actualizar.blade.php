@@ -69,7 +69,7 @@
 	                            </div>
 	                            <div class="panel-body">
 
-									 	<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
+									 	<div class="form-group  row"><label class="col-sm-3 ">Empresa:</label>
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_cliente" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->nombre}}" readonly></div>
 						                </div>
 
@@ -99,6 +99,10 @@
 	                            </div>
 	                            <div class="panel-body">
 
+						                <div class="form-group  row"><label class="col-sm-3 "></label>
+						                     <div class="col-sm-9"></div>
+						                </div>
+
 									 	<div class="form-group  row"><label class="col-sm-3">Modelo :</label>
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->nombre_equipo}}" readonly></div>
 						                </div>
@@ -114,6 +118,10 @@
 						                <div class="form-group  row"><label class="col-sm-3">Fecha de Compra:</label>
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="fecha_compra" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha_compra}}" readonly></div>
 						                </div>
+						                
+						                <div class="form-group  row"><label class="col-sm-3 "></label>
+						                     <div class="col-sm-9"></div>
+						                </div>
 
 	                            </div>
 	                        </div>
@@ -121,7 +129,7 @@
 	                    <div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
-	                               ajjajajajja
+	                             Datos y Diagnostico
 	                            </div>
 	                            <div class="panel-body">
 
