@@ -102,9 +102,6 @@ class GarantiaGuiaIngresoController extends Controller
 
         return redirect()->route('garantia_guia_ingreso.show',$contar);
 
-
-
-
     }
 
     /**
@@ -202,9 +199,10 @@ class GarantiaGuiaIngresoController extends Controller
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome');
-        $pdf=PDF::loadView('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','mi_empresa'));
-    //     return $pdf->download();
+        
+        $pdf=PDF::loadView('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','$mi_empresa'));
+        //     return $pdf->download();
         return $pdf->download();
-}
+    }
 
 }

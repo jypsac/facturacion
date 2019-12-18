@@ -1,7 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\InventarioInicial;
+use App\Producto;
+use App\Categoria;
+use App\Almacen;
 use Illuminate\Http\Request;
 
 class InventarioInicialController extends Controller
@@ -13,7 +16,10 @@ class InventarioInicialController extends Controller
      */
     public function index()
     {
-        return view('inventario.inventario-inicial.index');
+        $almacenes=Almacen::all();
+        $clasificaciones=Categoria::all();
+        $inventario_iniciales=InventarioInicial::all();
+        return view('inventario.inventario-inicial.index',compact('inventario_iniciales','clasificaciones','almacenes'));
     }
 
     /**
@@ -21,9 +27,16 @@ class InventarioInicialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    
+    
+    public function create(Request $request)
     {
-        //
+        $almacen = $request->input('almacen');
+        $clasificaciones = $request->input('clasificacion');
+
+        $productos=Producto::all();
+        return view('inventario.inventario-inicial.create',compact('productos','almacen','clasificaciones'));
+        
     }
 
     /**
@@ -34,7 +47,20 @@ class InventarioInicialController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id_producto=$request->input('articulo');
+        $producto = Producto::where("id","=",$id_producto)->first();
+        $producto=(string)$producto->unidad_medida_id;
+
+        $inventario_inicial=new InventarioInicial();
+        $inventario_inicial->almacen=$request->input('almacen');
+        $inventario_inicial->clasificacion=$request->input('clasificacion');
+        $inventario_inicial->articulo=$request->input('articulo');
+        $inventario_inicial->unidad_medida=$producto;
+        $inventario_inicial->codigo=$request->input('codigo');
+        $inventario_inicial->saldo=$request->input('saldo');
+        $inventario_inicial->save();
+
+        return $request;
     }
 
     /**

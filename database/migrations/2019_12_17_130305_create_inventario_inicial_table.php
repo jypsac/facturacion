@@ -15,7 +15,9 @@ class CreateInventarioInicialTable extends Migration
     {
         Schema::create('inventario_inicial', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->string('almacen');
             $table->string('clasificacion');
+            //calasificaion es la tabla categoria fernando gill
             $table->string('codigo');
             $table->string('articulo');
             $table->string('unidad_medida');
