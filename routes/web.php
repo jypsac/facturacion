@@ -58,8 +58,13 @@ Route::view('/' , 'home')->name('inicio');
 	Route::resource('/guia','GuiaController');
 	Route::resource('/horarios','HorariosController');
 	Route::resource('/igv','IgvController')->only(['index','edit','update']);
+
+//INVENTARIOS
+	Route::resource('/inventario-inicial','InventarioInicialController');
 	Route::resource('/kardex-entrada','KardexEntradaController');
 	Route::resource('/kardex-salida','KardexSalidaController');
+//FIN DE INVENTARIOS
+
 	Route::resource('/marca','MarcaController');
 	Route::resource('/moneda','MonedaController');
 	Route::resource('/pagados','PagadosController');

@@ -65,7 +65,7 @@
                                 </ul>
                             </li>
                             <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li>
-                            
+
                             <li>
                                 <a href="#">Garantias</a>
                                 <ul class="nav nav-third-level">
@@ -87,6 +87,7 @@
                                 </ul>
                             </li>
                             <li><a href="{{route('pagados.index')}}">Pagados</a></li>
+                            <li><a href="{{route('inventario-inicial.index')}}">Inventario Inicial</a></li>
                         </ul>
                     </li>
                     <li>
@@ -117,7 +118,7 @@
                         <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span>{{-- <span class="label label-warning float-right">16/24</span> --}}</a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="#">Inbox</a></li>
-                            <li><a href="#">Email view</a></li>{{-- 
+                            <li><a href="#">Email view</a></li>{{--
                             <li><a href="#">Compose email</a></li>
                             <li><a href="#">Email templates</a></li> --}}
                         </ul>
@@ -200,7 +201,7 @@
                     <div class="col-sm-8">
                         <div class="title-action">
                             <a data-toggle="@yield('data-toggle', '')"  href="@yield('href_accion', '#')" class="btn btn-primary">@yield('value_accion', '#')</a>
-                        </div><!-- 
+                        </div><!--
                         @yield('div', '') -->
                     </div>
 
