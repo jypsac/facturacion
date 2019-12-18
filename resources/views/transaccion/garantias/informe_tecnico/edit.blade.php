@@ -1,4 +1,4 @@
-@extends('layout')
+	@extends('layout')
 
 @section('title', ' Crear - Guia de Egreso')
 @section('breadcrumb', 'Crear Guia de egreso')
@@ -7,6 +7,8 @@
 @section('value_accion', 'Atras')
 
 @section('content')
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/dropzone.css">
 
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
@@ -68,7 +70,7 @@
 	                            </div>
 	                            <div class="panel-body">
 
-									 	<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
+									 	<div class="form-group  row"><label class="col-sm-3 ">Empresa:</label>
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_cliente" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->nombre}}" readonly></div>
 						                </div>
 
@@ -91,18 +93,23 @@
 	                            </div>
 	                        </div>
 	                    </div>
+
 	                    <div class="col-lg-6">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
 	                                Datos del Equipo
 	                            </div>
 	                            <div class="panel-body">
+	                            	
+						                <div class="form-group  row"><label class="col-sm-3 "></label>
+						                     <div class="col-sm-9"></div>
+						                </div>
 
-									 	<div class="form-group  row"><label class="col-sm-3">Modelo :</label>
+									 	<div class="form-group  row"><label class="col-sm-3">  Modelo:</label>
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_guia_egreso->garantia_ingreso_i->nombre_equipo}}" readonly></div>
 						                </div>
 
-								        <div class="form-group  row"><label class="col-sm-3">Nr Serie:</label>
+								        <div class="form-group  row"><label class="col-sm-3">N° Serie:</label>
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="numero_serie" value="{{$garantia_guia_egreso->garantia_ingreso_i->numero_serie}}" readonly></div>
 						                </div>
 
@@ -114,9 +121,14 @@
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="fecha_compra" value="{{$garantia_guia_egreso->garantia_ingreso_i->fecha_compra}}" readonly></div>
 						                </div>
 
+						                <div class="form-group  row"><label class="col-sm-3 "></label>
+						                     <div class="col-sm-9"></div>
+						                </div>
+
 	                            </div>
 	                        </div>
 	                    </div>
+	                    
 						<div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
@@ -174,7 +186,41 @@
 
 	                        </div>
 						</div>
+				<!-- xd -->
+				
 
+            
+            {{-- <div class="form-1-2">
+              <label for="">Archivo a subir:</label>
+              <input type="file" class="btn btn-info dim" name="file1" required>
+            </div> --}}
+
+
+           				<!--  <div class="col-lg-6">
+           					                        <div class="panel panel-primary">
+           					                            <div class="panel-heading">
+           					                                Fotos
+           					                            </div>
+           					                            <div class="panel-body">
+           										                <div class="form-group  row">
+           																<div class="col-sm-12">
+           																	
+           				
+           																 <div class="dropzone">
+           				              
+           				              									</div>
+           																</div>
+           										                </div>
+           					                            </div>
+           					                        </div>
+           										</div>  -->
+
+
+
+           
+              
+				<!-- xd -->		
+<!-- 
 						<div class="col-lg-6">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
@@ -204,7 +250,7 @@
 						                </div>
 	                            </div>
 	                        </div>
-						</div>
+						</div> 
 
 						<div class="col-lg-6">
 	                        <div class="panel panel-primary">
@@ -236,7 +282,7 @@
 	                        </div>
 						</div>
 
-
+-->
 
 
 
@@ -252,6 +298,20 @@
 
 	</div>
 </div>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/dropzone/5.5.1/min/dropzone.min.js"></script>
+<script>
+
+  new Dropzone('.dropzone', {
+  
+    url: '{{route('garantia_informe_tecnico.store')}}' ,
+    dictDefaultMessage: 'Arrastra las fotos aqui para subirlas'
+    });
+
+    Dropzone.autoDiscover = false;
+
+  </script>
+  {{-- FOTOS --}}
+
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
