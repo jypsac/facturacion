@@ -58,7 +58,7 @@
 						<input type="hidden" class="form-control" name="almacen" value="{{$almacen}}">
 					
 						
-						<input type="hidden" class="form-control" name="clasificacion" value="{{$clasificaciones}}">
+						<input type="hidden" class="form-control" name="categorias" value="{{$clasificaciones}}">
                         
                        
                        <button class="btn btn-primary" type="submit" name="action">Guardar</button>
