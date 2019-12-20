@@ -213,11 +213,14 @@
 
                 <div class="footer">
                 <div class="float-right">
-                    Visitanos: <a href="http://www.jypsac.com"><strong>JYP</strong></a> <
+                    Visitanos: &nbsp;&nbsp;&nbsp;<a href="http://www.jypsac.com"> <strong>JYP</strong></a>&nbsp;
+                    <a href="https://www.facebook.com/JYPPERIFERICOS" target="_blank" ><i class="fa fa-facebook-square" aria-hidden="true"></i></a>&nbsp;
+                    <a href="https://api.whatsapp.com/send?phone=51946201443&text=Hola!%20Necesito%20Ayuda%20con%20el%20sistema%20de%20Facturación,%20Gracias!%20" target="_blank" ><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
                 </div>
                 <div>
-                    <strong>Copyright</strong> JyP Perifericos &copy; 2019-2020
+                    <strong>Copyright </strong> JyP Perifericos &copy; 2019-2020 
                 </div>
+                
                 </div>
             </div>
     </div>
