@@ -1,4 +1,8 @@
 <?php
+// DB::listen(function($query){
+// 	echo "<pre>{$query->sql}</pre>";
+// });
+
 Route::view('/' , 'home')->name('inicio');
 
 	Route::resource('/almacen','AlmacenController');
