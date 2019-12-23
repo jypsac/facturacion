@@ -29,9 +29,13 @@
 									 	@csrf
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
-							                    <div class="col-sm-11">
+							                    <div class="col-sm-4">
 												<input type="text" class="form-control" name="marca" value="{{$garantia_guia_egreso->garantia_ingreso_i->marcas_i->nombre}}" readonly>
 							                    </div>
+							                    <label class="col-sm-2 col-form-label">Fecha:</label>
+						                   		 <div class="col-sm-4">
+													<input type="text" class="form-control" name="fecha_uno" value="{{$tiempo_actual}}" readonly>
+						                    	</div>
 						                </div>
 
 									 	<div class="form-group row">

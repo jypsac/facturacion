@@ -9,60 +9,53 @@
     <title>Guia Informe Tecnico</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    {{-- <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet"> --}}
-
-    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
-    {{-- <link href="{{ asset('css/style.css') }}" rel="stylesheet"> --}}
-
-    {{-- <script src="@yield('vue_js', '#')" defer></script> --}}
-
-    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
 
 </head>
 
 <body class="white-bg">
 
-<div class="ibox" style="margin-bottom:0px;">
+<div class="ibox" style=" margin-bottom:0px; width: 100%">
     <div class="table-responsive" >
-        <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:200px;height: 70px ;margin-top: 20px">
-        <img align="right" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 200px;height: 70;margin-top: 20px">
+        <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:100px;height: 50px ;margin-top: 5px">
+        <img align="right" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="width:100px;height: 50px ;margin-top: 5px">
     </div>
-    <div class="table-responsive" >
+    <div class="table-responsive" ><br><br><br><br><br>
         <p>{{$mi_empresa->calle}}<br>{{$mi_empresa->correo}} / {{$mi_empresa->telefono}} - {{$mi_empresa->movil}}</p>
     </div>
 </div>
 <h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Informe Técnico</strong></h2>
 
 <div class="wrapper wrapper-content animated fadeIn">
-
 <div class="table-responsive">
-    <table class="table table-bordered table-striped cero" >
+    <table class="table table-bordered table-striped correo">
         <thead>
             <tr>
-                <td style="width: 100px;">Motivo</td>
-                <th>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}</th>
+                <td style="width: 70px;">Motivo</td>
+                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}</th>
+                <td style="width: 70px;">Marca</td>
+                <th style="width: 70px;"> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre}}</th>
+                <td style="width: 70px;">Fecha</td>
+                <th style="width: 70px;">{{$garantias_informe_tecnico->fecha}}</th>
+                <td style="width: 70px;">Orden de Servicio</td>
+                <th style="width: 70px;"> {{$garantias_informe_tecnico->orden_servicio}}</th>
+
             </tr>
         </thead>
     </table>
     <table class="table table-bordered table-striped cero">
         <thead>
             <tr>
+
                 <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 200px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
-                <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha}}</th>
-                <td style="width: 70px;">Marca</td>
-                <th style="width: 70px;"> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre}}</th>
-                <td style="width: 80px;">Orden de Servicio</td>
-                <th style="width: 120px;"> {{$garantias_informe_tecnico->orden_servicio}}</th>
-                <td style="width: 80px;">Asunto</td>
-                <th style="width: 120px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</th>
+                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
+                <td style="width: 70px;">Asunto</td>
+                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</th>
 
             </tr>
         </thead>
     </table>
-
+    
+    
 </div>
 
 
@@ -202,20 +195,17 @@
 </div>
 
 <style>
+    *{font-size: 8px}
     .cero{
     margin-bottom: 0px;
 
     }
-    .container {
-        /* background: #e0e0e0; */
-        margin: 1 1 1rem;
-        height: 7rem;
-        display: flex;
-        align-items: start;
-    margin-top:10rem;
-
-    }
-
+     .table-bordered .blanco {
+    border: none;
+}
+    .blanco{border: none;
+        border: medium transparent;
+        }
     .border {
         border-color: #aaaaaa;
         border-width: 1px;
@@ -223,19 +213,3 @@
     }
 
 </style>
-
-
-<!-- Mainly scripts -->
-    <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-
-    <script type="text/javascript">
-        window.print();
-    </script>
-
-

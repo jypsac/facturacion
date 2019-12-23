@@ -8,6 +8,8 @@ use App\GarantiaGuiaEgreso;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Cliente;
 use App\Empresa;
+use Carbon\Carbon;
+
 
 class GarantiaInformeTecnicoController extends Controller
 {
@@ -140,6 +142,7 @@ class GarantiaInformeTecnicoController extends Controller
 
 
         //$garantia_informe_tecnico->descripcion_problema=$request->get('descripcion_problema');
+        $garantia_informe_tecnico->fecha=$request->get('fecha_uno');
         $garantia_informe_tecnico->estetica=$request->get('estetica');
         $garantia_informe_tecnico->revision_diagnostico=$request->get('revision_diagnostico');
         $garantia_informe_tecnico->causas_del_problema=$request->get('causas_del_problema');
@@ -177,9 +180,10 @@ class GarantiaInformeTecnicoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {
+    {    $tiempo_actual = Carbon::now();
+        $tiempo_actual = $tiempo_actual->format('Y-m-d');
         $garantia_guia_egreso=GarantiaGuiaEgreso::find($id);
-        return view('transaccion.garantias.informe_tecnico.edit',compact('garantia_guia_egreso'));
+        return view('transaccion.garantias.informe_tecnico.edit',compact('garantia_guia_egreso','tiempo_actual'));
     }
 
     /**
@@ -265,8 +269,10 @@ class GarantiaInformeTecnicoController extends Controller
 
 
         $garantia_informe_tecnico=GarantiaInformeTecnico::find($id);
+        $garantia_informe_tecnico->estetica=$request->get('estetica');
         $garantia_informe_tecnico->revision_diagnostico=$request->get('revision_diagnostico');
-        $garantia_informe_tecnico->informe=$request->get('informe');
+        $garantia_informe_tecnico->causas_del_problema=$request->get('causas_del_problema');
+        $garantia_informe_tecnico->solucion=$request->get('solucion');
         $garantia_informe_tecnico->image1=$name1;
         $garantia_informe_tecnico->image2=$name2;
         $garantia_informe_tecnico->image3=$name3;

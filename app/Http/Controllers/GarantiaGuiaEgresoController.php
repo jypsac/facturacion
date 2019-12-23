@@ -9,6 +9,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use App\Marca;
 use App\Empresa;
 use App\Cliente;
+use Carbon\Carbon;
 
 class GarantiaGuiaEgresoController extends Controller
 {
@@ -74,6 +75,7 @@ class GarantiaGuiaEgresoController extends Controller
         $garantia_guia_egreso->egresado=1;
         $garantia_guia_egreso->informe_tecnico=0;
         $garantia_guia_egreso->orden_servicio=$request->get('orden_servicio');
+        $garantia_guia_egreso->fecha=$request->get('fecha_uno');
         $garantia_guia_egreso->descripcion_problema=$request->get('descripcion_problema');
         $garantia_guia_egreso->diagnostico_solucion=$request->get('diagnostico_solucion');
         $garantia_guia_egreso->recomendaciones=$request->get('recomendaciones');
@@ -105,9 +107,11 @@ class GarantiaGuiaEgresoController extends Controller
      */
     public function edit($id)
     {
+        $tiempo_actual = Carbon::now();
+        $tiempo_actual = $tiempo_actual->format('Y-m-d');
         // Enviando vista para crear guia de egreso con datos de ingreso para egresar
         $garantias_guias_ingresos=GarantiaGuiaIngreso::find($id);
-        return view('transaccion.garantias.guia_egreso.edit',compact('garantias_guias_ingresos'));
+        return view('transaccion.garantias.guia_egreso.edit',compact('garantias_guias_ingresos','tiempo_actual'));
     }
 
     /**

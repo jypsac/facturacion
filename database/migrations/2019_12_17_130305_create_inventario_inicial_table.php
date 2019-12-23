@@ -15,12 +15,12 @@ class CreateInventarioInicialTable extends Migration
     {
         Schema::create('inventario_inicial', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('almacen');
-            $table->string('categorias');
+            // $table->string('almacen');
+            // $table->string('categorias');
             $table->string('codigo');
             $table->string('articulo');
             $table->integer('saldo');
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

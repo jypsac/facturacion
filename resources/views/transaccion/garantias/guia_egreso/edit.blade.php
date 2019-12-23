@@ -27,9 +27,13 @@
 									 	@csrf
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
-							                    <div class="col-sm-11">
+							                    <div class="col-sm-4">
 												<input type="text" class="form-control" name="marca" value="{{$garantias_guias_ingresos->marcas_i->nombre}}" readonly>
 							                    </div>
+							                    <label class="col-sm-2 col-form-label">Fecha:</label>
+						                   		 <div class="col-sm-4">
+													<input type="text" class="form-control" name="fecha_uno" value="{{$tiempo_actual}}" readonly>
+						                    	</div>
 						                </div>
 
 									 	<div class="form-group row">
@@ -68,7 +72,7 @@
 	                            </div>
 	                            <div class="panel-body">
 
-									 	<div class="form-group  row"><label class="col-sm-3 ">Nombre o Empresa:</label>
+									 	<div class="form-group  row"><label class="col-sm-3 "> Empresa:</label>
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_cliente" value="{{$garantias_guias_ingresos->clientes_i->nombre}}" readonly></div>
 						                </div>
 
@@ -98,6 +102,10 @@
 	                            </div>
 	                            <div class="panel-body">
 
+	                            	<div class="form-group  row"><label class="col-sm-3"></label>
+						                     <div class="col-sm-9"></div>
+						                </div>
+
 									 	<div class="form-group  row"><label class="col-sm-3">Modelo :</label>
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="nombre_equipo" value="{{$garantias_guias_ingresos->nombre_equipo}}" readonly></div>
 						                </div>
@@ -113,6 +121,7 @@
 						                <div class="form-group  row"><label class="col-sm-3">Fecha de Compra:</label>
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="fecha_compra" value="{{$garantias_guias_ingresos->fecha_compra}}" readonly></div>
 						                </div>
+
 
 	                            </div>
 	                        </div>

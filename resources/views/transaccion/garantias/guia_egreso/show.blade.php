@@ -39,7 +39,7 @@
                 <td style="width: 70px;">Marca</td>
                 <th style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->marcas_i->nombre}}</th>
                 <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;">22-22--22</th>
+                <th style="width: 70px;">{{$garantias_guias_egreso->fecha}}</th>
                 <td style="width: 70px;">Orden de Servicio</td>
                 <th style="width: 70px;"> {{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</th>
             </tr>   

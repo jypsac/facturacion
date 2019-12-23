@@ -13,7 +13,20 @@ class AddForeignKeyInventarioTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('inventario_inicial', function (Blueprint $table) {
+            $table->unsignedBigInteger('categorias');
+            $table->foreign('categorias')->references('id')->on('categorias')->onDelete('cascade');
+
+            $table->unsignedBigInteger('almacen');
+            $table->foreign('almacen')->references('id')->on('almacen')->onDelete('cascade');
+
+            /*$table->unsignedBigInteger('cliente_id');
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');*/
+
+            // $table->unsignedBigInteger('contacto_id');
+            // $table->foreign('contacto_id')->references('id')->on('contactos')->onDelete('cascade');
+            $table->timestamps();
+        });
     }
 
     /**
