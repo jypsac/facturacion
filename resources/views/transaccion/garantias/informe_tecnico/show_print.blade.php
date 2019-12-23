@@ -18,10 +18,16 @@
 
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
+ {{-- FUNCION CERRAR AUTOMATICAMENTE --}}
+    <SCRIPT LANGUAGE="JavaScript">
+        function cerrar() {
+        window.close();
+        }
+    </SCRIPT>
 
 </head>
-
-<body class="white-bg" style="height:50%">
+{{-- LLAMADO AL BODY EN FUNCION CERRAR CON UNA DURACION DE 10 SEGUNDOS --}}
+<body class="white-bg" style="height:50%" onLoad="setTimeout('cerrar()',1*1000)">
 
 <div class="ibox" style="margin-bottom:0px;">
     <div class="table-responsive" >
@@ -45,7 +51,7 @@
                 <td style="width: 70px;">Marca</td>
                 <th style="width: 70px;"> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre}}</th>
                 <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha}}</th>
+                <th style="width: 70px;">{{$garantias_informe_tecnico->fecha}}</th>
                 <td style="width: 70px;">Orden de Servicio</td>
                 <th style="width: 70px;"> {{$garantias_informe_tecnico->orden_servicio}}</th>
 

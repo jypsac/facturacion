@@ -18,6 +18,7 @@ class CreateGarantiaInformeTecnico extends Migration
 
             $table->string('orden_servicio');
             $table->boolean('estado');
+            $table->date('fecha');
             $table->boolean('egresado');
             $table->boolean('informe_tecnico');
 
