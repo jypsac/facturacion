@@ -317,11 +317,16 @@
 						                    	<input type="text" class="form-control" name="orden_servicio" value="{{$orden_servicio}}" readonly>
 						                    </div>
 						                    <label class="col-sm-1 col-form-label">Cliente:</label>
-						                     <div class="col-sm-5"><select class="form-control m-b" name="cliente_id">
+						                     <div class="col-sm-5">
+										    <input list="browsers" class="form-control m-b" name="cliente_id">
+						                     	
+												<datalist id="browsers" >
 													@foreach($clientes as $cliente)
-													<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
+													<option value="{{$cliente->nombre}}">
 													@endforeach
-										    	</select></div>
+												</datalist>
+
+										    </div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Asunto:</label>
