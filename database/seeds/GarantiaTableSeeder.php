@@ -11,7 +11,7 @@ class GarantiaTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('garantia_guia_ingreso')->insert([
+        /*DB::table('garantia_guia_ingreso')->insert([
 			'id' => 1 ,
 			'motivo' => 'TECNICO',
 			'fecha' => date('2019-08-01'),
@@ -73,6 +73,6 @@ class GarantiaTableSeeder extends Seeder
 			'cliente_id' => '3',
 			'created_at' => date('2019-11-23 00:00:00'),
            	'updated_at' => date('2019-11-23 00:00:00')
-		]);
+		]);*/
     }
 }

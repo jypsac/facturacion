@@ -317,11 +317,22 @@
 						                    	<input type="text" class="form-control" name="orden_servicio" value="{{$orden_servicio}}" readonly>
 						                    </div>
 						                    <label class="col-sm-1 col-form-label">Cliente:</label>
-						                     <div class="col-sm-5"><select class="form-control m-b" name="cliente_id">
-													@foreach($clientes as $cliente)
-													<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
+						                    <div class="col-sm-5">
+						                    {{-- <input list="answer" name="cliente_id" class="form-control m-b" >
+
+													<datalist id="answer">
+													 @foreach($clientes as $cliente)
+													<option data-value="{{$cliente->id}}" value="{{$cliente->nombre}}">
 													@endforeach
-										    	</select></div>
+													</datalist></div>
+													<script>var shownVal = document.getElementById("answer").value;
+													var value2send = document.querySelector("#answers option[value='"+shownVal+"']").dataset.value;</script> --}}
+													<input list="answers" id="answer" name="cliente_id" class="form-control m-b">
+													<datalist id="answers">
+													  <option data-value="42" value="The answer">
+													</datalist>
+													<script>var shownVal = document.getElementById("answer").value;
+													var value2send = document.querySelector("#answers option[value='"+shownVal+"']").dataset.value;</script> 
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Asunto:</label>

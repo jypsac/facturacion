@@ -7,57 +7,57 @@
 @section('value_accion', 'actualizar')
 
 @section('content')
-	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.0/css/all.css" integrity="sha384-lZN37f5QGtY3VHgisS14W3ExzMWZxybE1SJSEsQp9S+oqd12jhcu+A56Ebc1zFSJ" crossorigin="anonymous">
-    <div class="container" style="height:800px;padding-top: 10px">
+
+    <div class="container" style="height:880px;padding-top: 10px; background: white;">
       <div class="jumbotron">
         <h1>{{$mi_empresa->nombre}}
         <img align="right"  src="{{asset('img/logos/logo.jpg')}}" style="width: 300px;height: 50px; border-radius:15px"></h1>
 <br>
         <p class="lead" style="font-size: 15px">{{$mi_empresa->descripcion}}</p>
-        <p><a class="btn btn-lg btn-success" href="#" style="background-color: #1ab394; border-color: #1ab394"> <i class="fas fa-edit"></i></a></p>
+        <p><a class="btn btn-lg btn-success" href="#" style="background-color: #1ab394; border-color: #1ab394"> <i class="fa fa-edit"></i></a></p>
       </div>
 
       <div class="row marketing">
         <div class="col-lg-6">
           <h4> Razon Social</h4>
-          <p>{{$mi_empresa->razon_social}}</p>
+          <p>{{$mi_empresa->razon_social}}</p><hr>
 
           <h4>RUC</h4>
-          <p>{{$mi_empresa->ruc}}</p>
+          <p>{{$mi_empresa->ruc}}</p><hr>
 
           <h4>Telefono</h4>
-          <p>{{$mi_empresa->telefono}}</p>
+          <p>{{$mi_empresa->telefono}}</p><hr>
         </div>
 
         <div class="col-lg-6">
           <h4>Movil</h4>
-          <p>{{$mi_empresa->movil}}</p>
+          <p>{{$mi_empresa->movil}}</p><hr>
 
           <h4>Correo</h4>
-          <p>{{$mi_empresa->correo}}</p>
+          <p>{{$mi_empresa->correo}}</p><hr>
 
           <h4>Pais</h4>
-          <p>{{$mi_empresa->pais}}</p>
+          <p>{{$mi_empresa->pais}}</p><hr>
         </div>
         <div class="col-lg-6">
           <h4>Region Provincia</h4>
-          <p>{{$mi_empresa->region_provincia}}</p>
+          <p>{{$mi_empresa->region_provincia}}</p><hr>
 
           <h4>Ciudad</h4>
-          <p>{{$mi_empresa->ciudad}}</p>
+          <p>{{$mi_empresa->ciudad}}</p><hr>
 
           <h4>Calle</h4>
-          <p>{{$mi_empresa->calle}}</p>
+          <p>{{$mi_empresa->calle}}</p><hr>
         </div>
         <div class="col-lg-6">
           <h4>Codigo Postal</h4>
-          <p>{{$mi_empresa->codigo_postal}}</p>
+          <p>{{$mi_empresa->codigo_postal}}</p><hr>
 
           <h4>Rubro</h4>
-          <p>{{$mi_empresa->rubro}}</p>
+          <p>{{$mi_empresa->rubro}}</p><hr>
 
           <h4>Moneda Principal</h4>
-          <p>{{$mi_empresa->moneda_principal}}</p>
+          <p>{{$mi_empresa->moneda_principal}}</p><hr>
         </div>
       </div>
 

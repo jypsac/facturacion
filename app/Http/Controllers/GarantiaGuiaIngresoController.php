@@ -72,36 +72,36 @@ class GarantiaGuiaIngresoController extends Controller
         // $numero_doc=$cliente->numero_documento;
 
         //TRAANSFORMNADO CON VALUE DE MARCA A UN ID
-        $marca_nombre=$request->get('marca_id');
-        $marca= Marca::where("nombre","=",$marca_nombre)->first();
-        $marca_id_var=$marca->id;
+        // $marca_nombre=$request->get('marca_id');
+        // $marca= Marca::where("nombre","=",$marca_nombre)->first();
+        // $marca_id_var=$marca->id;
 
-        $garantia_guia_ingreso=new GarantiaGuiaIngreso;
-        $garantia_guia_ingreso->motivo=$request->get('motivo');
-        $garantia_guia_ingreso->fecha=$request->get('fecha');
-        $garantia_guia_ingreso->orden_servicio=$request->get('orden_servicio');
-        $garantia_guia_ingreso->estado=1;
-        $garantia_guia_ingreso->egresado=0;
-        $garantia_guia_ingreso->asunto=$request->get('asunto');
-        $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipo');
-        $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
-        $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
-        $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
-        $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
-        $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
-        $garantia_guia_ingreso->estetica=$request->get('estetica');
+        // $garantia_guia_ingreso=new GarantiaGuiaIngreso;
+        // $garantia_guia_ingreso->motivo=$request->get('motivo');
+        // $garantia_guia_ingreso->fecha=$request->get('fecha');
+        // $garantia_guia_ingreso->orden_servicio=$request->get('orden_servicio');
+        // $garantia_guia_ingreso->estado=1;
+        // $garantia_guia_ingreso->egresado=0;
+        // $garantia_guia_ingreso->asunto=$request->get('asunto');
+        // $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipo');
+        // $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
+        // $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
+        // $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
+        // $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
+        // $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
+        // $garantia_guia_ingreso->estetica=$request->get('estetica');
 
-        $garantia_guia_ingreso->marca_id=$marca_id_var;
+        // $garantia_guia_ingreso->marca_id=$marca_id_var;
 
-        $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
-        $garantia_guia_ingreso->cliente_id=$request->get('cliente_id');
-        // $garantia_guia_ingreso->contacto_id=$request->get('cliente_id');
+        // $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
+        // $garantia_guia_ingreso->cliente_id=$request->get('cliente_id');
+        // // $garantia_guia_ingreso->contacto_id=$request->get('cliente_id');
 
-        $garantia_guia_ingreso->save();
-        $contar=GarantiaGuiaIngreso::all()->count();
+        // $garantia_guia_ingreso->save();
+        // $contar=GarantiaGuiaIngreso::all()->count();
 
-        return redirect()->route('garantia_guia_ingreso.show',$contar);
-
+        // return redirect()->route('garantia_guia_ingreso.show',$contar);
+        return $request;
     }
 
     /**
