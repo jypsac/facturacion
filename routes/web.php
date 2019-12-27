@@ -3,7 +3,12 @@
 // 	echo "<pre>{$query->sql}</pre>";
 // });
 
-Route::view('/' , 'home')->name('inicio');
+Route::group(
+	[ 'middleware' => 'auth' ],
+  
+	function(){
+
+	Route::view('/' , 'home')->name('inicio');
 
 	Route::resource('/almacen','AlmacenController');
 	Route::resource('/categoria','CategoriaController');
@@ -91,6 +96,9 @@ Route::view('/' , 'home')->name('inicio');
 //
 	Route::view('/clasificacion' , 'partials.clasificacion')->name('Clasificacion');
 //
+
+});
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

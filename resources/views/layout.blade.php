@@ -179,9 +179,17 @@
                             <span class="m-r-sm text-muted welcome-message">Bienvenido</span>
                         </li>
                         <li>
-                            <a href="{{-- {{route('home')}} --}}">
+                            {{-- <a href="{{route('home')}}">
                                 <i class="fa fa-barsign-out"></i> Cerrar Secciónes
-                            </a>
+                            </a> --}}
+                            <a href="{{ route('logout') }}"
+                                       onclick="event.preventDefault();
+                                                     document.getElementById('logout-form').submit();">          
+                                         Cerrar Seccion
+                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                        @csrf
+                                    </form>
+                                    </a>
                         </li>
                     </ul>
                 </nav>
