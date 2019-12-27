@@ -3,10 +3,10 @@
 // 	echo "<pre>{$query->sql}</pre>";
 // });
 
-Route::group(
-	[ 'middleware' => 'auth' ],
+// Route::group(
+// 	[ 'middleware' => 'auth' ],
   
-	function(){
+// 	function(){
 
 	Route::view('/' , 'home')->name('inicio');
 
@@ -97,7 +97,7 @@ Route::group(
 	Route::view('/clasificacion' , 'partials.clasificacion')->name('Clasificacion');
 //
 
-});
+// });
 
 Auth::routes();
 
