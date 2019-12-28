@@ -15,7 +15,7 @@ class CreatePersonalTable extends Migration
     {
         Schema::create('personal', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombres');
+            $table->string('nombres')->unique();
             $table->string('apellidos');
             $table->date('fecha_nacimiento');
             $table->string('celular');

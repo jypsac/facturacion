@@ -145,7 +145,7 @@
 <div class="col-lg-13">
     <div class="ibox  ">
          {{-- <div class="ibox-title"> --}}
-        <h4>Revicion y Diagnostico</h4>
+        <h4>Revisión y diagnóstico</h4>
         {{-- </div > --}}
         <div class="border">
             <div class="ibox-content text-left h-10" style="padding: 0px;">

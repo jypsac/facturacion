@@ -299,11 +299,12 @@
 									 		
 						                    <label class="col-sm-1 col-form-label">Ing. Asignado:</label>
 												<div class="col-sm-5">
-													<select class="form-control m-b" name="personal_lab_id">
+										    <input list="browsers1" class="form-control m-b" name="personal_lab_id">
+												<datalist id="browsers1" >
 														@foreach($personales as $personal)
-													<option value="{{$personal->id}}">{{$personal->nombres}} {{$personal->apellidos}} </option>
+													<option value="{{$personal->nombres}}">
 														@endforeach
-													</select>
+												</datalist>
 												</div>
 												<label class="col-sm-1 col-form-label">Fecha:</label>
 						                   		 <div class="col-sm-5">
@@ -378,7 +379,7 @@
 	                    <div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
-	                                Revision Y Diagnostico
+	                                Revisión y diagnóstico
 	                            </div>
 	                            <div class="panel-body">
 						                <div class="form-group  row">

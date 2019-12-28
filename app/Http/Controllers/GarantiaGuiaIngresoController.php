@@ -71,6 +71,10 @@ class GarantiaGuiaIngresoController extends Controller
         $cliente_id_nombre=Cliente::where("nombre","=",$cliente)->first();
         $cliente_id=$cliente_id_nombre->id;
 
+        $ingeniero=$request->get('personal_lab_id');
+        $ingeniero_nombre_id=Personal::where("nombres","=",$ingeniero)->first();
+        $personal_lab_id=$ingeniero_nombre_id->id;
+
         // $nombre_cliente=$request->get('nombre_cliente');
         // $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
         // $numero_doc=$cliente->numero_documento;
@@ -97,8 +101,9 @@ class GarantiaGuiaIngresoController extends Controller
 
         $garantia_guia_ingreso->marca_id=$marca_id_var;
 
-        $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
+        // $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
         $garantia_guia_ingreso->cliente_id=$cliente_id;
+        $garantia_guia_ingreso->personal_lab_id=$personal_lab_id;
         // $garantia_guia_ingreso->contacto_id=$request->get('cliente_id');
 
         $garantia_guia_ingreso->save();
