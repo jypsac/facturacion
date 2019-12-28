@@ -134,7 +134,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" maxlength="630"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" maxlength="630" required></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -148,7 +148,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="diagnostico_solucion"  maxlength="630"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="diagnostico_solucion"  maxlength="630" required></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -162,7 +162,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="recomendaciones"  maxlength="630"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="recomendaciones"  maxlength="630" required></textarea>
 						                     </div>
 						                </div>
 

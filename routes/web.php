@@ -5,7 +5,7 @@
 
 // Route::group(
 // 	[ 'middleware' => 'auth' ],
-  
+
 // 	function(){
 
 	Route::view('/' , 'home')->name('inicio');

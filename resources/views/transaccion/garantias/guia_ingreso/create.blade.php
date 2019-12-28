@@ -10,7 +10,7 @@
 <div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
     <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i></i><span> personal</span></a>
-    
+
 </div><style type="text/css">span{font-size:15px;padding-left:4px}</style>
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
@@ -24,7 +24,7 @@
 						<div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-content" style="border-top-width: 0px;padding: 0;height: 20px">
-                           
+
 
                             <!-- MODAL CLIENTE -->
 
@@ -48,73 +48,73 @@
 
 							                    <label class="col-sm-2 col-form-label">Numero de Documento:</label>
 												<div class="col-sm-4">
-													<input type="text" class="form-control" name="numero_documento" class="form-control required">
+													<input type="text" class="form-control" name="numero_documento" class="form-control" required>
 							                    </div>
 
 						                </div>
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Cliente:</label>
 							                    <div class="col-sm-4">
-														<input type="text" class="form-control" name="nombre" class="form-control required">
+														<input type="text" class="form-control" name="nombre" class="form-control" required>
 							                    </div>
 
 							                    <label class="col-sm-2 col-form-label">Direccion:</label>
 												<div class="col-sm-4">
-														<input type="text" class="form-control" name="direccion" class="form-control required">
+														<input type="text" class="form-control" name="direccion" class="form-control" required>
 							                    </div>
-							                    
+
 						                </div>
 
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Celular:</label>
 							                    <div class="col-sm-4">
-							                    	<input type="telefono" class="form-control" name="celular" class="form-control required">							        </div>
+							                    	<input type="telefono" class="form-control" name="celular" class="form-control" required>							        </div>
 
 							                    <label class="col-sm-2 col-form-label">Telefono:</label>
 												<div class="col-sm-4">
-														<input type="telefono" class="form-control" name="telefono" class="form-control required">
+														<input type="telefono" class="form-control" name="telefono" class="form-control"required>
 							                    </div>
 						                </div>
-										
+
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >correo:</label>
 							                    <div class="col-sm-4">
-							                    	<input type="email" class="form-control" name="email" class="form-control required">							                  
+							                    	<input type="email" class="form-control" name="email" class="form-control" required>
 							                    	 </div>
 
-							                    
+
 						                </div>
 										<h1><i class="fa fa-address-book-o" aria-hidden="true"></i></h1>
-										
+
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Nombre Contacto:</label>
 							                    <div class="col-sm-4">
-														<input id="name" name="nombre_contacto" type="text" class="form-control required">
+														<input id="name" name="nombre_contacto" type="text" class="form-control" required>
 							                     </div>
 
 							                    <label class="col-sm-2 col-form-label">Cargo Contacto:</label>
 												<div class="col-sm-4">
-														<input id="surname" name="cargo_contacto" type="text" class="form-control required">
+														<input id="surname" name="cargo_contacto" type="text" class="form-control" required>
 							                    </div>
-							                    
+
 						                </div>
 
 						                <div class="form-group row" style="">
 									 		<label class="col-sm-2 col-form-label" >Telefono Contacto:</label>
 							                    <div class="col-sm-4">
-														<input id="email" name="telefono_contacto" type="text" class="form-control required">
+														<input id="email" name="telefono_contacto" type="text" class="form-control" required>
 							                     </div>
 
 							                    <label class="col-sm-2 col-form-label">Celular Contacto:</label>
 												<div class="col-sm-4">
-														<input id="address" name="celular_contacto" type="text" class="form-control required">
+														<input id="address" name="celular_contacto" type="text" class="form-control" required>
 							                    </div>
-							                    
+
 						                </div>
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Correo Contacto:</label>
 							                    <div class="col-sm-4">
-														<input id="email" name="email_contacto" type="text" class="form-control required email">
+														<input id="email" name="email_contacto" type="text" class="form-control email" required>
 							                     </div>
 
 						                </div>
@@ -145,19 +145,19 @@
 									 	<div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Nombre:</label>
 							                    <div class="col-sm-4">
-							                     	<input type="text" class="form-control" name="nombres">
+							                     	<input type="text" class="form-control" name="nombres" required>
 							                    </div>
 
 							                 <label class="col-sm-2 col-form-label">Apellidos:</label>
 												<div class="col-sm-4">
-														<input type="text" class="form-control" name="apellidos">
+														<input type="text" class="form-control" name="apellidos" required>
 							                    </div>
 						                </div>
 
 						                <div class="form-group row xd">
 						                	<label class="col-sm-2 col-form-label">Fecha Nacimiento:</label>
 												<div class="col-sm-4">
-													<input type="date" class="form-control" name="fecha_nacimiento">
+													<input type="date" class="form-control" name="fecha_nacimiento" required>
 							                    </div>
 
 							                <label class="col-sm-2 col-form-label">Genero:</label>
@@ -178,26 +178,26 @@
 												<option value="dni">DNI</option>
 												<option value="pasaporte">Pasaporte</option>
 												<option value="pasaporte">RUC</option>
-												</select>						                    
+												</select>
 												</div>
 
 							                    <label class="col-sm-2 col-form-label">N° de Doc:</label>
 												<div class="col-sm-4">
-														<input type="text" class="form-control" name="numero_documento">
+														<input type="text" class="form-control" name="numero_documento" required>
 							                    </div>
 
 						                </div>
 
 						                <div class="form-group row xd">
-									 		
+
 							                     <label class="col-sm-2 col-form-label" >Direccion:</label>
 							                    <div class="col-sm-4">
-														<input type="text" class="form-control" name="direccion">
+														<input type="text" class="form-control" name="direccion" required>
 							                     </div>
 
 							                    <label class="col-sm-2 col-form-label">Pais:</label>
 												<div class="col-sm-4">
-														<select class="form-control m-b" name="nacionalidad">
+														<select class="form-control m-b" name="nacionalidad" required>
 										  <option>Seleccione</option>
 										 {{--  @foreach($paises as $pais)
 										<option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
@@ -210,18 +210,18 @@
 										<h1><i class="fa fa-graduation-cap" aria-hidden="true"></i></h1>
 
 						                <div class="form-group row">
-										
+
 							            <label class="col-sm-2 col-form-label" >Nivel Educativo:</label>
 							                    <div class="col-sm-4">
-														<input type="text" class="form-control" name="nivel_educativo">
+														<input type="text" class="form-control" name="nivel_educativo" required>
 							                     </div>
 
 									 	<label class="col-sm-2 col-form-label" >Profesion:</label>
 							                    <div class="col-sm-4">
-							                    	<input type="text" class="form-control" name="profesion">							                  
+							                    	<input type="text" class="form-control" name="profesion" required>
 							                    	 </div>
 
-							                    
+
 						                </div>
 										<h1><i class="fa fa-phone" aria-hidden="true"></i></h1>
 						                <div class="form-group row">
@@ -229,11 +229,11 @@
 
 						                	<label class="col-sm-2 col-form-label" >Telefono:</label>
 							                    <div class="col-sm-4">
-														<input type="telefono" class="form-control" name="telefono">
+														<input type="telefono" class="form-control" name="telefono" required>
 							                    </div>
 									 		<label class="col-sm-2 col-form-label" >Celular:</label>
 							                    <div class="col-sm-4">
-														<input type="telefono" class="form-control" name="celular">
+														<input type="telefono" class="form-control" name="celular" required>
 							                     </div>
 
 						                </div>
@@ -242,9 +242,9 @@
 
 							                    <label class="col-sm-2 col-form-label">Correo:</label>
 												<div class="col-sm-4">
-														<input type="email" class="form-control" name="email">
+														<input type="email" class="form-control" name="email" required>
 							                    </div>
-							                    {{-- 
+							                    {{--
 									 		<label class="col-sm-2 col-form-label" >Estado civil:</label>
 							                    <div class="col-sm-4">
 														 <select class="form-control m-b" name="estado_civil">
@@ -254,7 +254,7 @@
 									   </select>
 							                     </div> --}}
 
-							                    
+
 						                </div>
 
 										<input type="submit"class="btn btn-primary" value="Grabar">
@@ -272,11 +272,11 @@
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
 	                                General
-	                            </div> 
+	                            </div>
 	                            <form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" method="post">
 
 	                            <div class="panel-body">
-	                                
+
 									 	@csrf
 									 	<div class="form-group row">
 									 		<label class="col-sm-1 col-form-label">Marca :</label>
@@ -296,10 +296,10 @@
 						                </div>
 
 									 	<div class="form-group row">
-									 		
+
 						                    <label class="col-sm-1 col-form-label">Ing. Asignado:</label>
 												<div class="col-sm-5">
-										    <input list="browsers1" class="form-control m-b" name="personal_lab_id">
+										    <input list="browsers1" class="form-control m-b" name="personal_lab_id" required>
 												<datalist id="browsers1" >
 														@foreach($personales as $personal)
 													<option value="{{$personal->nombres}}">
@@ -312,15 +312,15 @@
 						                    	</div>
 						                </div>
 								        <div class="form-group  row">
-								        	
+
 						                    <label class="col-sm-1 col-form-label">Orden de servicio:</label>
 						                    <div class="col-sm-5">
 						                    	<input type="text" class="form-control" name="orden_servicio" value="{{$orden_servicio}}" readonly>
 						                    </div>
 						                    <label class="col-sm-1 col-form-label">Cliente:</label>
 						                     <div class="col-sm-5">
-										    <input list="browsers" class="form-control m-b" name="cliente_id">
-						                     	
+										    <input list="browsers" class="form-control m-b" name="cliente_id" required>
+
 												<datalist id="browsers" >
 													@foreach($clientes as $cliente)
 													<option value="{{$cliente->nombre}}">
@@ -331,7 +331,7 @@
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Asunto:</label>
-						                     <div class="col-sm-11"><input type="text" class="form-control" name="asunto"></div>
+						                     <div class="col-sm-11"><input type="text" class="form-control" name="asunto" required></div>
 										</div>
 
 										<div class="form-group  row">
@@ -348,15 +348,15 @@
 
 									 	<div class="form-group  row">
 									 		<label class="col-sm-1">Modelo :</label>
-						                     <div class="col-sm-5"><input type="text" class="form-control" name="nombre_equipo"></div>
+						                     <div class="col-sm-5"><input type="text" class="form-control" name="nombre_equipo" required></div>
 						                     <label class="col-sm-1">Nr Serie:</label>
-						                     <div class="col-sm-5"><input type="text" class="form-control" name="numero_serie"></div>
+						                     <div class="col-sm-5"><input type="text" class="form-control" name="numero_serie" required></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-1">Codigo Interno:</label>
-						                     <div class="col-sm-5"><input type="text" class="form-control" name="codigo_interno"></div>
+						                     <div class="col-sm-5"><input type="text" class="form-control" name="codigo_interno" required></div>
 						                     <label class="col-sm-1">Fecha de Compra:</label>
-										<div class="col-sm-5"><input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}"></div>
+										<div class="col-sm-5"><input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}" required></div>
 						                </div>
 
 	                            </div>
@@ -370,7 +370,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema"  maxlength="630"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema"  maxlength="630" required></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -384,7 +384,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" maxlength="630"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" maxlength="630" required></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -398,7 +398,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="650"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="650" required></textarea>
 						                     </div>
 						                </div>
 	                            </div>

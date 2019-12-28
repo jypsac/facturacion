@@ -65,9 +65,9 @@
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-1 col-form-label">Asunto:</label>
-						                     <div class="col-sm-11"><input type="text" class="form-control" name="asunto" value="{{$garantia_guia_ingreso->asunto}}"></div>
+						                     <div class="col-sm-11"><input type="text" class="form-control" name="asunto" value="{{$garantia_guia_ingreso->asunto}}" required></div>
 										</div>
-										
+
 										<div class="form-group  row"><label class="col-sm-1 col-form-label">Cliente:</label>
 											<div class="col-sm-11"><select class="form-control m-b" name="cliente_id">
 												   @foreach($clientes as $cliente)
@@ -79,7 +79,7 @@
 	                            </div>
 	                        </div>
 	                    </div>
-	                    
+
 	                    <div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
@@ -88,19 +88,19 @@
 	                            <div class="panel-body">
 
 									 	<div class="form-group  row"><label class="col-sm-2">Modelo :</label>
-						                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_guia_ingreso->nombre_equipo}}"></div>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_guia_ingreso->nombre_equipo}}" required></div>
 						                </div>
 
 								        <div class="form-group  row"><label class="col-sm-2">Nr Serie:</label>
-						                     <div class="col-sm-10"><input type="text" class="form-control" name="numero_serie" value="{{$garantia_guia_ingreso->numero_serie}}"></div>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="numero_serie" value="{{$garantia_guia_ingreso->numero_serie}}" required></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-2">Codigo Interno:</label>
-						                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_interno" value="{{$garantia_guia_ingreso->codigo_interno}}"></div>
+						                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo_interno" value="{{$garantia_guia_ingreso->codigo_interno}}" required></div>
 						                </div>
 
 						                <div class="form-group  row"><label class="col-sm-2">Fecha de Compra:</label>
-										<div class="col-sm-10"><input type="date" class="form-control" name="fecha_compra" max="{{$garantia_guia_ingreso->fecha_compra}}" value="{{$garantia_guia_ingreso->fecha_compra}}"></div>
+										<div class="col-sm-10"><input type="date" class="form-control" name="fecha_compra" max="{{$garantia_guia_ingreso->fecha_compra}}" value="{{$garantia_guia_ingreso->fecha_compra}}" required></div>
 						                </div>
 
 	                            </div>
@@ -114,7 +114,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" >{{$garantia_guia_ingreso->descripcion_problema}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" required>{{$garantia_guia_ingreso->descripcion_problema}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -128,7 +128,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico">{{$garantia_guia_ingreso->revision_diagnostico}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" required>{{$garantia_guia_ingreso->revision_diagnostico}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -142,7 +142,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="estetica">{{$garantia_guia_ingreso->estetica}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" required>{{$garantia_guia_ingreso->estetica}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>

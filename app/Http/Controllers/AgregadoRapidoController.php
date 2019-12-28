@@ -22,7 +22,7 @@ class AgregadoRapidoController extends Controller
         $cliente->email=$request->get('email');
         $cliente->telefono=$request->get('telefono');
         $cliente->celular=$request->get('celular');
-        $cliente->empresa=$request->get('empresa');
+        // $cliente->empresa=$request->get('empresa');
         $cliente->documento_identificacion=$request->get('documento_identificacion');
         $cliente->numero_documento=$request->get('numero_documento');
         $cliente->save();
@@ -80,5 +80,5 @@ class AgregadoRapidoController extends Controller
         $personal->save();
         return back();
     }
-    
+
 }

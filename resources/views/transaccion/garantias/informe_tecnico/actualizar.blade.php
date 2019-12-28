@@ -118,7 +118,7 @@
 						                <div class="form-group  row"><label class="col-sm-3">Fecha de Compra:</label>
 						                     <div class="col-sm-9"><input type="text" class="form-control" name="fecha_compra" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha_compra}}" readonly></div>
 						                </div>
-						                
+
 						                <div class="form-group  row"><label class="col-sm-3 "></label>
 						                     <div class="col-sm-9"></div>
 						                </div>
@@ -153,7 +153,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" >{{$garantia_informe_tecnico->estetica}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" required>{{$garantia_informe_tecnico->estetica}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -167,7 +167,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico">{{$garantia_informe_tecnico->revision_diagnostico}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" required>{{$garantia_informe_tecnico->revision_diagnostico}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -181,7 +181,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="causas_del_problema">{{$garantia_informe_tecnico->causas_del_problema}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="causas_del_problema" required>{{$garantia_informe_tecnico->causas_del_problema}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -196,7 +196,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="solucion">{{$garantia_informe_tecnico->solucion}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="solucion" required>{{$garantia_informe_tecnico->solucion}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>

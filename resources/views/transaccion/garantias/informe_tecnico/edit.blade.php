@@ -104,7 +104,7 @@
 	                                Datos del Equipo
 	                            </div>
 	                            <div class="panel-body">
-	                            	
+
 						                <div class="form-group  row"><label class="col-sm-3 "></label>
 						                     <div class="col-sm-9"></div>
 						                </div>
@@ -132,7 +132,7 @@
 	                            </div>
 	                        </div>
 	                    </div>
-	                    
+
 						<div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
@@ -141,7 +141,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="630" ></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="630" required></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -155,7 +155,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico"  maxlength="630"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico"  maxlength="630" required></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -169,7 +169,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="causas_del_problema"  maxlength="630"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="causas_del_problema"  maxlength="630" required></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -183,7 +183,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="solucion"  maxlength="630"></textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="solucion"  maxlength="630" required></textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -191,9 +191,9 @@
 	                        </div>
 						</div>
 				<!-- xd -->
-				
 
-            
+
+
             {{-- <div class="form-1-2">
               <label for="">Archivo a subir:</label>
               <input type="file" class="btn btn-info dim" name="file1" required>
@@ -208,10 +208,10 @@
            					                            <div class="panel-body">
            										                <div class="form-group  row">
            																<div class="col-sm-12">
-           																	
-           				
+
+
            																 <div class="dropzone">
-           				              
+
            				              									</div>
            																</div>
            										                </div>
@@ -221,10 +221,10 @@
 
 
 
-           
-              
-				<!-- xd -->		
-<!-- 
+
+
+				<!-- xd -->
+
 						<div class="col-lg-6">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
@@ -254,7 +254,7 @@
 						                </div>
 	                            </div>
 	                        </div>
-						</div> 
+						</div>
 
 						<div class="col-lg-6">
 	                        <div class="panel panel-primary">
@@ -286,7 +286,7 @@
 	                        </div>
 						</div>
 
--->
+
 
 
 
@@ -306,7 +306,7 @@
 <script>
 
   new Dropzone('.dropzone', {
-  
+
     url: '{{route('garantia_informe_tecnico.store')}}' ,
     dictDefaultMessage: 'Arrastra las fotos aqui para subirlas'
     });
