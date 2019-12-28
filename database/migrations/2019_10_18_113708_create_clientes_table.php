@@ -22,7 +22,7 @@ class CreateClientesTable extends Migration
             $table->string('celular');
             $table->string('empresa')->nullable();;
             $table->string('documento_identificacion');
-            $table->string('numero_documento');
+            $table->string('numero_documento')->unique();
             $table->timestamps();
         });
 
