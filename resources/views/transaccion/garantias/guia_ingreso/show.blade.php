@@ -18,19 +18,20 @@
     </div>
 </div>
 <div class="table-responsive" align="right">
-                    <div class="title-action" style="padding-top: 0;" >
+                                <form class="btn" style="text-align: none;padding-right: 0" action="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}">
+                        <input type="text" name="archivo" maxlength="10">
+                         <button type="submit" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </button></form>  
+                       
                         <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a>
-                        <a href="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a>
-                        <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
-                        {{-- <iframe src="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" style="display:none;" name="frame"></iframe>
-
-                        <input type="button" onclick="frames['frame'].print()" value="printletter"> --}}
-
-                        {{-- <a href="javascript:printExternal('{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}')">Print</a> --}}
                         
-                        {{-- <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" onclick="w = window.open(this.href);w.print();w.close();return false;"><i class="fa fa-print"></i> Print Invoice </a> --}}
-                    </div>
-                </div>  
+
+                    
+                        <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
+
+                      
+                    
+                       
+  </div>  
 
 <h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2>
 

@@ -114,7 +114,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" required>{{$garantia_guia_ingreso->descripcion_problema}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" maxlength="630" required>{{$garantia_guia_ingreso->descripcion_problema}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -128,7 +128,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" required>{{$garantia_guia_ingreso->revision_diagnostico}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico"  maxlength="630"required>{{$garantia_guia_ingreso->revision_diagnostico}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>
@@ -142,7 +142,7 @@
 	                            <div class="panel-body">
 						                <div class="form-group  row">
 						                     <div class="col-sm-12">
-						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" required>{{$garantia_guia_ingreso->estetica}}</textarea>
+						                     	<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="630" required>{{$garantia_guia_ingreso->estetica}}</textarea>
 						                     </div>
 						                </div>
 	                            </div>

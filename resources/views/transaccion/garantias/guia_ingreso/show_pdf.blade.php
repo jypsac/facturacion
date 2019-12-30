@@ -7,7 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia Ingreso</title>{{-- 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" > --}}
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/estilos_pdf.css') }}" rel="stylesheet">
 </head>
 
 <body class="white-bg">
@@ -27,9 +27,9 @@
 <div class="wrapper wrapper-content animated fadeIn">
 
 <div class="table-responsive">
-    <table class="table table-bordered table-striped cero">
+    <table class="table table-bordered white-bg">
         <thead>
-            <tr>
+            <tr >
                 <td style="width: 70px;">Motivo</td>
                 <th style="width: 70px;">{{$garantia_guia_ingreso->motivo}}</th>
                 <td style="width: 70px;">Marca</td>
@@ -40,18 +40,15 @@
                 <th style="width: 70px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
                 
             </tr>
-        </thead>
-    </table>
-    <table class="table table-bordered table-striped cero">
-        <thead>
             <tr>
-                <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</th>
-                <td style="width: 70px;">Asunto</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->asunto}}</th>
+                <td colspan="2">Ing. Asigando</td>
+                <th colspan="2">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</th>
+                <td colspan="2">Asunto</td>
+                <th colspan="2">{{$garantia_guia_ingreso->asunto}}</th>
             </tr>
         </thead>
     </table>
+    
 </div>
 
 
@@ -109,12 +106,13 @@
                     <tbody>
             <tr>
                 <td style="width: 70px;">Modelo</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->nombre_equipo}}</th>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->nombre_equipo}}</th>
                 <td style="width: 70px;">Numero de Serie </td>
                 <th style="width: 70px;">{{$garantia_guia_ingreso->numero_serie}}</th>
-            </tr>            <tr>
+            </tr>            
+            <tr>
                 <td style="width: 70px;">Codigo Interno</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->codigo_interno}}</th>
+                <th style="width: 70px;">{{$garantia_guia_ingreso->codigo_interno}}</th>
                 <td style="width: 70px;">Fecha de Compra</td>
                 <th style="width: 70px;">{{$garantia_guia_ingreso->fecha_compra}}</th>
             </tr>
@@ -190,9 +188,9 @@
     <table class="table  white-bg ">
                     <tbody>
             <tr>
-                <td class="blanco" style="width: 70px;border-top: none;" ><hr style="width:200px;"  /> </td>
+                <td class="blanco" style="width: 70px;border-top: none;" ><hr style="width:200px;border-top-width:0.1px"  /> </td>
                 <td class="blanco" style="border-top: none;"></td>
-                <td class="blanco" style="width: 70px; border-top: none;"><hr style="width:200px;"  /> </td>
+                <td class="blanco" style="width: 70px; border-top: none;"><hr style="width:200px;border-top-width:0.1px"  /> </td>
                 
             </tr>
              <tr >
