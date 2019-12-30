@@ -140,4 +140,16 @@ class ClienteController extends Controller
 
         return redirect()->route('cliente.index');
     }
+
+    // public function consulta(Request $request){
+    //     $nombre=$request->get('nombre');
+    //     $validar= Cliente::where("nombre","=",$nombre)->get();
+
+    //     if ($nombre == $validar){
+    //         $si=true;
+    //     }else{
+    //         $si=false;
+    //     }
+    //     return $si;
+    // }
 }

@@ -72,9 +72,9 @@
             </div>
             <div class="ibox-content forum-container">
                 <div id="app">
-                    <invoice-compra-component>
+                    <cliente-component>
 
-                    </invoice-compra-component>
+                    </cliente-component>
                 </div>
 
             </div>

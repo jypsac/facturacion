@@ -5,6 +5,7 @@
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_guia_ingreso.index') )
 @section('value_accion', 'Atras')
+@section('vue_js',  asset('js/app.js') )
 @section('content')
 
 <div class="social-bar">
@@ -17,17 +18,21 @@
 		<div class="col-lg-12">
 	        <div class="ibox">
 	            <div class="ibox-title">
-	        <h5>Crear</h5>
+			<h5>Crear</h5>
+
+			{{-- <form action="{{ route('cliente.consulta') }}" method="post" >
+				@csrf
+				<input type="text" class="form-control" name="nombre" class="form-control" required>
+				<button type="submit">!</button>
+			</form> --}}
+
 	        </div>
 	            <div class="ibox-content">
 	            	<div class="row">
 						<div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-content" style="border-top-width: 0px;padding: 0;height: 20px">
-
-
                             <!-- MODAL CLIENTE -->
-
 							<div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-lg">
 								  <div class="modal-content" style="width: 100%">
@@ -48,14 +53,49 @@
 
 							                    <label class="col-sm-2 col-form-label">Numero de Documento:</label>
 												<div class="col-sm-4">
-													<input type="text" class="form-control" name="numero_documento" class="form-control" required>
-							                    </div>
+													{{-- <input type="text" class="form-control" name="numero_documento" class="form-control" required> --}}
 
-						                </div>
-						                <div class="form-group row">
+													<input list="browserdoc" class="form-control m-b" name="numero_documento" required>
+														<datalist id="browserdoc" >
+															@foreach($clientes as $cliente)
+																<option id="a">{{$cliente->numero_documento}} - existente</option>
+															@endforeach
+												 		</datalist>
+							                    </div>
+										</div>
+										
+						                <div class="form-group row" >
 									 		<label class="col-sm-2 col-form-label" >Cliente:</label>
 							                    <div class="col-sm-4">
-														<input type="text" class="form-control" name="nombre" class="form-control" required>
+														
+														{{-- <input type="text" class="form-control" name="nombre" class="form-control" required> --}}
+
+														
+														<input list="browsersc" class="form-control m-b" name="nombre" required>
+														<datalist id="browsersc" >
+															@foreach($clientes as $cliente)
+																<option id="a">{{$cliente->nombre}} - existente</option>
+															@endforeach
+												 		</datalist>
+														 {{-- @if()
+
+														 @else
+
+														 @endif --}}
+
+
+														{{-- <select class="form-control m-b" name="nombre" >
+															@foreach($clientes as $cliente)
+														<option>{{$cliente->nombre}}</option>
+															@endforeach
+														</select> --}}
+														{{-- <div id="app">
+															<example-component>
+										
+															</example-component>
+														</div> --}}
+															
+														
 							                    </div>
 
 							                    <label class="col-sm-2 col-form-label">Direccion:</label>
