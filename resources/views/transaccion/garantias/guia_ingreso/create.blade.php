@@ -20,11 +20,11 @@
 	            <div class="ibox-title">
 			<h5>Crear</h5>
 
-			{{-- <form action="{{ route('cliente.consulta') }}" method="post" >
-				@csrf
-				<input type="text" class="form-control" name="nombre" class="form-control" required>
-				<button type="submit">!</button>
-			</form> --}}
+			@if($errors->any())
+			<div class="alert alert-danger">
+                <a class="alert-link" href="#">{{$errors}}</a>.
+            </div>
+			@endif
 
 	        </div>
 	            <div class="ibox-content">
@@ -55,7 +55,7 @@
 												<div class="col-sm-4">
 													{{-- <input type="text" class="form-control" name="numero_documento" class="form-control" required> --}}
 
-													<input list="browserdoc" class="form-control m-b" name="numero_documento" required>
+													<input list="browserdoc" class="form-control m-b" name="numero_documento" required value="{{ old('numero_documento')}}">
 														<datalist id="browserdoc" >
 															@foreach($clientes as $cliente)
 																<option id="a">{{$cliente->numero_documento}} - existente</option>
@@ -63,15 +63,15 @@
 												 		</datalist>
 							                    </div>
 										</div>
-										
+
 						                <div class="form-group row" >
 									 		<label class="col-sm-2 col-form-label" >Cliente:</label>
 							                    <div class="col-sm-4">
-														
+
 														{{-- <input type="text" class="form-control" name="nombre" class="form-control" required> --}}
 
-														
-														<input list="browsersc" class="form-control m-b" name="nombre" required>
+
+												<input list="browsersc" class="form-control m-b" name="nombre" required value="{{ old('nombre')}}">
 														<datalist id="browsersc" >
 															@foreach($clientes as $cliente)
 																<option id="a">{{$cliente->nombre}} - existente</option>
@@ -91,16 +91,16 @@
 														</select> --}}
 														{{-- <div id="app">
 															<example-component>
-										
+
 															</example-component>
 														</div> --}}
-															
-														
+
+
 							                    </div>
 
 							                    <label class="col-sm-2 col-form-label">Direccion:</label>
 												<div class="col-sm-4">
-														<input type="text" class="form-control" name="direccion" class="form-control" required>
+														<input type="text" class="form-control" name="direccion" class="form-control" required value="{{ old('direccion')}}">
 							                    </div>
 
 						                </div>
@@ -108,18 +108,18 @@
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Celular:</label>
 							                    <div class="col-sm-4">
-							                    	<input type="telefono" class="form-control" name="celular" class="form-control" required>							        </div>
+							                    	<input type="telefono" class="form-control" name="celular" class="form-control" required value="{{ old('celular')}}">							        </div>
 
 							                    <label class="col-sm-2 col-form-label">Telefono:</label>
 												<div class="col-sm-4">
-														<input type="telefono" class="form-control" name="telefono" class="form-control"required>
+														<input type="telefono" class="form-control" name="telefono" class="form-control"required value="{{ old('telefono')}}">
 							                    </div>
 						                </div>
 
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >correo:</label>
 							                    <div class="col-sm-4">
-							                    	<input type="email" class="form-control" name="email" class="form-control" required>
+							                    	<input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}">
 							                    	 </div>
 
 
@@ -129,12 +129,12 @@
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Nombre Contacto:</label>
 							                    <div class="col-sm-4">
-														<input id="name" name="nombre_contacto" type="text" class="form-control" required>
+														<input id="name" name="nombre_contacto" type="text" class="form-control" required value="{{ old('nombre_contacto')}}">
 							                     </div>
 
 							                    <label class="col-sm-2 col-form-label">Cargo Contacto:</label>
 												<div class="col-sm-4">
-														<input id="surname" name="cargo_contacto" type="text" class="form-control" required>
+														<input id="surname" name="cargo_contacto" type="text" class="form-control" required value="{{ old('cargo_contacto')}}">
 							                    </div>
 
 						                </div>
@@ -142,19 +142,19 @@
 						                <div class="form-group row" style="">
 									 		<label class="col-sm-2 col-form-label" >Telefono Contacto:</label>
 							                    <div class="col-sm-4">
-														<input id="email" name="telefono_contacto" type="text" class="form-control" required>
+														<input id="email" name="telefono_contacto" type="text" class="form-control" required value="{{ old('telefono_contacto')}}">
 							                     </div>
 
 							                    <label class="col-sm-2 col-form-label">Celular Contacto:</label>
 												<div class="col-sm-4">
-														<input id="address" name="celular_contacto" type="text" class="form-control" required>
+														<input id="address" name="celular_contacto" type="text" class="form-control" required value="{{ old('celular_contacto')}}">
 							                    </div>
 
 						                </div>
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >Correo Contacto:</label>
 							                    <div class="col-sm-4">
-														<input id="email" name="email_contacto" type="text" class="form-control email" required>
+														<input id="email" name="email_contacto" type="text" class="form-control email" required value="{{ old('email_contacto')}}">
 							                     </div>
 
 						                </div>
