@@ -143,14 +143,16 @@ class GarantiaGuiaEgresoController extends Controller
         return view('transaccion.garantias.guia_egreso.show_print',compact('garantias_guias_egreso','mi_empresa'));
     }
 
-    public function pdf($id){
+    public function pdf(Request $request,$id){
         $mi_empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
+        $archivo=$request->get('archivo');
+
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome');
         $pdf=PDF::loadView('transaccion.garantias.guia_egreso.show_pdf',compact('garantias_guias_egreso','mi_empresa'));
     //     return $pdf->download();
-        return $pdf->download();
+        return $pdf->download('Guia Egreso - '.$archivo.' .pdf');
 }
 }

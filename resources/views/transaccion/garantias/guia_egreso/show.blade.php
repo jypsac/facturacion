@@ -20,8 +20,11 @@
 </div>
 <div class="table-responsive" align="right">
                     <div class="title-action" style="padding-top: 0;" >
-                        <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_egreso' ,$garantias_guias_egreso->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Gmail </a>
-                        <a href="{{route('pdf_egreso' ,$garantias_guias_egreso->id)}}" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a>
+                        <form class="btn" style="text-align: none;padding-right: 0" action="{{route('pdf_egreso' ,$garantias_guias_egreso->id)}}">
+                        <input type="text" name="archivo" maxlength="50" value=" {{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}">
+                         <button type="submit" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </button></form>  
+                        <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_egreso' ,$garantias_guias_egreso->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Gmail </a><!-- 
+                        <a href="{{route('pdf_egreso' ,$garantias_guias_egreso->id)}}" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a> -->
                         <a href="{{route('impresiones_egreso' ,$garantias_guias_egreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
                     </div>
                 </div>
