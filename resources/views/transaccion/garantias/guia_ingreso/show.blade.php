@@ -19,7 +19,7 @@
 </div>
 <div class="table-responsive" align="right">
                                 <form class="btn" style="text-align: none;padding-right: 0" action="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}">
-                        <input type="text" name="archivo" maxlength="10">
+                        <input type="text" name="archivo" maxlength="50" value="{{$garantia_guia_ingreso->orden_servicio}}">
                          <button type="submit" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </button></form>  
                        
                         <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a>

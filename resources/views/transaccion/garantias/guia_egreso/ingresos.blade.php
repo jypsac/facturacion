@@ -66,7 +66,7 @@
                                             <td>{{$garantias_guias_ingreso->fecha}}</td>
                                             <td>{{$garantias_guias_ingreso->orden_servicio}}</td>
                                             <td>{{$garantias_guias_ingreso->asunto}}</td>
-                                            <td>{{$garantias_guias_ingreso->contactos->nombre}}</td>
+                                            <td>{{$garantias_guias_ingreso->clientes_i->nombre}}</td>
                                             <td><center>
                                                 @if($garantias_guias_ingreso->estado==0)
                                                     <button class="btn btn-w-m btn-secondary">ANULADO</button>

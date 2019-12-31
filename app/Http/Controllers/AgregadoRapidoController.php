@@ -23,7 +23,7 @@ class AgregadoRapidoController extends Controller
             'nombre.unique' => 'El Cliente ya ha sido registrado'
         ]);
 
-        // $data = $request->all();
+        $data = $request->all();
 
 
 
