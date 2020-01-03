@@ -6,7 +6,8 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Guia Egreso</title>
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/estilos_pdf.css') }}" rel="stylesheet">
+    
 </head>
 
 <body class="white-bg">
@@ -37,15 +38,11 @@
                 <td style="width: 70px;">Orden de Servicio</td>
                 <th style="width: 70px;"> {{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</th>
             </tr>   
-        </thead>
-    </table>
-    <table class="table table-bordered table-striped cero">
-        <thead>
             <tr>
-                <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 70px;"> {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
-                <td style="width: 70px;">Asunto</td>
-                <th style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->asunto}}</th>
+                <td colspan="2" style="width: 70px;">Ing. Asigando</td>
+                <th colspan="2" style="width: 70px;"> {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
+                <td colspan="2" style="width: 70px;">Asunto</td>
+                <th colspan="2" style="width: 70px;">{{$garantias_guias_egreso->garantia_ingreso_i->asunto}}</th>
                 
             </tr>
         </thead>

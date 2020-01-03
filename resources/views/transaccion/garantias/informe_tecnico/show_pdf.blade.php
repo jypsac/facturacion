@@ -7,8 +7,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Guia Informe Tecnico</title>
+    <link href="{{ asset('css/estilos_pdf.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
 
 </head>
 
@@ -40,16 +40,13 @@
                 <th style="width: 70px;"> {{$garantias_informe_tecnico->orden_servicio}}</th>
 
             </tr>
-        </thead>
-    </table>
-    <table class="table table-bordered table-striped cero">
-        <thead>
+
             <tr>
 
-                <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
-                <td style="width: 70px;">Asunto</td>
-                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</th>
+                <td colspan="2" style="width: 70px;">Ing. Asigando</td>
+                <th colspan="2" style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
+                <td colspan="2" style="width: 70px;">Asunto</td>
+                <th colspan="2" style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</th>
 
             </tr>
         </thead>
@@ -189,6 +186,54 @@
 
                     </div>
                 </span>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="col-lg-13">
+    <div class="ibox">
+
+        {{-- <div class="ibox-title"> --}}
+        <h4>Fotos</h4>
+        {{-- </div> --}}
+        <div class="border">
+            <div class="ibox-content text-left h-50">
+                <span id="sparkline8">
+                    <div class="panel-body">
+                                 @if($garantias_informe_tecnico->image1<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image1}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image2<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image2}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image3<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image3}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image4<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image4}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image5<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image5}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image6<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image6}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image7<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image7}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantias_informe_tecnico->image8<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image8}}" style="width: 250px;">
+                            @endif
+                    </div>
+                </span>
+
             </div>
         </div>
     </div>

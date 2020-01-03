@@ -90,7 +90,10 @@ class ClienteController extends Controller
      */
     public function show($id)
     {
-        return view('auxiliar.cliente.show');
+
+        $cliente_show=Cliente::find($id);
+        $contacto_show=Contacto::where('clientes_id','=',$id)->get();
+        return view('auxiliar.cliente.show',compact('cliente_show','contacto_show')); 
     }
 
     /**

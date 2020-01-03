@@ -45,7 +45,7 @@
                                 <th>Correo</th>
                                 <th>Ver</th>
                                 <th>EDITAR</th>
-                                <th>Eliminar</th>
+                                {{-- <th>Eliminar</th> --}}
                             </tr>
                         </thead>
                     <tbody>
@@ -59,7 +59,7 @@
                                 <td>{{$provedor->email}}</td>
                                 <td><center><a href="{{ route('provedor.show', $provedor->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 <td><center><a href="{{ route('provedor.edit', $provedor->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
-                                <td>
+                                {{-- <td>
                                     <center>
                                         <form action="{{ route('provedor.destroy', $provedor->id)}}" method="POST">
                                             @csrf
@@ -67,7 +67,7 @@
                                             <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
                                         </form>
                                     </center>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>

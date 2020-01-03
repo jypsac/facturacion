@@ -7,91 +7,75 @@
 @section('value_accion', 'atras')
 
 @section('content')
-<div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		<div class="col-lg-12">
-            <div class="ibox">
-				<div class="ibox-title">
-                    <h5>Datos Personales</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#" class="dropdown-item">Config option 1</a>
-                            </li>
-                            <li><a href="#" class="dropdown-item">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-				</div>
-				<div class="ibox-content">
-					<form action="{{ route('cliente.update',$cliente->id) }}"  enctype="multipart/form-data" method="post">
-                         @csrf
-                       @method('PATCH')
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
-                         <div class="col-sm-10"><input type="text" class="form-control" name="nombre" value="{{$cliente->nombre}}"></div>
-		                </div>
 
+<div style="padding-top: 20px">
+<div class="container" style="height:1000px ; padding-top: 30px; background: white;">
+<form action="{{ route('cliente.update',$cliente->id) }}"  enctype="multipart/form-data" method="post">
+  @csrf
+@method('PATCH')
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Direccion:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="direccion" value="{{$cliente->direccion}}"></div>
-		                </div>
+      <div class="jumbotron" style="height: 60px;padding:10px">
+       <center><input style="width: 250px;font-size: 18px;" type="text" class="form-control" name="nombre" value="{{$cliente->nombre}}"></center>
+      </div>
 
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Correo:</label>
-		                     <div class="col-sm-10"><input type="email" class="form-control" name="email" value="{{$cliente->email}}"></div>
-                        </div>
+<h1><i class="fa fa-user-o" aria-hidden="true"></i></h1>
+      <div class="row marketing">
+        <div class="col-lg-6">
+          <h4>Direccion:</h4>
+         <p><input type="text" class="form-control" name="direccion" value="{{$cliente->direccion}}"></p>
 
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Telefono:</label>
-		                     <div class="col-sm-10"><input type="number" class="form-control" name="telefono" value="{{$cliente->telefono}}"></div>
-		                </div>
+          <h4>Telefono:</h4>
+          <p><input type="number" class="form-control" name="telefono" value="{{$cliente->telefono}}"></p>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Celular:</label>
-		                     <div class="col-sm-10"><input type="number" class="form-control" name="celular" value="{{$cliente->celular}}"></div>
-                        </div>
+          <h4>Email:</h4>
+          <p><input type="email" class="form-control" name="email" value="{{$cliente->email}}"></p>
+        </div>
 
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Empresa:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="empresa" value="{{$cliente->empresa}}"></div>
-		                </div>
+        <div class="col-lg-6">
+          <h4>Tipo de Documento:</h4>
+          <select class="form-control m-b" name="documento_identificacion">
+														
+				<option value="{{$cliente->documento_identificacion}}">{{$cliente->documento_identificacion}}</option>
+					@if($cliente->documento_identificacion == 'DNI')
+						<option value="Pasaporte"> Pasaporte</option>
+					@elseif($cliente->documento_identificacion == 'Pasaporte')
+						<option value="DNI">DNI</option>
+					@endif
+			</select>
+		
 
+          <h4>Numero de Documento:</h4>
+          <p><input type="text" class="form-control" name="numero_documento" value="{{$cliente->numero_documento}}"></p>
 
-		                <div class="form-group row"><label class="col-sm-2 col-form-label">Doc Identificacion:</label>
-							<div class="col-sm-10">
-								<select class="form-control m-b" name="documento_identificacion">
-					    		<option value="dni">DNI</option>
-					    		<option value="pasaporte">Pasaporte</option>
-					    		</select>
-		                    </div>
-		                </div>
+          <h4>Celular:</h4>
+          <p><input type="number" class="form-control" name="celular" value="{{$cliente->celular}}"></p>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">NR de Documento:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="numero_documento" value="{{$cliente->numero_documento}}"></div>
-		                </div>
+        </div>
 
+    </div> {{-- 
+    @foreach($contacto_show as $contacto)
+  <h1><i class="fa fa-address-book-o" aria-hidden="true"></i>  </h1>
+    <div class="row marketing">
+    	<div class="col-lg-6">
+    	  <h4>Nombre del Contacto:</h4>
+          <p>{{$contacto->nombre}}</p><hr>
+    	  <h4>Cargo:</h4>
+          <p>{{$contacto->cargo}}</p><hr>
+    	</div>
+    	<div class="col-lg-6">
+    	  <h4>Telefono/Celular:</h4>
+          <p>{{$contacto->telefono}} / {{$contacto->celular}}</p><hr>
+    	  <h4>Email:</h4>
+          <p>{{$contacto->email}}</p><hr>
+    	</div>
+    	
+    </div>
+    @endforeach --}}
+                           
 
-                		<button class="btn btn-primary" type="submit">Guardar</button>
-
-					</form>
-
-				</div>
-			</div>
-		</div>
-
-	</div>
+<button class="btn btn-primary" type="submit">Guardar</button>
+</form>
 </div>
-	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-    <!-- Custom and plugin javascript -->
-    <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-@stop
+</div>
+@endsection
+	
