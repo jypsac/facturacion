@@ -33,9 +33,13 @@ class InventarioInicialController extends Controller
     {
         $almacen = $request->input('almacen');
         $clasificaciones = $request->input('clasificacion');
-
         $productos=Producto::all();
-        return view('inventario.inventario-inicial.create',compact('productos','almacen','clasificaciones'));
+        $inventario_iniciales=InventarioInicial::where('almacen','=',$almacen)->where('categorias','=',$clasificaciones)->get();
+        //enviar guia de ingreso para saldo
+        //enviar guia de ingreso para costo
+
+        //consulta para total de costo
+        return view('inventario.inventario-inicial.create',compact('productos','almacen','clasificaciones','inventario_iniciales'));
         
     }
 

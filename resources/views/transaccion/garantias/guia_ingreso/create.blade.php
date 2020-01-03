@@ -22,7 +22,11 @@
 
 			@if($errors->any())
 			<div class="alert alert-danger">
-                <a class="alert-link" href="#">{{$errors}}</a>.
+                <a class="alert-link" href="#">
+					@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+					@endforeach
+				</a>
             </div>
 			@endif
 
