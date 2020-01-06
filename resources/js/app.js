@@ -10,8 +10,8 @@ Vue.component('invoice-compra-component', require('./components/InvoiceCreateCom
 Vue.component('cliente-component', require('./components/ClienteComponent.vue').default);
 
 
-const app = new Vue({
-    el: '#app',
+const apps = new Vue({
+    el: '#apps',
 });
 
 

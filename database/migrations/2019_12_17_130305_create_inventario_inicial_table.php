@@ -17,9 +17,7 @@ class CreateInventarioInicialTable extends Migration
             $table->bigIncrements('id');
             // $table->string('almacen');
             // $table->string('categorias');
-            $table->string('codigo');
-            $table->string('articulo');
-            $table->integer('saldo');
+            // $table->string('articulo');
             // $table->timestamps();
         });
     }

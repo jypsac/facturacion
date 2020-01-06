@@ -13,7 +13,7 @@
     <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
     <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
-    <script src="@yield('vue_js', '#')" defer></script>
+    {{-- <script src="@yield('vue_js', '#')" defer></script> --}}
 
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">

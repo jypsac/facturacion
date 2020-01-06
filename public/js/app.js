@@ -37602,39 +37602,7 @@ var render = function() {
               })
             ])
           ])
-        }),
-        _vm._v(" "),
-        _c("tfoot", [
-          _c("tr", [
-            _c("td", { staticClass: "text-right", attrs: { colspan: "5" } }, [
-              _vm._v("Sub Total")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-right" }, [
-              _vm._v(_vm._s(_vm.invoice_subtotal))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "text-right", attrs: { colspan: "5" } }, [
-              _vm._v("igv")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-right" }, [
-              _vm._v(_vm._s(_vm.invoice_tax))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "text-right", attrs: { colspan: "5" } }, [
-              _vm._v("Total")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-right" }, [
-              _vm._v(_vm._s(_vm.invoice_total))
-            ])
-          ])
-        ])
+        })
       ],
       2
     ),
@@ -37888,39 +37856,7 @@ var render = function() {
               })
             ])
           ])
-        }),
-        _vm._v(" "),
-        _c("tfoot", [
-          _c("tr", [
-            _c("td", { staticClass: "text-right", attrs: { colspan: "5" } }, [
-              _vm._v("Sub Total")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-right" }, [
-              _vm._v(_vm._s(_vm.invoice_subtotal))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "text-right", attrs: { colspan: "5" } }, [
-              _vm._v("igv")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-right" }, [
-              _vm._v(_vm._s(_vm.invoice_tax))
-            ])
-          ]),
-          _vm._v(" "),
-          _c("tr", [
-            _c("td", { staticClass: "text-right", attrs: { colspan: "5" } }, [
-              _vm._v("Total")
-            ]),
-            _vm._v(" "),
-            _c("td", { staticClass: "text-right" }, [
-              _vm._v(_vm._s(_vm.invoice_total))
-            ])
-          ])
-        ])
+        })
       ],
       2
     ),
@@ -50116,8 +50052,8 @@ window.Vue = __webpack_require__(/*! vue */ "./node_modules/vue/dist/vue.common.
 Vue.component('example-component', __webpack_require__(/*! ./components/ExampleComponent.vue */ "./resources/js/components/ExampleComponent.vue")["default"]);
 Vue.component('invoice-compra-component', __webpack_require__(/*! ./components/InvoiceCreateCompra.vue */ "./resources/js/components/InvoiceCreateCompra.vue")["default"]);
 Vue.component('cliente-component', __webpack_require__(/*! ./components/ClienteComponent.vue */ "./resources/js/components/ClienteComponent.vue")["default"]);
-var app = new Vue({
-  el: '#app'
+var apps = new Vue({
+  el: '#apps'
 });
 
 /***/ }),
@@ -50253,15 +50189,14 @@ __webpack_require__.r(__webpack_exports__);
 /*!******************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue ***!
   \******************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 __webpack_require__.r(__webpack_exports__);
 /* harmony import */ var _ExampleComponent_vue_vue_type_template_id_299e239e___WEBPACK_IMPORTED_MODULE_0__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=template&id=299e239e& */ "./resources/js/components/ExampleComponent.vue?vue&type=template&id=299e239e&");
 /* harmony import */ var _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__ = __webpack_require__(/*! ./ExampleComponent.vue?vue&type=script&lang=js& */ "./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js&");
-/* harmony reexport (unknown) */ for(var __WEBPACK_IMPORT_KEY__ in _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__) if(__WEBPACK_IMPORT_KEY__ !== 'default') (function(key) { __webpack_require__.d(__webpack_exports__, key, function() { return _ExampleComponent_vue_vue_type_script_lang_js___WEBPACK_IMPORTED_MODULE_1__[key]; }) }(__WEBPACK_IMPORT_KEY__));
-/* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
+/* empty/unused harmony star reexport *//* harmony import */ var _node_modules_vue_loader_lib_runtime_componentNormalizer_js__WEBPACK_IMPORTED_MODULE_2__ = __webpack_require__(/*! ../../../node_modules/vue-loader/lib/runtime/componentNormalizer.js */ "./node_modules/vue-loader/lib/runtime/componentNormalizer.js");
 
 
 
@@ -50291,7 +50226,7 @@ component.options.__file = "resources/js/components/ExampleComponent.vue"
 /*!*******************************************************************************!*\
   !*** ./resources/js/components/ExampleComponent.vue?vue&type=script&lang=js& ***!
   \*******************************************************************************/
-/*! no static exports found */
+/*! exports provided: default */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";

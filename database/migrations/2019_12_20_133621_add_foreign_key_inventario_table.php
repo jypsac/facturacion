@@ -20,11 +20,9 @@ class AddForeignKeyInventarioTable extends Migration
             $table->unsignedBigInteger('almacen');
             $table->foreign('almacen')->references('id')->on('almacen')->onDelete('cascade');
 
-            /*$table->unsignedBigInteger('cliente_id');
-            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');*/
+            $table->unsignedBigInteger('articulo_id');
+            $table->foreign('articulo_id')->references('id')->on('productos')->onDelete('cascade');
 
-            // $table->unsignedBigInteger('contacto_id');
-            // $table->foreign('contacto_id')->references('id')->on('contactos')->onDelete('cascade');
             $table->timestamps();
         });
     }
@@ -36,6 +34,6 @@ class AddForeignKeyInventarioTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('inventario_inicial');
     }
 }

@@ -4,6 +4,7 @@
 @section('breadcrumb', 'kardex_entradas-Agregar')
 @section('breadcrumb2', 'kardex_entradas-Agregar')
 @section('href_accion', route('kardex-entrada.index') )
+{{-- @section('vue_js',  asset('js/app.js') ) --}}
 @section('value_accion', 'Atras')
 
 @section('content')
@@ -70,12 +71,17 @@
 							</div>
 		                </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Informacion:</label>
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Informacions:</label>
 		                    <div class="col-sm-10"><input type="text" class="form-control" name="informacion"></div>
 		                </div>
 
                 		<button class="btn btn-primary" type="submit">Guardar</button>
 					</form>
+					<div id="apps">
+						<cliente-component>
+	
+						</cliente-component>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -89,5 +95,7 @@
 
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+	
+<script src="{{ asset('js/app.js')}}"></script>
 @endsection

@@ -34,7 +34,7 @@
                 </td>
             </tr>
 
-            <tfoot>
+            <!-- <tfoot>
                 <tr>
                     <td colspan="5" class="text-right">Sub Total</td>
                     <td class="text-right">{{invoice_subtotal}}</td>
@@ -47,7 +47,7 @@
                     <td colspan="5" class="text-right">Total</td>
                     <td class="text-right">{{invoice_total}}</td>
                 </tr>
-            </tfoot>
+            </tfoot> -->
 
     </table>
 
