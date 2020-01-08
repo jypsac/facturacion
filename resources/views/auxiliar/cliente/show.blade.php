@@ -7,13 +7,11 @@
 @section('value_accion', 'atras')
 
 @section('content')
-<div style="padding-top: 20px">
-<div class="container" style="height:1000px ; padding-top: 30px; background: white;">
+
+<div style="padding-top: 20px;padding-bottom: 50px">
+<div class="container" style=" padding-top: 30px; background: white;">
       <div class="jumbotron" style="height: 50px;padding:10px">
        <center><h1>{{$cliente_show->nombre}}</h1> </center>
-        {{-- <img align="right"  src="{{asset('img/logos/logo.jpg')}}" style="width: 300px;height: 50px; border-radius:15px">--}}
-        {{-- <p class="lead" style="font-size: 15px">sss</p>
-        <p><a class="btn btn-lg btn-success" href="#" style="background-color: #1ab394; border-color: #1ab394"> <i class="fa fa-edit"></i></a></p> --}}
       </div>
 <h1><i class="fa fa-user-o" aria-hidden="true"></i></h1>
       <div class="row marketing">
@@ -41,6 +39,7 @@
         </div>
 
     </div> 
+    <div style="padding-bottom: 10px">
     @foreach($contacto_show as $contacto)
   <h1><i class="fa fa-address-book-o" aria-hidden="true"></i>  </h1>
     <div class="row marketing">
@@ -59,6 +58,7 @@
     	
     </div>
     @endforeach
+    </div>
                            
 </div>
 </div>
