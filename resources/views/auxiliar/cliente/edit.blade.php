@@ -8,8 +8,8 @@
 
 @section('content')
 
-<div style="padding-top: 20px">
-<div class="container" style="height:1000px ; padding-top: 30px; background: white;">
+<div style="padding-top: 20px;padding-bottom: 50px">
+<div class="container" style="padding-top: 30px;padding-bottom: 30px; background: white;">
 <form action="{{ route('cliente.update',$cliente->id) }}"  enctype="multipart/form-data" method="post">
   @csrf
 @method('PATCH')
@@ -25,7 +25,7 @@
          <p><input type="text" class="form-control" name="direccion" value="{{$cliente->direccion}}"></p>
 
           <h4>Telefono:</h4>
-          <p><input type="number" class="form-control" name="telefono" value="{{$cliente->telefono}}"></p>
+          <p><input type="text" class="form-control" name="telefono" value="{{$cliente->telefono}}"></p>
 
           <h4>Email:</h4>
           <p><input type="email" class="form-control" name="email" value="{{$cliente->email}}"></p>
@@ -48,31 +48,12 @@
           <p><input type="text" class="form-control" name="numero_documento" value="{{$cliente->numero_documento}}"></p>
 
           <h4>Celular:</h4>
-          <p><input type="number" class="form-control" name="celular" value="{{$cliente->celular}}"></p>
+          <p><input type="text" class="form-control" name="celular" value="{{$cliente->celular}}"></p>
 
         </div>
 
-    </div> {{-- 
-    @foreach($contacto_show as $contacto)
-  <h1><i class="fa fa-address-book-o" aria-hidden="true"></i>  </h1>
-    <div class="row marketing">
-    	<div class="col-lg-6">
-    	  <h4>Nombre del Contacto:</h4>
-          <p>{{$contacto->nombre}}</p><hr>
-    	  <h4>Cargo:</h4>
-          <p>{{$contacto->cargo}}</p><hr>
-    	</div>
-    	<div class="col-lg-6">
-    	  <h4>Telefono/Celular:</h4>
-          <p>{{$contacto->telefono}} / {{$contacto->celular}}</p><hr>
-    	  <h4>Email:</h4>
-          <p>{{$contacto->email}}</p><hr>
-    	</div>
-    	
     </div>
-    @endforeach --}}
                            
-
 <button class="btn btn-primary" type="submit">Guardar</button>
 </form>
 </div>
