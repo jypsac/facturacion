@@ -70,14 +70,6 @@
 
         <table border="1" cellspacing="0">
             <tr>
-                <!-- <th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-                <th>S. No</th>
-                <th>First Name</th>
-                <th>Last Name</th>
-                <th>Tamil</th>
-                <th>English</th>
-                <th>Computer</th>
-                <th>Total</th> -->
                 <th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
                 <th>S. No</th>
                 <th>Codigo</th>
@@ -90,12 +82,13 @@
             <tr>
                 <td><input type='checkbox' class='case' /></td>
                 <td>1.</td>
-                <td><input type='text' id='first_name' name='first_name[]' /></td>
-                <td><input type='text' id='last_name' name='last_name[]' /></td>
-                <td><input type='text' id='tamil' name='tamil[]' /></td>
-                <td><input type='text' id='english' name='english[]' /> </td>
-                <td><input type='text' id='computer' name='computer[]' /></td>
-                <td><input type='text' id='total' name='total[]' /> </td>
+                <td><input type='text' id='codigo' name='codigo[]' /></td>
+                <td><input type='text' id='descripcion' name='descripcion[]' /></td>
+                <td><input type='text' id='unidad' name='unidad[]' /></td>
+                <td><input type='text' id='cantidad' name='cantidad[]' onchange="multiplicar(this.value);"/></td>
+                <td><input type='text' id='precio' name='precio[]' onchange="multiplicar(this.value);"/></td>
+                <td><input type='text' id='total' name='total[]' /></td>
+                <span id="spTotal"></span>
             </tr>
         </table>
 
@@ -104,6 +97,24 @@
         <p>
             <input type='submit' name='submit' value='submit' class='but' /></p>
     </form>
+
+    <script>
+        function multiplicar (valor) {
+            var total = 0;	
+            valor = parseInt(valor); // Convertir el valor a un entero (número).
+            
+            total = document.getElementById('spTotal').innerHTML;
+            
+            // Aquí valido si hay un valor previo, si no hay datos, le pongo un cero "0".
+            total = (total == null || total == undefined || total == "") ? 0 : total;
+            
+            /* Esta es la suma. */
+            total = (parseInt(total) - parseInt(valor));
+            
+            // Colocar el resultado de la suma en el control "span".
+            document.getElementById('spTotal').innerHTML = total;
+        }
+    </script>
 
     <script>
         var i = 2;
@@ -132,8 +143,8 @@
                 }
             });
         }
-
     </script>
+    
 </body>
 
 </html>
