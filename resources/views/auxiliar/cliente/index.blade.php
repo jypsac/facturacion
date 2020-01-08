@@ -44,8 +44,8 @@
                                 <th>Correo</th>
                                 <th>Celular</th>
                                 <th>Ver</th>
-                                <th>EDITAR</th>
-                                <th>Contacto</th>
+                               {{--  <th>EDITAR</th> --}}
+                              {{--   <th>Contacto</th> --}}
                                 {{-- <th>Eliminar</th> --}}
                             </tr>
                         </thead>
@@ -58,9 +58,9 @@
                                 <td>{{$cliente->numero_documento}}</td>
                                 <td>{{$cliente->email}}</td>
                                 <td>{{$cliente->celular}}</td>
-                                <td><center><a href="{{ route('cliente.show', $cliente->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                <td><center><a href="{{ route('cliente.edit', $cliente->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
-                                <td><center><a href="{{ route('contacto.index_id', $cliente->id) }}" ><button type="button" class="btn btn-s-m btn-success">Contacto</button></a></center></td>
+                                <td><center><a href="{{ route('cliente.show', $cliente->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>{{-- 
+                                <td><center><a href="{{ route('cliente.edit', $cliente->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
+                                {{-- <td><center><a href="{{ route('contacto.index_id', $cliente->id) }}" ><button type="button" class="btn btn-s-m btn-success">Contacto</button></a></center></td> --}}
                                 {{-- <td>
                                     <center>
                                         <form action="{{ route('cliente.destroy', $cliente->id)}}" method="POST">

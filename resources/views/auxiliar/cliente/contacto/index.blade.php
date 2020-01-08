@@ -4,7 +4,10 @@
 @section('breadcrumb', 'Contacto')
 @section('breadcrumb2', 'Contacto')
 @section('href_accion', route('contacto.crear',$id))
-@section('value_accion', 'Agregassr')
+@section('value_accion', 'Agregar')
+@section('visibility', 'none')
+@section('ruta',  route('cliente.index'))
+@section('name', 'Atras')
 
 @section('content')
 

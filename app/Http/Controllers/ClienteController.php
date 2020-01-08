@@ -127,9 +127,8 @@ class ClienteController extends Controller
         $cliente->documento_identificacion=$request->get('documento_identificacion');
         $cliente->numero_documento=$request->get('numero_documento');
         $cliente->save();
-        return redirect()->route('cliente.index');
+        return redirect()->route('cliente.show',$cliente->id);
     }
-
     /**
      * Remove the specified resource from storage.
      *

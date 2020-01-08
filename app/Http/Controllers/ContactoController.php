@@ -58,7 +58,8 @@ class ContactoController extends Controller
         $contacto->clientes_id=$request->get('clientes_id');
         $contacto->save();
 
-        return redirect()->route('contacto.index_id',compact('id'));
+       return redirect()->route('cliente.show', $id);
+        
     }
 
     /**
@@ -79,9 +80,12 @@ class ContactoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function editar($id_cliente)
+
+
+
     {
-        $cliente=Contacto::where("clientes_id","=",$id_cliente)->first();
-        return view('auxiliar.cliente.contacto.edit',compact('cliente'));
+        $contacto=Contacto::where("id","=",$id_cliente)->first();
+        return view('auxiliar.cliente.contacto.edit',compact('contacto'));
         
     }
 
@@ -93,8 +97,18 @@ class ContactoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {
-        //
+    {   
+        $contacto= Contacto::find($id);
+        $id=$request->get('clientes_id');
+        $contacto->nombre=$request->get('nombre');
+        $contacto->cargo=$request->get('cargo');
+        $contacto->telefono=$request->get('telefono');
+        $contacto->celular=$request->get('celular');
+        $contacto->email=$request->get('email');
+        $contacto->save();
+
+        return redirect()->route('cliente.show', $id);
+        
     }
 
     /**

@@ -54,7 +54,7 @@
 
     </div>
                            
-<button class="btn btn-primary" type="submit">Guardar</button>
+<button class="btn btn-primary" type="submit">Grabar</button>
 </form>
 </div>
 </div>

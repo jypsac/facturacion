@@ -208,9 +208,14 @@
                     </div>
                     <div class="col-sm-8">
                         <div class="title-action">
+                            <a style="visibility:@yield('visibility', 'hidden')" {{-- data-toggle="@yield('a', '')" --}}  href="@yield('ruta', '')" class="btn btn-primary">@yield('name', '')</a>
+
                             <a data-toggle="@yield('data-toggle', '')"  href="@yield('href_accion', '#')" class="btn btn-primary">@yield('value_accion', '#')</a>
                         </div><!--
-                        @yield('div', '') -->
+                        @yield('div', '') --> 
+                        
+
+
                     </div>
 
                 </div>
