@@ -56,14 +56,14 @@
                                 <td>{{$contacto->telefono}}</td>
                                 <td>{{$contacto->celular}}</td>
                                 <td>{{$contacto->email}}</td>
-                                <td><center><a href="{{ route('contacto.edit', $contacto->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
+                                <td><center><a href="{{ route('contacto.editar', $contacto->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                 
                                 <td>
                                     <center>
                                         @if($contacto->primer_contacto==1)
                                             <button class="btn btn-s-m btn-info">Sin funcion</button>  
                                         @else
-                                        <form action="{{ route('contacto.destroy', $contacto->id)}}" method="POST">
+                                        <form action="{{ route('contacto.destroy', $contacto->clientes_id)}}" method="POST">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>

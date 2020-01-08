@@ -78,10 +78,10 @@ class ContactoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function editar($id_contacto,$id_cliente)
+    public function editar($id_cliente)
     {
-        $contacto=Contacto::where("clientes_id","=",$id)->first();
-        return view('auxiliar.cliente.contacto.edit',compact('id'));
+        $cliente=Contacto::where("clientes_id","=",$id_cliente)->first();
+        return view('auxiliar.cliente.contacto.edit',compact('cliente'));
         
     }
 

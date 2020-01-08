@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title>jquery add remove table row dynamically with checkbox functionality</title>
+    <title>Facturac</title>
     <script src="https://code.jquery.com/jquery-1.9.1.min.js"
         integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ=" crossorigin="anonymous"></script>
     <meta charset='utf-8'>
@@ -70,13 +70,21 @@
 
         <table border="1" cellspacing="0">
             <tr>
-                <th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+                <!-- <th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
                 <th>S. No</th>
                 <th>First Name</th>
                 <th>Last Name</th>
                 <th>Tamil</th>
                 <th>English</th>
                 <th>Computer</th>
+                <th>Total</th> -->
+                <th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+                <th>S. No</th>
+                <th>Codigo</th>
+                <th>Descripcion</th>
+                <th>Unidad</th>
+                <th>Cantidad</th>
+                <th>Precio</th>
                 <th>Total</th>
             </tr>
             <tr>
@@ -91,8 +99,8 @@
             </tr>
         </table>
 
-        <button type="button" class='delete'>- Delete</button>
-        <button type="button" class='addmore'>+ Add More</button>
+        <button type="button" class='delete'>- Eliminar</button>
+        <button type="button" class='addmore'>+ Agregar</button>
         <p>
             <input type='submit' name='submit' value='submit' class='but' /></p>
     </form>
