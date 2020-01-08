@@ -4,7 +4,6 @@
 @section('breadcrumb', 'kardex_entradas-Agregar')
 @section('breadcrumb2', 'kardex_entradas-Agregar')
 @section('href_accion', route('kardex-entrada.index') )
-{{-- @section('vue_js',  asset('js/app.js') ) --}}
 @section('value_accion', 'Atras')
 
 @section('content')
