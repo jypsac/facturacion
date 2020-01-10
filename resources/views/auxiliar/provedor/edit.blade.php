@@ -3,87 +3,61 @@
 @section('title', 'editar provedor')
 @section('breadcrumb', 'editar provedor')
 @section('breadcrumb2', 'editar provedor')
-@section('href_accion', route('provedor.index'))
+@section('href_accion', route('provedor.show', $provedor->id))
 @section('value_accion', 'atras')
 
 @section('content')
 
-<div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		<div class="col-lg-12">
-            <div class="ibox">
-				<div class="ibox-title">
-                    <h5>Creacion de provedor</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#" class="dropdown-item">Config option 1</a>
-                            </li>
-                            <li><a href="#" class="dropdown-item">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-				</div>
-				<div class="ibox-content">
-					<form action="{{ route('provedor.update',$provedor->id) }}"  enctype="multipart/form-data" method="post">
-                         @csrf
-                         @method('PATCH')
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Ruc:</label>
-                         <div class="col-sm-10"><input type="text" class="form-control" name="ruc" value="{{$provedor->ruc}}"></div>
-                        </div>
-                        
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre de Empresa:</label>
-                            <div class="col-sm-10"><input type="text" class="form-control" name="empresa" value="{{$provedor->empresa}}"></div>
-                        </div>
 
-				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Direccion:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="direccion" value="{{$provedor->direccion}}"></div>
-		                </div>
+<div style="padding-top: 20px;padding-bottom: 50px">
+<div class="container" style="padding-top: 30px;padding-bottom: 30px; background: white;">
+<form action="{{ route('provedor.update',$provedor->id) }}"  enctype="multipart/form-data" method="post">
+  @csrf
+@method('PATCH')
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Telefonos:</label>
-		                     <div class="col-sm-10"><input type="text" class="form-control" name="telefonos" value="{{$provedor->telefonos}}"></div>
-		                </div>
+      <div class="jumbotron" style="height: 60px;padding:10px">
+       <center><input style="width: 250px;font-size: 18px;" type="text" class="form-control" name="empresa" value="{{$provedor->empresa}}"></center>
+      </div>
 
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Correo:</label>
-		                     <div class="col-sm-10"><input type="email" class="form-control" name="email" value="{{$provedor->email}}"></div>
-                        </div>
-                        
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre del contacto:</label>
-                            <div class="col-sm-10"><input type="text" class="form-control" name="contacto_provedor" value="{{$provedor->contacto_provedor}}"></div>
-                       </div>
+<h1><i class="fa fa-user-o" aria-hidden="true"></i></h1>
+      <div class="row marketing">
+        <div class="col-lg-6">
+          <h4>Ruc:</h4>
+         <p><input type="text" class="form-control" name="ruc" value="{{$provedor->ruc}}"></p>
 
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Celular del contacto:</label>
-                            <div class="col-sm-10"><input type="text" class="form-control" name="celular_provedor" value="{{$provedor->celular_provedor}}"></div>
-                        </div>
+          <h4>Direccion:</h4>
+          <p><input type="text" class="form-control" name="direccion" value="{{$provedor->direccion}}"></p>
 
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Correo del provedor:</label>
-                            <div class="col-sm-10"><input type="text" class="form-control" name="email_provedor" value="{{$provedor->email_provedor}}"></div>
-                        </div>
+          <h4>Telefonos:</h4>
+          <p><input type="text" class="form-control" name="telefonos" value="{{$provedor->telefonos}}"></p>
 
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Observacion:</label>
-                            <div class="col-sm-10"><input type="text" class="form-control" name="observacion" value="{{$provedor->observacion}}"></div>
-                        </div>
+           <h4>Correo del provedor:</h4>
+          <p><input type="text" class="form-control" name="email_provedor" value="{{$provedor->email_provedor}}"></p>
+        </div>
 
+        <div class="col-lg-6">
+        
+          <h4>Correo:</h4>
+          <p><input type="text" class="form-control" name="email" value="{{$provedor->email}}"></p>
 
+          <h4>Nombre del contacto:</h4>
+          <p><input type="text" class="form-control" name="contacto_provedor" value="{{$provedor->contacto_provedor}}"></p>
 
-                		<button class="btn btn-primary" type="submit">Guardar</button>
+          <h4>Celular del contacto:</h4>
+          <p><input type="text" class="form-control" name="celular_provedor" value="{{$provedor->celular_provedor}}"></p>
 
-					</form>
+          <h4>Observacion:</h4>
+          <p><textarea name="observacion" class="form-control">{{$provedor->observacion}}</textarea></p>
 
-				</div>
-			</div>
-		</div>
+        </div>
 
-	</div>
+    </div>
+                           
+<button class="btn btn-primary" type="submit">Grabar</button>
+</form>
 </div>
+</div>
+{{--  --}}
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>

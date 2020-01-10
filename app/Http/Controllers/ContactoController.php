@@ -117,11 +117,13 @@ class ContactoController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
         $contacto=Contacto::findOrFail($id);
         $contacto->delete();
-
-        return redirect()->route('cliente.index');
+        $id_cli=$request->get('id_cli');
+        
+        return redirect()->route('cliente.show', $id_cli);
+        // return redirect()->route('cliente.index');
     }
 }
