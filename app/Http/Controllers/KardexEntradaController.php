@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Kardex_entrada;
 use App\Almacen;
 use App\Provedor;
+use App\Producto;
 use Illuminate\Http\Request;
 
 class KardexEntradaController extends Controller
@@ -27,9 +28,10 @@ class KardexEntradaController extends Controller
      */
     public function create()
     {
+        $productos=Producto::all();
         $provedores=Provedor::all();
         $almacenes=Almacen::all();
-        return view('inventario.kardex.entrada.create',compact('almacenes','provedores'));
+        return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos'));
     }
 
     /**

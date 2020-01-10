@@ -72,15 +72,63 @@
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Informacions:</label>
 		                    <div class="col-sm-10"><input type="text" class="form-control" name="informacion"></div>
-		                </div>
-
-                		<button class="btn btn-primary" type="submit">Guardar</button>
-					</form>
-					<div id="apps">
-						<cliente-component>
+						</div>
+						
+						<div class="ibox ">
+							<div class="ibox-content">
+								<div class="text-center">
+								<a data-toggle="modal" class="btn btn-primary" href="#modal-form">Agregar Productos</a>
+								</div>
+								<div id="modal-form" class="modal fade" aria-hidden="true">
+									<div class="modal-dialog">
+										<div class="modal-content">
+											<div class="modal-body">
+												<div class="row">
+													<div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Productos</h3>
 	
-						</cliente-component>
-					</div>
+														<p>Elegir producto a lista</p>
+														<div class="ibox-content">
+															<table class="table">
+																<thead>
+																<tr>
+																	<th>#</th>
+																	<th>Codigo</th>
+																	<th>Nombre</th>
+																	<th>Unidad</th>
+																	<th>Agregar</th>
+																</tr>
+																</thead>
+																<tbody>
+																@foreach($productos as $producto)
+																<tr>
+																	<td>{{$producto->id}}</td>
+																	<td>{{$producto->codigo_producto}}</td>
+																	<td>{{$producto->nombre}}</td>
+																	<td>{{$producto->unidad_medida_id}}</td>
+																	<td><a href="#"><button>+</button></a></td>
+																</tr>
+																@endforeach
+																</tbody>
+															</table>
+									
+														</div>
+														
+													</div>
+												</div>
+											</div>
+										</div>
+									</div>
+							</div>
+							</div>
+						</div>
+
+						<button class="btn btn-primary" type="submit">Guardar</button>
+						
+					</form>
+				
+					
+
+
 				</div>
 			</div>
 		</div>
@@ -95,6 +143,5 @@
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-	
-<script src="{{ asset('js/app.js')}}"></script>
+
 @endsection
