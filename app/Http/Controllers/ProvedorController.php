@@ -46,7 +46,7 @@ class ProvedorController extends Controller
         $provedor->email_provedor=$request->get('email_provedor');
         $provedor->observacion=$request->get('observacion');
         $provedor->save();
-        return redirect()->route('provedor.index');
+        return redirect()->route('provedor.show',$provedor->id );
 
 
     }
@@ -60,7 +60,7 @@ class ProvedorController extends Controller
     public function show($id)
     {
         $provedor=Provedor::find($id);
-        return view('auxiliar.provedor.create',compact('provedor'));
+        return view('auxiliar.provedor.show',compact('provedor'));
     }
 
     /**
@@ -95,8 +95,8 @@ class ProvedorController extends Controller
         $provedor->email_provedor=$request->get('email_provedor');
         $provedor->observacion=$request->get('observacion');
         $provedor->save();
-        return redirect()->route('provedor.index');
-    }
+        return redirect()->route('provedor.show', $provedor->id);
+    } 
 
     /**
      * Remove the specified resource from storage.

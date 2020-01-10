@@ -114,52 +114,53 @@
                             </a>
                         </div>
                     </div>
-                    <div class="ibox-content">
-                        <form action="{{ route('provedor.store') }}"  enctype="multipart/form-data" method="post">
+
+<div style="padding-top: 20px;padding-bottom: 50px">
+<div class="container" style="padding-top: 30px;padding-bottom: 30px; background: white;">
+ <form action="{{ route('provedor.store') }}"  enctype="multipart/form-data" method="post">
                              @csrf
-                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Ruc:</label>
-                                 <div class="col-sm-10"><input type="text" class="form-control" name="ruc" id="numero_ruc"></div>
-                            </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre de Empresa:</label>
-                                <div class="col-sm-10"><input type="text" class="form-control" name="empresa" id="razon_social"></div>
-                            </div>
+      <div class="jumbotron" style="height: 60px;padding:10px">
+       <center><input style="width: 250px;font-size: 18px;" type="text" class="form-control" name="empresa" id="razon_social"></center>
+      </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Direccion:</label>
-                                 <div class="col-sm-10"><input type="text" class="form-control" name="direccion" id="domicilio"></div>
-                            </div>
-
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Telefonos:</label>
-                                 <div class="col-sm-10"><input type="text" class="form-control" name="telefonos"></div>
-                            </div>
-
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Correo:</label>
-                                 <div class="col-sm-10"><input type="email" class="form-control" name="email"></div>
-                            </div>
-
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre del contacto:</label>
-                                <div class="col-sm-10"><input type="text" class="form-control" name="contacto_provedor"></div>
-                           </div>
-
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Celular del contacto:</label>
-                                <div class="col-sm-10"><input type="text" class="form-control" name="celular_provedor"></div>
-                            </div>
-
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Correo del provedor:</label>
-                                <div class="col-sm-10"><input type="text" class="form-control" name="email_provedor"></div>
-                            </div>
-
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Observacion:</label>
-                                <div class="col-sm-10"><input type="text" class="form-control" name="observacion"></div>
-                            </div>
+<h1><i class="fa fa-user-o" aria-hidden="true"></i></h1>
+      <div class="row marketing">
+        <div class="col-lg-6">
 
 
+          <h4>Ruc:</h4>
+         <p><input type="text" class="form-control" name="ruc" id="numero_ruc"></p>
 
-                            <button class="btn btn-primary" type="submit">Guardar</button>
+          <h4>Direccion:</h4>
+          <p><input type="text" class="form-control" name="direccion" id="domicilio"></p>
 
-                        </form>
+          <h4>Telefonos:</h4>
+          <p><input type="text" class="form-control" name="telefonos" ></p>
 
-                    </div>
+           <h4>Correo del provedor:</h4>
+          <p><input type="text" class="form-control" name="email_provedor" ></p>
+        </div>
+
+        <div class="col-lg-6">
+        
+          <h4>Correo:</h4>
+          <p><input type="text" class="form-control" name="email" ></p>
+
+          <h4>Nombre del contacto:</h4>
+          <p><input type="text" class="form-control" name="contacto_provedor" ></p>
+
+          <h4>Celular del contacto:</h4>
+          <p><input type="text" class="form-control" name="celular_provedor" ></p>
+
+          <h4>Observacion:</h4>
+          <p><textarea name="observacion" class="form-control"></textarea></p>
+    </div>
+                           
+<button class="btn btn-primary" type="submit">Grabar</button>
+</form>
+</div>
+</div>
                 </div>
             </div>
 
