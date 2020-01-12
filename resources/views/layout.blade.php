@@ -20,6 +20,10 @@
 
     <link href="{{ asset('main.css') }}" rel="stylesheet">
 
+
+
+
+
 </head>
 
 <body class="">
@@ -184,7 +188,7 @@
                             </a> --}}
                             <a href="{{ route('logout') }}"
                                        onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">          
+                                                     document.getElementById('logout-form').submit();">
                                          Cerrar Seccion
                                     <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
                                         @csrf
@@ -212,8 +216,8 @@
 
                             <a data-toggle="@yield('data-toggle', '')"  href="@yield('href_accion', '#')" class="btn btn-primary">@yield('value_accion', '#')</a>
                         </div><!--
-                        @yield('div', '') --> 
-                        
+                        @yield('div', '') -->
+
 
 
                     </div>
@@ -230,9 +234,9 @@
                     <a href="https://api.whatsapp.com/send?phone=51946201443&text=Hola!%20Necesito%20Ayuda%20con%20el%20sistema%20de%20Facturación,%20Gracias!%20" target="_blank" ><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
                 </div>
                 <div>
-                    <strong>Copyright </strong> &nbsp;<a href="http://www.jypsac.com" target="_blank" > JyP Perifericos</a>&nbsp;  &copy; 2019-2020 
+                    <strong>Copyright </strong> &nbsp;<a href="http://www.jypsac.com" target="_blank" > JyP Perifericos</a>&nbsp;  &copy; 2019-2020
                 </div>
-                
+
                 </div>
             </div>
     </div>

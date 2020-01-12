@@ -5,7 +5,9 @@
 @section('breadcrumb2', 'kardex_entradas-Agregar')
 @section('href_accion', route('kardex-entrada.index') )
 @section('value_accion', 'Atras')
-
+{{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> --}}
+{{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
+  crossorigin="anonymous"></script> --}}
 @section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
@@ -56,7 +58,7 @@
 									@foreach($provedores as $provedor)
 									<option>{{$provedor->empresa}}</option>
 									@endforeach
-								</select>	
+								</select>
 							</div>
 		                </div>
 
@@ -66,67 +68,49 @@
 									@foreach($almacenes as $almacen)
 									<option value="{{$almacen->abreviatura}}">{{$almacen->abreviatura}} -> {{$almacen->descripcion}}</option>
 									@endforeach
-								</select>	
+								</select>
 							</div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Informacions:</label>
 		                    <div class="col-sm-10"><input type="text" class="form-control" name="informacion"></div>
 						</div>
-						
-						<div class="ibox ">
-							<div class="ibox-content">
-								<div class="text-center">
-								<a data-toggle="modal" class="btn btn-primary" href="#modal-form">Agregar Productos</a>
-								</div>
-								<div id="modal-form" class="modal fade" aria-hidden="true">
-									<div class="modal-dialog">
-										<div class="modal-content">
-											<div class="modal-body">
-												<div class="row">
-													<div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Productos</h3>
-	
-														<p>Elegir producto a lista</p>
-														<div class="ibox-content">
-															<table class="table">
-																<thead>
-																<tr>
-																	<th>#</th>
-																	<th>Codigo</th>
-																	<th>Nombre</th>
-																	<th>Unidad</th>
-																	<th>Agregar</th>
-																</tr>
-																</thead>
-																<tbody>
-																@foreach($productos as $producto)
-																<tr>
-																	<td>{{$producto->id}}</td>
-																	<td>{{$producto->codigo_producto}}</td>
-																	<td>{{$producto->nombre}}</td>
-																	<td>{{$producto->unidad_medida_id}}</td>
-																	<td><a href="#"><button>+</button></a></td>
-																</tr>
-																@endforeach
-																</tbody>
-															</table>
-									
-														</div>
-														
-													</div>
-												</div>
-											</div>
-										</div>
-									</div>
-							</div>
-							</div>
-						</div>
+
+						<table border="1" cellspacing="0">
+							<tr>
+								<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+								<th>---- Codigo ------ Descripcion</th>
+
+								<th>Cantidad</th>
+								<th>Precio</th>
+								<th>Total</th>
+							</tr>
+							<tr>
+								<td><input type='checkbox' class='case' /></td>
+								<td>
+								<select class="form-control" id='descripcion' name='descripcion[]' required>
+									@foreach($productos as $producto)
+									<option value="{{$producto->id}}">{{$producto->codigo_producto}} -> {{$producto->nombre}}</option>
+									@endforeach
+								</select></td>
+
+								<td><input type='text' id='cantidad' name='cantidad[]' onkeyup="multi();" required/></td>
+								<td><input type='text' id='precio' name='precio[]' onkeyup="multi();" required/></td>
+								<td><input type='text' id='total' name='total[]' required/></td>
+								<span id="spTotal"></span>
+							</tr>
+						</table>
+
+						<button type="button" class='delete'>- Eliminar</button>
+						<button type="button" class='addmore'>+ Agregar</button>
+
+
 
 						<button class="btn btn-primary" type="submit">Guardar</button>
-						
+
 					</form>
-				
-					
+
+
 
 
 				</div>
@@ -134,6 +118,7 @@
 		</div>
 	</div>
 </div>
+
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -143,5 +128,79 @@
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+
+	<script>
+        function multiplicar (valor) {
+            var total = 0;
+            valor = parseInt(valor);
+            total = document.getElementById('spTotal').innerHTML;
+            total = (total == null || total == undefined || total == "") ? 0 : total;
+            total = (parseInt(total) - parseInt(valor));
+            document.getElementById('spTotal').innerHTML = total;
+        }
+    </script>
+
+    <script>
+        var i = 2;
+        $(".addmore").on('click', function () {
+            var data = `[<tr><td><input type='checkbox' class='case'/></td>";
+             <td>
+			<select class="form-control" id='descripcion' name='descripcion[]' required>
+									@foreach($productos as $producto)
+									<option value="{{$producto->id}}">{{$producto->codigo_producto}} --- {{$producto->nombre}}</option>
+									@endforeach
+								</select>
+			</td>
+
+			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' onkeyup="multi();" required/></td>
+			<td><input type='text' id='precio" + i + "' name='precio[]' onkeyup="multi();" required/></td>
+			<td><input type='text' id='total" + i + "' name='total[]' required/></td>
+			</tr>`;
+            $('table').append(data);
+            i++;
+        });
+	</script>
+
+	<script>
+		function multi(){
+			var total = 1;
+			var change= false; //
+			$(".monto").each(function(){
+				if (!isNaN(parseFloat($(this).val()))) {
+					change= true;
+					total *= parseFloat($(this).val());
+				}
+			});
+			// Si se modifico el valor , retornamos la multiplicación
+			// caso contrario 0
+			total = (change)? total:0;
+			document.getElementById('total[]').innerHTML = total;
+		}
+	</script>
+
+    <script>
+        $(".delete").on('click', function () {
+            $('.case:checkbox:checked').parents("tr").remove();
+
+        });
+    </script>
+
+    <script>
+        function select_all() {
+            $('input[class=case]:checkbox').each(function () {
+                if ($('input[class=check_all]:checkbox:checked').length == 0) {
+                    $(this).prop("checked", false);
+                } else {
+                    $(this).prop("checked", true);
+                }
+            });
+        }
+    </script>
+    {{-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"
+	integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ=" crossorigin="anonymous"></script> --}}
+
+
+
 
 @endsection

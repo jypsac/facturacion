@@ -5,7 +5,6 @@
 @section('breadcrumb2', 'crear provedor')
 @section('href_accion', route('provedor.index'))
 @section('value_accion', 'atras')
-
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 @section('content')
@@ -43,7 +42,6 @@
                             </div>
                         </div>
                         <button class="btn btn-primary" id="botoncito" class="botoncito"><i class="fa fa-search"></i> Buscar</button>
-                        {{-- <img src="ajax.gif" class="ajaxgif hide"> --}}
                     </form>
                         {{-- <div>RUC: <span id="numero_rucs"></span></div> --}}
                         {{-- <div>RAZON SOCIAL: <span id="razon_social"></span></div>
@@ -143,7 +141,7 @@
         </div>
 
         <div class="col-lg-6">
-        
+
           <h4>Correo:</h4>
           <p><input type="text" class="form-control" name="email" ></p>
 
@@ -156,7 +154,7 @@
           <h4>Observacion:</h4>
           <p><textarea name="observacion" class="form-control"></textarea></p>
     </div>
-                           
+
 <button class="btn btn-primary" type="submit">Grabar</button>
 </form>
 </div>

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Kardex_entrada;
 use App\Almacen;
+use DB;
 use App\Provedor;
 use App\Producto;
 use Illuminate\Http\Request;
@@ -42,8 +43,11 @@ class KardexEntradaController extends Controller
      */
     public function store(Request $request)
     {
-        Kardex_entrada::create(request()->all());
-        return redirect()->route('kardex-entrada.index');
+        // Kardex_entrada::create(request()->all());
+        // return redirect()->route('kardex-entrada.index');
+        $cantidad = $request->input('cantidad');
+        $count_productos=count($cantidad);
+        return $count_productos;
     }
 
     /**
@@ -104,4 +108,51 @@ class KardexEntradaController extends Controller
 
         return redirect()->route('kardex-entrada.index');
     }
+
+    function fetch(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+      $data = DB::table('productos')
+        ->where('nombre', 'LIKE', "%{$query}%")
+        ->get();
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $row)
+      {
+       $output .= '
+       <li><a href="#">'.$row->country_name.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
+    }
+
+    // public function search(Request $request)
+    // {
+    //       $search = $request->get('term');
+
+    //       $result = Producto::where('nombre', 'LIKE', '%'. $search. '%')->get();
+
+    //       return response()->json($result);
+
+    // }
+
+    //  function productos(Request $request){
+    //     $ruc=$request->get('ruc');
+    //     $datos = array(
+    //         0 => "1",
+    //         1 => "2",
+    //         2 => "3",
+    //         3 => "4",
+    //         4 => "5",
+    //         5 => "6",
+    //         6 => "7",
+    //         7 => "8",
+    //         8 => "9"
+    //     );
+    //         echo json_encode($datos);
+
+    // }
 }

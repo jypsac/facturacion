@@ -71,6 +71,10 @@
 
 //INVENTARIOS
 	Route::resource('/inventario-inicial','InventarioInicialController');
+
+	Route::post('/autocomplete/fetch', 'KardexEntradaController@fetch')->name('autocomplete.fetch');
+	Route::get('autocomplete', 'KardexEntradaController@search');
+	Route::get('kardex_entrada_productos','KardexEntradaController@productos');
 	Route::resource('/kardex-entrada','KardexEntradaController');
 	Route::resource('/kardex-salida','KardexSalidaController');
 //FIN DE INVENTARIOS
