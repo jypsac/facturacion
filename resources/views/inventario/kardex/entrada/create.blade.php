@@ -8,6 +8,7 @@
 {{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> --}}
 {{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
   crossorigin="anonymous"></script> --}}
+
 @section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
@@ -94,8 +95,8 @@
 									@endforeach
 								</select></td>
 
-								<td><input type='text' id='cantidad' name='cantidad[]' onkeyup="multi();" required/></td>
-								<td><input type='text' id='precio' name='precio[]' onkeyup="multi();" required/></td>
+								<td><input type='text' id='cantidad' name='cantidad[]' class="monto" onkeyup="multi();"  required/></td>
+								<td><input type='text' id='precio' name='precio[]' class="monto" onkeyup="multi();" required/></td>
 								<td><input type='text' id='total' name='total[]' required/></td>
 								<span id="spTotal"></span>
 							</tr>
@@ -111,6 +112,25 @@
 					</form>
 
 
+
+
+<tr>
+    {{-- <td>
+    <label>
+      <input type="text" name="Precio" id="Precio" value="" class="monto" onkeyup="multi();">
+    </label>
+  </td>
+    <td>
+    <label>
+      <input type="text" name="Cantidad" id="Cantidad" class="monto" onkeyup="multi();">
+    </label>
+  </td> --}}
+  <td>
+    <label id="Costo">
+      <input type="text" name="Costo" disabled>
+    </label>
+  </td>
+</tr>
 
 
 				</div>
@@ -129,17 +149,21 @@
     <script src="{{ asset('js/inspinia.js') }}"></script>
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
+<script>
+// function multi(){
+//     var total = 1;
+//     var change= false; //
+//     $(".monto").each(function(){
+//         if (!isNaN(parseFloat($(this).val()))) {
+//             change= true;
+//             total *= parseFloat($(this).val());
+//         }
+//     });
+//     total = (change)? total:0;
+//     document.getElementById('Costo').innerHTML = total;
+// }
+</script>
 
-	<script>
-        function multiplicar (valor) {
-            var total = 0;
-            valor = parseInt(valor);
-            total = document.getElementById('spTotal').innerHTML;
-            total = (total == null || total == undefined || total == "") ? 0 : total;
-            total = (parseInt(total) - parseInt(valor));
-            document.getElementById('spTotal').innerHTML = total;
-        }
-    </script>
 
     <script>
         var i = 2;
@@ -162,22 +186,6 @@
         });
 	</script>
 
-	<script>
-		function multi(){
-			var total = 1;
-			var change= false; //
-			$(".monto").each(function(){
-				if (!isNaN(parseFloat($(this).val()))) {
-					change= true;
-					total *= parseFloat($(this).val());
-				}
-			});
-			// Si se modifico el valor , retornamos la multiplicación
-			// caso contrario 0
-			total = (change)? total:0;
-			document.getElementById('total[]').innerHTML = total;
-		}
-	</script>
 
     <script>
         $(".delete").on('click', function () {
@@ -201,6 +209,18 @@
 	integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ=" crossorigin="anonymous"></script> --}}
 
 
-
+	<script>function multi(){
+		var total = 1;
+		var change= false; //
+		$(".monto").each(function(){
+			if (!isNaN(parseFloat($(this).val()))) {
+				change= true;
+				total *= parseFloat($(this).val());
+			}
+		});
+		total = (change)? total:0;
+		document.getElementById('Costo').innerHTML = total;
+	}
+	</script>
 
 @endsection
