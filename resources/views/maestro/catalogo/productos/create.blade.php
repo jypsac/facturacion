@@ -16,6 +16,7 @@
 				</div>
 				<div class="ibox-content">
 					
+<form action="{{ route('productos.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 				<div class="row">
 
@@ -166,18 +167,9 @@
 									</div>
 									
 	                        		</div>	
-	                        		{{--  --}}
+	                        		
 	                        		<div class="form-group row">
 									 	<label class="col-sm-1 col-form-label">Unida de medida:</label>
-		                     			<div class="col-sm-5"><div class="input-group m-b">
-									<div class="input-group-prepend">
-										<span class="input-group-addon">%</span>
-									</div>
-									<input type="text" class="form-control" name="descuento_maximo" >
-								</div>
-										</div>
-
-		                     			<label class="col-sm-1 col-form-label">Utilidad:</label>
 		                     			<div class="col-sm-5">
 								<select class="form-control m-b" name="unidad_medida_id">
 			          			<option>Seleccione La Unidad de Medida</option>
@@ -186,18 +178,6 @@
 					    		@endforeach
 					    		</select>
 									</div>
-									
-	                        		</div>	
-	                        		{{--  --}}
-	                        		<div class="form-group row">
-									 	<label class="col-sm-1 col-form-label">Unida de medida:</label>
-		                     			<div class="col-sm-5"><div class="input-group m-b">
-									<div class="input-group-prepend">
-										<span class="input-group-addon">%</span>
-									</div>
-									<input type="text" class="form-control" name="descuento_maximo" >
-								</div>
-										</div>
 
 		                     			<label class="col-sm-1 col-form-label">Moneda:</label>
 		                     			<div class="col-sm-5">
@@ -252,7 +232,6 @@
 		</div>
 	</div>
 </div>
-<form action="{{ route('productos.store') }}"  enctype="multipart/form-data" method="post">
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>

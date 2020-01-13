@@ -49,11 +49,11 @@ class ProductosController extends Controller
      */
     public function store(Request $request)
     {
-        $name ="sin";
-        // $image =$request->file('foto');
-        // $codigo= $request->get('codigo_barras');
-        // $name = $codigo."-".$image->getClientOriginalName();
-        // $image->move(public_path().'/archivos/imagenes/productos',$name);
+        // $name ="sin";
+        $image =$request->file('foto');
+        $codigo= $request->get('codigo_barras');
+        $name = $codigo."-".$image->getClientOriginalName();
+        $image->move(public_path().'/archivos/imagenes/productos',$name);
 
         $producto=new Producto;
         $producto->codigo_producto=$request->get('codigo_producto');

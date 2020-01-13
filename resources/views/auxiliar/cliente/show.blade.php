@@ -63,6 +63,7 @@
              <input type="text" style="visibility: hidden;width: 1px" name="id_cli" value="{{$contacto->clientes_id}}">  
                 <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
                </form>
+               <th><button type="" class="btn btn-s-m btn-info">Contacto principal</button></th>
        @endif
        </th>
       </tr>

@@ -3,7 +3,7 @@
 @section('title', 'Contacto - crear')
 @section('breadcrumb', 'Contacto - crear')
 @section('breadcrumb2', 'Contacto - crear')
-@section('href_accion', route('contacto.index_id',$id))
+@section('href_accion', 'javascript:history.back()')
 @section('value_accion', 'Atras')
 
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

@@ -37,6 +37,7 @@
                         <thead>
                             <tr><!--
                                 <th>COD. GENERAL</th> -->
+                                <th>N° Registro</th>
                                 <th>Codigo Producto</th>
                                 <th>Codigo Original</th>
                                 <th>Nombre</th>
@@ -52,6 +53,7 @@
                     <tbody>
                         @foreach($productos as $producto)
                             <tr class="gradeX">
+                                <td>{{$producto->id}}</td>
                                 <td>{{$producto->codigo_producto}}</td>
                                 <td>{{$producto->codigo_original}}</td>
                                 <td>{{$producto->nombre}}</td>
