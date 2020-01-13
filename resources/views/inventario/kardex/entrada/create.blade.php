@@ -73,11 +73,18 @@
 							</div>
 		                </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Informacions:</label>
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Informaciones:</label>
 		                    <div class="col-sm-10"><input type="text" class="form-control" name="informacion"></div>
 						</div>
 
-						<table border="1" cellspacing="0">
+{{-- Check --}}
+
+	
+	
+{{-- Check --}}
+
+						<table 	 cellspacing="0" class="table table-striped">
+							<thead>
 							<tr>
 								<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
 								<th>---- Codigo ------ Descripcion</th>
@@ -86,8 +93,10 @@
 								<th>Precio</th>
 								<th>Total</th>
 							</tr>
+						</thead>
+								<tbody>
 							<tr>
-								<td><input type='checkbox' class='case' /></td>
+							<td><input type='checkbox' class='case' style="background:red;"></td>
 								<td>
 								<select class="form-control" id='descripcion' name='descripcion[]' required>
 									@foreach($productos as $producto)
@@ -95,26 +104,53 @@
 									@endforeach
 								</select></td>
 
-								<td><input type='text' id='cantidad' name='cantidad[]' class="monto" onkeyup="multi();"  required/></td>
-								<td><input type='text' id='precio' name='precio[]' class="monto" onkeyup="multi();" required/></td>
-								<td><input type='text' id='total' name='total[]' required/></td>
+								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0" onkeyup="multi(0);"  required/></td>
+								<td><input type='text' id='precio' name='precio[]' class="monto0" onkeyup="multi(0);" required/></td>
+								<td><input type='text' id='total0' name='total[]' required/></td>
 								<span id="spTotal"></span>
 							</tr>
+						</tbody>
 						</table>
-
-						<button type="button" class='delete'>- Eliminar</button>
-						<button type="button" class='addmore'>+ Agregar</button>
-
-
+					
+						<button type="button" class='delete btn btn-danger'  > Eliminar </button>
+						<button type="button" class='addmore btn btn-success' > Agregar </button>
 
 						<button class="btn btn-primary" type="submit">Guardar</button>
 
 					</form>
-
-
-
-
 <tr>
+
+	{{-- <style type="text/css">
+		#boton_personalizado_eliminar{
+			text-decoration: none;
+			padding: 5px;	
+			font-weight: 600;
+			font-size: 13px;
+			color: #ffffff;
+			background-color: #1883ba;
+			border-radius: 6px;
+			border: 2px solid #0016b0;
+		}
+		#boton_personalizado_eliminar:hover{
+			color: #1883ba;
+			background-color: #ffffff;
+		}
+
+		#boton_personalizado_agregar{
+			text-decoration: none;
+			padding: 5px;
+			font-weight: 600;
+			font-size: 13px;
+			color: #ffffff;
+			background-color: #CD5C5C;
+			border-radius: 6px;
+			border: 2px solid #F11616;
+		}
+		#boton_personalizado_agregar:hover{
+			color: #CD5C5C;
+			background-color: #ffffff;
+		}
+	  </style> --}}
     {{-- <td>
     <label>
       <input type="text" name="Precio" id="Precio" value="" class="monto" onkeyup="multi();">
@@ -126,9 +162,9 @@
     </label>
   </td> --}}
   <td>
-    <label id="Costo">
-      <input type="text" name="Costo" disabled>
-    </label>
+    {{-- <label id="Costo"> --}}
+      {{-- <input type="text" name="Costo" id="Costo"> --}}
+    {{-- </label> --}}
   </td>
 </tr>
 
@@ -145,7 +181,6 @@
     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
     <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
@@ -164,7 +199,6 @@
 // }
 </script>
 
-
     <script>
         var i = 2;
         $(".addmore").on('click', function () {
@@ -176,16 +210,30 @@
 									@endforeach
 								</select>
 			</td>
-
-			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' onkeyup="multi();" required/></td>
-			<td><input type='text' id='precio" + i + "' name='precio[]' onkeyup="multi();" required/></td>
-			<td><input type='text' id='total" + i + "' name='total[]' required/></td>
+			
+			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i}" onkeyup="multi(${i});" required/></td>
+			<td><input type='text' id='precio" + i + "' name='precio[]' class="monto${i}" onkeyup="multi(${i});" required/></td>
+			<td><input type='text' id='total${i}' name='total[]' required/></td>
 			</tr>`;
             $('table').append(data);
             i++;
         });
 	</script>
 
+<script>function multi(a){
+	console.log(a);
+	var total = 1;
+	var change= false; //
+	$(`.monto${a}`).each(function(){
+		if (!isNaN(parseFloat($(this).val()))) {
+			change= true;
+			total *= parseFloat($(this).val());
+		}
+	});
+	total = (change)? total:0;
+	document.getElementById(`total${a}`).value = total;
+}
+</script>
 
     <script>
         $(".delete").on('click', function () {
@@ -205,22 +253,16 @@
             });
         }
     </script>
-    {{-- <script src="https://code.jquery.com/jquery-1.9.1.min.js"
-	integrity="sha256-wS9gmOZBqsqWxgIVgA8Y9WcQOa7PgSIX+rPA0VL2rbQ=" crossorigin="anonymous"></script> --}}
 
+	
 
-	<script>function multi(){
-		var total = 1;
-		var change= false; //
-		$(".monto").each(function(){
-			if (!isNaN(parseFloat($(this).val()))) {
-				change= true;
-				total *= parseFloat($(this).val());
-			}
+<script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
+<script>
+	$(document).ready(function () {
+		$('.i-checks').iCheck({
+			checkboxClass: 'icheckbox_square-green',
+			radioClass: 'iradio_square-green',
 		});
-		total = (change)? total:0;
-		document.getElementById('Costo').innerHTML = total;
-	}
-	</script>
-
+	});
+</script>
 @endsection

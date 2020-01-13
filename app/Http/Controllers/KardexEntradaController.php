@@ -47,7 +47,7 @@ class KardexEntradaController extends Controller
         // return redirect()->route('kardex-entrada.index');
         $cantidad = $request->input('cantidad');
         $count_productos=count($cantidad);
-        return $count_productos;
+        return $request;
     }
 
     /**
