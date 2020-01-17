@@ -42,7 +42,7 @@
                                             <th>Direccion</th>
                                             <th>Responsable</th>
                                             <th>Descripcion</th>
-                                            <th>Ver</th>
+                                            {{-- <th>Ver</th> --}}
                                             <th>EDITAR</th>
                                             <th>Eliminar</th>
                                         </tr>
@@ -56,7 +56,7 @@
                                             <td>{{$almacen->direccion}}</td>
                                             <td>{{$almacen->responsable}}</td>
                                             <td>{{$almacen->descripcion}}</td>
-                                            <td><center><a href="#"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                            {{-- <td><center><a href="#"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td> --}}
                                             <td><center><a href="{{route('almacen.edit',$almacen->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td>
                                             <td><center>
                                             <form action="{{route('almacen.destroy',$almacen->id)}}" method="POST">

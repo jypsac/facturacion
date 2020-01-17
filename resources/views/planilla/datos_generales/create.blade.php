@@ -38,7 +38,7 @@
 
 											<label class="col-sm-1 col-form-label">Fecha Nacimiento:</label>
 												<div class="col-sm-5">
-													<input type="date" class="form-control" name="nombres">
+													<input type="date" class="form-control" name="fecha_nacimiento">
 							                    </div>
 
 
@@ -167,7 +167,7 @@
 									 
 									 <div  >
 										{{-- <p id="texto">Add file</p> --}}
-										<input type="file" id="archivoInput"  onchange="return validarExt()"  />
+										<input type="file" id="archivoInput"  name="foto" onchange="return validarExt()"  />
 										
 											<div id="visorArchivo">
 												<!--Aqui se desplegará el fichero-->
@@ -178,7 +178,9 @@
 	                        </div>
 	                        </div>
 
-		                
+		                </div>
+
+	                        <div class="col-lg-6">
 
                 		<button class="btn btn-primary" type="submit">Grabar</button>
 </div>

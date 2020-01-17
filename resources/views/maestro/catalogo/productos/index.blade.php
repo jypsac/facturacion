@@ -46,7 +46,7 @@
                                 <th>Estado</th>
                                 <th>Foto</th>
                                 <th>Ver</th>
-                                <th>Editar</th>
+                                {{-- <th>Editar</th> --}}
                                 <th>Eliminar</th>
                             </tr>
                         </thead>
@@ -64,7 +64,7 @@
                                     {{ asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" style="width: 45px;">
                                 </td>
                                 <td><center><a href="{{ route('productos.show', $producto->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                <td><center><a href="{{ route('productos.edit', $producto->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
+                                {{-- <td><center><a href="{{ route('productos.edit', $producto->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
                                 <td>
                                     <center>
                                         <form action="{{ route('productos.destroy', $producto->id)}}" method="POST">
