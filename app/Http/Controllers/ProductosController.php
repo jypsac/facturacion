@@ -127,14 +127,12 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $name ="sin";
-        // $name =$request->file('foto');
-        // $codigo= $request->get('codigo_barras');
-        // $name = $image->getClientOriginalName();
-        // $image->move(public_path().'/archivos/imagenes/productos',$name);
+        $image =$request->file('foto');
+        $codigo= $request->get('codigo_barras');
+        $name = $codigo."-".$image->getClientOriginalName();
+        $image->move(public_path().'/archivos/imagenes/productos',$name);
 
         $producto=Producto::find($id);
-        $producto=new Producto;
         $producto->codigo_producto=$request->get('codigo_producto');
         $producto->codigo_original=$request->get('codigo_original');
         $producto->categoria_id=$request->get('categoria_id');
@@ -154,6 +152,7 @@ class ProductosController extends Controller
         $producto->stock_minimo=$request->get('stock_minimo');
         $producto->stock_maximo=$request->get('stock_maximo');
         $producto->foto=$name;
+        // $producto->foto=$name;
         $producto->save();
         return redirect()->route('productos.index');
     }

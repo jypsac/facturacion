@@ -30,29 +30,44 @@
 	                            <div class="panel-body">
 									 
 								<div class="form-group row">
-									 	<label class="col-sm-2 col-form-label">Codigo:</label><div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto" value="{{$producto->codigo_producto}}" >
+									 	<label class="col-sm-2 col-form-label">Codigo:</label><div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto" value="{{$producto->codigo_producto}}" hidden="hidden">
 									 	</div>
 						        </div>
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
-		                     			<div class="col-sm-10"><input type="text" class="form-control" name="codigo_original" value="{{$producto->codigo_original}}" ></div>
+		                     			<div class="col-sm-10"><input type="text" class="form-control" name="codigo_original" value="{{$producto->codigo_original}}"></div>
 						        </div>
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Categoria:</label>
 		                    			 <div class="col-sm-10">
-		                    			 	<input type="text" name="categoria_id" class="form-control" value="{{$producto->categoria_i_producto->descripcion}}" >
+		                    			 	<select class="form-control m-b" name="categoria_id">
+			          						<option value="{{$producto->categoria_i_producto->id}}" style="font-weight:bold" >{{$producto->categoria_i_producto->descripcion}}</option>
+			          						@foreach($categorias as $categoria)
+					    					<option value="{{ $categoria->id }}">{{ $categoria->descripcion}}</option>
+					    					@endforeach
+					    					</select>
 					    				</div>
 						        </div>
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Familia:</label>
 		                     <div class="col-sm-10">
-		                     	<input type="text" class="form-control" name="familia_id" value="{{$producto->familia_i_producto->descripcion}}" >
+		                     	<select class="form-control m-b" name="familia_id">
+			          			<option value="{{$producto->familia_i_producto->id}}" style="font-weight:bold">{{$producto->familia_i_producto->descripcion}}</option>
+			          			@foreach($familias as $familia)
+					    		<option value="{{ $familia->id }}">{{ $familia->descripcion}}</option>
+					    		@endforeach
+					    		</select>
 					    	</div>
 						        </div>
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Marca:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="marca_id" value="{{$producto->marcas_i_producto->nombre}}" >
+								<select class="form-control m-b" name="marca_id"  hidden="hidden">
+			          			<option value="{{$producto->marcas_i_producto->id}}"style="font-weight:bold">{{$producto->marcas_i_producto->nombre}}</option>
+			          			@foreach($marcas as $marca)
+					    		<option value="{{ $marca->id }}">{{ $marca->nombre}}</option>
+					    		@endforeach
+					    		</select>
 		                    </div>
 						        </div>
 	                            </div>
@@ -78,14 +93,23 @@
 									<div class="form-group row">
 									 	<label class="col-sm-2 col-form-label">Estado:</label>
 										<div class="col-sm-10">
-											<input type="text" class="form-control" name="estado_id" value="{{$producto->estado_i_producto->nombre}}" >
+											<select class="form-control m-b" name="estado_id">
+			          			<option value="{{$producto->estado_i_producto->id}}"style="font-weight:bold">{{$producto->estado_i_producto->nombre}}</option>			          								@foreach($estados as $estado)
+					    							<option value="{{ $estado->id }}">{{ $estado->nombre}}</option>
+					    							@endforeach
+					    					</select>
 		                    			</div>
 									</div>
 									<div class="form-group row">
 									 	<label class="col-sm-2 col-form-label">Origen:</label>
 											<div class="col-sm-10">
 												
-					    						<input type="text" class="form-control" name="origen" value="{{$producto->origen}}" >
+					    						<select class="form-control m-b" name="origen">
+			          							<option value="{{$producto->origen}}" style="font-weight:bold">{{$producto->origen}}</option>
+			          							<option value="Producto Nacional" >Producto Nacional</option>
+			          							<option value="Producto Importado">Producto Importado</option>
+
+					    						</select>
 		                    				</div>
 
 	                        		</div>	
@@ -152,13 +176,23 @@
 									<div class="input-group-prepend">
 										{{-- <span class="input-group-addon">%</span> --}}
 									</div>
-									<input type="text" class="form-control" name="unidad_medida" value="{{$producto->unidad_i_producto->medida}}"  >
+									<select class="form-control m-b" name="unidad_medida_id">
+			          			<option value="{{$producto->unidad_i_producto->id}}" style="font-weight:bold">{{$producto->unidad_i_producto->medida}}</option>
+			          			@foreach($unidad_medidas as $unidad_medida)
+					    		<option value="{{ $unidad_medida->id }}">{{ $unidad_medida->medida}}</option>
+					    		@endforeach
+					    		</select>
 								</div>
 										</div>
 
 		                     			<label class="col-sm-1 col-form-label">Moneda:</label>
 		                     			<div class="col-sm-5">
-		                     				<input type="text" class="form-control" name="moneda_id" value="{{$producto->moneda_i_producto->nombre}}"  >
+		                     				<select class="form-control m-b" name="monedas_id">
+			          				<option value="{{$producto->moneda_i_producto->id}}"  style="font-weight:bold">{{$producto->moneda_i_producto->nombre}}</option>
+			          				@foreach($monedas as $moneda)
+					    			<option value="{{ $moneda->id }}">{{ $moneda->nombre}}</option>
+					    			@endforeach
+					    		</select>
 									</div>
 									
 	                        		</div>	
@@ -181,11 +215,11 @@
 										</div>
 										
 
-		                     			<label class="col-sm-1 col-form-label">Foto:</label>
+		                     		{{-- 	<label class="col-sm-1 col-form-label">Foto:</label>
 		                     			<div class="col-sm-5"><center>	<img src="
                                     {{ asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" style="width:150px;"></center>
 										</div>
-									
+									 --}}
 	                        		</div>
 	                        		</div>
 
@@ -194,6 +228,32 @@
 		
 
 						</div>
+						<div class="col-lg-6">
+
+	                        <div class="panel panel-primary">
+	                            <div class="panel-heading">
+	                                Foto Perfil
+	                            </div>
+	                            <div class="panel-body">
+	                        	{{-- 
+							      <label class=" col-form-label">Foto De Perfil:</label> --}}
+									<div  >
+										{{-- <p id="texto">Add file</p> --}}
+										<input type="file" id="archivoInput" name="foto" onchange="return validarExt()"  />
+										
+											<div id="visorArchivo">
+												<!--Aqui se desplegará el fichero-->
+												<center ><img name="foto"  src="{{asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" width="390px" height="302px" /></center>
+											</div>
+													
+							                    </div>
+
+	                        </div>
+	                        </div>
+	                        
+
+		                
+								</div>
 					
 	</div>								
 	<button class="btn btn-primary" type="submit">Grabar</button>
@@ -214,4 +274,168 @@
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+    {{-- foto --}}
+    <script type="text/javascript">
+		function validarExt()
+{
+    var archivoInput = document.getElementById('archivoInput');
+    var archivoRuta = archivoInput.value;
+    var extPermitidas = /(.jpg|.png|.jfif)$/i;
+    if(!extPermitidas.exec(archivoRuta)){
+        alert('Asegurese de haber seleccionado una Imagen');
+        archivoInput.value = '';
+        return false;
+    }
+
+    else
+    {
+        //PRevio del PDF
+        if (archivoInput.files && archivoInput.files[0]) 
+        {
+            var visor = new FileReader();
+            visor.onload = function(e) 
+            {
+                document.getElementById('visorArchivo').innerHTML = 
+                '<center><img name="foto" src="'+e.target.result+'"width="390px" height="302px" /></center>';
+            };
+            visor.readAsDataURL(archivoInput.files[0]);
+        }
+    }
+}
+	</script>
+
+	<script>
+			function readURL(input) {
+			  if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				
+				reader.onload = function(e) {
+				  $('#blah').attr('src', e.target.result);
+				}
+				
+				reader.readAsDataURL(input.files[0]);
+			  }
+			}
+			
+			$("#imgInp").change(function() {
+			  readURL(this);
+			});
+			</script>
+			<script>
+		function readURL(input) {
+		  if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			
+			reader.onload = function(e) {
+			  $('#blah').attr('src', e.target.result);
+			}
+			
+			reader.readAsDataURL(input.files[0]);
+		  }
+		}
+		
+		$("#imgInp").change(function() {
+		  readURL(this);
+		});
+		</script>
+
+    <script>
+        $(document).ready(function(){
+            $("#wizard").steps();
+            $("#form").steps({
+                bodyTag: "fieldset",
+                onStepChanging: function (event, currentIndex, newIndex)
+                {
+					// ¡Siempre permita retroceder incluso si el paso actual contiene campos no válidos!
+                    if (currentIndex > newIndex)
+                    {
+                        return true;
+                    }
+
+                    // Prohibir suprimir el paso "Advertencia" si el usuario es demasiado joven
+                    if (newIndex === 3 && Number($("#age").val()) < 18)
+                    {
+                        return false;
+                    }
+
+                    var form = $(this);
+
+                    // Limpie si el usuario retrocedió antes
+                    if (currentIndex < newIndex)
+                    {
+                        // Para eliminar estilos de error
+                        $(".body:eq(" + newIndex + ") label.error", form).remove();
+                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                    }
+
+                    // Deshabilite la validación en los campos que están deshabilitados u ocultos.
+                    form.validate().settings.ignore = ":disabled,:hidden";
+
+                    // Iniciar validación; Evite avanzar si es falso
+                    return form.valid();
+                },
+                onStepChanged: function (event, currentIndex, priorIndex)
+                {
+                    // Suprima (omita) el paso "Advertencia" si el usuario tiene edad suficiente.
+                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
+                    {
+                        $(this).steps("next");
+                    }
+
+                    // Suprima (omita) el paso "Advertencia" si el usuario tiene la edad suficiente y quiere el paso anterior.
+                    if (currentIndex === 2 && priorIndex === 3)
+                    {
+                        $(this).steps("previous");
+                    }
+                },
+                onFinishing: function (event, currentIndex)
+                {
+                    var form = $(this);
+
+					// Deshabilita la validación en los campos que están deshabilitados.
+                    // En este punto, se recomienda hacer una verificación general (significa ignorar solo los campos deshabilitados)
+                    form.validate().settings.ignore = ":disabled";
+
+                    // Iniciar validación; Evitar el envío del formulario si es falso
+                    return form.valid();
+                },
+                onFinished: function (event, currentIndex)
+                {
+                    var form = $(this);
+
+                    // Enviar entrada de formulario
+                    form.submit();
+                }
+            }).validate({
+                        errorPlacement: function (error, element)
+                        {
+                            element.before(error);
+                        },
+                        rules: {
+                            confirm: {
+                                equalTo: "#password"
+                            }
+                        }
+                    });
+       });
+    </script>
+    <style type="text/css">
+    	img{border-radius: 40px}
+	                        	
+								p#texto{
+									text-align: center;
+									color:black;
+								}
+								
+								input#archivoInput{
+									position:absolute;
+									top:0px;
+									left:0px;
+									right:0px;
+									bottom:0px;
+									width:100%;
+									height:100%;
+									opacity: 0	;
+								}
+	                    </style>
 @endsection

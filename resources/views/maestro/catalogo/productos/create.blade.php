@@ -28,12 +28,12 @@
 	                            <div class="panel-body">
 									 
 								<div class="form-group row">
-									 	<label class="col-sm-2 col-form-label">Codigo del Producto:</label><div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto" value="EPS-00123XR">
+									 	<label class="col-sm-2 col-form-label">Codigo del Producto:</label><div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto" >
 									 	</div>
 						        </div>
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Codigo Original:</label>
-		                     			<div class="col-sm-10"><input type="text" class="form-control" name="codigo_original" placeholder="EPS-00001"></div>
+		                     			<div class="col-sm-10"><input type="text" class="form-control" name="codigo_original" ></div>
 						        </div>
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Categoria:</label>
@@ -104,8 +104,8 @@
 											<div class="col-sm-10">
 												<select class="form-control m-b" name="origen">
 			          							<option>Seleccione un Estado</option>
-			          							<option value="Nacional" >Producto Nacional</option>
-			          							<option value="Importado">Producto Importado</option>
+			          							<option value="Producto Nacional" >Producto Nacional</option>
+			          							<option value="Producto Importado">Producto Importado</option>
 
 					    						</select>
 		                    				</div>
