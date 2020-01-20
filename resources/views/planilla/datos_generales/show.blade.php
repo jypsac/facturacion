@@ -38,6 +38,18 @@
              <td>
                  <a class="btn btn-lg btn-success" href="{{ route('personal.edit', $personales->id) }}" style="background-color: #1ab394; border-color: #1ab394"> <i class="fa fa-edit"></i></a>
              </td>
+             <td>
+              {{--    <a class="btn btn-lg btn-success" href="{{ route('personal.edit', $personales->id) }}" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-edit"></i></a>
+ --}}
+       @if($personales->estado==0)
+                  <a class="btn btn-lg btn-success" href="{{ route('personal-datos-laborales.create') }}" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-plus"></i></a>
+
+       @else
+                  <a class="btn btn-lg btn-success" href="" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-eye"></i></a>
+              
+               
+       @endif
+             </td>
 
         </table>
                         
