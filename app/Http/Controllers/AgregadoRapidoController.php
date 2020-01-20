@@ -37,23 +37,26 @@ class AgregadoRapidoController extends Controller
         $cliente->documento_identificacion=$request->get('documento_identificacion');
         $cliente->numero_documento=$request->get('numero_documento');
         $cliente->save();
+        
+        $idCliente=$cliente->id;
 
-        $this->contactos_store($data);
+        $this->contactos_store($data,$idCliente);
 
         // return view('auxiliar.cliente.contacto.cliente_new');
         return back();
     }
 
-    public function contactos_store($data){
+    public function contactos_store($data,$idCliente){
 
-        $contador=Cliente::count();
+        // $contador=Cliente::count();
         $contacto=new Contacto;
+        $contacto->primer_contacto=1;
         $contacto->nombre=$data['nombre_contacto'];
         $contacto->cargo=$data['cargo_contacto'];
         $contacto->telefono=$data['telefono_contacto'];
         $contacto->celular=$data['celular_contacto'];
         $contacto->email=$data['email_contacto'];
-        $contacto->clientes_id=$contador;
+        $contacto->clientes_id=$idCliente;
         $contacto->save();
     }
 

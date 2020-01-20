@@ -37,27 +37,23 @@
 				<div class="ibox-content">
 					<form action="{{ route('kardex-entrada.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
+					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
 		                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
 		                </div>
 
-				        <div class="form-group  row"><label class="col-sm-2 col-form-label">Precio:</label>
-		                    <div class="col-sm-10"><input type="text" class="form-control" name="precio"></div>
+				        <div class="form-group  row"><label class="col-sm-2 col-form-label">G Remision:</label>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="guia_remision"></div>
 		                </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Serie del producto:</label>
-		                    <div class="col-sm-10"><input type="text" class="form-control" name="serie_producto"></div>
-		                </div>
-
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Cantidad:</label>
-		                    <div class="col-sm-10"><input type="text" class="form-control" name="cantidad"></div>
+		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Factura:</label>
+		                    <div class="col-sm-10"><input type="text" class="form-control" name="factura"></div>
 		                </div>
 
 		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Provedor:</label>
 		                    <div class="col-sm-10">
 								<select class="form-control" name="provedor">
 									@foreach($provedores as $provedor)
-									<option>{{$provedor->empresa}}</option>
+									<option value="{{$provedor->id}}" >{{$provedor->empresa}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -67,7 +63,7 @@
 							<div class="col-sm-10">
 								<select class="form-control" name="almacen">
 									@foreach($almacenes as $almacen)
-									<option value="{{$almacen->abreviatura}}">{{$almacen->abreviatura}} -> {{$almacen->descripcion}}</option>
+									<option value="{{$almacen->id}}">{{$almacen->abreviatura}} -> {{$almacen->descripcion}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -87,7 +83,7 @@
 							<thead>
 							<tr>
 								<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-								<th>---- Codigo ------ Descripcion</th>
+								<th>---- Codigo ------ articulo</th>
 
 								<th>Cantidad</th>
 								<th>Precio</th>
@@ -98,7 +94,7 @@
 							<tr>
 							<td><input type='checkbox' class='case' style="background:red;"></td>
 								<td>
-								<select class="form-control" id='descripcion' name='descripcion[]' required>
+								<select class="form-control" id='articulo' name='articulo[]' required>
 									@foreach($productos as $producto)
 									<option value="{{$producto->id}}">{{$producto->codigo_producto}} -> {{$producto->nombre}}</option>
 									@endforeach
@@ -204,7 +200,7 @@
         $(".addmore").on('click', function () {
             var data = `[<tr><td><input type='checkbox' class='case'/></td>";
              <td>
-			<select class="form-control" id='descripcion' name='descripcion[]' required>
+			<select class="form-control" id='articulo' name='articulo[]' required>
 									@foreach($productos as $producto)
 									<option value="{{$producto->id}}">{{$producto->codigo_producto}} --- {{$producto->nombre}}</option>
 									@endforeach

@@ -149,6 +149,12 @@
                                     <li><a href="{{route('Clasificacion')}}">Clasificacion</a></li>
                                 </ul>
                             </li>
+                            <li>
+                                <a href="#">Tablas generales</a>
+                                <ul class="nav nav-third-level">
+                                    <li><a href="{{route('motivo.index')}}">Motivos</a></li>
+                                </ul>
+                            </li>
                             <li><a href="{{ route('almacen.index') }}">Almacenes</a></li>
                             <li><a href="{{route('usuario.index')}}">Usuarios</a></li>
                             <li><a href="{{route('moneda.index')}}">Monedas</a></li>

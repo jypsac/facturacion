@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'kardex_entradas Kardex - Entrada')
+@section('title', 'kardex Entrada')
 @section('breadcrumb', 'Entrada')
 @section('breadcrumb2', 'Entrada')
 @section('href_accion', route('kardex-entrada.create'))
@@ -37,14 +37,14 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>NOMBRE</th>
-                                <th>Precio</th>
-                                <th>Cantidad</th>
+                                <th>Nombre</th>
                                 <th>Provedor</th>
                                 <th>Almacen</th>
+                                <th>Guia Remision</th>
+                                <th>Factura</th>
                                 <th>Ver</th>
-                                <th>EDITAR</th>
-                                <th>Eliminar</th>
+                                <th>Editar</th>
+                                <th>Anular</th>
                             </tr>
                         </thead>
                     <tbody>
@@ -52,10 +52,10 @@
                             <tr class="gradeX">
                                 <td>{{$kardex_entrada->id}}</td>
                                 <td>{{$kardex_entrada->nombre}}</td>
-                                <td>{{$kardex_entrada->precio}}</td>
-                                <td>{{$kardex_entrada->cantidad}}</td>
-                                <td>{{$kardex_entrada->provedor}}</td>
-                                <td>{{$kardex_entrada->almacen}}</td>
+                                <td>{{$kardex_entrada->provedor->empresa}}</td>
+                                <td>{{$kardex_entrada->almacen->nombre}}</td>
+                                <td>{{$kardex_entrada->guia_remision}}</td>
+                                <td>{{$kardex_entrada->factura}}</td>
                                 <td><center><a href="{{ route('kardex-entrada.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 <td><center><a href="{{ route('kardex-entrada.edit', $kardex_entrada->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                 <td>
@@ -63,7 +63,7 @@
                                         <form action="{{ route('kardex-entrada.destroy', $kardex_entrada->id)}}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
+                                            <button type="submit" class="btn btn-s-m btn-danger">Anular</button>
                                         </form>
                                     </center>
                                 </td>
