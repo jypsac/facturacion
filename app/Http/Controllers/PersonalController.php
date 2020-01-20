@@ -39,12 +39,15 @@ class PersonalController extends Controller
 
     public function store(Request $request)
     {
-        // if($request->hasfile('foto')){
-        //     $image =$request->file('foto');
-        //     $nr_documento= $request->get('numero_documento');
-        //     $name = $nr_documento."-".$image->getClientOriginalName();
-        //     $image->move(public_path().'/profile/images',$name);
-        // }
+        if($request->hasfile('foto')){
+            $image =$request->file('foto');
+            $nr_documento= $request->get('numero_documento');
+            $name = $nr_documento."-".$image->getClientOriginalName();
+            $image->move(public_path().'/profile/images',$name);
+        }
+        else{
+            $name="perfil.svg"; 
+        }
         // Personal::create(request()->all());
         $personal=new Personal;
         $personal->nombres=$request->get('nombres');
@@ -61,9 +64,9 @@ class PersonalController extends Controller
         $personal->nivel_educativo=$request->get('nivel_educativo');
         $personal->profesion=$request->get('profesion');
         $personal->direccion=$request->get('direccion');
-        // $personal->foto=$name;
+        $personal->foto=$name;
         $personal->save();
-        return redirect()->route('personal.index');
+        return redirect()->route('personal.show', $personal->id); 
 
     }
 
@@ -104,10 +107,12 @@ class PersonalController extends Controller
 
         $personal=Personal::find($id);
         if($request->hasfile('foto')){
-            $foto= $request->file('foto');
+            $image =$request->file('foto');
             $nr_documento= $request->get('numero_documento');
-            $name = $nr_documento."-".$foto->getClientOriginalName();
-            $foto->move(public_path().'/profile/images/',$name);
+            $name = $nr_documento."-".$image->getClientOriginalName();
+            $image->move(public_path().'/profile/images',$name);
+
+
             $personal->nombres=$request->get('nombres');
             $personal->apellidos=$request->get('apellidos');
             $personal->fecha_nacimiento=$request->get('fecha_nacimiento');
@@ -125,7 +130,7 @@ class PersonalController extends Controller
             $personal->foto=$name;
             $personal->save();
         }else{
-            $file_path=(public_path().'profile/images/'.$personal->image);
+            // $file_path=(public_path().'profile/images/'.$personal->image);
             $personal->nombres=$request->get('nombres');
             $personal->apellidos=$request->get('apellidos');
             $personal->fecha_nacimiento=$request->get('fecha_nacimiento');
@@ -140,10 +145,12 @@ class PersonalController extends Controller
             $personal->nivel_educativo=$request->get('nivel_educativo');
             $personal->profesion=$request->get('profesion');
             $personal->direccion=$request->get('direccion');
-            $personal->foto=$file_path;
+            // $personal->foto=$file_path;
             $personal->save();
         }
-        return redirect()->route('personal.index');
+        // return redirect()->route('personal.index');
+        return redirect()->route('personal.show', $personal->id); 
+        
     }
 
     /**

@@ -19,7 +19,7 @@ class CreatePersonalTable extends Migration
             $table->string('apellidos');
             $table->date('fecha_nacimiento');
             $table->string('celular');
-            $table->string('telefono');
+            $table->string('telefono')->nullable();
             $table->string('email')->unique();
             $table->string('genero');
             $table->string('documento_identificacion');
@@ -29,6 +29,7 @@ class CreatePersonalTable extends Migration
             $table->string('nivel_educativo');
             $table->string('profesion');
             $table->string('direccion');
+            $table->boolean('estado');
             $table->string('foto')->default('perfil.svg');
             $table->timestamps();
         });

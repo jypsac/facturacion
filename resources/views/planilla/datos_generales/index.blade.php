@@ -45,8 +45,8 @@
                                                 <th>Correo</th>
                                                 <th>Foto</th>
                                                 <th>Ver</th>
-                                                <th>EDITAR</th>
-                                                <th>Eliminar</th>
+                                                {{-- <th>EDITAR</th> --}}
+                                                {{-- <th>Eliminar</th> --}}
                                             </tr>
                                         </thead>
                                     <tbody>
@@ -61,9 +61,9 @@
                                                 <td><img src="
                                                     {{ asset('/profile/images/')}}/{{$personal->foto}}" style="width: 45px;">
                                                 </td>
-                                                <td><center><a href="{{ route('personal.show', $personal->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                                <td><center><a href="{{ route('personal.edit', $personal->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
-                                                <td>
+                                                <td><center><a href="{{ route('personal.show', $personal->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>{{-- 
+                                                <td><center><a href="{{ route('personal.edit', $personal->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
+                                               {{--  <td>
                                                     <center>
                                                         <form action="{{ route('personal.destroy', $personal->id)}}" method="POST">
                                                             @csrf
@@ -71,7 +71,7 @@
                                                             <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
                                                         </form>
                                                     </center>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>

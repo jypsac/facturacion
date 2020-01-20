@@ -167,11 +167,11 @@
 									 
 									 <div  >
 										{{-- <p id="texto">Add file</p> --}}
-										<input type="file" id="archivoInput"  name="foto" onchange="return validarExt()"  />
+										<input type="file" id="archivoInput"  name="foto"   onchange="return validarExt()"  />
 										
 											<div id="visorArchivo">
 												<!--Aqui se desplegará el fichero-->
-												<center ><img name="foto"  src="https://planetared.com/wp-content/uploads/2018/02/Como-abrir-chrome-siempre-en-incognito-1.png" width="390px" height="302px" /></center>
+												<center ><img  name="foto"   src="{{asset('/profile/images/perfil.svg')}}" width="390px" height="302px" /></center>
 											</div>
 													
 							                    </div>

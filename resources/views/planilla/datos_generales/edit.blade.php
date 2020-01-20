@@ -19,8 +19,9 @@
 				</div>
 				<div class="ibox-content">
 					
-					<form action="{{ route('personal.store') }}"  enctype="multipart/form-data" method="post">
-						@csrf
+						<form action="{{ route('personal.update',$personales->id) }}"  enctype="multipart/form-data" method="post">
+							  @csrf
+							@method('PATCH')
 						<div class="row">
 						<div class="col-lg-12">
 	                        <div class="panel panel-primary">
@@ -65,7 +66,7 @@
 
 											<label class="col-sm-1 col-form-label">Tipo de Documento:</label>
 												<div class="col-sm-5">
-													<select class="form-control m-b" name="tipo_documento">
+													<select class="form-control m-b" name="documento_identificacion">
 														<option value="{{$personales->documento_identificacion}}">{{$personales->documento_identificacion}}</option>
 														@if($personales->documento_identificacion == 'DNI')
 													    <option value="Pasaporte">Pasaporte</option>
@@ -109,7 +110,7 @@
 
 							                <label class="col-sm-2 col-form-label">Estado civil:</label>
 												<div class="col-sm-10">
-												<select class="form-control m-b" name="documento_identificacion">
+												<select class="form-control m-b" name="estado_civil">
 													<option value="{{$personales->estado_civil}}">{{$personales->estado_civil}}</option>
 												@if($personales->estado_civil == 'Soltero')
 													 <option value="Casado">Casado</option>
@@ -189,7 +190,7 @@
 							      <label class=" col-form-label">Foto De Perfil:</label> --}}
 									<div  >
 										{{-- <p id="texto">Add file</p> --}}
-										<input type="file" id="archivoInput"  onchange="return validarExt()"  />
+										<input type="file" id="archivoInput"  name="foto"   onchange="return validarExt()"  />
 										
 											<div id="visorArchivo">
 												<!--Aqui se desplegará el fichero-->
@@ -249,7 +250,7 @@
             visor.onload = function(e) 
             {
                 document.getElementById('visorArchivo').innerHTML = 
-                '<center><img name="foto" src="'+e.target.result+'"width="390px" height="302px" /></center>';
+                '<center><img name="foto" src="'+e.target.result+'" width="390px" height="302px" /></center>';
             };
             visor.readAsDataURL(archivoInput.files[0]);
         }
