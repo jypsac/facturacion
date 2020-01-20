@@ -7,6 +7,8 @@ use App\Almacen;
 use DB;
 use App\Provedor;
 use App\Producto;
+use App\kardex_entrada_registro;
+
 use Illuminate\Http\Request;
 
 class KardexEntradaController extends Controller
@@ -43,11 +45,40 @@ class KardexEntradaController extends Controller
      */
     public function store(Request $request)
     {
-        // Kardex_entrada::create(request()->all());
-        // return redirect()->route('kardex-entrada.index');
+        //Kardex Entrada Guardado
+        $kardex_entrada=new Kardex_entrada();
+        $kardex_entrada->nombre=$request->get('nombre');
+        $kardex_entrada->provedor_id=$request->get('provedor');
+        $kardex_entrada->guia_remision=$request->get('guia_remision');
+        $kardex_entrada->factura=$request->get('factura');
+        $kardex_entrada->almacen_id=$request->get('almacen');
+        $kardex_entrada->informacion=$request->get('informacion');
+        $kardex_entrada->save();
+
+        //contador de valores de articulos
+        $articulo = $request->input('articulo');
+        $count_articulo=count($articulo);
+        //contador de valores de cantidad
         $cantidad = $request->input('cantidad');
-        $count_productos=count($cantidad);
-        return $request;
+        $count_cantidad=count($cantidad);
+        //contador de valores de precio
+        $precio = $request->input('precio');
+        $count_precio=count($precio);
+
+        if($count_articulo = $count_cantidad = $count_precio){
+            for($i=0;$i<$count_articulo;$i++){
+                $kardex_entrada_registro=new kardex_entrada_registro();
+                $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
+                $kardex_entrada_registro->producto_id=$request->get('articulo')[$i];
+                $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
+                $kardex_entrada_registro->precio=$request->get('precio')[$i];
+                $kardex_entrada_registro->save();
+            }
+        }
+        return redirect()->route('kardex-entrada.index');
+
+        // return "Guardado";
+        
     }
 
     /**

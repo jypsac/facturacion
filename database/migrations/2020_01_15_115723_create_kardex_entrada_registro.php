@@ -15,16 +15,11 @@ class CreateKardexEntradaRegistro extends Migration
     {
         Schema::create('kardex_entrada_registro', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('kardex_entrada_id');
-            $table->integer('cantidad');
-            $table->double('precio');
-            $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
-     *
+     *  
      * @return void
      */
     public function down()

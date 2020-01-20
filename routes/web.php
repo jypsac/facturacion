@@ -78,7 +78,7 @@
 	Route::resource('/kardex-entrada','KardexEntradaController');
 	Route::resource('/kardex-salida','KardexSalidaController');
 //FIN DE INVENTARIOS
-
+	Route::resource('/motivo','MotivoController');
 	Route::resource('/marca','MarcaController');
 	Route::resource('/moneda','MonedaController');
 	Route::resource('/pagados','PagadosController');
