@@ -27,7 +27,8 @@ class DatabaseSeeder extends Seeder
         $this->call(EstadoSeeder::class);
         $this->call(GarantiaTableSeeder::class);
         $this->call(ProductosTableSeeder::class);
-        
-        
+        $this->call(MotivoTableSeeder::class);
+
+
     }
 }

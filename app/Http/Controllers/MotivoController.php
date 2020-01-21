@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Motivo;
 use Illuminate\Http\Request;
 
 class MotivoController extends Controller
@@ -13,7 +14,8 @@ class MotivoController extends Controller
      */
     public function index()
     {
-        //
+        $motivos=Motivo::all();
+        return view('maestro.tablas_generales.motivo.index',compact('motivos'));
     }
 
     /**
@@ -23,7 +25,7 @@ class MotivoController extends Controller
      */
     public function create()
     {
-        //
+        return view('maestro.tablas_generales.motivo.create');
     }
 
     /**
@@ -34,7 +36,11 @@ class MotivoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $motivo=new Motivo;
+        $motivo->nombre=$request->get('nombre');
+        $motivo->save();
+
+        return redirect()->route('motivo.index');
     }
 
     /**
@@ -56,7 +62,8 @@ class MotivoController extends Controller
      */
     public function edit($id)
     {
-        //
+        $motivo=Motivo::find($id);
+        return view('maestro.tablas_generales.motivo.edit',compact('motivo'));
     }
 
     /**
@@ -68,7 +75,10 @@ class MotivoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $motivo=Motivo::find($id);
+        $motivo->nombre=$request->get('nombre');
+        $motivo->save();
+        return redirect()->route('motivo.index');
     }
 
     /**
@@ -79,6 +89,9 @@ class MotivoController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $motivo=Motivo::findOrFail($id);
+        $motivo->delete();
+
+        return redirect()->route('motivo.index');
     }
 }

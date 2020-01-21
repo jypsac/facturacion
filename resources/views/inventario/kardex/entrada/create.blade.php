@@ -37,8 +37,14 @@
 				<div class="ibox-content">
 					<form action="{{ route('kardex-entrada.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
-		                    <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
+					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Motivos :</label>
+		                    <div class="col-sm-10">
+								<select class="form-control" name="motivo">
+									@foreach($motivos as $motivo)
+									<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
+									@endforeach
+								</select>
+							</div>
 		                </div>
 
 				        <div class="form-group  row"><label class="col-sm-2 col-form-label">G Remision:</label>
@@ -75,8 +81,8 @@
 
 {{-- Check --}}
 
-	
-	
+
+
 {{-- Check --}}
 
 						<table 	 cellspacing="0" class="table table-striped">
@@ -107,7 +113,7 @@
 							</tr>
 						</tbody>
 						</table>
-					
+
 						<button type="button" class='delete btn btn-danger'  > Eliminar </button>
 						<button type="button" class='addmore btn btn-success' > Agregar </button>
 
@@ -119,7 +125,7 @@
 	{{-- <style type="text/css">
 		#boton_personalizado_eliminar{
 			text-decoration: none;
-			padding: 5px;	
+			padding: 5px;
 			font-weight: 600;
 			font-size: 13px;
 			color: #ffffff;
@@ -206,7 +212,7 @@
 									@endforeach
 								</select>
 			</td>
-			
+
 			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i}" onkeyup="multi(${i});" required/></td>
 			<td><input type='text' id='precio" + i + "' name='precio[]' class="monto${i}" onkeyup="multi(${i});" required/></td>
 			<td><input type='text' id='total${i}' name='total[]' required/></td>
@@ -250,7 +256,7 @@
         }
     </script>
 
-	
+
 
 <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
 <script>

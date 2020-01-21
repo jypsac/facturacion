@@ -8,6 +8,7 @@ use DB;
 use App\Provedor;
 use App\Producto;
 use App\kardex_entrada_registro;
+use App\Motivo;
 
 use Illuminate\Http\Request;
 
@@ -34,7 +35,8 @@ class KardexEntradaController extends Controller
         $productos=Producto::all();
         $provedores=Provedor::all();
         $almacenes=Almacen::all();
-        return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos'));
+        $motivos=Motivo::all();
+        return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos'));
     }
 
     /**
@@ -47,7 +49,7 @@ class KardexEntradaController extends Controller
     {
         //Kardex Entrada Guardado
         $kardex_entrada=new Kardex_entrada();
-        $kardex_entrada->nombre=$request->get('nombre');
+        $kardex_entrada->motivo=$request->get('motivo');
         $kardex_entrada->provedor_id=$request->get('provedor');
         $kardex_entrada->guia_remision=$request->get('guia_remision');
         $kardex_entrada->factura=$request->get('factura');
@@ -78,7 +80,7 @@ class KardexEntradaController extends Controller
         return redirect()->route('kardex-entrada.index');
 
         // return "Guardado";
-        
+
     }
 
     /**
