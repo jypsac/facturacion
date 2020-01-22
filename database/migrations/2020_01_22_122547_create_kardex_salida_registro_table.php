@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateInventarioInicialTable extends Migration
+class CreateKardexSalidaRegistroTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class CreateInventarioInicialTable extends Migration
      */
     public function up()
     {
-        Schema::create('inventario_inicial', function (Blueprint $table) {
+        Schema::create('kardex_salida_registro', function (Blueprint $table) {
             $table->bigIncrements('id');
+            
         });
     }
 
@@ -25,6 +26,6 @@ class CreateInventarioInicialTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inventario_inicial');
+        Schema::dropIfExists('kardex_salida_registro');
     }
 }

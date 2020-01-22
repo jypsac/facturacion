@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Producto;
+use App\Motivo;
 use Illuminate\Http\Request;
 
 class KardexSalidaController extends Controller
@@ -23,7 +25,9 @@ class KardexSalidaController extends Controller
      */
     public function create()
     {
-        //
+        $motivos=Motivo::all();
+        $productos=Producto::all();
+        return view('inventario.kardex.salida.create',compact('motivos','productos'));
     }
 
     /**
@@ -34,7 +38,7 @@ class KardexSalidaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**
