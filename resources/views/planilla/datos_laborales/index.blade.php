@@ -43,6 +43,7 @@
                                                 <th>Estado</th>
                                                 <th>Banco Renumeracion</th>
                                                 <th>Nr Cuenta</th>
+                                                <th>ver</th>
                                                 <th>EDITAR</th>
                                                 <th>Eliminar</th>
                                             </tr>
@@ -56,6 +57,8 @@
                                                 <td>{{$personal->estado_trabajador}}</td>
                                                 <td>{{$personal->banco_renumeracion}}</td>
                                                 <td>{{$personal->numero_cuenta}}</td>
+
+                                                <td><center><a href="{{ route('personal-datos-laborales.show', $personal->id) }}" ><button type="button" class="btn btn-s-m btn-success">ver</button></a></center></td>
                                                 <td><center><a href="{{ route('personal-datos-laborales.edit', $personal->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                                 <td>
                                                     <center>

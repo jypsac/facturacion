@@ -84,6 +84,8 @@
 	Route::resource('/pagados','PagadosController');
 	Route::resource('/pedidos','PedidosController');
 	Route::resource('/personal','PersonalController');
+
+	Route::get('/personal-laboral/{id}','PersonalDatosLaboralesController@idpersonal')->name('create.laboral');
 	Route::resource('/personal-datos-laborales','PersonalDatosLaboralesController');
 	Route::resource('/productos','ProductosController');
 	Route::resource('/promedios','PromediosController');

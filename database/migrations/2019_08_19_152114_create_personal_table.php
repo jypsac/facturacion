@@ -54,7 +54,7 @@ class CreatePersonalTable extends Migration
             $table->string('regimen_pensionario')->nullable();
             $table->string('afiliacion_salud')->nullable();
             $table->string('banco_renumeracion')->nullable();
-            $table->integer('numero_cuenta')->nullable();
+            $table->string('numero_cuenta')->nullable();
             $table->text('notas')->nullable();
             $table->timestamps();
         });

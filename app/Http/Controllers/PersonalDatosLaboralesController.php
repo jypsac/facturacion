@@ -28,7 +28,19 @@ class PersonalDatosLaboralesController extends Controller
     {
         $personales=Personal::all();
         return view('planilla.datos_laborales.create',compact('personales'));
+
     }
+
+    public function idpersonal($recibes){
+
+        $personales=Personal::where('id', '=', $recibes)->first();
+        return view('planilla.datos_laborales.create',compact('personales'));
+
+        // return $personales;
+
+
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -38,6 +50,12 @@ class PersonalDatosLaboralesController extends Controller
      */
     public function store(Request $request)
     {
+        $personal_id=$request->get('personal_id');
+
+        $personal_estado=Personal::where('id',$personal_id)->first();
+        $personal_estado->estado=1;
+        $personal_estado->save();
+
         $personal=new Personal_datos_laborales;
         $personal->personal_id=$request->get('personal_id');
         $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
@@ -58,7 +76,10 @@ class PersonalDatosLaboralesController extends Controller
         $personal->numero_cuenta=$request->get('numero_cuenta');
         $personal->notas=$request->get('notas');
         $personal->save();
-        return redirect()->route('personal-datos-laborales.index');
+        // return redirect()->route('personal-datos-laborales.index');
+        return redirect()->route('personal-datos-laborales.show', $personal->id); 
+
+        // return $personal_id;
     }
 
     /**
@@ -68,8 +89,13 @@ class PersonalDatosLaboralesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-        //
+    {     
+
+        $personales=Personal::where('id',$id)->first();
+        $persona=Personal_datos_laborales::where('personal_id',$id)->first();
+        //   $personales=Personal_datos_laborales::find($id);
+        return view('planilla.datos_laborales.show',compact('persona','personales'));
+        // return  $personal_datos_laborales;
     }
 
     /**
@@ -80,8 +106,9 @@ class PersonalDatosLaboralesController extends Controller
      */
     public function edit($id)
     {
+        $persona=Personal::where('id',$id)->first();
         $personales=Personal_datos_laborales::find($id);
-        return view('planilla.datos_laborales.edit',compact('personales'));
+        return view('planilla.datos_laborales.edit',compact('personales','persona'));
     }
 
     /**
