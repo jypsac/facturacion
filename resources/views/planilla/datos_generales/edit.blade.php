@@ -3,7 +3,7 @@
 @section('title', 'Personal')
 @section('breadcrumb', 'Personal-Editar')
 @section('breadcrumb2', 'Personal-Editar')
-@section('href_accion', route('personal.index') )
+@section('href_accion', route('personal.show', $personales->id)  )
 @section('value_accion', 'Atras')
 
 @section('content')

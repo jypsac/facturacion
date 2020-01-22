@@ -12,10 +12,14 @@
 
 <div style="padding-top: 20px;padding-bottom: 50px">
 <div class="container" style=" padding-top: 30px; background: white;">
-      <div class="jumbotron" style="padding: 10px 40px ;background-color: #d6d1ffc2;" >
-        <table>
+      <div class="jumbotron" 
+      style="padding: 10px 40px ;
+      background-image: url('https://www.iwantwallpaper.co.uk/images/muriva-bluff-embossed-brick-effect-wallpaper-j30309-p711-1303_image.jpg'); background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;"
+       >
+    <table>
             <tr>
-                <th width="100%"><h1>{{$personales->nombres}} {{$personales->apellidos}} <br> <span style="font-size: 20px">&nbsp;&nbsp;{{$personales->nacionalidad}}</span></h1></th>
+                <th width="100% "><h1 style="color: black">{{$personales->nombres}} {{$personales->apellidos}} <br> <span style="font-size: 20px">&nbsp;&nbsp;{{$personales->nacionalidad}}</span></h1>
+                </th>
                 <th  width="100%" rowspan="2">
 
                             <a href="{{ asset('/profile/images/')}}/{{$personales->foto}}" title="{{$personales->nombres}}  {{$personales->apellidos}}" data-gallery=""><img src="{{ asset('/profile/images/')}}/{{$personales->foto}}" class="rounded-circle circle-border m-b-md" alt="profile"  width="150px" height="150px" ></a>
@@ -32,26 +36,23 @@
                             </div>
 
                  </th>
- {{-- <img align="right" src="{{ asset('/profile/images/')}}/{{$personales->foto}}" class="rounded-circle circle-border m-b-md" alt="profile" width="140px" height="140px"> --}}
                 
              </tr>
              <td>
                  <a class="btn btn-lg btn-success" href="{{ route('personal.edit', $personales->id) }}" style="background-color: #1ab394; border-color: #1ab394"> <i class="fa fa-edit"></i></a>
              </td>
              <td>
-              {{--    <a class="btn btn-lg btn-success" href="{{ route('personal.edit', $personales->id) }}" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-edit"></i></a>
- --}}
-       @if($personales->estado==0)
-                  <a class="btn btn-lg btn-success" href="{{ route('personal-datos-laborales.create') }}" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-plus"></i></a>
+               @if($personales->estado==0)
+                  <a class="btn btn-lg btn-success" href="{{ route('create.laboral', $personales->id) }}" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-plus"></i></a>
 
-       @else
-                  <a class="btn btn-lg btn-success" href="" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-eye"></i></a>
+               @else
+                  <a class="btn btn-lg btn-success" href="{{ route('personal-datos-laborales.show', $personales->id) }}" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-eye"></i></a>
               
                
-       @endif
+               @endif
              </td>
 
-        </table>
+     </table>
                         
       </div>
 

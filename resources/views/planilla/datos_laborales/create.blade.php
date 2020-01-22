@@ -1,9 +1,9 @@
 @extends('layout')
 
-@section('title', 'Personal')
+@section('title', 'Personal') 
 @section('breadcrumb', 'Personal-Agregar')
 @section('breadcrumb2', 'Personal-Agregar')
-@section('href_accion', route('personal.index') )
+@section('href_accion', route('personal.show', $personales->id) )
 @section('value_accion', 'Atras')
 
 @section('content')
@@ -35,14 +35,10 @@
 				<div class="ibox-content">
 					<form action="{{ route('personal-datos-laborales.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-
+							<input type="text" class="form-control" value="{{$personales->id}}" name="personal_id" hidden="hidden">
 					 	<div class="form-group row"><label class="col-sm-2 col-form-label">Seleccionar Personal:</label>
 							<div class="col-sm-10">
-								<select class="form-control m-b" name="personal_id">
-				          			@foreach($personales as $personal)
-						    		<option value="{{ $personal->numero_documento }}">{{ $personal->nombres}}</option>
-						    		@endforeach
-					    		</select>
+								<input type="text" class="form-control" value="{{$personales->nombres}} {{$personales->apellidos}}" disabled="disabled">
 		                    </div>
 		                </div>
 
