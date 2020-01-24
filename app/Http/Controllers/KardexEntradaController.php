@@ -73,8 +73,8 @@ class KardexEntradaController extends Controller
             $articulo_comparacion_inicial=$request->get('articulo')[$e];
             for ($a=1; $a<$count_articulo ; $a++) {
                 $articulo_comparacion=$request->get('articulo')[$a];
-                if ($articulo_comparacion_inicial=$articulo_comparacion) {
-                    return "Articulos doble introducido";
+                if ($articulo_comparacion_inicial==$articulo_comparacion) {
+                    return "Articulos doble introducido".$count_articulo;
                 }
             }
         }
@@ -85,40 +85,39 @@ class KardexEntradaController extends Controller
         $precio = $request->input('precio');
         $count_precio=count($precio);
 
+        
         if($count_articulo = $count_cantidad = $count_precio){
             for($i=0;$i<$count_articulo;$i++){
                 $kardex_entrada_registro=new kardex_entrada_registro();
                 $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
                 $kardex_entrada_registro->producto_id=$request->get('articulo')[$i];
-                $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
+                $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
                 $kardex_entrada_registro->precio=$request->get('precio')[$i];
+
+                $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
+                $kardex_entrada->estado=1;
                 $kardex_entrada_registro->save();
+                
+                
             }
         }else {
             return "Falto introducir un campo";
         }
-        if (condition) {
-            $cantidad=Kardex_entrada::where('producto_id',)->sum('cantidad');
-            $promedio=Kardex_entrada::where()->avg('precio');
+        
+            // $cantidad=kardex_entrada_registro::where('producto_id',1)->sum('cantidad');
+            // $promedio=kardex_entrada_registro::where('producto_id',1)->avg('precio');
 
-            $inventario_inicial=new InventarioInicial();
-            $inventario_inicial->categorias_id=1;
-            $inventario_inicial->almacen_id=$almacen;
-            $inventario_inicial->articulo_id=
-            $inventario_inicial->cantidad=$cantidad;
-            $inventario_inicial->promedio=$promedio;
-            $inventario_inicial->save();
-        }
+            // $inventario_inicial=new InventarioInicial();
+            // $inventario_inicial->categorias_id=1;
+            // $inventario_inicial->almacen_id=$almacen;
+            // $inventario_inicial->articulo_id=1;
+            // $inventario_inicial->cantidad=$cantidad;
+            // $inventario_inicial->promedio=$promedio;
+            // $inventario_inicial->save();
+        
+        // return $cantidad." Promedio : ".$promedio;
 
-
-
-
-
-
-
-        return redirect()->route('kardex-entrada.index');
-
-        // return "Guardado";
+        return "Guardado";
 
     }
 
