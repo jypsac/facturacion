@@ -9,6 +9,7 @@ use App\Provedor;
 use App\Producto;
 use App\kardex_entrada_registro;
 use App\Motivo;
+use App\InventarioInicial;
 
 use Illuminate\Http\Request;
 
@@ -47,6 +48,10 @@ class KardexEntradaController extends Controller
      */
     public function store(Request $request)
     {
+
+        //Guardado de almacen para inventario-inicial
+        $almacen=$request->get('almacen');
+
         //Kardex Entrada Guardado
         $kardex_entrada=new Kardex_entrada();
         $kardex_entrada->motivo=$request->get('motivo');
@@ -60,6 +65,19 @@ class KardexEntradaController extends Controller
         //contador de valores de articulos
         $articulo = $request->input('articulo');
         $count_articulo=count($articulo);
+
+        //VALIDACION PARA LA NO INCERSION DE DOBLES ARTICULOS
+        $count_articulo_menos=$count_articulo--;
+
+        for ($e=0; $e < $count_articulo_menos; $e++) {
+            $articulo_comparacion_inicial=$request->get('articulo')[$e];
+            for ($a=1; $a<$count_articulo ; $a++) {
+                $articulo_comparacion=$request->get('articulo')[$a];
+                if ($articulo_comparacion_inicial=$articulo_comparacion) {
+                    return "Articulos doble introducido";
+                }
+            }
+        }
         //contador de valores de cantidad
         $cantidad = $request->input('cantidad');
         $count_cantidad=count($cantidad);
@@ -76,7 +94,28 @@ class KardexEntradaController extends Controller
                 $kardex_entrada_registro->precio=$request->get('precio')[$i];
                 $kardex_entrada_registro->save();
             }
+        }else {
+            return "Falto introducir un campo";
         }
+        if (condition) {
+            $cantidad=Kardex_entrada::where('producto_id',)->sum('cantidad');
+            $promedio=Kardex_entrada::where()->avg('precio');
+
+            $inventario_inicial=new InventarioInicial();
+            $inventario_inicial->categorias_id=1;
+            $inventario_inicial->almacen_id=$almacen;
+            $inventario_inicial->articulo_id=
+            $inventario_inicial->cantidad=$cantidad;
+            $inventario_inicial->promedio=$promedio;
+            $inventario_inicial->save();
+        }
+
+
+
+
+
+
+
         return redirect()->route('kardex-entrada.index');
 
         // return "Guardado";

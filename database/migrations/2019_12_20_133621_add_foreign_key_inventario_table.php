@@ -23,6 +23,8 @@ class AddForeignKeyInventarioTable extends Migration
             $table->unsignedBigInteger('articulo_id');
             $table->foreign('articulo_id')->references('id')->on('productos')->onDelete('cascade');
 
+            $table->integer('cantidad');
+            $table->double('promedio');
             $table->timestamps();
         });
     }
