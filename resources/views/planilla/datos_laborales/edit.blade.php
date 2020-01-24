@@ -3,7 +3,7 @@
 @section('title', 'Personal')
 @section('breadcrumb', 'Personal-Editar')
 @section('breadcrumb2', 'Personal-Editar')
-@section('href_accion', route('personal.index') )
+@section('href_accion', route('personal-datos-laborales.show', $personales->id) )
 @section('value_accion', 'Atras')
 
 @section('content')
@@ -40,29 +40,34 @@
 
      </table>
       </div>
+      <form action="{{ route('personal-datos-laborales.update',$personales->id) }}"  enctype="multipart/form-data" method="post">
+		@csrf
+		@method('PATCH')
 
+          <input type="text" class="form-control" name="id_personal" value="{{$personales->personal_id}}" hidden="hidden">
       <div class="row marketing">
         <div class="col-lg-6">
           <h4>Fecha Viculacion</h4>
-          <p><input type="text" value="{{$personales->fecha_vinculacion}} "></p><hr>
+          <p><input type="date" class="form-control" name="fecha_vinculacion" value="{{$personales->fecha_vinculacion}}"></p>
 
           <h4>Fecha Retiro</h4>
-          <p>{{$personales->fecha_retiro}} </p><hr>
+          <p><input type="date" class="form-control" name="fecha_retiro" value="{{$personales->fecha_retiro}}"></p>
 
 
           <h4>Forma Pago</h4>
-          <p>{{$personales->forma_pago}} </p><hr>
+
+          <p><input type="text" class="form-control" name="forma_pago" value="{{$personales->forma_pago}}"></p>
         </div>
 
         <div class="col-lg-6">
           <h4>Salario</h4>
-          <p>{{$personales->salario}} </p><hr>
+          <p><input type="text" class="form-control" name="salario" value="{{$personales->salario}}"> </p>
 
             <h4>Categoria Ocupacional</h4>
-          <p>{{$personales->categoria_ocupacional}} </p><hr>
-
+          <p><input type="text" class="form-control" name="categoria_ocupacional" value="{{$personales->categoria_ocupacional}}"></p>
+          
             <h4>Estado Del Trbajador</h4>
-          <p>{{$personales->estado_trabajador}} </p><hr>
+          <p><input type="text" class="form-control" name="estado_trabajador" value="{{$personales->estado_trabajador}}"> </p>
 
 
         </div>
@@ -70,20 +75,20 @@
          
 
           <h4>Sede</h4>
-          <p>{{$personales->sede}} </p><hr>
+          <p><input type="text" class="form-control" name="sede" value="{{$personales->sede}}"></p>
 
           <h4>Turno</h4>
-          <p>{{$personales->turno}} </p><hr>
+          <p><input type="text" class="form-control" name="turno" value="{{$personales->turno}}"></p>
 
         
         </div>
         <div class="col-lg-6">
          <h4>Departamento Area</h4>
-          <p>{{$personales->departamento_area}} </p><hr>
+          <p><input type="text" class="form-control" name="departamento_area" value="{{$personales->departamento_area}}"></p>
           
 
           <h4>Cargo</h4>
-          <p>{{$personales->cargo}} </p><hr>
+          <p><input type="text" class="form-control" name="cargo" value="{{$personales->cargo}}"></p>
 
           
         </div>
@@ -92,35 +97,47 @@
          
 
           <h4>Tipo Trbajador</h4>
-          <p>{{$personales->tipo_trabajador}} </p><hr>
+          <p><input type="text" class="form-control" name="tipo_trabajador" value="{{$personales->tipo_trabajador}}"></p>
+
+
+
+
+
 
           <h4>Regimen Pensionario</h4>
-          <p>{{$personales->regimen_pensionario}} </p><hr>
-
+          <p><input type="text" class="form-control" name="regimen_pensionario" value="{{$personales->regimen_pensionario}}"></p>
         
         </div>
         <div class="col-lg-6">
          <h4>Seguro de Salud</h4>
-          <p>{{$personales->afiliacion_salud}} </p><hr>
+          <p><input type="text" class="form-control" name="afiliacion_salud" value="{{$personales->afiliacion_salud}}"></p>
           
 
           <h4>Banco Abonado</h4>
-          <p>{{$personales->banco_renumeracion}} </p><hr>
+          <p><input type="text" class="form-control" name="banco_renumeracion" value="{{$personales->banco_renumeracion}}"></p>
 
           
         </div>
         <div class="col-lg-6">
          <h4>Numero Cuenta</h4>
-          <p>{{$personales->numero_cuenta}} </p><hr>
+          <p><input type="text" class="form-control" name="numero_cuenta" value="{{$personales->numero_cuenta}}"></p>
           
         </div>
         <div class="col-lg-6">
 
           <h4>Notas</h4>
-          <p>{{$personales->notas}} </p><hr>
+          <p><input type="text" class="form-control" name="notas" value="{{$personales->notas}}"></p>
+
+          <h4>Tipo Contrato</h4>
+          <p><input type="text" class="form-control" name="tipo_contrato" value="{{$personales->tipo_contrato}}"></p>
+          
         </div>
 
       </div>
+				    	<button class="btn btn-primary" type="submit">Guardar</button>
+
+      	
+      </form>
 
 
 

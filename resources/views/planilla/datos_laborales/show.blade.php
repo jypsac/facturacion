@@ -76,7 +76,7 @@
             <h4>Estado Del Trbajador</h4>
           <p>{{$persona->estado_trabajador}} </p><hr>
 
-
+           
         </div>
         <div class="col-lg-6">
          
@@ -130,6 +130,9 @@
 
           <h4>Notas</h4>
           <p>{{$persona->notas}} </p><hr>
+
+           <h4>Tipo Contrato</h4>
+          <p>{{$persona->tipo_contrato}}</p><hr>
         </div>
 
       </div>

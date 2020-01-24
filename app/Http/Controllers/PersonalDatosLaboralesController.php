@@ -77,7 +77,7 @@ class PersonalDatosLaboralesController extends Controller
         $personal->notas=$request->get('notas');
         $personal->save();
         // return redirect()->route('personal-datos-laborales.index');
-        return redirect()->route('personal-datos-laborales.show', $personal->id); 
+        return redirect()->route('personal-datos-laborales.show', $personal->personal_id); 
 
         // return $personal_id;
     }
@@ -121,7 +121,7 @@ class PersonalDatosLaboralesController extends Controller
     public function update(Request $request, $id)
     {
         $personal=Personal_datos_laborales::find($id);
-        $personal->personal_id=$request->get('personal_id');
+        $id_personal=$request->get('id_personal');
         $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
         $personal->fecha_retiro=$request->get('fecha_retiro');
         $personal->forma_pago=$request->get('forma_pago');
@@ -141,7 +141,10 @@ class PersonalDatosLaboralesController extends Controller
         $personal->notas=$request->get('notas');
         $personal->save();
 
-        return redirect()->route('personal-datos-laborales.index');
+        // return redirect()->route('personal-datos-laborales.index');
+        return redirect()->route('personal-datos-laborales.show', $id_personal); 
+        // return $id_personal;
+        
 
     }
 
