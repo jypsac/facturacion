@@ -37,28 +37,36 @@
                                     <table class="table table-striped table-bordered table-hover dataTables-example" >
                                         <thead>
                                             <tr>
-                                                <th>NR Documentacion</th>
-                                                <th>Fecha Vinculacion</th>
-                                                <th>cat.Ocupacional</th>
+                                                <th>Personal</th>
                                                 <th>Estado</th>
-                                                <th>Banco Renumeracion</th>
-                                                <th>Nr Cuenta</th>
-                                                <th>ver</th>
+                                                <th>Sede</th>
+                                                <th>Turno</th>
+                                                <th>Cargo</th>
+                                                <th>Banco Afiliado</th>
+                                                <th>N° Cuenta</th>
+                                                <th>Notas</th>
+                                                <th>Perfil</th>
+                                                {{-- <th>ver</th>
                                                 <th>EDITAR</th>
-                                                <th>Eliminar</th>
+                                                <th>Eliminar</th> --}}
                                             </tr>
                                         </thead>
                                     <tbody>
                                         @foreach($personales as $personal)
                                             <tr class="gradeX">
-                                                <td>{{$personal->personal_id}}</td>
-                                                <td>{{$personal->fecha_vinculacion}}</td>
-                                                <td>{{$personal->categoria_ocupacional}}</td>
+                                                <td>{{$personal->personal_l->nombres}} {{$personal->personal_l->apellidos}}</td>
                                                 <td>{{$personal->estado_trabajador}}</td>
+                                                <td>{{$personal->sede}}</td>
+                                                <td>{{$personal->turno}}</td>
+                                                <td>{{$personal->cargo}}</td>
                                                 <td>{{$personal->banco_renumeracion}}</td>
                                                 <td>{{$personal->numero_cuenta}}</td>
+                                                <td>{{$personal->notas}}</td>
+                                                <td><img src="
+                                                    {{ asset('/profile/images/')}}/{{$personal->personal_l->foto}}" style="width: 45px;">
+                                                </td>
 
-                                                <td><center><a href="{{ route('personal-datos-laborales.show', $personal->id) }}" ><button type="button" class="btn btn-s-m btn-success">ver</button></a></center></td>
+                                                {{-- <td><center><a href="{{ route('personal-datos-laborales.show', $personal->id) }}" ><button type="button" class="btn btn-s-m btn-success">ver</button></a></center></td>
                                                 <td><center><a href="{{ route('personal-datos-laborales.edit', $personal->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                                 <td>
                                                     <center>
@@ -68,7 +76,7 @@
                                                             <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
                                                         </form>
                                                     </center>
-                                                </td>
+                                                </td> --}}
                                             </tr>
                                         @endforeach
                                     </tbody>

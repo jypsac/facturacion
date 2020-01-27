@@ -64,6 +64,7 @@ class PersonalController extends Controller
         $personal->nivel_educativo=$request->get('nivel_educativo');
         $personal->profesion=$request->get('profesion');
         $personal->direccion=$request->get('direccion');
+        $personal->estado=0;
         $personal->foto=$name;
         $personal->save();
         return redirect()->route('personal.show', $personal->id); 

@@ -7,7 +7,9 @@
 @section('value_accion', 'Atras')
 
 @section('content')
-
+<form action="{{ route('personal.update',$personales->id) }}"  enctype="multipart/form-data" method="post">
+                        @csrf
+                        @method('PATCH')
 <div style="padding-top: 20px;padding-bottom: 50px">
 <div class="container" style=" padding-top: 30px; background: white;">
       <div class="jumbotron"  style="padding: 10px 40px ; background-image: url('https://www.iwantwallpaper.co.uk/images/muriva-bluff-embossed-brick-effect-wallpaper-j30309-p711-1303_image.jpg'); background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;">
@@ -16,14 +18,22 @@
                 <th width="100% ">
                 		<div class="row marketing">
                 		<div class="col-lg-4">
-                		<input type="text" class="form-control" name="nombres" value="{{$personales->nombres}}">
+                		<input style="font-size: 20px; text-align: center;" type="text" class="form-control" name="nombres" value="{{$personales->nombres}}">
                 		</div>
                 		<div class="col-lg-4">
-                		<input type="text" class="form-control" name="apellidos" value="{{$personales->apellidos}}">
+                		<input style="font-size: 20px; text-align: center;"  type="text" class="form-control" name="apellidos" value="{{$personales->apellidos}}">
                 		</div>
                 		</div>
                 		 <br>
-                		  <span style="font-size: 20px">&nbsp;&nbsp;{{$personales->nacionalidad}}</span>
+                        <div class="col-lg-4">
+                          <select class="form-control m-b" name="nacionalidad">
+                            <option value="{{$personales->nacionalidad }}">{{$personales->nacionalidad }}</option>
+                            <option disabled="disabled">------------------------</option>
+                            @foreach($paises as $pais)
+                            <option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
+                            @endforeach
+                          </select>
+                        </div>
                 </th>
                 <th  width="100%" rowspan="2">
 					<input  type="file" id="archivoInput"  name="foto"   onchange="return validarExt()"  width="150px" height="150px" />
@@ -32,6 +42,7 @@
 							<!--Aqui se desplegará el fichero-->
 						<center ><img name="foto" class="rounded-circle circle-border m-b-md" src="{{asset('/profile/images')}}/{{$personales->foto}}"  width="150px" height="150px"></center>
 						</div>
+                        
 													
 
                  </th>
@@ -45,25 +56,35 @@
       <div class="row marketing">
         <div class="col-lg-6">
           <h4>Fecha Nacimiento</h4>
-          <p>{{$personales->fecha_nacimiento}} </p><hr>
+          <p><input type="date" class="form-control" name="fecha_nacimiento" value="{{$personales->fecha_nacimiento}}"></p>
+                                                
 
           <h4>Celular</h4>
-          <p>{{$personales->celular}} </p><hr>
+          <p><input type="number" class="form-control" name="celular"  value="{{$personales->celular}}"></p>    
 
 
           <h4>Genero</h4>
-          <p>{{$personales->genero}} </p><hr>
+          <p>
+          <select class="form-control m-b" name="genero">
+            <option value="femenino">{{$personales->genero}}</option>
+                @if($personales->genero == 'femenino')
+            <option value="masculino">masculino</option>
+                @elseif($personales->genero == 'masculino')
+            <option value="femenino">femenino</option>
+                @endif
+          </select>
+         </p>
         </div>
 
         <div class="col-lg-6">
           <h4>Correo</h4>
-          <p>{{$personales->email}} </p><hr>
+          <p><input type="email" class="form-control" name="email" value="{{$personales->email}}"></p>  
 
             <h4>Nivel Educativo</h4>
-          <p>{{$personales->nivel_educativo}} </p><hr>
+          <p><input type="text" class="form-control" name="nivel_educativo" value="{{$personales->nivel_educativo}}"></p>   
 
             <h4>Carrera Profesional</h4>
-          <p>{{$personales->profesion}} </p><hr>
+          <p><input type="text" class="form-control" name="profesion" value="{{$personales->profesion}}"></p>   
 
 
         </div>
@@ -71,29 +92,62 @@
          
 
           <h4>Documento Identificacion</h4>
-          <p>{{$personales->documento_identificacion}} </p><hr>
+          <p>
+          <select class="form-control m-b" name="documento_identificacion">
+            <option value="{{$personales->documento_identificacion}}">{{$personales->documento_identificacion}}</option>
+             @if($personales->documento_identificacion == 'DNI')
+            <option value="Pasaporte">Pasaporte</option>
+         @elseif($personales->documento_identificacion == 'Pasaporte')
+              <option value="DNI">DNI</option>
+         @endif
+           </select></p>
 
           <h4>Estado Civil</h4>
-          <p>{{$personales->estado_civil}} </p><hr>
+          <p>
+              <select class="form-control m-b" name="estado_civil">
+                                                    <option value="{{$personales->estado_civil}}">{{$personales->estado_civil}}</option>
+                                                @if($personales->estado_civil == 'Soltero')
+                                                     <option value="Casado">Casado</option>
+                                                     <option value="Viudo con hijos">Viudo con hijos</option>
+                                                     <option value="Viudo sin hijos">Viudo sin hijos</option>
+                                                @elseif($personales->estado_civil == 'Casado')
+                                                    <option value="Soltero">Soltero</option>
+                                                    <option value="Viudo con hijos">Viudo con hijos</option>
+                                                    <option value="Viudo sin hijos">Viudo sin hijos</option>
+                                                @elseif($personales->estado_civil == 'Viudo con hijos')
+                                                    <option value="Viudo sin hijos">Viudo sin hijos</option>
+                                                    <option value="Soltero">Soltero</option>
+                                                    <option value="Casado">Casado</option>
+                                                @elseif($personales->estado_civil == 'Viudo sin hijos')
+                                                    <option value="Viudo con hijos">Viudo con hijos</option>
+                                                    <option value="Soltero">Soltero</option>
+                                                    <option value="Casado">Casado</option>
+                                                @endif
+                                                    </select>
+          </p>  
 
         
 
         </div>
         <div class="col-lg-6">
          <h4>Numero Documento</h4>
-          <p>{{$personales->numero_documento}} </p><hr>
+          <p><input type="text" class="form-control" name="numero_documento" value="{{$personales->numero_documento}}"></p> 
           
 
           <h4>Direccion Domiciliaria</h4>
-          <p>{{$personales->direccion}} </p><hr>
+          <p><input type="text" class="form-control" name="direccion" value="{{$personales->direccion}}"></p>   
 
           
         </div>
+        <div class="col-lg-6">
+        <button class="btn btn-primary" type="submit">Grabar</button>
+      </div>
       </div>
 
 
     </div> 
     </div> 
+    </form> 
                               
         	<!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

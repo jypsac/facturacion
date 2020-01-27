@@ -8,192 +8,128 @@
 
 @section('content')
 
-
-
-<div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		<div class="col-lg-12">
-            <div class="ibox">
-				<div class="ibox-title">
-                    <h5>Datos Personales</h5>
-                   
-				</div>
-				<div class="ibox-content">
-				
-					<form action="{{ route('personal.store') }}"  enctype="multipart/form-data" method="post">
+<form action="{{ route('personal.store') }}"  enctype="multipart/form-data" method="post">
 						@csrf
-						<div class="row">
-						<div class="col-lg-12">
-	                        <div class="panel panel-primary">
-	                            <div class="panel-heading">
-	                                General
-	                            </div>
-	                            <div class="panel-body">
-									 
-									 	<div class="form-group row">
-									 		<label class="col-sm-1 col-form-label">Nombre:</label>
-							                    <div class="col-sm-5">
-							                     	<input type="text" class="form-control" name="nombres">
-							                    </div>
-
-											<label class="col-sm-1 col-form-label">Fecha Nacimiento:</label>
-												<div class="col-sm-5">
-													<input type="date" class="form-control" name="fecha_nacimiento">
-							                    </div>
-
-
-							                    
-						                </div>
-						                <div class="form-group row">
-										<label class="col-sm-1 col-form-label">Apellidos:</label>
-												<div class="col-sm-5">
-													<input type="text" class="form-control" name="apellidos">
-							                    </div>
-							                    <label class="col-sm-1 col-form-label">Genero:</label>
-												<div class="col-sm-5">
-													<select class="form-control m-b" name="genero">
-														<option value="masculino">masculino</option>
-														<option value="femenino">femenino</option>
-													</select>
-							                    </div>
-						                </div>
-						                <div class="form-group row">
-
-											<label class="col-sm-1 col-form-label">Tipo de Documento:</label>
-												<div class="col-sm-5">
-												<select class="form-control m-b" name="documento_identificacion">
-										 				<option>Seleccione</option>
-									  					<option value="dni">DNI</option>
-									  					<option value="pasaporte">Pasaporte</option>
-									  				</select>
-							                    </div>
-
-							                    <label class="col-sm-1 col-form-label">Celular:</label>
-							                    <div class="col-sm-5">
-							                     	<input type="telefono" class="form-control" name="celular">
-							                    </div>
-
-						                </div>
-						                 <div class="form-group row">
-
-											<label class="col-sm-1 col-form-label">N° de Documento:</label>
-												<div class="col-sm-5">
-												<input type="text" class="form-control" name="numero_documento">
-							                    </div>
-
-
-							                    <label class="col-sm-1 col-form-label">Correo:</label>
-												<div class="col-sm-5">
-													<input type="email" class="form-control" name="email">
-							                    </div>
-						                </div>
-
-	                            </div>
-	                        </div>
-	                    </div>
-	                    <div class="col-lg-6">
-	                        <div class="panel panel-primary">
-	                            <div class="panel-heading">
-	                               Otro Datos
-	                            </div>
-	                            <div class="panel-body">
-
-									 	<div class="form-group row ">
-
-							                <label class="col-sm-2 col-form-label">Estado civil:</label>
-												<div class="col-sm-10">
-									  				<select class="form-control m-b" name="estado_civil">
-										 				<option>Seleccione</option>
-									  					<option value="Soltero">Soltero</option>
-									  					<option value="Casado">Casado</option>
-									  					<option value="Casado">Viudo con hijos</option>
-									  					<option value="Casado">Viudo sin hijos</option>
-
-									  				</select>
-							                    </div>
-
-							              
-						                </div>
-
-						                <div class="form-group row">
-									 		<label class="col-sm-2 col-form-label">Profesion:</label>
-							                    <div class="col-sm-10">
-							                     	<input type="text" class="form-control" name="profesion">
-							                    </div>
-
-						                </div>
-						                 <div class="form-group row">
-									 		
-
-							                    <label class="col-sm-2 col-form-label">Nivel Educativo:</label>
-												<div class="col-sm-10">
-													<input type="text" class="form-control" name="nivel_educativo">
-							                    </div>
-						                </div>
-						                  <div class="form-group row">
-									 		<label class="col-sm-2 col-form-label">Direccion:</label>
-							                    <div class="col-sm-10">
-							                    	<input type="text" class="form-control" name="direccion">
-							                    </div>
-
-							                    
-						                </div>
-						                 <div class="form-group row">
-									 		 <label class="col-sm-2 col-form-label">Pais:</label>
-												<div class="col-sm-10">
-									  			<select class="form-control m-b" name="nacionalidad">
-										  <option>Seleccione</option>
-										  @foreach($paises as $pais)
-										<option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
-										@endforeach
-										</select>
-							                    </div>
-
-							                    
-						                </div>
-						                 
-
-						        </div>
-
-	                           </div>
-	                        </div>
-	                        <div class="col-lg-6">
-
-	                        <div class="panel panel-primary">
-	                            <div class="panel-heading">
-	                                Foto Perfil
-	                            </div>
-	                            <div class="panel-body">
-									 
-									 <div  >
-										{{-- <p id="texto">Add file</p> --}}
-										<input type="file" id="archivoInput"  name="foto"   onchange="return validarExt()"  />
+<div style="padding-top: 20px;padding-bottom: 50px">
+<div class="container" style=" padding-top: 30px; background: white;">
+      <div class="jumbotron"  style="padding: 10px 40px ; background-image: url('https://www.iwantwallpaper.co.uk/images/muriva-bluff-embossed-brick-effect-wallpaper-j30309-p711-1303_image.jpg'); background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;">
+    <table>
+            <tr>
+                <th width="100% ">
+                		<div class="row marketing">
+                		<div class="col-lg-4">
+                		<input style="font-size: 20px; text-align: center;" type="text" class="form-control" name="nombres" value="" placeholder="Nombres">
+                		</div>
+                		<div class="col-lg-4">
+                		<input style="font-size: 20px; text-align: center;"  type="text" class="form-control" name="apellidos" value="" placeholder="Apellidos">
+                		</div>
+                		</div>
+                		 <br>
+                        <div class="col-lg-4">
+                          <select class="form-control m-b" name="nacionalidad">
+                            <option value="">Seleccione Pais</option>
+                            <option disabled="disabled">------------------------</option>
+                            @foreach($paises as $pais)
+                            <option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
+                            @endforeach
+                          </select>
+                        </div>
+                </th>
+                <th  width="100%" rowspan="2">
+					<input  type="file" id="archivoInput"  name="foto"   onchange="return validarExt()"  width="150px" height="150px" />
 										
-											<div id="visorArchivo">
-												<!--Aqui se desplegará el fichero-->
-												<center ><img  name="foto"   src="{{asset('/profile/images/perfil.svg')}}" width="390px" height="302px" /></center>
-											</div>
+						<div id="visorArchivo">
+							<!--Aqui se desplegará el fichero-->
+						<center ><img name="foto" class="rounded-circle circle-border m-b-md"  src="{{asset('/profile/images/perfil.svg')}}" width="150px" height="150px"></center>
+						</div>
 													
-							                    </div>
-	                        </div>
-	                        </div>
 
-		                </div>
+                 </th>
+                
+             </tr>
 
-	                        <div class="col-lg-6">
+     </table>
+                        
+      </div>
 
-                		<button class="btn btn-primary" type="submit">Grabar</button>
-</div>
-					</form>
+      <div class="row marketing">
+        <div class="col-lg-6">
+          <h4>Fecha Nacimiento</h4>
+          <p><input type="date" class="form-control" name="fecha_nacimiento" value=""></p>
+                                                
 
-				</div>
-			</div>
-		</div>
+          <h4>Celular</h4>
+          <p><input type="text" class="form-control" name="celular"  value=""></p>    
 
-	</div>
-</div>
 
-	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+          <h4>Genero</h4>
+          <p>
+          <select class="form-control m-b" name="genero">
+            <option value="femenino">Selecione Genero</option>
+            <option value="masculino">masculino</option>
+            <option value="femenino">femenino</option>
+          </select>
+         </p>
+        </div>
+
+        <div class="col-lg-6">
+          <h4>Correo</h4>
+          <p><input type="email" class="form-control" name="email" value=""></p>  
+
+            <h4>Nivel Educativo</h4>
+          <p><input type="text" class="form-control" name="nivel_educativo" value=""></p>   
+
+            <h4>Carrera Profesional</h4>
+          <p><input type="text" class="form-control" name="profesion" value=""></p>   
+
+
+        </div>
+        <div class="col-lg-6">
+         
+
+          <h4>Documento Identificacion</h4>
+          <p>
+          <select class="form-control m-b" name="documento_identificacion">
+            <option value="">Selecione Documento</option>
+            <option value="Pasaporte">Pasaporte</option>
+              <option value="DNI">DNI</option>
+           </select></p>
+
+          <h4>Estado Civil</h4>
+          <p>
+              <select class="form-control m-b" name="estado_civil">
+                 <option value="Soltero">Soltero</option>
+                  <option value="Casado">Casado</option>
+                  <option value="Viudo con hijos">Viudo con hijos</option>
+                  <option value="Viudo sin hijos">Viudo sin hijos</option>
+               </select>
+          </p>  
+
+        
+
+        </div>
+        <div class="col-lg-6">
+         <h4>Numero Documento</h4>
+          <p><input type="text" class="form-control" name="numero_documento" value=""></p> 
+          
+
+          <h4>Direccion Domiciliaria</h4>
+          <p><input type="text" class="form-control" name="direccion" value=""></p>   
+
+          
+        </div>
+        <div class="col-lg-6">
+        <button class="btn btn-primary" type="submit">Grabar</button>
+      </div>
+      </div>
+
+
+    </div> 
+    </div> 
+    </form> 
+                              
+        	<!-- Mainly scripts -->
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
@@ -201,11 +137,10 @@
 
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
-	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-	<!-- Jquery Validate -->
-	<script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
-<script type="text/javascript">
+
+    <script type="text/javascript">
 		function validarExt()
 {
     var archivoInput = document.getElementById('archivoInput');
@@ -226,7 +161,7 @@
             visor.onload = function(e) 
             {
                 document.getElementById('visorArchivo').innerHTML = 
-                '<center><img name="foto" src="'+e.target.result+'"width="390px" height="302px" /></center>';
+                '<center><img name="foto" class="rounded-circle circle-border m-b-md"  src="'+e.target.result+'"  width="150px" height="150px" ></center>';
             };
             visor.readAsDataURL(archivoInput.files[0]);
         }
@@ -234,24 +169,136 @@
 }
 	</script>
 
+	<script>
+			function readURL(input) {
+			  if (input.files && input.files[0]) {
+				var reader = new FileReader();
+				
+				reader.onload = function(e) {
+				  $('#blah').attr('src', e.target.result);
+				}
+				
+				reader.readAsDataURL(input.files[0]);
+			  }
+			}
+			
+			$("#imgInp").change(function() {
+			  readURL(this);
+			});
+			</script>
+			<script>
+		function readURL(input) {
+		  if (input.files && input.files[0]) {
+			var reader = new FileReader();
+			
+			reader.onload = function(e) {
+			  $('#blah').attr('src', e.target.result);
+			}
+			
+			reader.readAsDataURL(input.files[0]);
+		  }
+		}
+		
+		$("#imgInp").change(function() {
+		  readURL(this);
+		});
+		</script>
+
+    <script>
+        $(document).ready(function(){
+            $("#wizard").steps();
+            $("#form").steps({
+                bodyTag: "fieldset",
+                onStepChanging: function (event, currentIndex, newIndex)
+                {
+					// ¡Siempre permita retroceder incluso si el paso actual contiene campos no válidos!
+                    if (currentIndex > newIndex)
+                    {
+                        return true;
+                    }
+
+                    // Prohibir suprimir el paso "Advertencia" si el usuario es demasiado joven
+                    if (newIndex === 3 && Number($("#age").val()) < 18)
+                    {
+                        return false;
+                    }
+
+                    var form = $(this);
+
+                    // Limpie si el usuario retrocedió antes
+                    if (currentIndex < newIndex)
+                    {
+                        // Para eliminar estilos de error
+                        $(".body:eq(" + newIndex + ") label.error", form).remove();
+                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                    }
+
+                    // Deshabilite la validación en los campos que están deshabilitados u ocultos.
+                    form.validate().settings.ignore = ":disabled,:hidden";
+
+                    // Iniciar validación; Evite avanzar si es falso
+                    return form.valid();
+                },
+                onStepChanged: function (event, currentIndex, priorIndex)
+                {
+                    // Suprima (omita) el paso "Advertencia" si el usuario tiene edad suficiente.
+                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
+                    {
+                        $(this).steps("next");
+                    }
+
+                    // Suprima (omita) el paso "Advertencia" si el usuario tiene la edad suficiente y quiere el paso anterior.
+                    if (currentIndex === 2 && priorIndex === 3)
+                    {
+                        $(this).steps("previous");
+                    }
+                },
+                onFinishing: function (event, currentIndex)
+                {
+                    var form = $(this);
+
+					// Deshabilita la validación en los campos que están deshabilitados.
+                    // En este punto, se recomienda hacer una verificación general (significa ignorar solo los campos deshabilitados)
+                    form.validate().settings.ignore = ":disabled";
+
+                    // Iniciar validación; Evitar el envío del formulario si es falso
+                    return form.valid();
+                },
+                onFinished: function (event, currentIndex)
+                {
+                    var form = $(this);
+
+                    // Enviar entrada de formulario
+                    form.submit();
+                }
+            }).validate({
+                        errorPlacement: function (error, element)
+                        {
+                            element.before(error);
+                        },
+                        rules: {
+                            confirm: {
+                                equalTo: "#password"
+                            }
+                        }
+                    });
+       });
+    </script>
     <style type="text/css">
     	img{border-radius: 40px}
-	                        	
-								p#texto{
-									text-align: center;
-									color:black;
-								}
+	    p#texto{text-align: center;
+				color:black;
+				}
 								
-								input#archivoInput{
-									position:absolute;
-									top:0px;
-									left:0px;
-									right:0px;
-									bottom:0px;
-									width:100%;
-									height:100%;
-									opacity: 0	;
-								}
-	                    </style>
-
+	input#archivoInput{
+		position:absolute;
+		top:25%;
+		left:80%;
+		right:0px;
+		bottom:58%;
+		width:15%;
+		opacity: 0	;
+	}
+</style>
 @stop
+  
