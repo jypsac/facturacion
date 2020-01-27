@@ -4,6 +4,10 @@ namespace App\Http\Controllers;
 
 use App\Producto;
 use App\Motivo;
+use App\Kardex_salida;
+use App\kardex_salida_registro;
+use App\Kardex_entrada;
+use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
 
 class KardexSalidaController extends Controller
@@ -38,6 +42,41 @@ class KardexSalidaController extends Controller
      */
     public function store(Request $request)
     {
+        $kardex_salida=new Kardex_salida();
+        $kardex_salida->motivo_id=$request->get('motivo');
+        $kardex_salida->informacion=$request->get('informacion');
+        $kardex_salida->estado=1;
+        $kardex_salida->save();
+        
+        //contador de valores de articulos
+        $articulo = $request->input('articulo');
+        $count_articulo=count($articulo);
+
+        $cantidad = $request->input('cantidad');
+        $count_cantidad=count($cantidad);
+
+        if($count_articulo = $count_cantidad ){
+            for($i=0;$i<$count_articulo;$i++){
+                $kardex_salida_registro=new kardex_salida_registro();
+                $kardex_salida_registro->kardex_salida_id=$kardex_salida->id;
+                $kardex_salida_registro->producto_id=$request->get('articulo')[$i];
+                $kardex_salida_registro->cantidad=$request->get('cantidad')[$i];
+                $kardex_salida_registro->save();
+
+                $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->first();
+                // if(isset($comparacion)){
+                //     $kardex_entrada_registro_edit=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->first();
+                //     $var_cantidad=$kardex_entrada_registro_edit->cantidad;
+                //     return $comparacion;
+                // }
+
+                return $comparacion;
+            }
+        }else {
+            return "Falto introducir un campo";
+        }
+
+
         return $request;
     }
 

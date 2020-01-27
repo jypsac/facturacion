@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use App\Kardex_entrada;
+
 use App\Almacen;
 use DB;
 use App\Provedor;
 use App\Producto;
+use App\Kardex_entrada;
 use App\kardex_entrada_registro;
 use App\Motivo;
 use App\InventarioInicial;
