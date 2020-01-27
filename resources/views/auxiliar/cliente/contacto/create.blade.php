@@ -10,68 +10,41 @@
 
 @section('content')
 
-<div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		
-        <div class="col-lg-12">
-                <div class="ibox">
-                    <div class="ibox-title">
-                        <h5>Creacion de contacto</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#" class="dropdown-item">Config option 1</a>
-                                </li>
-                                <li><a href="#" class="dropdown-item">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
-                        </div>
-                    </div>
-                    <div class="ibox-content">
-                        <form action="{{ route('contacto.store',$id) }}"  enctype="multipart/form-data" method="post">
+<div style="padding-top: 20px;padding-bottom: 50px">
+<div class="container" style=" padding-top: 30px; background: white;">
+<form action="{{ route('contacto.store',$id) }}"  enctype="multipart/form-data" method="post">
                              @csrf
-                             
-                             <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
-                                 <div class="col-sm-10"><input type="text" class="form-control" name="nombre" ></div>
-                            </div>
+<div style="padding-bottom: 10px">
+  <h1><i class="fa fa-address-book-o" aria-hidden="true"></i>  </h1>
+    <div class="row marketing">
+        <div class="col-lg-6">
+          <h4>Nombre del Contacto:</h4>
+          <p><input class="form-control" type="text" name="nombre" ></p><hr>
+          <h4>Cargo:</h4>
+          <p><input class="form-control " type="text" name="cargo" ></p><hr>
+        </div>
+        <div class="col-lg-6">
+          <h4>Telefono/Celular:</h4>
+         <p class=" row" style="padding-left: 15px"><input class="form-control col-sm-5" name="telefono" type="text" placeholder="Telefono"> &nbsp; -  &nbsp;<input class="form-control col-sm-5" name="celular" type="text" placeholder="Celular" ></p> <hr>
+          <h4>Email:</h4>
+          <p><input class="form-control" name="email" type="text" ></p><hr>
+           <input type="hidden" name="clientes_id" value="{{$id}}">
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Cargo:</label>
-                                <div class="col-sm-10"><input type="text" class="form-control" name="cargo"></div>
-                            </div>
+        </div>
+        <div class="col-lg-6">
+        <p><input class="btn btn-primary" type="submit" value="Grabar"></p>
+        </div>
+        
+    </div>  
+ </div>
+</form>
+ </div>
+ </div>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Telefono:</label>
-                                 <div class="col-sm-10"><input type="text" class="form-control" name="telefono"></div>
-                            </div>
+ <style>
+    input{text-align: center;}
+ </style>
 
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Celular:</label>
-                                 <div class="col-sm-10"><input type="text" class="form-control" name="celular"></div>
-                            </div>
-
-                            <div class="form-group  row"><label class="col-sm-2 col-form-label">Correo:</label>
-                                 <div class="col-sm-10"><input type="email" class="form-control" name="email"></div>
-                            </div>
-                            
-                        <input type="hidden" name="clientes_id" value="{{$id}}">
-
-                            <button class="btn btn-primary" type="submit">Guardar</button>
-
-                        </form>
-
-                    </div>
-                </div>
-            </div>
-
-
-	    </div>
-</div>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>

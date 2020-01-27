@@ -40,9 +40,10 @@
 
      </table>
       </div>
+      
      <form action="{{ route('personal-datos-laborales.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-         <input type="text" class="form-control" value="{{$personales->id}}" name="personal_id" >
+         <input type="text" class="form-control" value="{{$personales->id}}" name="personal_id" hidden="hidden">
       <div class="row marketing">
         <div class="col-lg-6">
 

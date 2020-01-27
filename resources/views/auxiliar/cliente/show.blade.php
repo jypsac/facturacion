@@ -15,7 +15,7 @@
       </div>
 
   <i  class="fa fa-user-o" aria-hidden="true" style="font-size: 35px"></i>&nbsp;&nbsp;
-  <a  class="btn btn-sm btn-success" href="{{ route('cliente.edit', $cliente_show->id) }}" style="background-color: #1ab394; border-color: #1ab394;padding: 2px 4px"> <i style="font-size: 15px" class="fa fa-edit"></i></a>
+  <a  class="btn btn-success" href="{{ route('cliente.edit', $cliente_show->id) }}" role="button"> <i class="fa fa-edit"></i></a>
   <br><br>
       <div class="row marketing">
         <div class="col-lg-6">
@@ -51,7 +51,11 @@
     <table>
       <tr>
         <th><i  style="font-size: 35px" class="fa fa-address-book-o" aria-hidden="true"></i></th>
-        <th><a  class="btn btn-sm btn-success" href="{{ route('contacto.editar', $contacto->id) }}" style="background-color: #1ab394; border-color: #1ab394;padding: 2px 4px"> <i style="font-size: 15px" class="fa fa-edit"></i></a></th>
+        </tr>
+        <tr>
+        <th>
+          <a  class="btn btn-success" href="{{ route('contacto.editar', $contacto->id) }}" role="button"> <i class="fa fa-edit"></i></a>
+        </th>
         <th>
          @if($contacto->primer_contacto==1)
 
@@ -60,10 +64,11 @@
               <form action="{{ route('contacto.destroy', $contacto->id)}}" method="POST">
                 @csrf
              @method('delete')
-             <input type="text" style="visibility: hidden;width: 1px" name="id_cli" value="{{$contacto->clientes_id}}">  
-                <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
+             <input type="text" style=" width: 0px" hidden="hidden" name="id_cli" value="{{$contacto->clientes_id}}">  
+                <button type="submit" class="btn btn-s-m btn-danger"><i class="fa fa-trash-o"></i></button>
                </form>
-               <th><button type="" class="btn btn-s-m btn-info">Contacto principal</button></th>
+               <th>{{-- <button type="" class="btn btn-s-m btn-info"></button> --}}
+                <a data-toggle="modal" class="btn btn-s-m btn-info" href="#modal-form"><i class="fa fa-star"></i></a></th>
        @endif
        </th>
       </tr>
@@ -90,7 +95,31 @@
                            
 </div>
 </div>
+{{-- Modal Contacto Principal --}}
+                            
+                            <div id="modal-form" class="modal fade" aria-hidden="true">
+                                <div class="modal-dialog" style="margin-top: 12%">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            
+                                             <div class="ibox-content float-e-margins">
+                        
+                                               <h3 class="font-bold col-lg-12" align="center">
+                                              ¿Esta Seguro que Deseas Cambiar como "Contacto Principal"?
+                                               </h3>
+                                               <p align="center">
+                                                   <a class="btn btn-w-m btn-primary" href="">Aceptar</a>
+                                                   {{-- <a class="btn btn-w-m btn-danger"  href="">Cancelar</a> --}}
+                                                   <button type="button" class="btn btn-w-m btn-danger" data-dismiss="modal">Cancelar</button>
 
+                                               </p>
+                                              </div>
+
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+{{-- Fin Modal Contacto Principal --}}
 
 <!-- Mainly scripts -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
