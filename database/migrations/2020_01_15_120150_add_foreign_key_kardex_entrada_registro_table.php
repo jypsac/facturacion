@@ -23,6 +23,7 @@ class AddForeignKeyKardexEntradaRegistroTable extends Migration
 
             $table->integer('cantidad_inicial');
             $table->double('precio');
+
             $table->integer('cantidad');
             $table->boolean('estado');
 

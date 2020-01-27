@@ -85,7 +85,7 @@ class KardexEntradaController extends Controller
         $precio = $request->input('precio');
         $count_precio=count($precio);
 
-        
+
         if($count_articulo = $count_cantidad = $count_precio){
             for($i=0;$i<$count_articulo;$i++){
                 $kardex_entrada_registro=new kardex_entrada_registro();
@@ -93,17 +93,15 @@ class KardexEntradaController extends Controller
                 $kardex_entrada_registro->producto_id=$request->get('articulo')[$i];
                 $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
                 $kardex_entrada_registro->precio=$request->get('precio')[$i];
-
                 $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
-                $kardex_entrada->estado=1;
+                $kardex_entrada_registro->estado=1;
                 $kardex_entrada_registro->save();
-                
-                
+
             }
         }else {
             return "Falto introducir un campo";
         }
-        
+
             // $cantidad=kardex_entrada_registro::where('producto_id',1)->sum('cantidad');
             // $promedio=kardex_entrada_registro::where('producto_id',1)->avg('precio');
 
@@ -114,8 +112,8 @@ class KardexEntradaController extends Controller
             // $inventario_inicial->cantidad=$cantidad;
             // $inventario_inicial->promedio=$promedio;
             // $inventario_inicial->save();
-        
-        // return $cantidad." Promedio : ".$promedio;
+
+            // return $cantidad." Promedio : ".$promedio;
 
         return "Guardado";
 
