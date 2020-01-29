@@ -47,7 +47,7 @@ class KardexSalidaController extends Controller
         $kardex_salida->informacion=$request->get('informacion');
         $kardex_salida->estado=1;
         $kardex_salida->save();
-        
+
         //contador de valores de articulos
         $articulo = $request->input('articulo');
         $count_articulo=count($articulo);
@@ -64,13 +64,20 @@ class KardexSalidaController extends Controller
                 $kardex_salida_registro->save();
 
                 $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->first();
-                // if(isset($comparacion)){
-                //     $kardex_entrada_registro_edit=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->first();
-                //     $var_cantidad=$kardex_entrada_registro_edit->cantidad;
-                //     return $comparacion;
-                // }
 
-                return $comparacion;
+                $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->sum('cantidad');
+
+                if(isset($comparacion)){
+                    $kardex_entrada_registro_edit=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->first();
+                    $var_cantidad=$kardex_entrada_registro_edit->cantidad;
+                    // return $comparacion;
+                    if (condition) {
+                        # code...
+                    }
+
+                }
+
+                // return $comparacion;
             }
         }else {
             return "Falto introducir un campo";
