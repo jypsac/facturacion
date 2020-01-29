@@ -33,7 +33,6 @@ class KardexSalidaController extends Controller
         $productos=Producto::all();
         return view('inventario.kardex.salida.create',compact('motivos','productos'));
     }
-
     /**
      * Store a newly created resource in storage.
      *
@@ -63,27 +62,39 @@ class KardexSalidaController extends Controller
                 $kardex_salida_registro->cantidad=$request->get('cantidad')[$i];
                 $kardex_salida_registro->save();
 
-                $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->first();
-
+                $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->get();
                 $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->sum('cantidad');
 
                 if(isset($comparacion)){
-                    $kardex_entrada_registro_edit=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->first();
-                    $var_cantidad=$kardex_entrada_registro_edit->cantidad;
-                    // return $comparacion;
-                    if (condition) {
-                        # code...
+                    $var_cantidad_entrada=$kardex_salida_registro->cantidad;
+                    $contador=0;
+                    foreach ($comparacion as $p) {
+                        if($p->cantidad>=$var_cantidad_entrada){
+                            $cantidad_mayor=$p->cantidad;
+                            $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                            $p->cantidad=$cantidad_final;
+                            if($cantidad_final==0){
+                                $p->estado=0;
+                                $p->save();
+                                return "cantidad restada a cero";
+                            }else{
+                                $p->save();
+                                return "cantidad restada";
+                            }
+                        }else{
+                            $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+                            $p->cantidad=0;
+                            $p->estado=0;
+                            $p->save();
+                            // $contador=$contador+$var_cantidad_entrada;
+                        }
+                        // return "fuera de los if pero dentro del foreach";
                     }
-
                 }
-
-                // return $comparacion;
             }
         }else {
             return "Falto introducir un campo";
         }
-
-
         return $request;
     }
 
