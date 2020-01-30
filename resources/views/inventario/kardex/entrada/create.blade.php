@@ -85,7 +85,7 @@
 
 {{-- Check --}}
 
-						<table 	 cellspacing="0" class="table table-striped">
+						<table 	 cellspacing="0" class="table table-striped table-responsive">
 							<thead>
 							<tr>
 								<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
@@ -98,21 +98,23 @@
 						</thead>
 								<tbody>
 							<tr>
-							<td><input type='checkbox' class='case' style="background:red;"></td>
+								<td><input type='checkbox' class="i-checks"></td>
 								<td>
 								<select class="form-control" id='articulo' name='articulo[]' required>
 									@foreach($productos as $producto)
 									<option value="{{$producto->id}}">{{$producto->codigo_producto}} -> {{$producto->nombre}}</option>
 									@endforeach
-								</select></td>
+								</select>
+								</td>
 
-								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0" onkeyup="multi(0);"  required/></td>
-								<td><input type='text' id='precio' name='precio[]' class="monto0" onkeyup="multi(0);" required/></td>
-								<td><input type='text' id='total0' name='total[]' required/></td>
+								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
+								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
+								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
 								<span id="spTotal"></span>
 							</tr>
 						</tbody>
 						</table>
+
 
 						<button type="button" class='delete btn btn-danger'  > Eliminar </button>
 						<button type="button" class='addmore btn btn-success' > Agregar </button>
@@ -121,6 +123,11 @@
 
 					</form>
 <tr>
+	<style type="text/css">
+	.form-control{
+		    border-radius: 5px;
+	}
+	</style>
 
 	{{-- <style type="text/css">
 		#boton_personalizado_eliminar{
@@ -213,9 +220,9 @@
 								</select>
 			</td>
 
-			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i}" onkeyup="multi(${i});" required/></td>
-			<td><input type='text' id='precio" + i + "' name='precio[]' class="monto${i}" onkeyup="multi(${i});" required/></td>
-			<td><input type='text' id='total${i}' name='total[]' required/></td>
+			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/></td>
+			<td><input type='text' id='precio" + i + "' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});" required/></td>
+			<td><input type='text' id='total${i}' name='total[]' class="form-control" required/></td>
 			</tr>`;
             $('table').append(data);
             i++;
