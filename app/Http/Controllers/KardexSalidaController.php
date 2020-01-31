@@ -43,61 +43,76 @@ class KardexSalidaController extends Controller
 
     public function store(Request $request)
     {
-        $kardex_salida=new Kardex_salida();
-        $kardex_salida->motivo_id=$request->get('motivo');
-        $kardex_salida->informacion=$request->get('informacion');
-        $kardex_salida->estado=1;
-        $kardex_salida->save();
+        // Validacion para ver si la cantidad es suficiente con lo requerido
 
-        //contador de valores de articulos
-        $articulo = $request->input('articulo');
-        $count_articulo=count($articulo);
+        //Primer verificacion de articulos en validacion del if
+        $articulo1 = $request->input('articulo');
+        $count_articulo1=count($articulo1);
 
-        $cantidad = $request->input('cantidad');
-        $count_cantidad=count($cantidad);
+        $cantidad1 = $request->input('cantidad');
+        $count_cantidad1=count($cantidad1);
 
-        if($count_articulo = $count_cantidad ){
-            for($i=0;$i<$count_articulo;$i++){
-                $kardex_salida_registro=new kardex_salida_registro();
-                $kardex_salida_registro->kardex_salida_id=$kardex_salida->id;
-                $kardex_salida_registro->producto_id=$request->get('articulo')[$i];
-                $kardex_salida_registro->cantidad=$request->get('cantidad')[$i];
-                $kardex_salida_registro->save();
+        if($count_articulo = $count_cantidad){
+            $cantidad = $request->input('cantidad');
+            $count_cantidad=count($cantidad);
 
-                $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->get();
-                $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->sum('cantidad');
+            $kardex_salida=new Kardex_salida();
+            $kardex_salida->motivo_id=$request->get('motivo');
+            $kardex_salida->informacion=$request->get('informacion');
+            $kardex_salida->estado=1;
+            $kardex_salida->save();
 
-                if(isset($comparacion)){
-                    $var_cantidad_entrada=$kardex_salida_registro->cantidad;
-                    $contador=0;
-                    foreach ($comparacion as $p) {
-                        if($p->cantidad>=$var_cantidad_entrada){
-                            $cantidad_mayor=$p->cantidad;
-                            $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
-                            $p->cantidad=$cantidad_final;
-                            if($cantidad_final==0){
+            //contador de valores de articulos (re verificacion)
+            $articulo = $request->input('articulo');
+            $count_articulo=count($articulo);
+
+            $cantidad = $request->input('cantidad');
+            $count_cantidad=count($cantidad);
+
+            if($count_articulo = $count_cantidad ){
+                for($i=0;$i<$count_articulo;$i++){
+                    $kardex_salida_registro=new kardex_salida_registro();
+                    $kardex_salida_registro->kardex_salida_id=$kardex_salida->id;
+                    $kardex_salida_registro->producto_id=$request->get('articulo')[$i];
+                    $kardex_salida_registro->cantidad=$request->get('cantidad')[$i];
+                    $kardex_salida_registro->save();
+
+                    $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->get();
+                    $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->sum('cantidad');
+
+                    if(isset($comparacion)){
+                        $var_cantidad_entrada=$kardex_salida_registro->cantidad;
+                        $contador=0;
+                        foreach ($comparacion as $p) {
+                            if($p->cantidad>=$var_cantidad_entrada){
+                                $cantidad_mayor=$p->cantidad;
+                                $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                                $p->cantidad=$cantidad_final;
+                                if($cantidad_final==0){
+                                    $p->estado=0;
+                                    $p->save();
+                                    return "cantidad restada a cero";
+                                }else{
+                                    $p->save();
+                                    return "cantidad restada";
+                                }
+                            }else{
+                                $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+                                $p->cantidad=0;
                                 $p->estado=0;
                                 $p->save();
-                                return "cantidad restada a cero";
-                            }else{
-                                $p->save();
-                                return "cantidad restada";
+                                // $contador=$contador+$var_cantidad_entrada;
                             }
-                        }else{
-                            $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
-                            $p->cantidad=0;
-                            $p->estado=0;
-                            $p->save();
-                            // $contador=$contador+$var_cantidad_entrada;
+                            
                         }
-                        // return "fuera de los if pero dentro del foreach";
                     }
                 }
+            }else {
+                return "Error fatal comunicarse con soporte inmediatamente";
             }
-        }else {
+        }else{
             return "Falto introducir un campo";
         }
-        return $request;
     }
 
     /**

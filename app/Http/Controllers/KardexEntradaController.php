@@ -75,7 +75,7 @@ class KardexEntradaController extends Controller
             for ($a=1; $a<$count_articulo ; $a++) {
                 $articulo_comparacion=$request->get('articulo')[$a];
                 if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                    return "Articulos doble introducido".$count_articulo;
+                    return "Count Articulo : ".$count_articulo." Articulo comparacion inicial ".$articulo_comparacion_inicial." ";
                 }
             }
         }
@@ -103,19 +103,6 @@ class KardexEntradaController extends Controller
             return "Falto introducir un campo";
         }
 
-            // $cantidad=kardex_entrada_registro::where('producto_id',1)->sum('cantidad');
-            // $promedio=kardex_entrada_registro::where('producto_id',1)->avg('precio');
-
-            // $inventario_inicial=new InventarioInicial();
-            // $inventario_inicial->categorias_id=1;
-            // $inventario_inicial->almacen_id=$almacen;
-            // $inventario_inicial->articulo_id=1;
-            // $inventario_inicial->cantidad=$cantidad;
-            // $inventario_inicial->promedio=$promedio;
-            // $inventario_inicial->save();
-
-            // return $cantidad." Promedio : ".$promedio;
-
         return "Guardado";
 
     }
@@ -129,7 +116,7 @@ class KardexEntradaController extends Controller
     public function show($id)
     {
         $kardex_entradas=Kardex_entrada::find($id);
-        $kardex_entradas_registros=kardex_entrada_registro::find($id);
+        $kardex_entradas_registros=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
         return view('inventario.kardex.entrada.show',compact('kardex_entradas','kardex_entradas_registros'));
     }
 
