@@ -123,7 +123,10 @@ class KardexSalidaController extends Controller
      */
     public function show($id)
     {
-        //
+        $mi_empresa=Empresa::first();
+        $kardex_salidas=Kardex_salida::find($id);
+        $kardex_salidas_registros=kardex_salida_registro::where('kardex_salida_id',$id)->get();
+        return view('inventario.kardex.entrada.show',compact('kardex_salidas','kardex_salidas_registros','mi_empresa'));
     }
 
     /**

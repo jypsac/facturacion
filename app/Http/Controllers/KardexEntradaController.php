@@ -64,24 +64,43 @@ class KardexEntradaController extends Controller
         $kardex_entrada->save();
 
         //contador de valores de articulos
-        $articulo = $request->input('articulo');
-        $count_articulo=count($articulo);
+        $articulo = $request->input('articulo');    
+        $count_articulo=count($articulo);  
+         
+        
 
         //validacion para la no incersion de dobles articulos
         
-        $count_articulo_menos=$count_articulo--;
-
-        if($count_articulo=1){
-            for ($e=0; $e <= $count_articulo_menos; $e++) {
-                $articulo_comparacion_inicial=$request->get('articulo')[$e];
-                for ($a=1; $a<=$count_articulo ; $a++) {
-                    $articulo_comparacion=$request->get('articulo')[$a];
-                    if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return "Count Articulo : ".$count_articulo." Articulo comparacion inicial ".$articulo_comparacion_inicial." Articulo comparacion : ".$articulo_comparacion;
-                    }
+        $count_articulo_menos=$count_articulo-1;    
+        
+        for ($e=0; $e <= $count_articulo_menos; $e++){
+            $articulo_comparacion_inicial=$request->get('articulo')[$e];
+            for ($a=1; $a<=$count_articulo_menos ; $a++) {
+                $articulo_comparacion=$request->get('articulo')[$a];
+                if ($articulo_comparacion_inicial==$articulo_comparacion) {
+                    return "igualdad";
                 }
             }
         }
+
+        return "paso";
+        
+           
+
+        // if($count_articulo==1){
+        //     for ($e=0; $e < $count_articulo_menos; $e++) {
+        //         $articulo_comparacion_inicial=$request->get('articulo')[$e];
+        //         for ($a=0; $a<=$count_articulo ; $a++) {
+        //             $articulo_comparacion=$request->get('articulo')[$a];
+        //             if ($articulo_comparacion_inicial==$articulo_comparacion) {
+        //                 return "---Count Articulo : ".$count_articulo." ---Articulo comparacion inicial ".$articulo_comparacion_inicial." ---Articulo comparacion : ".$articulo_comparacion;
+        //             }
+        //         }
+        //     }
+        // }else{
+        //     $articulo_comparacion_inicial=$request->get('articulo')[0];
+        //     return $count_articulo_menos;
+        // }
         
         
 
