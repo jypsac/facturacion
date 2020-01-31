@@ -33,12 +33,14 @@ class KardexSalidaController extends Controller
         $productos=Producto::all();
         return view('inventario.kardex.salida.create',compact('motivos','productos'));
     }
+    
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
     public function store(Request $request)
     {
         $kardex_salida=new Kardex_salida();

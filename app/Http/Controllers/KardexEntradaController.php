@@ -128,7 +128,9 @@ class KardexEntradaController extends Controller
      */
     public function show($id)
     {
-        return view('inventario.kardex.entrada.show');
+        $kardex_entradas=Kardex_entrada::find($id);
+        $kardex_entradas_registros=kardex_entrada_registro::find($id);
+        return view('inventario.kardex.entrada.show',compact('kardex_entradas','kardex_entradas_registros'));
     }
 
     /**
