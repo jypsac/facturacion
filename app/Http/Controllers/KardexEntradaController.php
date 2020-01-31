@@ -2,9 +2,9 @@
 
 namespace App\Http\Controllers;
 
-
-use App\Almacen;
 use DB;
+use App\Almacen;
+use App\Empresa;
 use App\Provedor;
 use App\Producto;
 use App\Kardex_entrada;
@@ -67,18 +67,24 @@ class KardexEntradaController extends Controller
         $articulo = $request->input('articulo');
         $count_articulo=count($articulo);
 
-        //VALIDACION PARA LA NO INCERSION DE DOBLES ARTICULOS
+        //validacion para la no incersion de dobles articulos
+        
         $count_articulo_menos=$count_articulo--;
 
-        for ($e=0; $e < $count_articulo_menos; $e++) {
-            $articulo_comparacion_inicial=$request->get('articulo')[$e];
-            for ($a=1; $a<$count_articulo ; $a++) {
-                $articulo_comparacion=$request->get('articulo')[$a];
-                if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                    return "Count Articulo : ".$count_articulo." Articulo comparacion inicial ".$articulo_comparacion_inicial." ";
+        if($count_articulo=1){
+            for ($e=0; $e <= $count_articulo_menos; $e++) {
+                $articulo_comparacion_inicial=$request->get('articulo')[$e];
+                for ($a=1; $a<=$count_articulo ; $a++) {
+                    $articulo_comparacion=$request->get('articulo')[$a];
+                    if ($articulo_comparacion_inicial==$articulo_comparacion) {
+                        return "Count Articulo : ".$count_articulo." Articulo comparacion inicial ".$articulo_comparacion_inicial." Articulo comparacion : ".$articulo_comparacion;
+                    }
                 }
             }
         }
+        
+        
+
         //contador de valores de cantidad
         $cantidad = $request->input('cantidad');
         $count_cantidad=count($cantidad);
@@ -97,7 +103,6 @@ class KardexEntradaController extends Controller
                 $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
                 $kardex_entrada_registro->estado=1;
                 $kardex_entrada_registro->save();
-
             }
         }else {
             return "Falto introducir un campo";
@@ -115,9 +120,10 @@ class KardexEntradaController extends Controller
      */
     public function show($id)
     {
+        $mi_empresa=Empresa::first();
         $kardex_entradas=Kardex_entrada::find($id);
         $kardex_entradas_registros=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
-        return view('inventario.kardex.entrada.show',compact('kardex_entradas','kardex_entradas_registros'));
+        return view('inventario.kardex.entrada.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa'));
     }
 
     /**
