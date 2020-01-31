@@ -55,7 +55,7 @@
 
 {{-- Check --}}
 
-						<table 	 cellspacing="0" class="table table-striped">
+						<table 	 cellspacing="0" class="table table-striped ">
 							<thead>
 							<tr>
 								<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
@@ -74,7 +74,7 @@
 									@endforeach
 								</select></td>
 
-								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0"   required/></td>
+								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   required/></td>
 								
 								<span id="spTotal"></span>
 							</tr>
@@ -101,6 +101,11 @@
 		</div>
 	</div>
 </div>
+<style>	
+.form-control{
+	border-radius: 5px;
+}
+</style>
 
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -125,7 +130,7 @@
 								</select>
 			</td>
 
-			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto"  required/></td>
+			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto form-control"  required/></td>
 			
 			</tr>`;
             $('table').append(data);

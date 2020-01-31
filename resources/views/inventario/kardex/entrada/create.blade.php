@@ -98,7 +98,7 @@
 						</thead>
 								<tbody>
 							<tr>
-								<td><input type='checkbox' class="i-checks"></td>
+								<td><input type='checkbox' class="case"></td>
 								<td>
 								<select class="form-control" id='articulo' name='articulo[]' required>
 									@foreach($productos as $producto)

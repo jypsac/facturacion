@@ -16,6 +16,7 @@ class Kardex_entrada extends Model
 
     public function almacen(){
         return $this->belongsTo(Almacen::class,'almacen_id');
-    } 
+    }
 
+   
 }
