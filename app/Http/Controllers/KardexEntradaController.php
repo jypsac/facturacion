@@ -67,8 +67,6 @@ class KardexEntradaController extends Controller
         $articulo = $request->input('articulo');    
         $count_articulo=count($articulo);  
          
-        
-
         //validacion para la no incersion de dobles articulos
         
         $count_articulo_menos=$count_articulo-1;    
@@ -83,7 +81,7 @@ class KardexEntradaController extends Controller
             }
         }
 
-        return "paso";
+        return $articulo;
         
            
 
