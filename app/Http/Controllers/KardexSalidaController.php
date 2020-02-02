@@ -33,7 +33,7 @@ class KardexSalidaController extends Controller
         $productos=Producto::all();
         return view('inventario.kardex.salida.create',compact('motivos','productos'));
     }
-    
+
     /**
      * Store a newly created resource in storage.
      *
@@ -51,6 +51,40 @@ class KardexSalidaController extends Controller
 
         $cantidad1 = $request->input('cantidad');
         $count_cantidad1=count($cantidad1);
+
+        //validacion para la no incersion de dobles articulos
+
+        for ($e=0; $e < $count_articulo1; $e++){
+            $articulo_comparacion_inicial=$request->get('articulo')[$e];
+            for ($a=0; $a< $count_articulo1 ; $a++) {
+                if ($a==$e) {
+                    $a++;
+                }else {
+                    $articulo_comparacion=$request->get('articulo')[$a];
+                    if ($articulo_comparacion_inicial==$articulo_comparacion) {
+                        return "datos repetidos - NO PERMITIDOS" ;
+                    }
+                }
+
+            }
+        }
+
+        //Validacion para cantidad
+
+        for ($i=0; $i < $count_articulo1; $i++){
+            $articulo_c=$request->get('articulo')[$i];
+            $cantidad_c=$request->get('cantidad')[$i];
+            $consulta_cantidad=kardex_entrada_registro::where('producto_id',$articulo_c)->where('estado','1')->sum('cantidad');
+            if ($cantidad_c > $consulta_cantidad) {
+                return "no hay cantidad deseada para el articulo";
+            }
+        }
+
+        $articulo = $request->input('articulo');
+        $count_articulo=count($articulo);
+
+        $cantidad= $request->input('cantidad');
+        $count_cantidad=count($cantidad);
 
         if($count_articulo = $count_cantidad){
             $cantidad = $request->input('cantidad');
@@ -103,7 +137,7 @@ class KardexSalidaController extends Controller
                                 $p->save();
                                 // $contador=$contador+$var_cantidad_entrada;
                             }
-                            
+
                         }
                     }
                 }

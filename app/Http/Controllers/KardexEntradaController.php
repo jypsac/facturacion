@@ -49,6 +49,26 @@ class KardexEntradaController extends Controller
      */
     public function store(Request $request)
     {
+        //contador de valores de articulos
+        $articulo = $request->input('articulo');
+        $count_articulo=count($articulo);
+
+        //validacion para la no incersion de dobles articulos
+
+        for ($e=0; $e < $count_articulo; $e++){
+            $articulo_comparacion_inicial=$request->get('articulo')[$e];
+            for ($a=0; $a< $count_articulo ; $a++) {
+                if ($a==$e) {
+                    $a++;
+                }else {
+                    $articulo_comparacion=$request->get('articulo')[$a];
+                    if ($articulo_comparacion_inicial==$articulo_comparacion) {
+                        return "datos repetidos - NO PERMITIDOS" ;
+                    }
+                }
+
+            }
+        }
 
         //Guardado de almacen para inventario-inicial
         $almacen=$request->get('almacen');
@@ -63,52 +83,12 @@ class KardexEntradaController extends Controller
         $kardex_entrada->informacion=$request->get('informacion');
         $kardex_entrada->save();
 
-        //contador de valores de articulos
-        $articulo = $request->input('articulo');    
-        $count_articulo=count($articulo);  
-         
-        //validacion para la no incersion de dobles articulos
-        
-        $count_articulo_menos=$count_articulo-1;    
-        
-        for ($e=0; $e <= $count_articulo_menos; $e++){
-            $articulo_comparacion_inicial=$request->get('articulo')[$e];
-            for ($a=1; $a<=$count_articulo_menos ; $a++) {
-                $articulo_comparacion=$request->get('articulo')[$a];
-                if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                    return "igualdad";
-                }
-            }
-        }
-
-        return $articulo;
-        
-           
-
-        // if($count_articulo==1){
-        //     for ($e=0; $e < $count_articulo_menos; $e++) {
-        //         $articulo_comparacion_inicial=$request->get('articulo')[$e];
-        //         for ($a=0; $a<=$count_articulo ; $a++) {
-        //             $articulo_comparacion=$request->get('articulo')[$a];
-        //             if ($articulo_comparacion_inicial==$articulo_comparacion) {
-        //                 return "---Count Articulo : ".$count_articulo." ---Articulo comparacion inicial ".$articulo_comparacion_inicial." ---Articulo comparacion : ".$articulo_comparacion;
-        //             }
-        //         }
-        //     }
-        // }else{
-        //     $articulo_comparacion_inicial=$request->get('articulo')[0];
-        //     return $count_articulo_menos;
-        // }
-        
-        
-
         //contador de valores de cantidad
         $cantidad = $request->input('cantidad');
         $count_cantidad=count($cantidad);
         //contador de valores de precio
         $precio = $request->input('precio');
         $count_precio=count($precio);
-
 
         if($count_articulo = $count_cantidad = $count_precio){
             for($i=0;$i<$count_articulo;$i++){
@@ -124,9 +104,7 @@ class KardexEntradaController extends Controller
         }else {
             return "Falto introducir un campo";
         }
-
         return "Guardado";
-
     }
 
     /**
