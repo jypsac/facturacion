@@ -38,37 +38,33 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Motivo</th>
-                                <th>Provedor</th>
-                                <th>Almacen</th>
-                                <th>Guia Remision</th>
-                                <th>Factura</th>
-                                <th>Ver</th>
+                                <th>Informacion</th>
+                                {{-- <th>Estado</th> --}}
+                                <th>Ver</th>{{-- 
                                 <th>Editar</th>
-                                <th>Anular</th>
+                                <th>Anular</th> --}}
                             </tr>
                         </thead>
                     <tbody>
-                        {{-- @foreach($kardex_entradas as $kardex_entrada)
+                        @foreach($kardex_salidas as $kardex_salida)
                             <tr class="gradeX">
-                                <td>{{$kardex_entrada->id}}</td>
-                                <td>{{$kardex_entrada->motivo}}</td>
-                                <td>{{$kardex_entrada->provedor->empresa}}</td>
-                                <td>{{$kardex_entrada->almacen->nombre}}</td>
-                                <td>{{$kardex_entrada->guia_remision}}</td>
-                                <td>{{$kardex_entrada->factura}}</td>
-                                <td><center><a href="{{ route('kardex-entrada.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                <td><center><a href="{{ route('kardex-entrada.edit', $kardex_entrada->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
+                                <td>{{$kardex_salida->id}}</td>
+                                <td>{{$kardex_salida->motivos->nombre}}</td>
+                                <td>{{$kardex_salida->informacion}}</td>
+                                {{-- <td>{{$kardex_salida->estado}}</td> --}}
+                                <td><center><a href="{{ route('kardex-salida.show', $kardex_salida->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
+                                {{-- <td><center><a href="{{ route('kardex-salida.edit', $kardex_salida->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
                                 <td>
                                     <center>
-                                        <form action="{{ route('kardex-entrada.destroy', $kardex_entrada->id)}}" method="POST">
+                                        <form action="{{ route('kardex-entrada.destroy', $kardex_salida->id)}}" method="POST">
                                             @csrf
                                             @method('delete')
                                             <button type="submit" class="btn btn-s-m btn-danger">Anular</button>
                                         </form>
                                     </center>
-                                </td>
+                                </td> --}}
                             </tr>
-                        @endforeach --}}
+                        @endforeach
                     </tbody>
                     </table>
                 </div>

@@ -48,7 +48,7 @@
                                         <th>Producto</th>
                                         <th>Cantidad</th>
                                         <th>Precio unitario</th>
-                                        <th>Precio Total</th>
+                                        <th style="background: #f3f3f4">Precio Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -58,8 +58,8 @@
                                             <small>{{$kardex_entradas_registro->producto->descripcion}}</small>
                                         </td>
                                         <td>{{$kardex_entradas_registro->cantidad_inicial}}</td>
-                                        <td>P.U</td>
-                                        <td>Pr.T</td>
+                                        <td>{{$kardex_entradas_registro->precio}}</td>
+                                        <td style="background: #f3f3f4">{{$kardex_entradas_registro->precio * $kardex_entradas_registro->cantidad_inicial}}</td>
                                     </tr>
                                       @endforeach
                                     </tbody>

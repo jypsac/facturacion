@@ -19,9 +19,12 @@ class KardexSalidaController extends Controller
      */
     public function index()
     {
-        return view('inventario.kardex.salida.index');
+    
+        $kardex_salidas=Kardex_salida::all();
+        // return view('inventario.kardex.salida.index');
+        return view('inventario.kardex.salida.index' ,compact('kardex_salidas'));
     }
-
+        
     /**
      * Show the form for creating a new resource.
      *
@@ -160,7 +163,7 @@ class KardexSalidaController extends Controller
      */
     public function show($id)
     {
-        $mi_empresa=Empresa::first();
+        // $mi_empresa=Empresa::first();xattr_get(filename, name)
         $kardex_salidas=Kardex_salida::find($id);
         $kardex_salidas_registros=kardex_salida_registro::where('kardex_salida_id',$id)->get();
         return view('inventario.kardex.entrada.show',compact('kardex_salidas','kardex_salidas_registros','mi_empresa'));
