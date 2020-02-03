@@ -37,48 +37,53 @@
 				<div class="ibox-content">
 					<form action="{{ route('kardex-entrada.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Motivos :</label>
-		                    <div class="col-sm-10">
-								<select class="form-control" name="motivo">
-									@foreach($motivos as $motivo)
-									<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
-									@endforeach
-								</select>
-							</div>
-		                </div>
+					 	<div class="form-group row ">
+								<label class="col-sm-2 col-form-label" >Motivos:</label>
+							                    <div class="col-sm-4">
+							                     	<select class="form-control" name="motivo">
+														@foreach($motivos as $motivo)
+														<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
+														@endforeach
+													</select>
+							                    </div>
 
-				        <div class="form-group  row"><label class="col-sm-2 col-form-label">G Remision:</label>
-		                    <div class="col-sm-10"><input type="text" class="form-control" name="guia_remision"></div>
-		                </div>
+							    <label class="col-sm-2 col-form-label">G Remision:</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" name="guia_remision">
+							                    </div>
+						</div>
+						<div class="form-group row ">
+								<label class="col-sm-2 col-form-label" >Factura:</label>
+							                    <div class="col-sm-4">
+							                     	<input type="text" class="form-control" name="factura">
+							                    </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Factura:</label>
-		                    <div class="col-sm-10"><input type="text" class="form-control" name="factura"></div>
-		                </div>
+							    <label class="col-sm-2 col-form-label"> Provedor:</label>
+												<div class="col-sm-4">
+													<select class="form-control" name="provedor">
+													@foreach($provedores as $provedor)
+													<option value="{{$provedor->id}}" >{{$provedor->empresa}}</option>
+													@endforeach
+													</select>
+							                    </div>
+						</div>
+						<div class="form-group row ">
+								<label class="col-sm-2 col-form-label" >Almacen:</label>
+							                    <div class="col-sm-4">
+							                    <select class="form-control" name="almacen">
+												@foreach($almacenes as $almacen)
+												<option value="{{$almacen->id}}">{{$almacen->abreviatura}} -> {{$almacen->descripcion}}</option>
+												@endforeach
+												</select>
+							                    </div>
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Provedor:</label>
-		                    <div class="col-sm-10">
-								<select class="form-control" name="provedor">
-									@foreach($provedores as $provedor)
-									<option value="{{$provedor->id}}" >{{$provedor->empresa}}</option>
-									@endforeach
-								</select>
-							</div>
-		                </div>
-
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Almacen:</label>
-							<div class="col-sm-10">
-								<select class="form-control" name="almacen">
-									@foreach($almacenes as $almacen)
-									<option value="{{$almacen->id}}">{{$almacen->abreviatura}} -> {{$almacen->descripcion}}</option>
-									@endforeach
-								</select>
-							</div>
-		                </div>
-
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Informaciones:</label>
-		                    <div class="col-sm-10"><input type="text" class="form-control" name="informacion"></div>
+							    <label class="col-sm-2 col-form-label"> Informaciones:</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" name="informacion">
+							                    </div>
 						</div>
 
+					 
 {{-- Check --}}
 
 

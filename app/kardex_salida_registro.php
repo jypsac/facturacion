@@ -9,4 +9,7 @@ class kardex_salida_registro extends Model
     protected $table = 'kardex_salida_registro';
 
     protected $guarded = [];
+
+    
+    
 }

@@ -43,8 +43,8 @@
                                 <th>Guia Remision</th>
                                 <th>Factura</th>
                                 <th>Ver</th>
-                                <th>Editar</th>
-                                <th>Anular</th>
+                                {{-- <th>Editar</th> --}}
+                                {{-- <th>Anular</th> --}}
                             </tr>
                         </thead>
                     <tbody>
@@ -57,8 +57,8 @@
                                 <td>{{$kardex_entrada->guia_remision}}</td>
                                 <td>{{$kardex_entrada->factura}}</td>
                                 <td><center><a href="{{ route('kardex-entrada.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                <td><center><a href="{{ route('kardex-entrada.edit', $kardex_entrada->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
-                                <td>
+                                {{-- <td><center><a href="{{ route('kardex-entrada.edit', $kardex_entrada->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
+                                {{-- <td>
                                     <center>
                                         <form action="{{ route('kardex-entrada.destroy', $kardex_entrada->id)}}" method="POST">
                                             @csrf
@@ -66,7 +66,7 @@
                                             <button type="submit" class="btn btn-s-m btn-danger">Anular</button>
                                         </form>
                                     </center>
-                                </td>
+                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>
