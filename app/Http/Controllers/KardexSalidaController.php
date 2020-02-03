@@ -125,10 +125,12 @@ class KardexSalidaController extends Controller
                                 if($cantidad_final==0){
                                     $p->estado=0;
                                     $p->save();
-                                    return "cantidad restada a cero";
+                                    // return "cantidad restada a cero";
+                                    return redirect()->route('kardex-salida.index');
                                 }else{
                                     $p->save();
-                                    return "cantidad restada";
+                                    // return "cantidad restada";
+                                    return redirect()->route('kardex-salida.index');
                                 }
                             }else{
                                 $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
@@ -136,6 +138,7 @@ class KardexSalidaController extends Controller
                                 $p->estado=0;
                                 $p->save();
                                 // $contador=$contador+$var_cantidad_entrada;
+                                return redirect()->route('kardex-salida.index');
                             }
 
                         }

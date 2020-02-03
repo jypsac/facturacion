@@ -104,7 +104,7 @@ class KardexEntradaController extends Controller
         }else {
             return "Falto introducir un campo";
         }
-        return "Guardado";
+        return redirect()->route('kardex-entrada.index');
     }
 
     /**
