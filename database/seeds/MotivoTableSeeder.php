@@ -11,11 +11,11 @@ class MotivoTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('motivos')->insert([
-            'nombre' => 'Compras Importadas',
-            'created_at' => date('2019-08-01 00:00:00'),
-            'updated_at' => date('2019-08-01 00:00:00'),
-        ]);
+        // DB::table('motivos')->insert([
+        //     'nombre' => 'Compras Importadas',
+        //     'created_at' => date('2019-08-01 00:00:00'),
+        //     'updated_at' => date('2019-08-01 00:00:00'),
+        // ]);
 
         DB::table('motivos')->insert([
             'nombre' => 'Compras Locales',
@@ -23,11 +23,11 @@ class MotivoTableSeeder extends Seeder
             'updated_at' => date('2019-08-01 00:00:00'),
         ]);
 
-        DB::table('motivos')->insert([
-            'nombre' => 'Conversion',
-            'created_at' => date('2019-08-01 00:00:00'),
-            'updated_at' => date('2019-08-01 00:00:00'),
-        ]);
+        // DB::table('motivos')->insert([
+        //     'nombre' => 'Conversion',
+        //     'created_at' => date('2019-08-01 00:00:00'),
+        //     'updated_at' => date('2019-08-01 00:00:00'),
+        // ]);
 
         DB::table('motivos')->insert([
             'nombre' => 'Devolucion Clientes',
@@ -42,25 +42,25 @@ class MotivoTableSeeder extends Seeder
         ]);
 
         DB::table('motivos')->insert([
-            'nombre' => 'Inventario',
+            'nombre' => 'Inventario Inicial',
             'created_at' => date('2019-08-01 00:00:00'),
             'updated_at' => date('2019-08-01 00:00:00'),
         ]);
 
-        DB::table('motivos')->insert([
-            'nombre' => 'Produccion',
-            'created_at' => date('2019-08-01 00:00:00'),
-            'updated_at' => date('2019-08-01 00:00:00'),
-        ]);
+        // DB::table('motivos')->insert([
+        //     'nombre' => 'Produccion',
+        //     'created_at' => date('2019-08-01 00:00:00'),
+        //     'updated_at' => date('2019-08-01 00:00:00'),
+        // ]);
+
+        // DB::table('motivos')->insert([
+        //     'nombre' => 'Transferencia',
+        //     'created_at' => date('2019-08-01 00:00:00'),
+        //     'updated_at' => date('2019-08-01 00:00:00'),
+        // ]);
 
         DB::table('motivos')->insert([
-            'nombre' => 'Transferencia',
-            'created_at' => date('2019-08-01 00:00:00'),
-            'updated_at' => date('2019-08-01 00:00:00'),
-        ]);
-
-        DB::table('motivos')->insert([
-            'nombre' => 'Traslado Externo',
+            'nombre' => 'Traslado de Almacen',
             'created_at' => date('2019-08-01 00:00:00'),
             'updated_at' => date('2019-08-01 00:00:00'),
         ]);

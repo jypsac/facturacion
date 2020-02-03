@@ -31,15 +31,8 @@ class InventarioInicialController extends Controller
     
     public function create(Request $request)
     {
-        $almacen = $request->input('almacen');
-        $clasificaciones = $request->input('clasificacion');
         $productos=Producto::all();
-        $inventario_iniciales=InventarioInicial::where('almacen','=',$almacen)->where('categorias','=',$clasificaciones)->get();
-        //enviar guia de ingreso para saldo
-        //enviar guia de ingreso para costo
-
-        //consulta para total de costo
-        return view('inventario.inventario-inicial.create',compact('productos','almacen','clasificaciones','inventario_iniciales'));
+        return view('inventario.inventario-inicial.create',compact('productos'));
         
     }
 
@@ -51,20 +44,9 @@ class InventarioInicialController extends Controller
      */
     public function store(Request $request)
     {
-        // $id_producto=$request->input('articulo');
-        // $producto = Producto::where("id","=",$id_producto)->first();
-        // $producto=(string)$producto->unidad_medida_id;
+        return $request;
 
-        $inventario_inicial=new InventarioInicial();
-        $inventario_inicial->almacen=$request->input('almacen');
-        $inventario_inicial->categorias=$request->input('categorias');
-        $inventario_inicial->articulo=$request->input('articulo');
-        // $inventario_inicial->unidad_medida=$producto;
-        $inventario_inicial->codigo=$request->input('codigo');
-        $inventario_inicial->saldo=$request->input('saldo');
-        $inventario_inicial->save();
-
-        return redirect()->route('inventario-inicial.index');
+        // return redirect()->route('inventario-inicial.index');
     }
 
     /**

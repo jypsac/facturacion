@@ -90,7 +90,7 @@
                                     <th>Unidad de medida</th>
                                     <th>Saldo</th>
                                     <th>Ver</th>
-                                    <th>Editar</th>
+                                    
                                 </tr>
                             </thead>
                         <tbody>
@@ -100,11 +100,10 @@
                                 <td>{{$inventario_inicial->categorias}}</td>
                                 <td>{{$inventario_inicial->codigo}}</td>
                                 <td>{{$inventario_inicial->articulo}}</td>
-                                {{-- <td>{{$inventario_inicial->unidad_medida}}</td> --}}
                                 <td>Unidad</td>
                                 <td>{{$inventario_inicial->saldo}}</td>
                                 <td><center><a href="{{ route('inventario-inicial.show', $inventario_inicial->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                <td><center><a href="{{ route('inventario-inicial.edit', $inventario_inicial->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
+                                {{-- <td><center><a href="{{ route('inventario-inicial.edit', $inventario_inicial->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
                             </tr>
                         @endforeach
                         </tbody>

@@ -91,7 +91,7 @@
                                     <li><a href="{{route('kardex-salida.index')}}">Salida Producto</a></li>
                                 </ul>
                             </li>
-                            <li><a href="{{route('pagados.index')}}">Pagados</a></li>
+                            {{-- <li><a href="{{route('pagados.index')}}">Pagados</a></li> --}}
                             <li><a href="{{route('inventario-inicial.index')}}">Inventario Inicial</a></li>
                         </ul>
                     </li>
