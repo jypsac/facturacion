@@ -11,9 +11,10 @@ use App\Kardex_entrada;
 use App\kardex_entrada_registro;
 use App\Motivo;
 use App\InventarioInicial;
+use App\Categoria;
 
 use Illuminate\Http\Request;
-
+    
 class KardexEntradaController extends Controller
 {
     /**
@@ -38,7 +39,8 @@ class KardexEntradaController extends Controller
         $provedores=Provedor::all();
         $almacenes=Almacen::all();
         $motivos=Motivo::all();
-        return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos'));
+        $categorias=Categoria::all();
+        return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos','categorias'));
     }
 
     /**
@@ -78,6 +80,7 @@ class KardexEntradaController extends Controller
         $kardex_entrada->motivo_id=$request->get('motivo');
         $kardex_entrada->provedor_id=$request->get('provedor');
         $kardex_entrada->guia_remision=$request->get('guia_remision');
+        $kardex_entrada->categoria_id=$request->get('clasificacion');
         $kardex_entrada->factura=$request->get('factura');
         $kardex_entrada->almacen_id=$request->get('almacen');
         $kardex_entrada->informacion=$request->get('informacion');

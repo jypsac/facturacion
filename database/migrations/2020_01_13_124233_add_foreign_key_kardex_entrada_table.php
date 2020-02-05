@@ -22,6 +22,8 @@ class AddForeignKeyKardexEntradaTable extends Migration
             $table->unsignedBigInteger('provedor_id');
             $table->foreign('provedor_id')->references('id')->on('provedores')->onDelete('cascade');
             
+            $table->unsignedBigInteger('categoria_id');
+            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
             
 
             $table->unsignedBigInteger('almacen_id');

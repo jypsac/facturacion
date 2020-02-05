@@ -80,6 +80,8 @@ class InventarioInicialController extends Controller
          $kardex_entrada=new Kardex_entrada();
          $kardex_entrada->motivo_id=$request->get('motivo');
          $kardex_entrada->provedor_id=$request->get('provedor');
+         
+         $kardex_entrada->categoria_id=$request->get('clasificacion');
          $kardex_entrada->guia_remision=0;
          $kardex_entrada->factura=0;
          $kardex_entrada->almacen_id=$request->get('almacen');
