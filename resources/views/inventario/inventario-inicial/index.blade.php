@@ -84,11 +84,9 @@
                             <thead>
                                 <tr>
                                     <th>Id</th>
-                                    <th>Clasificacion</th>
-                                    <th>Codigo</th>
-                                    <th>Articulo</th>
-                                    <th>Unidad de medida</th>
-                                    <th>Saldo</th>
+                                    <th>Motivo</th>
+                                    <th>Provedor</th>
+                                    <th>Almacen </th>
                                     <th>Ver</th>
                                     
                                 </tr>
@@ -97,11 +95,9 @@
                             @foreach($kardex_entradas as $kardex_entrada)
                             <tr class="gradeX">
                                 <td>{{$kardex_entrada->id}}</td>
-                                <td>{{$kardex_entrada->categorias}}</td>
-                                <td>{{$kardex_entrada->codigo}}</td>
-                                <td>{{$kardex_entrada->articulo}}</td>
-                                <td>Unidad</td>
-                                <td>{{$kardex_entrada->saldo}}</td>
+                                <td>{{$kardex_entrada->motivo_id}}</td>
+                                <td>{{$kardex_entrada->provedor_id}}</td>
+                                <td>{{$kardex_entrada->almacen_id}}</td>
                                 <td><center><a href="{{ route('inventario-inicial.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 
                             </tr>
