@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Empresa;
 use App\Producto;
 use App\Motivo;
 use App\Kardex_salida;
@@ -163,10 +164,10 @@ class KardexSalidaController extends Controller
      */
     public function show($id)
     {
-        // $mi_empresa=Empresa::first();xattr_get(filename, name)
+        $mi_empresa=Empresa::first();
         $kardex_salidas=Kardex_salida::find($id);
         $kardex_salidas_registros=kardex_salida_registro::where('kardex_salida_id',$id)->get();
-        return view('inventario.kardex.entrada.show',compact('kardex_salidas','kardex_salidas_registros','mi_empresa'));
+        return view('inventario.kardex.salida.show',compact('kardex_salidas','kardex_salidas_registros','mi_empresa'));
     }
 
     /**
