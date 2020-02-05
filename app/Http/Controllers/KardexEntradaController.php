@@ -75,7 +75,7 @@ class KardexEntradaController extends Controller
 
         //Kardex Entrada Guardado
         $kardex_entrada=new Kardex_entrada();
-        $kardex_entrada->motivo=$request->get('motivo');
+        $kardex_entrada->motivo_id=$request->get('motivo');
         $kardex_entrada->provedor_id=$request->get('provedor');
         $kardex_entrada->guia_remision=$request->get('guia_remision');
         $kardex_entrada->factura=$request->get('factura');

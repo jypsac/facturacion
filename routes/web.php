@@ -70,6 +70,7 @@
 	Route::resource('/igv','IgvController')->only(['index','edit','update']);
 
 //INVENTARIOS
+	
 	Route::resource('/inventario-inicial','InventarioInicialController');
 
 	Route::post('/autocomplete/fetch', 'KardexEntradaController@fetch')->name('autocomplete.fetch');

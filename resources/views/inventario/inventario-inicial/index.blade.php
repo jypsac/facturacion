@@ -94,16 +94,16 @@
                                 </tr>
                             </thead>
                         <tbody>
-                            @foreach($inventario_iniciales as $inventario_inicial)
+                            @foreach($kardex_entradas as $kardex_entrada)
                             <tr class="gradeX">
-                                <td>{{$inventario_inicial->id}}</td>
-                                <td>{{$inventario_inicial->categorias}}</td>
-                                <td>{{$inventario_inicial->codigo}}</td>
-                                <td>{{$inventario_inicial->articulo}}</td>
+                                <td>{{$kardex_entrada->id}}</td>
+                                <td>{{$kardex_entrada->categorias}}</td>
+                                <td>{{$kardex_entrada->codigo}}</td>
+                                <td>{{$kardex_entrada->articulo}}</td>
                                 <td>Unidad</td>
-                                <td>{{$inventario_inicial->saldo}}</td>
-                                <td><center><a href="{{ route('inventario-inicial.show', $inventario_inicial->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                {{-- <td><center><a href="{{ route('inventario-inicial.edit', $inventario_inicial->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
+                                <td>{{$kardex_entrada->saldo}}</td>
+                                <td><center><a href="{{ route('inventario-inicial.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
+                                
                             </tr>
                         @endforeach
                         </tbody>

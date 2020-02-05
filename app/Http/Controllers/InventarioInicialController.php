@@ -5,6 +5,9 @@ use App\InventarioInicial;
 use App\Producto;
 use App\Categoria;
 use App\Almacen;
+use App\Provedor;
+use App\Kardex_entrada;
+use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
 
 class InventarioInicialController extends Controller
@@ -19,7 +22,8 @@ class InventarioInicialController extends Controller
         $almacenes=Almacen::all();
         $clasificaciones=Categoria::all();
         $inventario_iniciales=InventarioInicial::all();
-        return view('inventario.inventario-inicial.index',compact('inventario_iniciales','clasificaciones','almacenes'));
+        $kardex_entradas=Kardex_entrada::where('motivo_id','4')->get();
+        return view('inventario.inventario-inicial.index',compact('inventario_iniciales','clasificaciones','almacenes','kardex_entradas'));
     }
 
     /**
@@ -31,8 +35,11 @@ class InventarioInicialController extends Controller
 
     public function create(Request $request)
     {
+        $almacen=$request->get('almacen');
+        $clasificacion=$request->get('clasificacion');
         $productos=Producto::all();
-        return view('inventario.inventario-inicial.create',compact('productos'));
+        $provedores=Provedor::all();
+        return view('inventario.inventario-inicial.create',compact('productos','almacen','clasificacion','provedores'));
 
     }
 
@@ -45,9 +52,64 @@ class InventarioInicialController extends Controller
     public function store(Request $request)
     {
 
-        return $request;
-
-        // return redirect()->route('inventario-inicial.index');
+         //contador de valores de articulos
+         $articulo = $request->input('articulo');
+         $count_articulo=count($articulo);
+ 
+         //validacion para la no incersion de dobles articulos
+ 
+         for ($e=0; $e < $count_articulo; $e++){
+             $articulo_comparacion_inicial=$request->get('articulo')[$e];
+             for ($a=0; $a< $count_articulo ; $a++) {
+                 if ($a==$e) {
+                     $a++;
+                 }else {
+                     $articulo_comparacion=$request->get('articulo')[$a];
+                     if ($articulo_comparacion_inicial==$articulo_comparacion) {
+                         return "datos repetidos - NO PERMITIDOS" ;
+                     }
+                 }
+ 
+             }
+         }
+ 
+         //Guardado de almacen para inventario-inicial
+         $almacen=$request->get('almacen');
+ 
+         //Kardex Entrada Guardado
+         $kardex_entrada=new Kardex_entrada();
+         $kardex_entrada->motivo_id=$request->get('motivo');
+         $kardex_entrada->provedor_id=$request->get('provedor');
+         $kardex_entrada->guia_remision=0;
+         $kardex_entrada->factura=0;
+         $kardex_entrada->almacen_id=$request->get('almacen');
+         $kardex_entrada->informacion=$request->get('informacion');
+         $kardex_entrada->save();
+ 
+         //contador de valores de cantidad
+         $cantidad = $request->input('cantidad');
+         $count_cantidad=count($cantidad);
+         //contador de valores de precio
+         $precio = $request->input('precio');
+         $count_precio=count($precio);
+ 
+         if($count_articulo = $count_cantidad = $count_precio){
+             for($i=0;$i<$count_articulo;$i++){
+                 $kardex_entrada_registro=new kardex_entrada_registro();
+                 $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
+                 $kardex_entrada_registro->producto_id=$request->get('articulo')[$i];
+                 $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
+                 $kardex_entrada_registro->precio=$request->get('precio')[$i];
+                 $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
+                 $kardex_entrada_registro->estado=1;
+                 $kardex_entrada_registro->save();
+             }
+         }else {
+             return "Falto introducir un campo";
+         }
+         return redirect()->route('inventario-inicial.index');
+     
+        
     }
 
     /**

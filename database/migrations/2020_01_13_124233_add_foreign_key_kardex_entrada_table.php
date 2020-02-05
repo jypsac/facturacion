@@ -14,6 +14,10 @@ class AddForeignKeyKardexEntradaTable extends Migration
     public function up()
     {
         Schema::table('kardex_entrada', function (Blueprint $table) {
+            
+
+            $table->unsignedBigInteger('motivo_id');
+            $table->foreign('motivo_id')->references('id')->on('motivos')->onDelete('cascade');
 
             $table->unsignedBigInteger('provedor_id');
             $table->foreign('provedor_id')->references('id')->on('provedores')->onDelete('cascade');
