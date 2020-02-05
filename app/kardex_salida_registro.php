@@ -10,6 +10,8 @@ class kardex_salida_registro extends Model
 
     protected $guarded = [];
 
-    
+     public function producto(){
+        return $this->belongsTo(Producto::class,'producto_id');
+    } 
     
 }

@@ -34,20 +34,24 @@
 				<div class="ibox-content">
 					<form action="{{ route('kardex-salida.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-					 	<div class="form-group  row"><label class="col-sm-2 col-form-label">Motivos :</label>
-		                    <div class="col-sm-10">
-								<select class="form-control" name="motivo">
-									@foreach($motivos as $motivo)
-									<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
-									@endforeach
-								</select>
-							</div>
-		                </div>
 
 
-		                <div class="form-group  row"><label class="col-sm-2 col-form-label">Informaciones:</label>
-		                    <div class="col-sm-10"><input type="text" class="form-control" name="informacion"></div>
+					 	<div class="form-group row ">
+								<label class="col-sm-2 col-form-label" >motivos:</label>
+							                    <div class="col-sm-4">
+							                     	<select class="form-control" name="motivo">
+													@foreach($motivos as $motivo)
+													<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
+													@endforeach
+													</select>
+							                    </div>
+
+							    <label class="col-sm-2 col-form-label">Informaciones:</label>
+												<div class="col-sm-4">
+													<input type="text" class="form-control" name="informacion">
+							                    </div>
 						</div>
+					 	
 
 {{-- Check --}}
 
