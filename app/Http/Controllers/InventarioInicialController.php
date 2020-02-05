@@ -27,13 +27,13 @@ class InventarioInicialController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    
-    
+
+
     public function create(Request $request)
     {
         $productos=Producto::all();
         return view('inventario.inventario-inicial.create',compact('productos'));
-        
+
     }
 
     /**
@@ -44,6 +44,7 @@ class InventarioInicialController extends Controller
      */
     public function store(Request $request)
     {
+
         return $request;
 
         // return redirect()->route('inventario-inicial.index');
