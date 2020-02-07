@@ -13,20 +13,20 @@ class AddForeignKeyInventarioTable extends Migration
      */
     public function up()
     {
-        Schema::table('inventario_inicial', function (Blueprint $table) {
-            $table->unsignedBigInteger('categorias_id');
-            $table->foreign('categorias_id')->references('id')->on('categorias')->onDelete('cascade');
+        // Schema::table('inventario_inicial', function (Blueprint $table) {
+        //     $table->unsignedBigInteger('categorias_id');
+        //     $table->foreign('categorias_id')->references('id')->on('categorias')->onDelete('cascade');
 
-            $table->unsignedBigInteger('almacen_id');
-            $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
+        //     $table->unsignedBigInteger('almacen_id');
+        //     $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
 
-            $table->unsignedBigInteger('articulo_id');
-            $table->foreign('articulo_id')->references('id')->on('productos')->onDelete('cascade');
+        //     $table->unsignedBigInteger('articulo_id');
+        //     $table->foreign('articulo_id')->references('id')->on('productos')->onDelete('cascade');
 
-            $table->integer('cantidad');
-            $table->double('promedio');
-            $table->timestamps();
-        });
+        //     $table->integer('cantidad');
+        //     $table->double('promedio');
+        //     $table->timestamps();
+        // });
     }
 
     /**
@@ -36,6 +36,6 @@ class AddForeignKeyInventarioTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('inventario_inicial');
+        // Schema::dropIfExists('inventario_inicial');
     }
 }
