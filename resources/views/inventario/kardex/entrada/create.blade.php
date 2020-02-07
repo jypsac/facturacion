@@ -118,11 +118,23 @@
 							<tr>
 								<td><input type='checkbox' class="case"></td>
 								<td>
-								<select class="form-control" id='articulo' name='articulo[]' required>
-									@foreach($productos as $producto)
-									<option value="{{$producto->id}}">{{$producto->codigo_producto}} -> {{$producto->nombre}}</option>
-									@endforeach
-								</select>
+									<input list="browsers" class="form-control" name="" required>
+												<datalist id="browsers" >
+														@foreach($productos as $producto)
+													<option value="{{$producto->codigo_producto}}">
+														@endforeach
+												</datalist>
+									
+								</td>
+								<td>
+									<input list="browsers2" class="form-control" name="articulo[]" required id='articulo'>
+												<datalist id="browsers2" >
+														@foreach($productos as $producto)
+													<option value="{{$producto->nombre}}">
+														@endforeach
+												</datalist>
+									
+									
 								</td>
 
 								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
@@ -141,6 +153,10 @@
 
 					</form>
 <tr>
+
+
+
+
 	<style type="text/css">
 	.form-control{
 		    border-radius: 5px;
@@ -195,7 +211,6 @@
   </td>
 </tr>
 
-
 				</div>
 			</div>
 		</div>
@@ -210,6 +225,13 @@
 
     <script src="{{ asset('js/inspinia.js') }}"></script>
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+
+    <!-- Typehead -->
+	<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
+	
+
+
 
 <script>
 // function multi(){

@@ -51,7 +51,7 @@
                         @foreach($kardex_entradas as $kardex_entrada)
                             <tr class="gradeX">
                                 <td>{{$kardex_entrada->id}}</td>
-                                <td>{{$kardex_entrada->motivo}}</td>
+                                <td>{{$kardex_entrada->motivo->nombre}}</td>
                                 <td>{{$kardex_entrada->provedor->empresa}}</td>
                                 <td>{{$kardex_entrada->almacen->nombre}}</td>
                                 <td>{{$kardex_entrada->guia_remision}}</td>

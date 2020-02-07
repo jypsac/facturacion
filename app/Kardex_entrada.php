@@ -17,6 +17,9 @@ class Kardex_entrada extends Model
     public function almacen(){
         return $this->belongsTo(Almacen::class,'almacen_id');
     }
+     public function motivo(){
+        return $this->belongsTo(Motivo::class,'motivo_id');
+    }
 
    
 }
