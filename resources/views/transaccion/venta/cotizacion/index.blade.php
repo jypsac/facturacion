@@ -37,11 +37,11 @@
                                     <thead>
                                         <tr>
                                             <th>Id</th>
-                                            <th>Nombre</th>
-                                            <th>Abreviatura</th>
-                                            <th>Direccion</th>
-                                            <th>Responsable</th>
-                                            <th>Descripcion</th>
+                                            <th>N de cotizacion</th>
+                                            <th>Fecha</sth>
+                                            <th>Cliente</th>
+                                            <th>Rferencia</th>
+                                            <th>Estado</th>
                                             {{-- <th>Ver</th> --}}
                                             <th>EDITAR</th>
                                             <th>Eliminar</th>

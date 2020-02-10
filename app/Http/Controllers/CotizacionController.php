@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Producto;
 use Illuminate\Http\Request;
 
 class CotizacionController extends Controller
@@ -23,7 +24,8 @@ class CotizacionController extends Controller
      */
     public function create()
     {
-        //
+        $productos=Producto::all();
+        return view('transaccion.venta.cotizacion.create',compact('productos'));
     }
 
     /**
