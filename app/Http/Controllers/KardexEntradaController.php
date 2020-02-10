@@ -23,9 +23,10 @@ class KardexEntradaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+    {   $almacenes=Almacen::all();
+        $clasificaciones=Categoria::all();
         $kardex_entradas=Kardex_entrada::all();
-        return view('inventario.kardex.entrada.index' ,compact('kardex_entradas'));
+        return view('inventario.kardex.entrada.index' ,compact('kardex_entradas','almacenes','clasificaciones'));
     }
 
     /**

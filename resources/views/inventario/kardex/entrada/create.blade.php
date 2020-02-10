@@ -117,7 +117,7 @@
 								<tbody>
 							<tr>
 								<td><input type='checkbox' class="case"></td>
-								<td>
+								{{-- <td>
 									<input list="browsers" class="form-control" name="" required>
 												<datalist id="browsers" >
 														@foreach($productos as $producto)
@@ -125,18 +125,23 @@
 														@endforeach
 												</datalist>
 									
-								</td>
-								<td>
+								</td> --}}
+								{{-- <td>
 									<input list="browsers2" class="form-control" name="articulo[]" required id='articulo'>
 												<datalist id="browsers2" >
 														@foreach($productos as $producto)
 													<option value="{{$producto->nombre}}">
 														@endforeach
 												</datalist>
-									
-									
+								</td> --}}
+								<td>
+								<select class="form-control" id='articulo' name='articulo[]' required>
+									@foreach($productos as $producto)
+									<option value="{{$producto->id}}">{{$producto->codigo_producto}} --- {{$producto->nombre}}</option>
+									@endforeach
+								</select>
 								</td>
-
+		
 								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
 								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
 								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>

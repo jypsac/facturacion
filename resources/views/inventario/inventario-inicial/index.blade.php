@@ -94,10 +94,10 @@
                         <tbody>
                             @foreach($kardex_entradas as $kardex_entrada)
                             <tr class="gradeX">
-                                <td>{{$kardex_entrada->id}}</td>
-                                <td>{{$kardex_entrada->motivo_id}}</td>
-                                <td>{{$kardex_entrada->provedor_id}}</td>
-                                <td>{{$kardex_entrada->almacen_id}}</td>
+                                <td>{{$kardex_entrada->id}}</td> 
+                                <td>{{$kardex_entrada->motivo->nombre}}</td>
+                                <td>{{$kardex_entrada->provedor->empresa}}</td>
+                                <td>{{$kardex_entrada->almacen->nombre}}</td>
                                 <td><center><a href="{{ route('inventario-inicial.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 
                             </tr>

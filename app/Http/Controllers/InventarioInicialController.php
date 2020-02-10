@@ -109,8 +109,7 @@ class InventarioInicialController extends Controller
          }else {
              return "Falto introducir un campo";
          }
-         return redirect()->route('inventario-inicial.index');
-     
+         return redirect()->route('kardex-entrada.index');
         
     }
 

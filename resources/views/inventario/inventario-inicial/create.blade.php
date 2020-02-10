@@ -3,7 +3,7 @@
 @section('title', 'Inventario Inicial')
 @section('breadcrumb', 'Inventario Inicial')
 @section('breadcrumb2', 'Inventario Inicial')
-@section('href_accion', route('inventario-inicial.index'))
+@section('href_accion', route('kardex-entrada.index') )
 @section('value_accion', 'atras')
 
 @section('content')
