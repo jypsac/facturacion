@@ -143,13 +143,13 @@
 														@endforeach
 												</datalist>
 								</td> --}}
-								<td>
-								<select class="form-control" id='articulo' name='articulo[]' required>
-									@foreach($productos as $producto)
-									<option value="{{$producto->id}}">{{$producto->codigo_producto}} --- {{$producto->nombre}}</option>
-									@endforeach
-								</select>
-								</td>
+									<td>
+									<select class="form-control" id='articulo' name='articulo[]' required>
+										@foreach($productos as $producto)
+										<option value="{{$producto->id}}">{{$producto->codigo_producto}}-{{$producto->nombre}}</option>
+										@endforeach
+									</select>
+									</td>
 		
 								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
 								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
