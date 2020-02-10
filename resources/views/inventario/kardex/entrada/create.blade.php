@@ -82,6 +82,15 @@
 													<input type="text" class="form-control" name="informacion">
 							                    </div>
 						</div>
+						{{-- <input type="text" data-provide="typeahead" data-source='[
+							
+							"item 1","item 2","item 3"
+							
+						]' placeholder="item..." class="form-control" /> --}}
+
+						
+												
+						
 
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Categoria:</label>
@@ -167,6 +176,8 @@
 		    border-radius: 5px;
 	}
 	</style>
+
+
 
 	{{-- <style type="text/css">
 		#boton_personalizado_eliminar{
@@ -319,4 +330,17 @@
 		});
 	});
 </script>
+
+<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
+
+
+    <script>
+        $(document).ready(function(){
+
+            $('.typeahead_1').typeahead({
+                source: ["item 1","item 2","item 3"]
+            });
+        });
+	</script>
+	
 @endsection

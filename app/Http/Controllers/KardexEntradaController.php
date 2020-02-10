@@ -41,7 +41,13 @@ class KardexEntradaController extends Controller
         $almacenes=Almacen::all();
         $motivos=Motivo::all();
         $categorias=Categoria::all();
+
+        
+        
+        
         return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos','categorias'));
+
+        
     }
 
     /**

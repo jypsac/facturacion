@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCotizacionTable extends Migration
+class AddForeignKeyPeriodoConsultaRegistroTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,12 +13,7 @@ class CreateCotizacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('cotizacion', function (Blueprint $table) {
-            $table->bigIncrements('id');
-            $table->string('cliente_id');
-            $table->string('direccion');
-            $table->timestamps();
-        });
+        //
     }
 
     /**
@@ -28,6 +23,6 @@ class CreateCotizacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cotizacion');
+        //
     }
 }

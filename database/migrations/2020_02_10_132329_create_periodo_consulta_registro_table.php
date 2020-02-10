@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCotizacionTable extends Migration
+class CreatePeriodoConsultaRegistroTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,10 +13,8 @@ class CreateCotizacionTable extends Migration
      */
     public function up()
     {
-        Schema::create('cotizacion', function (Blueprint $table) {
+        Schema::create('periodo_consulta_registro', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('cliente_id');
-            $table->string('direccion');
             $table->timestamps();
         });
     }
@@ -28,6 +26,6 @@ class CreateCotizacionTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cotizacion');
+        Schema::dropIfExists('periodo_consulta_registro');
     }
 }
