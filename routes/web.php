@@ -107,6 +107,14 @@
 
 // });
 
+// ajax
+	
+
+Route::get('/inventario.kardex.entrada.create', 'KardexEntradaController@index');
+Route::post('/inventario.kardex.entrada.create/fetcha', 'KardexEntradaController@fetcha')->name('autocomplete.fetcha');
+
+//Fin Ajax 
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

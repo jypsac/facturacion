@@ -5,9 +5,9 @@
 @section('breadcrumb2', 'kardex_entradas-Agregar')
 @section('href_accion', route('kardex-entrada.index') )
 @section('value_accion', 'Atras')
-{{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> --}}
-{{-- <script src="https://code.jquery.com/jquery-3.4.1.min.js integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo="
-  crossorigin="anonymous"></script> --}}
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+  
 
 @section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -126,7 +126,7 @@
 								<tbody>
 							<tr>
 								<td><input type='checkbox' class="case"></td>
-								{{-- <td>
+								<!--  <td>
 									<input list="browsers" class="form-control" name="" required>
 												<datalist id="browsers" >
 														@foreach($productos as $producto)
@@ -134,23 +134,32 @@
 														@endforeach
 												</datalist>
 									
-								</td> --}}
-								{{-- <td>
+								</td>  -->
+								<!-- <td>
 									<input list="browsers2" class="form-control" name="articulo[]" required id='articulo'>
 												<datalist id="browsers2" >
 														@foreach($productos as $producto)
 													<option value="{{$producto->nombre}}">
 														@endforeach
 												</datalist>
-								</td> --}}
-									<td>
+								</td>  -->
+
+								<td>
+									<input type="text" name='articulo[]' id="country_name" class="form-control input-lg" placeholder="Producto" />
+									<div id="countryList"></div>
+									<div>
+										{{csrf_field()}}
+									</div>
+								</td>
+
+									<!-- <td>
 									<select class="form-control" id='articulo' name='articulo[]' required>
 										@foreach($productos as $producto)
 										<option value="{{$producto->id}}">{{$producto->codigo_producto}}-{{$producto->nombre}}</option>
 										@endforeach
 									</select>
 									</td>
-		
+		 -->
 								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
 								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
 								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
@@ -167,6 +176,33 @@
 
 					</form>
 <tr>
+<script>
+$(document).ready(function(){
+
+ $('#country_name').keyup(function(){ 
+        var query = $(this).val();
+        if(query != '')
+        {
+         var _token = $('input[name="_token"]').val();
+         $.ajax({
+          url:"{{ route('autocomplete.fetcha') }}",
+          method:"POST",
+          data:{query:query, _token:_token},
+          success:function(data){
+           $('#countryList').fadeIn();  
+                    $('#countryList').html(data);
+          }
+         });
+        }
+    });
+
+    $(document).on('click', 'li', function(){  
+        $('#country_name').val($(this).text());  
+        $('#countryList').fadeOut();  
+    });  
+
+});
+</script>
 
 
 

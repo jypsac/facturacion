@@ -23,11 +23,36 @@ class KardexEntradaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   $almacenes=Almacen::all();
+    {   
+        $almacenes=Almacen::all();
         $clasificaciones=Categoria::all();
         $kardex_entradas=Kardex_entrada::all();
         return view('inventario.kardex.entrada.index' ,compact('kardex_entradas','almacenes','clasificaciones'));
+
     }
+
+    public function fetcha(Request $request)
+    {
+     if($request->get('query'))
+     {
+      $query = $request->get('query');
+      $data = DB::table('productos')
+        ->where('nombre', 'LIKE', "%{$query}%")
+        ->get();
+      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+      foreach($data as $row)
+      {
+       $output .= '
+       <li><a href="#">'.$row->nombre.'</a></li>
+       ';
+      }
+      $output .= '</ul>';
+      echo $output;
+     }
+    }
+
+
+
 
     /**
      * Show the form for creating a new resource.
