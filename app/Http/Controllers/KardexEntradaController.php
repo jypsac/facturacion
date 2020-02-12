@@ -83,9 +83,22 @@ class KardexEntradaController extends Controller
      */
     public function store(Request $request)
     {
+
+    //codigo para convertir nombre a producto
+
+        // $articulo0 = $request->input('articulo');
+        // $convertir=Producto::where('nombre',$articulo0)->first();
+        // $sdsada= $convertir->id;
+        // return $sdsada;
+        //chequear
+
+        // return $request;
         //contador de valores de articulos
         $articulo = $request->input('articulo');
+
+        
         $count_articulo=count($articulo);
+        // return $count_articulo;
 
         //validacion para la no incersion de dobles articulos
 
@@ -100,7 +113,6 @@ class KardexEntradaController extends Controller
                         return "datos repetidos - NO PERMITIDOS" ;
                     }
                 }
-
             }
         }
 
