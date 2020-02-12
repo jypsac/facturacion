@@ -1,7 +1,9 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\PeriodoConsulta_registro;
+use App\PeriodoConsulta;
+use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
 
 class PeriodoConsultaController extends Controller
@@ -13,7 +15,8 @@ class PeriodoConsultaController extends Controller
      */
     public function index()
     {
-        //
+        $periodo_consultas=PeriodoConsulta::all();
+        return view('inventario.periodo-consulta.index',compact('periodo_consultas'));   
     }
 
     /**
@@ -23,7 +26,7 @@ class PeriodoConsultaController extends Controller
      */
     public function create()
     {
-        //
+        return view('inventario.periodo-consulta.create');
     }
 
     /**
@@ -34,7 +37,23 @@ class PeriodoConsultaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $registro=new PeriodoConsulta;
+        $registro->nombre=$request->input('nombre');
+        $registro->informacion=$request->input('informacion');
+        $registro->save();
+
+        $periodo_registro=kardex_entrada_registro::where('estado','1')->get();
+        foreach ($periodo_registro as $periodo) {
+            $register=new PeriodoConsulta_registro;
+            $register->periodo_consulta_id=$registro->id;
+            $register->producto_id=$periodo->producto_id;
+            $register->cantidad_inicial=$periodo->cantidad_inicial;
+            $register->precio=$periodo->precio;
+            $register->cantidad=$periodo->cantidad;
+            $register->save();
+        }
+
+        return "listo";
     }
 
     /**
@@ -45,7 +64,9 @@ class PeriodoConsultaController extends Controller
      */
     public function show($id)
     {
-        //
+        $periodo_consulta=PeriodoConsulta::find($id);
+        $periodo_consulta_registros=PeriodoConsulta_registro::where('periodo_consulta_id',$id)->get();
+        return view('inventario.periodo-consulta.show',compact('periodo_consulta','periodo_consulta_registros'));
     }
 
     /**

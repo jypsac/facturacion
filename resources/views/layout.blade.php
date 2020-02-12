@@ -93,6 +93,7 @@
                             </li>
                             {{-- <li><a href="{{route('pagados.index')}}">Pagados</a></li> --}}
                             <li><a href="{{route('inventario-inicial.index')}}">Inventario Inicial</a></li>
+                            <li><a href="{{route('periodo-consulta.index')}}">Periodo Consulta</a></li>
                         </ul>
                     </li>
                     <li>

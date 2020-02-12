@@ -15,7 +15,7 @@ class CreatePeriodoConsultaRegistroTable extends Migration
     {
         Schema::create('periodo_consulta_registro', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 

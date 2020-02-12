@@ -78,6 +78,8 @@
 	Route::get('kardex_entrada_productos','KardexEntradaController@productos');
 	Route::resource('/kardex-entrada','KardexEntradaController');
 	Route::resource('/kardex-salida','KardexSalidaController');
+	Route::resource('/periodo-consulta','PeriodoConsultaController');
+
 //FIN DE INVENTARIOS
 	Route::resource('/motivo','MotivoController');
 	Route::resource('/marca','MarcaController');
