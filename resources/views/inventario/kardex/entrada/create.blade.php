@@ -5,8 +5,7 @@
 @section('breadcrumb2', 'kardex_entradas-Agregar')
 @section('href_accion', route('kardex-entrada.index') )
 @section('value_accion', 'Atras')
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
-  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
   
 
 @section('content')
@@ -112,7 +111,7 @@
 
 {{-- Check --}}
 
-						<table 	 cellspacing="0" class="table table-striped table-responsive">
+						<table 	 cellspacing="0" class="table table-striped table-responsive" width="100%">
 							<thead>
 							<tr>
 								<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
@@ -125,41 +124,21 @@
 						</thead>
 								<tbody>
 							<tr>
-								<td><input type='checkbox' class="case"></td>
-								<!--  <td>
-									<input list="browsers" class="form-control" name="" required>
-												<datalist id="browsers" >
-														@foreach($productos as $producto)
-													<option value="{{$producto->codigo_producto}}">
-														@endforeach
-												</datalist>
-									
-								</td>  -->
-								<!-- <td>
-									<input list="browsers2" class="form-control" name="articulo[]" required id='articulo'>
+								<td>
+								
+									<input type='checkbox' class="case">
+								</td>
+								
+								<td>
+									<input list="browsers2" class="form-control " name="articulo[]" required id='articulo'>
 												<datalist id="browsers2" >
 														@foreach($productos as $producto)
-													<option value="{{$producto->nombre}}">
+													<option value="{{$producto->id}} {{$producto->nombre}}">
 														@endforeach
 												</datalist>
-								</td>  -->
+								</td> 
 
-								<td>
-									<input type="text" name='articulo[]' id="country_name" class="form-control input-lg" placeholder="Producto" />
-									<div id="countryList"></div>
-									<div>
-										{{csrf_field()}}
-									</div>
-								</td>
-
-									<!-- <td>
-									<select class="form-control" id='articulo' name='articulo[]' required>
-										@foreach($productos as $producto)
-										<option value="{{$producto->id}}">{{$producto->codigo_producto}}-{{$producto->nombre}}</option>
-										@endforeach
-									</select>
-									</td>
-		 -->
+		
 								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
 								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
 								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
@@ -176,35 +155,6 @@
 
 					</form>
 <tr>
-<script>
-$(document).ready(function(){
-
- $('#country_name').keyup(function(){ 
-        var query = $(this).val();
-        if(query != '')
-        {
-         var _token = $('input[name="_token"]').val();
-         $.ajax({
-          url:"{{ route('autocomplete.fetcha') }}",
-          method:"POST",
-          data:{query:query, _token:_token},
-          success:function(data){
-           $('#countryList').fadeIn();  
-                    $('#countryList').html(data);
-          }
-         });
-        }
-    });
-
-    $(document).on('click', 'li', function(){  
-        $('#country_name').val($(this).text());  
-        $('#countryList').fadeOut();  
-    });  
-
-});
-</script>
-
-
 
 
 	<style type="text/css">
@@ -215,47 +165,6 @@ $(document).ready(function(){
 
 
 
-	{{-- <style type="text/css">
-		#boton_personalizado_eliminar{
-			text-decoration: none;
-			padding: 5px;
-			font-weight: 600;
-			font-size: 13px;
-			color: #ffffff;
-			background-color: #1883ba;
-			border-radius: 6px;
-			border: 2px solid #0016b0;
-		}
-		#boton_personalizado_eliminar:hover{
-			color: #1883ba;
-			background-color: #ffffff;
-		}
-
-		#boton_personalizado_agregar{
-			text-decoration: none;
-			padding: 5px;
-			font-weight: 600;
-			font-size: 13px;
-			color: #ffffff;
-			background-color: #CD5C5C;
-			border-radius: 6px;
-			border: 2px solid #F11616;
-		}
-		#boton_personalizado_agregar:hover{
-			color: #CD5C5C;
-			background-color: #ffffff;
-		}
-	  </style> --}}
-    {{-- <td>
-    <label>
-      <input type="text" name="Precio" id="Precio" value="" class="monto" onkeyup="multi();">
-    </label>
-  </td>
-    <td>
-    <label>
-      <input type="text" name="Cantidad" id="Cantidad" class="monto" onkeyup="multi();">
-    </label>
-  </td> --}}
   <td>
     {{-- <label id="Costo"> --}}
       {{-- <input type="text" name="Costo" id="Costo"> --}}
@@ -305,12 +214,13 @@ $(document).ready(function(){
         $(".addmore").on('click', function () {
             var data = `[<tr><td><input type='checkbox' class='case'/></td>";
              <td>
-			<select class="form-control" id='articulo' name='articulo[]' required>
-									@foreach($productos as $producto)
-									<option value="{{$producto->id}}">{{$producto->codigo_producto}} --- {{$producto->nombre}}</option>
-									@endforeach
-								</select>
-			</td>
+									<input list="browsers" class="form-control " name="articulo[]" required id='articulo'>
+												<datalist id="browsers" >
+														@foreach($productos as $producto)
+													<option value="{{$producto->id}} {{$producto->nombre}}">
+														@endforeach
+												</datalist>
+								</td> 
 
 			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/></td>
 			<td><input type='text' id='precio" + i + "' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});" required/></td>
