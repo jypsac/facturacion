@@ -16,7 +16,7 @@
 				</div>
 				<div class="ibox-content">
 					
-<form action="{{ route('productos.store') }}"  enctype="multipart/form-data" method="post">
+		<form action="{{ route('productos.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 				<div class="row">
 
@@ -28,7 +28,7 @@
 	                            <div class="panel-body">
 									 
 								<div class="form-group row">
-									 	<label class="col-sm-2 col-form-label">Codigo del Producto:</label><div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto" >
+									 	<label class="col-sm-2 col-form-label">Codigo del Producto:</label><div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto"  value="{{-- {{$producto->id+1}} --}}" disabled="d">
 									 	</div>
 						        </div>
 						        <div class="form-group row">

@@ -20,9 +20,9 @@ class ProductosController extends Controller
      */
     public function index()
     {
-
+        $marcas=Marca::all();
         $productos=Producto::all();
-        return view('maestro.catalogo.productos.index',compact('productos'));
+        return view('maestro.catalogo.productos.index',compact('productos','marcas'));
     }
 
     /**
@@ -30,15 +30,30 @@ class ProductosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        // cODIGO
+        // $name = $request->input('familia');
+        // $marca = Marca::where("id","=",$name)->first();
+        // $marca_nombre=(string)$marca->nombre;
+        // $marca=(string)$marca->abreviatura;
+        // $guion='-';
+        // $marca_cantidad= Producto::where("codigo_producto","=",$name)->count();
+        // $marca_cantidad++;
+        // $contador=10000000;
+        // $marca_cantidad=$contador+$marca_cantidad;
+        // $marca_cantidad=(string)$marca_cantidad;
+        // $marca_cantidad=substr($marca_cantidad,1);
+        // $orden_servicio=$marca.$guion.$marca_cantidad;
+ // return $orden_servicio;
+        /*CODIGO*/
         $monedas=Moneda::all();
         $familias=Familia::all();
         $marcas=Marca::all();
         $estados=Estado::all();
         $categorias=Categoria::all();
         $unidad_medidas=Unidad_medida::all();
-        return view('maestro.catalogo.productos.create',compact('unidad_medidas','categorias','marcas','estados','familias','monedas'));
+        return view('maestro.catalogo.productos.create',compact('unidad_medidas','categorias','marcas','estados','familias','monedas','orden_servicio'));
     }
 
     /**
@@ -47,8 +62,24 @@ class ProductosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request )
     {
+        // categoria Abreviatura
+        $categoria=$request->get('categoria_id');
+        $id_igual=Categoria::where('id','=',$categoria)->first();
+        $nombre_cate=$id_igual->descripcion;
+        $cate = substr($nombre_cate, 0, 3);
+        // marca abrebia
+        $marca=$request->get('marca_id');
+        $id_igual_marca=Marca::where('id','=',$marca)->first();
+        $nombre_marca=$id_igual_marca->abreviatura;
+
+        $guion='-';
+        $ceros='0000';
+        $codigo_producto=$cate.$guion.$nombre_marca.$guion.$ceros;
+
+        return $codigo_producto;
+
         // $name ="sin";
         $image =$request->file('foto');
         $codigo= $request->get('codigo_barras');
@@ -76,14 +107,7 @@ class ProductosController extends Controller
         $producto->stock_maximo=$request->get('stock_maximo');
         $producto->foto=$name;
         $producto->save();
-
-        return redirect()->route('productos.index');
-
-
-
-
-
-
+        // return redirect()->route('productos.index');
 
 
     }

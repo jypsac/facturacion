@@ -49,7 +49,7 @@
                         @foreach($periodo_consulta_registros as $periodo_consulta_registro)
                         <tr class="gradeX">
                             <td>{{$periodo_consulta_registro->id}}</td>
-                            <td>{{$periodo_consulta_registro->producto_id}}</td>
+                            <td>{{$periodo_consulta_registro->periodo_producto->nombre}}</td>
                             <td>{{$periodo_consulta_registro->cantidad_inicial}}</td>
                             <td>{{$periodo_consulta_registro->precio}}</td>
                             <td>{{$periodo_consulta_registro->cantidad}}</td>
