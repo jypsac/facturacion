@@ -85,13 +85,37 @@ class KardexEntradaController extends Controller
     {
     //codigo para convertir nombre a producto
 
-        $articulo0 = $request->input('articulo');
+    
+        // $articulo0 = $request->input('articulo')[0];
+
         
-        // $id_producto =strstr($articulo0, ' ', true);
+
+
+
+        // $cantidad12 = $request->input('cantidad');
+        // $count_cantidad=count($cantidad12);
+        
+        // $precio12 = $request->input('precio');
+        // $count_precio=count($precio12);
+
+        
+        // for($i=0 ; $i<$count_cantidad;$i++){
+        //     $articulo[$i]= $request->input('articulo')[$i];
+        //     $newtwo[$i]=strstr($articulo[$i], ' ', true);
+        // }
+        // return $newtwo;
+        
+
+
+            // return $request;
+
+
+        // $id_producto =
  
         // $convertir=Producto::where('nombre',$articulo0)->first();
-        // $id_producto= $convertir->id;
-        return $nombre;
+        //  $id_producto= $convertir->id;
+        //  return $id_producto;
+        // return $nombre;
         //chequear
 
         // return $request;

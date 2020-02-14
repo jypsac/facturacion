@@ -133,7 +133,7 @@
 									<input list="browsers2" class="form-control " name="articulo[]" required id='articulo'>
 												<datalist id="browsers2" >
 														@foreach($productos as $producto)
-													<option value="{{$producto->id}} {{$producto->nombre}}">
+													<option value="{{$producto->id}}">
 														@endforeach
 												</datalist>
 								</td> 
