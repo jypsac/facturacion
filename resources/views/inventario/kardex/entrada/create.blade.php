@@ -6,7 +6,7 @@
 @section('href_accion', route('kardex-entrada.index') )
 @section('value_accion', 'Atras')
 
-  
+
 
 @section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -82,14 +82,10 @@
 							                    </div>
 						</div>
 						{{-- <input type="text" data-provide="typeahead" data-source='[
-							
-							"item 1","item 2","item 3"
-							
-						]' placeholder="item..." class="form-control" /> --}}
 
-						
-												
-						
+							"item 1","item 2","item 3"
+
+						]' placeholder="item..." class="form-control" /> --}}
 
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Categoria:</label>
@@ -101,76 +97,61 @@
 											</select>
 											</div>
 
-							
+
 					</div>
 
-					 
-{{-- Check --}}
-
-
 
 {{-- Check --}}
 
-						<table 	 cellspacing="0" class="table table-striped table-responsive" width="100%">
+
+
+{{-- Check --}}
+
+						<table cellspacing="0" class="table table-striped table-responsive" width="100%">
 							<thead>
-							<tr>
-								<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-								<th>---- Codigo ------ articulo</th>
-
-								<th>Cantidad</th>
-								<th>Precio</th>
-								<th>Total</th>
-							</tr>
-						</thead>
-								<tbody>
-							<tr>
-								<td>
-								
-									<input type='checkbox' class="case">
-								</td>
-								
-								<td>
-									<input list="browsers2" class="form-control " name="articulo[]" required id='articulo'>
-												<datalist id="browsers2" >
-														@foreach($productos as $producto)
-													<option value="{{$producto->id}}">
-														@endforeach
-												</datalist>
-								</td> 
-
-		
-								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
-								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
-								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
-								<span id="spTotal"></span>
-							</tr>
-						</tbody>
+								<tr>
+									<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+									<th>Producto</th>
+									<th>Cantidad</th>
+									<th>Precio</th>
+									<th>Total</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<input type='checkbox' class="case">
+									</td>
+									<td>
+										<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' autocomplete="off">
+											<datalist id="browsers2" >
+												@foreach($productos as $producto)
+												<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+												@endforeach
+											</datalist>
+									</td>
+									<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
+									<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
+									<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
+									<span id="spTotal"></span>
+								</tr>
+							</tbody>
 						</table>
 
 
 						<button type="button" class='delete btn btn-danger'  > Eliminar </button>
 						<button type="button" class='addmore btn btn-success' > Agregar </button>
-
 						<button class="btn btn-primary" type="submit">Guardar</button>
 
 					</form>
-<tr>
 
-
-	<style type="text/css">
-	.form-control{
-		    border-radius: 5px;
-	}
-	</style>
-
-
-
-  <td>
-    {{-- <label id="Costo"> --}}
-      {{-- <input type="text" name="Costo" id="Costo"> --}}
-    {{-- </label> --}}
-  </td>
-</tr>
+					<tr>
+						<style type="text/css">
+							.form-control{
+									border-radius: 5px;
+							}
+						</style>
+					</tr>
 
 				</div>
 			</div>
@@ -190,61 +171,53 @@
 
     <!-- Typehead -->
 	<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
-	
-
-
-
-<script>
-// function multi(){
-//     var total = 1;
-//     var change= false; //
-//     $(".monto").each(function(){
-//         if (!isNaN(parseFloat($(this).val()))) {
-//             change= true;
-//             total *= parseFloat($(this).val());
-//         }
-//     });
-//     total = (change)? total:0;
-//     document.getElementById('Costo').innerHTML = total;
-// }
-</script>
 
     <script>
         var i = 2;
         $(".addmore").on('click', function () {
-            var data = `[<tr><td><input type='checkbox' class='case'/></td>";
-             <td>
-									<input list="browsers" class="form-control " name="articulo[]" required id='articulo'>
-												<datalist id="browsers" >
-														@foreach($productos as $producto)
-													<option value="{{$producto->id}} {{$producto->nombre}}">
-														@endforeach
-												</datalist>
-								</td> 
-
-			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/></td>
-			<td><input type='text' id='precio" + i + "' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});" required/></td>
-			<td><input type='text' id='total${i}' name='total[]' class="form-control" required/></td>
+            var data = `[
+			<tr>
+				<td>
+					<input type='checkbox' class='case'/>
+				</td>";
+				<td>
+					<input list="browsers" class="form-control " name="articulo[]" required id='articulo' autocomplete="off">
+						<datalist id="browsers" >
+								@foreach($productos as $producto)
+							<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+								@endforeach
+						</datalist>
+				</td>
+				<td>
+					<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
+				</td>
+				<td>
+					<input type='text' id='precio" + i + "' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});" required/>
+				</td>
+				<td>
+					<input type='text' id='total${i}' name='total[]' class="form-control" required/>
+				</td>
 			</tr>`;
             $('table').append(data);
             i++;
         });
 	</script>
 
-<script>function multi(a){
-	console.log(a);
-	var total = 1;
-	var change= false; //
-	$(`.monto${a}`).each(function(){
-		if (!isNaN(parseFloat($(this).val()))) {
-			change= true;
-			total *= parseFloat($(this).val());
+	<script>
+		function multi(a){
+			console.log(a);
+			var total = 1;
+			var change= false; //
+			$(`.monto${a}`).each(function(){
+				if (!isNaN(parseFloat($(this).val()))) {
+					change= true;
+					total *= parseFloat($(this).val());
+				}
+			});
+			total = (change)? total:0;
+			document.getElementById(`total${a}`).value = total;
 		}
-	});
-	total = (change)? total:0;
-	document.getElementById(`total${a}`).value = total;
-}
-</script>
+	</script>
 
     <script>
         $(".delete").on('click', function () {
@@ -265,20 +238,18 @@
         }
     </script>
 
+	<script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
 
-
-<script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
-<script>
-	$(document).ready(function () {
-		$('.i-checks').iCheck({
-			checkboxClass: 'icheckbox_square-green',
-			radioClass: 'iradio_square-green',
+	<script>
+		$(document).ready(function () {
+			$('.i-checks').iCheck({
+				checkboxClass: 'icheckbox_square-green',
+				radioClass: 'iradio_square-green',
+			});
 		});
-	});
-</script>
+	</script>
 
-<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
-
+	<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
 
     <script>
         $(document).ready(function(){
@@ -288,5 +259,5 @@
             });
         });
 	</script>
-	
+
 @endsection

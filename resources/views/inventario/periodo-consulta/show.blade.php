@@ -5,7 +5,7 @@
 @section('breadcrumb2', 'periodo consulta')
 @section('href_accion', route('periodo-consulta.index') )
 @section('value_accion', 'Atras')
-  
+
 
 @section('content')
 
@@ -61,7 +61,7 @@
         </div>
         </div>
     </div>
-</div>   
+</div>
 
 
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

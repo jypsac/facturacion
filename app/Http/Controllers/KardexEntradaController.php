@@ -14,7 +14,7 @@ use App\InventarioInicial;
 use App\Categoria;
 
 use Illuminate\Http\Request;
-    
+
 class KardexEntradaController extends Controller
 {
     /**
@@ -23,7 +23,7 @@ class KardexEntradaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $almacenes=Almacen::all();
         $clasificaciones=Categoria::all();
         $kardex_entradas=Kardex_entrada::all();
@@ -67,12 +67,12 @@ class KardexEntradaController extends Controller
         $motivos=Motivo::all();
         $categorias=Categoria::all();
 
-        
-        
-        
+
+
+
         return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos','categorias'));
 
-        
+
     }
 
     /**
@@ -83,62 +83,35 @@ class KardexEntradaController extends Controller
      */
     public function store(Request $request)
     {
-    //codigo para convertir nombre a producto
+        //codigo para convertir nombre a producto
+        $cantidad_p = $request->input('cantidad');
+        $count_cantidad_p=count($cantidad_p);
 
-    
-        // $articulo0 = $request->input('articulo')[0];
+        $precio_p = $request->input('precio');
+        $count_precio_p=count($precio_p);
 
-        
+        for($i=0 ; $i<$count_cantidad_p;$i++){
+            $articulos[$i]= $request->input('articulo')[$i];
+            $producto_id[$i]=strstr($articulos[$i], ' ', true);
+        }
 
-
-
-        // $cantidad12 = $request->input('cantidad');
-        // $count_cantidad=count($cantidad12);
-        
-        // $precio12 = $request->input('precio');
-        // $count_precio=count($precio12);
-
-        
-        // for($i=0 ; $i<$count_cantidad;$i++){
-        //     $articulo[$i]= $request->input('articulo')[$i];
-        //     $newtwo[$i]=strstr($articulo[$i], ' ', true);
-        // }
-        // return $newtwo;
-        
-
-
-            // return $request;
-
-
-        // $id_producto =
- 
-        // $convertir=Producto::where('nombre',$articulo0)->first();
-        //  $id_producto= $convertir->id;
-        //  return $id_producto;
-        // return $nombre;
-        //chequear
-
-        // return $request;
         //contador de valores de articulos
         $articulo = $request->input('articulo');
-
-        
         $count_articulo=count($articulo);
-        // return $count_articulo;
 
         //validacion para la no incersion de dobles articulos
-
         for ($e=0; $e < $count_articulo; $e++){
-            $articulo_comparacion_inicial=$id_producto[$e];
+            $articulo_comparacion_inicial=$request->get('articulo')[$e];
             for ($a=0; $a< $count_articulo ; $a++) {
                 if ($a==$e) {
                     $a++;
                 }else {
-                    $articulo_comparacion=$id_producto[$a];
+                    $articulo_comparacion=$request->get('articulo')[$a];
                     if ($articulo_comparacion_inicial==$articulo_comparacion) {
                         return "datos repetidos - NO PERMITIDOS" ;
                     }
                 }
+
             }
         }
 
@@ -159,6 +132,7 @@ class KardexEntradaController extends Controller
         //contador de valores de cantidad
         $cantidad = $request->input('cantidad');
         $count_cantidad=count($cantidad);
+
         //contador de valores de precio
         $precio = $request->input('precio');
         $count_precio=count($precio);
@@ -167,7 +141,7 @@ class KardexEntradaController extends Controller
             for($i=0;$i<$count_articulo;$i++){
                 $kardex_entrada_registro=new kardex_entrada_registro();
                 $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
-                $kardex_entrada_registro->producto_id=$request->get('articulo')[$i];
+                $kardex_entrada_registro->producto_id=$producto_id[$i];
                 $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
                 $kardex_entrada_registro->precio=$request->get('precio')[$i];
                 $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];

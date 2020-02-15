@@ -16,7 +16,7 @@ class PeriodoConsultaController extends Controller
     public function index()
     {
         $periodo_consultas=PeriodoConsulta::all();
-        return view('inventario.periodo-consulta.index',compact('periodo_consultas'));   
+        return view('inventario.periodo-consulta.index',compact('periodo_consultas'));
     }
 
     /**
@@ -53,7 +53,7 @@ class PeriodoConsultaController extends Controller
             $register->save();
         }
 
-        return "listo";
+        return redirect()->route('periodo-consulta.index');
     }
 
     /**
