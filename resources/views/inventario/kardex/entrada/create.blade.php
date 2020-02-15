@@ -107,14 +107,14 @@
 
 {{-- Check --}}
 
-						<table cellspacing="0" class="table table-striped table-responsive" width="100%">
+						<table cellspacing="0" class="table table-striped " width="100%">
 							<thead>
 								<tr>
-									<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-									<th>Producto</th>
-									<th>Cantidad</th>
-									<th>Precio</th>
-									<th>Total</th>
+									<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+									<th style="width: 600px">Producto</th>
+									<th style="width: 100px">Cantidad</th>
+									<th style="width: 100px">Precio</th>
+									<th style="width: 100px">Total</th>
 								</tr>
 							</thead>
 							<tbody>
