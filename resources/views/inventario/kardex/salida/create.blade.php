@@ -79,9 +79,11 @@
 							</tbody>
 						</table>
 
-						<button type="button" class='delete btn btn-danger'  > Eliminar </button>
-						<button type="button" class='addmore btn btn-success' > Agregar </button>
-						<button class="btn btn-primary" type="submit">Guardar</button>
+						
+						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
+						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+						<button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
+
 
 					</form>
 				</div>

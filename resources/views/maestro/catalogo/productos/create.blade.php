@@ -26,13 +26,12 @@
 								Clasificacion del Producto
 	                            </div>
 	                            <div class="panel-body">
-									 
-								<div class="form-group row">
-									 	<label class="col-sm-2 col-form-label">Codigo del Producto:</label><div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto"  value="{{-- {{$producto->id+1}} --}}" disabled="d">
-									 	</div>
+								<div class="form-group row" >
+						        	<label for=""></label>
+						        	<div class="col-sm-10"></div>
 						        </div>
 						        <div class="form-group row">
-										<label class="col-sm-2 col-form-label">Codigo Original:</label>
+										<label class="col-sm-2 col-form-label">Codigo Alternativo:</label>
 		                     			<div class="col-sm-10"><input type="text" class="form-control" name="codigo_original" ></div>
 						        </div>
 						        <div class="form-group row">
@@ -68,6 +67,10 @@
 					    		</select>
 		                    </div>
 						        </div>
+						        <div class="form-group row" >
+						        	<label for=""></label>
+						        	<div class="col-sm-10"></div>
+						        </div>
 	                            </div>
 	                        </div>
 
@@ -86,7 +89,7 @@
 									</div>
 									<div class="form-group row">
 									 	<label class="col-sm-2 col-form-label">Descripcion:</label>
-		                     			<div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" placeholder="" style="height: 150px"></textarea></div>
+		                     			<div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" placeholder="" style="height: 114px"></textarea></div>
 									</div>
 									<div class="form-group row">
 									 	<label class="col-sm-2 col-form-label">Estado:</label>

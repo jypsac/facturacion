@@ -67,15 +67,15 @@
                             </div>
 						</div>
 
-						<table 	 cellspacing="0" class="table table-striped table-responsive">
+						<table 	 cellspacing="0" class="table table-striped ">
 							<thead>
 							<tr>
-								<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-								<th>---- Codigo ------ articulo</th>
+								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+								<th style="width: 600px">---- Codigo ------ articulo</th>
 
-								<th>Cantidad</th>
-								<th>Precio</th>
-								<th>Total</th>
+								<th style="width: 100px">Cantidad</th>
+								<th style="width: 100px">Precio</th>
+								<th style="width: 100px">Total</th>
 							</tr>
 						</thead>
 								<tbody>
@@ -98,10 +98,11 @@
 						</table>
 
 
-						<button type="button" class='delete btn btn-danger'  > Eliminar </button>
-						<button type="button" class='addmore btn btn-success' > Agregar </button>
 
-						<button class="btn btn-primary" type="submit">Guardar</button>
+						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
+						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+						<button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
+
 
 					</form>
 <tr>
