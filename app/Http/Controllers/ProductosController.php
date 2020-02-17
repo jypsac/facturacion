@@ -32,21 +32,6 @@ class ProductosController extends Controller
      */
     public function create(Request $request)
     {
-        // cODIGO
-        // $name = $request->input('familia');
-        // $marca = Marca::where("id","=",$name)->first();
-        // $marca_nombre=(string)$marca->nombre;
-        // $marca=(string)$marca->abreviatura;
-        // $guion='-';
-        // $marca_cantidad= Producto::where("codigo_producto","=",$name)->count();
-        // $marca_cantidad++;
-        // $contador=10000000;
-        // $marca_cantidad=$contador+$marca_cantidad;
-        // $marca_cantidad=(string)$marca_cantidad;
-        // $marca_cantidad=substr($marca_cantidad,1);
-        // $orden_servicio=$marca.$guion.$marca_cantidad;
- // return $orden_servicio;
-        /*CODIGO*/
         $monedas=Moneda::all();
         $familias=Familia::all();
         $marcas=Marca::all();
@@ -78,13 +63,22 @@ class ProductosController extends Controller
         $ceros='0000';
         $codigo_producto=$cate.$guion.$nombre_marca.$guion.$ceros;
 
-        // return $codigo_producto;
+        
 
-        // $name ="sin";
+        
         // $image =$request->file('foto');
-        // $codigo= $request->get('codigo_barras');
+        
         // $name = $codigo."-".$image->getClientOriginalName();
         // $image->move(public_path().'/archivos/imagenes/productos',$name);
+
+        if($request->hasfile('foto')){
+            $image1 =$request->file('foto');
+            $name1 =time().$image1->getClientOriginalName();
+            $destinationPath = public_path('/archivos/imagenes/productos/');
+            $image1->move($destinationPath,$name1);            
+        }else{
+            $name="sin_foto";
+        }
 
         $producto=new Producto;
         $producto->codigo_producto=$codigo_producto;
@@ -105,7 +99,7 @@ class ProductosController extends Controller
         $producto->precio=$request->get('precio');
         $producto->stock_minimo=$request->get('stock_minimo');
         $producto->stock_maximo=$request->get('stock_maximo');
-        // $producto->foto=$name;
+        $producto->foto=$name;
         $producto->save();
         return redirect()->route('productos.index');
 
