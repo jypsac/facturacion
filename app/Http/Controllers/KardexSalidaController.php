@@ -20,7 +20,6 @@ class KardexSalidaController extends Controller
      */
     public function index()
     {
-    
         $kardex_salidas=Kardex_salida::all();
         // return view('inventario.kardex.salida.index');
         return view('inventario.kardex.salida.index' ,compact('kardex_salidas'));
@@ -141,22 +140,22 @@ class KardexSalidaController extends Controller
                                 if($cantidad_final==0){
                                     $p->estado=0;
                                     $p->save();
-                                    // return "cantidad restada a cero";
-                                    return redirect()->route('kardex-salida.index');
+                                    // return "cantidad restada a cero 1";
+                                    // return redirect()->route('kardex-salida.index');
                                 }else{
                                     $p->save();
-                                    // return "cantidad restada";
-                                    return redirect()->route('kardex-salida.index');
+                                    // return "cantidad restada 2";
+                                    // return redirect()->route('kardex-salida.index');
                                 }
                             }else{
                                 $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
                                 $p->cantidad=0;
                                 $p->estado=0;
                                 $p->save();
-                                // $contador=$contador+$var_cantidad_entrada;
-                                return redirect()->route('kardex-salida.index');
+                                // $contador=$contador+$var_cantidad_entrada ;
+                                // return "3 es";
+                                // return redirect()->route('kardex-salida.index');
                             }
-
                         }
                     }
                 }
@@ -166,6 +165,7 @@ class KardexSalidaController extends Controller
         }else{
             return "Falto introducir un campo";
         }
+        return redirect()->route('kardex-salida.index');
     }
 
     /**
