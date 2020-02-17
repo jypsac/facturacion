@@ -78,16 +78,16 @@ class ProductosController extends Controller
         $ceros='0000';
         $codigo_producto=$cate.$guion.$nombre_marca.$guion.$ceros;
 
-        return $codigo_producto;
+        // return $codigo_producto;
 
         // $name ="sin";
-        $image =$request->file('foto');
-        $codigo= $request->get('codigo_barras');
-        $name = $codigo."-".$image->getClientOriginalName();
-        $image->move(public_path().'/archivos/imagenes/productos',$name);
+        // $image =$request->file('foto');
+        // $codigo= $request->get('codigo_barras');
+        // $name = $codigo."-".$image->getClientOriginalName();
+        // $image->move(public_path().'/archivos/imagenes/productos',$name);
 
         $producto=new Producto;
-        $producto->codigo_producto=$request->get('codigo_producto');
+        $producto->codigo_producto=$codigo_producto;
         $producto->codigo_original=$request->get('codigo_original');
         $producto->categoria_id=$request->get('categoria_id');
         $producto->familia_id=$request->get('familia_id');
@@ -105,9 +105,9 @@ class ProductosController extends Controller
         $producto->precio=$request->get('precio');
         $producto->stock_minimo=$request->get('stock_minimo');
         $producto->stock_maximo=$request->get('stock_maximo');
-        $producto->foto=$name;
+        // $producto->foto=$name;
         $producto->save();
-        // return redirect()->route('productos.index');
+        return redirect()->route('productos.index');
 
 
     }

@@ -67,6 +67,7 @@
                             </div>
 						</div>
 
+<<<<<<< HEAD
 						<table cellspacing="0" class="table table-striped table-responsive">
 							<thead>
 								<tr>
@@ -106,6 +107,44 @@
 						<button type="button" class='delete btn btn-danger'  > Eliminar </button>
 						<button type="button" class='addmore btn btn-success' > Agregar </button>
 						<button class="btn btn-primary" type="submit">Guardar</button>
+=======
+						<table 	 cellspacing="0" class="table table-striped ">
+							<thead>
+							<tr>
+								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+								<th style="width: 600px">---- Codigo ------ articulo</th>
+
+								<th style="width: 100px">Cantidad</th>
+								<th style="width: 100px">Precio</th>
+								<th style="width: 100px">Total</th>
+							</tr>
+						</thead>
+								<tbody>
+							<tr>
+								<td><input type='checkbox' class="case"></td>
+								<td>
+								<select class="form-control" id='articulo' name='articulo[]' required>
+									@foreach($productos as $producto)
+									<option value="{{$producto->id}}">{{$producto->codigo_producto}} -> {{$producto->nombre}}</option>
+									@endforeach
+								</select>
+								</td>
+
+								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
+								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
+								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
+								<span id="spTotal"></span>
+							</tr>
+						</tbody>
+						</table>
+
+
+
+						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
+						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+						<button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
+
+>>>>>>> b2bcb2c59a37f84edf8fe70516d039c09ef8c5cf
 
 					</form>
 
