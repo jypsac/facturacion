@@ -35,81 +35,66 @@
 					<form action="{{ route('kardex-salida.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 
-
 					 	<div class="form-group row ">
-								<label class="col-sm-2 col-form-label" >motivos:</label>
-							                    <div class="col-sm-4">
-							                     	<select class="form-control" name="motivo">
-													@foreach($motivos as $motivo)
-													<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
-													@endforeach
-													</select>
-							                    </div>
-
-							    <label class="col-sm-2 col-form-label">Informaciones:</label>
-												<div class="col-sm-4">
-													<input type="text" class="form-control" name="informacion">
-							                    </div>
+							<label class="col-sm-2 col-form-label" >motivos:</label>
+								<div class="col-sm-4">
+									<select class="form-control" name="motivo">
+										@foreach($motivos as $motivo)
+										<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
+										@endforeach
+									</select>
+								</div>
+							<label class="col-sm-2 col-form-label">Informaciones:</label>
+								<div class="col-sm-4">
+									<input type="text" class="form-control" name="informacion">
+							    </div>
 						</div>
 					 	
-
-{{-- Check --}}
-
-
-
-{{-- Check --}}
-
-						<table 	 cellspacing="0" class="table table-striped ">
+						<table cellspacing="0" class="table table-striped ">
 							<thead>
-							<tr>
-								<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-								<th>---- Codigo ------ articulo</th>
-
-								<th>Cantidad</th>
-							</tr>
-						</thead>
-								<tbody>
-							<tr>
-							<td><input type='checkbox' class='case' style="background:red;"></td>
-								<td>
-								<select class="form-control" id='articulo' name='articulo[]' required>
-									@foreach($productos as $producto)
-									<option value="{{$producto->id}}">{{$producto->codigo_producto}} -> {{$producto->nombre}}</option>
-									@endforeach
-								</select></td>
-
-								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   required/></td>
-								
-								<span id="spTotal"></span>
-							</tr>
-						</tbody>
+								<tr>
+									<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+									<th>Producto</th>
+									<th>Cantidad</th>
+								</tr>
+							</thead>
+							<tbody>
+								<tr>
+									<td>
+										<input type='checkbox' class='case' style="background:red;">
+									</td>
+									<td>
+										<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' autocomplete="off">
+											<datalist id="browsers2" >
+												@foreach($productos as $producto)
+												<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+												@endforeach
+											</datalist>
+									</td>
+									<td>
+										<input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control" required/>
+									</td>
+									<span id="spTotal"></span>
+								</tr>
+							</tbody>
 						</table>
 
 						<button type="button" class='delete btn btn-danger'  > Eliminar </button>
 						<button type="button" class='addmore btn btn-success' > Agregar </button>
-
 						<button class="btn btn-primary" type="submit">Guardar</button>
 
 					</form>
-<tr>
-
-	
-  <td>
-    
-  </td>
-</tr>
-
-
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
-<style>	
-.form-control{
-	border-radius: 5px;
-}
-</style>
+
+	<style>	
+	.form-control{
+		border-radius: 5px;
+	}
+	</style>
 
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -120,18 +105,17 @@
     <script src="{{ asset('js/inspinia.js') }}"></script>
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-
-
     <script>
         var i = 2;
         $(".addmore").on('click', function () {
             var data = `[<tr><td><input type='checkbox' class='case'/></td>";
              <td>
-			<select class="form-control" id='articulo' name='articulo[]' required>
-									@foreach($productos as $producto)
-									<option value="{{$producto->id}}">{{$producto->codigo_producto}} --- {{$producto->nombre}}</option>
-									@endforeach
-								</select>
+				<input list="browsers" class="form-control " name="articulo[]" required id='articulo' autocomplete="off">
+						<datalist id="browsers" >
+							@foreach($productos as $producto)
+							<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+							@endforeach
+						</datalist>
 			</td>
 
 			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto form-control"  required/></td>
@@ -141,8 +125,6 @@
             i++;
         });
 	</script>
-
-
 
     <script>
         $(".delete").on('click', function () {
@@ -163,15 +145,15 @@
         }
     </script>
 
+	<script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
 
-
-<script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
-<script>
-	$(document).ready(function () {
-		$('.i-checks').iCheck({
-			checkboxClass: 'icheckbox_square-green',
-			radioClass: 'iradio_square-green',
+	<script>
+		$(document).ready(function () {
+			$('.i-checks').iCheck({
+				checkboxClass: 'icheckbox_square-green',
+				radioClass: 'iradio_square-green',
+			});
 		});
-	});
-</script>
+	</script>
+
 @endsection

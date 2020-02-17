@@ -47,6 +47,18 @@ class KardexSalidaController extends Controller
 
     public function store(Request $request)
     {
+        //codigo para convertir nombre a producto
+        $cantidad_p = $request->input('cantidad');
+        $count_cantidad_p=count($cantidad_p);
+
+        $articulo_p = $request->input('articulo');
+        $articulo_p=count($articulo_p);
+
+        for($i=0 ; $i<$count_cantidad_p;$i++){
+            $articulos[$i]= $request->input('articulo')[$i];
+            $producto_id[$i]=strstr($articulos[$i], ' ', true);
+        }
+
         // Validacion para ver si la cantidad es suficiente con lo requerido
 
         //Primer verificacion de articulos en validacion del if
@@ -76,7 +88,7 @@ class KardexSalidaController extends Controller
         //Validacion para cantidad
 
         for ($i=0; $i < $count_articulo1; $i++){
-            $articulo_c=$request->get('articulo')[$i];
+            $articulo_c=$producto_id[$i];
             $cantidad_c=$request->get('cantidad')[$i];
             $consulta_cantidad=kardex_entrada_registro::where('producto_id',$articulo_c)->where('estado','1')->sum('cantidad');
             if ($cantidad_c > $consulta_cantidad) {
@@ -111,7 +123,7 @@ class KardexSalidaController extends Controller
                 for($i=0;$i<$count_articulo;$i++){
                     $kardex_salida_registro=new kardex_salida_registro();
                     $kardex_salida_registro->kardex_salida_id=$kardex_salida->id;
-                    $kardex_salida_registro->producto_id=$request->get('articulo')[$i];
+                    $kardex_salida_registro->producto_id=$producto_id[$i];
                     $kardex_salida_registro->cantidad=$request->get('cantidad')[$i];
                     $kardex_salida_registro->save();
 
