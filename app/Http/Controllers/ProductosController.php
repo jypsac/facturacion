@@ -63,19 +63,19 @@ class ProductosController extends Controller
         $ceros='0000';
         $codigo_producto=$cate.$guion.$nombre_marca.$guion.$ceros;
 
-        
 
-        
+
+
         // $image =$request->file('foto');
-        
+
         // $name = $codigo."-".$image->getClientOriginalName();
         // $image->move(public_path().'/archivos/imagenes/productos',$name);
 
         if($request->hasfile('foto')){
             $image1 =$request->file('foto');
-            $name1 =time().$image1->getClientOriginalName();
+            $name =time().$image1->getClientOriginalName();
             $destinationPath = public_path('/archivos/imagenes/productos/');
-            $image1->move($destinationPath,$name1);            
+            $image1->move($destinationPath,$name);
         }else{
             $name="sin_foto";
         }
@@ -125,7 +125,7 @@ class ProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {   
+    {
         $producto=Producto::find($id);
         $monedas=Moneda::all();
         $familias=Familia::all();
