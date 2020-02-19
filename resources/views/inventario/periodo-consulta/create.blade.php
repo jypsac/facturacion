@@ -5,7 +5,6 @@
 @section('breadcrumb2', 'periodo consulta-Agregar')
 @section('href_accion', route('periodo-consulta.index') )
 @section('value_accion', 'Atras')
-  
 
 @section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -34,15 +33,23 @@
 				</div>
 				<div class="ibox-content">
 					<form action="{{ route('periodo-consulta.store') }}"  enctype="multipart/form-data" method="post">
-					 	@csrf
+                         @csrf
+                         
 					 	<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Nombre:</label>
 							    <div class="col-sm-10">
                                     <input type="text" class="form-control" name="nombre">
 							    </div>
                         </div>
-                        <div class="form-group row ">
 
+                        <div class="form-group row ">
+							<label class="col-sm-2 col-form-label" >Amacen:</label>
+							    <div class="col-sm-10">
+                                    <input type="text" class="form-control" name="almacen">
+							    </div>
+                        </div>
+
+                        <div class="form-group row ">
 							<label class="col-sm-2 col-form-label">Informacion:</label>
                                 <div class="col-sm-10">
                                     <textarea class="form-control" name="informacion"></textarea>

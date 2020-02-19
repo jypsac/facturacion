@@ -24,6 +24,7 @@ class AlmacenController extends Controller
      */
     public function create()
     {
+        $almacenes=Almacen::all();
         return view('maestro.almacen.create');
     }
 
