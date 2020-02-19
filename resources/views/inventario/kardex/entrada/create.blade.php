@@ -126,7 +126,7 @@
 										<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' autocomplete="off">
 											<datalist id="browsers2" >
 												@foreach($productos as $producto)
-												<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+												<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}">
 												@endforeach
 											</datalist>
 									</td>
