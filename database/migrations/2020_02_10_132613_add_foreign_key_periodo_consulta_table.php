@@ -13,7 +13,15 @@ class AddForeignKeyPeriodoConsultaTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('periodo_consulta', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('almacen_id');
+            $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
+
+            $table->text('informacion');
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +31,6 @@ class AddForeignKeyPeriodoConsultaTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('periodo_consulta');
     }
 }
