@@ -28,6 +28,7 @@ class CreateProductosTable extends Migration
             $table->integer('stock_minimo');
             $table->integer('stock_maximo');
             $table->string('foto');
+            $table->string('estado_anular');
         });
     }
     /**

@@ -30,43 +30,30 @@
 	                            <div class="panel-body">
 									 
 								<div class="form-group row">
-									 	<label class="col-sm-2 col-form-label">Codigo:</label><div class="col-sm-10"><input type="text" class="form-control" name="codigo_producto" value="{{$producto->codigo_producto}}" hidden="hidden">
+									 	<label class="col-sm-2 col-form-label">Codigo:</label><div class="col-sm-10"><input type="text" class="form-control"  value="{{$producto->codigo_producto}}" disabled="disabled" >
 									 	</div>
 						        </div>
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
-		                     			<div class="col-sm-10"><input type="text" class="form-control" name="codigo_original" value="{{$producto->codigo_original}}"></div>
+		                     			<div class="col-sm-10"><input type="text" class="form-control"  value="{{$producto->codigo_original}}"  ></div>
 						        </div>
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Categoria:</label>
 		                    			 <div class="col-sm-10">
-		                    			 	<select class="form-control m-b" name="categoria_id">
-			          						<option value="{{$producto->categoria_i_producto->id}}" style="font-weight:bold" >{{$producto->categoria_i_producto->descripcion}}</option>
-			          						@foreach($categorias as $categoria)
-					    					<option value="{{ $categoria->id }}">{{ $categoria->descripcion}}</option>
-					    					@endforeach
-					    					</select>
+		                    			 	<input type="text" class="form-control m-b" value="{{$producto->categoria_i_producto->descripcion}}" disabled="disabled">
 					    				</div>
 						        </div>
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Familia:</label>
 		                     <div class="col-sm-10">
-		                     	<select class="form-control m-b" name="familia_id">
-			          			<option value="{{$producto->familia_i_producto->id}}" style="font-weight:bold">{{$producto->familia_i_producto->descripcion}}</option>
-			          			@foreach($familias as $familia)
-					    		<option value="{{ $familia->id }}">{{ $familia->descripcion}}</option>
-					    		@endforeach
-					    		</select>
+		                     		<input type="text" class="form-control m-b" value="{{$producto->familia_i_producto->descripcion}}" disabled="disabled">
 					    	</div>
 						        </div>
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Marca:</label>
 							<div class="col-sm-10">
-								<select class="form-control m-b" name="marca_id"  hidden="hidden">
-			          			<option value="{{$producto->marcas_i_producto->id}}"style="font-weight:bold">{{$producto->marcas_i_producto->nombre}}</option>
-			          			@foreach($marcas as $marca)
-					    		<option value="{{ $marca->id }}">{{ $marca->nombre}}</option>
-					    		@endforeach
+								<input type="text" class="form-control m-b" value="{{$producto->marcas_i_producto->nombre}}" disabled="disabled">
+			          			
 					    		</select>
 		                    </div>
 						        </div>
@@ -212,6 +199,7 @@
 	                        		<div class="form-group row">
 									 	<label class="col-sm-1 col-form-label">Stock Maximo:</label>
 		                     			<div class="col-sm-5"><input type="text" class="form-control" name="stock_maximo"  value="{{$producto->stock_maximo}}"  >
+		                     				<input type="text" value="{{$producto->foto}}" class="form-control" name="ori_foto" hidden="hidden">
 										</div>
 										
 

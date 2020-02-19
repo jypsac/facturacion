@@ -85,7 +85,7 @@
                                 <th>Foto</th>
                                 <th>Ver</th>
                                 {{-- <th>Editar</th> --}}
-                                <th>Eliminar</th>
+                                <th>Anular</th>
                             </tr>
                         </thead>
                     <tbody>
@@ -104,13 +104,18 @@
                                 <td><center><a href="{{ route('productos.show', $producto->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 {{-- <td><center><a href="{{ route('productos.edit', $producto->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
                                 <td>
-                                    <center>
+                                      @if($producto->estado_anular == '1')
+                                            <center>
                                         <form action="{{ route('productos.destroy', $producto->id)}}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
+                                            <button type="submit" class="btn btn-s-m btn-danger">Anular</button>
                                         </form>
-                                    </center>
+                                             </center>
+                                     @elseif($producto->estado_anular == '0')
+                                            <button type="submit" class="btn btn-secondary">Anulado</button>
+                                     @endif
+                                    
                                 </td>
                             </tr>
                         @endforeach

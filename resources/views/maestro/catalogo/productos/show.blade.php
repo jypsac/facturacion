@@ -15,7 +15,10 @@
             <div class="ibox">
 				<div class="ibox-title">
                     <h5>Nuevo Producto</h5>
-                    <a  class="btn btn-sm btn-success" href="{{ route('productos.edit', $producto->id) }}" style="background-color: #1ab394; border-color: #1ab394;padding: 2px 4px"> <i style="font-size: 15px" class="fa fa-edit"></i></a>
+                     @if($producto->estado_anular == '1')
+						 <a  class="btn btn-sm btn-success" href="{{ route('productos.edit', $producto->id) }}" style="background-color: #1ab394; border-color: #1ab394;padding: 2px 4px"> <i style="font-size: 15px" class="fa fa-edit"></i></a>
+					 @elseif($producto->estado_anular == '0')
+                                     @endif
 				</div>
 				<div class="ibox-content">
 					

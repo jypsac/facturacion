@@ -77,7 +77,7 @@ class ProductosController extends Controller
             $destinationPath = public_path('/archivos/imagenes/productos/');
             $image1->move($destinationPath,$name);
         }else{
-            $name="sin_foto";
+            $name="sin_foto.jpg";
         }
 
         $producto=new Producto;
@@ -100,6 +100,7 @@ class ProductosController extends Controller
         $producto->stock_minimo=$request->get('stock_minimo');
         $producto->stock_maximo=$request->get('stock_maximo');
         $producto->foto=$name;
+        $producto->estado_anular='1';
         $producto->save();
         return redirect()->route('productos.index');
 
@@ -145,17 +146,16 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $image =$request->file('foto');
-        $codigo= $request->get('codigo_barras');
-        $name = $codigo."-".$image->getClientOriginalName();
-        $image->move(public_path().'/archivos/imagenes/productos',$name);
+         if($request->hasfile('foto')){
+            $image1 =$request->file('foto');
+            $name =time().$image1->getClientOriginalName();
+            $destinationPath = public_path('/archivos/imagenes/productos/');
+            $image1->move($destinationPath,$name);
+        }else{
+            $name=$request->get('ori_foto');
+        }
 
         $producto=Producto::find($id);
-        $producto->codigo_producto=$request->get('codigo_producto');
-        $producto->codigo_original=$request->get('codigo_original');
-        $producto->categoria_id=$request->get('categoria_id');
-        $producto->familia_id=$request->get('familia_id');
-        $producto->marca_id=$request->get('marca_id');
         $producto->nombre=$request->get('nombre');
         $producto->descripcion=$request->get('descripcion');
         $producto->estado_id=$request->get('estado_id');
@@ -182,9 +182,12 @@ class ProductosController extends Controller
      */
     public function destroy($id)
     {
-        $producto=Producto::findOrFail($id);
-        $producto->delete();
-
+    //     $producto=Producto::findOrFail($id);
+    //     $producto->delete();
+        $producto=Producto::find($id);
+        $producto->estado_anular='0';
+        $producto->save();
+        
         return redirect()->route('productos.index');
     }
 }

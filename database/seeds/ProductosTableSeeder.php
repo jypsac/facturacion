@@ -25,21 +25,19 @@ class ProductosTableSeeder extends Seeder
 							Pantalla multitáctil de 12" x 2160 x 1440
 							Gráficos integrados Intel HD
 							Lector de tarjetas de medios microSDXC
-							Wi-Fi 802.11ac de doble banda - Bluetooth 4.1
-							USB 3.1 Tipo-C
-							Windows 10 Home
-							SOLO SE EMITE BOLETA DE VENTA',
+							',
 			'origen' => "Importado",
 			'precio' => '20' ,
 			'stock_minimo' => '5',
 			'stock_maximo' => '100',
-			'foto' => '',
+			'foto' => 'sin_foto.jpg',
 			'categoria_id' =>"2" ,
 			'familia_id' => '8',
 			'marca_id' => "13" ,
 			'monedas_id' => "2",
 			'unidad_medida_id' => "2",
 			'estado_id' => "1",
+			'estado_anular'=>'0',
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		]);
@@ -53,24 +51,20 @@ class ProductosTableSeeder extends Seeder
 			'descuento2' => "10",
 			'descuento_maximo' => "50",
 			'descripcion' => 'AMD Ryzen™ 3 2200UN.° de núcleos de CPU2N.° de subprocesos4N.° de núcleos de GPU3Reloj base2.5GHzReloj de aumento máx.3.4GHzCaché L1 total384KBCaché L2 total1MBCaché L3 total4MBWindows 10 edición de 64·bits
-				Velocidad máxima de memoria2400MHzTipo de memoriaDDR4Canales de memoria2
-				     Modelo de gráficosRadeon™                      Vega 3 Graphics
-				Conexion Inalambrica Wi-Fi 802.11b/g/n (1x1) y Bluetooth 4.2
-				Puertos de USB x 3
-				Puertos de HDMI x 1
-				Combinación de auriculares y micrófono
-				Lector de tarjeta de memoria :Lector de tarjetas SD multimedia de múltiples formatos',
+				Velocidad máxima de memoria2400MHzTipo de memoriaDDR4Canales de memoria2'
+				    ,
 			'origen' => "Importado",
 			'precio' => '130' ,
 			'stock_minimo' => '5',
 			'stock_maximo' => '100',
-			'foto' => '',
+			'foto' => 'sin_foto.jpg',
 			'categoria_id' =>"3" ,
 			'familia_id' => '9',
 			'marca_id' => "12" ,
 			'monedas_id' => "3",
 			'unidad_medida_id' => "9",
 			'estado_id' => "2",
+			'estado_anular'=>'1',
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		]);
@@ -89,23 +83,19 @@ class ProductosTableSeeder extends Seeder
 								monitor 6.21 pulgadas 2248x1080 FHD + pantalla, 402 PPI
 								RAM 6GB
 								ROM 128 GB, no es compatible con tarjeta de memoria,
-								cámara frontal 20MP
-								cámara trasera
-								cámara gran angular, 12MP, OIS de 4 ejes, F / 1.8
-								cámara de teleobjetivo, 12MP, F / 2.6
-								batería 3400mah (typ) / 3300mah (min)
-								Global version',
+								cámara frontal 20M',
 			'origen' => "NAcional",
 			'precio' => '230' ,
 			'stock_minimo' => '5',
 			'stock_maximo' => '100',
-			'foto' => '',
+			'foto' => 'sin_foto.jpg',
 			'categoria_id' =>"1" ,
 			'familia_id' => '8',
 			'marca_id' => "10" ,
 			'monedas_id' => "1",
 			'unidad_medida_id' => "11",
 			'estado_id' => "3",
+			'estado_anular'=>'1',
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		]);
