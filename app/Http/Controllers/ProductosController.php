@@ -53,7 +53,7 @@ class ProductosController extends Controller
         $categoria=$request->get('categoria_id');
         $id_igual=Categoria::where('id','=',$categoria)->first();
         $nombre_cate=$id_igual->descripcion;
-        $cate = substr($nombre_cate, 0, 3);
+        $cate = substr($nombre_cate, 0, 1);
         // marca abrebia
         $marca=$request->get('marca_id');
         $id_igual_marca=Marca::where('id','=',$marca)->first();
@@ -61,8 +61,8 @@ class ProductosController extends Controller
 
         $guion='-';
         $ceros='0000';
-        $codigo_producto=$cate.$guion.$nombre_marca.$guion.$ceros;
-
+        $codigo_producto=$cate.$nombre_marca.$ceros;
+        // return $codigo_producto;
 
 
 
