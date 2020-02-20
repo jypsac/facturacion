@@ -34,7 +34,7 @@
 				<div class="ibox-content">
 					<form action="{{ route('periodo-consulta.store') }}"  enctype="multipart/form-data" method="post">
                          @csrf
-                         
+
 					 	<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Nombre:</label>
 							    <div class="col-sm-10">
@@ -43,9 +43,13 @@
                         </div>
 
                         <div class="form-group row ">
-							<label class="col-sm-2 col-form-label" >Amacen:</label>
+							<label class="col-sm-2 col-form-label" >Almacen:</label>
 							    <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="almacen">
+                                    <select class="form-control" name="almacen">
+                                         @foreach($almacenes as $almacen)
+                                            <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
+                                        @endforeach
+                                    </select>
 							    </div>
                         </div>
 
@@ -55,8 +59,8 @@
                                     <textarea class="form-control" name="informacion"></textarea>
                                 </div>
 						</div>
-						
-						
+
+
 						<button class="btn btn-primary" type="submit">Guardar</button>
 
 					</form>
@@ -77,6 +81,6 @@
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
 
-    
-	
+
+
 @endsection

@@ -3,7 +3,9 @@
 namespace App\Http\Controllers;
 use App\PeriodoConsulta_registro;
 use App\PeriodoConsulta;
+use App\kardex_entrada;
 use App\kardex_entrada_registro;
+use App\Almacen;
 use Illuminate\Http\Request;
 
 class PeriodoConsultaController extends Controller
@@ -26,7 +28,8 @@ class PeriodoConsultaController extends Controller
      */
     public function create()
     {
-        return view('inventario.periodo-consulta.create');
+        $almacenes=Almacen::all();
+        return view('inventario.periodo-consulta.create',compact('almacenes'));
     }
 
     /**
@@ -39,18 +42,24 @@ class PeriodoConsultaController extends Controller
     {
         $registro=new PeriodoConsulta;
         $registro->nombre=$request->input('nombre');
+        $registro->almacen_id=$request->input('almacen');
         $registro->informacion=$request->input('informacion');
         $registro->save();
 
-        $periodo_registro=kardex_entrada_registro::where('estado','1')->get();
-        foreach ($periodo_registro as $periodo) {
-            $register=new PeriodoConsulta_registro;
-            $register->periodo_consulta_id=$registro->id;
-            $register->producto_id=$periodo->producto_id;
-            $register->cantidad_inicial=$periodo->cantidad_inicial;
-            $register->precio=$periodo->precio;
-            $register->cantidad=$periodo->cantidad;
-            $register->save();
+        //Ubicacion de alamacen+
+        $kardex_entrada_almacen=kardex_entrada::where('almacen_id',$registro->almacen_id)->get();
+
+        foreach($kardex_entrada_almacen as $kardex_entrada_alm){
+            $periodo_registro=kardex_entrada_registro::where('estado','1')->where('kardex_entrada_id',$kardex_entrada_alm->id)->get();
+                foreach ($periodo_registro as $periodo) {
+                $register=new PeriodoConsulta_registro;
+                $register->periodo_consulta_id=$registro->id;
+                $register->producto_id=$periodo->producto_id;
+                $register->cantidad_inicial=$periodo->cantidad_inicial;
+                $register->precio=$periodo->precio;
+                $register->cantidad=$periodo->cantidad;
+                $register->save();
+            }
         }
 
         return redirect()->route('periodo-consulta.index');

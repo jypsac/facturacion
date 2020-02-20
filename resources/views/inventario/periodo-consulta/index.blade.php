@@ -39,6 +39,7 @@
                                 <th>ID</th>
                                 <th>Nombre</th>
                                 <th>Informacion</th>
+                                <th>Almacen</th>
                                 <th>Fecha y hora de creacion</th>
                                 <th>Ver</th>
                             </tr>
@@ -49,6 +50,7 @@
                                 <td>{{$periodo_consulta->id}}</td>
                                 <td>{{$periodo_consulta->nombre}}</td>
                                 <td>{{$periodo_consulta->informacion}}</td>
+                                <td>{{$periodo_consulta->almacen_periodo->nombre}}</td>
                                 <td>{{$periodo_consulta->created_at}}</td>
                                 <td><center><a href="{{ route('periodo-consulta.show', $periodo_consulta->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                             </tr>
