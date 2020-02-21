@@ -119,17 +119,15 @@
                             </li>
                         </ul>
                     </li>
-                    {{-- Mail --}}
-                    <li>
-                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span>{{-- <span class="label label-warning float-right">16/24</span> --}}</a>
+                    
+                    {{-- <li>
+                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="#">Inbox</a></li>
-                            <li><a href="#">Email view</a></li>{{--
-                            <li><a href="#">Compose email</a></li>
-                            <li><a href="#">Email templates</a></li> --}}
+                            <li><a href="#">Email view</a></li>
                         </ul>
-                    </li>
-                    {{-- Mail --}}
+                    </li> --}}
+                    
                     <li>
                         <a href="#"><i class="fa fa-address-card  "></i> <span class="nav-label">Auxiliares</span></a>
                         <ul class="nav nav-second-level collapse">

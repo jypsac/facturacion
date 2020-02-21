@@ -9,6 +9,17 @@
 
 
 @section('content')
+
+@if (session('repite'))
+    <div class="alert alert-success">
+        {{ session('repite') }}
+    </div>
+@endif
+@if (session('campo'))
+    <div class="alert alert-success">
+        {{ session('campo') }}
+    </div>
+@endif
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -99,13 +110,6 @@
 
 
 					</div>
-
-
-{{-- Check --}}
-
-
-
-{{-- Check --}}
 
 						<table cellspacing="0" class="table table-striped " width="100%">
 							<thead>

@@ -46,6 +46,7 @@ class KardexSalidaController extends Controller
 
     public function store(Request $request)
     {
+
         //codigo para convertir nombre a producto
         $cantidad_p = $request->input('cantidad');
         $count_cantidad_p=count($cantidad_p);
@@ -68,7 +69,6 @@ class KardexSalidaController extends Controller
         $count_cantidad1=count($cantidad1);
 
         //validacion para la no incersion de dobles articulos
-
         for ($e=0; $e < $count_articulo1; $e++){
             $articulo_comparacion_inicial=$request->get('articulo')[$e];
             for ($a=0; $a< $count_articulo1 ; $a++) {
@@ -76,14 +76,14 @@ class KardexSalidaController extends Controller
                     $a++;
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
-                    if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return "datos repetidos - NO PERMITIDOS" ;
+                    if ($articulo_comparacion_inicial=$articulo_comparacion) {
+                        return redirect()->route('kardex-salida.create')->with('repite', 'Datos repetidos - No permitidos!');
                     }
                 }
 
             }
         }
-
+        
         //Validacion para cantidad
 
         for ($i=0; $i < $count_articulo1; $i++){
@@ -91,7 +91,7 @@ class KardexSalidaController extends Controller
             $cantidad_c=$request->get('cantidad')[$i];
             $consulta_cantidad=kardex_entrada_registro::where('producto_id',$articulo_c)->where('estado','1')->sum('cantidad');
             if ($cantidad_c > $consulta_cantidad) {
-                return "no hay cantidad deseada para el articulo";
+                return redirect()->route('kardex-salida.create')->with('cantidad', 'no hay cantidad deseada para el articulos');
             }
         }
 
@@ -140,21 +140,14 @@ class KardexSalidaController extends Controller
                                 if($cantidad_final==0){
                                     $p->estado=0;
                                     $p->save();
-                                    // return "cantidad restada a cero 1";
-                                    // return redirect()->route('kardex-salida.index');
                                 }else{
                                     $p->save();
-                                    // return "cantidad restada 2";
-                                    // return redirect()->route('kardex-salida.index');
                                 }
                             }else{
                                 $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
                                 $p->cantidad=0;
                                 $p->estado=0;
                                 $p->save();
-                                // $contador=$contador+$var_cantidad_entrada ;
-                                // return "3 es";
-                                // return redirect()->route('kardex-salida.index');
                             }
                         }
                     }
@@ -163,7 +156,7 @@ class KardexSalidaController extends Controller
                 return "Error fatal comunicarse con soporte inmediatamente";
             }
         }else{
-            return "Falto introducir un campo";
+            return redirect()->route('kardex-salida.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
         return redirect()->route('kardex-salida.index');
     }

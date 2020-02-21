@@ -107,8 +107,8 @@ class KardexEntradaController extends Controller
                     $a++;
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
-                    if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return "datos repetidos - NO PERMITIDOS" ;
+                    if ($articulo_comparacion_inicial=$articulo_comparacion) {
+                        return redirect()->route('kardex-entrada.create')->with('repite', 'Datos repetidos - No permitidos!');
                     }
                 }
 
@@ -149,7 +149,7 @@ class KardexEntradaController extends Controller
                 $kardex_entrada_registro->save();
             }
         }else {
-            return "Falto introducir un campo";
+            return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
         return redirect()->route('kardex-entrada.index');
     }

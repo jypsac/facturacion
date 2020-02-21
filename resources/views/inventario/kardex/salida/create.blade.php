@@ -7,6 +7,25 @@
 @section('value_accion', 'Atras')
 
 @section('content')
+
+@if (session('repite'))
+    <div class="alert alert-success">
+        {{ session('repite') }}
+    </div>
+@endif
+
+@if (session('cantidad'))
+    <div class="alert alert-success">
+        {{ session('cantidad') }}
+    </div>
+@endif
+
+@if (session('campo'))
+    <div class="alert alert-success">
+        {{ session('campo') }}
+    </div>
+@endif
+
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
