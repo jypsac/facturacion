@@ -32,7 +32,31 @@
                         <i class="fa fa-times"></i>
                     </a>
                 </div>
-            </div>
+            </div><div class="ibox-content">
+
+                        <div class="form-group row ">
+                            <label class="col-sm-1 col-form-label" >Nombre:</label>
+                                <div class="col-sm-5">
+                                    <p class="form-control" >{{$periodo_consulta->nombre}}</p>
+                                </div>
+                             <label class="col-sm-1 col-form-label" >Almacen:</label>
+                                <div class="col-sm-5">
+                                    <p class="form-control" >{{$periodo_consulta->almacen_periodo->nombre}}</p>
+                                </div>
+                        </div>
+
+                        <div class="form-group row ">
+                            <label class="col-sm-1 col-form-label">Informacion:</label>
+                                <div class="col-sm-5">
+                                   <p class="form-control" >{{$periodo_consulta->informacion}}</p>
+                                </div>
+                                <label class="col-sm-1 col-form-label">Fecha:</label>
+                                <div class="col-sm-5">
+                                   <p class="form-control"  >{{$periodo_consulta->created_at}}</p>
+                                </div>
+                        </div>
+
+                </div>
             <div class="ibox-content">
 
                 <table class="table table-striped">
@@ -43,10 +67,10 @@
                         <th scope="col">Cantidad Inicial</th>
                         <th scope="col">Precio</th>
                         <th scope="col">Cantidad</th>
-                        <th scope="col">Nombre</th>
+                        {{-- <th scope="col">Nombre</th>
                         <th scope="col">Informacion</th>
                         <th scope="col">Almacen</th>
-                        <th scope="col">Fecha y hora de creacion</th>
+                        <th scope="col">Fecha y hora de creacion</th> --}}
 
                     </tr>
                     </thead>
@@ -58,10 +82,10 @@
                             <td>{{$periodo_consulta_registro->cantidad_inicial}}</td>
                             <td>{{$periodo_consulta_registro->precio}}</td>
                             <td>{{$periodo_consulta_registro->cantidad}}</td>
-                            <td>{{$periodo_consulta->nombre}}</td>
+                            {{-- <td>{{$periodo_consulta->nombre}}</td>
                             <td>{{$periodo_consulta->informacion}}</td>
                             <td>{{$periodo_consulta->almacen_periodo->nombre}}</td>
-                            <td>{{$periodo_consulta->created_at}}</td>
+                            <td>{{$periodo_consulta->created_at}}</td> --}}
                         </tr>
                     @endforeach
                     </tbody>
@@ -71,7 +95,9 @@
         </div>
     </div>
 </div>
-
+<style>
+    .form-control{border:none; font-weight: bold;}
+</style>
 
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
