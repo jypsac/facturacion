@@ -35,14 +35,19 @@
             </div>
             <div class="ibox-content">
 
-                <table class="table  table-striped ">
-                    <thead>
+                <table class="table">
+                        <thead class="thead-dark">
                     <tr>
-                        <th>ID</th>
-                        <th>Producto</th>
-                        <th>Cantidad Inicial</th>
-                        <th>Precio</th>
-                        <th>Cantidad</th>
+                        <th scope="col">ID</th>
+                        <th scope="col">Producto</th>
+                        <th scope="col">Cantidad Inicial</th>
+                        <th scope="col">Precio</th>
+                        <th scope="col">Cantidad</th>
+                        <th scope="col">Nombre</th>
+                        <th scope="col">Informacion</th>
+                        <th scope="col">Almacen</th>
+                        <th scope="col">Fecha y hora de creacion</th>
+
                     </tr>
                     </thead>
                     <tbody>
@@ -53,6 +58,10 @@
                             <td>{{$periodo_consulta_registro->cantidad_inicial}}</td>
                             <td>{{$periodo_consulta_registro->precio}}</td>
                             <td>{{$periodo_consulta_registro->cantidad}}</td>
+                            <td>{{$periodo_consulta->nombre}}</td>
+                            <td>{{$periodo_consulta->informacion}}</td>
+                            <td>{{$periodo_consulta->almacen_periodo->nombre}}</td>
+                            <td>{{$periodo_consulta->created_at}}</td>
                         </tr>
                     @endforeach
                     </tbody>
