@@ -35,8 +35,8 @@
             </div>
             <div class="ibox-content">
 
-                <table class="table">
-                        <thead class="thead-dark">
+                <table class="table table-striped">
+                        <thead class="thead-" style="background: #4f5254b8; color: white; ">
                     <tr>
                         <th scope="col">ID</th>
                         <th scope="col">Producto</th>
