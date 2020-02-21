@@ -35,7 +35,7 @@
             </div>
             <div class="ibox-content">
 
-                <table class="table">
+                <table class="table  table-striped ">
                     <thead>
                     <tr>
                         <th>ID</th>

@@ -37,7 +37,7 @@
 						        <div class="form-group row">
 										<label class="col-sm-2 col-form-label">Categoria:</label>
 		                    			 <div class="col-sm-10">
-		                    			 	<select class="form-control m-b" name="categoria_id">
+		                    			 	<select class="form-control m-b" name="categoria_id" >
 			          						<option>Seleccione una Categoria</option>
 			          						@foreach($categorias as $categoria)
 					    					<option value="{{ $categoria->id }}">{{ $categoria->descripcion}}</option>
@@ -85,11 +85,11 @@
 									 
 									<div class="form-group row">
 									 	<label class="col-sm-2 col-form-label">Nombre:</label>
-		                     			<div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto"></div>
+		                     			<div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto" required="required"></div>
 									</div>
 									<div class="form-group row">
 									 	<label class="col-sm-2 col-form-label">Descripcion:</label>
-		                     			<div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" placeholder="" style="height: 114px"></textarea></div>
+		                     			<div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" placeholder="" style="height: 114px" required="required"></textarea></div>
 									</div>
 									<div class="form-group row">
 									 	<label class="col-sm-2 col-form-label">Estado:</label>
