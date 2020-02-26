@@ -221,6 +221,7 @@
                             <a style="visibility:@yield('visibility', 'hidden')" {{-- data-toggle="@yield('a', '')" --}}  href="@yield('ruta', '')" class="btn btn-primary">@yield('name', '')</a>
 
                             <a data-toggle="@yield('data-toggle', '')"  href="@yield('href_accion', '#')" class="btn btn-primary">@yield('value_accion', '#')</a>
+                            <a href="" class="btn btn-primary">actualizar</a>
                         </div><!--
                         @yield('div', '') -->
 

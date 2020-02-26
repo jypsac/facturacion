@@ -20,6 +20,73 @@
         {{ session('campo') }}
     </div>
 @endif
+<div class="social-bar">
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> Proveedor</span></a>
+ 
+</div>
+  <!-- MODAL CLIENTE -->
+	<div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+		<div class="modal-dialog modal-lg">
+			 <div class="modal-content">
+				<div class="wrapper wrapper-content animated fadeInRight" style="padding-bottom: 5px;padding-top: 0px;">
+	<div class="row">
+        <div class="col-lg-12">
+<div class="container" style="background: white;">
+        	<h2 align="center">Agregado Proveedor</h2>
+ <form action="{{ route('provedor.store') }}"  enctype="multipart/form-data" method="post">
+                             @csrf
+
+      <div class="jumbotron" style="height: 60px;padding:10px">
+       <center><input style="width: 250px;font-size: 18px;" type="text" class="form-control" name="empresa" id="razon_social"></center>
+      </div>
+
+<h1><i class="fa fa-user-o" aria-hidden="true"></i></h1>
+      <div class="row marketing">
+        <div class="col-lg-6">
+
+
+          <h4>Ruc:</h4>
+         <p><input type="text" class="form-control" name="ruc" id="numero_ruc"></p>
+
+          <h4>Direccion:</h4>
+          <p><input type="text" class="form-control" name="direccion" id="domicilio"></p>
+
+          <h4>Telefonos:</h4>
+          <p><input type="text" class="form-control" name="telefonos" ></p>
+
+           <h4>Correo del provedor:</h4>
+          <p><input type="text" class="form-control" name="email_provedor" ></p>
+        </div>
+
+        <div class="col-lg-6">
+
+          <h4>Correo:</h4>
+          <p><input type="text" class="form-control" name="email" ></p>
+
+          <h4>Nombre del contacto:</h4>
+          <p><input type="text" class="form-control" name="contacto_provedor" ></p>
+
+          <h4>Celular del contacto:</h4>
+          <p><input type="text" class="form-control" name="celular_provedor" ></p>
+
+          <h4>Observacion:</h4>
+          <p><textarea name="observacion" class="form-control"></textarea></p>
+    </div>
+
+<button class="btn btn-primary" type="submit">Grabar</button>
+</form>
+</div>
+            </div>
+
+
+	    </div>
+</div>
+
+								  </div>
+								  </div>
+								</div>
+							</div>
+							{{--  --}}
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -115,7 +182,7 @@
 							<thead>
 								<tr>
 									<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-									<th style="width: 600px">Producto</th>
+										<th style="width: 600px">Producto  <a href="{{route('productos.create')}}" class="btn btn-warning" target="blanck" style="padding-top: 0px;padding-bottom: 0px; padding-left: 4px;padding-right: 4px;" ><i class="fa fa-plus-square" aria-hidden="true" ></a></th>
 									<th style="width: 100px">Cantidad</th>
 									<th style="width: 100px">Precio</th>
 									<th style="width: 100px">Total</th>
