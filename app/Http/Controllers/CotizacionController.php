@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use App\Cotizacion;
+use App\Marcas;
 use App\Producto;
 use Illuminate\Http\Request;
 
@@ -36,7 +38,7 @@ class CotizacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        return $request;
     }
 
     /**

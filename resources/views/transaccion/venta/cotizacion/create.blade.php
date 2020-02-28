@@ -38,56 +38,74 @@
 					 	<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Cliente:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="nombre">
+								<input type="text" class="form-control" name="cliente">
 							</div>
 		                </div>
 
 				        <div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Direccion:</label>
 		                    <div class="col-sm-10">
-								<input type="text" class="form-control" name="abreviatura">
+								<input type="text" class="form-control" name="direccion">
+							</div>
+						</div>
+
+						<div class="form-group  row">
+							<label class="col-sm-2 col-form-label">Fecha de cotizacion:</label>
+		                    <div class="col-sm-10">
+								<input type="datetime" name="fecha" class="form-control" value="{{date("d-m-Y")}}" disabled>
 							</div>
 						</div>
 
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Atencion:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="responsable">
+								<input type="text" class="form-control" name="atencion">
 							</div>
 					   	</div>
 
 		                <div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Forma de pago:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="direccion">
+								<select class="form-control" name="forma_pago">
+									<option>50 % adelanto,saldo contra entrega</option>
+									<option>Adelantado</option>
+									<option>Cheque dif 7 dias</option>
+									<option>Cheque dif 15 dias</option>
+									<option>Contado</option>
+									<option>Contado / contra entrega</option>
+									<option>Factura 7 dias</option>
+									<option>Factura 15 dias</option>
+									<option>Factura 20 dias</option>
+									<option>Factura 35 dias</option>
+								<select>
 							</div>
 						</div>
 
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Validez:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="descripcion">
+								<input type="text" class="form-control" name="validez">
 							</div>
 						</div>
 
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Referencia:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="descripcion">
+								<input type="text" class="form-control" name="referencia">
 							</div>
 						</div>
 
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Vendedor:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="descripcion">
+								<input type="text" class="form-control" name="vendedor">
 							</div>
 						</div>
 
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Observacion:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="descripcion">
+								<input type="text" class="form-control" name="observacion">
 							</div>
 					   	</div>
 

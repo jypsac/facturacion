@@ -81,24 +81,6 @@
 																<option id="a">{{$cliente->nombre}} - existente</option>
 															@endforeach
 												 		</datalist>
-														 {{-- @if()
-
-														 @else
-
-														 @endif --}}
-
-
-														{{-- <select class="form-control m-b" name="nombre" >
-															@foreach($clientes as $cliente)
-														<option>{{$cliente->nombre}}</option>
-															@endforeach
-														</select> --}}
-														{{-- <div id="app">
-															<example-component>
-
-															</example-component>
-														</div> --}}
-
 
 							                    </div>
 
@@ -288,15 +270,7 @@
 												<div class="col-sm-4">
 														<input type="email" class="form-control" name="email" required>
 							                    </div>
-							                    {{--
-									 		<label class="col-sm-2 col-form-label" >Estado civil:</label>
-							                    <div class="col-sm-4">
-														 <select class="form-control m-b" name="estado_civil">
-										 <option>Seleccione</option>
-									   <option value="Soltero">Soltero</option>
-									   <option value="Casado">casado</option>
-									   </select>
-							                     </div> --}}
+							                    
 
 
 						                </div>
@@ -343,10 +317,10 @@
 
 						                    <label class="col-sm-1 col-form-label">Ing. Asignado:</label>
 												<div class="col-sm-5">
-										    <input list="browsers1" class="form-control m-b" name="personal_lab_id" required>
-												<datalist id="browsers1" >
+										    <input list="browsers1" class="form-control m-b" name="personal_lab_id" required autocomplete="off">
+												<datalist id="browsers1"  >
 														@foreach($personales as $personal)
-													<option value="{{$personal->nombres}}">
+															<option value="{{$personal->personal_l->nombres}}"></option>
 														@endforeach
 												</datalist>
 												</div>
