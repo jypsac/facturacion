@@ -48,7 +48,7 @@
 								<input type="text" class="form-control" name="abreviatura">
 							</div>
 						</div>
-						
+
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Atencion:</label>
 							<div class="col-sm-10">
@@ -62,28 +62,28 @@
 								<input type="text" class="form-control" name="direccion">
 							</div>
 						</div>
-						
+
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Validez:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="descripcion">
 							</div>
 						</div>
-						   
+
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Referencia:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="descripcion">
 							</div>
 						</div>
-						   
+
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Vendedor:</label>
 							<div class="col-sm-10">
 								<input type="text" class="form-control" name="descripcion">
 							</div>
 						</div>
-						   
+
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Observacion:</label>
 							<div class="col-sm-10">
@@ -91,7 +91,44 @@
 							</div>
 					   	</div>
 
-				    	<button class="btn btn-primary" type="submit" name="action">Guardar</button>
+				    	<table 	 cellspacing="0" class="table table-striped ">
+							<thead>
+							<tr>
+								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+								<th style="width: 600px">---- Codigo ------ articulo</th>
+
+								<th style="width: 100px">Cantidad</th>
+								<th style="width: 100px">Precio</th>
+								<th style="width: 100px">Total</th>
+							</tr>
+						</thead>
+								<tbody>
+							<tr>
+								<td><input type='checkbox' class="case"></td>
+								<td>
+								<select class="form-control" id='articulo' name='articulo[]' required>
+									@foreach($productos as $producto)
+									<option value="{{$producto->id}}">{{$producto->codigo_producto}} -> {{$producto->nombre}}</option>
+									@endforeach
+								</select>
+								</td>
+
+								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
+								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
+								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
+								<span id="spTotal"></span>
+							</tr>
+						</tbody>
+						</table>
+
+
+
+						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
+						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+						<button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
+
+
+					</form>
 
 					</form>
 				</div>
@@ -107,5 +144,81 @@
 
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+	 <script>
+        var i = 2;
+        $(".addmore").on('click', function () {
+            var data = `[
+			<tr>
+				<td>
+					<input type='checkbox' class='case'/>
+				</td>";
+             	<td>
+					<select class="form-control" id='articulo' name='articulo[]' required>
+						@foreach($productos as $producto)
+						<option value="{{$producto->id}}">{{$producto->codigo_producto}} --- {{$producto->nombre}}</option>
+						@endforeach
+					</select>
+				</td>
+				<td>
+					<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
+				</td>
+				<td>
+					<input type='text' id='precio" + i + "' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});" required/>
+				</td>
+				<td>
+					<input type='text' id='total${i}' name='total[]' class="form-control" required/>
+				</td>
+			</tr>`;
+            $('table').append(data);
+            i++;
+        });
+	</script>
+
+	<script>
+	function multi(a){
+		console.log(a);
+		var total = 1;
+		var change= false; //
+		$(`.monto${a}`).each(function(){
+			if (!isNaN(parseFloat($(this).val()))) {
+				change= true;
+				total *= parseFloat($(this).val());
+			}
+		});
+		total = (change)? total:0;
+		document.getElementById(`total${a}`).value = total;
+	}
+	</script>
+
+    <script>
+        $(".delete").on('click', function () {
+            $('.case:checkbox:checked').parents("tr").remove();
+
+        });
+    </script>
+
+    <script>
+        function select_all() {
+            $('input[class=case]:checkbox').each(function () {
+                if ($('input[class=check_all]:checkbox:checked').length == 0) {
+                    $(this).prop("checked", false);
+                } else {
+                    $(this).prop("checked", true);
+                }
+            });
+        }
+    </script>
+
+	<script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
+
+	<script>
+		$(document).ready(function () {
+			$('.i-checks').iCheck({
+				checkboxClass: 'icheckbox_square-green',
+				radioClass: 'iradio_square-green',
+			});
+		});
+	</script>
 @stop
