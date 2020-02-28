@@ -93,6 +93,8 @@
 	Route::resource('/productos','ProductosController');
 	Route::resource('/promedios','PromediosController');
 
+	Route::post('/provedor/add','ProvedorController@store_kardex')->name('provedor.store_kardex');
+	// agregado rapido
 	Route::get('provedorruc', 'ProvedorController@ruc');
 	Route::resource('/provedor','ProvedorController');
 

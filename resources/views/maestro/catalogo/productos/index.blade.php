@@ -105,15 +105,62 @@
                                 {{-- <td><center><a href="{{ route('productos.edit', $producto->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
                                 <td>
                                       @if($producto->estado_anular == '1')
-                                            <center>
-                                        <form action="{{ route('productos.destroy', $producto->id)}}" method="POST">
+                                           <!-- Button trigger modal -->
+<button type="button" class="btn btn-s-m btn-danger" data-toggle="modal" data-target="#{{$producto->id}}">
+ Anular
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog" style="margin-top: 12%">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            
+                                             <div class="ibox-content float-e-margins">
+                        
+                                               <h3 class="font-bold col-lg-12" align="center">
+                                              ¿Esta Seguro que Deseas Anular el Producto: {{$producto->nombre}}".?<br>
+                                             <h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4>
+                                               </h3>
+                                               <p align="center">
+                                                   <form action="{{ route('productos.destroy', $producto->id)}}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-s-m btn-danger">Anular</button>
+                                            <center>
+                                            <button type="submit" class="btn btn-w-m btn-primary">Aceptar</button>
+                                            <button type="button" class="btn btn-w-m btn-danger" data-dismiss="modal">Cancelar</button></center>
                                         </form>
-                                             </center>
+                                                 
+                                               </p>
+                                              </div>
+
+                                        </div>
+                                    </div>
+                                </div> 
+</div>
+
+
                                      @elseif($producto->estado_anular == '0')
-                                            <button type="submit" class="btn btn-secondary">Anulado</button>
+                                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal123">Anulado</button>
+                                            <!-- Modal -->
+<div class="modal fade" id="modal123" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog" style="margin-top: 12%">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                            
+                                             <div class="ibox-content float-e-margins">
+                        
+                                               <h3 class="font-bold col-lg-12" align="center">
+                                             Lo Lamentamos, dicho producto fue anulado.
+                                               </h3>
+                                              
+                                              </div>
+
+                                        </div>
+                                    </div>
+                                </div> 
+</div>
+
                                      @endif
                                     
                                 </td>

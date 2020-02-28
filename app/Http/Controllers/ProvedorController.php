@@ -51,6 +51,24 @@ class ProvedorController extends Controller
 
     }
 
+     public function store_kardex(Request $request)
+    {
+        $provedor=new Provedor;
+        $provedor->ruc=$request->get('ruc');
+        $provedor->empresa=$request->get('empresa');
+        $provedor->direccion=$request->get('direccion');
+        $provedor->telefonos=$request->get('telefonos');
+        $provedor->email=$request->get('email');
+        $provedor->contacto_provedor=$request->get('contacto_provedor');
+        $provedor->celular_provedor=$request->get('celular_provedor');
+        $provedor->email_provedor=$request->get('email_provedor');
+        $provedor->observacion=$request->get('observacion');
+        $provedor->save();
+        return redirect()->route('kardex-entrada.create');
+
+
+    }
+
     /**
      * Display the specified resource.
      *
