@@ -32,8 +32,8 @@
 	<div class="row">
         <div class="col-lg-12">
 <div class="container" style="background: white;">
-        	<h2 align="center">Agregado Proveedor</h2>
- <form action="{{ route('provedor.store') }}"  enctype="multipart/form-data" method="post">
+        	<h2 align="center">Agregar Proveedor</h2>
+ <form action="{{ route('provedor.store_kardex') }}"  enctype="multipart/form-data" method="post">
                              @csrf
 
       <div class="jumbotron" style="height: 60px;padding:10px">

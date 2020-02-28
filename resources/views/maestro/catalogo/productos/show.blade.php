@@ -22,7 +22,7 @@
 				</div>
 				<div class="ibox-content">
 					
-<form action="{{ route('productos.index') }}"  enctype="multipart/form-data" method="post">
+<form enctype="multipart/form-data" method="post">
 					 	@csrf
 				<div class="row">
 
@@ -200,7 +200,7 @@
 						</div>
 					
 	</div>								
-	<button class="btn btn-primary" type="submit">Aceptar</button>
+	<a href="{{ route('productos.index') }}" class="btn btn-primary">Aceptar</a>
 
                 		
 					</form>
