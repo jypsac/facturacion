@@ -112,9 +112,9 @@
 
 <!-- Modal -->
 <div class="modal fade" id="{{$producto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
- <div class="modal-dialog" style="margin-top: 12%">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
+ <div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">
+                                    <div class="modal-content" >
+                                        <div class="modal-body" style="padding: 0px;">
                                             
                                              <div class="ibox-content float-e-margins">
                         
@@ -127,8 +127,8 @@
                                             @csrf
                                             @method('delete')
                                             <center>
-                                            <button type="submit" class="btn btn-w-m btn-primary">Aceptar</button>
-                                            <button type="button" class="btn btn-w-m btn-danger" data-dismiss="modal">Cancelar</button></center>
+                                            <button type="submit" class="btn btn-w-m btn-primary">Anular</button>
+                                            {{-- <button type="button" class="btn btn-w-m btn-danger" data-dismiss="modal">Cancelar</button> --}}</center>
                                         </form>
                                                  
                                                </p>
