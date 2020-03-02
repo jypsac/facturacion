@@ -113,8 +113,7 @@
 							<thead>
 							<tr>
 								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-								<th style="width: 600px">---- Codigo ------ articulo</th>
-
+								<th style="width: 600px">Articulo</th>
 								<th style="width: 100px">Cantidad</th>
 								<th style="width: 100px">Precio</th>
 								<th style="width: 100px">Total</th>
