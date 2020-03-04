@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Cotizacion;
 use App\Marcas;
 use App\Producto;
+use App\Forma_pago;
 use Illuminate\Http\Request;
 
 class CotizacionController extends Controller
@@ -27,7 +28,8 @@ class CotizacionController extends Controller
     public function create()
     {
         $productos=Producto::all();
-        return view('transaccion.venta.cotizacion.create',compact('productos'));
+        $forma_pagos=Forma_pago::all();
+        return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos'));
     }
 
     /**

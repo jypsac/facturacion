@@ -13,7 +13,26 @@ class AddForeignKeyCotizacionTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('cotizacion', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('cliente_id');
+            $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
+
+            $table->string('direccion');
+            
+            $table->unsignedBigInteger('forma_pago_id');
+            $table->foreign('forma_pago_id')->references('id')->on('forma_pago')->onDelete('cascade');
+
+            $table->integer('validez');
+            $table->string('referencia');
+
+            $table->unsignedBigInteger('personal_id');
+            $table->foreign('personal_id')->references('id')->on('personal')->onDelete('cascade');
+
+            $table->string('observacion');
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +42,6 @@ class AddForeignKeyCotizacionTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('cotizacion');
     }
 }

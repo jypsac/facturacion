@@ -67,16 +67,9 @@
 							<label class="col-sm-2 col-form-label">Forma de pago:</label>
 							<div class="col-sm-10">
 								<select class="form-control" name="forma_pago">
-									<option>50 % adelanto,saldo contra entrega</option>
-									<option>Adelantado</option>
-									<option>Cheque dif 7 dias</option>
-									<option>Cheque dif 15 dias</option>
-									<option>Contado</option>
-									<option>Contado / contra entrega</option>
-									<option>Factura 7 dias</option>
-									<option>Factura 15 dias</option>
-									<option>Factura 20 dias</option>
-									<option>Factura 35 dias</option>
+									@foreach($forma_pagos as $forma_pago)
+									<option>{{$forma_pago->id}}</option>
+									@endforeach
 								<select>
 							</div>
 						</div>
