@@ -119,26 +119,26 @@
 								<th style="width: 100px">Total</th>
 							</tr>
 						</thead>
-								<tbody>
+						<tbody>
 							<tr>
-								<td><input type='checkbox' class="case"></td>
 								<td>
-								<select class="form-control" id='articulo' name='articulo[]' required>
-									@foreach($productos as $producto)
-									<option value="{{$producto->id}}">{{$producto->codigo_producto}} -> {{$producto->nombre}}</option>
-									@endforeach
-								</select>
+									<input type='checkbox' class="case">
 								</td>
-
-								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"   onkeyup="multi(0);"  required/></td>
-								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
+								<td>
+									<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' onkeyup="calcular(this);" autocomplete="off">
+										<datalist id="browsers2" >
+											@foreach($productos as $producto)
+											<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}">
+											@endforeach
+										</datalist>
+								</td>
+								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
+								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);calcular(this);" required/></td>
 								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
 								<span id="spTotal"></span>
 							</tr>
 						</tbody>
 						</table>
-
-
 
 						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
 						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
@@ -163,7 +163,7 @@
     <script src="{{ asset('js/inspinia.js') }}"></script>
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-	 <script>
+	<script>
         var i = 2;
         $(".addmore").on('click', function () {
             var data = `[
@@ -171,12 +171,13 @@
 				<td>
 					<input type='checkbox' class='case'/>
 				</td>";
-             	<td>
-					<select class="form-control" id='articulo' name='articulo[]' required>
-						@foreach($productos as $producto)
-						<option value="{{$producto->id}}">{{$producto->codigo_producto}} --- {{$producto->nombre}}</option>
-						@endforeach
-					</select>
+				<td>
+					<input list="browsers" class="form-control " name="articulo[]" required id='articulo' autocomplete="off">
+						<datalist id="browsers" >
+							@foreach($productos as $producto)
+							<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+							@endforeach
+						</datalist>
 				</td>
 				<td>
 					<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
@@ -209,10 +210,22 @@
 	}
 	</script>
 
+	<script>
+		function calcular(input)
+		{
+			var id = input.id;
+			if (id == "articulo") {
+			var cadena=input.value;
+			var separador=" ";
+			var id=cadena.split(separador,1)
+			document.getElementById("precio").value = id; 
+			} 
+		}
+	</script>
+
     <script>
         $(".delete").on('click', function () {
             $('.case:checkbox:checked').parents("tr").remove();
-
         });
     </script>
 
