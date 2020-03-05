@@ -7,7 +7,16 @@
 @section('value_accion', 'Atras')
 
 @section('content')
-
+@if (session('repite'))
+		<div class="alert alert-success">
+			{{ session('repite') }}
+		</div>
+	@endif
+	@if (session('campo'))
+		<div class="alert alert-success">
+			{{ session('campo') }}
+		</div>
+	@endif
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -38,16 +47,20 @@
 					 	<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Cliente:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="cliente">
+								<select class="form-control" name="cliente">
+									@foreach($clientes as $cliente)
+									<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
+									@endforeach
+								<select>
 							</div>
 		                </div>
 
-				        <div class="form-group  row">
+				        {{-- <div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Direccion:</label>
 		                    <div class="col-sm-10">
 								<input type="text" class="form-control" name="direccion">
 							</div>
-						</div>
+						</div> --}}
 
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Fecha de cotizacion:</label>
@@ -55,6 +68,7 @@
 								<input type="datetime" name="fecha" class="form-control" value="{{date("d-m-Y")}}" disabled>
 							</div>
 						</div>
+
 
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Atencion:</label>
@@ -68,7 +82,7 @@
 							<div class="col-sm-10">
 								<select class="form-control" name="forma_pago">
 									@foreach($forma_pagos as $forma_pago)
-									<option>{{$forma_pago->id}}</option>
+									<option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
 									@endforeach
 								<select>
 							</div>
@@ -91,7 +105,11 @@
 						<div class="form-group  row">
 							<label class="col-sm-2 col-form-label">Vendedor:</label>
 							<div class="col-sm-10">
-								<input type="text" class="form-control" name="vendedor">
+								<select class="form-control" name="personal">
+									@foreach($personales as $personal)
+									<option value="{{$personal->id}}">{{$personal->nombres}}</option>
+									@endforeach
+								<select>
 							</div>
 						</div>
 
@@ -108,8 +126,8 @@
 								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
 								<th style="width: 600px">Articulo</th>
 								<th style="width: 100px">Cantidad</th>
-								<th style="width: 100px">Precio</th>
-								<th style="width: 100px">Total</th>
+								{{-- <th style="width: 100px">Precio</th>
+								<th style="width: 100px">Total</th> --}}
 							</tr>
 						</thead>
 						<tbody>
@@ -125,9 +143,9 @@
 											@endforeach
 										</datalist>
 								</td>
-								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
-								<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);calcular(this);" required/></td>
-								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
+								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"    required/></td>
+								{{-- <td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);calcular(this);" required/></td>
+								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td> --}}
 								<span id="spTotal"></span>
 							</tr>
 						</tbody>
@@ -173,14 +191,9 @@
 						</datalist>
 				</td>
 				<td>
-					<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
+					<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" required/>
 				</td>
-				<td>
-					<input type='text' id='precio" + i + "' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});" required/>
-				</td>
-				<td>
-					<input type='text' id='total${i}' name='total[]' class="form-control" required/>
-				</td>
+				
 			</tr>`;
             $('table').append(data);
             i++;

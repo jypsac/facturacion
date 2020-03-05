@@ -13,6 +13,7 @@ use App\Motivo;
 use App\InventarioInicial;
 use App\Categoria;
 
+
 use Illuminate\Http\Request;
 
 class KardexEntradaController extends Controller
@@ -107,7 +108,7 @@ class KardexEntradaController extends Controller
                     $a++;
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
-                    if ($articulo_comparacion_inicial=$articulo_comparacion) {
+                    if ($articulo_comparacion_inicial==$articulo_comparacion) {
                         return redirect()->route('kardex-entrada.create')->with('repite', 'Datos repetidos - No permitidos!');
                     }
                 }

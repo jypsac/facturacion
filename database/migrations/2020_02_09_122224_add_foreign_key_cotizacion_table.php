@@ -18,8 +18,10 @@ class AddForeignKeyCotizacionTable extends Migration
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
 
-            $table->string('direccion');
-            
+            // $table->string('direccion');
+
+             $table->string('atencion');
+
             $table->unsignedBigInteger('forma_pago_id');
             $table->foreign('forma_pago_id')->references('id')->on('forma_pago')->onDelete('cascade');
 

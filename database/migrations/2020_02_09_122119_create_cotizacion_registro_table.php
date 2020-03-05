@@ -15,7 +15,7 @@ class CreateCotizacionRegistroTable extends Migration
     {
         Schema::create('cotizacion_registro', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->timestamps();
+            
         });
     }
 

@@ -13,7 +13,18 @@ class AddForeignKeyCotizacionRegistroTable extends Migration
      */
     public function up()
     {
-        //
+        Schema::table('cotizacion_registro', function (Blueprint $table) {
+
+            $table->unsignedBigInteger('cotizacion_id');
+            $table->foreign('cotizacion_id')->references('id')->on('cotizacion')->onDelete('cascade');
+
+            $table->unsignedBigInteger('producto_id');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+
+            $table->integer('cantidad');
+
+            $table->timestamps();
+        });
     }
 
     /**
@@ -23,6 +34,6 @@ class AddForeignKeyCotizacionRegistroTable extends Migration
      */
     public function down()
     {
-        //
+        Schema::dropIfExists('cotizacion_registro');
     }
 }
