@@ -36,37 +36,37 @@
                                 <table class="table table-striped table-bordered table-hover dataTables-example" >
                                     <thead>
                                         <tr>
-                                            <th>Id</th>
-                                            <th>N de cotizacion</th>
-                                            <th>Fecha</sth>
+                                            <th>ID</th>
                                             <th>Cliente</th>
-                                            <th>Rferencia</th>
-                                            <th>Estado</th>
+                                            <th>Atencion</sth>
+                                            <th>Validez</th>
+                                            <th>Referencia</th>
+                                            <th>Observacion</th>
                                             {{-- <th>Ver</th> --}}
                                             <th>EDITAR</th>
                                             <th>Eliminar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach($almacenes as $almacen)
+                                        @foreach($cotizacion as $cotizacions)
                                         <tr class="gradeX">
-                                            <td>{{$almacen->id}}</td>
-                                            <td>{{$almacen->nombre}}</td>
-                                            <td>{{$almacen->abreviatura}}</td>
-                                            <td>{{$almacen->direccion}}</td>
-                                            <td>{{$almacen->responsable}}</td>
-                                            <td>{{$almacen->descripcion}}</td>
-                                            <td><center><a href="#"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
-                                            <td><center><a href="{{route('almacen.edit',$almacen->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td>
+                                            <td>{{$cotizacions->id}}</td>
+                                            <td>{{$cotizacions->cliente_id}}</td>
+                                            <td>{{$cotizacions->atencion}}</td>
+                                            <td>{{$cotizacions->validez}}</td>
+                                            <td>{{$cotizacions->referencia}}</td>
+                                            <td>{{$cotizacions->observacion}}</td>
+                                            <td><center><a href="{{route('cotizacion.show',$cotizacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>{{-- 
+                                            <td><center><a href="{{route('cotizacion.show',$cotizacions->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td> --}}
                                             <td><center>
-                                            <form action="{{route('almacen.destroy',$almacen->id)}}" method="POST">
+                                            {{-- <form action="{{route('almacen.destroy',$almacen->id)}}" method="POST">
                                               @csrf
-                                              @method('delete')
+                                              @method('delete') --}}
                                               <button type="submit" class="btn btn-w-m btn-danger">Eliminar</button>
                                             </form></center>
                                             </td>
                                         </tr>
-                                        @endforeach --}}
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>

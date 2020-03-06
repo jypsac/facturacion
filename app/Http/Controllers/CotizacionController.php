@@ -20,8 +20,8 @@ class CotizacionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('transaccion.venta.cotizacion.index');
+    {   $cotizacion=Cotizacion::all();
+        return view('transaccion.venta.cotizacion.index',compact('cotizacion'));
     }
 
     /**
@@ -116,7 +116,7 @@ class CotizacionController extends Controller
      */
     public function show($id)
     {
-        //
+         return view('transaccion.venta.cotizacion.show');
     }
 
     /**
