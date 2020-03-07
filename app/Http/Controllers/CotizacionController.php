@@ -8,6 +8,7 @@ use App\Producto;
 use App\Cliente;
 use App\Forma_pago;
 use App\Personal;
+use App\Empresa;
 use App\Cotizacion_registro;
 
 use Illuminate\Http\Request;
@@ -115,8 +116,12 @@ class CotizacionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
-         return view('transaccion.venta.cotizacion.show');
+    {   
+        $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
+        $cotizacion=Cotizacion::find($id);
+        $empresa=Empresa::first();
+
+         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro'));
     }
 
     /**

@@ -13,51 +13,61 @@
             <div class="col-lg-12">
                     <div class="ibox-content p-xl">
                             <div class="row">
-                                <div class="col-sm-1"></div>
-                                <div class="col-sm-5">
+                                <div class="col-sm-4 text-left" align="left">
                                     
-                                    <address class="col-sm-4">
-                                        {{-- <h5>De:</h5>
-                                        <i class=" fa fa-user">:</i><strong > juan</strong><br>
+                                    <address class="col-sm-4" align="left">
+                                        <!-- <h5>De:</h5>
+                                        <i class=" fa fa-user">:</i><strong > {{$empresa->nombre}}</strong><br>
                                         <i class=" fa fa-building">:</i> <br>
-                                        <i class="fa fa-phone">:</i>  --}}
-                                        <img src="https://lh3.googleusercontent.com/proxy/t7LxCKVwclP5dHwI56rV8_ZMdGxSwzeZ_00F7aVmy_FXPe-r9Ib1fYoojm0tOxsuoUDQllsCazCV0N_mfjbkfRIEOR9uN3QUXV6O2DTVAYqqoLtCIsg" alt="" width="250px">
+                                        <i class="fa fa-phone">:</i>  --> 
+                                        <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
                                     </address>
                                 </div> 
-                                <div class="col-sm-2">
+                                <div class="col-sm-4">
                                 </div> 
 
-                                <div class="col-sm-3 text-right">
-                                    <h4>Guia Entrada</h4>
-                                    <h4 class="text-navy">GE-000</h4>
-                                    <span>Para:</span>
-                                    <address>
-                                        <i class=" fa fa-user">:</i><strong> </strong><br>
-                                        <i class=" fa fa-building">:</i><br>
-                                        <i class="fa fa-phone">:</i>
-                                    </address>
-                                    <p>
-                                        <span><strong>Fecha de la factura:</strong> </span><br/>
-                                    </p>
+                                <div class="col-sm-3 ">
+                                    <h4>{{$empresa->nombre}}</h4>
+                                    <h4>{{$empresa->ruc}}</h4>   
+                                    <h4>{{$empresa->calle}}</h4>   
+                                    <h4 class="text-navy">Cotizacion N°: 000{{$cotizacion->id}}</h4>
+                                    
                                 </div>
-                            </div>
+                            </div><br>
                             <div class="row">
                                 <div class="col-sm-7" align="center">
-                                    <div class="form-control">hola
+                                    <div class="form-control"><h3>Contanto Cliente</h3>
                                         <div align="left">
-                                            <strong>De:</strong>Luis
+                                            <strong>Nombre:</strong> &nbsp;{{$cotizacion->cliente->nombre}}<br>
+                                            <strong>Ruc/DNI:</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>Fecha:</strong> &nbsp;{{$cotizacion->created_at}}<br>
+                                            <strong>Direccion:</strong>&nbsp; {{$cotizacion->cliente->direccion}}<br>
+                                            <strong>Telefono:</strong>&nbsp; {{$cotizacion->cliente->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>Celular:</strong>&nbsp; {{$cotizacion->cliente->celular}}<br>
                                         </div>
                                     </div>
                                 </div>
                                 <div class="col-sm-5" align="center">
-                                    <div class="form-control">hola
+                                    <div class="form-control"><h3>Condiciones Generales</h3>
                                         <div align="left">
-                                            <strong>De:</strong>Luis
+                                            <strong>Precios:</strong> &nbsp;{{$cotizacion->id }}<br>
+                                            <strong>Forma De Pago:</strong> &nbsp;{{$cotizacion->forma_pago->nombre }}<br>
+                                            <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
+                                            <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br>
+                                            <strong>Garantia:</strong> &nbsp;{{$cotizacion->id }}<br>
+
+
                                         </div>
                                     </div>
                                 </div>
-                                
+                               
     
+                            </div><br>
+                            <div class="row">
+                                <div class="col-sm-12" >
+                                <h4>Observacion:</h4>
+                                {{$cotizacion->observacion }}
+                                </div>
                             </div>
 
                             <div class="table-responsive m-t">
@@ -67,51 +77,26 @@
                                         <th>Cantidad</th>
                                         <th>Codigo</th>
                                         <th>Descripcion</th>
-                                        <th>Precio U.</th>
                                         <th>S/.</th>
                                         <th style="background: #f3f3f4">Precio Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
-                                     {{-- @foreach($kardex_entradas_registros as $kardex_entradas_registro) --}}
+                                      @foreach($cotizacion_registro as $cotizacion_registros)
                                     <tr>
-                                        <td><strong></strong><br>
-                                            <small></small>
-                                        </td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="background: #f3f3f4"></td>
+                                        <td>{{$cotizacion_registros->cantidad}}</td>
+                                        <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
+                                        <td>{{$cotizacion_registros->producto->nombre}}</td>
+                                        <td>S/.{{$cotizacion_registros->producto->precio}}</td>
+                                        <td style="background: #f3f3f4">S/.{{$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</td>
                                     </tr>
-                                      {{-- @endforeach --}}
+                                      @endforeach 
                                     </tbody>
                                 </table>
                             </div><!-- /table-responsive -->
 
-                            {{--  --}}
-                            {{--  @foreach($kardex_entradas_registros as $kardex_entradas_registro)
-                            <tr class="gradeX">
-                                <td>{{$kardex_entradas_registro->id}}</td>
-                                <td>{{$kardex_entrada->motivo}}</td>
-                                <td>{{$kardex_entrada->provedor->empresa}}</td>
-                                <td>{{$kardex_entrada->almacen->nombre}}</td>
-                                <td>{{$kardex_entrada->guia_remision}}</td>
-                                <td>{{$kardex_entrada->factura}}</td>
-                                <td><center><a href="{{ route('kardex-entrada.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                <td><center><a href="{{ route('kardex-entrada.edit', $kardex_entrada->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
-                                <td>
-                                    <center>
-                                        <form action="{{ route('kardex-entrada.destroy', $kardex_entrada->id)}}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-s-m btn-danger">Anular</button>
-                                        </form>
-                                    </center>
-                                </td>
-                            </tr>
-                        @endforeach --}}
-                            {{--  --}}
+                           
+                            
 
                            
                                 
@@ -120,7 +105,10 @@
             </div>
         </div>
        
-
+<style type="text/css">
+    .form-control{border-radius: 10px; height: 150px;
+}
+</style>
     <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
