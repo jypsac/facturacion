@@ -7,7 +7,9 @@
 @section('value_accion', 'Atras')
 
 @section('content')
-
+ @if($producto->estado_anular == '1')
+            
+           
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -253,6 +255,9 @@
 		</div>
 	</div>
 </div>
+@elseif($producto->estado_anular == '0')
+ @include("maestro.catalogo.productos.show");
+@endif
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>

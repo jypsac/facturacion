@@ -11,7 +11,7 @@
   <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
             <div class="col-lg-12">
-                    <div class="ibox-content p-xl">
+                    <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
                             <div class="row">
                                 <div class="col-sm-4 text-left" align="left">
                                     
@@ -76,7 +76,7 @@
                                     <tr>
                                         <th>Cantidad</th>
                                         <th>Codigo</th>
-                                        <th>Descripcion</th>
+                                        <th style="width: 300px">Descripcion</th>
                                         <th>S/.</th>
                                         <th style="background: #f3f3f4">Precio Total</th>
                                     </tr>
@@ -90,15 +90,15 @@
                                         <td>{{$cotizacion_registros->producto->nombre}}</td>
                                         <td>S/.{{$cotizacion_registros->producto->precio}}</td>
                                         <td style="background: #f3f3f4">S/.{{$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</td>
-                                        {{$sum=$sum+$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}
+                                        <span  hidden="hidden">{{$sum=$sum+$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</span>
                                     </tr>
                                       @endforeach 
                                       <tr>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Sub Total</td>
-                                        <td style="background: #f3f3f4">
+                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
+                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
                                             S/.{{$sum}}
                                         </td>
 
@@ -107,8 +107,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>IGV</td>
-                                        <td style="background: #f3f3f4">
+                                        <td style="background: #f3f3f4;">IGV</td>
+                                        <td style="background: #f3f3f4;">
                                             S/.{{$igv_p=$sum*$igv->igv_total/100}}
                                         </td>
                                     </tr>
@@ -116,8 +116,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Total</td>
-                                        <td style="background: #f3f3f4">
+                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Total</td>
+                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
                                             S/.{{$sum+$igv_p}}
                                         </td>
                                     </tr>
@@ -127,13 +127,43 @@
 
                            
                             
+{{-- 
+                        <footer style="padding-top: 50px">
+                       <div class="row">    
+                            <div class="col-sm-6" align="left">
 
-                           
+                                
+                            </div>
+                            <div class="col-sm-6" align="center">
+
+                                <hr width="200" style="color:black"><p>
+                                Vendedor Fernandoi</p>
+                            </div>
+                       </div>
+                        </footer> --}}
+                         <div class="footer">
+                <div>
+                   <div class="row">    
+                            <div class="col-sm-6" align="left">
+
+                                
+                            </div>
+                            <div class="col-sm-6" align="center">
+
+                                <hr width="200" style="color:black"><p>
+                                Vendedor Fernandoi</p>
+                            </div>
+                       </div>
+                </div>
+             
+
+                </div>
                                 
                         </div>
                 </div>
             </div>
         </div>
+        
        
 <style type="text/css">
     .form-control{border-radius: 10px; height: 150px;
