@@ -82,6 +82,7 @@
                                     </tr>
                                     </thead>
                                     <tbody>
+                                    
                                       @foreach($cotizacion_registro as $cotizacion_registros)
                                     <tr>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
@@ -89,19 +90,36 @@
                                         <td>{{$cotizacion_registros->producto->nombre}}</td>
                                         <td>S/.{{$cotizacion_registros->producto->precio}}</td>
                                         <td style="background: #f3f3f4">S/.{{$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</td>
+                                        {{$sum=$sum+$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}
                                     </tr>
                                       @endforeach 
                                       <tr>
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td>Total IGV</td>
+                                        <td>Sub Total</td>
                                         <td style="background: #f3f3f4">
-                                            @foreach($cotizacion_registro as $cotizacion_registros)
-                                            {{$cotizacion_registros->producto->precio }}
-                                            @endforeach 
+                                            S/.{{$sum}}
                                         </td>
 
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>IGV</td>
+                                        <td style="background: #f3f3f4">
+                                            S/.{{$igv_p=$sum*$igv->igv_total/100}}
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total</td>
+                                        <td style="background: #f3f3f4">
+                                            S/.{{$sum+$igv_p}}
+                                        </td>
                                     </tr>
                                     </tbody>
                                 </table>
