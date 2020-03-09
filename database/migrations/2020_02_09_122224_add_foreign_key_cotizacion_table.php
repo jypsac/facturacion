@@ -25,7 +25,7 @@ class AddForeignKeyCotizacionTable extends Migration
             $table->unsignedBigInteger('forma_pago_id');
             $table->foreign('forma_pago_id')->references('id')->on('forma_pago')->onDelete('cascade');
 
-            $table->integer('validez');
+            $table->string('validez');
             $table->string('referencia');
 
             $table->unsignedBigInteger('personal_id');

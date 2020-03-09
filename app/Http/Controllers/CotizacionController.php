@@ -116,7 +116,8 @@ class CotizacionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {   
+    {   $cotizacion_sum=Cotizacion_registro::where('precio',$id)->get()->sum('columna');
+
         $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
         $cotizacion=Cotizacion::find($id);
         $empresa=Empresa::first();

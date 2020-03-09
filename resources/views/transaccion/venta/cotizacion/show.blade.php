@@ -91,6 +91,18 @@
                                         <td style="background: #f3f3f4">S/.{{$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</td>
                                     </tr>
                                       @endforeach 
+                                      <tr>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total IGV</td>
+                                        <td style="background: #f3f3f4">
+                                            @foreach($cotizacion_registro as $cotizacion_registros)
+                                            {{$cotizacion_registros->producto->precio }}
+                                            @endforeach 
+                                        </td>
+
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div><!-- /table-responsive -->

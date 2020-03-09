@@ -44,81 +44,87 @@
 				<div class="ibox-content">
 				<form action="{{route('cotizacion.store')}}"  enctype="multipart/form-data" method="post">
 					 	@csrf
-					 	<div class="form-group  row">
-							<label class="col-sm-2 col-form-label">Cliente:</label>
-							<div class="col-sm-10">
-								<select class="form-control" name="cliente">
-									@foreach($clientes as $cliente)
-									<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
-									@endforeach
-								<select>
-							</div>
-		                </div>
-
-				        {{-- <div class="form-group  row">
-							<label class="col-sm-2 col-form-label">Direccion:</label>
-		                    <div class="col-sm-10">
-								<input type="text" class="form-control" name="direccion">
-							</div>
-						</div> --}}
-
-						<div class="form-group  row">
-							<label class="col-sm-2 col-form-label">Fecha de cotizacion:</label>
-		                    <div class="col-sm-10">
-								<input type="datetime" name="fecha" class="form-control" value="{{date("d-m-Y")}}" disabled>
-							</div>
-						</div>
-
-
-						<div class="form-group  row">
-							<label class="col-sm-2 col-form-label">Atencion:</label>
-							<div class="col-sm-10">
+					 	<div class="row">
+					 		<div class="col-sm-6">
+					 			<div class="row"> 
+											<label class="col-sm-2 col-form-label">Cliente:</label>
+												<div class="col-sm-10">
+											<select class="form-control" name="cliente">
+												@foreach($clientes as $cliente)
+												<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
+												@endforeach
+											<select>
+												</div>
+								</div><br>
+					 			<div class="row"> 
+								
+									<label class="col-sm-2 col-form-label">Atencion:</label>
+										<div class="col-sm-10">
 								<input type="text" class="form-control" name="atencion">
-							</div>
-					   	</div>
+										</div>
+								</div><br>
+					 			<div class="row"> 
+								<label class="col-sm-2 col-form-label">Forma de pago:</label>
+									<div class="col-sm-10">
+										<select class="form-control" name="forma_pago">
+											@foreach($forma_pagos as $forma_pago)
+											<option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
+											@endforeach
+										<select>
+									</div>
+								</div><br>
+					 			<div class="row">
+					 				<label class="col-sm-2 col-form-label">Vendedor:</label>
+											<div class="col-sm-10">
+												<select class="form-control" name="personal">
+													@foreach($personales as $personal)
+													<option value="{{$personal->id}}">{{$personal->nombres}}</option>
+													@endforeach
+												<select>
+											</div>
+					 			</div>
+					 			
+					 		</div>
+					 		<div class="col-sm-6">
+					 			<div class="row"> 
+								
+					 			<label class="col-sm-2 col-form-label">Fecha de cotizacion:</label>
+		                    		<div class="col-sm-10">
+								<input type="datetime" name="fecha" class="form-control" value="{{date("d-m-Y")}}" disabled>
+									</div>
 
-		                <div class="form-group  row">
-							<label class="col-sm-2 col-form-label">Forma de pago:</label>
-							<div class="col-sm-10">
-								<select class="form-control" name="forma_pago">
-									@foreach($forma_pagos as $forma_pago)
-									<option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
-									@endforeach
-								<select>
-							</div>
-						</div>
+					 			</div><br>
+					 			<div class="row"> 
+						 			<label class="col-sm-2 col-form-label">Validez:</label>
+										<div class="col-sm-10">
+									<select  class="form-control" name="validez">
+										<option value="1 Día">1 Día</option>
+										<option value="2 Días">2 Días</option>
+										<option value="3 Días">3 Días</option>
+										<option value="4 Días">4 Días</option>
+										<option value="5 Días">5 Días</option>
+									</select>
+									</div>
+					 			</div><br>
 
-						<div class="form-group  row">
-							<label class="col-sm-2 col-form-label">Validez:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="validez">
-							</div>
-						</div>
+					 			<div class="row"> 
+					 					<label class="col-sm-2 col-form-label">Referencia:</label>
+										<div class="col-sm-10">
+										<input type="text" class="form-control" name="referencia">
+										</div>
+					 			</div><br>
 
-						<div class="form-group  row">
-							<label class="col-sm-2 col-form-label">Referencia:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="referencia">
-							</div>
-						</div>
+					 			<div class="row"> 
+					 						<label class="col-sm-2 col-form-label">Observacion:</label>
+											<div class="col-sm-10">
+												<textarea class="form-control" name="observacion" id=""  rows="3" ></textarea>
+											</div>
+					 			</div>
 
-						<div class="form-group  row">
-							<label class="col-sm-2 col-form-label">Vendedor:</label>
-							<div class="col-sm-10">
-								<select class="form-control" name="personal">
-									@foreach($personales as $personal)
-									<option value="{{$personal->id}}">{{$personal->nombres}}</option>
-									@endforeach
-								<select>
-							</div>
-						</div>
+					 		
+					 	</div>
 
-						<div class="form-group  row">
-							<label class="col-sm-2 col-form-label">Observacion:</label>
-							<div class="col-sm-10">
-								<input type="text" class="form-control" name="observacion">
-							</div>
-					   	</div>
+
 
 				    	<table 	 cellspacing="0" class="table table-striped ">
 							<thead>
@@ -151,19 +157,21 @@
 						</tbody>
 						</table>
 
-						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
-						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
+						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
 						<button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
 
 
 					</form>
 
-					</form>
 				</div>
 			</div>
 		</div>
 	</div>
 </div>
+<style>
+	.form-control{border-radius: 10px}
+</style>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
