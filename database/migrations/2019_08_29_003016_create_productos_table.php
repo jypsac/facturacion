@@ -24,7 +24,7 @@ class CreateProductosTable extends Migration
             $table->integer('descuento_maximo');
             $table->text('descripcion');
             $table->text('origen');
-            $table->text('precio');
+            $table->text('garantia');
             $table->integer('stock_minimo');
             $table->integer('stock_maximo');
             $table->string('foto');

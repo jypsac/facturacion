@@ -195,8 +195,8 @@
 	                        		</div>	
 	                        		{{--  --}}
 	                        		<div class="form-group row">
-									 	<label class="col-sm-1 col-form-label">Precio:</label>
-		                     			<div class="col-sm-5"><input type="text" class="form-control" name="precio" placeholder="S/.100.00">
+									 	<label class="col-sm-1 col-form-label">Garantia:</label>
+		                     			<div class="col-sm-5"><input type="text" class="form-control" name="garantia" >
 										</div>
 										
 

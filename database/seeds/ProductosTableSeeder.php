@@ -27,7 +27,7 @@ class ProductosTableSeeder extends Seeder
 							Lector de tarjetas de medios microSDXC
 							',
 			'origen' => "Importado",
-			'precio' => '20' ,
+			'garantia' => '15 dias',
 			'stock_minimo' => '5',
 			'stock_maximo' => '100',
 			'foto' => 'sin_foto.jpg',
@@ -54,7 +54,7 @@ class ProductosTableSeeder extends Seeder
 				Velocidad máxima de memoria2400MHzTipo de memoriaDDR4Canales de memoria2'
 				    ,
 			'origen' => "Importado",
-			'precio' => '130' ,
+			'garantia' => '51 dias',
 			'stock_minimo' => '5',
 			'stock_maximo' => '100',
 			'foto' => 'sin_foto.jpg',
@@ -85,7 +85,7 @@ class ProductosTableSeeder extends Seeder
 								ROM 128 GB, no es compatible con tarjeta de memoria,
 								cámara frontal 20M',
 			'origen' => "NAcional",
-			'precio' => '230' ,
+			'garantia' => '5 dias',
 			'stock_minimo' => '5',
 			'stock_maximo' => '100',
 			'foto' => 'sin_foto.jpg',
