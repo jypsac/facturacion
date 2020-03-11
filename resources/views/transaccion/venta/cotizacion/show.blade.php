@@ -70,13 +70,13 @@
                                 </div>
                             </div>
 
-                            <div class="table-responsive m-t">
-                                <table class="table invoice-table">
+                            <div class="table-responsive">
+                                <table class="table ">
                                     <thead>
                                     <tr>
                                         <th>Cantidad</th>
                                         <th>Codigo</th>
-                                        <th style="width: 300px">Descripcion</th>
+                                        <th >Descripcion</th>
                                         <th>S/.</th>
                                         <th style="background: #f3f3f4">Precio Total</th>
                                     </tr>
@@ -92,7 +92,9 @@
                                         <td style="background: #f3f3f4">S/.{{$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</td>
                                         <span  hidden="hidden">{{$sum=$sum+$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</span>
                                     </tr>
-                                      @endforeach 
+
+                                      @endforeach
+                                        
                                       <tr>
                                         <td></td>
                                         <td></td>
@@ -127,38 +129,37 @@
 
                            
                             
-{{-- 
-                        <footer style="padding-top: 50px">
+
+                        <footer style="padding-top: 150px">
                        <div class="row">    
                             <div class="col-sm-6" align="left">
+                               
+    
 
+                            <h3>Centro de Atencion:</h3>
+                            <table>
+                                    <tr>
+                                        <td style="width: 70px">Telefono</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
+                                    <tr>
+                                        <td style="width: 70px">Celular</td><td>:</td><td>&nbsp;{{$cotizacion->personal->celular}}</td>
+                                    </tr>
+                                    <tr>
+                                        <td style="width: 70px">Email</td><td>:</td><td>&nbsp;{{$cotizacion->personal->email}}</td>
+                                    </tr>
+                                     {{-- <tr>
+                                        <td style="width: 70px">Web</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
+                                    </tr> --}}
+                                </table>
                                 
                             </div>
                             <div class="col-sm-6" align="center">
 
-                                <hr width="200" style="color:black"><p>
-                                Vendedor Fernandoi</p>
+                                <hr width="200" style="color:black">
+                                <p> {{$cotizacion->personal->nombres}} {{$cotizacion->personal->apellidos}} <br> <strong>{{$cotizacion->personal->profesion}}</strong>  </p>
                             </div>
                        </div>
-                        </footer> --}}
-                         <div class="footer">
-                <div>
-                   <div class="row">    
-                            <div class="col-sm-6" align="left">
-
-                                
-                            </div>
-                            <div class="col-sm-6" align="center">
-
-                                <hr width="200" style="color:black"><p>
-                                Vendedor Fernandoi</p>
-                            </div>
-                       </div>
-                </div>
-             
-
-                </div>
-                                
+                        </footer>
+                             
                         </div>
                 </div>
             </div>
@@ -166,8 +167,7 @@
         
        
 <style type="text/css">
-    .form-control{border-radius: 10px; height: 150px;
-}
+    .form-control{border-radius: 10px; height: 150px;}
 </style>
     <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

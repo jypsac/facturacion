@@ -7,6 +7,7 @@
 @section('value_accion', 'Atras')
 
 @section('content')
+<<<<<<< HEAD
  @if($producto->estado_anular == '1')
             
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -221,16 +222,221 @@
 								</div>
 							</div>								
 							<button class="btn btn-primary" type="submit">Grabar</button>
-					</form>
+=======
+
+
+<div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
+	 <form action="{{ route('productos.update',$producto->id) }}"  enctype="multipart/form-data" method="post">
+					 	@csrf
+					 	@method('PATCH')
+    <div class="row">
+            
+        <fieldset class="col-sm-6">    	
+					<legend>Clasificacion del <br>Producto</legend>
+					
+				<div class="panel panel-default">
+					<div class="panel-body" align="left">
+						<div class="row">
+							<label class="col-sm-2 col-form-label">Codigo:</label>
+							<div class="col-sm-4"><input type="text" class="form-control" name="codigo_producto" value="{{$producto->codigo_producto}}" >
+                    		</div>
+
+                    		<label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
+                              <div class="col-sm-4"><input type="text" class="form-control" name="codigo_original" value="{{$producto->codigo_original}}" ></div>
+							</div>
+
+						<div class="row">
+							<label class="col-sm-2 col-form-label">Categoria:</label>
+                               <div class="col-sm-4">
+                                <input type="text" class="form-control" value="{{$producto->categoria_i_producto->descripcion}}" >
+                      			</div>
+
+                  		 	<label class="col-sm-2 col-form-label">Marca:</label>
+              					<div class="col-sm-4">
+               						 <input type="text" class="form-control" value="{{$producto->marcas_i_producto->nombre}}" >
+                      			</div>
+						</div>
+						<div class="row">
+							
+                      			<label class="col-sm-2 col-form-label">Familia:</label>
+                        		 <div class="col-sm-10">
+                         		 <input type="text" class="form-control" value="{{$producto->familia_i_producto->descripcion}}" >
+                				</div>
+
+						</div>
+						<br>
 				</div>
-			</div>
-		</div>
-	</div>
+					
+		</fieldset>		
+
+		<fieldset class="col-sm-6">    	
+					<legend>Datos del <br>Producto </legend>
+					
+					<div class="panel panel-default">
+						<div class="panel-body" align="left">
+							<div class="row">
+								<label class="col-sm-2 col-form-label">Nombre:</label>
+                              <div class="col-sm-10"><input type="text" class="form-control" value="{{$producto->nombre}}" ></div>
+
+                    			<label class="col-sm-2 col-form-label">Descripcion:</label>
+                              <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" >{{$producto->descripcion}}</textarea ></div>
+							</div>
+							<div class="row">
+								<label class="col-sm-2 col-form-label">Estado:</label>
+                    				<div class="col-sm-4">
+                     					 <input type="text" class="form-control" value="{{$producto->estado_i_producto->nombre}}" > 
+                     				</div>
+
+                    			<label class="col-sm-2 col-form-label">Origen:</label>
+                   				   <div class="col-sm-4">
+                   				   	<input type="text" class="form-control" value="{{$producto->origen}}" >
+                   				   </div>
+
+							</div>
+
+						</div>
+					</div>
+					
+		</fieldset>		
+
+		<fieldset class="col-sm-6">    	
+					<legend>Precio del <br>Producto</legend>
+					
+					<div class="panel panel-default">
+						<div class="panel-body" align="left">
+							<div class="row">
+								 <label class="col-sm-2 col-form-label">Descuento1:</label>
+                              <div class="col-sm-4">
+                              	<div class="input-group m-b">
+                  						<div class="input-group-prepend">
+                    						<span class="input-group-addon">%</span>
+                  						</div>
+                  					<input type="text" class="form-control" name="descuento1" value="{{$producto->descuento1}}" >
+                				</div>
+                   			 </div>
+
+                   			 <label class="col-sm-2 col-form-label">Descuento2:</label>
+                              <div class="col-sm-4">
+                              	<div class="input-group m-b">
+                  					<div class="input-group-prepend">
+                    					<span class="input-group-addon">%</span>
+                 					 </div>
+                  					<input type="text" class="form-control" value="{{$producto->descuento2}}" >
+                 				</div>
+                  			  </div>
+                    			
+						</div>
+						<div class="row">
+								 <label class="col-sm-2 col-form-label">Descuento Maximo:</label>
+                              <div class="col-sm-4"><div class="input-group m-b">
+                  <div class="input-group-prepend">
+                    <span class="input-group-addon">%</span>
+                  </div>
+                  <input type="text" class="form-control" name="descuento_maximo" value="{{$producto->descuento_maximo}}"  >
+                </div>
+                    </div>
+
+                   			<label class="col-sm-2 col-form-label">Utilidad:</label>
+                              <div class="col-sm-4"><div class="input-group m-b">
+                  <div class="input-group-prepend">
+                    <span class="input-group-addon">%</span>
+                  </div>
+                  <input type="text" class="form-control" name="utilidad" value="{{$producto->utilidad}}"  >
+                </div>
+                    			
+						</div>
+					</div>
+					<div class="row">
+								 <label class="col-sm-2 col-form-label">Unida de medida:</label>
+                              <div class="col-sm-4">
+                              	<div class="input-group m-b">
+	                  				 <input type="text" class="form-control" name="unidad_medida" value="{{$producto->unidad_i_producto->medida}}"  >
+               					 </div>
+                  			  </div>
+
+                   			<label class="col-sm-2 col-form-label">Moneda:</label>
+                              <div class="col-sm-4">
+                                <input type="text" class="form-control" value="{{$producto->moneda_i_producto->nombre}}"  >
+                  			</div>
+                    			
+						</div>
+						<div class="row">
+								 <label class="col-sm-2 col-form-label">Precio:</label>
+                              <div class="col-sm-2"><input type="text" class="form-control" name="precio"  value="{{$producto->precio}}"  >
+                    		</div>
+
+                   			<label class="col-sm-2 col-form-label">Stok Minimo:</label>
+                              <div class="col-sm-2"><input type="text" class="form-control" name="stock_minimo" value="{{$producto->stock_minimo}}"   >
+                    		</div>
+                    		<label class="col-sm-2 col-form-label">Stock Maximo:</label>
+                              <div class="col-sm-2"><input type="text" class="form-control" name="stock_maximo"  value="{{$producto->stock_maximo}}" >
+                    </div>
+                    			
+						</div>
+						
+
+
+					</div>
+
+						
+					
+		</fieldset>		
+		<fieldset class="col-sm-6">    	
+					<legend>Foto del <br>Producto </legend>
+					
+					<div class="panel panel-default">
+						<div class="panel-body">
+                              <div class="col-sm-12"><center>  <img src="
+                                    {{ asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" style="width:auto; height: 205px;border-radius: 5px"></center></div>
+						</div>
+							
+		</fieldset>		
+
+
+    </div>
+				
+	<button class="btn btn-primary" type="submit">Grabar</button>
+
+                		
+>>>>>>> 397dda93130043319345938ffd375a1d9c5afd35
+					</form>
 </div>
 
+<<<<<<< HEAD
 	@elseif($producto->estado_anular == '0')
 		@include("maestro.catalogo.productos.show");
 	@endif
+=======
+                
+<style>
+	.form-control{    margin-bottom: 15px;
+}
+   fieldset 
+  {
+    /*border: 1px solid #ddd !important;*/
+    padding: 10px;       
+    /*border-radius:4px ;*/
+    background-color:#f5f5f5;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    margin-bottom: 10px;
+    border-left: 1px solid #ddd !important;
+
+  } 
+  
+    legend
+    {
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom: 0px; 
+      width: 35%; 
+      border: 1px solid #ddd;
+      border-radius: 4px; 
+      padding: 5px 5px 5px 10px; 
+      background-color: #ffffff;
+    } 
+</style>
+>>>>>>> 397dda93130043319345938ffd375a1d9c5afd35
 
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
