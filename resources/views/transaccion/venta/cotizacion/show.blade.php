@@ -70,6 +70,51 @@
                                 </div>
                             </div>
 
+                            {{--  --}}
+                              <div class="row">
+                                
+                                <div class="col-sm-1">
+                                    Cantidad <br>
+                                     <table class="table ">
+
+                                        @foreach($cotizacion_registro as $cotizacion_registros)
+                                        <tr><td>{{$cotizacion_registros->cantidad}}</td></tr>
+                                        @endforeach
+                                    </table>
+                                </div>
+                                <div class="col-sm-2">
+                                    Codigo <br>
+                                    <table class="table ">
+                                            @foreach($cotizacion_registro as $cotizacion_registros)
+                                            <tr><td>{{$cotizacion_registros->producto->codigo_producto}}</td></tr>
+                                            @endforeach
+                                    </table>
+                                </div>
+                                <div class="col-sm-6">
+                                    Descripcion <br>
+                                             <table class="table ">
+                                            @foreach($cotizacion_registro as $cotizacion_registros)
+                                            <tr><td>{{$cotizacion_registros->producto->nombre}}</td></tr>@endforeach
+                                            </table>
+                                </div>
+                                <div class="col-sm-1">
+                                    S/. <br>
+                                             <table class="table ">
+                                            @foreach($array as $arrays)
+                                            <tr><td>S/.{{$arrays}}</td></tr>
+                                             @endforeach
+                                            </table>
+                                </div>
+                                <div class="col-sm-2">
+                                    Precio Total
+                                </div>
+                               
+                                
+                            </div>
+
+                            {{--  --}}
+
+
                             <div class="table-responsive">
                                 <table class="table ">
                                     <thead>
@@ -88,9 +133,16 @@
                                         <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$cotizacion_registros->producto->nombre}}</td>
-                                        <td>S/.{{$cotizacion_registros->producto->precio}}</td>
+                                        <span hidden="hidden">
+                                             @foreach($array as $arrays)
+                                                {{$arraysa=$arrays}}
+                                             @endforeach
+                                        </span>
+                                        <td>S/.{{$cotizacion_registros->producto->precio * $arraysa}}</td>
+
                                         <td style="background: #f3f3f4">S/.{{$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</td>
                                         <span  hidden="hidden">{{$sum=$sum+$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</span>
+                                        
                                     </tr>
 
                                       @endforeach

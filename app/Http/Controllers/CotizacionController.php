@@ -10,6 +10,7 @@ use App\Forma_pago;
 use App\Personal;
 use App\Empresa;
 use App\Cotizacion_registro;
+use App\kardex_entrada_registro;
 use App\Igv;
 
 use Illuminate\Http\Request;
@@ -118,15 +119,19 @@ class CotizacionController extends Controller
      */
     public function show($id)
     {  
-        // $cotizacion_sum=Cotizacion_registro::where('precio',$id)->get()->sum('columna');
-
         $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
+        foreach ($cotizacion_registro as $cotizacion_registros) {
+             $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+        }
+        // return $array[1];
+        
+        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
         $cotizacion=Cotizacion::find($id);
         $empresa=Empresa::first();
         $sum=0;
         $igv=Igv::first();
 
-         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv'));
+         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array"));
     }
 
     /**
