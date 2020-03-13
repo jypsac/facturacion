@@ -128,7 +128,7 @@
 	                               Precio del Producto
 	                            </div>
 	                            <div class="panel-body">
-									 {{--  --}}
+									 
 									<div class="form-group row">
 									 	<label class="col-sm-1 col-form-label">Descuento 1:</label>
 		                     			<div class="col-sm-5"><div class="input-group m-b">
@@ -149,7 +149,7 @@
 									</div>
 									
 	                        		</div>	
-	                        		{{--  --}}
+	                        		
 	                        		<div class="form-group row">
 									 	<label class="col-sm-1 col-form-label">Descuento Maximo:</label>
 		                     			<div class="col-sm-5"><div class="input-group m-b">
@@ -174,44 +174,34 @@
 	                        		<div class="form-group row">
 									 	<label class="col-sm-1 col-form-label">Unida de medida:</label>
 		                     			<div class="col-sm-5">
-								<select class="form-control m-b" name="unidad_medida_id">
-			          			<option>Seleccione La Unidad de Medida</option>
-			          			@foreach($unidad_medidas as $unidad_medida)
-					    		<option value="{{ $unidad_medida->id }}">{{ $unidad_medida->medida}}</option>
-					    		@endforeach
-					    		</select>
+										<select class="form-control m-b" name="unidad_medida_id">
+										<option>Seleccione La Unidad de Medida</option>
+										@foreach($unidad_medidas as $unidad_medida)
+										<option value="{{ $unidad_medida->id }}">{{ $unidad_medida->medida}}</option>
+										@endforeach
+										</select>
 									</div>
 
-		                     			<label class="col-sm-1 col-form-label">Moneda:</label>
-		                     			<div class="col-sm-5">
-								<select class="form-control m-b" name="monedas_id">
-			          				<option>Seleccione la Moneda</option>
-			          				@foreach($monedas as $moneda)
-					    			<option value="{{ $moneda->id }}">{{ $moneda->nombre}}</option>
-					    			@endforeach
-					    		</select>
-									</div>
+									<label class="col-sm-1 col-form-label">Stok Minimo:</label>
+									<div class="col-sm-5"><input type="text" class="form-control" name="stock_minimo" >
+								   	</div>
 									
 	                        		</div>	
-	                        		{{--  --}}
+	                        		
 	                        		<div class="form-group row">
+
 									 	<label class="col-sm-1 col-form-label">Garantia:</label>
 		                     			<div class="col-sm-5"><input type="text" class="form-control" name="garantia" >
 										</div>
-										
 
-		                     			<label class="col-sm-1 col-form-label">Stok Minimo:</label>
-		                     			<div class="col-sm-5"><input type="text" class="form-control" name="stock_minimo" >
+										<label class="col-sm-1 col-form-label">Stock Maximo:</label>
+		                     			<div class="col-sm-5"><input type="text" class="form-control" name="stock_maximo" >
 										</div>
 									
 	                        		</div>
-	                        		{{--  --}}
+	                        		
 	                        		<div class="form-group row">
-									 	<label class="col-sm-1 col-form-label">Stock Maximo:</label>
-		                     			<div class="col-sm-5"><input type="text" class="form-control" name="stock_maximo" >
-										</div>
-										
-
+									 	
 		                     			<label class="col-sm-1 col-form-label">Seleccionar Archivo:</label>
 		                     			<div class="col-sm-5"><input type="file" class="btn btn-success dim" name="foto">
 										</div>

@@ -54,7 +54,7 @@ class ProductosController extends Controller
         $id_igual=Categoria::where('id','=',$categoria)->first();
         $nombre_cate=$id_igual->descripcion;
         $cate = substr($nombre_cate, 0, 1);
-        // marca abrebia
+        // marca abrebiatura
         $marca=$request->get('marca_id');
         $id_igual_marca=Marca::where('id','=',$marca)->first();
         $nombre_marca=$id_igual_marca->abreviatura;
@@ -62,14 +62,7 @@ class ProductosController extends Controller
         $guion='-';
         $ceros='0000';
         $codigo_producto=$cate.$nombre_marca.$ceros;
-        // return $codigo_producto;
-
-
-
-        // $image =$request->file('foto');
-
-        // $name = $codigo."-".$image->getClientOriginalName();
-        // $image->move(public_path().'/archivos/imagenes/productos',$name);
+        
 
         if($request->hasfile('foto')){
             $image1 =$request->file('foto');
@@ -79,6 +72,8 @@ class ProductosController extends Controller
         }else{
             $name="sin_foto.jpg";
         }
+
+        
 
         $producto=new Producto;
         $producto->codigo_producto=$codigo_producto;
@@ -95,8 +90,7 @@ class ProductosController extends Controller
         $producto->descuento_maximo=$request->get('descuento_maximo');
         $producto->utilidad=$request->get('utilidad');
         $producto->unidad_medida_id=$request->get('unidad_medida_id');
-        $producto->monedas_id=$request->get('monedas_id');
-        $producto->precio=$request->get('precio');
+        $producto->garantia=$request->get('garantia');
         $producto->stock_minimo=$request->get('stock_minimo');
         $producto->stock_maximo=$request->get('stock_maximo');
         $producto->foto=$name;
@@ -165,12 +159,10 @@ class ProductosController extends Controller
         $producto->descuento_maximo=$request->get('descuento_maximo');
         $producto->utilidad=$request->get('utilidad');
         $producto->unidad_medida_id=$request->get('unidad_medida_id');
-        $producto->monedas_id=$request->get('monedas_id');
-        $producto->precio=$request->get('precio');
+        $producto->garantia=$request->get('garantia');
         $producto->stock_minimo=$request->get('stock_minimo');
         $producto->stock_maximo=$request->get('stock_maximo');
         $producto->foto=$name;
-        // $producto->foto=$name;
         $producto->save();
         return redirect()->route('productos.index');
     }

@@ -24,9 +24,6 @@ class AddForeignKeyProductosTable extends Migration
             $table->unsignedBigInteger('marca_id');
             $table->foreign('marca_id')->references('id')->on('marcas')->onDelete('cascade');
 
-            $table->unsignedBigInteger('monedas_id');
-            $table->foreign('monedas_id')->references('id')->on('monedas')->onDelete('cascade');
-
             $table->unsignedBigInteger('unidad_medida_id');
             $table->foreign('unidad_medida_id')->references('id')->on('unidad_medida')->onDelete('cascade');
             

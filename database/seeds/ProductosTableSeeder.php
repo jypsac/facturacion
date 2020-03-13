@@ -34,7 +34,7 @@ class ProductosTableSeeder extends Seeder
 			'categoria_id' =>"2" ,
 			'familia_id' => '8',
 			'marca_id' => "13" ,
-			'monedas_id' => "2",
+			
 			'unidad_medida_id' => "2",
 			'estado_id' => "1",
 			'estado_anular'=>'0',
@@ -61,7 +61,7 @@ class ProductosTableSeeder extends Seeder
 			'categoria_id' =>"3" ,
 			'familia_id' => '9',
 			'marca_id' => "12" ,
-			'monedas_id' => "3",
+			
 			'unidad_medida_id' => "9",
 			'estado_id' => "2",
 			'estado_anular'=>'1',
@@ -92,7 +92,7 @@ class ProductosTableSeeder extends Seeder
 			'categoria_id' =>"1" ,
 			'familia_id' => '8',
 			'marca_id' => "10" ,
-			'monedas_id' => "1",
+			
 			'unidad_medida_id' => "11",
 			'estado_id' => "3",
 			'estado_anular'=>'1',

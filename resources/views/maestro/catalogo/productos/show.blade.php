@@ -141,15 +141,12 @@
                					 </div>
                   			  </div>
 
-                   			<label class="col-sm-2 col-form-label">Moneda:</label>
-                              <div class="col-sm-4">
-                                <input type="text" class="form-control" value="{{$producto->moneda_i_producto->nombre}}"  disabled="disabled">
-                  			</div>
+                   			
                     			
 						</div>
 						<div class="row">
-								 <label class="col-sm-2 col-form-label">Precio:</label>
-                              <div class="col-sm-2"><input type="text" class="form-control" name="precio"  value="{{$producto->precio}}"  disabled="disabled">
+								 <label class="col-sm-2 col-form-label">garantia:</label>
+                              <div class="col-sm-2"><input type="text" class="form-control" name="garantia"  value="{{$producto->garantia}}"  disabled="disabled">
                     		</div>
 
                    			<label class="col-sm-2 col-form-label">Stok Minimo:</label>
