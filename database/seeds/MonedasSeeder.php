@@ -18,7 +18,7 @@ class MonedasSeeder extends Seeder
 			'codigo' => "PEN",
 			'pais' => "Peru",
 			'descripcion' => 'Moneda Principal Peruana',
-			'principal' => 0,
+			'principal' => 1,
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);

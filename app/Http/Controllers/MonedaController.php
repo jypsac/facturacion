@@ -93,6 +93,11 @@ class MonedaController extends Controller
         return redirect()->route('moneda.index');
     }
 
+    public function principal($id)
+    {
+        return redirect()->route('moneda.index');
+    }
+
     /**
      * Remove the specified resource from storage.
      *
