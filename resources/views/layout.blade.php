@@ -158,6 +158,7 @@
                             <li><a href="{{route('usuario.index')}}">Usuarios</a></li>
                             <li><a href="{{route('moneda.index')}}">Monedas</a></li>
                             <li><a href="{{route('documento.index')}}">Tipo de Documentos</a></li>
+                            <li><a href="{{route('tipo_cambio.index')}}">Tipo de Cambio</a></li>
                             <li>
                                 <a href="#">Configuracion General</a>
                                 <ul class="nav nav-third-level">
@@ -165,6 +166,7 @@
                                     <li><a href="{{route('unidad-medida.index')}}">Unidad de Medida</a></li>
                                     <li><a href="{{route('igv.index')}}">IGV</a></li>
                                 </ul>
+                                
                             </li>
                         </ul>
                     </li>

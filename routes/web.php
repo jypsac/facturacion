@@ -103,6 +103,7 @@
 	Route::resource('/unidad-medida','UnidadMedidaController');
 	Route::resource('/usuario','UsuarioController');
 	Route::resource('/venta','VentaController');
+	Route::resource('/tipo_cambio','TipoCambioController');
 
 
 //
