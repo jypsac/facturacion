@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\TipoCambio;
 use App\Moneda;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class TipoCambioController extends Controller
@@ -39,9 +40,15 @@ class TipoCambioController extends Controller
      */
     public function store(Request $request)
     {
+        $consulta=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+        if($consulta){
+            return "no puede generar otro tipo de cambio , en el mismo dia";
+        }
+
         $cambio=new TipoCambio;
         $cambio->compra=$request->get('compra');
         $cambio->venta=$request->get('venta');
+        $cambio->fecha=Carbon::now()->format('Y-m-d');
         $cambio->save();
 
         return redirect()->route('tipo_cambio.index');

@@ -121,9 +121,7 @@
 											</div>
 					 			</div>
 
-					 		
 					 	</div>
-
 
 
 				    	<table 	 cellspacing="0" class="table table-striped ">
@@ -132,8 +130,8 @@
 								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
 								<th style="width: 600px">Articulo</th>
 								<th style="width: 100px">Cantidad</th>
-								{{-- <th style="width: 100px">Precio</th>
-								<th style="width: 100px">Total</th> --}}
+								<th style="width: 100px">Precio</th>
+								<th style="width: 100px">Total</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -149,9 +147,9 @@
 											@endforeach
 										</datalist>
 								</td>
-								<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"    required/></td>
-								{{-- <td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);calcular(this);" required/></td>
-								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td> --}}
+								<td><input type='text' id='cantidad' name='cantidad[]' class="monto form-control"  onkeyup="multi(0)"  required/></td>
+								<td><input type='text' id='precio' name='precio[]' class="monto form-control" onkeyup="multi(0);calcular(this);" required/></td>
+								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
 								<span id="spTotal"></span>
 							</tr>
 						</tbody>
@@ -191,7 +189,7 @@
 					<input type='checkbox' class='case'/>
 				</td>";
 				<td>
-					<input list="browsers" class="form-control " name="articulo[]" required id='articulo' autocomplete="off">
+					<input list="browsers" class="form-control " name="articulo[]" required id='articulo' onkeyup="calcular(this);" autocomplete="off">
 						<datalist id="browsers" >
 							@foreach($productos as $producto)
 							<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
@@ -200,6 +198,8 @@
 				</td>
 				<td>
 					<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" required/>
+					<td><input type='text' id='precio" + i + "' name='precio[]' class="monto0 form-control" onkeyup="multi(0);calcular(this);" required/></td>
+					<td><input type='text' id='total0" + i + "' name='total[]' class="form-control" required/></td>
 				</td>
 				
 			</tr>`;
