@@ -129,6 +129,7 @@
 							<tr>
 								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
 								<th style="width: 600px">Articulo</th>
+								<th></th>
 								<th style="width: 100px">Stock</th>
 								<th style="width: 100px">Cantidad</th>
 								<th style="width: 100px">Precio</th>
@@ -148,8 +149,11 @@
 											<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}">
 											@endforeach
 										</datalist>
+										
 								</td>
-								<td><input type='text' id='stock0' name='stock[]' class="monto0 form-control" required  autocomplete="off"/></td>
+								<td>
+									<button type="reset" class=' btn btn-danger'  > <i class="fa fa-file-o" aria-hidden="true"></i> </button></td>
+								<td><input type='text' id='stock0' disabled="disabled" name='stock[]' class="monto0 a form-control" required  autocomplete="off"/></td>
 								<td><input type='text' id='cantidad0' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" /></td>
 								<td><input type='text' id='precio0' name='precio[]' class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
 								<td><input type='text' id='descuento0' name='descuento[]' class="monto0 form-control" required  autocomplete="off"/></td>
@@ -200,8 +204,12 @@
 							@endforeach
 						</datalist>
 				</td>
+
 				<td>
-					<input type='text' id='stock${i}' name='stock[]' class="monto${i} form-control" required  autocomplete="off"/>
+				<button type="reset" class=' btn btn-danger'  > <i class="fa fa-file-o" aria-hidden="true"></i> </button>
+				</td>
+				<td>
+					<input type='text' id='stock${i}' name='stock[]' disabled="disabled" class="monto${i} a form-control" required  autocomplete="off"/>
 				</td>
 				<td>
 					<input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
@@ -309,4 +317,7 @@
 			});
 		});
 	</script>
+	<style type="text/css">
+		.a{color: red}
+	</style>
 @stop

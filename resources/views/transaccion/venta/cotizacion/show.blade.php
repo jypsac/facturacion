@@ -119,18 +119,20 @@
                                 <table class="table ">
                                     <thead>
                                     <tr>
-                                        <th>Cantidad</th>
-                                        <th>Codigo</th>
+                                        <th >Codigo Producto</th>
                                         <th >Descripcion</th>
+                                        <th >Cantidad</th>
+                                        <th >Valor Unitario</th>
+                                        <th >Descuento %</th>
+                                        <th >Valor venta</th><!-- 
                                         <th>S/.</th>
-                                        <th style="background: #f3f3f4">Precio Total</th>
+                                        <th style="background: #f3f3f4">Precio Total</th> -->
                                     </tr>
                                     </thead>
                                     <tbody>
                                     
                                       @foreach($cotizacion_registro as $cotizacion_registros)
                                     <tr>
-                                        <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$cotizacion_registros->producto->nombre}}</td>
                                         <span hidden="hidden">
@@ -138,7 +140,9 @@
                                                 {{$arraysa=$arrays}}
                                              @endforeach
                                         </span>
+                                        <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>S/.{{$cotizacion_registros->producto->precio * $arraysa}}</td>
+                                        <td></td>
 
                                         <td style="background: #f3f3f4">S/.{{$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</td>
                                         <span  hidden="hidden">{{$sum=$sum+$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</span>
@@ -148,6 +152,7 @@
                                       @endforeach
                                         
                                       <tr>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -161,12 +166,14 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td style="background: #f3f3f4;">IGV</td>
                                         <td style="background: #f3f3f4;">
                                             S/.{{$igv_p=$sum*$igv->igv_total/100}}
                                         </td>
                                     </tr>
                                     <tr>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
