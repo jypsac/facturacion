@@ -34,11 +34,17 @@ class CotizacionController extends Controller
      */
     public function create()
     {
-        $productos=Producto::all();
+        $productos=Producto::where('estado_id',1)->get();
+
+        foreach ($productos as $producto) {
+            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio');
+            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+        }
+
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::all();
         $personales=Personal::all();
-        return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales'));
+        return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad'));
     }
 
     /**

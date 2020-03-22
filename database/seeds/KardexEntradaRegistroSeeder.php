@@ -27,10 +27,10 @@ class KardexEntradaRegistroSeeder extends Seeder
         DB::table('kardex_entrada_registro')->insert([
             'id' => 2 ,
             'kardex_entrada_id' => 1,
-            'producto_id' => 1,
+            'producto_id' => 2,
             'cantidad_inicial' => 1,
-            'precio' => 112,
-            'cantidad' => 100,
+            'precio' => 14322,
+            'cantidad' => 10,
             'estado' => 1,
             
             'created_at' => date('2019-08-01 00:00:00'),
@@ -40,27 +40,16 @@ class KardexEntradaRegistroSeeder extends Seeder
         DB::table('kardex_entrada_registro')->insert([
             'id' => 3 ,
             'kardex_entrada_id' => 1,
-            'producto_id' => 1,
+            'producto_id' => 3,
             'cantidad_inicial' => 1,
-            'precio' => 112,
-            'cantidad' => 100,
+            'precio' => 1122,
+            'cantidad' => 1100,
             'estado' => 1,
             
             'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
         ]);
         
-        DB::table('kardex_entrada_registro')->insert([
-            'id' => 4 ,
-            'kardex_entrada_id' => 1,
-            'producto_id' => 1,
-            'cantidad_inicial' => 1,
-            'precio' => 112,
-            'cantidad' => 100,
-            'estado' => 1,
-            
-            'created_at' => date('2019-08-01 00:00:00'),
-           	'updated_at' => date('2019-08-01 00:00:00')
-		]);
+        
     }
 }

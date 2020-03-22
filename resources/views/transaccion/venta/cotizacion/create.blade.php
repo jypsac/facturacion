@@ -129,8 +129,10 @@
 							<tr>
 								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
 								<th style="width: 600px">Articulo</th>
+								<th style="width: 100px">Stock</th>
 								<th style="width: 100px">Cantidad</th>
 								<th style="width: 100px">Precio</th>
+								<th style="width: 100px">Descuento</th>
 								<th style="width: 100px">Total</th>
 							</tr>
 						</thead>
@@ -140,16 +142,18 @@
 									<input type='checkbox' class="case">
 								</td>
 								<td>
-									<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' onkeyup="calcular(this);" autocomplete="off">
+									<input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);"  autocomplete="off">
 										<datalist id="browsers2" >
-											@foreach($productos as $producto)
-											<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}">
+											@foreach($productos as $index => $producto)
+											<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}">
 											@endforeach
 										</datalist>
 								</td>
-								<td><input type='text' id='cantidad' name='cantidad[]' class="monto form-control"  onkeyup="multi(0)"  required/></td>
-								<td><input type='text' id='precio' name='precio[]' class="monto form-control" onkeyup="multi(0);calcular(this);" required/></td>
-								<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
+								<td><input type='text' id='stock0' name='stock[]' class="monto0 form-control" required  autocomplete="off"/></td>
+								<td><input type='text' id='cantidad0' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" /></td>
+								<td><input type='text' id='precio0' name='precio[]' class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
+								<td><input type='text' id='descuento0' name='descuento[]' class="monto0 form-control" required  autocomplete="off"/></td>
+								<td><input type='text' id='total0' name='total[]' class="form-control" required  autocomplete="off" /></td>
 								<span id="spTotal"></span>
 							</tr>
 						</tbody>
@@ -189,18 +193,29 @@
 					<input type='checkbox' class='case'/>
 				</td>";
 				<td>
-					<input list="browsers" class="form-control " name="articulo[]" required id='articulo' onkeyup="calcular(this);" autocomplete="off">
+					<input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});" autocomplete="off">
 						<datalist id="browsers" >
-							@foreach($productos as $producto)
-							<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+							@foreach($productos as $index => $producto)
+								<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}" >
 							@endforeach
 						</datalist>
 				</td>
 				<td>
-					<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" required/>
-					<td><input type='text' id='precio" + i + "' name='precio[]' class="monto0 form-control" onkeyup="multi(0);calcular(this);" required/></td>
-					<td><input type='text' id='total0" + i + "' name='total[]' class="form-control" required/></td>
+					<input type='text' id='stock${i}' name='stock[]' class="monto${i} form-control" required  autocomplete="off"/>
 				</td>
+				<td>
+					<input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+				</td>
+				<td>
+					<input type='text' id='precio${i}' name='precio[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+				</td>
+				<td>
+					<input type='text' id='descuento${i}' name='descuento[]' class="monto${i} form-control" required  autocomplete="off"/>
+				</td>
+				<td>
+					<input type='text' id='total${i}' name='total[]' class="form-control" required  autocomplete="off"/>
+				</td>
+				
 				
 			</tr>`;
             $('table').append(data);
@@ -216,6 +231,7 @@
 		$(`.monto${a}`).each(function(){
 			if (!isNaN(parseFloat($(this).val()))) {
 				change= true;
+				
 				total *= parseFloat($(this).val());
 			}
 		});
@@ -225,15 +241,43 @@
 	</script>
 
 	<script>
-		function calcular(input)
+		function reverseString(str) {
+			return str.split("").reverse().join("");;
+		}
+
+		function calcular(input,a)
 		{
 			var id = input.id;
-			if (id == "articulo") {
+			var caracteres = input.value;
+			var caracteres_reverse=reverseString(caracteres);
 			var cadena=input.value;
 			var separador=" ";
-			var id=cadena.split(separador,1)
-			document.getElementById("precio").value = id; 
-			} 
+			var seprador_total= " / ";
+			var id=cadena.split(separador,1);
+			//revirtiendo la cadena
+				var reverse=reverseString(caracteres);//devuelve toda la cadena articulo al reves
+			//para precio
+				var precio_v_r=reverse.split(separador,1); //devuelve el precio en objeto al revez
+				var precio_r=precio_v_r[0];//obtiene el precio del objeto [0] al revez
+				var precio_v =reverseString(precio_v_r[0]);//convierte el precio al revez a la normalidad
+
+				var caracteres_space=caracteres_reverse.replace(precio_r,"");//obtiene la cadena articulo sin precio,pero con un espacio en blanco
+				var reverse2=caracteres_space.slice(1);//elimina el espacion en blanco de la cadena articulo sin precio
+			//para descuento
+				var descuento_v_r=reverse2.split(separador,1);////obtiene el descuento del objeto [0] al revez
+				var descuento_r=descuento_v_r[0];//obtiene el descuento del objeto [0] al revez
+				var descuento_v =reverseString(descuento_v_r[0]);//convierte el descuento al revez a la normalidad
+
+				var caracteres_space_2=reverse2.replace(descuento_r,"");//obtiene la cadena articulo sin precio,descuento,con un espacio en blanco
+				var reverse3=caracteres_space_2.slice(1);//elimina el espacion en blanco de la cadena articulo sin precio
+			//para stock
+				var stock_v_r=reverse3.split(separador,1);
+				var stock_r=stock_v_r[0];
+				var stock_v =reverseString(stock_v_r[0]);
+
+			document.getElementById(`precio${a}`).value = precio_v;
+			document.getElementById(`stock${a}`).value = stock_v; 
+			document.getElementById(`descuento${a}`).value = descuento_v; 
 		}
 	</script>
 

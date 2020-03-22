@@ -63,7 +63,7 @@ class ProductosTableSeeder extends Seeder
 			'marca_id' => "12" ,
 			
 			'unidad_medida_id' => "9",
-			'estado_id' => "2",
+			'estado_id' => "1",
 			'estado_anular'=>'1',
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
@@ -94,7 +94,7 @@ class ProductosTableSeeder extends Seeder
 			'marca_id' => "10" ,
 			
 			'unidad_medida_id' => "11",
-			'estado_id' => "3",
+			'estado_id' => "1",
 			'estado_anular'=>'1',
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
