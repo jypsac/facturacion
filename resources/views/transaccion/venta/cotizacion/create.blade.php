@@ -154,7 +154,7 @@
 								<td><input type='number' id='cantidad0' name='cantidad[]' max="3" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" /></td>
 								<td><input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
 								<td><input type='text' id='descuento0' name='descuento[]' class="monto0 form-control" required  autocomplete="off"/></td>
-								<td><input type='text' id='total0' name='total[]' class="form-control" required  autocomplete="off" /></td>
+								<td><input type='text' id='total0' name='total[]' class=" form-control " required  autocomplete="off" /></td>
 								<span id="spTotal"></span>
 							</tr>
 
@@ -167,7 +167,7 @@
 						<td></td>
 						<td></td>
 						<td>Subtotal :</td>
-						<td>S/.000</td>
+						<td>S/.</td>
 						</tr>
 						<tr style="background-color: #f5f5f500;" align="center">
 						<td></td>
@@ -205,6 +205,7 @@
 <style>
 	.form-control{border-radius: 10px}
 </style>
+
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -245,7 +246,7 @@
 					<input type='text' id='descuento${i}' name='descuento[]' class="monto${i} form-control" required  autocomplete="off"/>
 				</td>
 				<td>
-					<input type='text' id='total${i}' name='total[]' class="form-control" required  autocomplete="off"/>
+					<input type='text' id='total${i}' name='total[]' class=" form-control "  required  autocomplete="off"/>
 				</td>
 				
 				
@@ -344,4 +345,5 @@
 	<style type="text/css">
 		.a{color: red}
 	</style>
+	
 @stop
