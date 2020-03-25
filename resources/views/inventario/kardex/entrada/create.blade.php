@@ -104,68 +104,73 @@
 					<form action="{{ route('kardex-entrada.store') }}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 					 	<div class="form-group row ">
-								<label class="col-sm-2 col-form-label" >Motivos:</label>
-							                    <div class="col-sm-4">
-							                     	<select class="form-control" name="motivo">
-														@foreach($motivos as $motivo)
-														<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
-														@endforeach
-													</select>
-							                    </div>
+							<label class="col-sm-2 col-form-label" >Motivos:</label>
+							<div class="col-sm-4">
+								<select class="form-control" name="motivo">
+									@foreach($motivos as $motivo)
+									<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
+									@endforeach
+								</select>
+							</div>
 
-							    <label class="col-sm-2 col-form-label">G Remision:</label>
-												<div class="col-sm-4">
-													<input type="text" class="form-control" name="guia_remision">
-							                    </div>
+							<label class="col-sm-2 col-form-label">G Remision:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="guia_remision">
+							</div>
 						</div>
+
 						<div class="form-group row ">
-								<label class="col-sm-2 col-form-label" >Factura:</label>
-							                    <div class="col-sm-4">
-							                     	<input type="text" class="form-control" name="factura">
-							                    </div>
+							<label class="col-sm-2 col-form-label" >Factura:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="factura">
+							</div>
 
-							    <label class="col-sm-2 col-form-label"> Provedor:</label>
-												<div class="col-sm-4">
-													<select class="form-control" name="provedor">
-													@foreach($provedores as $provedor)
-													<option value="{{$provedor->id}}" >{{$provedor->empresa}}</option>
-													@endforeach
-													</select>
-							                    </div>
+							<label class="col-sm-2 col-form-label"> Provedor:</label>
+							<div class="col-sm-4">
+								<select class="form-control" name="provedor">
+									@foreach($provedores as $provedor)
+									<option value="{{$provedor->id}}" >{{$provedor->empresa}}</option>
+									@endforeach
+								</select>
+							</div>
 						</div>
+
 						<div class="form-group row ">
-								<label class="col-sm-2 col-form-label" >Almacen:</label>
-							                    <div class="col-sm-4">
-							                    <select class="form-control" name="almacen">
-												@foreach($almacenes as $almacen)
-												<option value="{{$almacen->id}}">{{$almacen->abreviatura}} -> {{$almacen->descripcion}}</option>
-												@endforeach
-												</select>
-							                    </div>
+							<label class="col-sm-2 col-form-label" >Almacen:</label>
+							<div class="col-sm-4">
+								<select class="form-control" name="almacen">
+									@foreach($almacenes as $almacen)
+									<option value="{{$almacen->id}}">{{$almacen->abreviatura}} -> {{$almacen->descripcion}}</option>
+								@endforeach
+								</select>
+							</div>
 
-							    <label class="col-sm-2 col-form-label"> Informaciones:</label>
-												<div class="col-sm-4">
-													<input type="text" class="form-control" name="informacion">
-							                    </div>
+							<label class="col-sm-2 col-form-label"> Informaciones:</label>
+							<div class="col-sm-4">
+								<input type="text" class="form-control" name="informacion">
+							</div>
 						</div>
-						{{-- <input type="text" data-provide="typeahead" data-source='[
-
-							"item 1","item 2","item 3"
-
-						]' placeholder="item..." class="form-control" /> --}}
+						
 
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Categoria:</label>
-											<div class="col-sm-4">
-											<select class="form-control" name="clasificacion">
-											@foreach($categorias as $categorias)
-											<option value="{{$categorias->id}}">{{$categorias->descripcion}}</option>
-											@endforeach
-											</select>
-											</div>
+								<div class="col-sm-4">
+									<select class="form-control" name="clasificacion">
+										@foreach($categorias as $categorias)
+										<option value="{{$categorias->id}}">{{$categorias->descripcion}}</option>
+										@endforeach
+									</select>
+								</div>
 
-
-					</div>
+							<label class="col-sm-2 col-form-label" >Moneda:</label>
+								<div class="col-sm-4">
+									<select class="form-control" name="moneda">
+										@foreach($moneda as $monedas)
+										<option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
+										@endforeach
+									</select>
+								</div>
+						</div>
 
 						<table cellspacing="0" class="table table-striped " width="100%">
 							<thead>

@@ -85,6 +85,7 @@ class InventarioInicialController extends Controller
          $kardex_entrada->guia_remision="No Registrado";
          $kardex_entrada->factura="No Registrado";
          $kardex_entrada->almacen_id=$request->get('almacen');
+         $kardex_entrada->moneda_id=1;
          $kardex_entrada->informacion=$request->get('informacion');
          $kardex_entrada->save();
  

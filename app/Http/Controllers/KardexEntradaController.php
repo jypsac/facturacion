@@ -11,7 +11,10 @@ use App\Kardex_entrada;
 use App\kardex_entrada_registro;
 use App\Motivo;
 use App\InventarioInicial;
+use App\Moneda;
 use App\Categoria;
+use App\TipoCambio;
+use Carbon\Carbon;
 
 
 use Illuminate\Http\Request;
@@ -34,22 +37,19 @@ class KardexEntradaController extends Controller
 
     public function fetcha(Request $request)
     {
-     if($request->get('query'))
-     {
-      $query = $request->get('query');
-      $data = DB::table('productos')
-        ->where('nombre', 'LIKE', "%{$query}%")
-        ->get();
-      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-      foreach($data as $row)
-      {
-       $output .= '
-       <li><a href="#">'.$row->nombre.'</a></li>
-       ';
-      }
-      $output .= '</ul>';
-      echo $output;
-     }
+        if($request->get('query'))
+        {
+            $query = $request->get('query');
+            $data = DB::table('productos')->where('nombre', 'LIKE', "%{$query}%")->get();
+            $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+            foreach($data as $row){
+                $output .= '
+                <li><a href="#">'.$row->nombre.'</a></li>
+                ';
+            }
+            $output .= '</ul>';
+            echo $output;
+        }
     }
 
 
@@ -67,13 +67,8 @@ class KardexEntradaController extends Controller
         $almacenes=Almacen::all();
         $motivos=Motivo::all();
         $categorias=Categoria::all();
-
-
-
-
-        return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos','categorias'));
-
-
+        $moneda=Moneda::all();
+        return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos','categorias','moneda'));
     }
 
     /**
@@ -116,6 +111,12 @@ class KardexEntradaController extends Controller
             }
         }
 
+        //buscador al cambio
+        $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+        if(!$cambio){
+            return "error por no hacer el cambio diario";
+        }
+
         //Guardado de almacen para inventario-inicial
         $almacen=$request->get('almacen');
 
@@ -127,6 +128,7 @@ class KardexEntradaController extends Controller
         $kardex_entrada->categoria_id=$request->get('clasificacion');
         $kardex_entrada->factura=$request->get('factura');
         $kardex_entrada->almacen_id=$request->get('almacen');
+        $kardex_entrada->moneda_id=$request->get('moneda');
         $kardex_entrada->informacion=$request->get('informacion');
         $kardex_entrada->save();
 
@@ -137,22 +139,51 @@ class KardexEntradaController extends Controller
         //contador de valores de precio
         $precio = $request->input('precio');
         $count_precio=count($precio);
+        
 
-        if($count_articulo = $count_cantidad = $count_precio){
-            for($i=0;$i<$count_articulo;$i++){
-                $kardex_entrada_registro=new kardex_entrada_registro();
-                $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
-                $kardex_entrada_registro->producto_id=$producto_id[$i];
-                $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
-                $kardex_entrada_registro->precio=$request->get('precio')[$i];
-                $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
-                $kardex_entrada_registro->estado=1;
-                $kardex_entrada_registro->save();
+        //convertido a moneda principal
+        $moneda_principal=Moneda::where('principal',1)->first();
+        $moneda_principal_id=$moneda_principal->id;
+        
+        $kardex_entrada_moneda_id=$kardex_entrada->moneda_id;
+
+        if($moneda_principal_id==$kardex_entrada_moneda_id){
+            //cuando la moneda es la principal
+            if($count_articulo = $count_cantidad = $count_precio){
+                for($i=0;$i<$count_articulo;$i++){
+                    $kardex_entrada_registro=new kardex_entrada_registro();
+                    $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
+                    $kardex_entrada_registro->producto_id=$producto_id[$i];
+                    $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
+                    $kardex_entrada_registro->precio=$request->get('precio')[$i];
+                    $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
+                    $kardex_entrada_registro->estado=1;
+                    $kardex_entrada_registro->save();
+                }
+            }else {
+                return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');
             }
-        }else {
-            return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');
+            return redirect()->route('kardex-entrada.index');
+        }else{
+            //cuando la moneda es la secundaria
+            if($count_articulo = $count_cantidad = $count_precio){
+                for($i=0;$i<$count_articulo;$i++){
+                    $kardex_entrada_registro=new kardex_entrada_registro();
+                    $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
+                    $kardex_entrada_registro->producto_id=$producto_id[$i];
+                    $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
+                    $kardex_entrada_registro->precio=($request->get('precio')[$i])*$cambio->venta;
+                    $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
+                    $kardex_entrada_registro->estado=1;
+                    $kardex_entrada_registro->save();
+                }
+            }else {
+                return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');
+            }
+            return redirect()->route('kardex-entrada.index');
         }
-        return redirect()->route('kardex-entrada.index');
+
+        
     }
 
     /**

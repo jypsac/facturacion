@@ -32,6 +32,6 @@ class DatabaseSeeder extends Seeder
         $this->call(KardexEntradaRegistroSeeder::class);
         $this->call(FormaPagoSeeder::class);
         $this->call(FacturacionTableSeeder::class);
-
+        $this->call(UsersTableSeeder::class);
     }
 }
