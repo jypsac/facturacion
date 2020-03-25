@@ -142,6 +142,20 @@ class ClientesSeeder extends Seeder
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		 ]);
+		DB::table('clientes')->insert([
+			'id' => 11 ,
+			'nombre' => 'Cliente Publico',
+			'direccion' =>"Publico" ,
+			'email' => 'Publico',
+			'telefono' => "000-000-000" ,
+			'celular' => "000-000-000",
+			'empresa' => "Publico" ,
+			'documento_identificacion' => 'Publico',
+			'numero_documento' => "000000",
+			'created_at' => '2019-10-30 11:36:57',
+			'updated_at' => "2019-10-30 11:36:57" ,
+		 ]);
+
 		DB::table('contactos')->insert([
 			'id' => 1,
 			'primer_contacto' => '1',
@@ -201,7 +215,6 @@ class ClientesSeeder extends Seeder
 		 ]);
 		 DB::table('contactos')->insert([
 			'id' => 6,
-			
 			'nombre' => 'juana de la luz',
 			'cargo' =>"secretaria" ,
 			'telefono' => '998887766',
@@ -213,7 +226,6 @@ class ClientesSeeder extends Seeder
 		 ]);
 		DB::table('contactos')->insert([
 			'id' =>7,
-			
 			'nombre' => 'mariela de la noche',
 			'cargo' =>"secretaria" ,
 			'telefono' => '22131231',
@@ -224,7 +236,6 @@ class ClientesSeeder extends Seeder
 			'updated_at' => "2019-10-30 11:36:57" ,
 		 ]);DB::table('contactos')->insert([
 			'id' => 8,
-			
 			'nombre' => 'pedro de la mañna',
 			'cargo' =>"secretaria" ,
 			'telefono' => '998887766',
@@ -235,7 +246,6 @@ class ClientesSeeder extends Seeder
 			'updated_at' => "2019-10-30 11:36:57" ,
 		 ]);DB::table('contactos')->insert([
 			'id' => 9,
-			
 			'nombre' => 'Nono de la madrigada',
 			'cargo' =>"secretaria" ,
 			'telefono' => '998887766',
@@ -246,7 +256,6 @@ class ClientesSeeder extends Seeder
 			'updated_at' => "2019-10-30 11:36:57" ,
 		 ]);DB::table('contactos')->insert([
 			'id' => 10,
-
 			'nombre' => 'juan de la luz',
 			'cargo' =>"secretaria" ,
 			'telefono' => '998887766',
@@ -300,7 +309,8 @@ class ClientesSeeder extends Seeder
 			'clientes_id' => '9',
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
-		 ]);DB::table('contactos')->insert([
+		 ]);
+		 DB::table('contactos')->insert([
 			'id' => 15,
 			'primer_contacto' => '1',
 			'nombre' => 'Romeo de la luz',
@@ -309,6 +319,18 @@ class ClientesSeeder extends Seeder
 			'celular' => "78565324",
 			'email' => "maria@S.A.C.com" ,
 			'clientes_id' => '10',
+			'created_at' => '2019-10-30 11:36:57',
+			'updated_at' => "2019-10-30 11:36:57" ,
+		 ]);
+		  DB::table('contactos')->insert([
+			'id' => 16,
+			'primer_contacto' => '1',
+			'nombre' => 'Publico',
+			'cargo' =>"Publico" ,
+			'telefono' => '00000',
+			'celular' => "00000",
+			'email' => "Publico" ,
+			'clientes_id' => '11',
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		 ]);

@@ -49,7 +49,7 @@
 					 			<div class="row"> 
 											<label class="col-sm-2 col-form-label">Cliente:</label>
 												<div class="col-sm-10">
-											<select class="form-control" name="cliente">
+											<select class="form-control" name="cliente" required="required">
 												@foreach($clientes as $cliente)
 												<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
 												@endforeach
@@ -60,13 +60,13 @@
 								
 									<label class="col-sm-2 col-form-label">Atencion:</label>
 										<div class="col-sm-10">
-								<input type="text" class="form-control" name="atencion">
+								<input type="text" class="form-control" name="atencion" required="required">
 										</div>
 								</div><br>
 					 			<div class="row"> 
 								<label class="col-sm-2 col-form-label">Forma de pago:</label>
 									<div class="col-sm-10">
-										<select class="form-control" name="forma_pago">
+										<select class="form-control" name="forma_pago" required="required">
 											@foreach($forma_pagos as $forma_pago)
 											<option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
 											@endforeach
@@ -76,7 +76,7 @@
 					 			<div class="row">
 					 				<label class="col-sm-2 col-form-label">Vendedor:</label>
 											<div class="col-sm-10">
-												<select class="form-control" name="personal">
+												<select class="form-control" name="personal" required="required">
 													@foreach($personales as $personal)
 													<option value="{{$personal->id}}">{{$personal->nombres}}</option>
 													@endforeach
@@ -97,7 +97,7 @@
 					 			<div class="row"> 
 						 			<label class="col-sm-2 col-form-label">Validez:</label>
 										<div class="col-sm-10">
-									<select  class="form-control" name="validez">
+									<select  class="form-control" name="validez" required="required">
 										<option value="1 Día">1 Día</option>
 										<option value="2 Días">2 Días</option>
 										<option value="3 Días">3 Días</option>
@@ -110,14 +110,14 @@
 					 			<div class="row"> 
 					 					<label class="col-sm-2 col-form-label">Referencia:</label>
 										<div class="col-sm-10">
-										<input type="text" class="form-control" name="referencia">
+										<input type="text" class="form-control" name="referencia" required="required">
 										</div>
 					 			</div><br>
 
 					 			<div class="row"> 
 					 						<label class="col-sm-2 col-form-label">Observacion:</label>
 											<div class="col-sm-10">
-												<textarea class="form-control" name="observacion" id=""  rows="3" ></textarea>
+												<textarea class="form-control" name="observacion" id="" required="required"  rows="3" ></textarea>
 											</div>
 					 			</div>
 
@@ -151,7 +151,7 @@
 										
 								</td>
 								<td><input type='text' id='stock0' disabled="disabled" name='stock[]' class="monto0 a form-control" required  autocomplete="off"/></td>
-								<td><input type='number' id='cantidad0' name='cantidad[]' max="3" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" /></td>
+								<td><input type='number' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" /></td>
 								<td><input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
 								<td><input type='text' id='descuento0' name='descuento[]' class="monto0 form-control" required  autocomplete="off"/></td>
 								<td><input type='text' id='total0' name='total[]' class=" form-control " required  autocomplete="off" /></td>
@@ -311,6 +311,7 @@
 			document.getElementById(`precio${a}`).value = precio_v;
 			document.getElementById(`stock${a}`).value = stock_v; 
 			document.getElementById(`descuento${a}`).value = descuento_v; 
+
 		}
 	</script>
 

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facturacion;
 use Illuminate\Http\Request;
 
 class FacturacionController extends Controller
@@ -13,7 +14,9 @@ class FacturacionController extends Controller
      */
     public function index()
     {
-        return view('transaccion.venta.facturacion.index');
+         $facturacion=Facturacion::all();
+        
+        return view('transaccion.venta.facturacion.index', compact('facturacion'));
     }
 
     /**
@@ -45,7 +48,7 @@ class FacturacionController extends Controller
      */
     public function show($id)
     {
-        //
+       return view('transaccion.venta.facturacion.show', compact());
     }
 
     /**
