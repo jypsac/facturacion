@@ -7,7 +7,8 @@
 @section('value_accion', 'Atras')
 
 @section('content')
-
+<h1>{{$facturacion->id}}</h1>
+<h2>Pronto Señor Julio--- no desespere ajaja </h2>
   <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>

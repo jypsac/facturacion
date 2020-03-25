@@ -48,7 +48,8 @@ class FacturacionController extends Controller
      */
     public function show($id)
     {
-       return view('transaccion.venta.facturacion.show', compact());
+        $facturacion=Facturacion::find($id);
+       return view('transaccion.venta.facturacion.show', compact('facturacion'));
     }
 
     /**
@@ -59,7 +60,8 @@ class FacturacionController extends Controller
      */
     public function edit($id)
     {
-        //
+        $facturacion=Facturacion::find($id);
+         return view('transaccion.venta.facturacion.edit', compact('facturacion'));
     }
 
     /**

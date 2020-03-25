@@ -3,12 +3,32 @@
 @section('title', 'Facturacion')
 @section('breadcrumb', 'Facturacion')
 @section('breadcrumb2', 'Facturacion')
-@section('href_accion', route('facturacion.create'))
+@section('data-toggle', 'modal')
+@section('href_accion', '#modal-form')
 @section('value_accion', 'Agregar')
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
+                <!-- modal -->
+
+                            
+                            <div id="modal-form" class="modal fade" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-body">
+                                                <center><div class="col-sm-12 b-r"><h2 align="center" class="m-t-none m-b">Agregar</h2><br>
+                                                    <a class="btn btn-info a" href="{{route('facturacion.create')}}">Nuevo</a>
+                                            <button type="button" class="btn btn-success a">Seleccionar de una cotizacion</button>
+
+                                                        </div></center>
+
+                                            </div>
+                                    </div>
+                                    </div>
+                                </div>
+
+                <!-- modal fin -->
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
@@ -37,12 +57,10 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
+                                            <th>Codigo de Factura</th>
                                             <th>Cliente</th>
-                                            <th>Atencion</sth>
-                                            <th>Validez</th>
-                                            <th>Referencia</th>
                                             <th>Observacion</th>
-                                            {{-- <th>Ver</th> --}}
+                                            <th>Ver</th> 
                                             <th>EDITAR</th>
                                             <th>Eliminar</th>
                                         </tr>
@@ -51,19 +69,17 @@
                                         @foreach($facturacion as $facturacions)
                                         <tr class="gradeX">
                                             <td>{{$facturacions->id}}</td>
-                                            <td>{{$facturacions->cliente_id}}</td>
-                                            <td>{{$facturacions->atencion}}</td>
-                                            <td>{{$facturacions->validez}}</td>
-                                            <td>{{$facturacions->referencia}}</td>
+                                            <td>{{$facturacions->codigo_fac}}</td>
+                                            <td>{{$facturacions->cliente}}</td>
                                             <td>{{$facturacions->observacion}}</td>
                                             <td><center><a href="{{route('facturacion.show',$facturacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
-                                            <td><center><a href="{{route('facturacion.show',$facturacions->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td> 
+                                            <td><center><a href="{{route('facturacion.edit',$facturacions->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td> 
                                             <td><center>
-                                             <form action="" method="POST">
+                                            <!--  <form action="" method="POST">
                                               @csrf
-                                              @method('delete')
-                                              <button type="submit" class="btn btn-w-m btn-danger">Eliminar</button>
-                                            </form></center>
+                                              @method('delete') -->
+                                              <button type="submit" class="btn btn-w-m btn-danger">Anular</button>
+                                            <!-- </form> --></center>
                                             </td>
                                         </tr>
                                         @endforeach
@@ -77,7 +93,9 @@
     </div>
 
 
-
+<style type="text/css">
+    .a{width: 200px}
+</style>
 
 
 
