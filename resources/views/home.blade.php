@@ -7,13 +7,33 @@
 @section('value_accion', '>>>')
 @section('content')
 
+@if(!$consulta)
+	<div class="row">
+		<div class="col-lg-12">
+			<div class="ibox ">
+				<div class="ibox-title">
+					<span class="label label-danger float-right">Danger</span>
+					<h5>Advertencia</h5>
+				</div>
+				<div class="ibox-content">
+					<h2 class="no-margins">Aún no se ha realizado el cambio diario el dia de hoy <a href="{{route('tipo_cambio.index')}}">Click para agregar el cambio diario<a></h2>
+					<div class="stat-percent font-bold text-danger"> :/ <i class="fa fa-level-down"></i></div>
+					
+				</div>
+			</div>
+		</div>
+	</div>
+@endif
+
+
 <div class="row">
 	<div class="col-lg-3">
 		<div class="ibox ">
 			<div class="ibox-title">
-				<span class="label label-success float-right">Monthly</span>
+				<span class="label label-success float-right"> Low</span>
 				<h5>Clientes</h5>
 			</div>
+			
 			<div class="ibox-content">
 				<h1 class="no-margins">40 886,200</h1>
 				<div class="stat-percent font-bold text-success">98% <i class="fa fa-bolt"></i></div>

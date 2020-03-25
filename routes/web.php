@@ -8,7 +8,8 @@ Route::group(
 
 		function(){
 
-		Route::view('/' , 'home')->name('inicio');
+		// Route::view('/' , 'home')->name('inicio');
+		Route::get('/' , 'ViewController@home')->name('inicio');
 
 		Route::resource('/almacen','AlmacenController');
 		Route::resource('/categoria','CategoriaController');
