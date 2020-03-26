@@ -9,6 +9,16 @@
 @section('content')
 
   <div class="wrapper wrapper-content animated fadeInRight">
+     <div class="ibox-title">
+                            <!-- <h5>Vista Previa</h5> -->
+                            <div class="ibox-tools">
+        @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
+                     <button type="button" class="btn btn-success a">Facturacion</button>
+        @elseif($cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
+                     <button type="button" class="btn btn-success a">Boleta</button>
+        @endif
+                            </div>
+                        </div>
             <div class="row">
             <div class="col-lg-12">
                     <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
