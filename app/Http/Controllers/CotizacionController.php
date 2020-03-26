@@ -44,7 +44,8 @@ class CotizacionController extends Controller
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::all();
         $personales=Personal::all();
-        return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad'));
+        $igv=Igv::first();
+        return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv'));
     }
 
     /**

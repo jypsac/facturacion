@@ -150,11 +150,11 @@
 										</datalist>
 										
 								</td>
-								<td><input type='text' id='stock0' disabled="disabled" name='stock[]' class="monto0 a form-control" required  autocomplete="off"/></td>
+								<td><input type='text' id='stock0' disabled="disabled" name='stock[]' class="form-control" required  autocomplete="off"/></td>
 								<td><input type='number' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" /></td>
 								<td><input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
-								<td><input type='text' id='descuento0' name='descuento[]' class="monto0 form-control" required  autocomplete="off"/></td>
-								<td><input type='text' id='total0' name='total[]' class=" form-control " required  autocomplete="off" /></td>
+								<td><input type='text' id='descuento0' name='descuento[]' class="form-control" required  autocomplete="off"/></td>
+								<td><input type='text' id='total0' name='total' class="total form-control " required  autocomplete="off" /></td>
 								<span id="spTotal"></span>
 							</tr>
 
@@ -167,7 +167,7 @@
 						<td></td>
 						<td></td>
 						<td>Subtotal :</td>
-						<td>S/.</td>
+						<td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
 						</tr>
 						<tr style="background-color: #f5f5f500;" align="center">
 						<td></td>
@@ -176,7 +176,7 @@
 						<td></td>
 						<td></td>
 						<td>IGV :</td>
-						<td>S./000</td>
+						<td><input id='igv'  disabled="disabled" class="form-control" required /></td>
 						</tr>
 						<tr  align="center">
 						<td></td>
@@ -184,8 +184,8 @@
 						<td></td>
 						<td></td>
 						<td></td>
-						<td>Subtotal :</td>
-						<td>S/.000</td>
+						<td>Total :</td>
+						<td><input id='total_final'  disabled="disabled" class="form-control" required /></td>
 						</tr>
 						</tbody>
 						</table>
@@ -234,7 +234,7 @@
 				</td>
 
 				<td>
-					<input type='text' id='stock${i}' name='stock[]' disabled="disabled" class="monto${i} a form-control" required  autocomplete="off"/>
+					<input type='text' id='stock${i}' name='stock[]' disabled="disabled" class="form-control" required  autocomplete="off"/>
 				</td>
 				<td>
 					<input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
@@ -243,10 +243,10 @@
 					<input type='text' id='precio${i}' name='precio[]' disabled="disabled" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
 				</td>
 				<td>
-					<input type='text' id='descuento${i}' name='descuento[]' class="monto${i} form-control" required  autocomplete="off"/>
+					<input type='text' id='descuento${i}' name='descuento[]' class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
 				</td>
 				<td>
-					<input type='text' id='total${i}' name='total[]' class=" form-control "  required  autocomplete="off"/>
+					<input type='text' id='total${i}' name='total' class="total form-control "  required  autocomplete="off"/>
 				</td>
 				
 				
@@ -258,8 +258,8 @@
 
 	<script>
 	function multi(a){
-		console.log(a);
 		var total = 1;
+		var totales=0;
 		var change= false; //
 		$(`.monto${a}`).each(function(){
 			if (!isNaN(parseFloat($(this).val()))) {
@@ -269,7 +269,31 @@
 			}
 		});
 		total = (change)? total:0;
-		document.getElementById(`total${a}`).value = total;
+		var descuento = document.querySelector(`#descuento${a}`).value;
+		var precio = document.querySelector(`#precio${a}`).value;
+		var final= total-(total*descuento/100);
+
+		document.getElementById(`total${a}`).value = final;
+
+		var totalInp = $('[name="total"]'); 
+		var total_t = 0;
+
+		totalInp.each(function(){
+			total_t += parseFloat($(this).val());
+		});
+		$('#sub_total').val(total_t);
+
+		var igv_valor={{$igv->renta}};
+		var subtotal = document.querySelector(`#sub_total`).value;
+		var igv=subtotal*igv_valor/100;
+		var end=igv+parseInt(subtotal);
+
+		console.log(typeof igv);
+		console.log(typeof end);
+		document.getElementById("igv").value = igv;
+		document.getElementById("total_final").value = end;
+		
+
 	}
 	</script>
 
@@ -319,6 +343,7 @@
         $(".delete").on('click', function () {
             $('.case:checkbox:checked').parents("tr").remove();
         });
+		//meter en funcion la suma
     </script>
 
     <script>
