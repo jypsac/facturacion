@@ -142,7 +142,7 @@
 									<input type='checkbox' class="case">
 								</td>
 								<td>
-									<input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);"  autocomplete="off">
+									<input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)"  autocomplete="off">
 										<datalist id="browsers2" >
 											@foreach($productos as $index => $producto)
 											<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}">
@@ -151,10 +151,11 @@
 										
 								</td>
 								<td><input type='text' id='stock0' disabled="disabled" name='stock[]' class="form-control" required  autocomplete="off"/></td>
-								<td><input type='number' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" /></td>
+								<td><input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" /></td>
 								<td><input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
-								<td><input type='text' id='descuento0' name='descuento[]' class="form-control" required  autocomplete="off"/></td>
-								<td><input type='text' id='total0' name='total' class="total form-control " required  autocomplete="off" /></td>
+								<td><input type='checkbox' id='check0' name='check[]'  class="form-control" required onclick="multi(0)"  autocomplete="off"/>
+									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
+								<td><input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" /></td>
 								<span id="spTotal"></span>
 							</tr>
 
@@ -225,7 +226,7 @@
 					<input type='checkbox' class='case'/>
 				</td>";
 				<td>
-					<input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});" autocomplete="off">
+					<input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i})" autocomplete="off">
 						<datalist id="browsers" >
 							@foreach($productos as $index => $producto)
 								<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}" >
@@ -243,10 +244,11 @@
 					<input type='text' id='precio${i}' name='precio[]' disabled="disabled" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
 				</td>
 				<td>
-					<input type='text' id='descuento${i}' name='descuento[]' class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
+					<input type='checkbox' id='check${i}' name='check[]'  class="form-control" required onclick="multi(${i})"  autocomplete="off"/>
+					<input type='text' id='descuento${i}' name='descuento[]' disabled="disabled" class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
 				</td>
 				<td>
-					<input type='text' id='total${i}' name='total' class="total form-control "  required  autocomplete="off"/>
+					<input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
 				</td>
 				
 				
@@ -257,6 +259,8 @@
 	</script>
 
 	<script>
+	
+	
 	function multi(a){
 		var total = 1;
 		var totales=0;
@@ -269,11 +273,24 @@
 			}
 		});
 		total = (change)? total:0;
-		var descuento = document.querySelector(`#descuento${a}`).value;
-		var precio = document.querySelector(`#precio${a}`).value;
-		var final= total-(total*descuento/100);
 
-		document.getElementById(`total${a}`).value = final;
+		// Get the checkbox
+		var checkBox = document.getElementById(`check${a}`);
+		if (checkBox.checked == true){
+			var descuento = document.querySelector(`#descuento${a}`).value;
+			var precio = document.querySelector(`#precio${a}`).value;
+			var final= total-(total*descuento/100);
+
+			document.getElementById(`total${a}`).value = final;
+		} else {
+			var descuento = 0;
+			var precio = document.querySelector(`#precio${a}`).value;
+			var final= total-(total*descuento/100);
+
+			document.getElementById(`total${a}`).value = final;
+		}
+
+		
 
 		var totalInp = $('[name="total"]'); 
 		var total_t = 0;
@@ -288,12 +305,10 @@
 		var igv=subtotal*igv_valor/100;
 		var end=igv+parseInt(subtotal);
 
-		console.log(typeof igv);
-		console.log(typeof end);
+		
 		document.getElementById("igv").value = igv;
 		document.getElementById("total_final").value = end;
-		
-
+	
 	}
 	</script>
 
@@ -342,8 +357,24 @@
     <script>
         $(".delete").on('click', function () {
             $('.case:checkbox:checked').parents("tr").remove();
-        });
-		//meter en funcion la suma
+			var totalInp = $('[name="total"]'); 
+			var total_t = 0;
+
+			totalInp.each(function(){
+				total_t += parseFloat($(this).val());
+			});
+			$('#sub_total').val(total_t);
+
+			var igv_valor={{$igv->renta}};
+			var subtotal = document.querySelector(`#sub_total`).value;
+			var igv=subtotal*igv_valor/100;
+			var end=igv+parseInt(subtotal);
+
+			console.log(typeof igv);
+			console.log(typeof end);
+			document.getElementById("igv").value = igv;
+			document.getElementById("total_final").value = end;
+			});
     </script>
 
     <script>
