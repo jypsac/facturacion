@@ -62,7 +62,8 @@
             </div>
             <div class="card-footer">
                 <div class="d-flex justify-content-center links">
-                    No tienes una Cuenta?<a href="registrar.html">Registrate</a>
+                    No tienes una Cuenta?<!-- <a href="">Registrate</a> -->
+                      <a  href="{{ route('register') }}">{{ __('Register') }}</a>
                 </div>
                 <div class="d-flex justify-content-center">
                     <!-- <a href="#">Olvidaste tu contraseña?</a>- -->

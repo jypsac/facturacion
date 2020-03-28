@@ -20,6 +20,7 @@
     <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
 
     <link href="{{ asset('main.css') }}" rel="stylesheet">
+<link rel="icon" type="image/svg+xml" href="{{ asset('img/icono.svg') }}" sizes="any">
 
 
 
