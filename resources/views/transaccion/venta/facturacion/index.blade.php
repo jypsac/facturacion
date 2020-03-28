@@ -18,8 +18,8 @@
                                     <div class="modal-content">
                                         <div class="modal-body">
                                                 <center><div class="col-sm-12 b-r"><h2 align="center" class="m-t-none m-b">Agregar</h2><br>
-                                                    <a class="btn btn-info a" href="{{route('facturacion.create')}}">Nuevo</a>
-                                            <button type="button" class="btn btn-success a">Seleccionar de una cotizacion</button>
+                                                    <a class="btn btn-info a" href="{{route('facturacion.create')}}">Factura</a>
+                                             <a class="btn btn-success a" href="{{route('create.boleta')}}">Boleta</a>
 
                                                         </div></center>
 
@@ -72,7 +72,7 @@
                                             <td>{{$facturacions->codigo_fac}}</td>
                                             <td>{{$facturacions->cliente}}</td>
                                             <td>{{$facturacions->observacion}}</td>
-                                            <td><center><a href="{{route('facturacion.show',$facturacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                            <td><center><a href="{{route('boleta',$facturacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                             <td><center><a href="{{route('facturacion.edit',$facturacions->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td> 
                                             <td><center>
                                             <!--  <form action="" method="POST">

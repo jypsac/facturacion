@@ -26,7 +26,8 @@ class FacturacionController extends Controller
      */
     public function create()
     {
-        //
+         return view('transaccion.venta.facturacion.create');
+        
     }
 
     /**
@@ -37,7 +38,6 @@ class FacturacionController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
@@ -50,6 +50,18 @@ class FacturacionController extends Controller
     {
         $facturacion=Facturacion::find($id);
        return view('transaccion.venta.facturacion.show', compact('facturacion'));
+    }
+    
+    public function show_boleta(Request $request,$id)
+    {
+      
+       return view('transaccion.venta.facturacion.boleta');
+    }
+
+    public function create_boleta()
+    {
+      
+       return view('transaccion.venta.facturacion.create_boleta');
     }
 
     /**

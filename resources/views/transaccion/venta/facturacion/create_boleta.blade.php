@@ -1,8 +1,9 @@
+    
  @extends('layout')
 
-@section('title', 'Facturacion Ver')
-@section('breadcrumb', 'Facturacion')
-@section('breadcrumb2', 'Facturacion')
+@section('title', 'Boleta Ver')
+@section('breadcrumb', 'Facturacion/Boleta')
+@section('breadcrumb2', 'Facturacion/Boleta')
 @section('href_accion', route('facturacion.index'))
 @section('value_accion', 'Atras')
 
@@ -28,8 +29,8 @@
                                     <div class="form-control ruc" style="height: 125px">
                                         <center>
                                             <h3 style="padding-top:10px ">RUC : 202020202</h3>
-                                            <h2>FACTURA ELECTRONICA</h2>   
-                                            <h5>FC11-0001213</h5>   
+                                            <h2>BOLETA ELECTRONICA</h2>   
+                                            <h5>BO11-0001213</h5>   
                                         </center>
                                     
                                     </div>
@@ -40,8 +41,8 @@
                                     <thead>
 
                                 <tr>
-    <td style="width: 170px"><b>Razon Social</b></td><td style="width: 3px">:</td><td style="width: 500px"><input type="text" class="form-control"  name=""></td>
-    <td style="width: 140px"><b>RUC</b></td><td style="width: 3px">:</td><td ><input type="text" class="form-control"  name=""></td>
+    <td style="width: 170px"><b>Nombre</b></td><td style="width: 3px">:</td><td style="width: 500px"><input type="text" class="form-control"  name=""></td>
+    <td style="width: 140px"><b>DNI</b></td><td style="width: 3px">:</td><td ><input type="text" class="form-control"  name=""></td>
                                 </tr>
                                 <tr>
     <td><b>Direccion</b></td><td style="width: 3px">:</td><td><input type="text" class="form-control"  name=""></td><td></td><td></td><td></td>
@@ -61,7 +62,7 @@
                             <div class="row">
                                 <div class="col-sm-12" >
                                 <h4>Observacion:</h4>
-                               <textarea class="form-control"></textarea>
+                               <textarea  type="text" class="form-control"  name=""></textarea>
                                 </div>
                             </div>
 
