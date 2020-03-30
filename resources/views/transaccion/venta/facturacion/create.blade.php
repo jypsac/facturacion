@@ -40,30 +40,31 @@
                                     <thead>
 
                                 <tr>
-    <td style="width: 170px"><b>Razon Social</b></td><td style="width: 3px">:</td><td style="width: 500px"><input type="text" class="form-control"  name=""></td>
+    <td style="width: 170px"><b>Razon Social</b></td><td style="width: 3px">:</td><td style="width: 200px" colspan="4"><input type="text" class="form-control"  name=""></td><!-- <td></td><td></td><td></td> -->
     <td style="width: 140px"><b>RUC</b></td><td style="width: 3px">:</td><td ><input type="text" class="form-control"  name=""></td>
                                 </tr>
                                 <tr>
-    <td><b>Direccion</b></td><td style="width: 3px">:</td><td><input type="text" class="form-control"  name=""></td><td></td><td></td><td></td>
+    <td><b>Direccion</b></td><td style="width: 3px">:</td><td colspan="4"><input type="text" class="form-control"  name=""><!-- </td><td></td><td></td><td></td> -->
+    <td><b>Orden de Compra</b></td><td>:</td><td><input type="text" class="form-control"  name=""></td>
                                 </tr>
                                 <tr>
-    <td><b>Fecha Emision</b></td><td style="width: 3px">:</td><td><input type="date" class="form-control"  name=""></td>
+    <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td><td colspan="4"><input type="text" class="form-control"  name=""><!-- </td><td></td><td></td><td></td> -->
+    <td><b>Guia Remision</b></td><td style="width: 3px">:</td><td><input type="text" class="form-control"  name=""></td>
+                                </tr>
+                                 <tr>
+    <td><b>Fecha Emision</b></td><td style="width: 3px">:</td><td><input type="date" class="form-control"  name=""></td><td style="width: 180px"><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td><td style="width: 200px"><input type="date" class="form-control"  name=""></td>
     <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td><td><input type="text" class="form-control"  name=""></td>
-                                </tr>
-                                <tr>
-     <td><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td><td><input type="date" class="form-control"  name=""></td>
-     <td><b>Guia Remision</b></td><td style="width: 3px">:</td><td><input type="text" class="form-control"  name=""></td>
                                 </tr>
                                     </thead>
                             </table>
 
-                            <br>
+                            <br><!-- 
                             <div class="row">
                                 <div class="col-sm-12" >
                                 <h4>Observacion:</h4>
                                <textarea class="form-control"></textarea>
                                 </div>
-                            </div>
+                            </div> -->
 
                            
 
@@ -73,11 +74,11 @@
                                     <tr>
                                         <th >Codigo Producto</th>
                                         <th >Cantidad</th>
-                                        <th >Unidad</th>
+                                        <!-- <th >Unidad</th> -->
                                         <th >Descripción</th>
                                         <th >Valor Unitario</th>
                                         <th>Dscto.%</th>
-                                        <th>Precio Unitario</th>
+                                        <!-- <th>Precio Unitario</th> -->
                                         <th>Valor Venta </th>
                                     </tr>
                                     </thead>
@@ -90,14 +91,12 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
-                                        <td></td>
                                         <td></td>                                        
                                     </tr>
 
                                         
                                       <tr>
-                                        <td colspan="6" rowspan="4">
+                                        <td colspan="4" rowspan="4">
                                             <div class="row">
                                                 <div class="col-lg-2" align="center">
                                                  <img src="https://www.codigos-qr.com/qr/php/qr_img.php?d=https%3A%2F%2Fwww.jypsac.com%2F&s=6&e=m" alt="Generador de Códigos QR Codes" height="150px" />

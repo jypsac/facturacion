@@ -40,20 +40,22 @@
                                     <thead>
 
                                 <tr>
-    <td style="width: 170px"><b>Razon Social</b></td><td style="width: 3px">:</td><td style="width: 500px">Jyp perofe</td>
+    <td style="width: 170px"><b>Razon Social</b></td><td style="width: 3px">:</td><td style="width: 200px">Jyp perofe</td><td></td><td></td><td></td>
     <td style="width: 140px"><b>RUC</b></td><td style="width: 3px">:</td><td >98998798</td>
                                 </tr>
                                 <tr>
     <td><b>Direccion</b></td><td style="width: 3px">:</td><td>av jaja .com</td><td></td><td></td><td></td>
+    <td><b>Orden de Compra</b></td><td>:</td><td>xd</td>
                                 </tr>
                                 <tr>
-    <td><b>Fecha Emision</b></td><td style="width: 3px">:</td><td>14/02/2020</td>
+    <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td><td>7 dias</td><td></td><td></td><td></td>
+    <td><b>Guia Remision</b></td><td style="width: 3px">:</td><td>xd</td>
+                                </tr>
+                                 <tr>
+    <td><b>Fecha Emision</b></td><td style="width: 3px">:</td><td>14/02/2020</td><td style="width: 180px"><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td><td style="width: 200px">12/04/3020</td>
     <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td><td>Soles</td>
                                 </tr>
-                                <tr>
-     <td><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td><td>12/04/3020</td>
-     <td><b>Guia Remision</b></td><td style="width: 3px">:</td><td>xd</td>
-                                </tr>
+                               
                                     </thead>
                             </table>
 

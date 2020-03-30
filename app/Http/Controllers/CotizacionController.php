@@ -61,7 +61,7 @@ class CotizacionController extends Controller
     {
         //El input esta activo
 
-        return $request;
+        // return $request;
 
         $print=$request->get('print');
         if($print==1){
