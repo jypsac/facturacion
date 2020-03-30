@@ -288,14 +288,19 @@
 			var precio = document.querySelector(`#precio${a}`).value;
 			var final= total-(total*descuento/100);
 
-			document.getElementById(`total${a}`).value = final;
+			var multiplier = 100;
+			var final_decimal = Math.round(final * multiplier) / multiplier;  
+			document.getElementById(`total${a}`).value = final_decimal;
 			document.getElementById(`check_descuento${a}`).value = descuento;
 		} else {
 			var descuento = 0;
 			var precio = document.querySelector(`#precio${a}`).value;
 			var final= total-(total*descuento/100);
+
+			var multiplier = 100;
+			var final_decimal = Math.round(final * multiplier) / multiplier;  
 			document.getElementById(`check_descuento${a}`).value = 0;
-			document.getElementById(`total${a}`).value = final;
+			document.getElementById(`total${a}`).value = final_decimal;
 		}
 
 		
@@ -306,16 +311,26 @@
 		totalInp.each(function(){
 			total_t += parseFloat($(this).val());
 		});
-		$('#sub_total').val(total_t);
+
+		var multiplier2 = 100;
+		var total_tt = Math.round(total_t * multiplier2) / multiplier2;  
+
+		$('#sub_total').val(total_tt);
+
+		
+		
 
 		var igv_valor={{$igv->renta}};
 		var subtotal = document.querySelector(`#sub_total`).value;
 		var igv=subtotal*igv_valor/100;
-		var end=igv+parseInt(subtotal);
 
+		var igv_decimal = Math.round(igv * multiplier2) / multiplier2;  
+		var end=igv_decimal+parseFloat(subtotal);
+
+		var end2 = Math.round(end * multiplier2) / multiplier2;  
 		
-		document.getElementById("igv").value = igv;
-		document.getElementById("total_final").value = end;
+		document.getElementById("igv").value = igv_decimal;
+		document.getElementById("total_final").value = end2;
 	
 	}
 	</script>
