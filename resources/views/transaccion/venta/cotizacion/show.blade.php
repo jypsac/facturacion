@@ -13,9 +13,11 @@
                             <!-- <h5>Vista Previa</h5> -->
                             <div class="ibox-tools">
         @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
-                     <button type="button" class="btn btn-success a">Facturacion</button>
+                    <a class="btn btn-info" href="{{route('facturacion.create')}}">Factura</a>
         @elseif($cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
-                     <button type="button" class="btn btn-success a">Boleta</button>
+                     <a class="btn btn-success"  href="{{route('create.boleta')}}">Boleta</a>
+
+
         @endif
                             </div>
                         </div>
@@ -186,6 +188,7 @@
        
 <style type="text/css">
     .form-control{border-radius: 10px; height: 150px;}
+    .ibox-tools a{color: white !important}
 </style>
     <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

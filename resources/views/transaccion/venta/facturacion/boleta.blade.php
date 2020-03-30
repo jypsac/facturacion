@@ -74,12 +74,10 @@
                                     <tr>
                                         <th >Codigo Producto</th>
                                         <th >Cantidad</th>
-                                        <th >Unidad</th>
                                         <th >Descripción</th>
                                         <th >Valor Unitario</th>
                                         <th>Dscto.%</th>
                                         <th>Precio Unitario</th>
-                                        <th>Valor Venta </th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -98,7 +96,7 @@
 
                                         
                                       <tr>
-                                        <td colspan="6" rowspan="4">
+                                        <td colspan="4" rowspan="4">
                                             <div class="row">
                                                 <div class="col-lg-2" align="center">
                                                  <img src="https://www.codigos-qr.com/qr/php/qr_img.php?d=https%3A%2F%2Fwww.jypsac.com%2F&s=6&e=m" alt="Generador de Códigos QR Codes" height="150px" />
