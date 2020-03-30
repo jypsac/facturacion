@@ -56,6 +56,7 @@
 											@endforeach
 										 </datalist>
 									</div>
+									<input type="hidden" value="0" name="print" id="prints">
 								</div><br>
 					 			<div class="row"> 
 									<label class="col-sm-2 col-form-label">Atencion:</label>
@@ -191,11 +192,11 @@
 
 						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
 						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
+						<a onclick="print()"><button class="btn btn-warning float-right"><i class="fa fa-cloud" aria-hidden="true">sasadsadsadas</i></button></a>
 						<button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
-						<button class="btn btn-warning float-right" type="submit"><i class="fa fa-cloud" aria-hidden="true"> Imprimir</i></button>
+						
 
 					</form>
-
 				</div>
 			</div>
 		</div>
@@ -258,7 +259,12 @@
 	</script>
 
 	<script>
-	
+	function print(){
+		var print_input=1;
+		document.getElementById("prints").value = print_input;
+		var estado = document.querySelector("#prints").value;
+		console.log(estado);
+	}
 	
 	function multi(a){
 		var total = 1;

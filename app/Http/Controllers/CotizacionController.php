@@ -59,6 +59,40 @@ class CotizacionController extends Controller
      */
     public function store(Request $request)
     {
+        //El input esta activo
+
+        return $request;
+
+        $print=$request->get('print');
+        if($print==1){
+            $cliente_id=$request->get('cliente');
+            $atencion=$request->get('atencion');
+            $forma_pago_id=$request->get('forma_pago');
+            $validez=$request->get('validez');
+            $referencia=$request->get('referencia');
+            $user_id =auth()->user()->id;
+            $observacion=$request->get('observacion');
+
+            $articulo = $request->input('articulo');
+            $count_articulo=count($articulo);
+
+            $cantidad_p = $request->input('cantidad');
+            $count_cantidad_p=count($cantidad_p);
+
+            for($i=0 ; $i<$count_cantidad_p;$i++){
+                $articulos[$i]= $request->input('articulo')[$i];
+                $producto_id[$i]=strstr($articulos[$i], ' ', true);
+            }
+
+            for($i=0;$i<$count_articulo;$i++){
+                
+                $cantidad[]=$request->input('cantidad')[$i];
+                $check_descuento[]=$request->input('check_descuento')[$i];
+            }
+
+            return view('transaccion.venta.cotizacion.fast_print',compact('cliente_id','atencion','forma_pago_id','validez','referencia','user_id','observacion','producto_id','cantidad','check_descuento'));
+        }
+
         //codigo para convertir nombre a producto
         $cantidad_p = $request->input('cantidad');
         $count_cantidad_p=count($cantidad_p);
@@ -190,4 +224,9 @@ class CotizacionController extends Controller
     {
         //
     }
+
+    // public function fast_print(Request $request){
+    //     $atencion=$request->get('atencion');
+    //     return view('transaccion.venta.cotizacion.fast_print',compact('atencion'));
+    // }
 }

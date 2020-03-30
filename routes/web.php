@@ -17,6 +17,7 @@ Route::group(
 		Route::post('/cliente/contac','ClienteController@storecontact')->name('cliente.storecontact');
 		Route::resource('/cliente','ClienteController');
 		Route::resource('/compra','CompraController');
+		// Route::get('cotizacion/fast_print', 'CotizacionController@fast_print')->name('cotizacion.fast_print');
 		Route::resource('/cotizacion','CotizacionController');
 		Route::resource('/credito','CreditoController');
 		Route::resource('/debito','DebitoController');
