@@ -12,6 +12,7 @@ use App\Empresa;
 use App\Cotizacion_registro;
 use App\kardex_entrada_registro;
 use App\Igv;
+use App\User;
 
 use Illuminate\Http\Request;
 
@@ -34,10 +35,11 @@ class CotizacionController extends Controller
      */
     public function create()
     {
-        $productos=Producto::where('estado_id',1)->get();
+        $productos=Producto::where('estado_id',1)->where('estado_anular',1)->get();
 
-        foreach ($productos as $producto) {
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio');
+        foreach ($productos as $index => $producto) {
+            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
+            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index];
             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
         }
 
@@ -45,6 +47,7 @@ class CotizacionController extends Controller
         $clientes=Cliente::all();
         $personales=Personal::all();
         $igv=Igv::first();
+
         return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv'));
     }
 
@@ -56,9 +59,6 @@ class CotizacionController extends Controller
      */
     public function store(Request $request)
     {
-        
-
-
         //codigo para convertir nombre a producto
         $cantidad_p = $request->input('cantidad');
         $count_cantidad_p=count($cantidad_p);
@@ -87,14 +87,19 @@ class CotizacionController extends Controller
 
             }
         }
+        
+        //Convertir nombre del cliente a id
+        $cliente_nombre=$request->get('cliente');
+        $cliente_buscador=Cliente::where('nombre',$cliente_nombre)->first();
+        
 
         $cotizacion=new Cotizacion;
-        $cotizacion->cliente_id=$request->get('cliente');
+        $cotizacion->cliente_id=$cliente_buscador->id;
         $cotizacion->atencion=$request->get('atencion');
         $cotizacion->forma_pago_id=$request->get('forma_pago');
         $cotizacion->validez=$request->get('validez');
         $cotizacion->referencia=$request->get('referencia');
-        $cotizacion->personal_id=$request->get('personal');
+        $cotizacion->user_id =auth()->user()->id;
         $cotizacion->observacion=$request->get('observacion');
         $cotizacion->save();
 
@@ -102,12 +107,23 @@ class CotizacionController extends Controller
         $cantidad = $request->input('cantidad');
         $count_cantidad=count($cantidad);
 
-        if($count_articulo = $count_cantidad ){
+        //contador de valores del check descuento
+        $check = $request->input('check_descuento');
+        $count_check=count($check);
+
+        if($count_articulo = $count_cantidad  = $count_check){
             for($i=0;$i<$count_articulo;$i++){
                 $cotizacion_registro=new Cotizacion_registro();
                 $cotizacion_registro->cotizacion_id=$cotizacion->id;
                 $cotizacion_registro->producto_id=$producto_id[$i];
+
+                $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
+                $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
+                $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')+$utilidad;
+
+                $cotizacion_registro->precio=$array;
                 $cotizacion_registro->cantidad=$request->get('cantidad')[$i];
+                $cotizacion_registro->descuento=$request->get('check_descuento')[$i];
                 $cotizacion_registro->save();
             }
         }else {
@@ -130,15 +146,15 @@ class CotizacionController extends Controller
         foreach ($cotizacion_registro as $cotizacion_registros) {
              $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
         }
-        // return $array[1];
         
         // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
         $cotizacion=Cotizacion::find($id);
         $empresa=Empresa::first();
         $sum=0;
         $igv=Igv::first();
+        $sub_total=0;
 
-         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array"));
+         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total"));
     }
 
     /**

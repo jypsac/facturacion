@@ -47,22 +47,23 @@
 					 	<div class="row">
 					 		<div class="col-sm-6">
 					 			<div class="row"> 
-											<label class="col-sm-2 col-form-label">Cliente:</label>
-												<div class="col-sm-10">
-											<select class="form-control" name="cliente" required="required">
-												@foreach($clientes as $cliente)
-												<option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
-												@endforeach
-											<select>
-												</div>
+									<label class="col-sm-2 col-form-label">Cliente:</label>
+									<div class="col-sm-10">
+										<input list="browsersc" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}">
+										<datalist id="browsersc" >
+											@foreach($clientes as $cliente)
+												<option id="{{$cliente->id}}">{{$cliente->nombre}}</option>
+											@endforeach
+										 </datalist>
+									</div>
 								</div><br>
 					 			<div class="row"> 
-								
 									<label class="col-sm-2 col-form-label">Atencion:</label>
 										<div class="col-sm-10">
-								<input type="text" class="form-control" name="atencion" required="required">
+										<input type="text" class="form-control" name="atencion" required="required">
 										</div>
 								</div><br>
+
 					 			<div class="row"> 
 								<label class="col-sm-2 col-form-label">Forma de pago:</label>
 									<div class="col-sm-10">
@@ -76,11 +77,7 @@
 					 			<div class="row">
 					 				<label class="col-sm-2 col-form-label">Vendedor:</label>
 											<div class="col-sm-10">
-												<select class="form-control" name="personal" required="required">
-													@foreach($personales as $personal)
-													<option value="{{$personal->id}}">{{$personal->nombres}}</option>
-													@endforeach
-												<select>
+											<input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}">
 											</div>
 					 			</div>
 					 			
@@ -110,14 +107,14 @@
 					 			<div class="row"> 
 					 					<label class="col-sm-2 col-form-label">Referencia:</label>
 										<div class="col-sm-10">
-										<input type="text" class="form-control" name="referencia" required="required">
+										<input type="text" class="form-control" name="referencia" >
 										</div>
 					 			</div><br>
 
 					 			<div class="row"> 
 					 						<label class="col-sm-2 col-form-label">Observacion:</label>
 											<div class="col-sm-10">
-												<textarea class="form-control" name="observacion" id="" required="required"  rows="3" ></textarea>
+												<textarea class="form-control" name="observacion" id="observacion"   rows="3" ></textarea>
 											</div>
 					 			</div>
 
@@ -153,7 +150,8 @@
 								<td><input type='text' id='stock0' disabled="disabled" name='stock[]' class="form-control" required  autocomplete="off"/></td>
 								<td><input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" /></td>
 								<td><input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
-								<td><input type='checkbox' id='check0' name='check[]'  class="form-control" required onclick="multi(0)"  autocomplete="off"/>
+								<td><input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
+									<input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
 									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
 								<td><input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" /></td>
 								<span id="spTotal"></span>
@@ -193,8 +191,8 @@
 
 						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
 						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-						<button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
-
+						<button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
+						<button class="btn btn-warning float-right" type="submit"><i class="fa fa-cloud" aria-hidden="true"> Imprimir</i></button>
 
 					</form>
 
@@ -244,7 +242,8 @@
 					<input type='text' id='precio${i}' name='precio[]' disabled="disabled" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
 				</td>
 				<td>
-					<input type='checkbox' id='check${i}' name='check[]'  class="form-control" required onclick="multi(${i})"  autocomplete="off"/>
+					<input type='checkbox' id='check${i}' name='check[]'  class="form-control"  onclick="multi(${i})"  autocomplete="off"/>
+					<input type='hidden' id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
 					<input type='text' id='descuento${i}' name='descuento[]' disabled="disabled" class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
 				</td>
 				<td>
@@ -282,11 +281,12 @@
 			var final= total-(total*descuento/100);
 
 			document.getElementById(`total${a}`).value = final;
+			document.getElementById(`check_descuento${a}`).value = descuento;
 		} else {
 			var descuento = 0;
 			var precio = document.querySelector(`#precio${a}`).value;
 			var final= total-(total*descuento/100);
-
+			document.getElementById(`check_descuento${a}`).value = 0;
 			document.getElementById(`total${a}`).value = final;
 		}
 
@@ -349,7 +349,8 @@
 
 			document.getElementById(`precio${a}`).value = precio_v;
 			document.getElementById(`stock${a}`).value = stock_v; 
-			document.getElementById(`descuento${a}`).value = descuento_v; 
+			document.getElementById(`descuento${a}`).value = descuento_v;
+			document.getElementById(`check_descuento${a}`).value =0;  
 
 		}
 	</script>
@@ -367,8 +368,8 @@
 
 			var igv_valor={{$igv->renta}};
 			var subtotal = document.querySelector(`#sub_total`).value;
-			var igv=subtotal*igv_valor/100;
-			var end=igv+parseInt(subtotal);
+			var igv=parseFloat(subtotal)*igv_valor/100;
+			var end=parseFloat(igv)+parseFloat(subtotal);
 
 			console.log(typeof igv);
 			console.log(typeof end);

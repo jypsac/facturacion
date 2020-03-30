@@ -80,51 +80,6 @@
                                 </div>
                             </div>
 
-                            {{--  --}}
-                              <div class="row">
-                                
-                                <div class="col-sm-1">
-                                    Cantidad <br>
-                                     <table class="table ">
-
-                                        @foreach($cotizacion_registro as $cotizacion_registros)
-                                        <tr><td>{{$cotizacion_registros->cantidad}}</td></tr>
-                                        @endforeach
-                                    </table>
-                                </div>
-                                <div class="col-sm-2">
-                                    Codigo <br>
-                                    <table class="table ">
-                                            @foreach($cotizacion_registro as $cotizacion_registros)
-                                            <tr><td>{{$cotizacion_registros->producto->codigo_producto}}</td></tr>
-                                            @endforeach
-                                    </table>
-                                </div>
-                                <div class="col-sm-6">
-                                    Descripcion <br>
-                                             <table class="table ">
-                                            @foreach($cotizacion_registro as $cotizacion_registros)
-                                            <tr><td>{{$cotizacion_registros->producto->nombre}}</td></tr>@endforeach
-                                            </table>
-                                </div>
-                                <div class="col-sm-1">
-                                    S/. <br>
-                                             <table class="table ">
-                                            @foreach($array as $arrays)
-                                            <tr><td>S/.{{$arrays}}</td></tr>
-                                             @endforeach
-                                            </table>
-                                </div>
-                                <div class="col-sm-2">
-                                    Precio Total
-                                </div>
-                               
-                                
-                            </div>
-
-                            {{--  --}}
-
-
                             <div class="table-responsive">
                                 <table class="table ">
                                     <thead>
@@ -132,10 +87,10 @@
                                         <th >Codigo Producto</th>
                                         <th >Descripcion</th>
                                         <th >Cantidad</th>
-                                        <th >Valor Unitario</th>
+                                        <th >Precio</th>
                                         <th >Descuento %</th>
-                                        <th >Valor venta</th><!-- 
-                                        <th>S/.</th>
+                                        <th >Valor venta</th> 
+                                        <th style="display: none">S/.</th><!--
                                         <th style="background: #f3f3f4">Precio Total</th> -->
                                     </tr>
                                     </thead>
@@ -145,20 +100,14 @@
                                     <tr>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$cotizacion_registros->producto->nombre}}</td>
-                                        <span hidden="hidden">
-                                             @foreach($array as $arrays)
-                                                {{$arraysa=$arrays}}
-                                             @endforeach
-                                        </span>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
-                                        <td>S/.{{$cotizacion_registros->producto->precio * $arraysa}}</td>
-                                        <td></td>
-
-                                        <td style="background: #f3f3f4">S/.{{$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</td>
-                                        <span  hidden="hidden">{{$sum=$sum+$cotizacion_registros->producto->precio * $cotizacion_registros->cantidad}}</span>
+                                        <td>S/.{{$cotizacion_registros->precio}}</td>
+                                        <td>{{$cotizacion_registros->descuento}}%</td>
+                                        <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
+                                        <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}</td>
                                         
                                     </tr>
-
+                                    
                                       @endforeach
                                         
                                       <tr>
@@ -168,7 +117,7 @@
                                         <td></td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                            S/.{{$sum}}
+                                            S/.{{$sub_total}}
                                         </td>
 
                                     </tr>
@@ -179,7 +128,7 @@
                                         <td></td>
                                         <td style="background: #f3f3f4;">IGV</td>
                                         <td style="background: #f3f3f4;">
-                                            S/.{{$igv_p=$sum*$igv->igv_total/100}}
+                                            S/.{{$igv_p=$sub_total*$igv->igv_total/100}}
                                         </td>
                                     </tr>
                                     <tr>
@@ -189,7 +138,7 @@
                                         <td></td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Total</td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                            S/.{{$sum+$igv_p}}
+                                            S/.{{$sub_total+$igv_p}}
                                         </td>
                                     </tr>
                                     </tbody>
@@ -208,12 +157,12 @@
                             <h3>Centro de Atencion:</h3>
                             <table>
                                     <tr>
-                                        <td style="width: 70px">Telefono</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
+                                        {{-- <td style="width: 70px">Telefono</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
                                     <tr>
                                         <td style="width: 70px">Celular</td><td>:</td><td>&nbsp;{{$cotizacion->personal->celular}}</td>
                                     </tr>
                                     <tr>
-                                        <td style="width: 70px">Email</td><td>:</td><td>&nbsp;{{$cotizacion->personal->email}}</td>
+                                        <td style="width: 70px">Email</td><td>:</td><td>&nbsp;{{$cotizacion->personal->email}}</td> --}}
                                     </tr>
                                      {{-- <tr>
                                         <td style="width: 70px">Web</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
@@ -224,7 +173,7 @@
                             <div class="col-sm-6" align="center">
 
                                 <hr width="200" style="color:black">
-                                <p> {{$cotizacion->personal->nombres}} {{$cotizacion->personal->apellidos}} <br> <strong>{{$cotizacion->personal->profesion}}</strong>  </p>
+                                {{-- <p> {{$cotizacion->personal->nombres}} {{$cotizacion->personal->apellidos}} <br> <strong>{{$cotizacion->personal->profesion}}</strong>  </p> --}}
                             </div>
                        </div>
                         </footer>
