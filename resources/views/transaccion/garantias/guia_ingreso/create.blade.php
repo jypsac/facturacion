@@ -8,11 +8,12 @@
 @section('vue_js',  asset('js/app.js') )
 @section('content')
 
-<div class="social-bar">
+	<div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
-    <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i></i><span> personal</span></a>
+    <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> personal</span></a>
 
-</div><style type="text/css">span{font-size:15px;padding-left:4px}</style>
+	</div>
+<style type="text/css">span{font-size:15px;padding-left:4px}</style>
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
