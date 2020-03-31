@@ -233,7 +233,13 @@
 					 			<div class="row"> 
 					 					<label class="col-sm-2 col-form-label">Garantia:</label>
 										<div class="col-sm-10">
-										<input type="text" class="form-control" name="referencia" >
+										<!-- <input type="text" class="form-control" name="referencia" > -->
+										<select class="form-control" name="referencia">
+											<option value="6 meses">6 Meses</option>
+											<option value="1 año">1 Año</option>
+											<option value="2 años">2 Años</option>
+											<option value="3 años">3 Años</option>
+										</select>
 										</div>
 					 			</div><br>
 
