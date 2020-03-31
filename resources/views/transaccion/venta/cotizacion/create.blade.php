@@ -17,6 +17,131 @@
 			{{ session('campo') }}
 		</div>
 	@endif
+
+	<div class="social-bar">
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a><!-- 
+    <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> personal</span></a> -->
+
+	</div>
+	<!-- Modal CLiente -->
+	  <!-- MODAL CLIENTE -->
+							<div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
+								<div class="modal-dialog modal-lg">
+								  <div class="modal-content" style="width: 100%">
+
+									<form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
+
+										@csrf
+										<h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
+									 	<div class="form-group row ">
+									 		<label class="col-sm-2 col-form-label" >Tipo Documento:</label>
+							                    <div class="col-sm-4">
+							                     	<select class="form-control m-b" name="documento_identificacion" >
+															<option value="dni">DNI</option>
+															<option value="pasaporte">Pasaporte</option>
+															<option value="ruc">Ruc</option>
+														</select>
+							                    </div>
+
+							                    <label class="col-sm-2 col-form-label">Numero de Documento:</label>
+												<div class="col-sm-4">
+													{{-- <input type="text" class="form-control" name="numero_documento" class="form-control" required> --}}
+
+													<input list="browserdoc" class="form-control m-b" name="numero_documento" required value="{{ old('numero_documento')}}">
+														<datalist id="browserdoc" >
+															@foreach($clientes as $cliente)
+																<option id="a">{{$cliente->numero_documento}} - existente</option>
+															@endforeach
+												 		</datalist>
+							                    </div>
+										</div>
+
+						                <div class="form-group row" >
+									 		<label class="col-sm-2 col-form-label" >Cliente:</label>
+							                    <div class="col-sm-4">
+
+														{{-- <input type="text" class="form-control" name="nombre" class="form-control" required> --}}
+
+
+												<input list="browsersc" class="form-control m-b" name="nombre" required value="{{ old('nombre')}}">
+														<datalist id="browsersc" >
+															@foreach($clientes as $cliente)
+																<option id="a">{{$cliente->nombre}} - existente</option>
+															@endforeach
+												 		</datalist>
+
+							                    </div>
+
+							                    <label class="col-sm-2 col-form-label">Direccion:</label>
+												<div class="col-sm-4">
+														<input type="text" class="form-control" name="direccion" class="form-control" required value="{{ old('direccion')}}">
+							                    </div>
+
+						                </div>
+
+						                <div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >Celular:</label>
+							                    <div class="col-sm-4">
+							                    	<input type="telefono" class="form-control" name="celular" class="form-control" required value="{{ old('celular')}}">							        </div>
+
+							                    <label class="col-sm-2 col-form-label">Telefono:</label>
+												<div class="col-sm-4">
+														<input type="telefono" class="form-control" name="telefono" class="form-control"required value="{{ old('telefono')}}">
+							                    </div>
+						                </div>
+
+						                <div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >correo:</label>
+							                    <div class="col-sm-4">
+							                    	<input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}">
+							                    	 </div>
+
+
+						                </div>
+										<h1><i class="fa fa-address-book-o" aria-hidden="true"></i></h1>
+
+						                <div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >Nombre Contacto:</label>
+							                    <div class="col-sm-4">
+														<input id="name" name="nombre_contacto" type="text" class="form-control" required value="{{ old('nombre_contacto')}}">
+							                     </div>
+
+							                    <label class="col-sm-2 col-form-label">Cargo Contacto:</label>
+												<div class="col-sm-4">
+														<input id="surname" name="cargo_contacto" type="text" class="form-control" required value="{{ old('cargo_contacto')}}">
+							                    </div>
+
+						                </div>
+
+						                <div class="form-group row" style="">
+									 		<label class="col-sm-2 col-form-label" >Telefono Contacto:</label>
+							                    <div class="col-sm-4">
+														<input id="email" name="telefono_contacto" type="text" class="form-control" required value="{{ old('telefono_contacto')}}">
+							                     </div>
+
+							                    <label class="col-sm-2 col-form-label">Celular Contacto:</label>
+												<div class="col-sm-4">
+														<input id="address" name="celular_contacto" type="text" class="form-control" required value="{{ old('celular_contacto')}}">
+							                    </div>
+
+						                </div>
+						                <div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >Correo Contacto:</label>
+							                    <div class="col-sm-4">
+														<input id="email" name="email_contacto" type="text" class="form-control email" required value="{{ old('email_contacto')}}">
+							                     </div>
+
+						                </div>
+
+										<input type="submit"class="btn btn-primary" value="Grabar">
+
+									</form>
+
+								  </div>
+								</div>
+							</div>
+	<!-- Fin Modal Clieb¿nte -->
+
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -49,10 +174,10 @@
 					 			<div class="row"> 
 									<label class="col-sm-2 col-form-label">Cliente:</label>
 									<div class="col-sm-10">
-										<input list="browsersc" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}">
-										<datalist id="browsersc" >
+						<input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off">
+										<datalist id="browsersc1" >
 											@foreach($clientes as $cliente)
-												<option id="{{$cliente->id}}">{{$cliente->nombre}}</option>
+												<option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
 											@endforeach
 										 </datalist>
 									</div>
@@ -131,6 +256,7 @@
 								<th style="width: 100px">Cantidad</th>
 								<th style="width: 100px">Precio</th>
 								<th style="width: 100px">Descuento</th>
+								<th style="width: 100px">PU. Dsto.</th>
 								<th style="width: 100px">Total</th>
 							</tr>
 						</thead>
@@ -154,6 +280,9 @@
 								<td><input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
 									<input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
 									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
+								<td>
+									<input  class="form-control"  required >
+								</td>
 								<td><input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" /></td>
 								<span id="spTotal"></span>
 							</tr>
@@ -161,6 +290,7 @@
 						</tbody><br>
 						<tbody>
 						<tr style="background-color: #f5f5f500;" align="center">
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -175,10 +305,12 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<td></td>
 						<td>IGV :</td>
 						<td><input id='igv'  disabled="disabled" class="form-control" required /></td>
 						</tr>
 						<tr  align="center">
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
