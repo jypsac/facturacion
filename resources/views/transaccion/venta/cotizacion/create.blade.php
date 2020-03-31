@@ -231,7 +231,7 @@
 					 			</div><br>
 
 					 			<div class="row"> 
-					 					<label class="col-sm-2 col-form-label">Referencia:</label>
+					 					<label class="col-sm-2 col-form-label">Garantia:</label>
 										<div class="col-sm-10">
 										<input type="text" class="form-control" name="referencia" >
 										</div>
@@ -281,7 +281,7 @@
 									<input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
 									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
 								<td>
-									<input  class="form-control"  required >
+									<input  class="form-control"   >
 								</td>
 								<td><input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" /></td>
 								<span id="spTotal"></span>
@@ -381,6 +381,9 @@
 					<input type='hidden' id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
 					<input type='text' id='descuento${i}' name='descuento[]' disabled="disabled" class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
 				</td>
+				<td>
+									<input  class="form-control"   >
+								</td>
 				<td>
 					<input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
 				</td>

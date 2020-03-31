@@ -124,8 +124,10 @@ class CotizacionController extends Controller
         
         //Convertir nombre del cliente a id
         $cliente_nombre=$request->get('cliente');
-        $cliente_buscador=Cliente::where('nombre',$cliente_nombre)->first();
-        
+        $nombre = strstr($cliente_nombre, '-',true);
+
+        $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
+        // return $cliente_buscador->id;
 
         $cotizacion=new Cotizacion;
         $cotizacion->cliente_id=$cliente_buscador->id;
