@@ -106,7 +106,10 @@
                                         <td>S/.{{$cotizacion_registros->precio}}</td>
                                         <td>{{$cotizacion_registros->descuento}}%</td>
                                         <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
-                                        <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}</td>
+                                        <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}
+                                            S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                            {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                        </td>
                                         
                                     </tr>
                                     
@@ -119,7 +122,7 @@
                                         <td></td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                            S/.{{$sub_total}}
+                                            S/.{{round($sub_total, 2)}}
                                         </td>
 
                                     </tr>
@@ -130,8 +133,9 @@
                                         <td></td>
                                         <td style="background: #f3f3f4;">IGV</td>
                                         <td style="background: #f3f3f4;">
-                                            S/.{{$igv_p=$sub_total*$igv->igv_total/100}}
+                                            S/.{{round($igv_p, 2)}}
                                         </td>
+                                        <td></td>
                                     </tr>
                                     <tr>
                                         <td></td>
@@ -140,7 +144,7 @@
                                         <td></td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Total</td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                            S/.{{$sub_total+$igv_p}}
+                                            S/.{{$end}}
                                         </td>
                                     </tr>
                                     </tbody>
@@ -156,7 +160,10 @@
                                
     
 
-                            <h3>Centro de Atencion:</h3>
+                            <h3><?php $v=new CifrasEnLetras() ?>
+                                
+                                {{$letra=($v->convertirEurosEnLetras($end))}}
+                                 </h3>
                             <table>
                                     <tr>
                                         {{-- <td style="width: 70px">Telefono</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
