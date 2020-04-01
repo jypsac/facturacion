@@ -142,17 +142,17 @@
 
         <div class="col-lg-6">
 
-          <h4>Correo del Contacto:</h4>
-          <p><input type="text" required="required" class="form-control" name="email" ></p>
+          <h4>Correo del Contacto (opcional):</h4>
+          <p><input type="text"  class="form-control" name="email" ></p>
 
-          <h4>Nombre del contacto:</h4>
-          <p><input type="text" required="required" class="form-control" name="contacto_provedor" ></p>
+          <h4>Nombre del contacto (opcional):</h4>
+          <p><input type="text"  class="form-control" name="contacto_provedor" ></p>
 
-          <h4>Celular del contacto:</h4>
-          <p><input type="text" required="required" class="form-control" name="celular_provedor" ></p>
+          <h4>Celular del contacto (opcional):</h4>
+          <p><input type="text"  class="form-control" name="celular_provedor" ></p>
 
-          <h4>Observacion:</h4>
-          <p><textarea name="observacion" required="required" class="form-control"></textarea></p>
+          <h4>Observacion (opcional):</h4>
+          <p><textarea name="observacion"  class="form-control"></textarea></p>
     </div>
 
 <button class="btn btn-primary" type="submit">Grabar</button>
