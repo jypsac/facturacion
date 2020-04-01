@@ -21,9 +21,10 @@ class AddForeignKeyCotizacionRegistroTable extends Migration
             $table->unsignedBigInteger('producto_id');
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
 
-            $table->double('precio',10,2);
+            $table->double('precio',17,2);
             $table->integer('cantidad');
             $table->integer('descuento');
+            $table->double('precio_unitario_desc',17,2);
 
             $table->timestamps();
         });

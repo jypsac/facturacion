@@ -286,9 +286,7 @@
 								<td><input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
 									<input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
 									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
-								<td>
-									<input  class="form-control"   >
-								</td>
+								<td><input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" /></td>
 								<td><input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" /></td>
 								<span id="spTotal"></span>
 							</tr>
@@ -388,8 +386,8 @@
 					<input type='text' id='descuento${i}' name='descuento[]' disabled="disabled" class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
 				</td>
 				<td>
-									<input  class="form-control"   >
-								</td>
+					<input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
+				</td>
 				<td>
 					<input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
 				</td>
@@ -431,8 +429,12 @@
 
 			var multiplier = 100;
 			var final_decimal = Math.round(final * multiplier) / multiplier;  
+
+			var precio_uni=precio-(precio*descuento/100);
+			var precio_uni_dec=Math.round(precio_uni * multiplier) / multiplier;  
 			document.getElementById(`total${a}`).value = final_decimal;
 			document.getElementById(`check_descuento${a}`).value = descuento;
+			document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
 		} else {
 			var descuento = 0;
 			var precio = document.querySelector(`#precio${a}`).value;
@@ -442,9 +444,8 @@
 			var final_decimal = Math.round(final * multiplier) / multiplier;  
 			document.getElementById(`check_descuento${a}`).value = 0;
 			document.getElementById(`total${a}`).value = final_decimal;
+			document.getElementById(`precio_unitario_descuento${a}`).value = precio;
 		}
-
-		
 
 		var totalInp = $('[name="total"]'); 
 		var total_t = 0;
@@ -457,9 +458,6 @@
 		var total_tt = Math.round(total_t * multiplier2) / multiplier2;  
 
 		$('#sub_total').val(total_tt);
-
-		
-		
 
 		var igv_valor={{$igv->renta}};
 		var subtotal = document.querySelector(`#sub_total`).value;
@@ -512,6 +510,8 @@
 				var stock_v =reverseString(stock_v_r[0]);
 
 			document.getElementById(`precio${a}`).value = precio_v;
+			document.getElementById(`cantidad${a}`).value = 1;
+			document.getElementById(`precio_unitario_descuento${a}`).value = precio_v;
 			document.getElementById(`stock${a}`).value = stock_v; 
 			document.getElementById(`descuento${a}`).value = descuento_v;
 			document.getElementById(`check_descuento${a}`).value =0;  

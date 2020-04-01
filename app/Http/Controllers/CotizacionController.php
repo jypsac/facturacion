@@ -156,10 +156,16 @@ class CotizacionController extends Controller
                 $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
                 $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
                 $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')+$utilidad;
-
+                $desc_comprobacion=$request->get('check_descuento')[$i];
                 $cotizacion_registro->precio=$array;
                 $cotizacion_registro->cantidad=$request->get('cantidad')[$i];
                 $cotizacion_registro->descuento=$request->get('check_descuento')[$i];
+                if($desc_comprobacion <> 0){
+                    $cotizacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
+                }else{
+                    $cotizacion_registro->precio_unitario_desc=$array;
+                }
+                
                 $cotizacion_registro->save();
             }
         }else {

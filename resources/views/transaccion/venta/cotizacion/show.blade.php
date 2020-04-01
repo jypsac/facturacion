@@ -91,6 +91,7 @@
                                         <th >Cantidad</th>
                                         <th >Precio</th>
                                         <th >Descuento %</th>
+                                        <th >PU_DES %</th>
                                         <th >Valor venta</th> 
                                         <th style="display: none">S/.</th><!--
                                         <th style="background: #f3f3f4">Precio Total</th> -->
@@ -105,6 +106,7 @@
                                         <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>S/.{{$cotizacion_registros->precio}}</td>
                                         <td>{{$cotizacion_registros->descuento}}%</td>
+                                        <td>{{$cotizacion_registros->precio_unitario_desc}}%</td>
                                         <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
                                         <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}
                                             S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
@@ -120,6 +122,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
                                             S/.{{round($sub_total, 2)}}
@@ -131,6 +134,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td style="background: #f3f3f4;">IGV</td>
                                         <td style="background: #f3f3f4;">
                                             S/.{{round($igv_p, 2)}}
@@ -138,6 +142,7 @@
                                         <td></td>
                                     </tr>
                                     <tr>
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
