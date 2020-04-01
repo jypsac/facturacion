@@ -66,9 +66,14 @@ class GarantiaGuiaIngresoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {   
+         // Obtner ID 
         $cliente=$request->get('cliente_id');
-        $cliente_id_nombre=Cliente::where("nombre","=",$cliente)->first();
+        $nombre = strstr($cliente, '-',true);
+        $cliente_id_nombre=Cliente::where("numero_documento","=",$nombre)->first();
+
+        // $cliente=$request->get('cliente_id');
+        // $cliente_id_nombre=Cliente::where("nombre","=",$cliente)->first();
         $cliente_id=$cliente_id_nombre->id;
 
         $ingeniero=$request->get('personal_lab_id');
