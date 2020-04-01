@@ -119,7 +119,7 @@
                              @csrf
 
       <div class="jumbotron" style="height: 60px;padding:10px">
-       <center><input style="width: 250px;font-size: 18px;" type="text" class="form-control" name="empresa" id="razon_social"></center>
+       <center><input style="width: 250px;font-size: 18px;" type="text" required="required" class="form-control" name="empresa" id="razon_social"></center>
       </div>
 
 <h1><i class="fa fa-user-o" aria-hidden="true"></i></h1>
@@ -128,31 +128,31 @@
 
 
           <h4>Ruc:</h4>
-         <p><input type="text" class="form-control" name="ruc" id="numero_ruc"></p>
+         <p><input type="text" required="required" class="form-control" name="ruc" id="numero_ruc"></p>
 
           <h4>Direccion:</h4>
-          <p><input type="text" class="form-control" name="direccion" id="domicilio"></p>
+          <p><input type="text" required="required" class="form-control" name="direccion" id="domicilio"></p>
 
           <h4>Telefonos:</h4>
-          <p><input type="text" class="form-control" name="telefonos" ></p>
+          <p><input type="text" required="required" class="form-control" name="telefonos" ></p>
 
            <h4>Correo del provedor:</h4>
-          <p><input type="text" class="form-control" name="email_provedor" ></p>
+          <p><input type="text" required="required" class="form-control" name="email_provedor" ></p>
         </div>
 
         <div class="col-lg-6">
 
-          <h4>Correo:</h4>
-          <p><input type="text" class="form-control" name="email" ></p>
+          <h4>Correo del Contacto:</h4>
+          <p><input type="text" required="required" class="form-control" name="email" ></p>
 
           <h4>Nombre del contacto:</h4>
-          <p><input type="text" class="form-control" name="contacto_provedor" ></p>
+          <p><input type="text" required="required" class="form-control" name="contacto_provedor" ></p>
 
           <h4>Celular del contacto:</h4>
-          <p><input type="text" class="form-control" name="celular_provedor" ></p>
+          <p><input type="text" required="required" class="form-control" name="celular_provedor" ></p>
 
           <h4>Observacion:</h4>
-          <p><textarea name="observacion" class="form-control"></textarea></p>
+          <p><textarea name="observacion" required="required" class="form-control"></textarea></p>
     </div>
 
 <button class="btn btn-primary" type="submit">Grabar</button>
