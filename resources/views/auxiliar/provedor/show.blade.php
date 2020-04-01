@@ -34,19 +34,25 @@
         </div>
 
         <div class="col-lg-6">
+          @if(isset($provedor->email))
           <h4>Correo:</h4>
           <p>{{$provedor->email}}</p><hr>
+          @endif
 
+          @if(isset($provedor->contacto_provedor))
           <h4>Nombre del contacto:</h4>
           <p>{{$provedor->contacto_provedor}}</p><hr>
+          @endif
 
+          @if(isset($provedor->celular_provedor))
           <h4>Celular del contacto:</h4>
           <p>{{$provedor->celular_provedor}}</p><hr>
-          
-          
+          @endif
 
+          @if(isset($provedor->observacion))
           <h4>Observacion:</h4>
           <p>{{$provedor->observacion}}</p><hr>
+          @endif
 
         </div>
 
