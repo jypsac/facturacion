@@ -45,6 +45,39 @@ class AgregadoRapidoController extends Controller
         // return view('auxiliar.cliente.contacto.cliente_new');
         return back();
     }
+     public function cliente_cotizado(Request $request){
+
+        // $this->validate($request,[
+        //     'nombre' => ['required','unique:clientes,nombre'],
+        //     'numero_documento' => ['required','unique:clientes,numero_documento'],
+        //     'email' => ['required','email','unique:clientes,email'],
+        // ],[
+        //     'nombre.unique' => 'El Cliente ya ha sido registrado'
+        // ]);
+
+        // $data = $request->all();
+
+
+
+        $cliente= new Cliente;
+        $cliente->nombre=$request->get('nombre');
+        $cliente->direccion=$request->get('direccion');
+        // $cliente->email=$request->get('email');
+        // $cliente->telefono=$request->get('telefono');
+        // $cliente->celular=$request->get('celular');
+        // $cliente->empresa=$request->get('empresa');
+        $cliente->documento_identificacion=$request->get('documento_identificacion');
+        $cliente->numero_documento=$request->get('numero_documento');
+        $cliente->save();
+        
+        
+        // $idCliente=$cliente->id;
+
+        // $this->contactos_store($data,$idCliente);
+
+        // return view('auxiliar.cliente.contacto.cliente_new');
+        return back();
+    }
 
     public function contactos_store($data,$idCliente){
 

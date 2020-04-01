@@ -29,7 +29,7 @@
 								<div class="modal-dialog modal-lg">
 								  <div class="modal-content" style="width: 100%">
 
-									<form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
+									<form action="{{ route('agregado_rapido.cliente_cotizado') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
 
 										@csrf
 										<h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
@@ -39,13 +39,12 @@
 							                     	<select class="form-control m-b" name="documento_identificacion" >
 															<option value="dni">DNI</option>
 															<option value="pasaporte">Pasaporte</option>
-															<option value="ruc">Ruc</option>
+															<option value="Ruc">Ruc</option>
 														</select>
 							                    </div>
 
 							                    <label class="col-sm-2 col-form-label">Numero de Documento:</label>
 												<div class="col-sm-4">
-													{{-- <input type="text" class="form-control" name="numero_documento" class="form-control" required> --}}
 
 													<input list="browserdoc" class="form-control m-b" name="numero_documento" required value="{{ old('numero_documento')}}">
 														<datalist id="browserdoc" >
@@ -60,7 +59,6 @@
 									 		<label class="col-sm-2 col-form-label" >Cliente:</label>
 							                    <div class="col-sm-4">
 
-														{{-- <input type="text" class="form-control" name="nombre" class="form-control" required> --}}
 
 
 												<input list="browsersc" class="form-control m-b" name="nombre" required value="{{ old('nombre')}}">
@@ -79,59 +77,6 @@
 
 						                </div>
 
-						                <div class="form-group row">
-									 		<label class="col-sm-2 col-form-label" >Celular:</label>
-							                    <div class="col-sm-4">
-							                    	<input type="telefono" class="form-control" name="celular" class="form-control" required value="{{ old('celular')}}">							        </div>
-
-							                    <label class="col-sm-2 col-form-label">Telefono:</label>
-												<div class="col-sm-4">
-														<input type="telefono" class="form-control" name="telefono" class="form-control"required value="{{ old('telefono')}}">
-							                    </div>
-						                </div>
-
-						                <div class="form-group row">
-									 		<label class="col-sm-2 col-form-label" >correo:</label>
-							                    <div class="col-sm-4">
-							                    	<input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}">
-							                    	 </div>
-
-
-						                </div>
-										<h1><i class="fa fa-address-book-o" aria-hidden="true"></i></h1>
-
-						                <div class="form-group row">
-									 		<label class="col-sm-2 col-form-label" >Nombre Contacto:</label>
-							                    <div class="col-sm-4">
-														<input id="name" name="nombre_contacto" type="text" class="form-control" required value="{{ old('nombre_contacto')}}">
-							                     </div>
-
-							                    <label class="col-sm-2 col-form-label">Cargo Contacto:</label>
-												<div class="col-sm-4">
-														<input id="surname" name="cargo_contacto" type="text" class="form-control" required value="{{ old('cargo_contacto')}}">
-							                    </div>
-
-						                </div>
-
-						                <div class="form-group row" style="">
-									 		<label class="col-sm-2 col-form-label" >Telefono Contacto:</label>
-							                    <div class="col-sm-4">
-														<input id="email" name="telefono_contacto" type="text" class="form-control" required value="{{ old('telefono_contacto')}}">
-							                     </div>
-
-							                    <label class="col-sm-2 col-form-label">Celular Contacto:</label>
-												<div class="col-sm-4">
-														<input id="address" name="celular_contacto" type="text" class="form-control" required value="{{ old('celular_contacto')}}">
-							                    </div>
-
-						                </div>
-						                <div class="form-group row">
-									 		<label class="col-sm-2 col-form-label" >Correo Contacto:</label>
-							                    <div class="col-sm-4">
-														<input id="email" name="email_contacto" type="text" class="form-control email" required value="{{ old('email_contacto')}}">
-							                     </div>
-
-						                </div>
 
 										<input type="submit"class="btn btn-primary" value="Grabar">
 

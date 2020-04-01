@@ -17,10 +17,10 @@ class CreateClientesTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre')->unique();
             $table->string('direccion');
-            $table->string('email')->unique();
-            $table->string('telefono');
-            $table->string('celular');
-            $table->string('empresa')->nullable();;
+            $table->string('email')->unique()->nullable();
+            $table->string('telefono')->nullable();
+            $table->string('celular')->nullable();
+            $table->string('empresa')->nullable();
             $table->string('documento_identificacion');
             $table->string('numero_documento')->unique();
             $table->timestamps();
