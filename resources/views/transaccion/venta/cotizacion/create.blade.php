@@ -230,16 +230,8 @@
 								<td><input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
 								<td><input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
 									<input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
-<<<<<<< HEAD
 									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
 								<td><input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" /></td>
-=======
-									<input for="check_descuento0" type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
-									<label></label>
-								<td>
-									<input  class="form-control"   >
-								</td>
->>>>>>> 93367c9cc13f9e80f1db287d62892f67d8773126
 								<td><input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" /></td>
 								<span id="spTotal"></span>
 							</tr>

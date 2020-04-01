@@ -106,7 +106,7 @@
                                         <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>S/.{{$cotizacion_registros->precio}}</td>
                                         <td>{{$cotizacion_registros->descuento}}%</td>
-                                        <td>{{$cotizacion_registros->precio_unitario_desc}}%</td>
+                                        <td>{{$cotizacion_registros->precio_unitario_desc}}</td>
                                         <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
                                         <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}
                                             S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
