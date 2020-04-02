@@ -62,7 +62,7 @@ class AgregadoRapidoController extends Controller
         $cliente= new Cliente;
         $cliente->nombre=$request->get('nombre');
         $cliente->direccion=$request->get('direccion');
-        // $cliente->email=$request->get('email');
+        $cliente->email=$request->get('email');
         // $cliente->telefono=$request->get('telefono');
         // $cliente->celular=$request->get('celular');
         // $cliente->empresa=$request->get('empresa');

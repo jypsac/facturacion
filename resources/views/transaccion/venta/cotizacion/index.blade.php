@@ -37,34 +37,28 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Cliente</th>
-                                            <th>Atencion</sth>
-                                            <th>Validez</th>
-                                            <th>Referencia</th>
-                                            <th>Observacion</th>
-                                            {{-- <th>Ver</th> --}}
-                                            <th>EDITAR</th>
-                                            <th>Eliminar</th>
+                                            <th>Ruc/DNI</th>
+                                            <th>Cliente</sth>
+                                            <th>N° Cotizacion</th>
+                                            <th>Moneda</th>
+                                            <th>Fecha</th>
+                                            <th>Ver</th> 
+                                            <th>Estado</th>
+                                            <th>Estado Vigencia</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($cotizacion as $cotizacions)
                                         <tr class="gradeX">
                                             <td>{{$cotizacions->id}}</td>
-                                            <td>{{$cotizacions->cliente_id}}</td>
-                                            <td>{{$cotizacions->atencion}}</td>
-                                            <td>{{$cotizacions->validez}}</td>
-                                            <td>{{$cotizacions->referencia}}</td>
-                                            <td>{{$cotizacions->observacion}}</td>
-                                            <td><center><a href="{{route('cotizacion.show',$cotizacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>{{-- 
-                                            <td><center><a href="{{route('cotizacion.show',$cotizacions->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td> --}}
-                                            <td><center>
-                                            {{-- <form action="{{route('almacen.destroy',$almacen->id)}}" method="POST">
-                                              @csrf
-                                              @method('delete') --}}
-                                              <button type="submit" class="btn btn-w-m btn-danger">Eliminar</button>
-                                            </form></center>
-                                            </td>
+                                            <td>{{$cotizacions->cliente->numero_documento}}</td>
+                                            <td>{{$cotizacions->cliente->nombre}}</td>
+                                            <td>Proximamte</td>
+                                            <td>Soles-Proximamente</td>
+                                            <td>{{$cotizacions->created_at}}</td>
+                                            <td><center><a href="{{route('cotizacion.show',$cotizacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                            <td><button type="button" class="btn btn-w-m btn-default">Facturado</button></td>
+                                            <td><button type="button" class="btn btn-w-m btn-warning">Vigente</button></td>
                                         </tr>
                                         @endforeach
                                     </tbody>

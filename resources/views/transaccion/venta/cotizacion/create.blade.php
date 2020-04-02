@@ -5,6 +5,7 @@
 @section('breadcrumb2', 'Cotizacion')
 @section('href_accion', route('cotizacion.index') )
 @section('value_accion', 'Atras')
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 @section('content')
 @if (session('repite'))
@@ -24,10 +25,72 @@
 
 	</div>
 	<!-- Modal CLiente -->
-	  <!-- MODAL CLIENTE -->
+
 							<div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-lg">
 								  <div class="modal-content" style="width: 100%">
+						<!-- Consulta API -->
+							<form class="wizard-big" style="margin:20px 20px 20px 20px">
+                        {{ csrf_field() }}
+						<div class="form-group row ">
+								<label class="col-sm-2 col-form-label" >Introducir Ruc (Inestable):</label>
+							        <div class="col-sm-10">
+							            <input type="text" class="form-control" class="ruc" id="ruc" name="ruc">
+							            <button class="btn btn-primary" id="botoncito" class="botoncito"><i class="fa fa-search"></i> Buscar</button>
+							        </div>
+						</div>
+						</form><!-- 
+						<div class="form-group row ">
+							<div class="col-sm-12">
+						
+                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Introducir Ruc (Inestable):</label>
+                            <div class="col-sm-10">
+                                <input type="text" class="form-control" class="ruc" id="ruc" name="ruc">
+                            </div>
+                        </div>
+                        <button class="btn btn-primary" id="botoncito" class="botoncito"><i class="fa fa-search"></i> Buscar</button>
+                    
+                    		</div>
+                    	
+                   		 </div> -->
+
+
+
+                        <script>
+                        $(function(){
+                            $('#botoncito').on('click', function(){
+                                var ruc = $('#ruc').val();
+                                var url = "{{ url('provedorruc') }}";
+                                $('.ajaxgif').removeClass('hide');
+                                $.ajax({
+                                type:'GET',
+                                url:url,
+                                data:'ruc='+ruc,
+                                success: function(datos_dni){
+                                    $('.ajaxgif').addClass('hide');
+                                    var datos = eval(datos_dni);
+                                        var nada ='nada';
+                                        if(datos[0]==nada){
+                                            alert('DNI o RUC no válido o no registrado');
+                                        }else{
+                                            $('#numero_ruc').val(datos[0]);
+                                            $('#razon_social').val(datos[1]);
+                                            $('#fecha_actividad').val(datos[2]);
+                                            $('#condicion').val(datos[3]);
+                                            $('#tipo').val(datos[4]);
+                                            $('#estado').val(datos[5]);
+                                            $('#fecha_inscripcion').val(datos[6]);
+                                            $('#domicilio').val(datos[7]);
+                                            $('#emision').val(datos[8]);
+                                        }
+                                }
+                            });
+                            return false;
+                            });
+                        });
+                        </script>
+
+						<!-- Fin Consulta API -->
 
 									<form action="{{ route('agregado_rapido.cliente_cotizado') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
 
@@ -37,23 +100,25 @@
 									 		<label class="col-sm-2 col-form-label" >Tipo Documento:</label>
 							                    <div class="col-sm-4">
 							                     	<select class="form-control m-b" name="documento_identificacion" >
+															<option value="Ruc">Ruc</option>
 															<option value="dni">DNI</option>
 															<option value="pasaporte">Pasaporte</option>
-															<option value="Ruc">Ruc</option>
 														</select>
 							                    </div>
 
 							                    <label class="col-sm-2 col-form-label">Numero de Documento:</label>
 												<div class="col-sm-4">
 
-													<input list="browserdoc" class="form-control m-b" name="numero_documento" required value="{{ old('numero_documento')}}">
+													<input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required value="{{ old('numero_documento')}}">
 														<datalist id="browserdoc" >
 															@foreach($clientes as $cliente)
 																<option id="a">{{$cliente->numero_documento}} - existente</option>
 															@endforeach
 												 		</datalist>
 							                    </div>
-										</div>
+										</div> 
+
+
 
 						                <div class="form-group row" >
 									 		<label class="col-sm-2 col-form-label" >Cliente:</label>
@@ -61,7 +126,7 @@
 
 
 
-												<input list="browsersc" class="form-control m-b" name="nombre" required value="{{ old('nombre')}}">
+												<input list="browsersc" class="form-control m-b" name="nombre" id="razon_social" required value="{{ old('nombre')}}">
 														<datalist id="browsersc" >
 															@foreach($clientes as $cliente)
 																<option id="a">{{$cliente->nombre}} - existente</option>
@@ -72,8 +137,17 @@
 
 							                    <label class="col-sm-2 col-form-label">Direccion:</label>
 												<div class="col-sm-4">
-														<input type="text" class="form-control" name="direccion" class="form-control" required value="{{ old('direccion')}}">
+														<input type="text" class="form-control" name="direccion" id="domicilio" class="form-control" required value="{{ old('direccion')}}">
 							                    </div>
+
+						                </div>
+
+						                <div class="form-group row">
+									 		<label class="col-sm-2 col-form-label" >correo:</label>
+							                    <div class="col-sm-4">
+							                    	<input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}">
+							                    	 </div>
+
 
 						                </div>
 
@@ -202,13 +276,13 @@
 							<thead>
 							<tr>
 								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-								<th style="width: 600px">Articulo</th>
-								<th style="width: 100px">Stock</th>
-								<th style="width: 100px">Cantidad</th>
-								<th style="width: 100px">Precio</th>
-								<th style="width: 100px">Descuento</th>
-								<th style="width: 100px">PU. Dsto.</th>
-								<th style="width: 100px">Total</th>
+								<th style="width: 600px;font-size: 13px">Articulo</th>
+								<th style="width: 100px;font-size: 13px">Stock</th>
+								<th style="width: 100px;font-size: 13px">Cantidad</th>
+								<th style="width: 100px;font-size: 13px">Precio</th>
+								<th style="width: 100px;font-size: 13px">Descuento</th>
+								<th style="width: 100px;font-size: 13px">PU. Dsto.</th>
+								<th style="width: 100px;font-size: 13px">Total</th>
 							</tr>
 						</thead>
 						<tbody>
@@ -512,5 +586,6 @@
 	<style type="text/css">
 		.a{color: red}
 	</style>
+
 	
 @stop
