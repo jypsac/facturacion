@@ -9,15 +9,27 @@
 
 @section('content')
 @if (session('repite'))
-		<div class="alert alert-success">
-			{{ session('repite') }}
-		</div>
-	@endif
-	@if (session('campo'))
-		<div class="alert alert-success">
-			{{ session('campo') }}
-		</div>
-	@endif
+	<div class="alert alert-success">
+		{{ session('repite') }}
+	</div>
+@endif
+
+@if (session('campo'))
+	<div class="alert alert-success">
+		{{ session('campo') }}
+	</div>
+@endif
+
+@if($errors->any())
+			<div class="alert alert-danger">
+                <a class="alert-link" href="#">
+					@foreach ($errors->all() as $error)
+					<li>{{ $error }}</li>
+					@endforeach
+				</a>
+            </div>
+			@endif
+
 
 	<div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a><!-- 
@@ -39,22 +51,7 @@
 							            <button class="btn btn-primary" id="botoncito" class="botoncito"><i class="fa fa-search"></i> Buscar</button>
 							        </div>
 						</div>
-						</form><!-- 
-						<div class="form-group row ">
-							<div class="col-sm-12">
-						
-                        <div class="form-group  row"><label class="col-sm-2 col-form-label">Introducir Ruc (Inestable):</label>
-                            <div class="col-sm-10">
-                                <input type="text" class="form-control" class="ruc" id="ruc" name="ruc">
-                            </div>
-                        </div>
-                        <button class="btn btn-primary" id="botoncito" class="botoncito"><i class="fa fa-search"></i> Buscar</button>
-                    
-                    		</div>
-                    	
-                   		 </div> -->
-
-
+						</form>
 
                         <script>
                         $(function(){
@@ -109,7 +106,7 @@
 							                    <label class="col-sm-2 col-form-label">Numero de Documento:</label>
 												<div class="col-sm-4">
 
-													<input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required value="{{ old('numero_documento')}}">
+													<input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required value="{{ old('numero_documento')}}" autocomplete="off">
 														<datalist id="browserdoc" >
 															@foreach($clientes as $cliente)
 																<option id="a">{{$cliente->numero_documento}} - existente</option>
@@ -126,7 +123,7 @@
 
 
 
-												<input list="browsersc" class="form-control m-b" name="nombre" id="razon_social" required value="{{ old('nombre')}}">
+												<input list="browsersc" class="form-control m-b" name="nombre" id="razon_social" required value="{{ old('nombre')}}" autocomplete="off">
 														<datalist id="browsersc" >
 															@foreach($clientes as $cliente)
 																<option id="a">{{$cliente->nombre}} - existente</option>
@@ -137,7 +134,7 @@
 
 							                    <label class="col-sm-2 col-form-label">Direccion:</label>
 												<div class="col-sm-4">
-														<input type="text" class="form-control" name="direccion" id="domicilio" class="form-control" required value="{{ old('direccion')}}">
+														<input type="text" class="form-control" name="direccion" id="domicilio" class="form-control" required value="{{ old('direccion')}}" autocomplete="off">
 							                    </div>
 
 						                </div>
@@ -145,7 +142,7 @@
 						                <div class="form-group row">
 									 		<label class="col-sm-2 col-form-label" >correo:</label>
 							                    <div class="col-sm-4">
-							                    	<input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}">
+							                    	<input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}" autocomplete="off">
 							                    	 </div>
 
 

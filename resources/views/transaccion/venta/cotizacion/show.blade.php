@@ -165,9 +165,11 @@
                                
     
 
-                            <h3><?php $v=new CifrasEnLetras() ?>
+                            <h3><?php $v=new CifrasEnLetras() ;
+                            $letra=($v->convertirEurosEnLetras($end))
+                            ?>
                                 
-                                {{$letra=($v->convertirEurosEnLetras($end))}}
+                                {{$letra}}
                                  </h3>
                             <table>
                                     <tr>
