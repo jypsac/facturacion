@@ -13,6 +13,7 @@ use App\Cotizacion_registro;
 use App\kardex_entrada_registro;
 use App\Igv;
 use App\User;
+use App\Moneda;
 
 use Illuminate\Http\Request;
 
@@ -184,6 +185,7 @@ class CotizacionController extends Controller
      */
     public function show($id)
     {  
+        $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
         foreach ($cotizacion_registro as $cotizacion_registros) {
              $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
@@ -196,7 +198,7 @@ class CotizacionController extends Controller
         $igv=Igv::first();
         $sub_total=0;
 
-         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total"));
+         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda"));
     }
 
     /**
