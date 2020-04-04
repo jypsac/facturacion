@@ -166,9 +166,16 @@
                                
     
 
-                            <h3><?php $v=new CifrasEnLetras() ?>
+                            <h3>
+                            <?php $v=new CifrasEnLetras() ;
+                            $letra=($v->convertirEurosEnLetras($end));
+                            
+                            $letra_final = strstr($letra, 'soles',true);
+
+                            $end_final=strstr($end, '.');
+                            ?>
                                 
-                                {{$letra=($v->convertirEurosEnLetras($end))}}
+                                {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
                                  </h3>
                             <table>
                                     <tr>

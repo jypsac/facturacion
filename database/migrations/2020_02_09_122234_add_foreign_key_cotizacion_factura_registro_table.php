@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddForeignKeyCotizacionRegistroTable extends Migration
+class AddForeignKeyCotizacionFacturaRegistroTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class AddForeignKeyCotizacionRegistroTable extends Migration
      */
     public function up()
     {
-        Schema::table('cotizacion_registro', function (Blueprint $table) {
+        Schema::table('cotizacion_factura_registro', function (Blueprint $table) {
 
             $table->unsignedBigInteger('cotizacion_id');
             $table->foreign('cotizacion_id')->references('id')->on('cotizacion')->onDelete('cascade');
@@ -37,6 +37,6 @@ class AddForeignKeyCotizacionRegistroTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cotizacion_registro');
+        Schema::dropIfExists('cotizacion_factura_registro');
     }
 }

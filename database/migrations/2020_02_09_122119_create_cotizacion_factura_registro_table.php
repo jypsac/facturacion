@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCotizacionRegistroTable extends Migration
+class CreateCotizacionFacturaRegistroTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,7 +13,7 @@ class CreateCotizacionRegistroTable extends Migration
      */
     public function up()
     {
-        Schema::create('cotizacion_registro', function (Blueprint $table) {
+        Schema::create('Cotizacion_factura_registro', function (Blueprint $table) {
             $table->bigIncrements('id');
             
         });
@@ -26,6 +26,6 @@ class CreateCotizacionRegistroTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('cotizacion_registro');
+        Schema::dropIfExists('Cotizacion_factura_registro');
     }
 }

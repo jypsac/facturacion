@@ -12,7 +12,7 @@ class AgregadoRapidoController extends Controller
 
 //FUNCIONES PARA EJECUTAR CONSULTAS
 
-    //FUNCION PARA CREAR CLIENTES Y CONTACTOS
+//FUNCION PARA CREAR CLIENTES Y CONTACTOS
     public function cliente_store(Request $request){
 
         $this->validate($request,[
@@ -45,39 +45,6 @@ class AgregadoRapidoController extends Controller
         // return view('auxiliar.cliente.contacto.cliente_new');
         return back();
     }
-     public function cliente_cotizado(Request $request){
-
-        // $this->validate($request,[
-        //     'nombre' => ['required','unique:clientes,nombre'],
-        //     'numero_documento' => ['required','unique:clientes,numero_documento'],
-        //     'email' => ['required','email','unique:clientes,email'],
-        // ],[
-        //     'nombre.unique' => 'El Cliente ya ha sido registrado'
-        // ]);
-
-        // $data = $request->all();
-
-
-
-        $cliente= new Cliente;
-        $cliente->nombre=$request->get('nombre');
-        $cliente->direccion=$request->get('direccion');
-        $cliente->email=$request->get('email');
-        // $cliente->telefono=$request->get('telefono');
-        // $cliente->celular=$request->get('celular');
-        // $cliente->empresa=$request->get('empresa');
-        $cliente->documento_identificacion=$request->get('documento_identificacion');
-        $cliente->numero_documento=$request->get('numero_documento');
-        $cliente->save();
-        
-        
-        // $idCliente=$cliente->id;
-
-        // $this->contactos_store($data,$idCliente);
-
-        // return view('auxiliar.cliente.contacto.cliente_new');
-        return back();
-    }
 
     public function contactos_store($data,$idCliente){
 
@@ -93,7 +60,50 @@ class AgregadoRapidoController extends Controller
         $contacto->save();
     }
 
-    //FUNCION PARA CREAR MARCAS
+
+//FUNCION PARA CREAR CLIENTE Y CONTACTO CON PARAMETROS POR DEFECTO
+    public function cliente_cotizado(Request $request){
+
+        $this->validate($request,[
+            'nombre' => ['required','unique:clientes,nombre'],
+            'numero_documento' => ['required','unique:clientes,numero_documento'],
+            'email' => ['required','email','unique:clientes,email'],
+        ],[
+            'nombre.unique' => 'El Cliente ya ha sido registrado',
+            'nombre.numero_documento' => 'El numero de documentacion ya ha sido registrado',
+            'nombre.email' => 'El correo ya existe'
+        ]);
+
+        $data = $request->all();
+
+        $cliente= new Cliente;
+        $cliente->nombre=$request->get('nombre');
+        $cliente->direccion=$request->get('direccion');
+        $cliente->email=$request->get('email');
+        $cliente->telefono="0510000000";
+        $cliente->celular="999999999";
+        $cliente->empresa="";
+        $cliente->documento_identificacion=$request->get('documento_identificacion');
+        $cliente->numero_documento=$request->get('numero_documento');
+        $cliente->save();
+        
+        $idCliente=$cliente->id;
+
+        $contacto=new Contacto;
+        $contacto->primer_contacto=1;
+        $contacto->nombre="Contacto";
+        $contacto->cargo="Cargo";
+        $contacto->telefono="0510000000";
+        $contacto->celular="999999999";
+        $contacto->email="correo@contacto.com";
+        $contacto->clientes_id=$idCliente;
+        $contacto->save();
+
+        return back();
+        
+    }
+
+//FUNCION PARA CREAR MARCAS
     public function marcas_store(Request $request){
 
         $marca=new Marca;
@@ -107,7 +117,7 @@ class AgregadoRapidoController extends Controller
         return back();
     }
 
-    //FUNCION PARA CREAR PERSONAL
+//FUNCION PARA CREAR PERSONAL
     public function personal_store(Request $request){
         $personal=new Personal;
         $personal->nombres=$request->get('nombres');
