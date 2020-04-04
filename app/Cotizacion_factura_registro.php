@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Cotizacion_registro extends Model
+class Cotizacion_factura_registro extends Model
 {
-    protected $table = 'cotizacion_registro';
+    protected $table = 'cotizacion_factura_registro';
 
     protected $guarded = [];
 
