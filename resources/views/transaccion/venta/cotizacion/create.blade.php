@@ -248,7 +248,7 @@
 										<option value="5 Días">5 Días</option>
 									</select>
 									</div>
-					 			</div><br>
+					 			</div><br><br>
 
 					 			<div class="row"> 
 					 					<label class="col-sm-2 col-form-label">Garantia:</label>
@@ -264,12 +264,26 @@
 					 			</div><br>
 
 					 			<div class="row"> 
-					 						<label class="col-sm-2 col-form-label">Observacion:</label>
+					 						<label class="col-sm-2 col-form-label">Comisionista:</label>
 											<div class="col-sm-10">
-												<textarea class="form-control" name="observacion" id="observacion"   rows="3" ></textarea>
+												<!-- <input type="text" name="comisionista" class="form-control"> -->
+												<input list="browsersc2" class="form-control m-b" name="comisionista" required value="{{ old('nombre')}}" autocomplete="off">
+										<datalist id="browsersc2" >
+											@foreach($p_venta as $p_ventas)
+												<option id="{{$p_ventas->id}}">{{$p_ventas->numero_documento}} - {{$p_ventas->nombres}}</option>
+											@endforeach
+										 </datalist>
 											</div>
 					 			</div>
 
+					 	</div>
+					 	<div class="col-sm-12" style="padding-top: 15px">
+					 		<div class="row">
+					 			<label class="col-sm-1 col-form-label">Observacion:</label>
+											<div class="col-sm-11">
+												<textarea class="form-control" name="observacion" id="observacion"  rows="1"  ></textarea>
+											</div>
+							</div>
 					 	</div>
 
 

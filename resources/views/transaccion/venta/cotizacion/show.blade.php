@@ -60,15 +60,15 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-5" align="center">
-                                    <div class="form-control"><h3>Condiciones Generales</h3>
+                                    <div class="form-control" style="height: 200px"><h3>Condiciones Generales</h3>
                                         <div align="left">
                                             <strong>Precios:</strong> &nbsp;{{$cotizacion->id }}<br>
                                             <strong>Forma De Pago:</strong> &nbsp;{{$cotizacion->forma_pago->nombre }}<br>
                                             <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
                                             <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br>
-                                            <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                            <strong>Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}<br>
-
+                                            <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                            <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista->nombres}}
 
                                         </div>
                                     </div>

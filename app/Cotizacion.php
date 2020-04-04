@@ -22,6 +22,10 @@ class Cotizacion extends Model
     public function moneda(){
         return $this->belongsTo(Moneda::class,'moneda_id');
     } 
+
+    public function comisionista(){
+        return $this->belongsTo(Personal_venta::class,'comisionista_id');
+    } 
     
 }
 

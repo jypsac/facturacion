@@ -14,7 +14,7 @@ use App\Cotizacion_factura_registro;
 use App\kardex_entrada_registro;
 use App\Igv;
 use App\User;
-// use App\Moneda;
+use App\Personal_venta;
 
 use Illuminate\Http\Request;
 
@@ -49,9 +49,10 @@ class CotizacionController extends Controller
         $clientes=Cliente::all();
         $moneda=Moneda::all();
         $personales=Personal::all();
+        $p_venta=Personal_venta::where('tipo_trabajador','externo')->get();
         $igv=Igv::first();
 
-        return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda'));
+        return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta'));
     }
 
     /**
@@ -125,7 +126,12 @@ class CotizacionController extends Controller
 
             }
         }
-        
+        // Comisionista cob¿nvertir id
+
+        $comisionista=$request->get('comisionista');
+        $numero = strstr($comisionista, '-',true);
+        $comisionista_buscador=Personal_venta::where('numero_documento',$numero)->first();
+
         //Convertir nombre del cliente a id
         $cliente_nombre=$request->get('cliente');
         $nombre = strstr($cliente_nombre, '-',true);
@@ -142,6 +148,7 @@ class CotizacionController extends Controller
         $cotizacion->garantia=$request->get('garantia');
         $cotizacion->user_id =auth()->user()->id;
         $cotizacion->observacion=$request->get('observacion');
+        $cotizacion->comisionista_id= $comisionista_buscador->id;
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
         $cotizacion->save();
