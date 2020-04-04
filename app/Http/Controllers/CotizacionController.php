@@ -14,7 +14,7 @@ use App\Cotizacion_factura_registro;
 use App\kardex_entrada_registro;
 use App\Igv;
 use App\User;
-use App\Moneda;
+// use App\Moneda;
 
 use Illuminate\Http\Request;
 
