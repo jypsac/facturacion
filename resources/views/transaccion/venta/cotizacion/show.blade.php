@@ -66,7 +66,8 @@
                                             <strong>Forma De Pago:</strong> &nbsp;{{$cotizacion->forma_pago->nombre }}<br>
                                             <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
                                             <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br>
-                                            <strong>Garantia:</strong> &nbsp;{{$cotizacion->id }}<br>
+                                            <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}<br>
 
 
                                         </div>

@@ -19,19 +19,26 @@ class AddForeignKeyCotizacionTable extends Migration
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
 
             // $table->string('direccion');
+            $table->string('garantia');
 
-             $table->string('atencion');
+            $table->unsignedBigInteger('moneda_id');
+            $table->foreign('moneda_id')->references('id')->on('monedas')->onDelete('cascade');
+             // $table->string('atencion');
 
             $table->unsignedBigInteger('forma_pago_id');
             $table->foreign('forma_pago_id')->references('id')->on('forma_pago')->onDelete('cascade');
 
             $table->string('validez');
-            $table->string('referencia')->nullable();
+            // $table->string('referencia')->nullable();
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('observacion')->nullable();
+
+            $table->boolean('estado');
+
+            $table->boolean('estado_vigente');
 
             $table->timestamps();
         });

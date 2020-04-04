@@ -44,7 +44,7 @@
                                             <th>Fecha</th>
                                             <th>Ver</th> 
                                             <th>Estado</th>
-                                            <th>Estado Vigencia</th>
+                                            <!-- <th>Estado Vigencia</th> -->
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -54,11 +54,18 @@
                                             <td>{{$cotizacions->cliente->numero_documento}}</td>
                                             <td>{{$cotizacions->cliente->nombre}}</td>
                                             <td>Proximamte</td>
-                                            <td>Soles-Proximamente</td>
+                                            <td>{{$cotizacions->moneda->nombre }}</td>
                                             <td>{{$cotizacions->created_at}}</td>
                                             <td><center><a href="{{route('cotizacion.show',$cotizacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
-                                            <td><button type="button" class="btn btn-w-m btn-default">Facturado</button></td>
-                                            <td><button type="button" class="btn btn-w-m btn-warning">Vigente</button></td>
+                                            <td>@if($cotizacions->estado =='0')
+                                                   
+                                            <button type="button" class="btn btn-w-m btn-default">Procesado</button>
+
+                                                @else
+                                                <button type="button" class="btn btn-w-m btn-default">En Proceso</button>
+                                                @endif
+                                            </td>
+                                           <!--  <td><button type="button" class="btn btn-w-m btn-warning">Vigente</button></td> -->
                                         </tr>
                                         @endforeach
                                     </tbody>

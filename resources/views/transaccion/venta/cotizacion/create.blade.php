@@ -109,7 +109,7 @@
 							                    <label class="col-sm-2 col-form-label">Numero de Documento:</label>
 												<div class="col-sm-4">
 
-													<input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required value="{{ old('numero_documento')}}">
+													<input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required value="{{ old('numero_documento')}}" autocomplete="off">
 														<datalist id="browserdoc" >
 															@foreach($clientes as $cliente)
 																<option id="a">{{$cliente->numero_documento}} - existente</option>
@@ -203,18 +203,22 @@
 									<input type="hidden" value="0" name="print" id="prints">
 								</div><br>
 					 			<div class="row"> 
-									<label class="col-sm-2 col-form-label">Atencion:</label>
-										<div class="col-sm-10">
-										<input type="text" class="form-control" name="atencion" required="required">
-										</div>
-								</div><br>
-
-					 			<div class="row"> 
-								<label class="col-sm-2 col-form-label">Forma de pago:</label>
+									<label class="col-sm-2 col-form-label">Forma de pago:</label>
 									<div class="col-sm-10">
 										<select class="form-control" name="forma_pago" required="required">
 											@foreach($forma_pagos as $forma_pago)
 											<option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
+											@endforeach
+										<select>
+									</div>
+								</div><br>
+
+					 			<div class="row"> 
+								<label class="col-sm-2 col-form-label">Moneda:</label>
+									<div class="col-sm-10">
+										<select class="form-control" name="moneda" required="required">
+											@foreach($moneda as $monedas)
+											<option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
 											@endforeach
 										<select>
 									</div>
@@ -253,7 +257,7 @@
 					 					<label class="col-sm-2 col-form-label">Garantia:</label>
 										<div class="col-sm-10">
 										<!-- <input type="text" class="form-control" name="referencia" > -->
-										<select class="form-control" name="referencia">
+										<select class="form-control" name="garantia">
 											<option value="6 meses">6 Meses</option>
 											<option value="1 año">1 Año</option>
 											<option value="2 años">2 Años</option>

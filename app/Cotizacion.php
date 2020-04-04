@@ -19,6 +19,9 @@ class Cotizacion extends Model
     public function personal(){
         return $this->belongsTo(Personal::class,'personal_id');
     } 
+    public function moneda(){
+        return $this->belongsTo(Moneda::class,'moneda_id');
+    } 
     
 }
 

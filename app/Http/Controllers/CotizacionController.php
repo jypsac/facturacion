@@ -8,6 +8,7 @@ use App\Producto;
 use App\Cliente;
 use App\Forma_pago;
 use App\Personal;
+use App\Moneda;
 use App\Empresa;
 use App\Cotizacion_registro;
 use App\kardex_entrada_registro;
@@ -45,10 +46,11 @@ class CotizacionController extends Controller
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::all();
+        $moneda=Moneda::all();
         $personales=Personal::all();
         $igv=Igv::first();
 
-        return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv'));
+        return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda'));
     }
 
     /**
@@ -66,10 +68,11 @@ class CotizacionController extends Controller
         $print=$request->get('print');
         if($print==1){
             $cliente_id=$request->get('cliente');
-            $atencion=$request->get('atencion');
+            // $atencion=$request->get('atencion');
             $forma_pago_id=$request->get('forma_pago');
+            $moneda_id=$request->get('moneda');
             $validez=$request->get('validez');
-            $referencia=$request->get('referencia');
+            $garantia=$request->get('garantia');
             $user_id =auth()->user()->id;
             $observacion=$request->get('observacion');
 
@@ -90,7 +93,7 @@ class CotizacionController extends Controller
                 $check_descuento[]=$request->input('check_descuento')[$i];
             }
 
-            return view('transaccion.venta.cotizacion.fast_print',compact('cliente_id','atencion','forma_pago_id','validez','referencia','user_id','observacion','producto_id','cantidad','check_descuento'));
+            return view('transaccion.venta.cotizacion.fast_print',compact('cliente_id','forma_pago_id','validez','referencia','user_id','observacion','producto_id','cantidad','check_descuento'));
         }
 
         //codigo para convertir nombre a producto
@@ -131,13 +134,17 @@ class CotizacionController extends Controller
 
         $cotizacion=new Cotizacion;
         $cotizacion->cliente_id=$cliente_buscador->id;
-        $cotizacion->atencion=$request->get('atencion');
+        // $cotizacion->atencion=$request->get('atencion');
         $cotizacion->forma_pago_id=$request->get('forma_pago');
         $cotizacion->validez=$request->get('validez');
-        $cotizacion->referencia=$request->get('referencia');
+        $cotizacion->moneda_id=$request->get('moneda');
+        $cotizacion->garantia=$request->get('garantia');
         $cotizacion->user_id =auth()->user()->id;
         $cotizacion->observacion=$request->get('observacion');
+        $cotizacion->estado='0';
+        $cotizacion->estado_vigente='0';
         $cotizacion->save();
+
 
         //contador de valores de cantidad
         $cantidad = $request->input('cantidad');
