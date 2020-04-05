@@ -10,7 +10,7 @@ class Personal_venta extends Model
 
     protected $guarded = [];
 
-    // public function almacen_periodo(){
-    //     return $this->belongsTo(Almacen::class,'almacen_id');
-    // }
+    public function personal(){
+        return $this->belongsTo(personal::class,'id_personal');
+    }
 }

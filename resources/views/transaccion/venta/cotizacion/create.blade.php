@@ -270,7 +270,7 @@
 												<input list="browsersc2" class="form-control m-b" name="comisionista" required value="{{ old('nombre')}}" autocomplete="off">
 										<datalist id="browsersc2" >
 											@foreach($p_venta as $p_ventas)
-												<option id="{{$p_ventas->id}}">{{$p_ventas->numero_documento}} - {{$p_ventas->nombres}}</option>
+												<option id="{{$p_ventas->id}}">{{$p_ventas->personal->numero_documento}} - {{$p_ventas->personal->nombres}}</option>
 											@endforeach
 										 </datalist>
 											</div>

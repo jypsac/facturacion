@@ -49,7 +49,7 @@ class CotizacionController extends Controller
         $clientes=Cliente::all();
         $moneda=Moneda::all();
         $personales=Personal::all();
-        $p_venta=Personal_venta::where('tipo_trabajador','externo')->get();
+        $p_venta=Personal_venta::all();
         $igv=Igv::first();
 
         return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta'));
@@ -130,7 +130,10 @@ class CotizacionController extends Controller
 
         $comisionista=$request->get('comisionista');
         $numero = strstr($comisionista, '-',true);
-        $comisionista_buscador=Personal_venta::where('numero_documento',$numero)->first();
+        $numero_doc=personal::where('numero_documento',$numero)->first();
+        $id_personal=$numero_doc->id;
+        $comisionista_buscador=Personal_venta::where('id_personal',$id_personal)->first();
+
 
         //Convertir nombre del cliente a id
         $cliente_nombre=$request->get('cliente');

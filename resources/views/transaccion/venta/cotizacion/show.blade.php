@@ -68,7 +68,7 @@
                                             <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br>
                                             <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <strong>Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                            <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista->nombres}}
+                                            <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista->personal->nombres}}
 
                                         </div>
                                     </div>
