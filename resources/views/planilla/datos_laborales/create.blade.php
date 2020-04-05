@@ -153,13 +153,21 @@
            <select class="form-control" name="regimen_pensionario">
               <option value="Privado">Privado</option>
               <option value="Nacional">Nacional</option>
+              <option value="Sin Regimen">Sin Regimen</option>
             </select></p>
         
 
         </div>
         <div class="col-lg-6">
          <h4>Seguro de Salud</h4>
-          <p><input type="text" class="form-control" name="afiliacion_salud" ></p>
+          <p><input type="text" class="form-control" name="afiliacion_salud"  value="Sin Seguro">
+           <select class="form-control" name="afiliacion_salud">
+              <option value="AFP Integra">AFP Integra</option>
+              <option value="AFP Horizonte">AFP Horizonte</option>
+              <option value="ONP">ONP</option>
+              <option value="Sin Seguro">Sin Seguro</option>
+
+            </select></p>
           
 
           <h4>Banco Abonado</h4>
@@ -191,6 +199,7 @@
               <option value="Temporal">Temporal</option>
               <option value="Practicante">Practicante</option>
               <option value="Obra o Labor">Obra o Labor</option>
+              <option value="Sin Contrato"></option>
             </select></p>
 
         </div>
