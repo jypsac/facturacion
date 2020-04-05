@@ -160,8 +160,8 @@
         </div>
         <div class="col-lg-6">
          <h4>Seguro de Salud</h4>
-          <p><input type="text" class="form-control" name="afiliacion_salud"  value="Sin Seguro">
-           <select class="form-control" name="afiliacion_salud">
+          <p>
+              <select class="form-control" name="afiliacion_salud">
               <option value="AFP Integra">AFP Integra</option>
               <option value="AFP Horizonte">AFP Horizonte</option>
               <option value="ONP">ONP</option>
@@ -199,7 +199,7 @@
               <option value="Temporal">Temporal</option>
               <option value="Practicante">Practicante</option>
               <option value="Obra o Labor">Obra o Labor</option>
-              <option value="Sin Contrato"></option>
+              <option value="Sin Contrato">Sin Contrato</option>
             </select></p>
 
         </div>
