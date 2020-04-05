@@ -55,8 +55,14 @@
 
 
           <h4>Forma Pago</h4>
+          <p>        
+              <select class="form-control" name="forma_pago">
+              <option value="Semanal">Semanal</option>
+              <option value="Quincenal">Quincenal</option>
+              <option value="Mensual">Mensual</option>
+              <option value="Otros">Otros</option>
+            </select></p>
 
-          <p><input type="text" class="form-control" name="forma_pago" ></p>
         </div>
 
         <div class="col-lg-6">
@@ -64,11 +70,23 @@
           <p><input type="text" class="form-control" name="salario" > </p>
 
             <h4>Categoria Ocupacional</h4>
-          <p><input type="text" class="form-control" name="categoria_ocupacional" ></p>
-          
-            <h4>Estado Del Trbajador</h4>
-          <p><input type="text" class="form-control" name="estado_trabajador" > </p>
+          <p>
+            <select class="form-control" name="categoria_ocupacional">
+              <option value="Obrero">Obrero</option>
+              <option value="Empleado">Empleado</option>
+              <option value="Administrativo">Administrativo</option>
+              <option value="Ejecutivo">Ejecutivo</option>
+            </select>
+          </p>
 
+            <h4>Estado Del Trbajador</h4>
+          <p>
+           <select class="form-control" name="estado_trabajador">
+              <option value="Activo">Activo</option>
+              <option value="Retirado">Retirado</option>
+              <option value="Vacaciones">Vacaciones</option>
+              <option value="Descanso medico">Descanso medico</option>
+            </select></p>
 
         </div>
         <div class="col-lg-6">
@@ -78,35 +96,66 @@
           <p><input type="text" class="form-control" name="sede" ></p>
 
           <h4>Turno</h4>
-          <p><input type="text" class="form-control" name="turno" ></p>
+          <p>
+           <select class="form-control" name="turno">
+              <option value="Mañana">Mañana</option>
+              <option value="Tarde">Tarde</option>
+              <option value="Noche">Noche</option>
+            </select></p>
 
-        
         </div>
         <div class="col-lg-6">
          <h4>Departamento Area</h4>
-          <p><input type="text" class="form-control" name="departamento_area" ></p>
+          <p>
+            <select class="form-control" name="departamento_area">
+              <option value="Aministracion">Administracion</option>
+              <option value="Almacen">Almacen</option>
+              <option value="Compras">Compras</option>
+              <option value="Comercial">Comercial</option>
+              <option value="Contabilidad">Contabilidad</option>
+              <option value="Logistica">Logistica</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Produccion">Produccion</option>
+              <option value="Recursos Humanos">Recursos Humanos</option>
+              <option value="otros">otros</option>
+            </select></p>
           
 
           <h4>Cargo</h4>
-          <p><input type="text" class="form-control" name="cargo" ></p>
+          <p>
+           <select class="form-control" name="cargo">
+              <option value="vendedor">vendedor</option>
+              <option value="Obrero">Obrero</option>
+              <option value="Empleado">Empleado</option>
+              <option value="Contador">Contador</option>
+              <option value="Jefe de Ventas">Jefe de Ventas</option>
+              <option value="Administrador">Administrador</option>
+              <option value="Gerente">Gerente</option>
+            </select>
+          </p>
 
-          
         </div>
 
         <div class="col-lg-6">
          
 
           <h4>Tipo Trbajador</h4>
-          <p><input type="text" class="form-control" name="tipo_trabajador" ></p>
-
-
-
-
+          <p>
+           <select class="form-control" name="tipo_trabajador">
+              <option value="Interno">Interno</option>
+              <option value="Externo">Externo</option>
+              <option value="Temporal">Temporal</option>
+            </select></p>
 
 
           <h4>Regimen Pensionario</h4>
-          <p><input type="text" class="form-control" name="regimen_pensionario" ></p>
+          <p>
+           <select class="form-control" name="regimen_pensionario">
+              <option value="Privado">Privado</option>
+              <option value="Nacional">Nacional</option>
+            </select></p>
         
+
         </div>
         <div class="col-lg-6">
          <h4>Seguro de Salud</h4>
@@ -114,8 +163,14 @@
           
 
           <h4>Banco Abonado</h4>
-          <p><input type="text" class="form-control" name="banco_renumeracion" ></p>
-
+          <p>
+            <select class="form-control" name="banco_renumeracion">
+              <option value="BCP">BCP</option>
+              <option value="BN">BN</option>
+              <option value="Interbank">Interbank</option>
+              <option value="Continental">Continental</option>
+              <option value="Scotiabank">Scotiabank</option>
+            </select></p>
           
         </div>
         <div class="col-lg-6">
@@ -129,8 +184,15 @@
           <p><input type="text" class="form-control" name="notas" ></p>
 
           <h4>Tipo Contrato</h4>
-          <p><input type="text" class="form-control" name="tipo_contrato" ></p>
-          
+          <p>
+          <select class="form-control" name="tipo_contrato">
+              <option value="Idefinido">Indefinido</option>
+              <option value="Fijo">Fijo</option>
+              <option value="Temporal">Temporal</option>
+              <option value="Practicante">Practicante</option>
+              <option value="Obra o Labor">Obra o Labor</option>
+            </select></p>
+
         </div>
 
       </div>

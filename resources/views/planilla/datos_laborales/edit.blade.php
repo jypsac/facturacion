@@ -56,7 +56,14 @@
 
           <h4>Forma Pago</h4>
 
-          <p><input type="text" class="form-control" name="forma_pago" value="{{$personales->forma_pago}}"></p>
+          <p>
+           <select class="form-control" name="forma_pago">
+              <option value="{{$personales->forma_pago}}">{{$personales->forma_pago}}</option>
+              <option value="Semanal">Semanal</option>
+              <option value="Quincenal">Quincenal</option>
+              <option value="Mensual">Mensual</option>
+              <option value="Otros">Otros</option>
+            </select></p>
         </div>
 
         <div class="col-lg-6">
@@ -64,10 +71,23 @@
           <p><input type="text" class="form-control" name="salario" value="{{$personales->salario}}"> </p>
 
             <h4>Categoria Ocupacional</h4>
-          <p><input type="text" class="form-control" name="categoria_ocupacional" value="{{$personales->categoria_ocupacional}}"></p>
+          <p>
+           <select class="form-control" name="categoria_ocupacional">
+              <option value="{{$personales->categoria_ocupacional}}">{{$personales->categoria_ocupacional}}</option>
+              <option value="Obrero">Obrero</option>
+              <option value="Empleado">Empleado</option>
+              <option value="Administrativo">Administrativo</option>
+              <option value="Ejecutivo">Ejecutivo</option>
+            </select></p>
           
             <h4>Estado Del Trbajador</h4>
-          <p><input type="text" class="form-control" name="estado_trabajador" value="{{$personales->estado_trabajador}}"> </p>
+          <p><select class="form-control" name="estado_trabajador">
+              <option value="{{$personales->estado_trabajador}}">{{$personales->estado_trabajador}}</option>
+              <option value="Activo">Activo</option>
+              <option value="Retirado">Retirado</option>
+              <option value="Vacaciones">Vacaciones</option>
+              <option value="Descanso medico">Descanso medico</option>
+            </select></p>
 
 
         </div>
@@ -78,17 +98,46 @@
           <p><input type="text" class="form-control" name="sede" value="{{$personales->sede}}"></p>
 
           <h4>Turno</h4>
-          <p><input type="text" class="form-control" name="turno" value="{{$personales->turno}}"></p>
+          <p>
+           <select class="form-control" name="turno">
+              <option value="{{$personales->turno}}">{{$personales->turno}}</option>
+              <option value="Mañana">Mañana</option>
+              <option value="Tarde">Tarde</option>
+              <option value="Noche">Noche</option>
+            </select></p>
 
         
         </div>
         <div class="col-lg-6">
          <h4>Departamento Area</h4>
-          <p><input type="text" class="form-control" name="departamento_area" value="{{$personales->departamento_area}}"></p>
+          <p>
+            <select class="form-control" name="departamento_area">
+              <option value="{{$personales->departamento_area}}">{{$personales->departamento_area}}</option>
+              <option value="Aministracion">Administracion</option>
+              <option value="Almacen">Almacen</option>
+              <option value="Compras">Compras</option>
+              <option value="Comercial">Comercial</option>
+              <option value="Contabilidad">Contabilidad</option>
+              <option value="Logistica">Logistica</option>
+              <option value="Marketing">Marketing</option>
+              <option value="Produccion">Produccion</option>
+              <option value="Recursos Humanos">Recursos Humanos</option>
+              <option value="otros">otros</option>
+            </select></p>
           
 
           <h4>Cargo</h4>
-          <p><input type="text" class="form-control" name="cargo" value="{{$personales->cargo}}"></p>
+          <p>
+            <select class="form-control" name="cargo">
+              <option value="{{$personales->cargo}}">{{$personales->cargo}}</option>
+              <option value="vendedor">vendedor</option>
+              <option value="Obrero">Obrero</option>
+              <option value="Empleado">Empleado</option>
+              <option value="Contador">Contador</option>
+              <option value="Jefe de Ventas">Jefe de Ventas</option>
+              <option value="Administrador">Administrador</option>
+              <option value="Gerente">Gerente</option>
+            </select></p>
 
           
         </div>
@@ -97,7 +146,13 @@
          
 
           <h4>Tipo Trbajador</h4>
-          <p><input type="text" class="form-control" name="tipo_trabajador" value="{{$personales->tipo_trabajador}}"></p>
+          <p>
+           <select class="form-control" name="tipo_trabajador">
+              <option value="{{$personales->tipo_trabajador}}">{{$personales->tipo_trabajador}}</option>
+              <option value="Interno">Interno</option>
+              <option value="Externo">Externo</option>
+              <option value="Temporal">Temporal</option>
+            </select></p>
 
 
 
@@ -105,7 +160,12 @@
 
 
           <h4>Regimen Pensionario</h4>
-          <p><input type="text" class="form-control" name="regimen_pensionario" value="{{$personales->regimen_pensionario}}"></p>
+          <p>
+           <select class="form-control" name="regimen_pensionario">
+              <option value="{{$personales->regimen_pensionario}}">{{$personales->regimen_pensionario}}</option>
+              <option value="Privado">Privado</option>
+              <option value="Nacional">Nacional</option>
+            </select></p>
         
         </div>
         <div class="col-lg-6">
@@ -114,7 +174,15 @@
           
 
           <h4>Banco Abonado</h4>
-          <p><input type="text" class="form-control" name="banco_renumeracion" value="{{$personales->banco_renumeracion}}"></p>
+          <p>
+            <select class="form-control" name="banco_renumeracion">
+              <option value="{{$personales->banco_renumeracion}}">{{$personales->banco_renumeracion}}</option>
+              <option value="BCP">BCP</option>
+              <option value="BN">BN</option>
+              <option value="Interbank">Interbank</option>
+              <option value="Continental">Continental</option>
+              <option value="Scotiabank">Scotiabank</option>
+            </select></p>
 
           
         </div>
@@ -129,7 +197,15 @@
           <p><input type="text" class="form-control" name="notas" value="{{$personales->notas}}"></p>
 
           <h4>Tipo Contrato</h4>
-          <p><input type="text" class="form-control" name="tipo_contrato" value="{{$personales->tipo_contrato}}"></p>
+          <p>
+           <select class="form-control" name="tipo_contrato">
+              <option value="{{$personales->tipo_contrato}}">{{$personales->tipo_contrato}}</option>
+              <option value="Idefinido">Indefinido</option>
+              <option value="Fijo">Fijo</option>
+              <option value="Temporal">Temporal</option>
+              <option value="Practicante">Practicante</option>
+              <option value="Obra o Labor">Obra o Labor</option>
+            </select></p>
           
         </div>
 

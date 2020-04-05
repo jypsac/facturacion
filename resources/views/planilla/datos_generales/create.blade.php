@@ -77,10 +77,27 @@
           <p><input type="email" class="form-control" name="email" value=""></p>  
 
             <h4>Nivel Educativo</h4>
-          <p><input type="text" class="form-control" name="nivel_educativo" value=""></p>   
-
+          <p>
+            <select class="form-control" name="nivel_educativo">
+              <option value="Primaria">Primaria</option>
+              <option value="Secundaria">Secundaria</option>
+              <option value="Tecnico">Tecnico</option>
+              <option value="universitaria">universitaria</option>
+            </select></p>  
+          
             <h4>Carrera Profesional</h4>
-          <p><input type="text" class="form-control" name="profesion" value=""></p>   
+          <p>
+           <select class="form-control" name="profesion">
+              <option value="sin carrera">sin carrera</option>
+              <option value="Contabilidad">Contabilidad</option>
+              <option value="Administracion">Administracion</option>
+              <option value="Ingenieria">Ingenieria</option>
+              <option value="Ciencias de la comunicación">Ciencias de la comunicación</option>
+              <option value="Marketing y Mercadotecnia">Marketing y Mercadotecnia</option>
+              <option value="Economia">Economia</option>
+              <option value="Derecho">Derecho</option>
+              <option value="Medicina">Medicina</option>
+            </select></p>   
 
 
         </div>
