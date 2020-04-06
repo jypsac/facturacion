@@ -13,6 +13,7 @@ Route::group(
 
 		Route::resource('/almacen','AlmacenController');
 		Route::resource('/categoria','CategoriaController');
+		Route::resource('/vendedores','PersonalVentaController');
 
 		Route::post('/cliente/contac','ClienteController@storecontact')->name('cliente.storecontact');
 		Route::resource('/cliente','ClienteController');

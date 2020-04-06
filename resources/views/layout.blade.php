@@ -103,6 +103,7 @@
                             <li><a href="{{route('personal.index')}}">Datos Generales</a></li>
                             {{-- <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li> --}}
                             <li><a href="{{route('horarios.index')}}">Horarios</a></li>
+                            <li><a href="{{route('vendedores.index')}}">Vendedores</a></li>
                         </ul>
                     </li>
                     <li>
