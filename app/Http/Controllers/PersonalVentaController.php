@@ -77,7 +77,8 @@ class PersonalVentaController extends Controller
      */
     public function edit($id)
     {
-        //
+          $personal=Personal_venta::find($id);
+        return view('planilla.vendedores.edit',compact('personal'));
     }
 
     /**
@@ -89,7 +90,15 @@ class PersonalVentaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $personal=Personal_venta::find($id);
+        $personal->tipo_comision=$request->get('tipo_comision');
+        $personal->comision=$request->get('comision');
+        $personal->save();
+
+        // return redirect()->route('personal-datos-laborales.index');
+        return redirect()->route('vendedores.show', $personal->id); 
+
+
     }
 
     /**
@@ -100,6 +109,10 @@ class PersonalVentaController extends Controller
      */
     public function destroy($id)
     {
-        //
+         $registro=Ventas_registro::find($id);
+        $registro->pago_efectuado='1';
+        $registro->save();
+        return redirect()->route('vendedores.show', $registro->id_vendedor); 
+
     }
 }

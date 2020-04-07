@@ -11,7 +11,9 @@
 <div style="padding-top: 20px;">
 <div class="container" style=" padding-top: 30px; background: white;">
      
-
+ <div class="ibox-title">
+    <a class="btn btn-lg btn-success" href="{{ route('vendedores.edit', $personal->id) }}" style="background-color: #1ab394; border-color: #1ab394"> <i class="fa fa-edit"></i></a>
+ </div>
       <div class="row marketing">
         <div class="col-lg-6">
           <h4>Codigo Vendedor</h4>
@@ -166,13 +168,13 @@
                                               ¿Esta Seguro que Desea Procesar con el pago a la Comision:"{{$listas->numero_cotizacion}}".?<br>
                                              <h4 align="center"> <strong>Nota: Una vez Aprobada no hay opcion de deshacer cambios</strong></h4>
                                                </h3>
-                                               <p align="center"><!-- 
-                                                   <form  method="POST">
+                                               <p align="center">
+                                                   <form  action="{{ route('vendedores.destroy', $listas->id)}}" method="POST">
                                                    @csrf
-                                                   @method('delete') -->
+                                                   @method('delete')
                                                    <center>
                                                    <button type="submit" class="btn btn-s-m btn-warning">Procesar</button>
-                                              <!-- </form> -->
+                                              </form>
                                                     
                                                </p>
                                               </div>

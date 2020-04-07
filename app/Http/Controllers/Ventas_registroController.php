@@ -86,5 +86,6 @@ class Ventas_registroController extends Controller
         return redirect()->route('vendedores.show', $registro->id_vendedor); 
         // return redirect()->route('productos.index');
     }
+  
 
 }
