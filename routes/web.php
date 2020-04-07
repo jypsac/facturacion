@@ -19,8 +19,25 @@ Route::group(
 		Route::post('/cliente/contac','ClienteController@storecontact')->name('cliente.storecontact');
 		Route::resource('/cliente','ClienteController');
 		Route::resource('/compra','CompraController');
+
+
+// COTIZACIONES BOLETA - FACTURA
+		//boleta
+
+		Route::get('/cotizacion/create_boleta' , 'CotizacionController@create_boleta')->name('cotizacion.create_boleta');
+		Route::post('/cotizacion/store_boleta','CotizacionController@store_boleta')->name('cotizacion.store_boleta');
+		
+
+		//factura
+
 		// Route::get('cotizacion/fast_print', 'CotizacionController@fast_print')->name('cotizacion.fast_print');
+		Route::get('/cotizacion/create_factura' , 'CotizacionController@create_factura')->name('cotizacion.create_factura');
+		Route::post('/cotizacion/store_factura','CotizacionController@store_factura')->name('cotizacion.store_factura');
+
 		Route::resource('/cotizacion','CotizacionController');
+
+
+
 		Route::resource('/credito','CreditoController');
 		Route::resource('/debito','DebitoController');
 		Route::resource('/documento','DocumentoController');

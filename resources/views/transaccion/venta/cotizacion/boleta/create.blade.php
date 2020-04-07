@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title', 'Cotizacion')
-@section('breadcrumb', 'Cotizacion')
-@section('breadcrumb2', 'Cotizacion')
+@section('title', 'Cotizacion - Boleta')
+@section('breadcrumb', 'Cotizacion - Boleta')
+@section('breadcrumb2', 'Cotizacion - Boleta')
 @section('href_accion', route('cotizacion.index') )
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -32,8 +32,8 @@
 
 
 	<div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a><!-- 
-    <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> personal</span></a> -->
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
+    <a href="{{route('cotizacion.create_factura')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a>
 
 	</div>
 	<!-- Modal CLiente -->
@@ -156,7 +156,9 @@
 								  </div>
 								</div>
 							</div>
-	<!-- Fin Modal Clieb¿nte -->
+	<!-- Fin Modal Cliente -->
+
+	
 
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
@@ -183,7 +185,7 @@
                     </div>
 				</div>
 				<div class="ibox-content">
-				<form action="{{route('cotizacion.store')}}"  enctype="multipart/form-data" method="post">
+				<form action="{{route('cotizacion.store_boleta')}}"  enctype="multipart/form-data" method="post">
 					 	@csrf
 					 	<div class="row">
 					 		<div class="col-sm-6">
@@ -327,7 +329,7 @@
 
 						</tbody><br>
 						<tbody>
-						<tr style="background-color: #f5f5f500;" align="center">
+						{{-- <tr style="background-color: #f5f5f500;" align="center">
 						<td></td>
 						<td></td>
 						<td></td>
@@ -336,8 +338,8 @@
 						<td></td>
 						<td>Subtotal :</td>
 						<td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
-						</tr>
-						<tr style="background-color: #f5f5f500;" align="center">
+						</tr> --}}
+						{{-- <tr style="background-color: #f5f5f500;" align="center">
 						<td></td>
 						<td></td>
 						<td></td>
@@ -346,7 +348,7 @@
 						<td></td>
 						<td>IGV :</td>
 						<td><input id='igv'  disabled="disabled" class="form-control" required /></td>
-						</tr>
+						</tr> --}}
 						<tr  align="center">
 						<td></td>
 						<td></td>
