@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title', 'Cotizacion')
-@section('breadcrumb', 'Cotizacion')
-@section('breadcrumb2', 'Cotizacion')
+@section('title', 'Cotizacion - Factura')
+@section('breadcrumb', 'Cotizacion - Factura')
+@section('breadcrumb2', 'Cotizacion - Factura')
 @section('href_accion', route('cotizacion.index') )
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -32,8 +32,8 @@
 
 
 	<div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a><!-- 
-    <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> personal</span></a> -->
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
+    <a href="{{route('cotizacion.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a>
 
 	</div>
 	<!-- Modal CLiente -->
