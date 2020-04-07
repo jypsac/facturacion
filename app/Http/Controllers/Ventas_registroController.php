@@ -1,13 +1,10 @@
 <?php
-
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\Personal_venta;
 use App\Ventas_registro;
-use App\Personal;
+use Illuminate\Http\Request;
 
-class PersonalVentaController extends Controller
+class Ventas_registroController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -16,8 +13,6 @@ class PersonalVentaController extends Controller
      */
     public function index()
     {
-        $vendedores=Personal_venta::all();
-        return view('planilla.vendedores.index', compact('vendedores'));
     }
 
     /**
@@ -26,12 +21,8 @@ class PersonalVentaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
-
-        $personal_contador= Personal_venta::all()->count();
-        $suma=$personal_contador+1;
-        $personal=Personal::all();
-        return view('planilla.vendedores.create', compact('personal','suma'));
+    {
+        //
     }
 
     /**
@@ -42,17 +33,7 @@ class PersonalVentaController extends Controller
      */
     public function store(Request $request)
     {
-      // Personal::create(request()->all());
-        $personal_venta=new Personal_venta;
-        $personal_venta->cod_vendedor=$request->get('cod_vendedor');
-        $personal_venta->id_personal=$request->get('id_personal');
-        $personal_venta->tipo_comision=$request->get('tipo_comision');
-        $personal_venta->comision=$request->get('comision');
-        $personal_venta->estado=0;
-        
-
-        $personal_venta->save();
-        return redirect()->route('vendedores.show', $personal_venta->id); 
+        //
     }
 
     /**
@@ -63,10 +44,7 @@ class PersonalVentaController extends Controller
      */
     public function show($id)
     {
-        
-        $personal=Personal_venta::find($id);
-        $lista=Ventas_registro::where('id_vendedor',$id)->get();
-        return view('planilla.vendedores.show',compact('personal','lista'));
+        //
     }
 
     /**
@@ -100,6 +78,13 @@ class PersonalVentaController extends Controller
      */
     public function destroy($id)
     {
-        //
+         $registro=Ventas_registro::find($id);
+         // return $registro;
+        $registro->estado_aprobado='1';
+        $registro->save();
+        
+        return redirect()->route('vendedores.show', $registro->id_vendedor); 
+        // return redirect()->route('productos.index');
     }
+
 }

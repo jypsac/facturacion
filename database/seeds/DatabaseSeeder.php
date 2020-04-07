@@ -34,6 +34,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FacturacionTableSeeder::class);
         $this->call(UsersTableSeeder::class);
         $this->call(PersonalVentasTableSeeder::class);
+        $this->call(VentasRegistroTableSeeder::class);
         
     }
 }

@@ -38,12 +38,13 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
-                                                <th>NOMBRE</th>
-                                                <th>APELLIDO</th>
-                                                <th>NR DOCUMENTO</th>
+                                                <th>Nombres</th>
+                                                <th>Apellidos</th>
+                                                <th>Nª Documento</th>
                                                 <th>Celular</th>
                                                 <th>Correo</th>
-                                                <th>Foto</th>
+                                                <th>Tipo Trabajador</th>
+                                                <th>Comision %</th>
                                                 <th>Ver</th>
                                                 {{-- <th>EDITAR</th> --}}
                                                 {{-- <th>Eliminar</th> --}}
@@ -58,10 +59,8 @@
                                                 <td>{{$vendedor->personal->numero_documento}}</td>
                                                 <td>{{$vendedor->personal->celular}}</td>
                                                 <td>{{$vendedor->personal->email}}</td>
-                                                 <td><img src="
-                                                    {{ asset('/profile/images/')}}/{{$vendedor->personal->foto}}" style="width: 45px;">
-                                                </td>
-                                                
+                                                <td>Proximamate</td>
+                                                <td>% {{$vendedor->comision}}</td>
                                                 <td><center><a href="{{ route('vendedores.show', $vendedor->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>{{-- 
                                                 <td><center><a href="{{ route('vendedores.edit', $vendedor->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
                                                {{--  <td>
