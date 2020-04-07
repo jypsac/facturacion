@@ -35,7 +35,7 @@ class CotizacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create_factura()
     {
         $productos=Producto::where('estado_id',1)->where('estado_anular',1)->get();
 
@@ -52,7 +52,7 @@ class CotizacionController extends Controller
         $p_venta=Personal_venta::all();
         $igv=Igv::first();
 
-        return view('transaccion.venta.cotizacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta'));
+        return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta'));
     }
 
     /**
@@ -61,7 +61,7 @@ class CotizacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store_factura(Request $request)
     {
         //El input esta activo
 
@@ -120,7 +120,7 @@ class CotizacionController extends Controller
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
                     if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return redirect()->route('cotizacion.create')->with('repite', 'Datos repetidos - No permitidos!');
+                        return redirect()->route('cotizacion.create_factura')->with('repite', 'Datos repetidos - No permitidos!');
                     }
                 }
 
@@ -187,7 +187,7 @@ class CotizacionController extends Controller
                 $cotizacion_registro->save();
             }
         }else {
-            return redirect()->route('cotizacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
+            return redirect()->route('cotizacion.create_factura')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
         return redirect()->route('cotizacion.show',$cotizacion->id);
 

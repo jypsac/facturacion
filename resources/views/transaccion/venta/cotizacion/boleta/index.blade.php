@@ -2,8 +2,8 @@
 
 @section('title', 'Cotizacion')
 @section('breadcrumb', 'Cotizacion')
-@section('breadcrumb2', 'Cotizacions')
-@section('href_accion', route('cotizacion.create_factura'))
+@section('breadcrumb2', 'Cotizacion')
+@section('href_accion', route('cotizacion.create'))
 @section('value_accion', 'Agregar')
 
 @section('content')
