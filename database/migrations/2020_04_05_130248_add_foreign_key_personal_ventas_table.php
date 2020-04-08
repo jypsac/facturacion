@@ -16,7 +16,7 @@ class AddForeignKeyPersonalVentasTable extends Migration
        Schema::table('personal_ventas', function (Blueprint $table) {
 
             $table->unsignedBigInteger('id_personal');
-            $table->foreign('id_personal')->references('id')->on('personal')->onDelete('cascade');
+            $table->foreign('id_personal')->references('id')->on('personal_datos_laborales')->onDelete('cascade');
             
             $table->string('cod_vendedor');
             $table->string('tipo_comision');

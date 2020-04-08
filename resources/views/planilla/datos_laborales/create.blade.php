@@ -139,7 +139,7 @@
         <div class="col-lg-6">
          
 
-          <h4>Tipo Trbajador</h4>
+          <h4>Tipo Trabajador</h4>
           <p>
            <select class="form-control" name="tipo_trabajador">
               <option value="Interno">Interno</option>

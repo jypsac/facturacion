@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Personal_venta;
 use App\Ventas_registro;
+use App\Personal_datos_laborales;
 use App\Personal;
 
 class PersonalVentaController extends Controller
@@ -30,7 +31,7 @@ class PersonalVentaController extends Controller
 
         $personal_contador= Personal_venta::all()->count();
         $suma=$personal_contador+1;
-        $personal=Personal::all();
+        $personal=Personal_datos_laborales::all();
         return view('planilla.vendedores.create', compact('personal','suma'));
     }
 
@@ -62,10 +63,11 @@ class PersonalVentaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {
+     {
         
         $personal=Personal_venta::find($id);
         $lista=Ventas_registro::where('id_vendedor',$id)->get();
+
         return view('planilla.vendedores.show',compact('personal','lista'));
     }
 

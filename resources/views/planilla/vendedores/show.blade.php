@@ -25,7 +25,8 @@
         <div class="col-lg-6">
           <h4>Nombre Vendedor:</h4>
           <p class="form-control" >
-          {{ $personal->personal->nombres }}</p>
+          {{ $personal->personal->personal_l->nombres}} - 
+          {{ $personal->personal->tipo_trabajador}}</p>
            
 
         </div>
