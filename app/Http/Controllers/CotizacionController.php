@@ -204,10 +204,13 @@ class CotizacionController extends Controller
     public function create_boleta()
     {
         $productos=Producto::where('estado_id',1)->where('estado_anular',1)->get();
+        $igv_proceso=Igv::first();
+        $igv_total=$igv_proceso->igv_total;
 
         foreach ($productos as $index => $producto) {
             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index];
+            $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index])+(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index])*$igv_total/100;
+
             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
         }
 
