@@ -24,10 +24,10 @@
           <h4>Nombre Vendedor:</h4>
           <p>
             <select class="form-control" name="id_personal" required="required">
-                <option value="">Seleccione Trabajador</option>
+              <option value="">Seleccione Trabajador</option>
                @foreach($personal as $personals)
-                            <option value="{{ $personals->id }}">{{ $personals->nombres }}</option>
-                            @endforeach
+              <option value="{{$personals->id}}">{{$personals->personal_l->nombres}} - {{$personals->tipo_trabajador}}</option>
+               @endforeach
             </select></p>  
 
         </div>

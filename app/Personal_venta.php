@@ -11,6 +11,6 @@ class Personal_venta extends Model
     protected $guarded = [];
 
     public function personal(){
-        return $this->belongsTo(personal::class,'id_personal');
+        return $this->belongsTo(personal_datos_laborales::class,'id_personal');
     }
 }

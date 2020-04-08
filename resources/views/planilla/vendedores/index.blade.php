@@ -54,12 +54,12 @@
                                         @foreach($vendedores as $vendedor)
                                             <tr class="gradeX">
                                                 <td>{{$vendedor->id}}</td>
-                                                <td>{{$vendedor->personal->nombres}}</td>
-                                                <td>{{$vendedor->personal->apellidos}}</td>
-                                                <td>{{$vendedor->personal->numero_documento}}</td>
-                                                <td>{{$vendedor->personal->celular}}</td>
-                                                <td>{{$vendedor->personal->email}}</td>
-                                                <td>Proximamate</td>
+                                                <td>{{$vendedor->personal->personal_l->nombres}}</td>
+                                                <td>{{$vendedor->personal->personal_l->apellidos}}</td>
+                                                <td>{{$vendedor->personal->personal_l->numero_documento}}</td>
+                                                <td>{{$vendedor->personal->personal_l->celular}}</td>
+                                                <td>{{$vendedor->personal->personal_l->email}}</td>
+                                                <td>{{$vendedor->personal->tipo_trabajador}}</td>
                                                 <td>% {{$vendedor->comision}}</td>
                                                 <td><center><a href="{{ route('vendedores.show', $vendedor->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>{{-- 
                                                 <td><center><a href="{{ route('vendedores.edit', $vendedor->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
