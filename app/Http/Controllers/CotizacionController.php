@@ -44,6 +44,7 @@ class CotizacionController extends Controller
             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
             $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index];
             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio');
         }
 
         $forma_pagos=Forma_pago::all();
@@ -52,8 +53,8 @@ class CotizacionController extends Controller
         $personales=Personal::all();
         $p_venta=Personal_venta::all();
         $igv=Igv::first();
-
-        return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta'));
+        
+        return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
     }
 
     /**
@@ -208,8 +209,10 @@ class CotizacionController extends Controller
         $igv_total=$igv_proceso->igv_total;
 
         foreach ($productos as $index => $producto) {
+
             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
             $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index])+(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index])*$igv_total/100;
+            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index];
 
             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
         }
@@ -221,7 +224,7 @@ class CotizacionController extends Controller
         $p_venta=Personal_venta::all();
         $igv=Igv::first();
 
-        return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta'));
+        return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
     }
 
     /**
@@ -295,7 +298,7 @@ class CotizacionController extends Controller
 
             }
         }
-        // Comisionista cob¿nvertir id
+        // Comisionista convertir id
 
         $comisionista=$request->get('comisionista');
         $numero = strstr($comisionista, '-',true);

@@ -33,7 +33,7 @@
 
 	<div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
-    <a href="{{route('cotizacion.create_factura')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a>
+    <a href="{{route('cotizacion.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a>
 
 	</div>
 	<!-- Modal CLiente -->
@@ -156,9 +156,7 @@
 								  </div>
 								</div>
 							</div>
-	<!-- Fin Modal Cliente -->
-
-	
+	<!-- Fin Modal Clieb¿nte -->
 
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
@@ -311,7 +309,7 @@
 									<input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)"  autocomplete="off">
 										<datalist id="browsers2" >
 											@foreach($productos as $index => $producto)
-											<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}">
+											<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}">
 											@endforeach
 										</datalist>
 										
@@ -321,6 +319,7 @@
 								<td><input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
 								<td><input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
 									<input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
+									<input type='text' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
 									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
 								<td><input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" /></td>
 								<td><input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" /></td>
@@ -338,8 +337,8 @@
 						<td></td>
 						<td>Subtotal :</td>
 						<td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
-						</tr> --}}
-						{{-- <tr style="background-color: #f5f5f500;" align="center">
+						</tr>
+						<tr style="background-color: #f5f5f500;" align="center">
 						<td></td>
 						<td></td>
 						<td></td>
@@ -402,7 +401,7 @@
 					<input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i})" autocomplete="off">
 						<datalist id="browsers" >
 							@foreach($productos as $index => $producto)
-								<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}" >
+								<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}" >
 							@endforeach
 						</datalist>
 				</td>
@@ -419,6 +418,7 @@
 				<td>
 					<input type='checkbox' id='check${i}' name='check[]'  class="form-control"  onclick="multi(${i})"  autocomplete="off"/>
 					<input type='hidden' id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
+					<input type='text' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
 					<input type='text' id='descuento${i}' name='descuento[]' disabled="disabled" class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
 				</td>
 				<td>
@@ -458,23 +458,33 @@
 
 		// Get the checkbox
 		var checkBox = document.getElementById(`check${a}`);
+		var cantidad = document.querySelector(`#cantidad${a}`).value;
+		var promedio_origina_descuento1=document.querySelector(`#precio_unitario_descuento${a}`).value;
+
 		if (checkBox.checked == true){
 			var descuento = document.querySelector(`#descuento${a}`).value;
+			
 			var precio = document.querySelector(`#precio${a}`).value;
-			var final= total-(total*descuento/100);
-
+			var promedio_original=document.querySelector(`#promedio_original${a}`).value;
+			
+			// var final= total-(total*descuento/100);
 			var multiplier = 100;
-			var final_decimal = Math.round(final * multiplier) / multiplier;  
 
-			var precio_uni=precio-(precio*descuento/100);
+			var precio_uni=precio-(promedio_original*descuento/100);
 			var precio_uni_dec=Math.round(precio_uni * multiplier) / multiplier;  
-			document.getElementById(`total${a}`).value = final_decimal;
+			
 			document.getElementById(`check_descuento${a}`).value = descuento;
 			document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
+
+			var promedio_origina_descuento=document.querySelector(`#precio_unitario_descuento${a}`).value;
+
+			var final=promedio_origina_descuento*cantidad;
+			var final_decimal = Math.round(final * multiplier) / multiplier;  
+			document.getElementById(`total${a}`).value = final_decimal;
 		} else {
 			var descuento = 0;
 			var precio = document.querySelector(`#precio${a}`).value;
-			var final= total-(total*descuento/100);
+			var final= cantidad*promedio_origina_descuento1;
 
 			var multiplier = 100;
 			var final_decimal = Math.round(final * multiplier) / multiplier;  
@@ -493,19 +503,19 @@
 		var multiplier2 = 100;
 		var total_tt = Math.round(total_t * multiplier2) / multiplier2;  
 
-		$('#sub_total').val(total_tt);
+		$('#total_final').val(total_tt);
 
-		var igv_valor={{$igv->renta}};
-		var subtotal = document.querySelector(`#sub_total`).value;
-		var igv=subtotal*igv_valor/100;
+		// var igv_valor={{$igv->renta}};
+		// var subtotal = document.querySelector(`#sub_total`).value;
+		// var igv=subtotal*igv_valor/100;
 
-		var igv_decimal = Math.round(igv * multiplier2) / multiplier2;  
-		var end=igv_decimal+parseFloat(subtotal);
+		// var igv_decimal = Math.round(igv * multiplier2) / multiplier2;  
+		// var end=igv_decimal+parseFloat(subtotal);
 
-		var end2 = Math.round(end * multiplier2) / multiplier2;  
+		// var end2 = Math.round(end * multiplier2) / multiplier2;  
 		
-		document.getElementById("igv").value = igv_decimal;
-		document.getElementById("total_final").value = end2;
+		// document.getElementById("igv").value = igv_decimal;
+		// document.getElementById("total_final").value = end2;
 	
 	}
 	</script>
@@ -545,9 +555,20 @@
 				var stock_r=stock_v_r[0];
 				var stock_v =reverseString(stock_v_r[0]);
 
+				var caracteres_space_3=reverse3.replace(stock_r,"");//obtiene la cadena articulo sin precio,descuento,con un espacio en blanco
+				var reverse4=caracteres_space_3.slice(1);//elimina el espacion en blanco de la cadena articulo sin precio
+			//para promedio_original
+				var prom_v_r=reverse4.split(separador,1);
+				var prom_r=prom_v_r[0];
+				var prom_v =reverseString(prom_v_r[0]);
+
+				console.log("el promedio original es: "+prom_v);
+				console.log("el strock es: "+stock_v)
+
 			document.getElementById(`precio${a}`).value = precio_v;
 			document.getElementById(`cantidad${a}`).value = 1;
 			document.getElementById(`precio_unitario_descuento${a}`).value = precio_v;
+			document.getElementById(`promedio_original${a}`).value = prom_v;
 			document.getElementById(`stock${a}`).value = stock_v; 
 			document.getElementById(`descuento${a}`).value = descuento_v;
 			document.getElementById(`check_descuento${a}`).value =0;  
