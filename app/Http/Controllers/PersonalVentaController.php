@@ -42,7 +42,14 @@ class PersonalVentaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {    
+        $this->validate($request,[
+            'id_personal' => ['required','unique:personal_ventas,id_personal'],
+        ],[
+            'id_personal.unique' => 'El vendedor ya ha sido registrado',
+           
+        ]);
+
       // Personal::create(request()->all());
         $personal_venta=new Personal_venta;
         $personal_venta->cod_vendedor=$request->get('cod_vendedor');
@@ -111,7 +118,25 @@ class PersonalVentaController extends Controller
      */
     public function destroy($id)
     {
+        
+    }
+   public function aprobar(Request $request, $id)
+    {
+       
          $registro=Ventas_registro::find($id);
+         // return $registro;
+        $registro->estado_aprobado='1';
+        $registro->save();
+        
+        return redirect()->route('vendedores.show', $registro->id_vendedor); 
+        // return redirect()->route('productos.index');
+
+
+    }
+    public function procesado(Request $request, $id)
+    {
+       
+        $registro=Ventas_registro::find($id);
         $registro->pago_efectuado='1';
         $registro->save();
         return redirect()->route('vendedores.show', $registro->id_vendedor); 

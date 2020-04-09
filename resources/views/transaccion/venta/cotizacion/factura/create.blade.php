@@ -21,13 +21,15 @@
 @endif
 
 @if($errors->any())
+<div style="padding-top: 20px;">
 			<div class="alert alert-danger">
                 <a class="alert-link" href="#">
 					@foreach ($errors->all() as $error)
-					<li>{{ $error }}</li>
+					<li style="color: red">{{ $error }}</li>
 					@endforeach
 				</a>
             </div>
+ </div>
 @endif
 
 
@@ -106,7 +108,7 @@
 							                    <label class="col-sm-2 col-form-label">Numero de Documento:</label>
 												<div class="col-sm-4">
 
-													<input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required value="{{ old('numero_documento')}}" autocomplete="off">
+													<input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required value="{{ old('numero_documento')}}" autocomplete="off" type="number">
 														<datalist id="browserdoc" >
 															@foreach($clientes as $cliente)
 																<option id="a">{{$cliente->numero_documento}} - existente</option>

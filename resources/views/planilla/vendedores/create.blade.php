@@ -8,6 +8,22 @@
 
 @section('content')
 
+@if($errors->any())
+     
+<div style="padding-top: 20px;">
+ <div class="alert alert-danger">
+                <a class="alert-link" href="#">
+          @foreach ($errors->all() as $error)
+          <li class="error">{{ $error }}</li>
+          @endforeach
+        </a>
+      </div>
+</div>
+@endif
+<style type="text/css">
+  .error{color: red}
+</style>
+
 <form action="{{ route('vendedores.store') }}"  enctype="multipart/form-data" method="post">
 						@csrf
 <div style="padding-top: 20px;padding-bottom: 50px">

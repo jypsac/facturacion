@@ -8,6 +8,7 @@ use App\Categoria;
 use App\Marca;
 use App\Estado;
 use App\Familia;
+use App\kardex_entrada_registro;
 use App\Moneda;
 use Illuminate\Http\Request;
 
@@ -19,7 +20,9 @@ class ProductosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
+
+    {   
+        // $stok=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
         $marcas=Marca::all();
         $productos=Producto::all();
         return view('maestro.catalogo.productos.index',compact('productos','marcas'));

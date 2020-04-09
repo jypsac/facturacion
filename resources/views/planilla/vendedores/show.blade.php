@@ -127,9 +127,9 @@
                                              <h4 align="center"> <strong>Nota: Una vez Aprobada no hay opcion de deshacer cambios</strong></h4>
                                                </h3>
                                                <p align="center">
-                                                   <form action="{{ route('registros.destroy', $listas->id)}}" method="POST">
-                                                   @csrf
-                                                   @method('delete')
+                                                   <form action="{{ route('vendedores.aprobar', $listas->id)}}" method="POST">
+                                                  @csrf 
+                                                  @method('put')
                                                    <center>
                                                    <button type="submit" class="btn btn-w-m btn-info">Aprobar</button>
                                               </form>
@@ -170,9 +170,9 @@
                                              <h4 align="center"> <strong>Nota: Una vez Aprobada no hay opcion de deshacer cambios</strong></h4>
                                                </h3>
                                                <p align="center">
-                                                   <form  action="{{ route('vendedores.destroy', $listas->id)}}" method="POST">
-                                                   @csrf
-                                                   @method('delete')
+                                                  <form action="{{ route('vendedores.procesado', $listas->id)}}" method="POST">
+                                                  @csrf 
+                                                  @method('put')
                                                    <center>
                                                    <button type="submit" class="btn btn-s-m btn-warning">Procesar</button>
                                               </form>

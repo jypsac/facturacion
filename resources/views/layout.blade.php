@@ -111,6 +111,7 @@
                         <ul class="nav nav-second-level collapse">
                             <li><a href="{{route('venta.index')}}">Ventas</a></li>
                             <li><a href="{{route('compra.index')}}">Compras</a></li>
+                            <li><a href="#">Almacen</a></li>
                             <li>
                                 <a href="#">Garantias</a>
                                 <ul class="nav nav-third-level">
