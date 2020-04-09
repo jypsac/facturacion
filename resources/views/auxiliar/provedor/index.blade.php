@@ -56,7 +56,7 @@
                                 <td>{{$provedor->empresa}}</td>
                                 <td>{{$provedor->direccion}}</td>
                                 <td>{{$provedor->telefonos}}</td>
-                                <td>{{$provedor->email}}</td>
+                                <td>{{$provedor->email_provedor}}</td>
                                 <td><center><a href="{{ route('provedor.show', $provedor->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>{{-- 
                                 <td><center><a href="{{ route('provedor.edit', $provedor->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
                                 {{-- <td>

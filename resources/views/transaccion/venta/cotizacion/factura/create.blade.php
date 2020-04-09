@@ -28,7 +28,7 @@
 					@endforeach
 				</a>
             </div>
-			@endif
+@endif
 
 
 	<div class="social-bar">
@@ -270,7 +270,7 @@
 												<input list="browsersc2" class="form-control m-b" name="comisionista" required value="{{ old('nombre')}}" autocomplete="off">
 										<datalist id="browsersc2" >
 											@foreach($p_venta as $p_ventas)
-												<option id="{{$p_ventas->id}}">{{$p_ventas->personal->numero_documento}} - {{$p_ventas->personal->nombres}}</option>
+												<option id="{{$p_ventas->id}}">{{$p_ventas->personal->personal_l->numero_documento}} - {{$p_ventas->personal->personal_l->nombres}}</option>
 											@endforeach
 										 </datalist>
 											</div>
@@ -297,6 +297,8 @@
 								<th style="width: 100px;font-size: 13px">Precio</th>
 								<th style="width: 100px;font-size: 13px">Descuento</th>
 								<th style="width: 100px;font-size: 13px">PU. Dsto.</th>
+								<th style="width: 100px;font-size: 13px">Comision</th>
+								<th style="width: 100px;font-size: 13px">PU. Comision.</th>
 								<th style="width: 100px;font-size: 13px">Total</th>
 							</tr>
 						</thead>
@@ -322,6 +324,8 @@
 									<input type='text' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
 									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
 								<td><input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" /></td>
+								<td><input type='text'   disabled="disabled" class="form-control"  required  autocomplete="off" /></td>
+								<td><input type='text'   disabled="disabled" class="form-control"  required  autocomplete="off" /></td>
 								<td><input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" /></td>
 								<span id="spTotal"></span>
 							</tr>
@@ -329,6 +333,8 @@
 						</tbody><br>
 						<tbody>
 						<tr style="background-color: #f5f5f500;" align="center">
+						<td></td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -345,10 +351,14 @@
 						<td></td>
 						<td></td>
 						<td></td>
+						<td></td>
+						<td></td>
 						<td>IGV :</td>
 						<td><input id='igv'  disabled="disabled" class="form-control" required /></td>
 						</tr>
 						<tr  align="center">
+						<td></td>
+						<td></td>
 						<td></td>
 						<td></td>
 						<td></td>
@@ -424,6 +434,9 @@
 				<td>
 					<input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
 				</td>
+				<td><input type='text'   disabled="disabled" class="form-control"  required  autocomplete="off" /></td>
+								<td><input type='text'   disabled="disabled" class="form-control"  required  autocomplete="off" /></td>
+								
 				<td>
 					<input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
 				</td>
