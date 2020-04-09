@@ -321,7 +321,7 @@
 								<td><input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
 								<td><input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
 									<input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
-									<input type='text' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
+									<input type='hidden' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
 									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
 								<td><input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" /></td>
 								<td><input type='text'   disabled="disabled" class="form-control"  required  autocomplete="off" /></td>
@@ -428,7 +428,7 @@
 				<td>
 					<input type='checkbox' id='check${i}' name='check[]'  class="form-control"  onclick="multi(${i})"  autocomplete="off"/>
 					<input type='hidden' id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
-					<input type='text' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
+					<input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
 					<input type='text' id='descuento${i}' name='descuento[]' disabled="disabled" class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
 				</td>
 				<td>
