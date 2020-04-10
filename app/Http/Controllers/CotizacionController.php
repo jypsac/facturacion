@@ -51,7 +51,7 @@ class CotizacionController extends Controller
         $clientes=Cliente::all();
         $moneda=Moneda::all();
         $personales=Personal::all();
-        $p_venta=Personal_venta::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
         
         return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));

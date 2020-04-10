@@ -38,10 +38,10 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Cod-Vendedor</th>
                                                 <th>Nombres</th>
                                                 <th>Apellidos</th>
                                                 <th>Nª Documento</th>
-                                                <th>Celular</th>
                                                 <th>Correo</th>
                                                 <th>Tipo Trabajador</th>
                                                 <th>Comision %</th>
@@ -55,10 +55,10 @@
                                         @foreach($vendedores as $vendedor)
                                             <tr class="gradeX">
                                                 <td>{{$vendedor->id}}</td>
+                                                <td>{{$vendedor->cod_vendedor}}</td>
                                                 <td>{{$vendedor->personal->personal_l->nombres}}</td>
                                                 <td>{{$vendedor->personal->personal_l->apellidos}}</td>
                                                 <td>{{$vendedor->personal->personal_l->numero_documento}}</td>
-                                                <td>{{$vendedor->personal->personal_l->celular}}</td>
                                                 <td>{{$vendedor->personal->personal_l->email}}</td>
                                                 <td>{{$vendedor->personal->tipo_trabajador}}</td>
                                                 <td>% {{$vendedor->comision}}</td>

@@ -273,7 +273,7 @@
 										<datalist id="browsersc2" >
 
 											@foreach($p_venta as $p_ventas)
-												<option id="{{$p_ventas->id}}">{{$p_ventas->personal->personal_l->numero_documento}} - {{$p_ventas->personal->personal_l->nombres}}</option>
+												<option id="{{$p_ventas->id}}">{{$p_ventas->personal->personal_l->numero_documento}} - {{$p_ventas->personal->personal_l->nombres}} - {{$p_ventas->cod_vendedor}}</option>
 												
 											@endforeach
 										 </datalist>
