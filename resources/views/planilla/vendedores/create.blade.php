@@ -41,8 +41,9 @@
           <p>
             <select class="form-control" name="id_personal" required="required">
               <option value="">Seleccione Trabajador</option>
+
                @foreach($personal as $personals)
-              <option value="{{$personals->id}}">{{$personals->personal_l->nombres}} - {{$personals->tipo_trabajador}}</option>
+                             <option value="{{$personals->id}}">{{$personals->personal_l->nombres}} - {{$personals->tipo_trabajador}}</option>
                @endforeach
             </select></p>  
 

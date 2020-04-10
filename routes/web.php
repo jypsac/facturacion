@@ -16,6 +16,8 @@ Route::group(
 		Route::resource('/vendedores','PersonalVentaController');
 		Route::put('vendedores/aprobar/{id}', 'PersonalVentaController@aprobar')->name('vendedores.aprobar');
 		Route::put('vendedores/procesado/{id}', 'PersonalVentaController@procesado')->name('vendedores.procesado');
+		
+		Route::put('vendedores/estado/{id}', 'PersonalVentaController@estado')->name('vendedores.estado');
 
 
 		Route::resource('/registros','Ventas_registroController');

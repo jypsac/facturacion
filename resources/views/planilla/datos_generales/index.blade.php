@@ -43,6 +43,7 @@
                                                 <th>NR DOCUMENTO</th>
                                                 <th>Celular</th>
                                                 <th>Correo</th>
+                                                <th>Estado</th>
                                                 <th>Foto</th>
                                                 <th>Ver</th>
                                                 {{-- <th>EDITAR</th> --}}
@@ -58,6 +59,7 @@
                                                 <td>{{$personal->numero_documento}}</td>
                                                 <td>{{$personal->celular}}</td>
                                                 <td>{{$personal->email}}</td>
+                                                <td>{{$personal->estado_trabajador_laboral}}</td>
                                                 <td><img src="
                                                     {{ asset('/profile/images/')}}/{{$personal->foto}}" style="width: 45px;">
                                                 </td>

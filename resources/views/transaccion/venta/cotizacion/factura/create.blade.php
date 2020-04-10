@@ -271,8 +271,10 @@
 												<!-- <input type="text" name="comisionista" class="form-control"> -->
 												<input list="browsersc2" class="form-control m-b" name="comisionista" required value="{{ old('nombre')}}" autocomplete="off">
 										<datalist id="browsersc2" >
+
 											@foreach($p_venta as $p_ventas)
 												<option id="{{$p_ventas->id}}">{{$p_ventas->personal->personal_l->numero_documento}} - {{$p_ventas->personal->personal_l->nombres}}</option>
+												
 											@endforeach
 										 </datalist>
 											</div>

@@ -63,7 +63,7 @@ class PersonalDatosLaboralesController extends Controller
         $personal->forma_pago=$request->get('forma_pago');
         $personal->salario=$request->get('salario');
         $personal->categoria_ocupacional=$request->get('categoria_ocupacional');
-        $personal->estado_trabajador=$request->get('estado_trabajador');
+        $personal->estado_trabajador='Activo';
         $personal->sede=$request->get('sede');
         $personal->turno=$request->get('turno');
         $personal->departamento_area=$request->get('departamento_area');
@@ -120,6 +120,13 @@ class PersonalDatosLaboralesController extends Controller
      */
     public function update(Request $request, $id)
     {
+         // //Personal Estado
+        $id_personal_estado=$request->get('id_personal');
+        
+        $personal_estado=Personal::find($id_personal_estado);
+        $personal_estado->estado_trabajador_laboral=$request->get('estado_trabajador');
+        $personal_estado->save();
+
         $personal=Personal_datos_laborales::find($id);
         $id_personal=$request->get('id_personal');
         $personal->fecha_vinculacion=$request->get('fecha_vinculacion');

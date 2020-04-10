@@ -78,15 +78,26 @@
               <option value="Ejecutivo">Ejecutivo</option>
             </select>
           </p>
+            <h4>Tipo Contrato</h4>
+          <p>
+          <select class="form-control" name="tipo_contrato">
+              <option value="Idefinido">Indefinido</option>
+              <option value="Fijo">Fijo</option>
+              <option value="Temporal">Temporal</option>
+              <option value="Practicante">Practicante</option>
+              <option value="Obra o Labor">Obra o Labor</option>
+              <option value="Sin Contrato">Sin Contrato</option>
+            </select></p>
 
-            <h4>Estado Del Trbajador</h4>
+
+            <!-- <h4>Estado Del Trbajador</h4>
           <p>
            <select class="form-control" name="estado_trabajador">
               <option value="Activo">Activo</option>
               <option value="Retirado">Retirado</option>
               <option value="Vacaciones">Vacaciones</option>
               <option value="Descanso medico">Descanso medico</option>
-            </select></p>
+            </select></p> -->
 
         </div>
         <div class="col-lg-6">
@@ -191,7 +202,7 @@
           <h4>Notas</h4>
           <p><input type="text" class="form-control" name="notas" ></p>
 
-          <h4>Tipo Contrato</h4>
+        <!--   <h4>Tipo Contrato</h4>
           <p>
           <select class="form-control" name="tipo_contrato">
               <option value="Idefinido">Indefinido</option>
@@ -201,7 +212,7 @@
               <option value="Obra o Labor">Obra o Labor</option>
               <option value="Sin Contrato">Sin Contrato</option>
             </select></p>
-
+ -->
         </div>
 
       </div>

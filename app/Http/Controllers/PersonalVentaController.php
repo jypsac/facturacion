@@ -31,7 +31,7 @@ class PersonalVentaController extends Controller
 
         $personal_contador= Personal_venta::all()->count();
         $suma=$personal_contador+1;
-        $personal=Personal_datos_laborales::all();
+        $personal=Personal_datos_laborales::where('estado_trabajador','Activo')->get();
         return view('planilla.vendedores.create', compact('personal','suma'));
     }
 
@@ -140,6 +140,15 @@ class PersonalVentaController extends Controller
         $registro->pago_efectuado='1';
         $registro->save();
         return redirect()->route('vendedores.show', $registro->id_vendedor); 
+
+    }
+     public function estado(Request $request, $id)
+    {
+       
+        $personal_venta=Personal_venta::find($id);
+        $personal_venta->estado=$request->get('numero');
+        $personal_venta->save();
+        return redirect()->route('vendedores.index'); 
 
     }
 }
