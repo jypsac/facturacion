@@ -18,30 +18,91 @@
   <a  class="btn btn-success" href="{{ route('cliente.edit', $cliente_show->id) }}" role="button"> <i class="fa fa-edit"></i></a>
   <br><br>
       <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>Direccion:</h4>
-          <p>{{$cliente_show->direccion}}</p><hr>
 
-          <h4>Telefono:</h4>
-          <p>{{$cliente_show->telefono}}</p><hr>
+        <div class="col-lg-12">
 
-          <h4>Email:</h4>
-          <p>{{$cliente_show->email}}</p><hr>
+          <div class="row">
+            <div class="col-lg-4"> 
+              <h4>Nombre:</h4>
+               <p>{{$cliente_show->nombre}}</p>
+            </div>
+            <div class="col-lg-4"> 
+              <h4>Direccion:</h4>
+               <p>{{$cliente_show->direccion}}</p>
+            </div>
+            <div class="col-lg-4"> 
+              <h4>Email:</h4>
+          <p>{{$cliente_show->email}}</p>
+            </div>
+          </div><hr>
+
+          <div class="row">
+            <div class="col-lg-4"> 
+              <h4>Pais:</h4>
+          <p>{{$cliente_show->pais}}</p>
+            </div>
+            <div class="col-lg-4"> 
+              <h4>Departamento:</h4>
+          <p>{{$cliente_show->departamento}}</p>
+            </div>
+            <div class="col-lg-4"> 
+              <h4>Ciudad:</h4>
+          <p>{{$cliente_show->ciudad}}</p>
+            </div>
+          </div><hr>
+
+          <div class="row">
+            <div class="col-lg-4"> 
+              <h4>Codigo Postal:</h4>
+          <p>{{$cliente_show->cod_postal}}</p>
+            </div>
+            <div class="col-lg-4"> 
+             <h4>Telefono:</h4>
+          <p>{{$cliente_show->numero_documento}}</p>
+            </div>
+            <div class="col-lg-4"> 
+              <h4>Celular:</h4>
+          <p>{{$cliente_show->celular}}</p>
+            </div>
+            
+          </div><hr>
+
+          <div class="row">
+            <div class="col-lg-4"> 
+              <h4>Documento De Identifiacion:</h4>
+          <p>{{$cliente_show->documento_identificacion}}</p>
+            </div>
+            <div class="col-lg-4"> 
+             <h4>Numero Documento:</h4>
+          <p>{{$cliente_show->numero_documento}}</p>
+            </div>
+            <div class="col-lg-4"> 
+              <h4>Tipo de Cliente:</h4>
+          <p>{{$cliente_show->tipo_cliente}}</p>
+            </div>
+            
+          </div><hr>
+
+          <div class="row">
+            <div class="col-lg-4"> 
+              <h4>Fecha de Aniversario:</h4>
+          <p>{{$cliente_show->aniversario}}</p>
+            </div>
+            <div class="col-lg-4"> 
+             <h4>Fecha de Registro:</h4>
+          <p>{{$cliente_show->fecha_registro}}</p>
+            </div>
+            <!-- <div class="col-lg-4"> 
+              <h4>Tipo de Cliente:</h4>
+          <p>{{$cliente_show->tipo_cliente}}</p>
+            </div> -->
+            
+          </div><hr>
+
+
         </div>
 
-        <div class="col-lg-6">
-          <h4>Tipo de Documento:</h4>
-          <p>{{$cliente_show->documento_identificacion}}</p><hr>
-
-          <h4>Numero de Documento:</h4>
-          <p>{{$cliente_show->numero_documento}}</p><hr>
-
-          <h4>Celular:</h4>
-          <p>{{$cliente_show->celular}}</p><hr>
-
-        </div>
-
-    </div> 
+    </div>
 
 {{--Contacto  --}}
 <p aling='rigth'><a class="btn btn-primary" href="{{ route('contacto.crear',$cliente_show->id) }}"> Agregar Contacto</a></p>

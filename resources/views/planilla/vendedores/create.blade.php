@@ -8,6 +8,22 @@
 
 @section('content')
 
+@if($errors->any())
+     
+<div style="padding-top: 20px;">
+ <div class="alert alert-danger">
+                <a class="alert-link" href="#">
+          @foreach ($errors->all() as $error)
+          <li class="error">{{ $error }}</li>
+          @endforeach
+        </a>
+      </div>
+</div>
+@endif
+<style type="text/css">
+  .error{color: red}
+</style>
+
 <form action="{{ route('vendedores.store') }}"  enctype="multipart/form-data" method="post">
 						@csrf
 <div style="padding-top: 20px;padding-bottom: 50px">
@@ -25,8 +41,9 @@
           <p>
             <select class="form-control" name="id_personal" required="required">
               <option value="">Seleccione Trabajador</option>
+
                @foreach($personal as $personals)
-              <option value="{{$personals->id}}">{{$personals->personal_l->nombres}} - {{$personals->tipo_trabajador}}</option>
+                             <option value="{{$personals->id}}">{{$personals->personal_l->nombres}} - {{$personals->tipo_trabajador}}</option>
                @endforeach
             </select></p>  
 

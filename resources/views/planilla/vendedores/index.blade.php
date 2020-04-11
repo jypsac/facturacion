@@ -38,14 +38,15 @@
                                         <thead>
                                             <tr>
                                                 <th>ID</th>
+                                                <th>Cod-Vendedor</th>
                                                 <th>Nombres</th>
                                                 <th>Apellidos</th>
                                                 <th>Nª Documento</th>
-                                                <th>Celular</th>
                                                 <th>Correo</th>
                                                 <th>Tipo Trabajador</th>
                                                 <th>Comision %</th>
                                                 <th>Ver</th>
+                                                <th>Estado</th>
                                                 {{-- <th>EDITAR</th> --}}
                                                 {{-- <th>Eliminar</th> --}}
                                             </tr>
@@ -54,24 +55,33 @@
                                         @foreach($vendedores as $vendedor)
                                             <tr class="gradeX">
                                                 <td>{{$vendedor->id}}</td>
+                                                <td>{{$vendedor->cod_vendedor}}</td>
                                                 <td>{{$vendedor->personal->personal_l->nombres}}</td>
                                                 <td>{{$vendedor->personal->personal_l->apellidos}}</td>
                                                 <td>{{$vendedor->personal->personal_l->numero_documento}}</td>
-                                                <td>{{$vendedor->personal->personal_l->celular}}</td>
                                                 <td>{{$vendedor->personal->personal_l->email}}</td>
                                                 <td>{{$vendedor->personal->tipo_trabajador}}</td>
                                                 <td>% {{$vendedor->comision}}</td>
-                                                <td><center><a href="{{ route('vendedores.show', $vendedor->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>{{-- 
-                                                <td><center><a href="{{ route('vendedores.edit', $vendedor->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
-                                               {{--  <td>
+                                                <td><center><a href="{{ route('vendedores.show', $vendedor->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
+                                                <td>
                                                     <center>
-                                                        <form action="{{ route('personal.destroy', $personal->id)}}" method="POST">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
+                                                        @if($vendedor->estado=='0')
+                                                        <form action="{{ route('vendedores.estado', $vendedor->id)}}" method="POST">
+                                                             @csrf 
+                                                             @method('put')
+                                                             <input type="text" name="numero" value="1" hidden="hidden">
+                                                            <button type="submit" class="btn btn-s-m btn-danger">Desactivar</button>
                                                         </form>
+                                                        @elseif($vendedor->estado=='1')
+                                                        <form action="{{ route('vendedores.estado', $vendedor->id)}}" method="POST">
+                                                             @csrf 
+                                                             @method('put')
+                                                             <input type="text" name="numero" value="0" hidden="hidden">
+                                                            <button type="submit" class="btn btn-s-m btn-success">Activar</button>
+                                                        </form>
+                                                        @endif
                                                     </center>
-                                                </td> --}}
+                                                </td> 
                                             </tr>
                                         @endforeach
                                     </tbody>

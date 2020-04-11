@@ -37,6 +37,16 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
+         $this->validate($request,[
+            'nombre' => ['required','unique:clientes,nombre'],
+            'numero_documento' => ['required','unique:clientes,numero_documento'],
+            'email' => ['required','email','unique:clientes,email'],
+        ],[
+            'nombre.unique' => 'El Cliente ya ha sido registrado',
+            'nombre.numero_documento' => 'El numero de documentacion ya ha sido registrado',
+            'nombre.email' => 'El correo ya existe'
+        ]);
+         
         $data = $request->all();
 
         $cliente= new Cliente;
@@ -45,9 +55,18 @@ class ClienteController extends Controller
         $cliente->email=$request->get('email');
         $cliente->telefono=$request->get('telefono');
         $cliente->celular=$request->get('celular');
-        $cliente->empresa=$request->get('empresa');
+        // $cliente->empresa=$request->get('empresa');
         $cliente->documento_identificacion=$request->get('documento_identificacion');
         $cliente->numero_documento=$request->get('numero_documento');
+        
+        $cliente->ciudad=$request->get('ciudad');
+        $cliente->departamento=$request->get('departamento');
+        $cliente->pais=$request->get('pais');
+        $cliente->tipo_cliente=$request->get('tipo_cliente');
+        $cliente->aniversario=$request->get('aniversario');
+        $cliente->cod_postal=$request->get('cod_postal');
+        $cliente->fecha_registro=$request->get('fecha_registro');
+
         $cliente->save();
 
         $this->storecontact($data);

@@ -78,13 +78,6 @@ class Ventas_registroController extends Controller
      */
     public function destroy($id)
     {
-         $registro=Ventas_registro::find($id);
-         // return $registro;
-        $registro->estado_aprobado='1';
-        $registro->save();
-        
-        return redirect()->route('vendedores.show', $registro->id_vendedor); 
-        // return redirect()->route('productos.index');
     }
   
 

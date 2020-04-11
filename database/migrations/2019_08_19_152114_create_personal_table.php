@@ -29,6 +29,7 @@ class CreatePersonalTable extends Migration
             $table->string('nivel_educativo');
             $table->string('profesion');
             $table->string('direccion');
+            $table->string('estado_trabajador_laboral');
             $table->boolean('estado');
             $table->string('foto')->default('perfil.svg');
             $table->timestamps();

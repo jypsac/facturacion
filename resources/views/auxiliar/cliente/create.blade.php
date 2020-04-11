@@ -7,7 +7,17 @@
 @section('value_accion', 'atras')
 
 @section('content')
-
+@if($errors->any())
+<div style="padding-top: 20px;">
+      <div class="alert alert-danger">
+                <a class="alert-link" href="#">
+          @foreach ($errors->all() as $error)
+          <li style="color: red">{{ $error }}</li>
+          @endforeach
+        </a>
+            </div>
+ </div>
+@endif
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -58,19 +68,33 @@
 									</div>
 									<div class="form-group">
 										<label>Numero de Documento *</label>
-										<input type="text" class="form-control" name="numero_documento" class="form-control required">
+										<input type="text" class="form-control" name="numero_documento" class="form-control required" required="required">
 									</div>
 								</div>
 
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label>Nombre *</label>
-										<input type="text" class="form-control" name="nombre" class="form-control required">
+										<input type="text" class="form-control" name="nombre" class="form-control required"  required="required">
 									</div>
 
 									<div class="form-group">
 										<label>Direccion *</label>
-										<input type="text" class="form-control" name="direccion" class="form-control required">
+										<input type="text" class="form-control" name="direccion" class="form-control required" required="required">
+									</div>
+								</div>
+								<!--  -->
+								<div class="col-lg-12">
+									<div class="row">
+									<div class="form-group col-lg-6 ">
+										<label>Correo *</label>
+										<input  name="email" type="text" class="form-control required " required="required">
+									</div>
+
+									<div class="form-group col-lg-6">
+										<label>Ciudad *</label>
+										<input type="text" class="form-control" name="ciudad" class="form-control required" required="required">
+									</div>
 									</div>
 								</div>
 
@@ -81,28 +105,62 @@
 						<h1>Informacion</h1>
 						<fieldset>
 							<h2>Informacion II</h2>
-							<div class="row">
+							<div class="row" style="padding-bottom: 50px">
+
+								<div class="col-lg-12">
+									<div class="row">
+									<div class="form-group col-lg-6 ">
+										<label>Telefono *</label>
+										<input value="5200000" type="number" class="form-control" name="telefono" class="form-control required">
+									</div>
+
+									<div class="form-group col-lg-6">
+										<label>Departamento *</label>
+										<input value="Lima" type="text" class="form-control" name="departamento" class="form-control required">
+									</div>
+									</div>
+								</div>
+
+								<div class="col-lg-12">
+									<div class="row">
+									<div class="form-group col-lg-6 ">
+										<label>Celular *</label>
+										<input value="92000000" type="number" class="form-control" name="celular" class="form-control required">
+									</div>
+
+									<div class="form-group col-lg-6">
+										<label>Pais *</label>
+										<input value="Perú" type="text" class="form-control" name="pais" class="form-control required">
+									</div>
+									</div>
+								</div>
+
+
 								<div class="col-lg-6">
 									<div class="form-group">
-										<label>Celular *</label>
-										<input type="number" class="form-control" name="celular" class="form-control required">
+										<label>Tipo Cliente *</label>
+										<select class="form-control" name="tipo_cliente">
+											<option value="Cliente Frecuente">Cliente Frecuente</option>
+											<option value="Cliente Revendedor">Cliente Revendedor</option>
+											<option value="Cliente VIP">Cliente VIP</option>
+										</select>
 									</div>
 									<div class="form-group">
-										<label>Empresas *</label>
-										<input type="text" class="form-control" name="empresa" class="form-control required">
+										<label>Aniversario *</label>
+										<input value="2020-07-22" type="date" class="form-control" name="aniversario" class="form-control required">
 									</div>
 								</div>
 
 								<div class="col-lg-6">
 
 									<div class="form-group">
-										<label>correo *</label>
-										<input id="email" name="email" type="text" class="form-control required email">
+										<label>Codigo Postal *</label>
+										<input value="01" name="cod_postal" type="text" class="form-control required ">
 									</div>
 
 									<div class="form-group">
-										<label>Telefono *</label>
-										<input type="number" class="form-control" name="telefono" class="form-control required">
+										<label>Fecha Registro *</label>
+										<input value="{{date("Y-m-d")}}" type="date" class="form-control" name="fecha_registro" class="form-control required">
 									</div>
 
 								</div>
@@ -116,27 +174,27 @@
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label>Nombre *</label>
-										<input id="name" name="nombre_contacto" type="text" class="form-control required">
+										<input id="name" name="nombre_contacto" type="text" class="form-control required" value="Contacto">
 									</div>
 									<div class="form-group">
 										<label>Cargo *</label>
-										<input id="surname" name="cargo_contacto" type="text" class="form-control required">
+										<input id="surname" name="cargo_contacto" type="text" class="form-control required" value="Cargo">
 									</div>
 								</div>
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label>	Telefono *</label>
-										<input id="email" name="telefono_contacto" type="text" class="form-control required">
+										<input id="email" name="telefono_contacto" type="text" class="form-control required" value="0050000">
 									</div>
 									<div class="form-group">
 										<label>Celular *</label>
-										<input id="address" name="celular_contacto" type="text" class="form-control required">
+										<input id="address" name="celular_contacto" type="text" class="form-control required" value="951000000">
 									</div>
 								</div>
 								<div class="col-lg-6">
 									<div class="form-group">
 										<label>	Correo *</label>
-										<input id="email" name="email_contacto" type="text" class="form-control required email">
+										<input id="email" name="email_contacto" type="text" class="form-control required email" value="correo@contanto.com">
 									</div>
 								</div>
 							</div>
@@ -155,7 +213,9 @@
 </div>
 
 
-
+<style type="text/css">
+	.content{height: 380px}
+</style>
 
 
 

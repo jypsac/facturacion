@@ -23,6 +23,15 @@ class CreateClientesTable extends Migration
             $table->string('empresa')->nullable();
             $table->string('documento_identificacion');
             $table->string('numero_documento')->unique();
+            // Nuevo
+            $table->string('ciudad')->nullable();
+            $table->string('departamento')->nullable();
+            $table->string('pais')->nullable();
+            $table->string('tipo_cliente')->nullable();
+            $table->string('cod_postal')->nullable();
+            $table->string('aniversario')->nullable();
+            $table->string('fecha_registro')->nullable();
+            // 
             $table->timestamps();
         });
 

@@ -14,6 +14,12 @@ Route::group(
 		Route::resource('/almacen','AlmacenController');
 		Route::resource('/categoria','CategoriaController');
 		Route::resource('/vendedores','PersonalVentaController');
+		Route::put('vendedores/aprobar/{id}', 'PersonalVentaController@aprobar')->name('vendedores.aprobar');
+		Route::put('vendedores/procesado/{id}', 'PersonalVentaController@procesado')->name('vendedores.procesado');
+		
+		Route::put('vendedores/estado/{id}', 'PersonalVentaController@estado')->name('vendedores.estado');
+
+
 		Route::resource('/registros','Ventas_registroController');
 
 		Route::post('/cliente/contac','ClienteController@storecontact')->name('cliente.storecontact');

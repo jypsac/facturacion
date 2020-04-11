@@ -31,7 +31,7 @@ class PersonalVentaController extends Controller
 
         $personal_contador= Personal_venta::all()->count();
         $suma=$personal_contador+1;
-        $personal=Personal_datos_laborales::all();
+        $personal=Personal_datos_laborales::where('estado_trabajador','Activo')->get();
         return view('planilla.vendedores.create', compact('personal','suma'));
     }
 
@@ -42,7 +42,14 @@ class PersonalVentaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
+    {    
+        $this->validate($request,[
+            'id_personal' => ['required','unique:personal_ventas,id_personal'],
+        ],[
+            'id_personal.unique' => 'El vendedor ya ha sido registrado',
+           
+        ]);
+
       // Personal::create(request()->all());
         $personal_venta=new Personal_venta;
         $personal_venta->cod_vendedor=$request->get('cod_vendedor');
@@ -111,10 +118,37 @@ class PersonalVentaController extends Controller
      */
     public function destroy($id)
     {
+        
+    }
+   public function aprobar(Request $request, $id)
+    {
+       
          $registro=Ventas_registro::find($id);
+         // return $registro;
+        $registro->estado_aprobado='1';
+        $registro->save();
+        
+        return redirect()->route('vendedores.show', $registro->id_vendedor); 
+        // return redirect()->route('productos.index');
+
+
+    }
+    public function procesado(Request $request, $id)
+    {
+       
+        $registro=Ventas_registro::find($id);
         $registro->pago_efectuado='1';
         $registro->save();
         return redirect()->route('vendedores.show', $registro->id_vendedor); 
+
+    }
+     public function estado(Request $request, $id)
+    {
+       
+        $personal_venta=Personal_venta::find($id);
+        $personal_venta->estado=$request->get('numero');
+        $personal_venta->save();
+        return redirect()->route('vendedores.index'); 
 
     }
 }
