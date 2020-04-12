@@ -43,7 +43,7 @@ class ProductosTableSeeder extends Seeder
 		]);
 		DB::table('productos')->insert([
 			'id' => 2 ,
-			'codigo_producto' => 'HP-0002',
+			'codigo_producto' => 'HP-0001',
 			'codigo_original' => 'AS-WW-0021',
 			'nombre' =>'HP LAPTOP 14-CM0007LA' ,
 			'utilidad' => '30',
@@ -72,7 +72,7 @@ class ProductosTableSeeder extends Seeder
 
 		DB::table('productos')->insert([
 			'id' => 3 ,
-			'codigo_producto' => 'ADVA-0002',
+			'codigo_producto' => 'ADVA-0001',
 			'codigo_original' => 'EE-ZZ-0002',
 			'nombre' =>'Celuar Xiaomi Mi8 Mi 8 6GB RAM 128GB ROM - Negro' ,
 			'utilidad' => '40',

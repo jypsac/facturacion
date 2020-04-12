@@ -38,7 +38,7 @@ class CotizacionController extends Controller
      */
     public function create_factura()
     {
-        $productos=Producto::where('estado_id',1)->where('estado_anular',1)->get();
+        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
         foreach ($productos as $index => $producto) {
             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;

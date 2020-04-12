@@ -269,12 +269,16 @@
 					 						<label class="col-sm-2 col-form-label">Comisionista:</label>
 											<div class="col-sm-10">
 												<!-- <input type="text" name="comisionista" class="form-control"> -->
-												<input list="browsersc2" class="form-control m-b" name="comisionista" required value="{{ old('nombre')}}" autocomplete="off">
+												<input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="{{ old('nombre')}}" autocomplete="off">
 										<datalist id="browsersc2" >
 
 											@foreach($p_venta as $p_ventas)
+<<<<<<< HEAD
+												<option id="{{$p_ventas->id}}">{{$p_ventas->personal->personal_l->numero_documento}} - {{$p_ventas->personal->personal_l->nombres}} - {{$p_ventas->comision}}</option>
+=======
 												<option id="{{$p_ventas->id}}">{{$p_ventas->personal->personal_l->numero_documento}} - {{$p_ventas->personal->personal_l->nombres}} - {{$p_ventas->cod_vendedor}}</option>
 												
+>>>>>>> 3c35904c930da6b83d27c83a7c5caca38ff2477e
 											@endforeach
 										 </datalist>
 											</div>
@@ -320,17 +324,33 @@
 										</datalist>
 										
 								</td>
-								<td><input type='text' id='stock0' disabled="disabled" name='stock[]' class="form-control" required  autocomplete="off"/></td>
-								<td><input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" /></td>
-								<td><input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" /></td>
-								<td><input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
+								<td>
+									<input type='text' id='stock0' disabled="disabled" name='stock[]' class="form-control" required  autocomplete="off"/>
+								</td>
+								<td>
+									<input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
+								</td>
+								<td>
+									<input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
+								</td>
+								<td>
+									<input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
 									<input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
 									<input type='hidden' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
-									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/></td>
-								<td><input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" /></td>
-								<td><input type='text'   disabled="disabled" class="form-control"  required  autocomplete="off" /></td>
-								<td><input type='text'   disabled="disabled" class="form-control"  required  autocomplete="off" /></td>
-								<td><input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" /></td>
+									<input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/>
+								</td>
+								<td>
+									<input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" />
+								</td>
+								<td>
+									<input type='text' id='comision0'  disabled="disabled" class="form-control"  required  autocomplete="off" />
+								</td>
+								<td>
+									<input type='text' id='precio_unitario_comision0'  disabled="disabled" class="form-control"  required  autocomplete="off" />
+								</td>
+								<td>
+									<input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
+								</td>
 								<span id="spTotal"></span>
 							</tr>
 
@@ -438,8 +458,12 @@
 				<td>
 					<input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
 				</td>
-				<td><input type='text'   disabled="disabled" class="form-control"  required  autocomplete="off" /></td>
-								<td><input type='text'   disabled="disabled" class="form-control"  required  autocomplete="off" /></td>
+				<td>
+					<input type='text' id='comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
+				</td>
+				<td>
+					<input type='text' id='precio_unitario_comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
+				</td>
 								
 				<td>
 					<input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
@@ -590,6 +614,17 @@
 			document.getElementById(`descuento${a}`).value = descuento_v;
 			document.getElementById(`check_descuento${a}`).value =0;  
 
+			//comision
+			var comision=document.querySelector(`#comisionista`).value;
+			//revirtiendo la cadena
+			var reverse9=reverseString(comision);//devuelve toda la cadena articulo al reves
+			//para comision
+				var comision_v_r=reverse9.split(separador,1); //devuelve el precio en objeto al revez
+				var comision_r=comision_v_r[0];//obtiene el precio del objeto [0] al revez
+				var comision_v =reverseString(comision_v_r[0]);//convierte el precio al revez a la normalidad
+			console.log(comision_v);
+			
+			document.getElementById(`comision${a}`).value = comision_v;
 		}
 	</script>
 

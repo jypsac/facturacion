@@ -55,17 +55,23 @@ class ProductosController extends Controller
         // categoria Abreviatura
         $categoria=$request->get('categoria_id');
         $id_igual=Categoria::where('id','=',$categoria)->first();
+
         $nombre_cate=$id_igual->descripcion;
         $cate = substr($nombre_cate, 0, 1);
         // marca abrebiatura
         $marca=$request->get('marca_id');
         $id_igual_marca=Marca::where('id','=',$marca)->first();
         $nombre_marca=$id_igual_marca->abreviatura;
-
+        $contador=1000000;
         $guion='-';
-        $ceros='0000';
-        $codigo_producto=$cate.$nombre_marca.$ceros;
+        $code=Producto::count();
+        $code++;
+        $num=$contador+$code;
+        $string_code=(string)$num;
+        $code_final=substr($string_code,1);
+        $codigo_producto=$cate.$guion.$nombre_marca.$guion.$code_final;
         
+        // return $codigo_producto;
 
         if($request->hasfile('foto')){
             $image1 =$request->file('foto');
