@@ -18,12 +18,14 @@ class AddForeignKeyPeriodoConsultaTable extends Migration
             $table->unsignedBigInteger('almacen_id');
             $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
 
+            $table->unsignedBigInteger('categoria_id');
+            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
+
             $table->text('informacion');
 
             $table->timestamps();
         });
     }
-
     /**
      * Reverse the migrations.
      *

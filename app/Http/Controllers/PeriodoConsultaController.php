@@ -6,6 +6,7 @@ use App\PeriodoConsulta;
 use App\kardex_entrada;
 use App\kardex_entrada_registro;
 use App\Almacen;
+use App\Categoria;
 use Illuminate\Http\Request;
 
 class PeriodoConsultaController extends Controller
@@ -28,8 +29,9 @@ class PeriodoConsultaController extends Controller
      */
     public function create()
     {
+        $categorias=Categoria::all();
         $almacenes=Almacen::all();
-        return view('inventario.periodo-consulta.create',compact('almacenes'));
+        return view('inventario.periodo-consulta.create',compact('almacenes','categorias'));
     }
 
     /**
@@ -41,13 +43,16 @@ class PeriodoConsultaController extends Controller
     public function store(Request $request)
     {
         $registro=new PeriodoConsulta;
-        $registro->nombre=$request->input('nombre');
+        // $registro->nombre=$request->input('nombre');
+        $registro->nombre='consulta';
+        $registro->fecha=$request->input('fecha');
         $registro->almacen_id=$request->input('almacen');
+        $registro->categoria_id=$request->input('categoria');
         $registro->informacion=$request->input('informacion');
         $registro->save();
 
         //Ubicacion de alamacen+
-        $kardex_entrada_almacen=kardex_entrada::where('almacen_id',$registro->almacen_id)->get();
+        $kardex_entrada_almacen=kardex_entrada::where('almacen_id',$registro->almacen_id)->where('categoria_id',$registro->categoria_id)->get();
 
         foreach($kardex_entrada_almacen as $kardex_entrada_alm){
             $periodo_registro=kardex_entrada_registro::where('estado','1')->where('kardex_entrada_id',$kardex_entrada_alm->id)->get();

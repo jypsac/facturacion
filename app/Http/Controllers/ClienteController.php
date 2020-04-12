@@ -26,7 +26,8 @@ class ClienteController extends Controller
      */
     public function create()
     {
-        return view('auxiliar.cliente.create');
+        $clientes=Cliente::all();
+        return view('auxiliar.cliente.create',compact('clientes'));
     }
 
     /**

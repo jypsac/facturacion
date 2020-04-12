@@ -16,6 +16,7 @@ class CreatePeriodoConsultaTable extends Migration
         Schema::create('periodo_consulta', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('nombre');
+            $table->string('fecha');
         });
     }
 

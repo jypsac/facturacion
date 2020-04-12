@@ -35,31 +35,56 @@
 					<form action="{{ route('periodo-consulta.store') }}"  enctype="multipart/form-data" method="post">
                          @csrf
 
-					 	<div class="form-group row ">
-							<label class="col-sm-2 col-form-label" >Nombre:</label>
-							    <div class="col-sm-10">
-                                    <input type="text" class="form-control" name="nombre">
-							    </div>
-                        </div>
 
-                        <div class="form-group row ">
-							<label class="col-sm-2 col-form-label" >Almacen:</label>
-							    <div class="col-sm-10">
-                                    <select class="form-control" name="almacen">
-                                         @foreach($almacenes as $almacen)
-                                            <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
-                                        @endforeach
-                                    </select>
-							    </div>
-                        </div>
 
-                        <div class="form-group row ">
-							<label class="col-sm-2 col-form-label">Informacion:</label>
-                                <div class="col-sm-10">
-                                    <textarea class="form-control" name="informacion"></textarea>
+                        <div class="row">
+                            <div class="col-lg-12">
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                            <div class="row">
+                                            <label class="col-sm-2 col-form-label" >Fecha:</label>
+                                             <div class="col-sm-10">
+                                                 <input type="date" class="form-control" name="fecha" value="{{date("Y-m-d")}}">
+                                             </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                            <div class="row">
+                                             <label class="col-sm-2 col-form-label" >Almacen:</label>
+                                             <div class="col-sm-10">
+                                             <select class="form-control" name="almacen">
+                                                 @foreach($almacenes as $almacen)
+                                                <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
+                                                @endforeach
+                                            </select>
+                                            </div>
+                                            </div>
+                                    </div><br>
+                                    <div class="col-sm-6" style="margin-top: 5px">
+                                            <div class="row">
+                                             <label class="col-sm-2 col-form-label" >Categoria:</label>
+                                             <div class="col-sm-10">
+                                             <select class="form-control" name="categoria">
+                                                @foreach($categorias as $categoria)
+                                                <option value="{{$categoria->id}}">{{$categoria->descripcion}}</option>
+                                                 @endforeach
+                                            </select>
+                                            </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-sm-6" style="margin-top: 5px">
+                                            <div class="row">
+                                             <label class="col-sm-3 col-form-label">Informacion:</label>
+                                             <div class="col-sm-9">
+                                             <textarea class="form-control" name="informacion"></textarea>
+                                             </div>
+                                             </div>
+                                    </div>
+                                
                                 </div>
-						</div>
-
+                             
+                            </div>
+                        </div>
 
 						<button class="btn btn-primary" type="submit">Guardar</button>
 
