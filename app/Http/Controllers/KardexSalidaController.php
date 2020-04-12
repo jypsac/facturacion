@@ -33,7 +33,7 @@ class KardexSalidaController extends Controller
     public function create()
     {
         $motivos=Motivo::all();
-        $productos=Producto::all();
+        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         return view('inventario.kardex.salida.create',compact('motivos','productos'));
     }
 

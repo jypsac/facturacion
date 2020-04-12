@@ -62,7 +62,7 @@ class KardexEntradaController extends Controller
      */
     public function create()
     {
-        $productos=Producto::all();
+        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         $provedores=Provedor::all();
         $almacenes=Almacen::all();
         $motivos=Motivo::all();

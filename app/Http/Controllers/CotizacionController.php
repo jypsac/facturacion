@@ -48,7 +48,7 @@ class CotizacionController extends Controller
         }
 
         $forma_pagos=Forma_pago::all();
-        $clientes=Cliente::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
         $moneda=Moneda::all();
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();

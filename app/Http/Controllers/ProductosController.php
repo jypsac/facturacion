@@ -52,6 +52,13 @@ class ProductosController extends Controller
      */
     public function store(Request $request )
     {
+
+        $this->validate($request,[
+            'codigo_original' => ['required','unique:productos,codigo_original'],
+        ]
+        );
+
+
         // categoria Abreviatura
         $categoria=$request->get('categoria_id');
         $id_igual=Categoria::where('id','=',$categoria)->first();

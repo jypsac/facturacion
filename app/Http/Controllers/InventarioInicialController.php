@@ -37,7 +37,7 @@ class InventarioInicialController extends Controller
     {
         $almacen=$request->get('almacen');
         $clasificacion=$request->get('clasificacion');
-        $productos=Producto::all();
+        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         $provedores=Provedor::all();
         return view('inventario.inventario-inicial.create',compact('productos','almacen','clasificacion','provedores'));
 
