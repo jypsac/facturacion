@@ -269,16 +269,11 @@
 					 						<label class="col-sm-2 col-form-label">Comisionista:</label>
 											<div class="col-sm-10">
 												<!-- <input type="text" name="comisionista" class="form-control"> -->
-												<input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="{{ old('nombre')}}" autocomplete="off">
+												<input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="{{ old('nombre')}}" onkeyup="comision()" autocomplete="off">
 										<datalist id="browsersc2" >
 
 											@foreach($p_venta as $p_ventas)
-<<<<<<< HEAD
 												<option id="{{$p_ventas->id}}">{{$p_ventas->personal->personal_l->numero_documento}} - {{$p_ventas->personal->personal_l->nombres}} - {{$p_ventas->comision}}</option>
-=======
-												<option id="{{$p_ventas->id}}">{{$p_ventas->personal->personal_l->numero_documento}} - {{$p_ventas->personal->personal_l->nombres}} - {{$p_ventas->cod_vendedor}}</option>
-												
->>>>>>> 3c35904c930da6b83d27c83a7c5caca38ff2477e
 											@endforeach
 										 </datalist>
 											</div>
@@ -343,7 +338,7 @@
 									<input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" />
 								</td>
 								<td>
-									<input type='text' id='comision0'  disabled="disabled" class="form-control"  required  autocomplete="off" />
+									<input type='text' name="1" id='comision0'  disabled="disabled" class="form-control"  required  autocomplete="off" />
 								</td>
 								<td>
 									<input type='text' id='precio_unitario_comision0'  disabled="disabled" class="form-control"  required  autocomplete="off" />
@@ -459,7 +454,7 @@
 					<input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
 				</td>
 				<td>
-					<input type='text' id='comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
+					<input type='text' name'${i}' id='comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
 				</td>
 				<td>
 					<input type='text' id='precio_unitario_comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
@@ -468,7 +463,6 @@
 				<td>
 					<input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
 				</td>
-				
 				
 			</tr>`;
             $('table').append(data);
@@ -481,10 +475,45 @@
 		var print_input=1;
 		document.getElementById("prints").value = print_input;
 		var estado = document.querySelector("#prints").value;
-		console.log(estado);
+		// console.log(estado);
+	}
+
+	function comision(){
+		
+			//comision
+			var comision=document.querySelector(`#comisionista`).value;
+			var separador=" ";
+			//revirtiendo la cadena
+			var reverse9=reverseString(comision);//devuelve toda la cadena articulo al reves
+			//para comision
+				var comision_v_r=reverse9.split(separador,1); //devuelve el precio en objeto al revez
+				var comision_r=comision_v_r[0];//obtiene el precio del objeto [0] al revez
+				var comision_v =reverseString(comision_v_r[0]);//convierte el precio al revez a la normalidad
+			
+			var campos_num = document.getElementsByClassName("total").length;
+
+			console.log(comision_v);
+
+			document.getElementById(`comision0`).value = comision_v;
+
+			if(campos_num!=1){
+				for(var i=2;i<=campos_num;i++){
+				document.getElementById(`comision${i}`).value = comision_v;
+				}
+			}
+			multi(0);
+			if(campos_num!=1){
+				for(var i=2;i<=campos_num;i++){
+					multi(i);
+				}
+			}
+			
+		
 	}
 	
 	function multi(a){
+		
+			
 		var total = 1;
 		var totales=0;
 		var change= false; //
@@ -501,37 +530,47 @@
 		var checkBox = document.getElementById(`check${a}`);
 		var cantidad = document.querySelector(`#cantidad${a}`).value;
 		var promedio_origina_descuento1=document.querySelector(`#precio_unitario_descuento${a}`).value;
+		var promedio_original2=document.querySelector(`#promedio_original${a}`).value;
 
 		if (checkBox.checked == true){
 			var descuento = document.querySelector(`#descuento${a}`).value;
-			
 			var precio = document.querySelector(`#precio${a}`).value;
 			var promedio_original=document.querySelector(`#promedio_original${a}`).value;
-			
-			// var final= total-(total*descuento/100);
+			var comision_porcentaje=document.querySelector(`#comision${a}`).value;
 			var multiplier = 100;
-
 			var precio_uni=precio-(promedio_original*descuento/100);
 			var precio_uni_dec=Math.round(precio_uni * multiplier) / multiplier;  
-			
+
 			document.getElementById(`check_descuento${a}`).value = descuento;
 			document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
 
-			var promedio_origina_descuento=document.querySelector(`#precio_unitario_descuento${a}`).value;
+			var comisiones=precio_uni_dec+(promedio_original*comision_porcentaje/100);
 
-			var final=promedio_origina_descuento*cantidad;
+			document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
+
+			var final=comisiones*cantidad;
 			var final_decimal = Math.round(final * multiplier) / multiplier;  
+
 			document.getElementById(`total${a}`).value = final_decimal;
 		} else {
 			var descuento = 0;
 			var precio = document.querySelector(`#precio${a}`).value;
-			var final= cantidad*promedio_origina_descuento1;
-
+			var comision_porcentaje=document.querySelector(`#comision${a}`).value;
+			var final= cantidad*precio;
+			var end=parseFloat(precio)+(parseFloat(promedio_original2)*parseInt(comision_porcentaje)/100);
+			var final2=cantidad*end;
 			var multiplier = 100;
 			var final_decimal = Math.round(final * multiplier) / multiplier;  
+
+			console.log("la promedio_origina_descuento1 es:"+  promedio_origina_descuento1);
+			console.log("la comision procentaje es:"+  comision_porcentaje);
+			console.log("la promedio_original2 procentaje es:"+   promedio_original2);
+			console.log("la end es:"+  end);
+
 			document.getElementById(`check_descuento${a}`).value = 0;
 			document.getElementById(`total${a}`).value = final_decimal;
 			document.getElementById(`precio_unitario_descuento${a}`).value = precio;
+			document.getElementById(`precio_unitario_comision${a}`).value = end;
 		}
 
 		var totalInp = $('[name="total"]'); 
@@ -604,7 +643,7 @@
 				var prom_v =reverseString(prom_v_r[0]);
 
 				console.log("el promedio original es: "+prom_v);
-				console.log("el strock es: "+stock_v)
+				console.log("el strock es: "+stock_v+"-------------")
 
 			document.getElementById(`precio${a}`).value = precio_v;
 			document.getElementById(`cantidad${a}`).value = 1;
@@ -622,9 +661,14 @@
 				var comision_v_r=reverse9.split(separador,1); //devuelve el precio en objeto al revez
 				var comision_r=comision_v_r[0];//obtiene el precio del objeto [0] al revez
 				var comision_v =reverseString(comision_v_r[0]);//convierte el precio al revez a la normalidad
-			console.log(comision_v);
+			// console.log(comision_v);
+			if(comision){
+				document.getElementById(`comision${a}`).value = comision_v;
+			}else{
+				document.getElementById(`comision${a}`).value = 0;
+			}
 			
-			document.getElementById(`comision${a}`).value = comision_v;
+			
 		}
 	</script>
 
@@ -644,8 +688,8 @@
 			var igv=parseFloat(subtotal)*igv_valor/100;
 			var end=parseFloat(igv)+parseFloat(subtotal);
 
-			console.log(typeof igv);
-			console.log(typeof end);
+			// console.log(typeof igv);
+			// console.log(typeof end);
 			document.getElementById("igv").value = igv;
 			document.getElementById("total_final").value = end;
 			});
