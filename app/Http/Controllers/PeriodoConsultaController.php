@@ -43,8 +43,8 @@ class PeriodoConsultaController extends Controller
     public function store(Request $request)
     {
         $registro=new PeriodoConsulta;
-        // $registro->nombre=$request->input('nombre');
-        $registro->nombre='consulta';
+        $registro->nombre=$request->input('nombre');
+        // $registro->nombre='consulta';
         $registro->fecha=$request->input('fecha');
         $registro->almacen_id=$request->input('almacen');
         $registro->categoria_id=$request->input('categoria');
@@ -80,7 +80,17 @@ class PeriodoConsultaController extends Controller
     {
         $periodo_consulta=PeriodoConsulta::find($id);
         $periodo_consulta_registros=PeriodoConsulta_registro::where('periodo_consulta_id',$id)->get();
+        // $periodo_consulta_registros_num=PeriodoConsulta_registro::where('periodo_consulta_id',$id)->count();
+
+        // for($i=0;$i< $periodo_consulta_registros_num;$i++){
+
+        //     if($periodo_consulta_registros[$i]->producto_id =){
+        //         $array[]= $periodo_consulta_registros[$i]->producto_id , $periodo_consulta_registros[$i]->cantidad;
+        //     }
+        // }   
+
         return view('inventario.periodo-consulta.show',compact('periodo_consulta','periodo_consulta_registros'));
+        // return  var_dump($array);
     }
 
     /**

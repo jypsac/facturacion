@@ -422,4 +422,21 @@ class CotizacionController extends Controller
     //     $atencion=$request->get('atencion');
     //     return view('transaccion.venta.cotizacion.fast_print',compact('atencion'));
     // }
+
+     public function print($id){
+        $moneda=Moneda::where('principal',1)->first();
+        $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+        foreach ($cotizacion_registro as $cotizacion_registros) {
+             $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+        }
+        
+        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
+        $cotizacion=Cotizacion::find($id);
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+
+        return view('transaccion.venta.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda"));
+        }
 }

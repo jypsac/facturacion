@@ -42,13 +42,21 @@
                                 <div class="row">
                                     <div class="col-sm-6">
                                             <div class="row">
+                                            <label class="col-sm-2 col-form-label" >Nombre:</label>
+                                             <div class="col-sm-10">
+                                                 <input type="text" class="form-control" name="nombre" readonly="readonly" value="{{auth()->user()->name}}">
+                                             </div>
+                                            </div>
+                                    </div>
+                                    <div class="col-sm-6">
+                                            <div class="row">
                                             <label class="col-sm-2 col-form-label" >Fecha:</label>
                                              <div class="col-sm-10">
                                                  <input type="date" class="form-control" name="fecha" value="{{date("Y-m-d")}}">
                                              </div>
                                             </div>
                                     </div>
-                                    <div class="col-sm-6">
+                                    <div class="col-sm-6" style="margin-top: 5px">
                                             <div class="row">
                                              <label class="col-sm-2 col-form-label" >Almacen:</label>
                                              <div class="col-sm-10">
@@ -59,7 +67,7 @@
                                             </select>
                                             </div>
                                             </div>
-                                    </div><br>
+                                    </div>
                                     <div class="col-sm-6" style="margin-top: 5px">
                                             <div class="row">
                                              <label class="col-sm-2 col-form-label" >Categoria:</label>
@@ -72,10 +80,10 @@
                                             </div>
                                             </div>
                                     </div>
-                                    <div class="col-sm-6" style="margin-top: 5px">
+                                    <div class="col-sm-12" style="margin-top: 5px">
                                             <div class="row">
-                                             <label class="col-sm-3 col-form-label">Informacion:</label>
-                                             <div class="col-sm-9">
+                                             <label class="col-sm-2 col-form-label">Informacion:</label>
+                                             <div class="col-sm-10">
                                              <textarea class="form-control" name="informacion"></textarea>
                                              </div>
                                              </div>

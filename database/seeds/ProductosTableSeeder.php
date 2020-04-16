@@ -14,7 +14,7 @@ class ProductosTableSeeder extends Seeder
     	DB::table('productos')->insert([
 			'id' => 1 ,
 			'codigo_producto' => 'EP-0001',
-			'codigo_original' => 'EE-EE-0001',
+			'codigo_original' => 'wew22',
 			'nombre' =>'Laptop Samsung Galaxy Book 12\"' ,
 			'utilidad' => '10',
 			'descuento1' => "10",
@@ -37,7 +37,7 @@ class ProductosTableSeeder extends Seeder
 			
 			'unidad_medida_id' => "2",
 			'estado_id' => "1",
-			'estado_anular'=>'0',
+			'estado_anular'=>'1',
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		]);

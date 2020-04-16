@@ -42,7 +42,7 @@ class ClientesSeeder extends Seeder
 			'telefono' => "95623" ,
 			'celular' => "9512354525",
 			'empresa' => "Perifericos S.A.C" ,
-			'documento_identificacion' => 'DNI',
+			'documento_identificacion' => 'Ruc',
 			'numero_documento' => "72586522",
 
 			'ciudad' => "Lima",
@@ -86,7 +86,7 @@ class ClientesSeeder extends Seeder
 			'telefono' => "546456" ,
 			'celular' => "786789657",
 			'empresa' => "San Luis S.A.C" ,
-			'documento_identificacion' => 'Pasaporte',
+			'documento_identificacion' => 'Ruc',
 			'numero_documento' => "2223243443",
 
 			'ciudad' => "Lima",

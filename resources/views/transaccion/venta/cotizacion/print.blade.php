@@ -1,29 +1,36 @@
-@extends('layout')
+<!DOCTYPE html>
+<html>
 
-@section('title', 'Cotizacion Ver')
-@section('breadcrumb', 'Cotizacion')
-@section('breadcrumb2', 'Cotizacion')
-@section('href_accion', route('cotizacion.index'))
-@section('value_accion', 'Atras')
+<head>
 
-@section('content')
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Cotizacion- Impresion</title>
 
-  <div class="wrapper wrapper-content animated fadeInRight">
-     <div class="ibox-title">
-                            <!-- <h5>Vista Previa</h5> -->
-                            <div class="ibox-tools">
-        @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
-                    <a class="btn btn-info" href="{{route('facturacion.create')}}">Factura</a>
-                    <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
-        @elseif($cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
-                     <a class="btn btn-success"  href="{{route('create.boleta')}}">Boleta</a>
-                     <a class="btn btn-info" href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
+    <script src="@yield('vue_js', '#')" defer></script>
 
-        @endif
-                            </div>
-                        </div>
+    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
+
+    {{-- FUNCION CERRAR AUTOMATICAMENTE --}}
+    <SCRIPT LANGUAGE="JavaScript">
+        function cerrar() {
+        window.close();
+        }
+    </SCRIPT>
+
+</head>
+
+{{-- LLAMADO AL BODY EN FUNCION CERRAR CON UNA DURACION DE 10 SEGUNDOS --}}
+<body class="white-bg" onLoad="setTimeout('cerrar()',1*1000)">
+<div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
             <div class="col-lg-12">
                     <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
@@ -213,18 +220,21 @@
     .form-control{border-radius: 10px; height: 150px;}
     .ibox-tools a{color: white !important}
 </style>
-    <!-- Mainly scripts -->
-    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
- <!-- Custom and plugin javascript -->
-    <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+    
 
-  
-@endsection
+
+
+<!-- Mainly scripts -->
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+
+    {{-- IMPRIMIR --}}
+    <script type="text/javascript">
+        window.print();
+    </script>

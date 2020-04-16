@@ -37,7 +37,7 @@
 											<div class="form-group row">
 												<label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
 												<div class="col-sm-10">
-													<input type="text" class="form-control"  value="{{$producto->codigo_original}}">
+													<input type="text" class="form-control" name="codigo_original" value="{{$producto->codigo_original}}">
 												</div>
 											</div>
 										

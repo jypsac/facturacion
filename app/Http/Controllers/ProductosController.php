@@ -167,6 +167,7 @@ class ProductosController extends Controller
 
         $producto=Producto::find($id);
         $producto->nombre=$request->get('nombre');
+        $producto->codigo_original=$request->get('codigo_original');
         $producto->descripcion=$request->get('descripcion');
         $producto->estado_id=$request->get('estado_id');
         $producto->origen=$request->get('origen');
@@ -193,6 +194,7 @@ class ProductosController extends Controller
     //     $producto=Producto::findOrFail($id);
     //     $producto->delete();
         $producto=Producto::find($id);
+        $producto->codigo_original='Codigo Anulado';
         $producto->estado_anular='0';
         $producto->save();
         
