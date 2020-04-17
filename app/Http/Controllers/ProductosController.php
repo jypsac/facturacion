@@ -194,7 +194,7 @@ class ProductosController extends Controller
     //     $producto=Producto::findOrFail($id);
     //     $producto->delete();
         $producto=Producto::find($id);
-        $producto->codigo_original='Codigo Anulado';
+        $producto->codigo_original='Codigo Anulado N°'.$id;
         $producto->estado_anular='0';
         $producto->save();
         
