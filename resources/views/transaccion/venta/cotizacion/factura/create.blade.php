@@ -243,11 +243,11 @@
 						 			<label class="col-sm-2 col-form-label">Validez:</label>
 										<div class="col-sm-10">
 									<select  class="form-control" name="validez" required="required">
-										<option value="1 Día">1 Día</option>
-										<option value="2 Días">2 Días</option>
-										<option value="3 Días">3 Días</option>
-										<option value="4 Días">4 Días</option>
 										<option value="5 Días">5 Días</option>
+										<option value="4 Días">4 Días</option>
+										<option value="3 Días">3 Días</option>
+										<option value="2 Días">2 Días</option>
+										<option value="1 Día">1 Día</option>
 									</select>
 									</div>
 					 			</div><br><br>
@@ -257,10 +257,10 @@
 										<div class="col-sm-10">
 										<!-- <input type="text" class="form-control" name="referencia" > -->
 										<select class="form-control" name="garantia">
-											<option value="6 meses">6 Meses</option>
 											<option value="1 año">1 Año</option>
 											<option value="2 años">2 Años</option>
 											<option value="3 años">3 Años</option>
+											<option value="6 meses">6 Meses</option>
 										</select>
 										</div>
 					 			</div><br>
@@ -298,10 +298,10 @@
 								<th style="width: 100px;font-size: 13px">Stock</th>
 								<th style="width: 100px;font-size: 13px">Cantidad</th>
 								<th style="width: 100px;font-size: 13px">Precio</th>
-								<th style="width: 100px;font-size: 13px">Descuento</th>
-								<th style="width: 100px;font-size: 13px">PU. Dsto.</th>
+								<th style="width: 100px;font-size: 13px">Dcto</th>
+								<th style="width: 100px;font-size: 13px">PU. Dcto.</th>
 								<th style="width: 100px;font-size: 13px">Comision</th>
-								<th style="width: 100px;font-size: 13px">PU. Comision.</th>
+								<th style="width: 100px;font-size: 13px">PU. Com.</th>
 								<th style="width: 100px;font-size: 13px">Total</th>
 							</tr>
 						</thead>

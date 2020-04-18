@@ -22,6 +22,16 @@ class PersonalVentasTableSeeder extends Seeder
 			'created_at' => date('2019-08-01 00:00:00'),
             'updated_at' => date('2019-08-01 00:00:00'),
 		]);
+        DB::table('personal_ventas')->insert([
+            'id' => 2 ,
+            'id_personal' => '1',
+            'cod_vendedor' => 'VE002',
+            'tipo_comision' => 'Porcentaje de Venta' ,
+            'comision' => '0',
+            'estado' => '0',
+            'created_at' => date('2019-08-01 00:00:00'),
+            'updated_at' => date('2019-08-01 00:00:00'),
+        ]);
 
     }
 }

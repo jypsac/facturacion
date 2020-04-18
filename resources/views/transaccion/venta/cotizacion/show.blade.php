@@ -13,10 +13,10 @@
                             <!-- <h5>Vista Previa</h5> -->
                             <div class="ibox-tools">
         @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
-                    <a class="btn btn-info" href="{{route('facturacion.create')}}">Factura</a>
+                    <a class="btn btn-info" href="{{route('cotizacion.facturar' , $cotizacion->id)}}">Facturar</a>
                     <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
         @elseif($cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
-                     <a class="btn btn-success"  href="{{route('create.boleta')}}">Boleta</a>
+                     <a class="btn btn-success"  href="{{route('create.boleta')}}">Boletear</a>
                      <a class="btn btn-info" href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
 
 
@@ -54,7 +54,7 @@
                                     <div class="form-control"><h3>Contanto Cliente</h3>
                                         <div align="left">
                                             <strong>Nombre:</strong> &nbsp;{{$cotizacion->cliente->nombre}}<br>
-                                            <strong>Ruc/DNI:</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>{{$cotizacion->cliente->documento_identificacion}} :</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <strong>Fecha:</strong> &nbsp;{{$cotizacion->created_at}}<br>
                                             <strong>Direccion:</strong>&nbsp; {{$cotizacion->cliente->direccion}}<br>
                                             <strong>Telefono:</strong>&nbsp; {{$cotizacion->cliente->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

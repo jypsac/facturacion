@@ -40,6 +40,7 @@ Route::group(
 		Route::get('/cotizacion/create_factura' , 'CotizacionController@create_factura')->name('cotizacion.create_factura');
 		Route::post('/cotizacion/store_factura','CotizacionController@store_factura')->name('cotizacion.store_factura');
 		Route::get('/cotizacion/print_cotizacion/{id}' , 'CotizacionController@print')->name('cotizacion.print');
+		Route::get('/cotizacion/facturar/{id}' , 'CotizacionController@facturar')->name('cotizacion.facturar');
 
 		Route::resource('/cotizacion','CotizacionController');
 

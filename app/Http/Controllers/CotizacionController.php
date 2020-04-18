@@ -13,6 +13,7 @@ use App\Empresa;
 use App\Cotizacion_factura_registro;
 use App\Cotizacion_boleta_registro;
 use App\kardex_entrada_registro;
+use App\Facturacion;
 use App\Igv;
 use App\User;
 use App\Personal_venta;
@@ -439,4 +440,34 @@ class CotizacionController extends Controller
 
         return view('transaccion.venta.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda"));
         }
+
+
+         public function facturar($id)
+
+        {  
+        $moneda=Moneda::where('principal',1)->first();
+        $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+        foreach ($cotizacion_registro as $cotizacion_registros) {
+             $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+        }
+        
+        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
+        $cotizacion=Cotizacion::find($id);
+        /*Fecha vencimiento*/
+         $cotizacion_dias_pago= $cotizacion->forma_pago->dias;  
+         $fecha =date("d-m-Y");
+         $nuevafecha = strtotime ( '+'.$cotizacion_dias_pago.' day' , strtotime ( $fecha ) ) ;
+         $nuevafechas = date("d-m-Y", $nuevafecha );
+
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+
+        $personal_contador= Facturacion::all()->count();
+        $suma=$personal_contador+1;
+
+         return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda",'suma','nuevafechas'));
+        }
+        
 }
