@@ -145,15 +145,31 @@ class CotizacionController extends Controller
         $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
         // return $cliente_buscador->id;
 
+         $forma_pago_id=$request->get('forma_pago');
+         $formapago= Forma_pago::find($forma_pago_id);
+         $dias= $formapago->dias;
+        /*Fecha vencimiento*/
+         $fecha =date("d-m-Y");
+         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
+         $nuevafechas = date("d-m-Y", $nuevafecha );
+
+        $personal_contador= cotizacion::all()->count();
+        $suma=$personal_contador+1;
+        $cod_comision='CO-0000'.$suma;
+
+
         $cotizacion=new Cotizacion;
         $cotizacion->cliente_id=$cliente_buscador->id;
         // $cotizacion->atencion=$request->get('atencion');
         $cotizacion->forma_pago_id=$request->get('forma_pago');
         $cotizacion->validez=$request->get('validez');
         $cotizacion->moneda_id=$request->get('moneda');
+        $cotizacion->cod_comision=$cod_comision;
         $cotizacion->garantia=$request->get('garantia');
         $cotizacion->user_id =auth()->user()->id;
         $cotizacion->observacion=$request->get('observacion');
+        $cotizacion->fecha_emision=$request->get('fecha_emision');
+        $cotizacion->fecha_vencimiento=$nuevafechas;
         $cotizacion->comisionista_id= $comisionista_buscador->id;
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
@@ -315,12 +331,18 @@ class CotizacionController extends Controller
         $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
         // return $cliente_buscador->id;
 
+        $personal_contador= cotizacion::all()->count();
+        $suma=$personal_contador+1;
+        $cod_comision='BO-0000'.$suma;
+
+
         $cotizacion=new Cotizacion;
         $cotizacion->cliente_id=$cliente_buscador->id;
         // $cotizacion->atencion=$request->get('atencion');
         $cotizacion->forma_pago_id=$request->get('forma_pago');
         $cotizacion->validez=$request->get('validez');
         $cotizacion->moneda_id=$request->get('moneda');
+        $cotizacion->cod_comision=$cod_comision;
         $cotizacion->garantia=$request->get('garantia');
         $cotizacion->user_id =auth()->user()->id;
         $cotizacion->observacion=$request->get('observacion');
@@ -382,7 +404,11 @@ class CotizacionController extends Controller
         $igv=Igv::first();
         $sub_total=0;
 
-         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda"));
+        $id_fac_cli=Facturacion::where('id_cotizador',$id)->first();
+        $id_fac=$id_fac_cli->id;
+        // return  $id_fac;
+
+         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda",'id_fac'));
     }
 
     /**
@@ -451,23 +477,48 @@ class CotizacionController extends Controller
              $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
         }
         
-        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
         $cotizacion=Cotizacion::find($id);
         /*Fecha vencimiento*/
-         $cotizacion_dias_pago= $cotizacion->forma_pago->dias;  
-         $fecha =date("d-m-Y");
-         $nuevafecha = strtotime ( '+'.$cotizacion_dias_pago.' day' , strtotime ( $fecha ) ) ;
-         $nuevafechas = date("d-m-Y", $nuevafecha );
+         // $cotizacion_dias_pago= $cotizacion->forma_pago->dias;  
+         // $fecha =date("d-m-Y");
+         // $nuevafecha = strtotime ( '+'.$cotizacion_dias_pago.' day' , strtotime ( $fecha ) ) ;
+         // $nuevafechas = date("d-m-Y", $nuevafecha );
 
         $empresa=Empresa::first();
         $sum=0;
         $igv=Igv::first();
         $sub_total=0;
 
+        
+
         $personal_contador= Facturacion::all()->count();
         $suma=$personal_contador+1;
 
-         return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda",'suma','nuevafechas'));
+         return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda",'suma'));
         }
-        
-}
+
+
+         public function facturar_store(Request $request)
+        {   
+            // cambio de Estado Cotizador
+            $id_cotizador=$request->get('id_cotizador');
+            $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
+            $cotizacion->estado=1;
+            $cotizacion->save();
+
+            // Creacion de Facturacion
+            $facturar=new Facturacion;
+            $facturar->codigo_fac=$request->get('codigo_fac');
+            $facturar->id_cotizador=$request->get('id_cotizador');
+            $facturar->orden_compra=$request->get('orden_compra');
+            $facturar->guia_remision=$request->get('guia_remision');
+            $facturar->fecha_emision=$request->get('fecha_emision');
+            $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
+            $facturar->estado='0';
+            $facturar->save();
+
+            return redirect()->route('cotizacion.show',$id_cotizador);
+
+
+        }
+} 

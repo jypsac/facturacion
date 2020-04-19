@@ -72,7 +72,7 @@
                                             <td>{{$facturacions->codigo_fac}}</td>
                                             <td>{{$facturacions->cliente}}</td>
                                             <td>{{$facturacions->observacion}}</td>
-                                            <td><center><a href="{{route('boleta',$facturacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                            <td><center><a href="{{route('facturacion.show',$facturacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                             <td><center><a href="{{route('facturacion.edit',$facturacions->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td> 
                                             <td><center>
                                             <!--  <form action="" method="POST">

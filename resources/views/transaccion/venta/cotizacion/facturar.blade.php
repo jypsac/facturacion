@@ -10,6 +10,8 @@
 
  <div class="wrapper wrapper-content animated fadeInRight">
     
+     <form action="{{route('cotizacion.facturar_store')}}"  enctype="multipart/form-data" method="post">
+                            @csrf
             <div class="row">
             <div class="col-lg-12">
                     <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
@@ -31,6 +33,7 @@
                                             <h2>FACTURA ELECTRONICA</h2>   
                                             <h5> <!-- <input align="center" type="text" name="codigo_fac" value="FC-000{{$suma}}" class="form-control col-sm-4" readonly="" > --> FC-000{{$suma}}</h5>   
                                             <input type="text" value="{{$cotizacion->id}}" name="id_cotizador" hidden="hidden"> 
+                                            <input type="text" value="FC-000{{$suma}}" name="codigo_fac" hidden="hidden"> 
 
                                         </center>
                                     
@@ -47,14 +50,14 @@
                                 </tr>
                                 <tr>
     <td><b>Direccion</b></td><td style="width: 3px">:</td><td colspan="4"><input type="text" class="form-control" value="{{$cotizacion->cliente->direccion}}" readonly="readonly"><!-- </td><td></td><td></td><td></td> -->
-    <td><b>Orden de Compra</b></td><td>:</td><td><input type="text" class="form-control"  name=""></td>
+    <td><b>Orden de Compra</b></td><td>:</td><td><input type="text" class="form-control"  name="orden_compra"></td>
                                 </tr>
                                 <tr>
     <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td><td colspan="4"><input type="text" class="form-control" value="{{$cotizacion->forma_pago->nombre }}" readonly="readonly"><!-- </td><td></td><td></td><td></td> -->
-    <td><b>Guia Remision</b></td><td style="width: 3px">:</td><td><input type="text" class="form-control"  name=""></td>
+    <td><b>Guia Remision</b></td><td style="width: 3px">:</td><td><input type="text" class="form-control"  name="guia_remision"></td>
                                 </tr>
                                  <tr>
-    <td><b>Fecha Emision</b></td><td style="width: 3px">:</td><td><input type="date" class="form-control" value="{{date("Y-m-d")}}"  readonly="readonly" name=fecha_emision></td><td style="width: 180px"><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td><td style="width: 200px"><input type="text" class="form-control"  name="" value="{{$nuevafechas}}" readonly="readonly"></td>
+    <td><b>Fecha Emision</b></td><td style="width: 3px">:</td><td><input type="date" class="form-control" value="{{date("Y-m-d")}}"  readonly="readonly" name=fecha_emision></td><td style="width: 180px"><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td><td style="width: 200px"><input type="text" class="form-control"  name="fecha_vencimiento" value="{{$cotizacion->fecha_vencimiento }}" readonly="readonly"></td>
     <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td><td><input type="text" class="form-control" value="{{$cotizacion->moneda->nombre }}" readonly="readonly" ></td>
                                 </tr>
                                     </thead>
@@ -167,14 +170,13 @@
                                 </table>
                             </div><!-- /table-responsive -->
 
-                         
-                            
-
-                        
-                             
+                             <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
                         </div>
                 </div>
+                
             </div>
+
+                        </form>
         </div>
         
        
