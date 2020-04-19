@@ -7,9 +7,10 @@
 @section('value_accion', 'Atras')
 
 @section('content')
-
  <div class="wrapper wrapper-content animated fadeInRight">
-    
+    <!-- 
+     <form action="{{route('cotizacion.facturar_store')}}"  enctype="multipart/form-data" method="post">
+                            @csrf -->
             <div class="row">
             <div class="col-lg-12">
                     <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
@@ -18,18 +19,19 @@
                                     
                                     <address class="col-sm-4" align="left">
                                         
-                                        <img src="{{asset('img/logos/logo.png')}}" alt="" width="300px">
+                                        <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
                                     </address>
                                 </div>
                                 <div class="col-sm-4">
                                 </div> 
 
                                 <div class="col-sm-4 ">
-                                    <div class="form-control" style="height: 125px">
+                                    <div class="form-control ruc" style="height: 125px">
                                         <center>
-                                            <h3 style="padding-top:10px ">RUC : 202020202</h3>
+                                            <h3 style="padding-top:10px ">RUC : {{$empresa->ruc}}</h3>
                                             <h2>FACTURA ELECTRONICA</h2>   
-                                            <h5>FC11-0001213</h5>   
+                                            <h5> {{$facturacion->codigo_fac}}</h5>   
+
                                         </center>
                                     
                                     </div>
@@ -40,35 +42,40 @@
                                     <thead>
 
                                 <tr>
-    <td style="width: 170px"><b>Razon Social</b></td><td style="width: 3px">:</td><td style="width: 200px">Jyp perofe</td><td></td><td></td><td></td>
-    <td style="width: 140px"><b>RUC</b></td><td style="width: 3px">:</td><td >98998798</td>
+    <td style="width: 170px"><b>Razon Social</b></td><td style="width: 3px">:</td>
+    <td  colspan="4">{{$facturacion->cotizacion->cliente->nombre}}</td>
+
+    <td style="width: 100px"><b>RUC</b></td><td style="width: 3px">:</td><td  style="width: 150px">{{$facturacion->cotizacion->cliente->numero_documento}}</td>
                                 </tr>
                                 <tr>
-    <td><b>Direccion</b></td><td style="width: 3px">:</td><td>av jaja .com</td><td></td><td></td><td></td>
-    <td><b>Orden de Compra</b></td><td>:</td><td>xd</td>
+    <td><b>Direccion</b></td><td style="width: 3px">:</td>
+    <td colspan="4">{{$facturacion->cotizacion->cliente->direccion}}</td>
+
+    <td><b>Orden de Compra</b></td><td>:</td>
+    <td> {{$facturacion->orden_compra}}</td>
                                 </tr>
                                 <tr>
-    <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td><td>7 dias</td><td></td><td></td><td></td>
-    <td><b>Guia Remision</b></td><td style="width: 3px">:</td><td>xd</td>
+    <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td>
+    <td colspan="4">{{$facturacion->cotizacion->forma_pago->nombre }}</td>
+
+    <td><b>Guia Remision</b></td><td style="width: 3px">:</td>
+    <td> {{$facturacion->guia_remision}}</td>
                                 </tr>
                                  <tr>
-    <td><b>Fecha Emision</b></td><td style="width: 3px">:</td><td>14/02/2020</td><td style="width: 180px"><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td><td style="width: 200px">12/04/3020</td>
-    <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td><td>Soles</td>
+    <td><b>Fecha Emision</b></td><td style="width: 3px">:</td>
+    <td>{{$facturacion->cotizacion->fecha_emision}}</td>
+
+    <td ><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td>
+    <td >{{$facturacion->cotizacion->fecha_vencimiento }}</td>
+
+    <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td>
+    <td>{{$facturacion->cotizacion->moneda->nombre }}</td>
                                 </tr>
-                               
                                     </thead>
-                            </table>
+                            </table> 
 
                             <br>
-                            <div class="row">
-                                <div class="col-sm-12" >
-                                <h4>Observacion:</h4>
-                               
-                                </div>
-                            </div>
-
                            
-
                             <div class="table-responsive">
                                 <table class="table ">
                                     <thead>
@@ -157,20 +164,20 @@
                                     </tbody>
                                 </table>
                             </div><!-- /table-responsive -->
-
-                         
-                            
-
-                        
-                             
+<!-- 
+                             <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp; -->
                         </div>
                 </div>
+                
             </div>
+
+                        <!-- </form> -->
         </div>
         
        
 <style type="text/css">
-    .form-control{border-radius: 10px; height: 150px;}
+    .ruc{border-radius: 10px; height: 150px;}
+    .form-control{border-radius: 10px;}
 </style>
 
   <!-- Mainly scripts -->
