@@ -32,7 +32,7 @@ class AddForeignKeyCotizacionTable extends Migration
 
             // $table->string('comisionista_id');
             // $table->string('referencia')->nullable();
-            $table->unsignedBigInteger('comisionista_id');
+            $table->unsignedBigInteger('comisionista_id')->nullable();
             $table->foreign('comisionista_id')->references('id')->on('personal_ventas')->onDelete('cascade');
 
             $table->unsignedBigInteger('user_id');

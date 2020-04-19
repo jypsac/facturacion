@@ -54,7 +54,7 @@ class CotizacionController extends Controller
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
-        
+
         return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
     }
 
@@ -68,7 +68,7 @@ class CotizacionController extends Controller
     {
         //El input esta activo
 
-        // return $request;
+//         return $request;
 
         $print=$request->get('print');
         if($print==1){
@@ -93,7 +93,7 @@ class CotizacionController extends Controller
             }
 
             for($i=0;$i<$count_articulo;$i++){
-                
+
                 $cantidad[]=$request->input('cantidad')[$i];
                 $check_descuento[]=$request->input('check_descuento')[$i];
             }
@@ -132,10 +132,13 @@ class CotizacionController extends Controller
         // Comisionista cob¿nvertir id
 
         $comisionista=$request->get('comisionista');
-        $numero = strstr($comisionista, '-',true);
-        $numero_doc=personal::where('numero_documento',$numero)->first();
-        $id_personal=$numero_doc->id;
-        $comisionista_buscador=Personal_venta::where('id_personal',$id_personal)->first();
+        if($comisionista!="" and $comisionista!="Sin comision - 0"){
+            $numero = strstr($comisionista, '-',true);
+            $numero_doc=personal::where('numero_documento',$numero)->first();
+            $id_personal=$numero_doc->id;
+            $comisionista_buscador=Personal_venta::where('id_personal',$id_personal)->first();
+        }
+
 
 
         //Convertir nombre del cliente a id
@@ -170,7 +173,9 @@ class CotizacionController extends Controller
         $cotizacion->observacion=$request->get('observacion');
         $cotizacion->fecha_emision=$request->get('fecha_emision');
         $cotizacion->fecha_vencimiento=$nuevafechas;
-        $cotizacion->comisionista_id= $comisionista_buscador->id;
+        if($comisionista!="" and $comisionista!="Sin comision - 0"){
+            $cotizacion->comisionista_id= $comisionista_buscador->id;
+        }
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
         $cotizacion->save();
@@ -202,7 +207,7 @@ class CotizacionController extends Controller
                 }else{
                     $cotizacion_registro->precio_unitario_desc=$array;
                 }
-                
+
                 $cotizacion_registro->save();
             }
         }else {
@@ -279,7 +284,7 @@ class CotizacionController extends Controller
             }
 
             for($i=0;$i<$count_articulo;$i++){
-                
+
                 $cantidad[]=$request->input('cantidad')[$i];
                 $check_descuento[]=$request->input('check_descuento')[$i];
             }
@@ -318,10 +323,13 @@ class CotizacionController extends Controller
         // Comisionista convertir id
 
         $comisionista=$request->get('comisionista');
-        $numero = strstr($comisionista, '-',true);
-        $numero_doc=personal::where('numero_documento',$numero)->first();
-        $id_personal=$numero_doc->id;
-        $comisionista_buscador=Personal_venta::where('id_personal',$id_personal)->first();
+        if($comisionista!="" and $comisionista!="Sin comision - 0"){
+            $numero = strstr($comisionista, '-',true);
+            $numero_doc=personal::where('numero_documento',$numero)->first();
+            $id_personal=$numero_doc->id;
+            $comisionista_buscador=Personal_venta::where('id_personal',$id_personal)->first();
+        }
+
 
 
         //Convertir nombre del cliente a id
@@ -335,6 +343,15 @@ class CotizacionController extends Controller
         $suma=$personal_contador+1;
         $cod_comision='BO-0000'.$suma;
 
+        $forma_pago_id=$request->get('forma_pago');
+        $formapago= Forma_pago::find($forma_pago_id);
+        $dias= $formapago->dias;
+        /*Fecha vencimiento*/
+        $fecha =date("d-m-Y");
+        $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
+        $nuevafechas = date("d-m-Y", $nuevafecha );
+
+
 
         $cotizacion=new Cotizacion;
         $cotizacion->cliente_id=$cliente_buscador->id;
@@ -346,7 +363,11 @@ class CotizacionController extends Controller
         $cotizacion->garantia=$request->get('garantia');
         $cotizacion->user_id =auth()->user()->id;
         $cotizacion->observacion=$request->get('observacion');
-        $cotizacion->comisionista_id= $comisionista_buscador->id;
+        $cotizacion->fecha_emision=$request->get('fecha_emision');
+        $cotizacion->fecha_vencimiento=$nuevafechas;
+        if($comisionista!="" and $comisionista!="Sin comision - 0"){
+            $cotizacion->comisionista_id= $comisionista_buscador->id;
+        }
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
         $cotizacion->save();
@@ -378,7 +399,7 @@ class CotizacionController extends Controller
                 }else{
                     $cotizacion_registro->precio_unitario_desc=$array;
                 }
-                
+
                 $cotizacion_registro->save();
             }
         }else {
@@ -390,13 +411,14 @@ class CotizacionController extends Controller
 
 
     public function show($id)
-    {  
+    {
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+        $cotizacion_registro2=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
         foreach ($cotizacion_registro as $cotizacion_registros) {
              $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
         }
-        
+
         // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
         $cotizacion=Cotizacion::find($id);
         $empresa=Empresa::first();
@@ -404,11 +426,12 @@ class CotizacionController extends Controller
         $igv=Igv::first();
         $sub_total=0;
 
-        // $id_fac_cli=Facturacion::where('id_cotizador',$id)->first();
-        // $id_fac=$id_fac_cli->id;
-        // return  $id_fac;
-
-         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda"));
+        $regla=substr($cotizacion->cod_comision,0,-6);
+//        if ($regla=="CO"){
+//            RETURN "V";
+//        }
+//        return "d";
+         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla"));
     }
 
     /**
@@ -456,7 +479,7 @@ class CotizacionController extends Controller
         foreach ($cotizacion_registro as $cotizacion_registros) {
              $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
         }
-        
+
         // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
         $cotizacion=Cotizacion::find($id);
         $empresa=Empresa::first();
@@ -470,16 +493,16 @@ class CotizacionController extends Controller
 
          public function facturar($id)
 
-        {  
+        {
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
         foreach ($cotizacion_registro as $cotizacion_registros) {
              $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
         }
-        
+
         $cotizacion=Cotizacion::find($id);
         /*Fecha vencimiento*/
-         // $cotizacion_dias_pago= $cotizacion->forma_pago->dias;  
+         // $cotizacion_dias_pago= $cotizacion->forma_pago->dias;
          // $fecha =date("d-m-Y");
          // $nuevafecha = strtotime ( '+'.$cotizacion_dias_pago.' day' , strtotime ( $fecha ) ) ;
          // $nuevafechas = date("d-m-Y", $nuevafecha );
@@ -489,7 +512,7 @@ class CotizacionController extends Controller
         $igv=Igv::first();
         $sub_total=0;
 
-        
+
 
         $personal_contador= Facturacion::all()->count();
         $suma=$personal_contador+1;
@@ -499,7 +522,7 @@ class CotizacionController extends Controller
 
 
          public function facturar_store(Request $request)
-        {   
+        {
             // cambio de Estado Cotizador
             $id_cotizador=$request->get('id_cotizador');
             $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
@@ -521,4 +544,4 @@ class CotizacionController extends Controller
 
 
         }
-} 
+}

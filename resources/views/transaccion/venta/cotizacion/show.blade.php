@@ -27,7 +27,7 @@
 
                     <a class="btn btn-info" href="{{route('cotizacion.facturar' , $cotizacion->id)}}">Facturar</a>
 
-@elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )   
+@elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
 
                      <a class="btn btn-success"  href="{{route('create.boleta')}}">Boletear</a>
 @endif
@@ -39,24 +39,24 @@
                     <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
                             <div class="row">
                                 <div class="col-sm-4 text-left" align="left">
-                                    
+
                                     <address class="col-sm-4" align="left">
                                         <!-- <h5>De:</h5>
                                         <i class=" fa fa-user">:</i><strong > {{$empresa->nombre}}</strong><br>
                                         <i class=" fa fa-building">:</i> <br>
-                                        <i class="fa fa-phone">:</i>  --> 
+                                        <i class="fa fa-phone">:</i>  -->
                                         <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
                                     </address>
-                                </div> 
+                                </div>
                                 <div class="col-sm-4">
-                                </div> 
+                                </div>
 
                                 <div class="col-sm-3 ">
                                     <h4>{{$empresa->nombre}}</h4>
-                                    <h4>{{$empresa->ruc}}</h4>   
-                                    <h4>{{$empresa->calle}}</h4>   
+                                    <h4>{{$empresa->ruc}}</h4>
+                                    <h4>{{$empresa->calle}}</h4>
                                     <h4 class="text-navy">Cotizacion N°: 000{{$cotizacion->id}}</h4>
-                                    
+
                                 </div>
                             </div><br>
                             <div class="row">
@@ -79,15 +79,15 @@
                                             <strong>Forma De Pago:</strong> &nbsp;{{$cotizacion->forma_pago->nombre }}<br>
                                             <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
                                             <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br>
-                                            <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                             <strong>Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                            <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista->personal->personal_l->nombres}}
+{{--                                            <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista->personal->personal_l->nombres}}--}}
 
                                         </div>
                                     </div>
                                 </div>
-                               
-    
+
+
                             </div><br>
                             <div class="row">
                                 <div class="col-sm-12" >
@@ -106,13 +106,13 @@
                                         <th >Precio</th>
                                         <th >Descuento %</th>
                                         <th >PU_DES %</th>
-                                        <th >Valor venta</th> 
+                                        <th >Valor venta</th>
                                         <th style="display: none">S/.</th><!--
                                         <th style="background: #f3f3f4">Precio Total</th> -->
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    
+                                    @if ($regla=="CO")
                                       @foreach($cotizacion_registro as $cotizacion_registros)
                                     <tr>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
@@ -123,14 +123,16 @@
                                         <td>{{$cotizacion_registros->precio_unitario_desc}}</td>
                                         <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
                                         <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}
+                                            @if ($regla=="CO")
                                             S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                            @endif
                                         </td>
-                                        
+
                                     </tr>
-                                    
+
                                       @endforeach
-                                        
+
                                       <tr>
                                         <td></td>
                                         <td></td>
@@ -155,6 +157,7 @@
                                         </td>
                                         <td></td>
                                     </tr>
+
                                     <tr>
                                         <td></td>
                                         <td></td>
@@ -166,28 +169,60 @@
                                             S/.{{$end}}
                                         </td>
                                     </tr>
+                                      @else
+                                        @foreach($cotizacion_registro2 as $cotizacion_registros)
+                                            <tr>
+                                                <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
+                                                <td>{{$cotizacion_registros->producto->nombre}}</td>
+                                                <td>{{$cotizacion_registros->cantidad}}</td>
+                                                <td>S/.{{$cotizacion_registros->precio}}</td>
+                                                <td>{{$cotizacion_registros->descuento}}%</td>
+                                                <td>{{$cotizacion_registros->precio_unitario_desc}}</td>
+                                                <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
+                                                <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}
+                                                    @if ($regla=="CO")
+                                                        S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                                        {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                                    @endif
+                                                </td>
+
+                                            </tr>
+
+                                        @endforeach
+                                          <tr>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Total</td>
+                                              <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
+                                                  {{$end=round($sub_total, 2)}}
+                                              </td>
+                                          </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div><!-- /table-responsive -->
 
-                           
-                            
+
+
 
                         <footer style="padding-top: 150px">
-                       <div class="row">    
+                       <div class="row">
                             <div class="col-sm-6" align="left">
-                               
-    
+
+
 
                             <h3>
                             <?php $v=new CifrasEnLetras() ;
                             $letra=($v->convertirEurosEnLetras($end));
-                            
+
                             $letra_final = strstr($letra, 'soles',true);
 
                             $end_final=strstr($end, '.');
                             ?>
-                                
+
                                 {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
                                  </h3>
                             <table>
@@ -203,7 +238,7 @@
                                         <td style="width: 70px">Web</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
                                     </tr> --}}
                                 </table>
-                                
+
                             </div>
                             <div class="col-sm-6" align="center">
 
@@ -212,13 +247,13 @@
                             </div>
                        </div>
                         </footer>
-                             
+
                         </div>
                 </div>
             </div>
         </div>
-        
-       
+
+
 <style type="text/css">
     .form-control{border-radius: 10px; height: 150px;}
     .ibox-tools a{color: white !important}
@@ -236,5 +271,5 @@
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-  
+
 @endsection

@@ -269,9 +269,9 @@
                                         <label class="col-sm-2 col-form-label">Comisionista:</label>
                                         <div class="col-sm-10">
                                             <!-- <input type="text" name="comisionista" class="form-control"> -->
-                                            <input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="{{ old('nombre')}}" onkeyup="comision()" autocomplete="off">
+                                            <input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="Sin comision - 0" onkeyup="comision()" autocomplete="off">
                                             <datalist id="browsersc2" >
-
+                                                <option id="">Sin comision - 0 </option>
                                                 @foreach($p_venta as $p_ventas)
                                                     <option id="{{$p_ventas->id}}">{{$p_ventas->personal->personal_l->numero_documento}} - {{$p_ventas->personal->personal_l->nombres}} - <span style="color: red">{{$p_ventas->comision}}</span></option>
                                                 @endforeach
