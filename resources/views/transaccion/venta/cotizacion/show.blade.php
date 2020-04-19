@@ -21,7 +21,7 @@
                                         }
                                 </style>
 @if($cotizacion->estado == '1')
-     <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$id_fac)}}" >
+     <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="" >
          <!-- procesado --> </a>
 @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc' )
 
