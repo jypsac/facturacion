@@ -40,6 +40,9 @@ class AddForeignKeyCotizacionTable extends Migration
 
             $table->string('observacion')->nullable();
 
+            $table->string('fecha_emision');
+            $table->string('fecha_vencimiento');
+
             $table->boolean('estado');
 
             $table->boolean('estado_vigente');

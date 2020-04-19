@@ -235,7 +235,7 @@
 
                                         <label class="col-sm-2 col-form-label">Fecha de cotizacion:</label>
                                         <div class="col-sm-10">
-                                            <input type="datetime" name="fecha" class="form-control" value="{{date("d-m-Y")}}" disabled>
+                                            <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
                                         </div>
 
                                     </div><br>

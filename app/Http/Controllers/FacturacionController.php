@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Facturacion;
+use App\Empresa;
 use Illuminate\Http\Request;
 
 class FacturacionController extends Controller
@@ -48,8 +49,9 @@ class FacturacionController extends Controller
      */
     public function show($id)
     {
+         $empresa=Empresa::first();
         $facturacion=Facturacion::find($id);
-       return view('transaccion.venta.facturacion.show', compact('facturacion'));
+       return view('transaccion.venta.facturacion.show', compact('facturacion','empresa'));
     }
     
     public function show_boleta(Request $request,$id)

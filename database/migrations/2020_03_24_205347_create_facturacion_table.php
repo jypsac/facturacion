@@ -16,9 +16,7 @@ class CreateFacturacionTable extends Migration
         Schema::create('facturacion', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->string('codigo_fac');
-            $table->string('cliente');
-            $table->string('observacion');
-            $table->timestamps();
+
         });
     }
 

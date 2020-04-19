@@ -59,10 +59,11 @@
                                             <th>ID</th>
                                             <th>Codigo de Factura</th>
                                             <th>Cliente</th>
-                                            <th>Observacion</th>
+                                            <th>Ruc/DNI</th>
+                                            <th>Fecha Vencimiento</th>
                                             <th>Ver</th> 
-                                            <th>EDITAR</th>
-                                            <th>Eliminar</th>
+                                            <!-- <th>EDITAR</th> -->
+                                            <th>Anular</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -70,10 +71,11 @@
                                         <tr class="gradeX">
                                             <td>{{$facturacions->id}}</td>
                                             <td>{{$facturacions->codigo_fac}}</td>
-                                            <td>{{$facturacions->cliente}}</td>
-                                            <td>{{$facturacions->observacion}}</td>
-                                            <td><center><a href="{{route('boleta',$facturacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
-                                            <td><center><a href="{{route('facturacion.edit',$facturacions->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td> 
+                                            <td>{{$facturacions->cotizacion->cliente->nombre}}</td>
+                                            <td>{{$facturacions->cotizacion->cliente->numero_documento}}</td>
+                                            <td>{{$facturacions->cotizacion->fecha_vencimiento }}</td>
+                                            <td><center><a href="{{route('facturacion.show',$facturacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td><!-- 
+                                            <td><center><a href="{{route('facturacion.edit',$facturacions->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td>  -->
                                             <td><center>
                                             <!--  <form action="" method="POST">
                                               @csrf

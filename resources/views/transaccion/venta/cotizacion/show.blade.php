@@ -12,16 +12,26 @@
      <div class="ibox-title">
                             <!-- <h5>Vista Previa</h5> -->
                             <div class="ibox-tools">
-        @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
+                                <style type="text/css">
+                                     .procesado:before {
+                                         content: "Procesado";
+                                        }
+                                    .procesado:hover:before {
+                                        content: "Ver";
+                                        }
+                                </style>
+@if($cotizacion->estado == '1')
+     <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="" >
+         <!-- procesado --> </a>
+@elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc' )
+
                     <a class="btn btn-info" href="{{route('cotizacion.facturar' , $cotizacion->id)}}">Facturar</a>
-                    <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
-        @elseif($cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
+
+@elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )   
+
                      <a class="btn btn-success"  href="{{route('create.boleta')}}">Boletear</a>
-                     <a class="btn btn-info" href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
-
-
-
-        @endif
+@endif
+     <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
                             </div>
                         </div>
             <div class="row">

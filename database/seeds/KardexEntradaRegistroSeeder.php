@@ -16,7 +16,7 @@ class KardexEntradaRegistroSeeder extends Seeder
             'kardex_entrada_id' => 1,
             'producto_id' => 1,
             'cantidad_inicial' => 200,
-            'precio' => 112,
+            'precio' => 11,
             'cantidad' => 200,
             'estado' => 1,
             
@@ -29,7 +29,7 @@ class KardexEntradaRegistroSeeder extends Seeder
             'kardex_entrada_id' => 1,
             'producto_id' => 2,
             'cantidad_inicial' => 150,
-            'precio' => 14322,
+            'precio' => 12,
             'cantidad' => 150,
             'estado' => 1,
             
@@ -42,7 +42,7 @@ class KardexEntradaRegistroSeeder extends Seeder
             'kardex_entrada_id' => 1,
             'producto_id' => 3,
             'cantidad_inicial' => 100,
-            'precio' => 1122,
+            'precio' => 10,
             'cantidad' => 100,
             'estado' => 1,
             
