@@ -404,11 +404,11 @@ class CotizacionController extends Controller
         $igv=Igv::first();
         $sub_total=0;
 
-        $id_fac_cli=Facturacion::where('id_cotizador',$id)->first();
-        $id_fac=$id_fac_cli->id;
+        // $id_fac_cli=Facturacion::where('id_cotizador',$id)->first();
+        // $id_fac=$id_fac_cli->id;
         // return  $id_fac;
 
-         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda",'id_fac'));
+         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda"));
     }
 
     /**
