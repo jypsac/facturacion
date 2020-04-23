@@ -10,9 +10,9 @@ class Ventas_registro extends Model
 
 	protected $guarded = [];
 
-	// public function cliente(){
- //        return $this->belongsTo(cliente::class,'cliente_id');
- //    } 
+	public function facturacion(){
+        return $this->belongsTo(facturacion::class,'id_facturacion');
+    } 
  //    public function forma_pago(){
  //        return $this->belongsTo(forma_pago::class,'forma_pago_id');
  //    } 

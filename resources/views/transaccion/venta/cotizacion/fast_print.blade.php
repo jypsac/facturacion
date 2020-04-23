@@ -1,11 +1,4 @@
 
-<!-- {{$atencion}}
-{{$forma_pago_id}}
-{{$validez}}
-{{$referencia}}
-{{$user_id}}
-{{$observacion}}
- -->
 <!DOCTYPE html>
 <html>
 <head>

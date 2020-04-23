@@ -16,11 +16,12 @@ class CreateVentasRegistroTable extends Migration
     {
         Schema::create('ventas_registro', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('numero_cotizacion');
-            $table->string('tipo');
+            // $table->string('numero_cotizacion');
+            // $table->string('tipo');
             $table->boolean('estado_aprobado');
             $table->boolean('pago_efectuado');
             $table->string('observacion');
+            $table->string('comisionista');
 
             // $table->timestamps();
         });

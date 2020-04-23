@@ -15,8 +15,11 @@ class AddForeignKeyVentasRegistroTable extends Migration
     {
         Schema::table('ventas_registro', function (Blueprint $table) {
 
-            $table->unsignedBigInteger('id_vendedor');
-            $table->foreign('id_vendedor')->references('id')->on('personal_ventas')->onDelete('cascade');
+            // $table->unsignedBigInteger('id_vendedor')->nullable();
+            // $table->foreign('id_vendedor')->references('id')->on('personal_ventas')->onDelete('cascade');
+
+            $table->unsignedBigInteger('id_facturacion')->nullable();
+            $table->foreign('id_facturacion')->references('id')->on('facturacion')->onDelete('cascade');
             
 
             $table->timestamps();

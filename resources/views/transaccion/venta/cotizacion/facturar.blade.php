@@ -34,6 +34,8 @@
                                             <h5> <!-- <input align="center" type="text" name="codigo_fac" value="FC-000{{$suma}}" class="form-control col-sm-4" readonly="" > --> FC-000{{$suma}}</h5>   
                                             <input type="text" value="{{$cotizacion->id}}" name="id_cotizador" hidden="hidden"> 
                                             <input type="text" value="FC-000{{$suma}}" name="codigo_fac" hidden="hidden"> 
+                                             <input type="text" value="{{$suma}}" name="fac_id" hidden="hidden">
+                                            <input type="text" value="{{$cotizacion->comisionista_id}}" name="id_comisionista" hidden="hidden"> 
 
                                         </center>
                                     

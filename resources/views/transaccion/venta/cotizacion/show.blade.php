@@ -55,7 +55,7 @@
                                     <h4>{{$empresa->nombre}}</h4>
                                     <h4>{{$empresa->ruc}}</h4>
                                     <h4>{{$empresa->calle}}</h4>
-                                    <h4 class="text-navy">Cotizacion N°: 000{{$cotizacion->id}}</h4>
+                                    <h4 class="text-navy">Cotizacion N°: {{$cotizacion->cod_comision}}</h4>
 
                                 </div>
                             </div><br>
@@ -81,7 +81,7 @@
                                             <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br>
                                             <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                             <strong>Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-{{--                                            <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista->personal->personal_l->nombres}}--}}
+                                         <!-- <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista_id}} -->
 
                                         </div>
                                     </div>
