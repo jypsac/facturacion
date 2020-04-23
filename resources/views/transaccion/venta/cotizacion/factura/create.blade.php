@@ -338,10 +338,10 @@
                                             <input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" />
                                         </td>
 {{--                                        <td>--}}
-                                            <input type='hidden' name="1" id='comision0'  disabled="disabled" class="form-control"  required  autocomplete="off" />
+                                            <input type='hidden' name="comision[]" id='comision0'  readonly="readonly" class="form-control"  required  autocomplete="off" />
 {{--                                        </td>--}}
                                         <td>
-                                            <input type='text' id='precio_unitario_comision0'  readonly="readonly" class="form-control"  required  autocomplete="off" />
+                                            <input type='text' id='precio_unitario_comision0' name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
                                         </td>
                                         <td>
                                             <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
@@ -454,10 +454,10 @@
 					<input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
 				</td>
 
-					<input type='hidden' name'${i}' id='comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
+					<input type='hidden' name="comision[]" id='comision${i}' readonly="readonly" class="form-control"  required  autocomplete="off" />
 
 				<td>
-					<input type='text' id='precio_unitario_comision${i}' readonly="readonly" class="form-control"  required  autocomplete="off" />
+					<input type='text' id='precio_unitario_comision${i}' name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
 				</td>
 
 				<td>
