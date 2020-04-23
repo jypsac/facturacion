@@ -73,7 +73,7 @@ class PersonalVentaController extends Controller
      {
         
         $personal=Personal_venta::find($id);
-        $lista=Ventas_registro::where('id_vendedor',$id)->get();
+        $lista=Ventas_registro::where('comisionista',$id)->get();
 
         return view('planilla.vendedores.show',compact('personal','lista'));
     }
@@ -128,7 +128,7 @@ class PersonalVentaController extends Controller
         $registro->estado_aprobado='1';
         $registro->save();
         
-        return redirect()->route('vendedores.show', $registro->id_vendedor); 
+        return redirect()->route('vendedores.show', $registro->comisionista); 
         // return redirect()->route('productos.index');
 
 
@@ -139,7 +139,7 @@ class PersonalVentaController extends Controller
         $registro=Ventas_registro::find($id);
         $registro->pago_efectuado='1';
         $registro->save();
-        return redirect()->route('vendedores.show', $registro->id_vendedor); 
+        return redirect()->route('vendedores.show', $registro->comisionista); 
 
     }
      public function estado(Request $request, $id)

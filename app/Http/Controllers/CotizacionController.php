@@ -15,6 +15,7 @@ use App\Cotizacion_boleta_registro;
 use App\kardex_entrada_registro;
 use App\Facturacion;
 use App\Igv;
+use App\Ventas_registro;
 use App\User;
 use App\Personal_venta;
 
@@ -523,6 +524,8 @@ class CotizacionController extends Controller
 
          public function facturar_store(Request $request)
         {
+
+           
             // cambio de Estado Cotizador
             $id_cotizador=$request->get('id_cotizador');
             $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
@@ -539,6 +542,22 @@ class CotizacionController extends Controller
             $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
             $facturar->estado='0';
             $facturar->save();
+
+            // Creacion de Ventas Registros del Comisinista
+            $cotizador=$request->get('id_cotizador');
+            $id_comisionista=$request->get('id_comisionista');
+            $comisionista=Cotizacion::where('id',$cotizador)->first();
+            $id_comi=$comisionista->comisionista_id;
+            if(isset($id_comi)){
+                 $comisionista=new Ventas_registro;
+                 $comisionista->id_facturacion=$request->get('fac_id');
+                 $comisionista->comisionista=$request->get('id_comisionista');
+                 $comisionista->estado_aprobado='0';
+                 $comisionista->pago_efectuado='0';
+                 $comisionista->observacion='Viene del Cotizador';
+                 $comisionista->save();
+             }
+            
 
             return redirect()->route('cotizacion.show',$id_cotizador);
 

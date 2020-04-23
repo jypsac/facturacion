@@ -87,8 +87,8 @@
                                                 <!-- <th>ID</th> -->
                                                 <th>Fecha</th>
                                                 <th>Nª Cotizacion</th>
-                                                <th>Tipo</th>
-                                                <th>Factura</th>
+                                                <!-- <th>Tipo</th> -->
+                                                <th>Factura/Boleta</th>
                                                 <th>Cliente</th>
                                                 <th>Comision</th>
                                                 <th>Aprobada</th>
@@ -102,10 +102,11 @@
                                         @foreach($lista as $listas)
                                             <tr class="gradeX">
                                                 <td>{{$listas->created_at}}</td>
-                                                <td>{{$listas->numero_cotizacion}}</td>
-                                                <td>{{$listas->tipo}}</td>
-                                                <td>factura</td>
-                                                <td>cliente</td>
+                                                <td>
+                                                  <a target="_blank" href="{{route('cotizacion.show',$listas->facturacion->cotizacion->id)}}">{{$listas->facturacion->cotizacion->cod_comision}}</a></td>
+                                                <!-- <td>{{$listas->tipo}}</td> -->
+                                                <td><a target="_blank" href="{{route('facturacion.show',$listas->facturacion->id)}}">{{$listas->facturacion->codigo_fac}} </a></td>
+                                                <td>{{$listas->facturacion->cotizacion->cliente->nombre}}</td>
                                                 <td>comsion</td>
                                                  <td>
                                                   @if($listas->estado_aprobado == 0)
@@ -123,7 +124,7 @@
                                                         <div class="ibox-content float-e-margins">
                         
                                                <h3 class="font-bold col-lg-12" align="center">
-                                              ¿Esta Seguro que Desea Aprobar la Comision:"{{$listas->numero_cotizacion}}".?<br>
+                                              ¿Esta Seguro que Desea Aprobar la Comision:"{{$listas->facturacion->codigo_fac}}".?<br>
                                              <h4 align="center"> <strong>Nota: Una vez Aprobada no hay opcion de deshacer cambios</strong></h4>
                                                </h3>
                                                <p align="center">
@@ -166,7 +167,7 @@
                                                         <div class="ibox-content float-e-margins">
                         
                                                <h3 class="font-bold col-lg-12" align="center">
-                                              ¿Esta Seguro que Desea Procesar con el pago a la Comision:"{{$listas->numero_cotizacion}}".?<br>
+                                              ¿Esta Seguro que Desea Procesar con el pago a la Comision:"{{$listas->facturacion->codigo_fac}}".?<br>
                                              <h4 align="center"> <strong>Nota: Una vez Aprobada no hay opcion de deshacer cambios</strong></h4>
                                                </h3>
                                                <p align="center">
@@ -193,7 +194,13 @@
                                     
                                               </td>
                                                
-                                                <td>{{$listas->observacion}}</td>
+                                                <td><form> 
+                                                  <div class="row">
+                                                    <div class="col-lg-9">
+                                                  <textarea rows="1" class="form-control">{{$listas->observacion}}</textarea></div><input class="btn btn-info" type="submit">
+                                                  </div>
+                                                </form></td>
+                                            
 
 
                                         @endforeach
@@ -254,6 +261,7 @@
       p#texto{text-align: center;
         color:black;
         }
+        a{color: #4a58bdd1}
                 
   input#archivoInput{
     position:absolute;
