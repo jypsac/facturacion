@@ -320,28 +320,28 @@
 
                                         </td>
                                         <td>
-                                            <input type='text' id='stock0' disabled="disabled" name='stock[]' class="form-control" required  autocomplete="off"/>
+                                            <input type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
                                         </td>
                                         <td>
                                             <input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
                                         </td>
                                         <td>
-                                            <input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
+                                            <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
                                         </td>
                                         <td>
                                             <input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
                                             <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
                                             <input type='hidden' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
-                                            <input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/>
+                                            <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
                                         </td>
                                         <td>
-                                            <input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" />
+                                            <input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" />
                                         </td>
 {{--                                        <td>--}}
                                             <input type='hidden' name="1" id='comision0'  disabled="disabled" class="form-control"  required  autocomplete="off" />
 {{--                                        </td>--}}
                                         <td>
-                                            <input type='text' id='precio_unitario_comision0'  disabled="disabled" class="form-control"  required  autocomplete="off" />
+                                            <input type='text' id='precio_unitario_comision0'  readonly="readonly" class="form-control"  required  autocomplete="off" />
                                         </td>
                                         <td>
                                             <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
@@ -436,28 +436,28 @@
     </td>
 
     <td>
-        <input type='text' id='stock${i}' name='stock[]' disabled="disabled" class="form-control" required  autocomplete="off"/>
+        <input type='text' id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
 				</td>
 				<td>
 					<input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
 				</td>
 				<td>
-					<input type='text' id='precio${i}' name='precio[]' disabled="disabled" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+					<input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
 				</td>
 				<td>
 					<input type='checkbox' id='check${i}' name='check[]'  class="form-control"  onclick="multi(${i})"  autocomplete="off"/>
 					<input type='hidden' id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
 					<input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
-					<input type='text' id='descuento${i}' name='descuento[]' disabled="disabled" class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
+					<input type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
 				</td>
 				<td>
-					<input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
+					<input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
 				</td>
 
 					<input type='hidden' name'${i}' id='comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
 
 				<td>
-					<input type='text' id='precio_unitario_comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
+					<input type='text' id='precio_unitario_comision${i}' readonly="readonly" class="form-control"  required  autocomplete="off" />
 				</td>
 
 				<td>
