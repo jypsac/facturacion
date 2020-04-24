@@ -43,6 +43,8 @@ class AddForeignKeyCotizacionTable extends Migration
             $table->string('fecha_emision');
             $table->string('fecha_vencimiento');
 
+            $table->string('tipo');
+
             $table->boolean('estado');
 
             $table->boolean('estado_vigente');

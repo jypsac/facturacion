@@ -9,4 +9,7 @@ class Unidad_medida extends Model
     protected $table = 'unidad_medida';
 
     protected $guarded = [];
+
+
+
 }

@@ -187,11 +187,12 @@ class CotizacionController extends Controller
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $cotizacion->comisionista_id= $comisionista_buscador->id;
         }
+        $cotizacion->tipo='factura';
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
         $cotizacion->save();
 
-        
+
 
         //contador de valores de cantidad
         $cantidad = $request->input('cantidad');
@@ -404,6 +405,7 @@ class CotizacionController extends Controller
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $cotizacion->comisionista_id= $comisionista_buscador->id;
         }
+        $cotizacion->tipo="boleta";
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
         $cotizacion->save();
@@ -457,7 +459,7 @@ class CotizacionController extends Controller
     }
 
 
-    
+
 
 
     public function show($id)
@@ -476,11 +478,8 @@ class CotizacionController extends Controller
         $igv=Igv::first();
         $sub_total=0;
 
-        $regla=substr($cotizacion->cod_comision,0,-6);
-//        if ($regla=="CO"){
-//            RETURN "V";
-//        }
-//        return "d";
+        $regla=$cotizacion->tipo;
+
          return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla"));
     }
 
@@ -574,7 +573,7 @@ class CotizacionController extends Controller
          public function facturar_store(Request $request)
         {
 
-           
+
             // cambio de Estado Cotizador
             $id_cotizador=$request->get('id_cotizador');
             $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
@@ -607,7 +606,7 @@ class CotizacionController extends Controller
                  $comisionista->observacion='Viene del Cotizador';
                  $comisionista->save();
              }
-            
+
 
             return redirect()->route('cotizacion.show',$id_cotizador);
 
@@ -646,7 +645,7 @@ class CotizacionController extends Controller
          public function boletear_store(Request $request)
         {
 
-           
+
             // cambio de Estado Cotizador
             $id_cotizador=$request->get('id_cotizador');
             $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
@@ -679,7 +678,7 @@ class CotizacionController extends Controller
                  $comisionista->observacion='Viene del Cotizador';
                  $comisionista->save();
              }
-            
+
 
             return redirect()->route('cotizacion.show',$id_cotizador);
 
