@@ -203,8 +203,12 @@
                                                    value="{{ old('nombre')}}" autocomplete="off">
                                             <datalist id="browsersc1">
                                                 @foreach($clientes as $cliente)
+                                                    @if($cliente->documento_identificacion == 'DNI' || $cliente->documento_identificacion == 'Pasaporte' ||
+                                                    $cliente->documento_identificacion == 'dni' ||
+                                                    $cliente->documento_identificacion == 'pasaporte')
                                                     <option id="{{$cliente->id}}">{{$cliente->numero_documento}}
                                                         - {{$cliente->nombre}}</option>
+                                                    @endif
                                                 @endforeach
                                             </datalist>
                                         </div>
@@ -289,7 +293,7 @@
                                             <datalist id="browsersc2" >
                                                 <option id="">Sin comision - 0 </option>
                                                 @foreach($p_venta as $p_ventas)
-                                                    <option id="{{$p_ventas->id}}">{{$p_ventas->personal->personal_l->numero_documento}} - {{$p_ventas->personal->personal_l->nombres}} - <span style="color: red">{{$p_ventas->comision}}</span></option>
+                                                    <option id="{{$p_ventas->id}}">{{$p_ventas->cod_vendedor}}  - {{$p_ventas->personal->personal_l->nombres}} - <span style="color: red">{{$p_ventas->comision}}</span></option>
                                                 @endforeach
                                             </datalist>
                                         </div>

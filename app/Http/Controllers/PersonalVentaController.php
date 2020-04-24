@@ -73,7 +73,7 @@ class PersonalVentaController extends Controller
      {
         
         $personal=Personal_venta::find($id);
-        $lista=Ventas_registro::where('comisionista',$id)->get();
+        $lista=Ventas_registro::where('comisionista',$id)->where('estado_fac','0')->get();
 
         return view('planilla.vendedores.show',compact('personal','lista'));
     }

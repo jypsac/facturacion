@@ -23,6 +23,9 @@ class CreateVentasRegistroTable extends Migration
             $table->string('observacion');
             $table->string('comisionista');
 
+            // estado anulado o activo de la factura
+            $table->string('estado_fac');
+
             // $table->timestamps();
         });
     }

@@ -135,12 +135,17 @@ class CotizacionController extends Controller
         $comisionista=$request->get('comisionista');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $numero = strstr($comisionista, '-',true);
-            $numero_doc=personal::where('numero_documento',$numero)->first();
-            $id_personal=$numero_doc->id;
-            $comisionista_buscador=Personal_venta::where('id_personal',$id_personal)->first();
+
+            // $numero_doc=personal::where('numero_documento',$numero)->first();
+            // $id_personal=$numero_doc->id;
+
+            $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
+            $id_personal=$cod_vendedor->id;
+
+            $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
             //Comision segun comisionista
-            $personal_venta=Personal_venta::where('id_personal',$comisionista_buscador->id)->first();
-            $comi=$personal_venta->comision;
+            // $personal_venta=Personal_venta::where('id_personal',$comisionista_buscador->id)->first();
+            $comi=$comisionista_buscador->comision;
         }else{
             $comi=0;
         }
@@ -259,6 +264,7 @@ class CotizacionController extends Controller
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::all();
+        // $clientes=Cliente::where('documento_identificacion', '=','DNI'  )->get();
         $moneda=Moneda::all();
         $personales=Personal::all();
         $p_venta=Personal_venta::all();
@@ -345,12 +351,17 @@ class CotizacionController extends Controller
         $comisionista=$request->get('comisionista');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $numero = strstr($comisionista, '-',true);
-            $numero_doc=personal::where('numero_documento',$numero)->first();
-            $id_personal=$numero_doc->id;
-            $comisionista_buscador=Personal_venta::where('id_personal',$id_personal)->first();
+
+            // $numero_doc=personal::where('numero_documento',$numero)->first();
+            // $id_personal=$numero_doc->id;
+
+            $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
+            $id_personal=$cod_vendedor->id;
+
+            $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
             //Comision segun comisionista
-            $personal_venta=Personal_venta::where('id_personal',$comisionista_buscador->id)->first();
-            $comi=$personal_venta->comision;
+            // $personal_venta=Personal_venta::where('id_personal',$comisionista_buscador->id)->first();
+            $comi=$comisionista_buscador->comision;
         }else{
             $comi=0;
         }
@@ -592,6 +603,7 @@ class CotizacionController extends Controller
                  $comisionista->comisionista=$request->get('id_comisionista');
                  $comisionista->estado_aprobado='0';
                  $comisionista->pago_efectuado='0';
+                 $comisionista->estado_fac='0';
                  $comisionista->observacion='Viene del Cotizador';
                  $comisionista->save();
              }
@@ -601,4 +613,78 @@ class CotizacionController extends Controller
 
 
         }
+
+         public function boletear($id)
+
+        {
+        $moneda=Moneda::where('principal',1)->first();
+        $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+        foreach ($cotizacion_registro as $cotizacion_registros) {
+             $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+        }
+
+        $cotizacion=Cotizacion::find($id);
+        /*Fecha vencimiento*/
+         // $cotizacion_dias_pago= $cotizacion->forma_pago->dias;
+         // $fecha =date("d-m-Y");
+         // $nuevafecha = strtotime ( '+'.$cotizacion_dias_pago.' day' , strtotime ( $fecha ) ) ;
+         // $nuevafechas = date("d-m-Y", $nuevafecha );
+
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+
+
+
+        $personal_contador= Facturacion::all()->count();
+        $suma=$personal_contador+1;
+
+         return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total",'moneda' ,'suma'));
+        }
+
+         public function boletear_store(Request $request)
+        {
+
+           
+            // cambio de Estado Cotizador
+            $id_cotizador=$request->get('id_cotizador');
+            $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
+            $cotizacion->estado=1;
+            $cotizacion->save();
+
+            // Creacion de Facturacion
+            $facturar=new Facturacion;
+            $facturar->codigo_fac=$request->get('codigo_fac');
+            $facturar->id_cotizador=$request->get('id_cotizador');
+            $facturar->orden_compra=$request->get('orden_compra');
+            $facturar->guia_remision=$request->get('guia_remision');
+            $facturar->fecha_emision=$request->get('fecha_emision');
+            $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
+            $facturar->estado='0';
+            $facturar->save();
+
+            // Creacion de Ventas Registros del Comisinista
+            $cotizador=$request->get('id_cotizador');
+            $id_comisionista=$request->get('id_comisionista');
+            $comisionista=Cotizacion::where('id',$cotizador)->first();
+            $id_comi=$comisionista->comisionista_id;
+            if(isset($id_comi)){
+                 $comisionista=new Ventas_registro;
+                 $comisionista->id_facturacion=$request->get('fac_id');
+                 $comisionista->comisionista=$request->get('id_comisionista');
+                 $comisionista->estado_aprobado='0';
+                 $comisionista->pago_efectuado='0';
+                 $comisionista->estado_fac='0';
+                 $comisionista->observacion='Viene del Cotizador';
+                 $comisionista->save();
+             }
+            
+
+            return redirect()->route('cotizacion.show',$id_cotizador);
+
+
+        }
+
+
 }

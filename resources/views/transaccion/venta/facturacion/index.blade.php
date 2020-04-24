@@ -76,13 +76,49 @@
                                             <td>{{$facturacions->cotizacion->fecha_vencimiento }}</td>
                                             <td><center><a href="{{route('facturacion.show',$facturacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td><!-- 
                                             <td><center><a href="{{route('facturacion.edit',$facturacions->id)}}" ><button type="button" class="btn btn-w-m btn-success">Editar</button></a></center></td>  -->
-                                            <td><center>
-                                            <!--  <form action="" method="POST">
-                                              @csrf
-                                              @method('delete') -->
-                                              <button type="submit" class="btn btn-w-m btn-danger">Anular</button>
-                                            <!-- </form> --></center>
+                                            <td>
+                                                @if($facturacions->estado == '0')
+                                           <!-- Button trigger modal -->
+<button type="button" class="btn btn-s-m btn-danger" data-toggle="modal" data-target="#{{$facturacions->id}}">
+ Anular
+</button>
+
+<!-- Modal -->
+<div class="modal fade" id="{{$facturacions->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+ <div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">
+                                    <div class="modal-content" >
+                                        <div class="modal-body" style="padding: 0px;">
+                                            
+                                             <div class="ibox-content float-e-margins">
+                        
+                                               <h3 class="font-bold col-lg-12" align="center">
+                                              ¿Esta Seguro que Deseas Anular la Factura: {{$facturacions->codigo_fac}}".?<br>
+                                             <h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4>
+                                               </h3>
+                                               <p align="center">
+                                                   <form action="{{ route('facturacion.destroy', $facturacions->id)}}" method="POST">
+                                            @csrf
+                                            @method('delete')
+                                            <center>
+                                            <button type="submit" class="btn btn-w-m btn-primary">Anular</button>
+                                            {{-- <button type="button" class="btn btn-w-m btn-danger" data-dismiss="modal">Cancelar</button> --}}</center>
+                                        </form>
+                                                 
+                                               </p>
+                                              </div>
+
+                                        </div>
+                                    </div>
+                                </div> 
+</div>
+
+
+                                     @elseif($facturacions->estado == '1')
+                                            <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal123">Anulado</button>
+
+                                     @endif
                                             </td>
+                                            
                                         </tr>
                                         @endforeach
                                     </tbody>
