@@ -18,6 +18,7 @@ use App\Igv;
 use App\Ventas_registro;
 use App\User;
 use App\Personal_venta;
+use App\Unidad_medida;
 
 use Illuminate\Http\Request;
 
@@ -69,12 +70,16 @@ class CotizacionController extends Controller
     {
         //El input esta activo
 
-         // return $request;
+        //  return $request;
 
         $print=$request->get('print');
+
         if($print==1){
             $cliente_id=$request->get('cliente');
-            // $atencion=$request->get('atencion');
+            
+            $sub_total=0;
+            $igv=Igv::first();
+
             $forma_pago_id=$request->get('forma_pago');
             $moneda_id=$request->get('moneda');
             $validez=$request->get('validez');
@@ -91,15 +96,24 @@ class CotizacionController extends Controller
             for($i=0 ; $i<$count_cantidad_p;$i++){
                 $articulos[$i]= $request->input('articulo')[$i];
                 $producto_id[$i]=strstr($articulos[$i], ' ', true);
+                $producto_codigo[$i]=Producto::where('id',$producto_id[$i])->first();
+                $unidad_medida[$i]=Unidad_medida::where('id',$producto_codigo[$i]->unidad_medida_id)->first();
             }
 
             for($i=0;$i<$count_articulo;$i++){
-
+                $stock[]=$request->input('stock')[$i];
                 $cantidad[]=$request->input('cantidad')[$i];
+                $precio[]=$request->input('precio')[$i];
                 $check_descuento[]=$request->input('check_descuento')[$i];
+                $promedio_original[]=$request->input('promedio_original')[$i];
+                $descuento[]=$request->input('descuento')[$i];
+                $precio_unitario_descuento[]=$request->input('precio_unitario_descuento')[$i];
+                $comision[]=$request->input('comision')[$i];
+                $precio_unitario_comision[]=$request->input('precio_unitario_comision')[$i];
             }
+            // $produc=Producto::all()->get();
 
-            return view('transaccion.venta.cotizacion.fast_print',compact('cliente_id','forma_pago_id','validez','referencia','user_id','observacion','producto_id','cantidad','check_descuento'));
+            return view('transaccion.venta.cotizacion.factura.fast_print',compact('producto_codigo','unidad_medida','sub_total','igv','cliente_id','forma_pago_id','validez','user_id','observacion','producto_id','stock','cantidad','precio','check_descuento','promedio_original','descuento','precio_unitario_descuento','comision','precio_unitario_comision'));
         }
 
         //codigo para convertir nombre a producto
@@ -285,13 +299,14 @@ class CotizacionController extends Controller
         //El input esta activo
 
         // return $request;
-        $igv_proceso=Igv::first();
-        $igv_total=$igv_proceso->igv_total;
-
         $print=$request->get('print');
+
         if($print==1){
             $cliente_id=$request->get('cliente');
-            // $atencion=$request->get('atencion');
+            
+            $sub_total=0;
+            $igv=Igv::first();
+
             $forma_pago_id=$request->get('forma_pago');
             $moneda_id=$request->get('moneda');
             $validez=$request->get('validez');
@@ -308,15 +323,24 @@ class CotizacionController extends Controller
             for($i=0 ; $i<$count_cantidad_p;$i++){
                 $articulos[$i]= $request->input('articulo')[$i];
                 $producto_id[$i]=strstr($articulos[$i], ' ', true);
+                $producto_codigo[$i]=Producto::where('id',$producto_id[$i])->first();
+                $unidad_medida[$i]=Unidad_medida::where('id',$producto_codigo[$i]->unidad_medida_id)->first();
             }
 
             for($i=0;$i<$count_articulo;$i++){
-
+                $stock[]=$request->input('stock')[$i];
                 $cantidad[]=$request->input('cantidad')[$i];
+                $precio[]=$request->input('precio')[$i];
                 $check_descuento[]=$request->input('check_descuento')[$i];
+                $promedio_original[]=$request->input('promedio_original')[$i];
+                $descuento[]=$request->input('descuento')[$i];
+                $precio_unitario_descuento[]=$request->input('precio_unitario_descuento')[$i];
+                $comision[]=$request->input('comision')[$i];
+                $precio_unitario_comision[]=$request->input('precio_unitario_comision')[$i];
             }
+            // $produc=Producto::all()->get();
 
-            return view('transaccion.venta.cotizacion.fast_print',compact('cliente_id','forma_pago_id','validez','referencia','user_id','observacion','producto_id','cantidad','check_descuento'));
+            return view('transaccion.venta.cotizacion.boleta.fast_print',compact('producto_codigo','unidad_medida','sub_total','igv','cliente_id','forma_pago_id','validez','user_id','observacion','producto_id','stock','cantidad','precio','check_descuento','promedio_original','descuento','precio_unitario_descuento','comision','precio_unitario_comision'));
         }
 
         //codigo para convertir nombre a producto
