@@ -443,6 +443,10 @@ class CotizacionController extends Controller
         $check = $request->input('check_descuento');
         $count_check=count($check);
 
+        $igv_proceso=Igv::first();
+        $igv_total=$igv_proceso->igv_total;
+        
+
         if($count_articulo = $count_cantidad  = $count_check){
             for($i=0;$i<$count_articulo;$i++){
                 $cotizacion_registro=new Cotizacion_boleta_registro();
