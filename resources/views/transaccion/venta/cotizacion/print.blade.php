@@ -32,28 +32,28 @@
 <body class="white-bg" onLoad="setTimeout('cerrar()',1*1000)">
 <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-            <div class="col-lg-12">
+                <div class="col-lg-12">
                     <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
                             <div class="row">
                                 <div class="col-sm-4 text-left" align="left">
-                                    
+
                                     <address class="col-sm-4" align="left">
                                         <!-- <h5>De:</h5>
                                         <i class=" fa fa-user">:</i><strong > {{$empresa->nombre}}</strong><br>
                                         <i class=" fa fa-building">:</i> <br>
-                                        <i class="fa fa-phone">:</i>  --> 
+                                        <i class="fa fa-phone">:</i>  -->
                                         <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
                                     </address>
-                                </div> 
+                                </div>
                                 <div class="col-sm-4">
-                                </div> 
+                                </div>
 
                                 <div class="col-sm-3 ">
                                     <h4>{{$empresa->nombre}}</h4>
-                                    <h4>{{$empresa->ruc}}</h4>   
-                                    <h4>{{$empresa->calle}}</h4>   
-                                    <h4 class="text-navy">Cotizacion N°: 000{{$cotizacion->id}}</h4>
-                                    
+                                    <h4>{{$empresa->ruc}}</h4>
+                                    <h4>{{$empresa->calle}}</h4>
+                                    <h4 class="text-navy">Cotizacion N°: {{$cotizacion->cod_comision}}</h4>
+
                                 </div>
                             </div><br>
                             <div class="row">
@@ -61,7 +61,7 @@
                                     <div class="form-control"><h3>Contanto Cliente</h3>
                                         <div align="left">
                                             <strong>Nombre:</strong> &nbsp;{{$cotizacion->cliente->nombre}}<br>
-                                            <strong>Ruc/DNI:</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>{{$cotizacion->cliente->documento_identificacion}} :</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <strong>Fecha:</strong> &nbsp;{{$cotizacion->created_at}}<br>
                                             <strong>Direccion:</strong>&nbsp; {{$cotizacion->cliente->direccion}}<br>
                                             <strong>Telefono:</strong>&nbsp; {{$cotizacion->cliente->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -76,15 +76,15 @@
                                             <strong>Forma De Pago:</strong> &nbsp;{{$cotizacion->forma_pago->nombre }}<br>
                                             <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
                                             <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br>
-                                            <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                             <strong>Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                            <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista->personal->personal_l->nombres}}
+                                         <!-- <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista_id}} -->
 
                                         </div>
                                     </div>
                                 </div>
-                               
-    
+
+
                             </div><br>
                             <div class="row">
                                 <div class="col-sm-12" >
@@ -98,38 +98,39 @@
                                     <thead>
                                     <tr>
                                         <th >Codigo Producto</th>
+                                        <th>Unidad de medida</th>
                                         <th >Descripcion</th>
                                         <th >Cantidad</th>
                                         <th >Precio</th>
-                                        <th >Descuento %</th>
-                                        <th >PU_DES %</th>
-                                        <th >Valor venta</th> 
+                                        <th >Valor venta</th>
+
                                         <th style="display: none">S/.</th><!--
                                         <th style="background: #f3f3f4">Precio Total</th> -->
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    
+                                    @if ($regla=="factura")
                                       @foreach($cotizacion_registro as $cotizacion_registros)
                                     <tr>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
+                                        <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
                                         <td>{{$cotizacion_registros->producto->nombre}}</td>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
-                                        <td>S/.{{$cotizacion_registros->precio}}</td>
-                                        <td>{{$cotizacion_registros->descuento}}%</td>
-                                        <td>{{$cotizacion_registros->precio_unitario_desc}}</td>
-                                        <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
-                                        <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}
+                                        <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
+
+                                        <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
+                                        <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
+                                            @if ($regla=="factura")
                                             S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                            @endif
                                         </td>
-                                        
+
                                     </tr>
-                                    
+
                                       @endforeach
-                                        
+
                                       <tr>
-                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -145,15 +146,14 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                         <td style="background: #f3f3f4;">IGV</td>
                                         <td style="background: #f3f3f4;">
                                             S/.{{round($igv_p, 2)}}
                                         </td>
                                         <td></td>
                                     </tr>
+
                                     <tr>
-                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -163,28 +163,59 @@
                                             S/.{{$end}}
                                         </td>
                                     </tr>
+                                      @else
+                                        @foreach($cotizacion_registro2 as $cotizacion_registros)
+                                            <tr>
+                                                <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
+                                                <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
+                                                <td>{{$cotizacion_registros->producto->nombre}}</td>
+                                                <td>{{$cotizacion_registros->cantidad}}</td>
+                                                <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
+
+                                                <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
+                                                <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
+                                                    @if ($regla=="factura")
+                                                        S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                                        {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                                    @endif
+                                                </td>
+
+                                            </tr>
+
+                                        @endforeach
+                                          <tr>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td></td>
+                                              <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Total</td>
+                                              <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
+                                                  {{$end=round($sub_total, 2)}}
+                                              </td>
+                                          </tr>
+                                    @endif
                                     </tbody>
                                 </table>
                             </div><!-- /table-responsive -->
 
-                           
-                            
+
+
 
                         <footer style="padding-top: 150px">
-                       <div class="row">    
+                       <div class="row">
                             <div class="col-sm-6" align="left">
-                               
-    
+
+
 
                             <h3>
                             <?php $v=new CifrasEnLetras() ;
                             $letra=($v->convertirEurosEnLetras($end));
-                            
+
                             $letra_final = strstr($letra, 'soles',true);
 
                             $end_final=strstr($end, '.');
                             ?>
-                                
+
                                 {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
                                  </h3>
                             <table>
@@ -200,7 +231,7 @@
                                         <td style="width: 70px">Web</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
                                     </tr> --}}
                                 </table>
-                                
+
                             </div>
                             <div class="col-sm-6" align="center">
 
@@ -209,9 +240,11 @@
                             </div>
                        </div>
                         </footer>
-                             
+
                         </div>
                 </div>
+            </div>
+                    
             </div>
         </div>
         

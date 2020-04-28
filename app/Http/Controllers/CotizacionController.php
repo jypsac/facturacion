@@ -553,6 +553,7 @@ class CotizacionController extends Controller
      public function print($id){
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+        $cotizacion_registro2=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
         foreach ($cotizacion_registro as $cotizacion_registros) {
              $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
         }
@@ -564,7 +565,9 @@ class CotizacionController extends Controller
         $igv=Igv::first();
         $sub_total=0;
 
-        return view('transaccion.venta.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda"));
+        $regla=$cotizacion->tipo;
+
+        return view('transaccion.venta.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda",'regla'));
         }
 
 
