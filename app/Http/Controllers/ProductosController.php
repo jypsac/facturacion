@@ -181,7 +181,7 @@ class ProductosController extends Controller
         $producto->stock_maximo=$request->get('stock_maximo');
         $producto->foto=$name;
         $producto->save();
-        return redirect()->route('productos.index');
+        return redirect()->route('productos.show',$id);
     }
     /**
      * Remove the specified resource from storage.

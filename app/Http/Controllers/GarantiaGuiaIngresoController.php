@@ -51,7 +51,8 @@ class GarantiaGuiaIngresoController extends Controller
         $orden_servicio=$marca.$guion.$marca_cantidad;
 
         $clientes=Cliente::all();
-        $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
+        // $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
+        $personales=Personal_datos_laborales::all();
         // $personales=Personal::join("personal_datos_laborales","id","=","personal_datos_laborales.personal_id")->get();
         // $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
 

@@ -8,221 +8,196 @@
 
 @section('content')
  @if($producto->estado_anular == '1')
-            
-<div class="wrapper wrapper-content animated fadeInRight">
-	<div class="row">
-		<div class="col-lg-12">
-            <div class="ibox">
-				<div class="ibox-title">
-                    <h5>Editar Producto</h5>
-				</div>
-				<div class="ibox-content">
-					<form action="{{ route('productos.update',$producto->id) }}"  enctype="multipart/form-data" method="post">
+<div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
+        
+        <form action="{{ route('productos.update',$producto->id) }}"  enctype="multipart/form-data" method="post">
 							@csrf
 							@method('PATCH')
+		 <div class="row">
+            
+        <fieldset class="col-sm-6">    	
+					<legend>Clasificacion del <br>Producto</legend>
+					
+				<div class="panel panel-default">
+					<div class="panel-body" align="left">
+						<div class="row">
+							<label class="col-sm-2 col-form-label">Codigo:</label>
+							<div class="col-sm-4"><input type="text" class="form-control" value="{{$producto->codigo_producto}}" disabled="disabled">
+                    		</div>
+
+                    		<label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
+                              <div class="col-sm-4"><input type="text" class="form-control" name="codigo_original" value="{{$producto->codigo_original}}" ></div>
+							</div>
+
+						<div class="row">
+							<label class="col-sm-2 col-form-label">Categoria:</label>
+                               <div class="col-sm-4">
+                                <input type="text" class="form-control" value="{{$producto->categoria_i_producto->descripcion}}" disabled="disabled">
+                      			</div>
+
+                  		 	<label class="col-sm-2 col-form-label">Marca:</label>
+              					<div class="col-sm-4">
+               						 <input type="text" class="form-control" value="{{$producto->marcas_i_producto->nombre}}" disabled="disabled">
+                      			</div>
+						</div>
+						<div class="row">
+							
+                      			<label class="col-sm-2 col-form-label">Familia:</label>
+                        		 <div class="col-sm-10">
+                         		 <input type="text" class="form-control" value="{{$producto->familia_i_producto->descripcion}}" disabled="disabled">
+                				</div>
+
+						</div>
+						<br>
+				</div>
+					
+		</fieldset>		
+
+		<fieldset class="col-sm-6">    	
+					<legend>Datos del <br>Producto </legend>
+					
+					<div class="panel panel-default">
+						<div class="panel-body" align="left">
 							<div class="row">
-								<div class="col-lg-6">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-										Clasificacion del Producto
-										</div>
-										<div class="panel-body">
-											<div class="form-group row">
-												<label class="col-sm-2 col-form-label">Codigo:</label>
-												<div class="col-sm-10">
-													<input type="text" class="form-control"  value="{{$producto->codigo_producto}}" disabled="disabled" >
-												</div>
-											</div>
-										
-											<div class="form-group row">
-												<label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
-												<div class="col-sm-10">
-													<input type="text" class="form-control" name="codigo_original" value="{{$producto->codigo_original}}">
-												</div>
-											</div>
-										
-											<div class="form-group row">
-												<label class="col-sm-2 col-form-label">Categoria:</label>
-												<div class="col-sm-10">
-													<input type="text" class="form-control m-b" value="{{$producto->categoria_i_producto->descripcion}}" disabled="disabled">
-												</div>
-											</div>
+								<label class="col-sm-2 col-form-label">Nombre:</label>
+                              <div class="col-sm-10"><input type="text" class="form-control" name="nombre" value="{{$producto->nombre}}"></div>
 
-											<div class="form-group row">
-												<label class="col-sm-2 col-form-label">Familia:</label>
-												<div class="col-sm-10">
-													<input type="text" class="form-control m-b" value="{{$producto->familia_i_producto->descripcion}}" disabled="disabled">
-												</div>
-											</div>
-											
-											<div class="form-group row">
-												<label class="col-sm-2 col-form-label">Marca:</label>
-												<div class="col-sm-10">
-													<input type="text" class="form-control m-b" value="{{$producto->marcas_i_producto->nombre}}" disabled="disabled">
-												</div>
-											</div>
-										</div>
-									</div>
-								</div>
-
-								<div class="col-lg-6">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-											Datos del Producto
-										</div>
-										<div class="panel-body">
-											<div class="form-group row">
-												<label class="col-sm-2 col-form-label">Nombre:</label>
-												<div class="col-sm-10">
-													<input type="text" name="nombre" class="form-control" value="{{$producto->nombre}}" >
-												</div>
-											</div>
-
-											<div class="form-group row">
-												<label class="col-sm-2 col-form-label">Descripcion:</label>
-												<div class="col-sm-10">
-													<textarea type="text" class="form-control" name="descripcion" rows="5" >{{$producto->descripcion}}</textarea >
-												</div>
-											</div>
-
-											<div class="form-group row">
-												<label class="col-sm-2 col-form-label">Estado:</label>
-												<div class="col-sm-10">
-													<select class="form-control m-b" name="estado_id">
+                    			<label class="col-sm-2 col-form-label">Descripcion:</label>
+                              <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" >{{$producto->descripcion}}</textarea ></div>
+							</div>
+							<div class="row">
+								<label class="col-sm-2 col-form-label">Estado:</label>
+                    				<div class="col-sm-4">
+                     					<select class="form-control m-b" name="estado_id">
 														<option value="{{$producto->estado_i_producto->id}}"style="font-weight:bold">{{$producto->estado_i_producto->nombre}}</option>			          					@foreach($estados as $estado)
 														<option value="{{ $estado->id }}">{{ $estado->nombre}}</option>
 														@endforeach
 													</select>
-												</div>
-											</div>
+									</div>
 
-											<div class="form-group row">
-												<label class="col-sm-2 col-form-label">Origen:</label>
-												<div class="col-sm-10">
-													<select class="form-control m-b" name="origen">
+                    			<label class="col-sm-2 col-form-label">Origen:</label>
+                   				   <div class="col-sm-4">
+                   				   	<select class="form-control m-b" name="origen">
 														<option value="{{$producto->origen}}" style="font-weight:bold">{{$producto->origen}}</option>
 														<option value="Producto Nacional" >Producto Nacional</option>
 														<option value="Producto Importado">Producto Importado</option>
 													</select>
-												</div>
-											</div>	
-										</div>
-									</div>
-								</div>	
+                   				   </div>
 
-								<div class="col-lg-12">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-											Precio del Producto
-										</div>
-										<div class="panel-body">
-											<div class="form-group row">
-												<label class="col-sm-1 col-form-label">Descuento 1:</label>
-												<div class="col-sm-5">
-													<div class="input-group m-b">
-														<div class="input-group-prepend">
-															<span class="input-group-addon">%</span>
-														</div>
-														<input type="text" class="form-control" name="descuento1" value="{{$producto->descuento1}}" >
-													</div>
-												</div>
+							</div>
 
-												<label class="col-sm-1 col-form-label">Descuento 2:</label>
-												<div class="col-sm-5">
-													<div class="input-group m-b">
-														<div class="input-group-prepend">
-															<span class="input-group-addon">%</span>
-														</div>
-														<input type="text" class="form-control" name="descuento2" value="{{$producto->descuento2}}" >
-													</div>
-												</div>
-												
-											</div>	
+						</div>
+					</div>
+					
+		</fieldset>		
 
-											<div class="form-group row">
-												<label class="col-sm-1 col-form-label">Descuento Maximo:</label>
-												<div class="col-sm-5">
-													<div class="input-group m-b">
-														<div class="input-group-prepend">
-															<span class="input-group-addon">%</span>
-														</div>
-														<input type="text" class="form-control" name="descuento_maximo" value="{{$producto->descuento_maximo}}" >
-													</div>
-												</div>
+		<fieldset class="col-sm-6">    	
+					<legend>Precio del <br>Producto</legend>
+					
+					<div class="panel panel-default">
+						<div class="panel-body" align="left">
+							<div class="row">
+								 <label class="col-sm-2 col-form-label">Descuento1:</label>
+                              <div class="col-sm-4">
+                              	<div class="input-group m-b">
+                  						<div class="input-group-prepend">
+                    						<span class="input-group-addon">%</span>
+                  						</div>
+                  					<input type="text" class="form-control" name="descuento1" value="{{$producto->descuento1}}" >
+                				</div>
+                   			 </div>
 
-												<label class="col-sm-1 col-form-label">Utilidad:</label>
-												<div class="col-sm-5">
-													<div class="input-group m-b">
-														<div class="input-group-prepend">
-															<span class="input-group-addon">%</span>
-														</div>
-														<input type="text" class="form-control" name="utilidad" value="{{$producto->utilidad}}"  >
-													</div>
-												</div>
-												
-											</div>	
-												
-											<div class="form-group row">
-												<label class="col-sm-1 col-form-label">Unida de medida:</label>
-												<div class="col-sm-5">
-													<div class="input-group m-b">
-														<div class="input-group-prepend">
-														</div>
-														<select class="form-control m-b" name="unidad_medida_id">
+                   			 <label class="col-sm-2 col-form-label">Descuento2:</label>
+                              <div class="col-sm-4">
+                              	<div class="input-group m-b">
+                  					<div class="input-group-prepend">
+                    					<span class="input-group-addon">%</span>
+                 					 </div>
+                  					<input type="text" class="form-control" name="descuento2" value="{{$producto->descuento2}}" >
+                 				</div>
+                  			  </div>
+                    			
+						</div>
+						<div class="row">
+								 <label class="col-sm-2 col-form-label">Descuento Maximo:</label>
+                              <div class="col-sm-4"><div class="input-group m-b">
+                  <div class="input-group-prepend">
+                    <span class="input-group-addon">%</span>
+                  </div>
+                 <input type="text" class="form-control" name="descuento_maximo" value="{{$producto->descuento_maximo}}" >
+                </div>
+                    </div>
+
+                   			<label class="col-sm-2 col-form-label">Utilidad:</label>
+                              <div class="col-sm-4"><div class="input-group m-b">
+                  <div class="input-group-prepend">
+                    <span class="input-group-addon">%</span>
+                  </div>
+                 <input type="text" class="form-control" name="utilidad" value="{{$producto->utilidad}}"  >
+                </div>
+                    			
+						</div>
+					</div>
+					<div class="row">
+								 <label class="col-sm-2 col-form-label">Unida de medida:</label>
+                              <div class="col-sm-10">
+                              	<div class="input-group m-b">
+	                  				 <select class="form-control m-b" name="unidad_medida_id">
 															<option value="{{$producto->unidad_i_producto->id}}" style="font-weight:bold">{{$producto->unidad_i_producto->medida}}</option>
 															@foreach($unidad_medidas as $unidad_medida)
 															<option value="{{ $unidad_medida->id }}">{{ $unidad_medida->medida}}</option>
 															@endforeach
-														</select>
-													</div>
-												</div>
-												
-											</div>	
-												
-											<div class="form-group row">
-												<label class="col-sm-1 col-form-label">Garantia:</label>
-												<div class="col-sm-5">
-													<input type="text" class="form-control" name="garantia"  value="{{$producto->garantia}}"  >
-												</div>
-													
-												<label class="col-sm-1 col-form-label">Stok Minimo:</label>
-												<div class="col-sm-5">
-													<input type="text" class="form-control" name="stock_minimo" value="{{$producto->stock_minimo}}"   >
-												</div>
-												
-											</div>
-												
-											<div class="form-group row">
-												<label class="col-sm-1 col-form-label">Stock Maximo:</label>
-												<div class="col-sm-5">
-													<input type="text" class="form-control" name="stock_maximo"  value="{{$producto->stock_maximo}}"  >
-													<input type="text" value="{{$producto->foto}}" class="form-control" name="ori_foto" hidden="hidden">
-												</div>	
-											</div>
-										</div>
-									</div>
-								</div>
+									</select>
+               					 </div>
+                  			  </div>
 
-								<div class="col-lg-6">
-									<div class="panel panel-primary">
-										<div class="panel-heading">
-											Foto Perfil
-										</div>
-										<div class="panel-body">
-											<div>
-												<input type="file" id="archivoInput" name="foto" onchange="return validarExt()"  />
+                   			
+                    			
+						</div>
+						<div class="row">
+								 <label class="col-sm-2 col-form-label">garantia:</label>
+                              <div class="col-sm-2"><input type="text" class="form-control" name="garantia"  value="{{$producto->garantia}}"  >
+                    		</div>
+
+                   			<label class="col-sm-2 col-form-label">Stok Minimo:</label>
+                              <div class="col-sm-2"><input type="text" class="form-control" name="stock_minimo" value="{{$producto->stock_minimo}}"   >
+                    		</div>
+                    		<label class="col-sm-2 col-form-label">Stock Maximo:</label>
+                              <div class="col-sm-2"><input type="text" class="form-control" name="stock_maximo"  value="{{$producto->stock_maximo}}"  >
+                    </div>
+                    			
+						</div>
+						
+
+
+					</div>
+
+						
+					
+		</fieldset>		
+		<fieldset class="col-sm-6">    	
+					<legend>Foto del <br>Producto </legend>
+					
+					<div class="panel panel-default">
+						<div class="panel-body">
+                              <div class="col-sm-12">
+                              	<input type="file" id="archivoInput" name="foto" onchange="return validarExt()"  />
 												<div id="visorArchivo">
 													<!--Aqui se desplegará el fichero-->
-													<center ><img name="foto"  src="{{asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" width="390px" height="302px" /></center>
-												</div>	
-											</div>
-										</div>
-									</div>
-								</div>
-							</div>								
+													<center ><img name="foto" src="{{asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" width="390px" height="200px" /></center>
+                              					</div><input type="text" value="{{$producto->foto}}" class="form-control" name="ori_foto" hidden="hidden">
+                              	</div>
+						</div>
+							
+		</fieldset>		
+
+
+    </div>
+							
 							<button class="btn btn-primary" type="submit">Grabar</button>
 					</form>
 </div>
+
 
 	@elseif($producto->estado_anular == '0')
 		@include("maestro.catalogo.productos.show");
@@ -288,7 +263,7 @@
             visor.onload = function(e) 
             {
                 document.getElementById('visorArchivo').innerHTML = 
-                '<center><img name="foto" src="'+e.target.result+'"width="390px" height="302px" /></center>';
+                '<center><img name="foto" src="'+e.target.result+'"width="390px" height="200px" /></center>';
             };
             visor.readAsDataURL(archivoInput.files[0]);
         }
@@ -412,7 +387,7 @@
        });
     </script>
     <style type="text/css">
-    	img{border-radius: 40px}
+    	/*img{border-radius: 40px}*/
 			p#texto{
 				text-align: center;
 				color:black;

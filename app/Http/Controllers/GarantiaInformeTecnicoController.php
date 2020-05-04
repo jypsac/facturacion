@@ -123,10 +123,7 @@ class GarantiaInformeTecnicoController extends Controller
         $orden_servicio_egreso=$request->get('orden_servicio');
         $orden_servicio_egreso=(string)$orden_servicio_egreso;
 
-        // //GUIA INGRESO
-        $garantia_guia_egreso=GarantiaGuiaEgreso::where('orden_servicio',$orden_servicio_egreso)->first();
-        $garantia_guia_egreso->informe_tecnico=1;
-        $garantia_guia_egreso->save();
+       
 
         //consulta
         $id_garantia_egreso=$garantia_guia_egreso->id;
@@ -157,6 +154,10 @@ class GarantiaInformeTecnicoController extends Controller
         $garantia_informe_tecnico->image8=$name8;
         $garantia_informe_tecnico->save();
 
+         // //GUIA EGRESO
+        $garantia_guia_egreso=GarantiaGuiaEgreso::where('orden_servicio',$orden_servicio_egreso)->first();
+        $garantia_guia_egreso->informe_tecnico=1;
+        $garantia_guia_egreso->save();
         return redirect()->route('garantia_informe_tecnico.index');
     }
 

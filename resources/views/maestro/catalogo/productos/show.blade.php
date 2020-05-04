@@ -171,7 +171,7 @@
 					<div class="panel panel-default">
 						<div class="panel-body">
                               <div class="col-sm-12"><center>  <img src="
-                                    {{ asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" style="width:auto; height: 205px;border-radius: 5px"></center></div>
+                                    {{ asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" style="width:390px; height: 205px;border-radius: 5px"></center></div>
 						</div>
 							
 		</fieldset>		
