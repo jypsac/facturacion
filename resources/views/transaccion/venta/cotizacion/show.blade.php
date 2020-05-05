@@ -68,7 +68,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-5" align="center">
-                                    <div class="form-control" style="height: 200px"><h3>Condiciones Generales</h3>
+                                    <div class="form-control" ><h3>Condiciones Generales</h3>
                                         <div align="left">
                                             <!-- <strong>Precios:</strong> &nbsp;{{$cotizacion->id }}<br> -->
                                             <strong>Forma De Pago:</strong> &nbsp;{{$cotizacion->forma_pago->nombre }}<br>
@@ -89,7 +89,7 @@
                                 <h4>Observacion:</h4>
                                 {{$cotizacion->observacion }}
                                 </div>
-                            </div>
+                            </div><br>
 
                             <div class="table-responsive">
                                 <table class="table ">
