@@ -95,11 +95,11 @@
                                 <table class="table ">
                                     <thead>
                                     <tr>
-                                        <th>Codigo </th>
-                                        <th>U. Medida</th>
+                                        <th style="width: 55px">Codigo </th>
+                                        <th>Unidad</th>
                                         <th>Descripcion</th>
                                         <th>Cantidad</th>
-                                        <th>P. Unitario</th>
+                                        <th style="width: 86px">P. Unitario</th>
                                         <th>Total</th>
 
                                         <th style="display: none">S/.</th><!--
