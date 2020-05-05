@@ -95,7 +95,7 @@
                                 <table class="table ">
                                     <thead>
                                     <tr>
-                                        <th style="width: 55px">Codigo </th>
+                                        <th style="width: 100px">Codigo </th>
                                         <th>Unidad</th>
                                         <th>Descripcion</th>
                                         <th>Cantidad</th>
@@ -156,7 +156,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Total</td>
+                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Importe Total</td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
                                             S/.{{$end}}
                                         </td>
