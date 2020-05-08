@@ -70,12 +70,12 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-5" align="center">
-                                    <div class="form-control" style="height: 200px"><h3>Condiciones Generales</h3>
+                                    <div class="form-control" ><h3>Condiciones Generales</h3>
                                         <div align="left">
-                                            <strong>Precios:</strong> &nbsp;{{$cotizacion->id }}<br>
+                                            <!-- <strong>Precios:</strong> &nbsp;{{$cotizacion->id }}<br> -->
                                             <strong>Forma De Pago:</strong> &nbsp;{{$cotizacion->forma_pago->nombre }}<br>
                                             <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
-                                            <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br>
+                                            <!-- <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br> -->
                                             <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                             <strong>Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                          <!-- <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista_id}} -->
@@ -91,18 +91,24 @@
                                 <h4>Observacion:</h4>
                                 {{$cotizacion->observacion }}
                                 </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-sm-12" >
+                                <h4>Observacion:</h4>
+                                {{$cotizacion->observacion }}
+                                </div>
                             </div>
 
                             <div class="table-responsive">
                                 <table class="table ">
                                     <thead>
                                     <tr>
-                                        <th >Codigo Producto</th>
-                                        <th>Unidad de medida</th>
-                                        <th >Descripcion</th>
-                                        <th >Cantidad</th>
-                                        <th >Precio</th>
-                                        <th >Valor venta</th>
+                                        <th style="width: 100px">Codigo </th>
+                                        <th>Unidad</th>
+                                        <th>Descripcion</th>
+                                        <th>Cantidad</th>
+                                        <th style="width: 86px">P. Unitario</th>
+                                        <th>Total</th>
 
                                         <th style="display: none">S/.</th><!--
                                         <th style="background: #f3f3f4">Precio Total</th> -->
@@ -131,10 +137,18 @@
                                       @endforeach
 
                                       <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
+                                        <td colspan="4" rowspan="3"> <h3 align="center">
+                            <?php $v=new CifrasEnLetras() ;
+                            $letra=($v->convertirEurosEnLetras($end));
+
+                            $letra_final = strstr($letra, 'soles',true);
+
+                            $end_final=strstr($end, '.');
+                            ?>
+
+                                {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
+                                 </h3></td>
+                                        
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
                                             S/.{{round($sub_total, 2)}}
@@ -142,10 +156,6 @@
 
                                     </tr>
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
                                         <td style="background: #f3f3f4;">IGV</td>
                                         <td style="background: #f3f3f4;">
                                             S/.{{round($igv_p, 2)}}
@@ -154,11 +164,7 @@
                                     </tr>
 
                                     <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Total</td>
+                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Importe Total</td>
                                         <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
                                             S/.{{$end}}
                                         </td>
@@ -184,10 +190,6 @@
 
                                         @endforeach
                                           <tr>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
-                                              <td></td>
                                               <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Total</td>
                                               <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
                                                   {{$end=round($sub_total, 2)}}
@@ -198,26 +200,13 @@
                                 </table>
                             </div><!-- /table-responsive -->
 
-
-
-
                         <footer style="padding-top: 150px">
                        <div class="row">
                             <div class="col-sm-6" align="left">
 
 
 
-                            <h3>
-                            <?php $v=new CifrasEnLetras() ;
-                            $letra=($v->convertirEurosEnLetras($end));
-
-                            $letra_final = strstr($letra, 'soles',true);
-
-                            $end_final=strstr($end, '.');
-                            ?>
-
-                                {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
-                                 </h3>
+                           
                             <table>
                                     <tr>
                                         {{-- <td style="width: 70px">Telefono</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
@@ -244,16 +233,13 @@
                         </div>
                 </div>
             </div>
-                    
-            </div>
         </div>
-        
-       
+
+
 <style type="text/css">
     .form-control{border-radius: 10px; height: 150px;}
     .ibox-tools a{color: white !important}
 </style>
-
     
 
 
