@@ -35,6 +35,15 @@
     background-color: #1a5eb3;
     border-color: #1a3bb3;
 }
+.btn-primary:hover {
+    color: #fff;
+    background-color: #1a3bb3;
+    border-color: #1a5eb3;
+}
+.page-item.active .page-link {
+    background-color: #1a5eb3;
+    border-color: #1a3bb3;
+}
 </style>
 <body class="">
     <div id="wrapper">
