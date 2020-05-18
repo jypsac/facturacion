@@ -27,7 +27,15 @@
 
 
 </head>
+<style type="text/css">
 
+    .nav-header {background: #1a388e !important; /*cabeza*/}
+.btn-primary {
+    color: #fff;
+    background-color: #1a5eb3;
+    border-color: #1a3bb3;
+}
+</style>
 <body class="">
     <div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
