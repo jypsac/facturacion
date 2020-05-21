@@ -46,6 +46,7 @@ Route::group(
 		Route::post('/cotizacion/boletear_store' , 'CotizacionController@boletear_store')->name('cotizacion.boletear_store');
 
 		Route::resource('/cotizacion','CotizacionController');
+		Route::resource('/empresa/banco','BancoController'); //Banco
 
 
 

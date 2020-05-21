@@ -2,11 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Empresa;
 use App\Banco;
 use Illuminate\Http\Request;
 
-class EmpresaController extends Controller
+class BancoController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +14,7 @@ class EmpresaController extends Controller
      */
     public function index()
     {
-        $mi_empresa=Empresa::first();
-        $banco=Banco::all();
-        return view('maestro.conf_general.empresa.index',compact('mi_empresa','banco'));
+
     }
 
     /**
@@ -60,7 +57,8 @@ class EmpresaController extends Controller
      */
     public function edit($id)
     {
-        //
+       $banco=Banco::find($id);
+        return view('maestro.conf_general.empresa.banco_edit',compact('banco'));
     }
 
     /**
@@ -72,7 +70,13 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $banco=Banco::find($id);
+        $banco->numero_soles=$request->get('numero_soles');
+        $banco->numero_dolares=$request->get('numero_dolares');
+        $banco->estado=$request->get('estado');
+        $banco->save();
+
+        return redirect()->route('empresa.index');
     }
 
     /**

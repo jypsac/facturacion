@@ -8,10 +8,10 @@
 
 @section('content')
 
-    <div class="container" style="height:880px;padding-top: 10px; background: white;">
+    <div class="container" style="height:auto;padding-top: 10px; background: white; margin-bottom: 50px; " >
       <div class="jumbotron">
         <h1>{{$mi_empresa->nombre}}
-        <img align="right"  src="{{asset('img/logos/logo.jpg')}}" style="width: 300px;height: 50px; border-radius:15px"></h1>
+        <img align="right"  src="{{asset('img/logos/logo.png')}}" style="width: 300px;height: 50px; border-radius:15px"></h1>
 <br>
         <p class="lead" style="font-size: 15px">{{$mi_empresa->descripcion}}</p>
         <p><a class="btn btn-lg btn-success" href="#" style="background-color: #1ab394; border-color: #1ab394"> <i class="fa fa-edit"></i></a></p>
@@ -61,6 +61,31 @@
         </div>
       </div>
 
+      <div class="row ">
+
+        @foreach($banco as $bancos)
+                      <div class="col-lg-3 " align="center">
+                        <p class="form-control">
+                          <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
+                        <br>
+                          N° Soles: {{$bancos->numero_soles}}
+                       <br>
+                          N° Dolares: {{$bancos->numero_dolares}}<br>
+                          @if($bancos->estado==0)
+                           <strong> estado: Activado</strong>
+                          @else
+                          <strong> estado: Desactivado</strong>
+                          @endif
+                         
+                          <br><br>
+                          <a  class="btn btn-lg btn-success" href="{{ route('banco.edit', $bancos->id) }}" style="padding: 3px 5px 3px 7px; " > <i  class="fa fa-edit"></i></a>
+                        </p> 
+                      </div>                  
+          @endforeach
+       
+        
+      </div>
+
 
     </div> 
      <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
@@ -85,5 +110,8 @@
     });
 
 </script> 
+<style type="text/css">
+  .banco{border-radius: 5px;border: 1px solid black }
+</style>
 
 @endsection
