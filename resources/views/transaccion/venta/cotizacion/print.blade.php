@@ -100,14 +100,14 @@
                             </div>
 
                             <div class="table-responsive">
-                                <table class="table ">
+                                <table class="table " >
                                     <thead>
                                     <tr>
                                         <th style="width: 100px">Codigo </th>
                                         <th>Unidad</th>
                                         <th>Descripcion</th>
                                         <th>Cantidad</th>
-                                        <th style="width: 86px">P. Unitario</th>
+                                        <th style="width: 86px">P.Unitario</th>
                                         <th>Total</th>
 
                                         <th style="display: none">S/.</th><!--
@@ -136,39 +136,6 @@
 
                                       @endforeach
 
-                                      <tr>
-                                        <td colspan="4" rowspan="3"> <h3 align="center">
-                            <?php $v=new CifrasEnLetras() ;
-                            $letra=($v->convertirEurosEnLetras($end));
-
-                            $letra_final = strstr($letra, 'soles',true);
-
-                            $end_final=strstr($end, '.');
-                            ?>
-
-                                {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
-                                 </h3></td>
-                                        
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                            S/.{{round($sub_total, 2)}}
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <td style="background: #f3f3f4;">IGV</td>
-                                        <td style="background: #f3f3f4;">
-                                            S/.{{round($igv_p, 2)}}
-                                        </td>
-                                        <td></td>
-                                    </tr>
-
-                                    <tr>
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Importe Total</td>
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                            S/.{{$end}}
-                                        </td>
-                                    </tr>
                                       @else
                                         @foreach($cotizacion_registro2 as $cotizacion_registros)
                                             <tr>
@@ -189,56 +156,100 @@
                                             </tr>
 
                                         @endforeach
-                                          <tr>
-                                              <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Total</td>
-                                              <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                                  {{$end=round($sub_total, 2)}}
-                                              </td>
-                                          </tr>
+                                         
                                     @endif
                                     </tbody>
                                 </table>
                             </div><!-- /table-responsive -->
 
                         <footer style="padding-top: 150px">
-                       <div class="row">
-                            <div class="col-sm-6" align="left">
-
-
-
-                           
-                            <table>
-                                    <tr>
-                                        {{-- <td style="width: 70px">Telefono</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
-                                    <tr>
-                                        <td style="width: 70px">Celular</td><td>:</td><td>&nbsp;{{$cotizacion->personal->celular}}</td>
-                                    </tr>
-                                    <tr>
-                                        <td style="width: 70px">Email</td><td>:</td><td>&nbsp;{{$cotizacion->personal->email}}</td> --}}
-                                    </tr>
-                                     {{-- <tr>
-                                        <td style="width: 70px">Web</td><td>:</td><td>&nbsp;{{$cotizacion->personal->telefono}}</td>
-                                    </tr> --}}
-                                </table>
-
-                            </div>
-                            <div class="col-sm-6" align="center">
-
-                                <hr width="200" style="color:black">
-                                {{-- <p> {{$cotizacion->personal->nombres}} {{$cotizacion->personal->apellidos}} <br> <strong>{{$cotizacion->personal->profesion}}</strong>  </p> --}}
-                            </div>
-                       </div>
+                       
                         </footer>
+
+                        <!-- Totales de Productos --> 
+                                @if ($regla=="factura")
+                                <h3 align="left">
+                            <?php $v=new CifrasEnLetras() ;
+                            $letra=($v->convertirEurosEnLetras($end));
+
+                            $letra_final = strstr($letra, 'soles',true);
+
+                            $end_final=strstr($end, '.');
+                            ?>
+
+                                Son : {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
+                                 </h3>
+
+                                <div class="row">
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> Sub Total</p>
+                                        <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> Op. Agravada</p>
+                                        <p class="form-control a"> S/.00</p>
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> IGV</p>
+                                        <p class="form-control a"> S/.{{round($igv_p, 2)}}</p>
+                                    </div>
+                                     <div class="col-sm-3 ">
+                                        <p class="form-control a"> Importe Total</p>
+                                        <p class="form-control a"> S/.{{$end}}</p>
+                                    </div>
+                                </div>
+                                    @else
+                                <div class="row">
+
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> Sub Total</p>
+                                        <p class="form-control a"> S/.{{$end=round($sub_total, 2)}}</p>
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> Op. Agravada</p>
+                                        <p class="form-control a"> S/.00</p>
+                                    </div>
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> IGV</p>
+                                        <p class="form-control a"> S/.00</p>
+                                    </div>
+                                     <div class="col-sm-3 ">
+                                        <p class="form-control a"> Importe Total</p>
+                                        <p class="form-control a"> S/.{{$end=round($sub_total, 2)}}</p>
+                                    </div>
+                                </div>
+                                    @endif
+
+         
+                                <br>
+                        <!-- Fin Totales de Productos -->
+                            <div class="row">
+                             @foreach($banco as $bancos)
+                                     <div class="col-sm-3 " align="center">
+                                         <p class="form-control" style="height: 100px;font-size: 10px">
+                                         <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
+                                         <br>
+                                         N° Soles: {{$bancos->numero_soles}}
+                                         <br>
+                                          N° Dolares: {{$bancos->numero_dolares}}<br>
+                                         </p> 
+                                    </div>  
+                                                 
+                            @endforeach
+                            </div>        
+                                
 
                         </div>
                 </div>
             </div>
+           
         </div>
-
 
 <style type="text/css">
     .form-control{border-radius: 10px; height: 150px;}
     .ibox-tools a{color: white !important}
+    .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {border-top-width: 0px;}
 </style>
     
 

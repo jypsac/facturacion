@@ -17,6 +17,7 @@ use App\Facturacion;
 use App\Igv;
 use App\Ventas_registro;
 use App\User;
+use App\Banco;
 use App\Personal_venta;
 use App\Unidad_medida;
 
@@ -491,7 +492,8 @@ class CotizacionController extends Controller
 
 
     public function show($id)
-    {
+    {   
+        $banco=Banco::where('estado','0')->get();
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
         $cotizacion_registro2=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
@@ -508,7 +510,7 @@ class CotizacionController extends Controller
 
         $regla=$cotizacion->tipo;
 
-         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla"));
+         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco'));
     }
 
     /**
@@ -551,6 +553,7 @@ class CotizacionController extends Controller
     // }
 
      public function print($id){
+        $banco=Banco::where('estado','0')->get();
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
         $cotizacion_registro2=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
@@ -567,7 +570,7 @@ class CotizacionController extends Controller
 
         $regla=$cotizacion->tipo;
 
-        return view('transaccion.venta.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda",'regla'));
+        return view('transaccion.venta.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda",'regla','banco'));
         }
 
 
