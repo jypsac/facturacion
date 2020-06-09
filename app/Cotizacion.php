@@ -26,6 +26,10 @@ class Cotizacion extends Model
     public function comisionista(){
         return $this->belongsTo(Personal_venta::class,'comisionista_id');
     } 
+
+     public function user_personal(){
+        return $this->belongsTo(user::class,'user_id');
+    }
     
 }
 

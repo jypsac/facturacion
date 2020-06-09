@@ -284,7 +284,7 @@
                                     <div class="row">
                                         <label class="col-sm-1 col-form-label">Observacion:</label>
                                         <div class="col-sm-11">
-                                            <textarea class="form-control" name="observacion" id="observacion"  rows="1"  ></textarea>
+                                            <textarea class="form-control" name="observacion" id="observacion"  rows="1"  >Emitimos la siguiente cotización a vuestra solicitud</textarea>
                                         </div>
                                     </div>
                                 </div>
