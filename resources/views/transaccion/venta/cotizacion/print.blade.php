@@ -92,12 +92,6 @@
                                 {{$cotizacion->observacion }}
                                 </div>
                             </div><br>
-                            <div class="row">
-                                <div class="col-sm-12" >
-                                <h4>Observacion:</h4>
-                                {{$cotizacion->observacion }}
-                                </div>
-                            </div>
 
                             <div class="table-responsive">
                                 <table class="table " >
@@ -236,7 +230,24 @@
                                     </div>  
                                                  
                             @endforeach
-                            </div>        
+                            </div>
+                            <br><br><br><br><br>
+                                <div class="row">
+                                    <div class="col-sm-3">
+                                        <p><u>centro de Atencion : </u></p>
+                                Telefono : {{$cotizacion->user_personal->personal->telefono }}<br>
+                                Celular : {{$cotizacion->user_personal->personal->celular }}<br>
+                                Email : {{$cotizacion->user_personal->personal->email }}<br>
+                                Web : <br>
+                                    </div>
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-3"><br><br>
+                                        <hr>
+                                        <center>{{$cotizacion->user_personal->personal->nombres }}</center>
+                                    </div>
+                                    
+                                </div>        
                                 
 
                         </div>

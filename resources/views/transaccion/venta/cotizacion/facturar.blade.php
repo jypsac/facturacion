@@ -52,11 +52,11 @@
                                 </tr>
                                 <tr>
     <td><b>Direccion</b></td><td style="width: 3px">:</td><td colspan="4"><input type="text" class="form-control" value="{{$cotizacion->cliente->direccion}}" readonly="readonly"><!-- </td><td></td><td></td><td></td> -->
-    <td><b>Orden de Compra</b></td><td>:</td><td><input type="text" class="form-control"  name="orden_compra"></td>
+    <td><b>Orden de Compra</b></td><td>:</td><td><input type="text" class="form-control" value="0" name="orden_compra"></td>
                                 </tr>
                                 <tr>
     <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td><td colspan="4"><input type="text" class="form-control" value="{{$cotizacion->forma_pago->nombre }}" readonly="readonly"><!-- </td><td></td><td></td><td></td> -->
-    <td><b>Guia Remision</b></td><td style="width: 3px">:</td><td><input type="text" class="form-control"  name="guia_remision"></td>
+    <td><b>Guia Remision</b></td><td style="width: 3px">:</td><td><input type="text" class="form-control" value="0" name="guia_remision"></td>
                                 </tr>
                                  <tr>
     <td><b>Fecha Emision</b></td><td style="width: 3px">:</td><td><input type="date" class="form-control" value="{{date("Y-m-d")}}"  readonly="readonly" name=fecha_emision></td><td style="width: 180px"><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td><td style="width: 200px"><input type="text" class="form-control"  name="fecha_vencimiento" value="{{$cotizacion->fecha_vencimiento }}" readonly="readonly"></td>
@@ -96,7 +96,8 @@
                                     <tr>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
-                                        <td>{{$cotizacion_registros->producto->nombre}}</td>
+                                        <td>{{$cotizacion_registros->producto->nombre}} <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span><input type="text" class="form-control col-sm-4" name="" placeholder="N° Serie">
+                                        </td>
                                         <td>S/.{{$cotizacion_registros->precio}}</td>
                                         <!-- <td>{{$cotizacion_registros->descuento}}%</td> -->
                                         <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
@@ -136,8 +137,8 @@
 
                                         </td>
                                        
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
+                                        <td >Sub Total</td>
+                                        <td >
                                             S/.{{round($sub_total, 2)}}
                                         </td>
 
@@ -150,8 +151,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td> -->
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">IGV</td>
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
+                                        <td >IGV</td>
+                                        <td >
                                             S/.{{round($igv_p, 2)}}
                                         </td>
                                     </tr>
@@ -162,8 +163,8 @@
                                         <td></td>
                                         <td></td>
                                         <td></td> -->
-                                        <td  style="background: #f3f3f4;">Importe Total</td>
-                                        <td  style="background: #f3f3f4;">
+                                        <td>Importe Total</td>
+                                        <td>
                                             S/.{{$end}}
                                         </td>
                                     </tr>
