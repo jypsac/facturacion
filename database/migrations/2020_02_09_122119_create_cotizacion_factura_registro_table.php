@@ -13,7 +13,7 @@ class CreateCotizacionFacturaRegistroTable extends Migration
      */
     public function up()
     {
-        Schema::create('Cotizacion_factura_registro', function (Blueprint $table) {
+        Schema::create('cotizacion_factura_registro', function (Blueprint $table) {
             $table->bigIncrements('id');
             
         });
