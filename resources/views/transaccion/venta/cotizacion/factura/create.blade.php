@@ -300,7 +300,6 @@
                                         <th style="width: 100px;font-size: 13px">Precio</th>
                                         <th style="width: 100px;font-size: 13px">Dcto</th>
                                         <th style="width: 100px;font-size: 13px">PU. Dcto.</th>
-{{--                                        <th style="width: 100px;font-size: 13px">Comision</th>--}}
                                         <th style="width: 100px;font-size: 13px">PU. Com.</th>
                                         <th style="width: 100px;font-size: 13px">Total</th>
                                     </tr>
@@ -337,9 +336,7 @@
                                         <td>
                                             <input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" />
                                         </td>
-{{--                                        <td>--}}
                                             <input type='hidden' name="comision[]" id='comision0'  readonly="readonly" class="form-control"  required  autocomplete="off" />
-{{--                                        </td>--}}
                                         <td>
                                             <input type='text' id='precio_unitario_comision0' name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
                                         </td>
@@ -358,7 +355,6 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-{{--                                        <td></td>--}}
                                         <td></td>
                                         <td>Subtotal :</td>
                                         <td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
@@ -368,7 +364,6 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-{{--                                        <td></td>--}}
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -380,7 +375,6 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-{{--                                        <td></td>--}}
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -392,9 +386,7 @@
 
                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-
                                 <a onclick="print()"><button class="btn btn-warning float-right" ><i class="fa fa-cloud" aria-hidden="true">Imprimir</i></button></a>
-
                                 <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
 
 
