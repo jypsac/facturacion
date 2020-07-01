@@ -189,6 +189,12 @@
                             <div class="row">
                                 <div class="col-sm-6">
                                     <div class="row">
+                                        <label class="col-sm-2 col-form-label">Orden de compra:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control m-b" name="orden_compra" required  autocomplete="off">
+                                        </div>
+                                    </div><br>
+                                    <div class="row">
                                         <label class="col-sm-2 col-form-label">Cliente:</label>
                                         <div class="col-sm-10">
                                             <input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off">
@@ -231,7 +237,13 @@
                                 </div>
                                 <div class="col-sm-6">
                                     <div class="row">
+                                        <label class="col-sm-2 col-form-label">Guia Remision:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control m-b" name="guia_remision" required  autocomplete="off">
+                                        </div>
+                                    </div><br>
 
+                                    <div class="row">
                                         <label class="col-sm-2 col-form-label">Fecha de cotizacion:</label>
                                         <div class="col-sm-10">
                                             <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
@@ -294,6 +306,7 @@
                                     <tr>
                                         <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
                                         <th style="width: 600px;font-size: 13px">Articulo</th>
+                                        <th style="width: 100px;font-size: 13px">Nr Serie</th>
                                         <th style="width: 100px;font-size: 13px">Stock</th>
                                         <th style="width: 100px;font-size: 13px">Cantidad</th>
                                         <th style="width: 100px;font-size: 13px">Precio</th>
@@ -316,6 +329,9 @@
                                                 @endforeach
                                             </datalist>
 
+                                        </td>
+                                        <td>
+                                            <input type='text' id='numero_serie0'  name='numero_serie[]' class="form-control" required  autocomplete="off"/>
                                         </td>
                                         <td>
                                             <input type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
@@ -355,10 +371,12 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td>Subtotal :</td>
                                         <td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
                                     </tr>
                                     <tr style="background-color: #f5f5f500;" align="center">
+                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -377,6 +395,7 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
+                                        <td></td>
                                         <td>Total :</td>
                                         <td><input id='total_final'  disabled="disabled" class="form-control" required /></td>
                                     </tr>
@@ -385,7 +404,6 @@
 
                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                                <a onclick="print()"><button class="btn btn-warning float-right" ><i class="fa fa-cloud" aria-hidden="true">Imprimir</i></button></a>
                                 <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
 
 
@@ -427,6 +445,9 @@
     </td>
 
     <td>
+        <input type='text' id='numero_serie${i}' name='numero_serie[]'  class="form-control" required  autocomplete="off"/>
+				</td>
+    <td>
         <input type='text' id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
 				</td>
 				<td>
@@ -462,12 +483,6 @@
     </script>
 
     <script>
-        function print(){
-            var print_input=1;
-            document.getElementById("prints").value = print_input;
-            var estado = document.querySelector("#prints").value;
-            // console.log(estado);
-        }
 
         function comision(){
 
