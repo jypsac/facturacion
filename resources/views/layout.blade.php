@@ -83,6 +83,7 @@
                                     <li><a href="{{route('credito.index')}}">Credito</a></li>
                                     <li><a href="{{route('debito.index')}}">Debito</a></li>
                                     <li><a href="{{route('facturacion.index')}}">Facturacion</a></li>
+                                    <li><a href="{{route('boleta.index')}}">Boleta</a></li>
                                     <li><a href="{{route('guia.index')}}">Guias</a></li>
                                     <li><a href="{{route('pedidos.index')}}">Pedidos</a></li>
                                 </ul>
