@@ -35,7 +35,7 @@ class FacturacionController extends Controller
     public function index()
     {
          $facturacion=Facturacion::all();
-        
+
         return view('transaccion.venta.facturacion.index', compact('facturacion'));
     }
 
@@ -63,8 +63,8 @@ class FacturacionController extends Controller
         $igv=Igv::first();
 
         return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
-         
-        
+
+
     }
 
     /**
@@ -79,7 +79,7 @@ class FacturacionController extends Controller
 
         if($print==1){
             $cliente_id=$request->get('cliente');
-            
+
             $sub_total=0;
             $igv=Igv::first();
 
@@ -114,7 +114,7 @@ class FacturacionController extends Controller
                 $comision[]=$request->input('comision')[$i];
                 $precio_unitario_comision[]=$request->input('precio_unitario_comision')[$i];
             }
-            
+
             return view('transaccion.venta.cotizacion.factura.fast_print',compact('producto_codigo','unidad_medida','sub_total','igv','cliente_id','forma_pago_id','validez','user_id','observacion','producto_id','stock','cantidad','precio','check_descuento','promedio_original','descuento','precio_unitario_descuento','comision','precio_unitario_comision'));
         }
 
@@ -187,23 +187,16 @@ class FacturacionController extends Controller
         $suma=$personal_contador+1;
         $cod_comision='CO-0000'.$suma;
 
-        //FATLA
-        // observacion
-        // Comisionista
-        // VALIDEZ
-        // garantia
-        // user id
-
         $facturacion=new facturacion;
         $facturacion->codigo_fac="fac-00000";
         $facturacion->cliente_id=$cliente_buscador->id;
         $facturacion->forma_pago_id=$request->get('forma_pago');
         // $facturacion->validez=$request->get('validez');
         $facturacion->moneda_id=$request->get('moneda');
-        // $facturacion->cod_comision=$cod_comision;
+        $facturacion->comisionista=$cod_comision;
         // $facturacion->garantia=$request->get('garantia');
-        // $facturacion->user_id =auth()->user()->id;
-        // $facturacion->observacion=$request->get('observacion');
+        $facturacion->user_id =auth()->user()->id;
+        $facturacion->observacion=$request->get('observacion');
         $facturacion->fecha_emision=$request->get('fecha_emision');
         $facturacion->fecha_vencimiento=$nuevafechas;
         $facturacion->orden_compra=$request->get('orden_compra');
@@ -275,16 +268,16 @@ class FacturacionController extends Controller
         $facturacion=Facturacion::find($id);
        return view('transaccion.venta.facturacion.show', compact('facturacion','empresa'));
     }
-    
+
     public function show_boleta(Request $request,$id)
     {
-      
+
        return view('transaccion.venta.facturacion.boleta');
     }
 
     public function create_boleta()
     {
-      
+
        return view('transaccion.venta.facturacion.create_boleta');
     }
 
@@ -319,7 +312,7 @@ class FacturacionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {       
+    {
             $venta_registro=Ventas_registro::where('id_facturacion',$id)->first();
             $id_venta_r=$venta_registro->id;
 

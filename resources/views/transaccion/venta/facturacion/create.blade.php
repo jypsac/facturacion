@@ -35,7 +35,7 @@
 
     <div class="social-bar">
         <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
-        
+
     </div>
     <!-- Modal CLiente -->
 
