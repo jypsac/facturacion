@@ -3,29 +3,12 @@
 @section('title', 'Facturacion')
 @section('breadcrumb', 'Facturacion')
 @section('breadcrumb2', 'Facturacion')
-@section('data-toggle', 'modal')
-@section('href_accion', '#modal-form')
+@section('href_accion', route('facturacion.create'))
 @section('value_accion', 'Agregar')
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
-            <div id="modal-form" class="modal fade" aria-hidden="true">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-body">
-                            <center>
-                                <div class="col-sm-12 b-r">
-                                    <h2 align="center" class="m-t-none m-b">Agregar</h2><br>
-                                    <a class="btn btn-info a" href="{{route('facturacion.create')}}">Factura</a>
-                                    <a class="btn btn-success a" href="{{route('create.boleta')}}">Boleta</a>
-                                </div>
-                            </center>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
             <div class="col-lg-12">
                 <div class="ibox ">
                     <div class="ibox-title">

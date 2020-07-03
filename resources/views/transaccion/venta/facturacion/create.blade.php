@@ -186,134 +186,111 @@
                     <div class="ibox-content">
                         <form action="{{route('facturacion.store')}}"  enctype="multipart/form-data" method="post">
                             @csrf
-                            <div class="row">
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <label class="col-sm-2 col-form-label">Orden de compra:</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control m-b" name="orden_compra" required  autocomplete="off">
-                                        </div>
-                                    </div><br>
-                                    <div class="row">
-                                        <label class="col-sm-2 col-form-label">Cliente:</label>
-                                        <div class="col-sm-10">
-                                            <input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off">
+                            {{-- Cabecera --}}
+                             <div class="row">
+                                <div class="col-sm-4 text-left" align="left">
+                                    
+                                    <address class="col-sm-4" align="left">
+                                        
+                                        <img src="{{asset('img/logos/logo.png')}}" alt="" width="300px">
+                                    </address>
+                                </div>
+                                <div class="col-sm-4">
+                                </div> 
+
+                                <div class="col-sm-4 ">
+                                    <div class="form-control ruc" style="height: 125px">
+                                        <center>
+                                            <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
+                                            <h2>FACTURA ELECTRONICA</h2>   
+                                            <h5>FC-000{{$suma}}</h5>   
+                                        </center>
+                                    
+                                    </div>
+                                </div>
+                            </div><br>
+
+                            <table class="table">
+                                    <thead>
+                                        <tr>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        <th></th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td>Cliente</td>
+                                            <td>:</td>
+                                            <td><input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off">
                                             <datalist id="browsersc1" >
                                                 @foreach($clientes as $cliente)
                                                     <option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
                                                 @endforeach
-                                            </datalist>
-                                        </div>
-                                        <input type="hidden" value="0" name="print" id="prints">
-                                    </div><br>
-                                    <div class="row">
-                                        <label class="col-sm-2 col-form-label">Forma de pago:</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control" name="forma_pago" required="required">
-                                                @foreach($forma_pagos as $forma_pago)
-                                                    <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
-                                                @endforeach
-                                                <select>
-                                        </div>
-                                    </div><br>
+                                            </datalist></td>
 
-                                    <div class="row">
-                                        <label class="col-sm-2 col-form-label">Moneda:</label>
-                                        <div class="col-sm-10">
-                                            <select class="form-control" name="moneda" required="required">
-                                                @foreach($moneda as $monedas)
-                                                    <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
-                                                @endforeach
-                                                <select>
-                                        </div>
-                                    </div><br>
-                                    <div class="row">
-                                        <label class="col-sm-2 col-form-label">Vendedor:</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}">
-                                        </div>
-                                    </div>
-
-                                </div>
-                                <div class="col-sm-6">
-                                    <div class="row">
-                                        <label class="col-sm-2 col-form-label">Guia Remision:</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control m-b" name="guia_remision" required  autocomplete="off">
-                                        </div>
-                                    </div><br>
-
-                                    <div class="row">
-                                        <label class="col-sm-2 col-form-label">Fecha de cotizacion:</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
-                                        </div>
-
-                                    </div><br>
-                                    <div class="row">
-                                        <label class="col-sm-2 col-form-label">Validez:</label>
-                                        <div class="col-sm-10">
-                                            <select  class="form-control" name="validez" required="required">
-                                                <option value="5 Días">5 Días</option>
-                                                <option value="4 Días">4 Días</option>
-                                                <option value="3 Días">3 Días</option>
-                                                <option value="2 Días">2 Días</option>
-                                                <option value="1 Día">1 Día</option>
-                                            </select>
-                                        </div>
-                                    </div><br><br>
-
-                                    <div class="row">
-                                        <label class="col-sm-2 col-form-label">Garantia:</label>
-                                        <div class="col-sm-10">
-                                            <!-- <input type="text" class="form-control" name="referencia" > -->
-                                            <select class="form-control" name="garantia">
-                                                <option value="1 año">1 Año</option>
-                                                <option value="2 años">2 Años</option>
-                                                <option value="3 años">3 Años</option>
-                                                <option value="6 meses">6 Meses</option>
-                                            </select>
-                                        </div>
-                                    </div><br>
-
-                                    <div class="row">
-                                        <label class="col-sm-2 col-form-label">Comisionista:</label>
-                                        <div class="col-sm-10">
-                                            <!-- <input type="text" name="comisionista" class="form-control"> -->
-                                            <input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="Sin comision - 0" onkeyup="comision()" autocomplete="off">
+                                            <td>Comisionista</td>
+                                            <td>:</td>
+                                            <td> <input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="Sin comision - 0" onkeyup="comision()" autocomplete="off">
                                             <datalist id="browsersc2" >
                                                 <option id="">Sin comision - 0 </option>
                                                 @foreach($p_venta as $p_ventas)
                                                     <option id="{{$p_ventas->id}}">{{$p_ventas->cod_vendedor}} - {{$p_ventas->personal->personal_l->nombres}} - <span style="color: red">{{$p_ventas->comision}}</span></option>
                                                 @endforeach
                                             </datalist>
-                                        </div>
-                                    </div>
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Orden de compra</td>
+                                            <td>:</td>
+                                            <td><input type="text" class="form-control m-b" name="orden_compra" required  autocomplete="off" value="0"></td>
 
-                                </div>
-                                <div class="col-sm-12" style="padding-top: 15px">
-                                    <div class="row">
-                                        <label class="col-sm-1 col-form-label">Observacion:</label>
-                                        <div class="col-sm-11">
-                                            <textarea class="form-control" name="observacion" id="observacion"  rows="1"  >Emitimos la siguiente cotización a vuestra solicitud</textarea>
-                                        </div>
-                                    </div>
-                                </div>
+                                            <td>Forma de pago</td>
+                                            <td>:</td>
+                                            <td><select class="form-control" name="forma_pago" required="required">
+                                                @foreach($forma_pagos as $forma_pago)
+                                                    <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
+                                                @endforeach
+                                                <select></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Vendedor</td>
+                                            <td>:</td>
+                                            <td><input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}"></td>
 
+                                            <td>Fecha</td>
+                                            <td>:</td>
+                                            <td><input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly"></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Observacion</td>
+                                            <td>:</td>
+                                            <td colspan="4"><textarea class="form-control" name="observacion" id="observacion"  rows="1"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
+                                        </div></td>
+                                        </tr>
+                                        
+                                        
+                                    </tbody>
+                            </table> 
 
-                                <table 	 cellspacing="0" class="table table-striped ">
+                            {{--FIn Cabecera --}}
+                            <div class="table-responsive">
+                                <table 	 cellspacing="0" class="table tables  " style="width: 1500px">
                                     <thead>
                                     <tr>
                                         <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-                                        <th style="width: 600px;font-size: 13px">Articulo</th>
-                                        <th style="width: 100px;font-size: 13px">Nr Serie</th>
-                                        <th style="width: 100px;font-size: 13px">Stock</th>
-                                        <th style="width: 100px;font-size: 13px">Cantidad</th>
-                                        <th style="width: 100px;font-size: 13px">Precio</th>
-                                        <th style="width: 100px;font-size: 13px">Dcto</th>
-                                        <th style="width: 100px;font-size: 13px">PU. Dcto.</th>
-                                        <th style="width: 100px;font-size: 13px">PU. Com.</th>
-                                        <th style="width: 100px;font-size: 13px">Total</th>
+                                        <th style="width: 400px">Articulo</th>
+                                        <th>Nr Serie</th>
+                                        <th>Stock</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>Dcto</th>
+                                        <th>PU. Dcto.</th>
+                                        <th>PU. Com.</th>
+                                        <th>Total</th>
                                     </tr>
                                     </thead>
                                     <tbody>
@@ -334,34 +311,39 @@
                                             <input type='text' id='numero_serie0'  name='numero_serie[]' class="form-control" required  autocomplete="off"/>
                                         </td>
                                         <td>
-                                            <input type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
+                                            <input  style="width: 76px" type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
                                         </td>
                                         <td>
-                                            <input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
+                                            <input style="width: 76px" type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
                                         </td>
                                         <td>
-                                            <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
+                                            <input style="width: 76px" type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
                                         </td>
+
+
                                         <td>
-                                            <input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
+                                            <div style="position: relative;" > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/></div>
+                                           
+                
+                                            <div  class="div_check"> 
+                                                <input class="check"  type='checkbox' id='check0' name='check[]'    onclick="multi(0)" style="" autocomplete="off"/></div>
                                             <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
                                             <input type='hidden' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
-                                            <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
                                         </td>
                                         <td>
-                                            <input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" />
+                                            <input style="width: 76px" type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" />
                                         </td>
-                                            <input type='hidden' name="comision[]" id='comision0'  readonly="readonly" class="form-control"  required  autocomplete="off" />
+                                            <input style="width: 76px"  type='hidden' name="comision[]" id='comision0'  readonly="readonly" class="form-control"  required  autocomplete="off" />
                                         <td>
-                                            <input type='text' id='precio_unitario_comision0' name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+                                            <input style="width: 76px"  type='text' id='precio_unitario_comision0' name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
                                         </td>
                                         <td>
-                                            <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
+                                            <input style="width: 76px"  type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
                                         </td>
                                         <span id="spTotal"></span>
                                     </tr>
 
-                                    </tbody><br>
+                                    </tbody>
                                     <tbody>
                                     <tr style="background-color: #f5f5f500;" align="center">
                                         <td></td>
@@ -373,7 +355,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>Subtotal :</td>
-                                        <td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
+                                        <td><input id='sub_total'  disabled="disabled"  style="width: 76px"  class="form-control" required /></td>
                                     </tr>
                                     <tr style="background-color: #f5f5f500;" align="center">
                                         <td></td>
@@ -385,7 +367,7 @@
                                         <td></td>
                                         <td></td>
                                         <td>IGV :</td>
-                                        <td><input id='igv'  disabled="disabled" class="form-control" required /></td>
+                                        <td><input id='igv'  style="width: 76px"   disabled="disabled" class="form-control" required /></td>
                                     </tr>
                                     <tr  align="center">
                                         <td></td>
@@ -397,10 +379,11 @@
                                         <td></td>
                                         <td></td>
                                         <td>Total :</td>
-                                        <td><input id='total_final'  disabled="disabled" class="form-control" required /></td>
+                                        <td><input id='total_final'  style="width: 76px"  disabled="disabled" class="form-control" required /></td>
                                     </tr>
                                     </tbody>
                                 </table>
+                                </div>
 
                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
@@ -415,8 +398,11 @@
     </div>
     <style>
         .form-control{border-radius: 10px}
+        .text_des{border-radius: 10px;border: 1px solid #e5e6e7;width: 80px;padding: 6px 12px;}
+        .check{-webkit-appearance: none;height: 28px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px}
+        .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;}
+        .check:checked {background: #0375bd6b;}
     </style>
-
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -448,36 +434,41 @@
         <input type='text' id='numero_serie${i}' name='numero_serie[]'  class="form-control" required  autocomplete="off"/>
 				</td>
     <td>
-        <input type='text' id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
+        <input type='text' style="width: 76px"  id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
 				</td>
 				<td>
-					<input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+					<input type='text' style="width: 76px"  id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
 				</td>
 				<td>
-					<input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+					<input type='text' style="width: 76px"  id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
 				</td>
+                <td>
+                    <div style="position: relative;" > 
+                        <input class="text_des"type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="" required onkeyup="multi(${i})"  autocomplete="off"/>
+                    </div>
+                    <div  class="div_check"> 
+                        <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
+                    </div>
+                        <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
+                        <input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
+                </td>
+				
 				<td>
-					<input type='checkbox' id='check${i}' name='check[]'  class="form-control"  onclick="multi(${i})"  autocomplete="off"/>
-					<input type='hidden' id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
-					<input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
-					<input type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
-				</td>
-				<td>
-					<input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
+					<input type='text' id='precio_unitario_descuento${i}'  style="width: 76px"  name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
 				</td>
 
-					<input type='hidden' name="comision[]" id='comision${i}' readonly="readonly" class="form-control"  required  autocomplete="off" />
+					<input type='hidden' name="comision[]" id='comision${i}'  style="width: 76px"  readonly="readonly" class="form-control"  required  autocomplete="off" />
 
 				<td>
-					<input type='text' id='precio_unitario_comision${i}' name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+					<input type='text' id='precio_unitario_comision${i}'  style="width: 76px"  name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
 				</td>
 
 				<td>
-					<input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
+					<input type='text' id='total${i}'  style="width: 76px"  name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
 				</td>
 
 			</tr>`;
-            $('table').append(data);
+            $('.tables').append(data);
             i++;
         });
     </script>

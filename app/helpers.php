@@ -1,4 +1,7 @@
+
 <?php
+use App\TipoCambio;
+use App\Carbon;
 
 function tiempo($actual){
     date_default_timezone_set("America/Lima");
@@ -456,6 +459,8 @@ class CifrasEnLetras {
       return substr_compare($texto, $sufijo, -$largoSufijo) === 0;*/
       return substr($texto, -strlen($sufijo)) == $sufijo;
     }
+      
+       
   
   
   } // class CifrasEnLetras
