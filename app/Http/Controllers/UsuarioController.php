@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\User;
+use App\Personal;
 
 class UsuarioController extends Controller
 {
@@ -13,7 +15,8 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        return view('maestro.usuario.index');
+        $usuarios=User::all();
+        return view('maestro.usuario.index',compact('usuarios'));
     }
 
     /**
@@ -21,10 +24,24 @@ class UsuarioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function lista()
     {
-        //
+        $personales=Personal::all();
+        return view('maestro.usuario.lista',compact('personales'));
     }
+
+
+    // public function create()
+    // {
+
+    // }
+
+    public function crear($id)
+    {
+        $personal=Personal::find($id);
+        return view('maestro.usuario.create',compact('personal'));
+    }
+
 
     /**
      * Store a newly created resource in storage.
@@ -34,7 +51,19 @@ class UsuarioController extends Controller
      */
     public function store(Request $request)
     {
-        //
+       //Al no poder recibir 2 parametros,obliga a la creacion de otro controlador
+    }
+
+    public function creacion(Request $request,$id)
+    {
+        $user=new User();
+        $user->personal_id=$id;
+        $user->name=$request->get('name');
+        $user->email=$request->get('correo');
+        $user->password=bcrypt($request->get('password'));
+        $user->save();
+
+        return redirect()->route('usuario.index');
     }
 
     /**
@@ -45,7 +74,7 @@ class UsuarioController extends Controller
      */
     public function show($id)
     {
-        //
+        //no xD
     }
 
     /**
@@ -56,7 +85,8 @@ class UsuarioController extends Controller
      */
     public function edit($id)
     {
-        //
+        $usuario=User::find($id);
+        return view('maestro.usuario.edit',compact('usuario'));
     }
 
     /**
@@ -68,7 +98,13 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $user=User::find($id);
+        $user->name=$request->get('name');
+        $user->email=$request->get('correo');
+        $user->password=bcrypt($request->get('password'));
+        $user->save();
+
+        return redirect()->route('usuario.index');
     }
 
     /**
@@ -79,6 +115,6 @@ class UsuarioController extends Controller
      */
     public function destroy($id)
     {
-        //
+        //la eliminacion del usuario sera por medio de un estado (desactivado)
     }
 }

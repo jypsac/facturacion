@@ -1,4 +1,3 @@
-
 <?php
 
 use Illuminate\Database\Seeder;
@@ -201,5 +200,5 @@ class MarcasTableSeeder extends Seeder
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
     }
-    
+
 }

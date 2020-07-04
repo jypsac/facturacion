@@ -1,4 +1,3 @@
-            $table->boolean('estado');
 <?php
 
 use Illuminate\Database\Migrations\Migration;

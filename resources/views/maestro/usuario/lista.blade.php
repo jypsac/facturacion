@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Usuario')
-@section('breadcrumb', 'Usuario')
-@section('breadcrumb2', 'Usuario')
-@section('href_accion', route('usuario.lista'))
-@section('value_accion', 'Agregar')
+@section('title', 'Usuario Creacion')
+@section('breadcrumb', 'Usuario Creacion')
+@section('breadcrumb2', 'Usuario Creacion')
+@section('href_accion', route('usuario.index'))
+@section('value_accion', 'Atras')
 
 @section('content')
 		<div class="wrapper wrapper-content animated fadeInRight">
@@ -40,30 +40,17 @@
                                                 <th>Personal</th>
                                                 <th>Nombre</th>
                                                 <th>Correo</th>
-                                                <th>Permisos</th>
-                                                <th>EDITAR</th>
-                                                <th>Eliminar</th>
+                                                <th>Activar</th>
                                             </tr>
                                         </thead>
                                     <tbody>
-                                        @foreach($usuarios as $usuario)
+                                        @foreach($personales as $personal)
                                             <tr class="gradeX">
-                                                <td>{{$usuario->id}}</td>
-                                                <td>{{$usuario->personal->nombres}}</td>
-                                                <td>{{$usuario->name}}</td>
-                                                <td>{{$usuario->email}}</td>
-                                                <td><center><a href="" ><button type="button" class="btn btn-s-m btn-info">Permisos</button></a></center></td>
-                                                <td><center><a href="{{ route('usuario.edit', $usuario->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
-                                                <td>
-                                                   {{--  <center>
-                                                        <form action="{{ route('usuario.destroy', $usuario->id)}}" method="POST">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
-                                                        </form>
-                                                    </center> --}}
-                                                    <button type="submit" class="btn btn-s-m btn-danger">Sin funcionar</button>
-                                                </td>
+                                                <td>{{$personal->id}}</td>
+                                                <td>{{$personal->nombres}}</td>
+                                                <td>{{$personal->apellidos}}</td>
+                                                <td>{{$personal->email}}</td>
+                                                <td><center><a href="{{ route('usuario.crear', $personal->id) }}"><button type="button" class="btn btn-s-m btn-success">Activar</button></a></center></td>
                                             </tr>
                                         @endforeach
                                     </tbody>

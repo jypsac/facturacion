@@ -16,7 +16,7 @@ Route::group(
 		Route::resource('/vendedores','PersonalVentaController');
 		Route::put('vendedores/aprobar/{id}', 'PersonalVentaController@aprobar')->name('vendedores.aprobar');
 		Route::put('vendedores/procesado/{id}', 'PersonalVentaController@procesado')->name('vendedores.procesado');
-		
+
 		Route::put('vendedores/estado/{id}', 'PersonalVentaController@estado')->name('vendedores.estado');
 
 
@@ -32,7 +32,7 @@ Route::group(
 
 		Route::get('/cotizacion/create_boleta' , 'CotizacionController@create_boleta')->name('cotizacion.create_boleta');
 		Route::post('/cotizacion/store_boleta','CotizacionController@store_boleta')->name('cotizacion.store_boleta');
-		
+
 
 		//factura
 
@@ -59,7 +59,7 @@ Route::group(
 		Route::get('facturacion/create_boleta/' , 'FacturacionController@create_boleta')->name('create.boleta');
 		Route::resource('/facturacion','FacturacionController');
 		Route::resource('/boleta','BoletaController');
-		
+
 		Route::resource('/familia','FamiliaController');
 
 		//Agregado rapido
@@ -67,7 +67,7 @@ Route::group(
 		Route::post('agregado_rapido/cliente','AgregadoRapidoController@cliente_store')->name('agregado_rapido.cliente_store');
 
 		Route::post('agregado_rapido/cliente/cotizacion','AgregadoRapidoController@cliente_cotizado')->name('agregado_rapido.cliente_cotizado');
-		
+
 		Route::post('agregado_rapido/personal_store','AgregadoRapidoController@personal_store')->name('agregado_rapido.personal_store');
 
 		//Garantias
@@ -134,6 +134,12 @@ Route::group(
 		Route::resource('/servicios','ServiciosController');
 		Route::resource('/transaccion-compra','TransaccionCompraController');
 		Route::resource('/unidad-medida','UnidadMedidaController');
+		Route::get('/usuario/lista','UsuarioController@lista')->name('usuario.lista');
+
+		//Usuarios
+
+		Route::get('usuario/crear/{id}','UsuarioController@crear')->name('usuario.crear');
+		Route::post('usuario/creacion/{guia}', 'UsuarioController@creacion')->name('usuario.creacion');
 		Route::resource('/usuario','UsuarioController');
 		Route::resource('/venta','VentaController');
 		Route::resource('/tipo_cambio','TipoCambioController');
