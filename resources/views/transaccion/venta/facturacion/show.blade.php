@@ -7,8 +7,9 @@
 @section('value_accion', 'Atras')
 
 @section('content')
-@if($facturacion->cotizacion->cliente->documento_identificacion== 'RUC'|| $facturacion->cotizacion->cliente->documento_identificacion== 'Ruc'||
-$facturacion->cotizacion->cliente->documento_identificacion== 'ruc')
+
+@if (isset($facturacion->cotizacion))
+
  <div class="wrapper wrapper-content animated fadeInRight">
     <!-- 
      <form action="{{route('cotizacion.facturar_store')}}"  enctype="multipart/form-data" method="post">
@@ -176,8 +177,7 @@ $facturacion->cotizacion->cliente->documento_identificacion== 'ruc')
                         <!-- </form> -->
         </div>
 @else
-
- <div class="wrapper wrapper-content animated fadeInRight">
+<div class="wrapper wrapper-content animated fadeInRight">
     <!-- 
      <form action="{{route('cotizacion.facturar_store')}}"  enctype="multipart/form-data" method="post">
                             @csrf -->
@@ -199,7 +199,7 @@ $facturacion->cotizacion->cliente->documento_identificacion== 'ruc')
                                     <div class="form-control ruc" style="height: 125px">
                                         <center>
                                             <h3 style="padding-top:10px ">RUC : {{$empresa->ruc}}</h3>
-                                            <h2>BOLETA ELECTRONICA</h2>   
+                                            <h2>FACTURA ELECTRONICA</h2>   
                                             <h5> {{$facturacion->codigo_fac}}</h5>   
 
                                         </center>
@@ -213,33 +213,33 @@ $facturacion->cotizacion->cliente->documento_identificacion== 'ruc')
 
                                 <tr>
     <td style="width: 170px"><b>Razon Social</b></td><td style="width: 3px">:</td>
-    <td  colspan="4">{{$facturacion->cotizacion->cliente->nombre}}</td>
+    <td  colspan="4">{{$facturacion->cliente->nombre}}</td>
 
-    <td style="width: 100px"><b>{{$facturacion->cotizacion->cliente->documento_identificacion}}</b></td><td style="width: 3px">:</td><td  style="width: 150px">{{$facturacion->cotizacion->cliente->numero_documento}}</td>
+    <td style="width: 100px"><b>RUC</b></td><td style="width: 3px">:</td><td  style="width: 150px">{{$facturacion->cliente->numero_documento}}</td>
                                 </tr>
                                 <tr>
     <td><b>Direccion</b></td><td style="width: 3px">:</td>
-    <td colspan="4">{{$facturacion->cotizacion->cliente->direccion}}</td>
+    <td colspan="4">{{$facturacion->cliente->direccion}}</td>
 
     <td><b>Orden de Compra</b></td><td>:</td>
     <td> {{$facturacion->orden_compra}}</td>
                                 </tr>
                                 <tr>
     <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td>
-    <td colspan="4">{{$facturacion->cotizacion->forma_pago->nombre }}</td>
+    <td colspan="4">{{$facturacion->forma_pago->nombre }}</td>
 
     <td><b>Guia Remision</b></td><td style="width: 3px">:</td>
     <td> {{$facturacion->guia_remision}}</td>
                                 </tr>
                                  <tr>
     <td><b>Fecha Emision</b></td><td style="width: 3px">:</td>
-    <td>{{$facturacion->cotizacion->fecha_emision}}</td>
+    <td>{{$facturacion->fecha_emision}}</td>
 
     <td ><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td>
-    <td >{{$facturacion->cotizacion->fecha_vencimiento }}</td>
+    <td >{{$facturacion->fecha_vencimiento }}</td>
 
     <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td>
-    <td>{{$facturacion->cotizacion->moneda->nombre }}</td>
+    <td>{{$facturacion->moneda->nombre }}</td>
                                 </tr>
                                     </thead>
                             </table> 
@@ -289,15 +289,48 @@ $facturacion->cotizacion->cliente->documento_identificacion== 'ruc')
 
                                         </td>
                                        
-                                       <td  style="background: #f3f3f4;">Importe Total</td>
-                                        <td  style="background: #f3f3f4;">
+                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
+                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
                                             S/.
                                         </td>
 
                                     </tr>
-                                   
-                                  
-                                  
+                                    <tr>
+                                        <!-- <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td> -->
+                                        <td style="background: #f3f3f4;">Op. Gravada</td>
+                                        <td style="background: #f3f3f4;">
+                                            S/.
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                       <!--  <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td> -->
+                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">IGV</td>
+                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
+                                            S/.
+                                        </td>
+                                    </tr>
+                                    <tr >
+                                        <!-- <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td> -->
+                                        <td  style="background: #f3f3f4;">Importe Total</td>
+                                        <td  style="background: #f3f3f4;">
+                                            S/.
+                                        </td>
+                                    </tr>
                                     </tbody>
                                 </table>
                             </div><!-- /table-responsive -->
@@ -309,11 +342,8 @@ $facturacion->cotizacion->cliente->documento_identificacion== 'ruc')
             </div>
 
                         <!-- </form> -->
-        </div>
-
+        </div>  
 @endif
-
-        
        
 <style type="text/css">
     .ruc{border-radius: 10px; height: 150px;}
