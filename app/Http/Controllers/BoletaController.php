@@ -61,7 +61,7 @@ class BoletaController extends Controller
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
 
-        return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
+        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
          
         
     }
@@ -114,7 +114,7 @@ class BoletaController extends Controller
                 $precio_unitario_comision[]=$request->input('precio_unitario_comision')[$i];
             }
             
-            return view('transaccion.venta.cotizacion.factura.fast_print',compact('producto_codigo','unidad_medida','sub_total','igv','cliente_id','forma_pago_id','validez','user_id','observacion','producto_id','stock','cantidad','precio','check_descuento','promedio_original','descuento','precio_unitario_descuento','comision','precio_unitario_comision'));
+            return view('transaccion.venta.cotizacion.boleta.fast_print',compact('producto_codigo','unidad_medida','sub_total','igv','cliente_id','forma_pago_id','validez','user_id','observacion','producto_id','stock','cantidad','precio','check_descuento','promedio_original','descuento','precio_unitario_descuento','comision','precio_unitario_comision'));
         }
 
         //codigo para convertir nombre a producto

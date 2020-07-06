@@ -3,7 +3,7 @@
 @section('title', 'Boleta')
 @section('breadcrumb', 'Boleta')
 @section('breadcrumb2', 'Boleta')
-@section('href_accion', route('create.boleta'))
+@section('href_accion', route('boleta.create'))
 @section('value_accion', 'Agregar')
 
 @section('content')

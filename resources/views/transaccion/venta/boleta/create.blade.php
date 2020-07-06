@@ -1,7 +1,7 @@
     
  @extends('layout')
 
-@section('title', 'Boleta Ver')
+@section('title', 'Boleta Agregar')
 @section('breadcrumb', 'Boleta')
 @section('breadcrumb2', 'Boleta')
 @section('href_accion', route('boleta.index'))
