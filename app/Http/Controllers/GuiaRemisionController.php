@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Banco;
+use App\Cotizacion;
 use Illuminate\Http\Request;
 
 class GuiaRemisionController extends Controller
@@ -27,6 +27,8 @@ class GuiaRemisionController extends Controller
     {
        return view('transaccion.venta.guia_remision.create');
     }
+
+
 
     /**
      * Store a newly created resource in storage.
@@ -81,5 +83,13 @@ class GuiaRemisionController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function seleccionar()
+    {   
+        $activos=Cotizacion::where('estado_aprovar','1')->get();
+
+         return view('transaccion.venta.guia_remision.selecionar_cotizacion',compact('activos'));
+
     }
 }
