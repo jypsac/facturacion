@@ -59,7 +59,13 @@ Route::group(
 		// Route::get('facturacion/create_boleta/' , 'FacturacionController@create_boleta')->name('create.boleta');
 		Route::resource('/facturacion','FacturacionController');
 		Route::resource('/boleta','BoletaController');
+
+		/*Guia Remision*/
 		Route::resource('/guia_remision','GuiaRemisionController');
+		Route::get('guias_remision/seleccionar', 'GuiaRemisionController@seleccionar')->name('guia_remision.seleccionar');
+		Route::put('cotizacion/aprobar/{id}', 'CotizacionController@aprobar')->name('cotizacion.aprobar');
+		
+		/**/
 
 		Route::resource('/familia','FamiliaController');
 

@@ -45,6 +45,7 @@
                                             <th>Fecha</th>
                                             <th>Ver</th> 
                                             <th>Estado</th>
+                                            <th>Estado Aprobado</th>
                                             <!-- <th>Estado Vigencia</th> -->
                                         </tr>
                                     </thead>
@@ -66,6 +67,21 @@
 
                                                 @else
                                                 <button type="button" class="btn btn-w-m btn-default">Procesado</button>
+                                                @endif
+                                            </td>
+
+                                            <td>
+                                                @if($cotizacions->estado_aprovar =='0')
+
+                                                   <form action="{{ route('cotizacion.aprobar', $cotizacions->id)}}" method="POST">
+                                                  @csrf 
+                                                  @method('put')
+                                                   <center>
+                                                   <button type="submit" class="btn btn-w-m btn-info">Aprobar</button>
+                                              </form>
+
+                                                @else
+                                                <button type="button" class="btn btn-w-m btn-default">Aprobado</button>
                                                 @endif
                                             </td>
                                            <!--  <td><button type="button" class="btn btn-w-m btn-warning">Vigente</button></td> -->

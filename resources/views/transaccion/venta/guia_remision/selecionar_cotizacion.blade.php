@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Guia Remision')
-@section('breadcrumb', 'Guia Remision')
-@section('breadcrumb2', 'Guia Remision')
-@section('href_accion', route('guia_remision.seleccionar'))
-@section('value_accion', 'Agregar')
+@section('title', 'Guia Remision/Cotizaciones Aprovadas')
+@section('breadcrumb', 'Guia Remision/Cotizaciones Aprovadas')
+@section('breadcrumb2', 'Guia Remision/Cotizaciones Aprovadas')
+@section('href_accion', route('guia_remision.create'))
+@section('value_accion', 'Agregar Nuevo')
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -38,69 +38,29 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Codigo de Factura</th>
+                                            <th>Codigo de Comision</th>
                                             <th>Cliente</th>
                                             <th>Ruc/DNI</th>
-                                            <th>Fecha Vencimiento</th>
-                                            <th>Ver</th> 
-                                            <!-- <th>EDITAR</th> -->
-                                            <th>Anular</th>
+                                            <th>Seleccionar</th> 
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach($facturacion as $facturacions) --}}
+                                        @foreach($activos as $activo)
                                         <tr class="gradeX">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td><center><a href=""><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
-                                            <td>
-                                               {{--  @if($facturacions->estado == '0') --}}
-                                           <!-- Button trigger modal -->
-<button type="button" class="btn btn-s-m btn-danger" data-toggle="modal" data-target="#1">
- Anular
-</button>
+                                            <td>{{$activo->id}}</td>    
+                                            <td>{{$activo->cod_comision}}</td>    
+                                            <td>{{$activo->cliente->nombre}}</td>    
+                                            <td>{{$activo->cliente->numero_documento}}</td>    
 
-<!-- Modal -->
-<div class="modal fade" id="1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
- <div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">
-                                    <div class="modal-content" >
-                                        <div class="modal-body" style="padding: 0px;">
-                                            
-                                             <div class="ibox-content float-e-margins">
-                        
-                                               <h3 class="font-bold col-lg-12" align="center">
-                                              ¿Esta Seguro que Deseas Anular la Factura: ".?<br>
-                                             <h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4>
-                                               </h3>
-                                               <p align="center">
-                                                   <form action="" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <center>
-                                            <button type="submit" class="btn btn-w-m btn-primary">Anular</button>
-                                            {{-- <button type="button" class="btn btn-w-m btn-danger" data-dismiss="modal">Cancelar</button> --}}</center>
-                                        </form>
-                                                 
-                                               </p>
-                                              </div>
-
-                                        </div>
-                                    </div>
-                                </div> 
-</div>
-
-
-                                    {{--  @elseif($facturacions->estado == '1') --}}
-                                          {{--   <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal123">Anulado</button> --}}
-
-                                    {{--  @endif --}}
-                                            </td>
-                                            
+                                            <td><center>
+                                                @if($activo->estado_aprobado==0)
+                                                <a href=""><button type="button" class="btn btn-w-m btn-primary">Procesar</button></a>
+                                                @else
+                                                <button type="button" class="btn btn-w-m btn-info">Procesado</button>
+                                                @endif
+                                            </center></td>
                                         </tr>
-                                        {{-- @endforeach --}}
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
@@ -112,7 +72,7 @@
 
 
 <style type="text/css">
-    .a{width: 200px}
+    .a{width: 200px; }
 </style>
 
 

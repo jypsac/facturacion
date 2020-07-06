@@ -205,6 +205,8 @@ class CotizacionController extends Controller
         $cotizacion->tipo='factura';
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
+        $cotizacion->estado_aprovar='0';
+        $cotizacion->estado_aprobado='0';
         $cotizacion->save();
 
 
@@ -433,6 +435,9 @@ class CotizacionController extends Controller
         $cotizacion->tipo="boleta";
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
+        $cotizacion->estado_aprovar='0';
+        $cotizacion->estado_aprobado='0';
+        
         $cotizacion->save();
 
 
@@ -718,6 +723,19 @@ class CotizacionController extends Controller
 
 
         }
+
+   public function aprobar(Request $request, $id)
+    {
+       
+         $cotizacion=Cotizacion::find($id);
+         // return $registro;
+        $cotizacion->estado_aprovar='1';
+        $cotizacion->save();
+        
+        return redirect()->route('cotizacion.index'); 
+        // return redirect()->route('productos.index');
+
+    }
 
 
 }
