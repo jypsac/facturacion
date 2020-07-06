@@ -80,15 +80,16 @@
                                 <a href="#">Ventas</a>
                                 <ul class="nav nav-third-level">
                                     <li><a href="{{route('cotizacion.index')}}">Cotizaciones</a></li>
-                                    <li><a href="{{route('credito.index')}}">Credito</a></li>
-                                    <li><a href="{{route('debito.index')}}">Debito</a></li>
+                                    {{-- <li><a href="{{route('credito.index')}}">Credito</a></li> --}}
+                                    {{-- <li><a href="{{route('debito.index')}}">Debito</a></li> --}}
                                     <li><a href="{{route('facturacion.index')}}">Facturacion</a></li>
                                     <li><a href="{{route('boleta.index')}}">Boleta</a></li>
-                                    <li><a href="{{route('guia.index')}}">Guias</a></li>
-                                    <li><a href="{{route('pedidos.index')}}">Pedidos</a></li>
+                                    <li><a href="{{route('guia_remision.index')}}">Guia Remision</a></li>
+                                    {{-- <li><a href="{{route('guia.index')}}">Guias</a></li> --}}
+                                    {{-- <li><a href="{{route('pedidos.index')}}">Pedidos</a></li> --}}
                                 </ul>
                             </li>
-                            <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li>
+                            {{-- <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li> --}}
 
                             <li>
                                 <a href="#">Garantias</a>

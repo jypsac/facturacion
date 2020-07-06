@@ -59,6 +59,7 @@ Route::group(
 		// Route::get('facturacion/create_boleta/' , 'FacturacionController@create_boleta')->name('create.boleta');
 		Route::resource('/facturacion','FacturacionController');
 		Route::resource('/boleta','BoletaController');
+		Route::resource('/guia_remision','GuiaRemisionController');
 
 		Route::resource('/familia','FamiliaController');
 
