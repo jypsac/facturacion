@@ -2,26 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Facturacion;
-use App\Empresa;
-use App\Ventas_registro;
-
-use App\Cotizacion;
-use App\Marcas;
-use App\Producto;
-use App\Cliente;
-use App\Forma_pago;
-use App\Personal;
-use App\Moneda;
-use App\Cotizacion_factura_registro;
-use App\Cotizacion_boleta_registro;
-use App\kardex_entrada_registro;
-
-use App\Igv;
-use App\User;
 use App\Banco;
+use App\Boleta;
+use App\Cliente;
+use App\Cotizacion;
+use App\Cotizacion_boleta_registro;
+use App\Cotizacion_factura_registro;
+use App\Empresa;
+use App\Facturacion;
+use App\Forma_pago;
+use App\Igv;
+use App\Marcas;
+use App\Moneda;
+use App\Personal;
 use App\Personal_venta;
+use App\Producto;
 use App\Unidad_medida;
+use App\User;
+use App\Ventas_registro;
+use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
 
 class BoletaController extends Controller
@@ -33,9 +32,8 @@ class BoletaController extends Controller
      */
     public function index()
     {
-         $facturacion=Facturacion::all();
-        
-        return view('transaccion.venta.boleta.index', compact('facturacion'));
+        $boletas=Boleta::all();
+        return view('transaccion.venta.boleta.index', compact('boletas'));
     }
 
     /**
@@ -61,9 +59,13 @@ class BoletaController extends Controller
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
 
-        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
-         
-        
+        $empresa=Empresa::first();
+        $personal_contador= Facturacion::all()->count();
+        $suma=$personal_contador+1;
+
+        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma'));
+
+
     }
 
     /**
@@ -78,7 +80,7 @@ class BoletaController extends Controller
 
         if($print==1){
             $cliente_id=$request->get('cliente');
-            
+
             $sub_total=0;
             $igv=Igv::first();
 
@@ -113,7 +115,7 @@ class BoletaController extends Controller
                 $comision[]=$request->input('comision')[$i];
                 $precio_unitario_comision[]=$request->input('precio_unitario_comision')[$i];
             }
-            
+
             return view('transaccion.venta.cotizacion.boleta.fast_print',compact('producto_codigo','unidad_medida','sub_total','igv','cliente_id','forma_pago_id','validez','user_id','observacion','producto_id','stock','cantidad','precio','check_descuento','promedio_original','descuento','precio_unitario_descuento','comision','precio_unitario_comision'));
         }
 
@@ -266,16 +268,16 @@ class BoletaController extends Controller
         $facturacion=Facturacion::find($id);
        return view('transaccion.venta.facturacion.show', compact('facturacion','empresa'));
     }
-    
+
     public function show_boleta(Request $request,$id)
     {
-      
+
        return view('transaccion.venta.facturacion.boleta');
     }
 
     public function create_boleta()
     {
-      
+
        return view('transaccion.venta.facturacion.create_boleta');
     }
 
@@ -310,7 +312,7 @@ class BoletaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
-    {       
+    {
             $venta_registro=Ventas_registro::where('id_facturacion',$id)->first();
             $id_venta_r=$venta_registro->id;
 
