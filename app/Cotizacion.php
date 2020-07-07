@@ -30,6 +30,9 @@ class Cotizacion extends Model
      public function user_personal(){
         return $this->belongsTo(user::class,'user_id');
     }
+    public function aprobado(){
+        return $this->belongsTo(user::class,'aprobado_por');
+    }
     
 }
 

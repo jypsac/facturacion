@@ -207,6 +207,7 @@ class CotizacionController extends Controller
         $cotizacion->estado_vigente='0';
         $cotizacion->estado_aprovar='0';
         $cotizacion->estado_aprobado='0';
+        // $cotizacion->aprobado_por='0';
         $cotizacion->save();
 
 
@@ -437,7 +438,7 @@ class CotizacionController extends Controller
         $cotizacion->estado_vigente='0';
         $cotizacion->estado_aprovar='0';
         $cotizacion->estado_aprobado='0';
-        
+        // $cotizacion->aprobado_por='0';
         $cotizacion->save();
 
 
@@ -727,9 +728,14 @@ class CotizacionController extends Controller
    public function aprobar(Request $request, $id)
     {
        
-         $cotizacion=Cotizacion::find($id);
-         // return $registro;
+        $cotizacion=Cotizacion::find($id);
+        // $usuario=$cotizacion->user_id;
+        
         $cotizacion->estado_aprovar='1';
+        if (!isset($cotizacion->aprobado_por)) {
+           $cotizacion->aprobado_por=auth()->user()->id;
+        }
+                
         $cotizacion->save();
         
         return redirect()->route('cotizacion.index'); 

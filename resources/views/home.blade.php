@@ -1,8 +1,12 @@
 @extends('layout')
 
-@section('title', 'Bienvenido : '.auth()->user()->name)
+@section('title', 'Bienvenido : '.auth()->user()->personal->nombres)
 @section('breadcrumb', 'Inicio')
 @section('breadcrumb2', 'Bienvenido')
+
+@section('foto', auth()->user()->personal->foto)
+@section('nombre', auth()->user()->personal->nombres)
+@section('area', auth()->user()->name)
 
 @section('value_accion', '>>>')
 @section('content')
