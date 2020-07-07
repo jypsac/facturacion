@@ -141,7 +141,7 @@ class BoletaController extends Controller
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
                     if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return redirect()->route('facturacion.create')->with('repite', 'Datos repetidos - No permitidos!');
+                        return redirect()->route('boleta.create')->with('repite', 'Datos repetidos - No permitidos!');
                     }
                 }
 
@@ -224,7 +224,7 @@ class BoletaController extends Controller
                 $cotizacion_registro->cotizacion_id=$cotizacion->id;
                 $cotizacion_registro->producto_id=$producto_id[$i];
 
-                $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
+    $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
                 $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
                 $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')+$utilidad;
                 $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio');
@@ -251,9 +251,9 @@ class BoletaController extends Controller
                 $cotizacion_registro->save();
             }
         }else {
-            return redirect()->route('facturacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
+            return redirect()->route('boleta.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
-        return redirect()->route('facturacion.show',$cotizacion->id);
+        return redirect()->route('boleta.show',$cotizacion->id);
     }
 
     /**
@@ -264,9 +264,9 @@ class BoletaController extends Controller
      */
     public function show($id)
     {
-         $empresa=Empresa::first();
-        $facturacion=Facturacion::find($id);
-       return view('transaccion.venta.facturacion.show', compact('facturacion','empresa'));
+     $empresa=Empresa::first();
+    $boleta=Boleta::find($id);
+       return view('transaccion.venta.facturacion.show', compact('boleta','empresa'));
     }
 
     public function show_boleta(Request $request,$id)
