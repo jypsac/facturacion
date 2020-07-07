@@ -17,7 +17,7 @@ class CreateCotizacionTable extends Migration
             $table->bigIncrements('id');
             $table->string('cod_comision');
             $table->boolean('estado_aprovar');
-            $table->boolean('estado_aprobado');
+            $table->boolean('estado_aprobado'); 
             
         });
     }

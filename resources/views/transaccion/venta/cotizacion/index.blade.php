@@ -5,7 +5,6 @@
 @section('breadcrumb2', 'Cotizacions')
 @section('href_accion', route('cotizacion.create_factura'))
 @section('value_accion', 'Agregar')
-
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
@@ -27,7 +26,7 @@
                                     </li>
                                 </ul>
                                 <a class="close-link">
-                                    <i class="fa fa-times"></i>
+                                    <i class="fa fa-times"></i> 
                                 </a>
                             </div>
                         </div>
@@ -46,6 +45,7 @@
                                             <th>Ver</th> 
                                             <th>Estado</th>
                                             <th>Estado Aprobado</th>
+                                            <th>Creado por</th>
                                             <!-- <th>Estado Vigencia</th> -->
                                         </tr>
                                     </thead>
@@ -81,10 +81,10 @@
                                               </form>
 
                                                 @else
-                                                <button type="button" class="btn btn-w-m btn-default">Aprobado</button>
+                                                <button type="button" class="btn btn-w-m btn-default">Aprobado por <br> {{$cotizacions->aprobado->personal->nombres}}</button>
                                                 @endif
                                             </td>
-                                           <!--  <td><button type="button" class="btn btn-w-m btn-warning">Vigente</button></td> -->
+                                            <td>{{$cotizacions->user_personal->personal->nombres}}</td>
                                         </tr>
                                         @endforeach
                                     </tbody>

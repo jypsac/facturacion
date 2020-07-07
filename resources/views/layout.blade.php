@@ -52,18 +52,18 @@
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
                         <div class="dropdown profile-element">
-                            <img alt="image" class="rounded-circle" src="{{ asset('img/profile_small.jpg') }}"/>
+                            <img alt="image" class="rounded-circle" style="width: 90px; height: auto;" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)"/>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold">Julio Flores</span>
-                                <span class="text-muted text-xs block">Art Director <b class="caret"></b></span>
-                            </a>
+                                <span class="block m-t-xs font-bold">@yield('nombre',auth()->user()->personal->nombres)</span>
+                                <span class="text-muted text-xs block">@yield('area',auth()->user()->name) <b class="caret"></b></span>
+                            </a>{{-- 
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a class="dropdown-item" href="">Perfil</a></li>
                                 <li><a class="dropdown-item" href="">Contactos</a></li>
                                 <li><a class="dropdown-item" href="">Mail</a></li>
                                 <li class="dropdown-divider"></li>
                                 <li><a class="dropdown-item" href="">Cerrar Seccion</a></li>
-                            </ul>
+                            </ul> --}}
                         </div>
                         <div class="logo-element">
                             IN+
@@ -210,7 +210,7 @@
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
-                            <span class="m-r-sm text-muted welcome-message">Bienvenido</span>
+                            <span class="m-r-sm text-muted welcome-message">Bienvenido :@yield('nombres',auth()->user()->personal->nombres)</span>
                         </li>
                         <li>
                             {{-- <a href="{{route('home')}}">
@@ -256,6 +256,7 @@
                 </div>
 
                 @yield('content')
+
 
 
 

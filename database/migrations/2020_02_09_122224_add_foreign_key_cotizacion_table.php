@@ -15,6 +15,10 @@ class AddForeignKeyCotizacionTable extends Migration
     {
         Schema::table('cotizacion', function (Blueprint $table) {
 
+            
+            $table->unsignedBigInteger('aprobado_por')->nullable();
+            $table->foreign('aprobado_por')->references('id')->on('users')->onDelete('cascade');
+            
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
 
@@ -39,6 +43,7 @@ class AddForeignKeyCotizacionTable extends Migration
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
             $table->string('observacion')->nullable();
+
 
             $table->string('fecha_emision');
             $table->string('fecha_vencimiento');
