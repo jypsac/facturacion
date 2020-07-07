@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cliente;
 use App\Cotizacion;
+use App\Empresa;
 use App\Igv;
 use App\Producto;
 use App\kardex_entrada_registro;
@@ -38,8 +39,9 @@ class GuiaRemisionController extends Controller
         }
 
         $clientes=Cliente::all();
+        $empresa=Empresa::first();
         $igv=Igv::first();
-       return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio'));
+       return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa'));
     }
 
 

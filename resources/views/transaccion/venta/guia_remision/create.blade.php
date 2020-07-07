@@ -9,6 +9,7 @@
 @section('content')
 
 
+
 <div class="wrapper wrapper-content animated fadeInRight">
 
     <div class="row">
@@ -19,7 +20,7 @@
 
                         <address class="col-sm-4" align="left">
 
-                            <img src="{{asset('img/logos/logo.png')}}" alt="" width="300px">
+                            <img src="{{asset('img/logos/')}}//{{$empresa->foto}}" alt="" width="300px">
                         </address>
                     </div>
                     <div class="col-sm-4">
@@ -28,7 +29,7 @@
                     <div class="col-sm-4 ">
                         <div class="form-control ruc" style="height: 125px">
                             <center>
-                                <h3 style="padding-top:10px ">RUC : 202020202</h3>
+                                <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
                                 <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>   
                                 <h5>BO11-0001213</h5>   
                             </center>
