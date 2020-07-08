@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Banco;
 use App\Boleta;
+use App\Boleta_registro;
 use App\Cliente;
 use App\Cotizacion;
 use App\Cotizacion_boleta_registro;
@@ -190,22 +191,20 @@ class BoletaController extends Controller
 
 
         $boleta=new Boleta;
+        $boleta->orden_compra=$request->get('orden_compra');
+        $boleta->guia_remision=$request->get('guia_remision');
         $boleta->cliente_id=$cliente_buscador->id;
-        $boleta->forma_pago_id=$request->get('forma_pago');
-        $boleta->validez=$request->get('validez');
         $boleta->moneda_id=$request->get('moneda');
-        $boleta->cod_comision=$cod_comision;
-        $boleta->garantia=$request->get('garantia');
-        $boleta->user_id =auth()->user()->id;
-        $boleta->observacion=$request->get('observacion');
+        $boleta->forma_pago_id=$request->get('forma_pago');
         $boleta->fecha_emision=$request->get('fecha_emision');
         $boleta->fecha_vencimiento=$nuevafechas;
+        $boleta->observacion=$request->get('observacion');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $boleta->comisionista_id= $comisionista_buscador->id;
         }
-        $boleta->tipo='factura';
+        $boleta->user_id =auth()->user()->id;
         $boleta->estado='0';
-        $boleta->estado_vigente='0';
+
         $boleta->save();
 
 
@@ -220,7 +219,7 @@ class BoletaController extends Controller
 
         if($count_articulo = $count_cantidad  = $count_check){
             for($i=0;$i<$count_articulo;$i++){
-                $boleta_registro=new Boleta_registro();
+                $boleta_registro=new Boleta_registro;
                 $boleta_registro->boleta_id=$boleta->id;
                 $boleta_registro->producto_id=$producto_id[$i];
                 $boleta_registro->numero_serie=$request->get('numero_serie')[$i];
@@ -254,7 +253,7 @@ class BoletaController extends Controller
         }else {
             return redirect()->route('boleta.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
-        return redirect()->route('boleta.show',$cotizacion->id);
+        return redirect()->route('boleta.show',$boleta->id);
     }
 
     /**

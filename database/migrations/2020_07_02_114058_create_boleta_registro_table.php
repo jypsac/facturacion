@@ -15,10 +15,15 @@ class CreateBoletaRegistroTable extends Migration
     {
         Schema::create('boleta_registro', function (Blueprint $table) {
             $table->bigIncrements('id');
-             $table->unsignedBigInteger('boleta_id');
+
+            $table->unsignedBigInteger('boleta_id');
             $table->foreign('boleta_id')->references('id')->on('boleta')->onDelete('cascade');
-            
-            $table->string('producto');
+
+            $table->string('numero_serie');
+
+            $table->unsignedBigInteger('producto_id');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+
             $table->integer('stock');
             $table->double('promedio_original',17,2);
             $table->double('precio',17,2);
