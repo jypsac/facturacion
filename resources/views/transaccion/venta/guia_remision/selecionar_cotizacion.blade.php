@@ -54,8 +54,7 @@
 
                                             <td><center>
                                                 @if($activo->estado_aprobado==0)
-                                                <a href=""><button type="button" class="btn btn-w-m btn-primary">Procesar</button></a>
-                                                <a class="btn btn-info" href="{{route('guias_remision.create' , $activo->id)}}">Facturar</a>
+                                                <a class="btn btn-info" href="{{route('guias_remision.create' , $activo->id)}}">Procesar</a>
 
                                                 @else
                                                 <button type="button" class="btn btn-w-m btn-info">Procesado</button>
