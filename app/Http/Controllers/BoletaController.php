@@ -176,37 +176,37 @@ class BoletaController extends Controller
         $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
         // return $cliente_buscador->id;
 
-         $forma_pago_id=$request->get('forma_pago');
-         $formapago= Forma_pago::find($forma_pago_id);
-         $dias= $formapago->dias;
+        $forma_pago_id=$request->get('forma_pago');
+        $formapago= Forma_pago::find($forma_pago_id);
+        $dias= $formapago->dias;
         /*Fecha vencimiento*/
-         $fecha =date("d-m-Y");
-         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
-         $nuevafechas = date("d-m-Y", $nuevafecha );
+        $fecha =date("d-m-Y");
+        $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
+        $nuevafechas = date("d-m-Y", $nuevafecha );
 
         $personal_contador= cotizacion::all()->count();
         $suma=$personal_contador+1;
         $cod_comision='CO-0000'.$suma;
 
 
-        $cotizacion=new Cotizacion;
-        $cotizacion->cliente_id=$cliente_buscador->id;
-        $cotizacion->forma_pago_id=$request->get('forma_pago');
-        $cotizacion->validez=$request->get('validez');
-        $cotizacion->moneda_id=$request->get('moneda');
-        $cotizacion->cod_comision=$cod_comision;
-        $cotizacion->garantia=$request->get('garantia');
-        $cotizacion->user_id =auth()->user()->id;
-        $cotizacion->observacion=$request->get('observacion');
-        $cotizacion->fecha_emision=$request->get('fecha_emision');
-        $cotizacion->fecha_vencimiento=$nuevafechas;
+        $boleta=new Boleta;
+        $boleta->cliente_id=$cliente_buscador->id;
+        $boleta->forma_pago_id=$request->get('forma_pago');
+        $boleta->validez=$request->get('validez');
+        $boleta->moneda_id=$request->get('moneda');
+        $boleta->cod_comision=$cod_comision;
+        $boleta->garantia=$request->get('garantia');
+        $boleta->user_id =auth()->user()->id;
+        $boleta->observacion=$request->get('observacion');
+        $boleta->fecha_emision=$request->get('fecha_emision');
+        $boleta->fecha_vencimiento=$nuevafechas;
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
-            $cotizacion->comisionista_id= $comisionista_buscador->id;
+            $boleta->comisionista_id= $comisionista_buscador->id;
         }
-        $cotizacion->tipo='factura';
-        $cotizacion->estado='0';
-        $cotizacion->estado_vigente='0';
-        $cotizacion->save();
+        $boleta->tipo='factura';
+        $boleta->estado='0';
+        $boleta->estado_vigente='0';
+        $boleta->save();
 
 
 
@@ -220,35 +220,36 @@ class BoletaController extends Controller
 
         if($count_articulo = $count_cantidad  = $count_check){
             for($i=0;$i<$count_articulo;$i++){
-                $cotizacion_registro=new Cotizacion_factura_registro();
-                $cotizacion_registro->cotizacion_id=$cotizacion->id;
-                $cotizacion_registro->producto_id=$producto_id[$i];
+                $boleta_registro=new Boleta_registro();
+                $boleta_registro->boleta_id=$boleta->id;
+                $boleta_registro->producto_id=$producto_id[$i];
+                $boleta_registro->numero_serie=$request->get('numero_serie')[$i];
 
-    $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
+                $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
                 $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
                 $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')+$utilidad;
                 $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio');
                 // $array_pu_desc=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio');
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $desc_comprobacion=$request->get('check_descuento')[$i];
-                $cotizacion_registro->precio=$array;
-                $cotizacion_registro->stock=$stock;
-                $cotizacion_registro->cantidad=$request->get('cantidad')[$i];
-                $cotizacion_registro->descuento=$request->get('check_descuento')[$i];
-                $cotizacion_registro->promedio_original=$array2;
+                $boleta_registro->precio=$array;
+                $boleta_registro->stock=$stock;
+                $boleta_registro->cantidad=$request->get('cantidad')[$i];
+                $boleta_registro->descuento=$request->get('check_descuento')[$i];
+                $boleta_registro->promedio_original=$array2;
                 if($desc_comprobacion <> 0){
-                    $cotizacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
+                    $boleta_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
                 }else{
-                    $cotizacion_registro->precio_unitario_desc=$array;
+                    $boleta_registro->precio_unitario_desc=$array;
                 }
-                $cotizacion_registro->comision=$comi;
+                $boleta_registro->comision=$comi;
                 if($desc_comprobacion <> 0){
-                    $cotizacion_registro->precio_unitario_comi=($array-($array*$desc_comprobacion/100))+($array*$comi/100);
+                    $boleta_registro->precio_unitario_comi=($array-($array*$desc_comprobacion/100))+($array*$comi/100);
                 }else{
-                    $cotizacion_registro->precio_unitario_comi=$array+($array*$comi/100);
+                    $boleta_registro->precio_unitario_comi=$array+($array*$comi/100);
                 }
 
-                $cotizacion_registro->save();
+                $boleta_registro->save();
             }
         }else {
             return redirect()->route('boleta.create')->with('campo', 'Falto introducir un campo de la tabla productos');
@@ -264,22 +265,22 @@ class BoletaController extends Controller
      */
     public function show($id)
     {
-     $empresa=Empresa::first();
-    $boleta=Boleta::find($id);
+       $empresa=Empresa::first();
+       $boleta=Boleta::find($id);
        return view('transaccion.venta.facturacion.show', compact('boleta','empresa'));
-    }
+   }
 
-    public function show_boleta(Request $request,$id)
-    {
+   public function show_boleta(Request $request,$id)
+   {
 
-       return view('transaccion.venta.facturacion.boleta');
-    }
+     return view('transaccion.venta.facturacion.boleta');
+ }
 
-    public function create_boleta()
-    {
+ public function create_boleta()
+ {
 
-       return view('transaccion.venta.facturacion.create_boleta');
-    }
+     return view('transaccion.venta.facturacion.create_boleta');
+ }
 
     /**
      * Show the form for editing the specified resource.
@@ -290,7 +291,7 @@ class BoletaController extends Controller
     public function edit($id)
     {
         $facturacion=Facturacion::find($id);
-         return view('transaccion.venta.facturacion.edit', compact('facturacion'));
+        return view('transaccion.venta.facturacion.edit', compact('facturacion'));
     }
 
     /**
@@ -313,17 +314,17 @@ class BoletaController extends Controller
      */
     public function destroy($id)
     {
-            $venta_registro=Ventas_registro::where('id_facturacion',$id)->first();
-            $id_venta_r=$venta_registro->id;
+        $venta_registro=Ventas_registro::where('id_facturacion',$id)->first();
+        $id_venta_r=$venta_registro->id;
 
-            $venta=Ventas_registro::where('id',$id_venta_r)->first();
-            $venta->estado_fac=1;
-            $venta->save();
+        $venta=Ventas_registro::where('id',$id_venta_r)->first();
+        $venta->estado_fac=1;
+        $venta->save();
 
-            $fac=Facturacion::where('id',$id)->first();
-            $fac->estado=1;
-            $fac->save();
+        $fac=Facturacion::where('id',$id)->first();
+        $fac->estado=1;
+        $fac->save();
 
-            return redirect()->route('facturacion.index');
+        return redirect()->route('facturacion.index');
     }
 }
