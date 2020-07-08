@@ -58,7 +58,7 @@
                             </div><br>
                             <div class="row">
                                 <div class="col-sm-7" align="center">
-                                    <div class="form-control"><h3>Contanto Cliente</h3>
+                                    <div class="form-control"><h3>Contacto Cliente</h3>
                                         <div align="left">
                                             <strong>Nombre:</strong> &nbsp;{{$cotizacion->cliente->nombre}}<br>
                                             <strong>{{$cotizacion->cliente->documento_identificacion}} :</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

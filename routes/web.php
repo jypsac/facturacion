@@ -64,6 +64,7 @@ Route::group(
 		Route::resource('/guia_remision','GuiaRemisionController');
 		Route::get('guias_remision/seleccionar', 'GuiaRemisionController@seleccionar')->name('guia_remision.seleccionar');
 		Route::put('cotizacion/aprobar/{id}', 'CotizacionController@aprobar')->name('cotizacion.aprobar');
+		Route::get('/guias_remision/creates/{id}' , 'GuiaRemisionController@cotizacion')->name('guias_remision.create');
 		
 		/**/
 

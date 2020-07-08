@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Cliente;
 use App\Cotizacion;
+use App\Cotizacion_factura_registro;
 use App\Empresa;
 use App\Igv;
 use App\Producto;
@@ -108,4 +109,24 @@ class GuiaRemisionController extends Controller
          return view('transaccion.venta.guia_remision.selecionar_cotizacion',compact('activos'));
 
     }
+    public function cotizacion($id)
+
+        {
+
+        $cotizacion=Cotizacion::find($id);
+        $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+
+        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        foreach ($productos as $index => $producto) {
+            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
+            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index];
+            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio');
+        }
+
+        $clientes=Cliente::all();
+        $empresa=Empresa::first();
+        $igv=Igv::first();
+return view('transaccion.venta.guia_remision.create_2',compact('cotizacion','productos','clientes','array','array_cantidad','igv','array_promedio','empresa','cotizacion_registro'));
+        }
 }
