@@ -65,7 +65,7 @@ Route::group(
 		Route::get('guias_remision/seleccionar', 'GuiaRemisionController@seleccionar')->name('guia_remision.seleccionar');
 		Route::put('cotizacion/aprobar/{id}', 'CotizacionController@aprobar')->name('cotizacion.aprobar');
 		Route::get('/guias_remision/creates/{id}' , 'GuiaRemisionController@cotizacion')->name('guias_remision.create');
-		
+
 		/**/
 
 		Route::resource('/familia','FamiliaController');
@@ -142,12 +142,15 @@ Route::group(
 		Route::resource('/servicios','ServiciosController');
 		Route::resource('/transaccion-compra','TransaccionCompraController');
 		Route::resource('/unidad-medida','UnidadMedidaController');
-		Route::get('/usuario/lista','UsuarioController@lista')->name('usuario.lista');
+
 
 		//Usuarios
-
+		Route::get('/usuario/lista','UsuarioController@lista')->name('usuario.lista');
 		Route::get('usuario/crear/{id}','UsuarioController@crear')->name('usuario.crear');
 		Route::post('usuario/creacion/{guia}', 'UsuarioController@creacion')->name('usuario.creacion');
+		Route::post('usuario/desactivar/{id}', 'UsuarioController@desactivar')->name('usuario.desactivar');
+		Route::post('usuario/activar/{id}', 'UsuarioController@activar')->name('usuario.activar');
+		Route::get('usuario/permiso/{id}','UsuarioController@permiso')->name('usuario.permiso');
 		Route::resource('/usuario','UsuarioController');
 		Route::resource('/venta','VentaController');
 		Route::resource('/tipo_cambio','TipoCambioController');

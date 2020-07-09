@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
-use App\User;
+use App\Permiso;
 use App\Personal;
+use App\User;
+use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
 {
@@ -61,6 +62,7 @@ class UsuarioController extends Controller
         $user->name=$request->get('name');
         $user->email=$request->get('correo');
         $user->password=bcrypt($request->get('password'));
+        $user->estado=1;
         $user->save();
 
         return redirect()->route('usuario.index');
@@ -113,8 +115,34 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function desactivar($id)
     {
         //la eliminacion del usuario sera por medio de un estado (desactivado)
+        $user=User::find($id);
+        $user->estado=0;
+        $user->save();
+
+        return redirect()->route('usuario.index');
+    }
+
+    public function activar($id)
+    {
+        //la eliminacion del usuario sera por medio de un estado (desactivado)
+        $user=User::find($id);
+        $user->estado=1;
+        $user->save();
+
+        return redirect()->route('usuario.index');
+    }
+
+    public function permiso($id){
+
+        $usuario=User::find($id);
+        $permisos=Permiso::all();
+        return view('maestro.usuario.permisos.lista',compact('usuario','permiso'));
+    }
+
+    public function asignar_permiso(){
+        //asignamiento de permisos
     }
 }

@@ -62,7 +62,7 @@ class PersonalTableSeeder extends Seeder
     	DB::table('personal')->insert([
     		'id' =>3 ,
     		'nombres' => 'Christian Gilmar ',
-    		'apellidos' => 'Flores Gallardo 
+    		'apellidos' => 'Flores Gallardo
     		',
     		'fecha_nacimiento' => '2019-08-01' ,
     		'celular' => '324234234',
@@ -105,6 +105,29 @@ class PersonalTableSeeder extends Seeder
     		'created_at' => date('2019-08-01 00:00:00'),
     		'updated_at' => date('2019-08-01 00:00:00'),
     	]);
+
+        DB::table('personal')->insert([
+            'id' => 5 ,
+            'nombres' => 'Christopher',
+            'apellidos' => 'Huaman',
+            'fecha_nacimiento' => '2019-08-01' ,
+            'celular' => '324234234',
+            'telefono' => '5235432',
+            'email' => 'christojhg@gmail.com' ,
+            'genero' => 'masculino',
+            'documento_identificacion' => 'DNI',
+            'numero_documento' => '09782642' ,
+            'nacionalidad' => 'Peru',
+            'estado_civil' => 'Casado',
+            'nivel_educativo' => 'Secundaria',
+            'profesion' => 'barrendero',
+            'direccion' => 'aV.Rodalds',
+            'estado_trabajador_laboral' => 'Activo',
+            'estado' => '1',
+            'foto' => 'sportacus.jpg',
+            'created_at' => date('2019-08-01 00:00:00'),
+            'updated_at' => date('2019-08-01 00:00:00'),
+        ]);
 
     }
 }

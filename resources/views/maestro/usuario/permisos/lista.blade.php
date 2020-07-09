@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Usuario')
-@section('breadcrumb', 'Usuario')
-@section('breadcrumb2', 'Usuario')
-@section('href_accion', route('usuario.lista'))
-@section('value_accion', 'Agregar')
+@section('title', 'Usuario Permiso')
+@section('breadcrumb', 'Permiso de Usuarios')
+@section('breadcrumb2', 'Permiso de Usuarios')
+@section('href_accion', route('usuario.index'))
+@section('value_accion', 'Atras')
 
 @section('content')
 		<div class="wrapper wrapper-content animated fadeInRight">
@@ -12,7 +12,7 @@
                         <div class="col-lg-12">
                         <div class="ibox ">
                             <div class="ibox-title">
-                                <h5>Usuarios</h5>
+                                <h5>Permisos</h5>
                                 <div class="ibox-tools">
                                     <a class="collapse-link">
                                         <i class="fa fa-chevron-up"></i>
@@ -36,52 +36,15 @@
                                     <table class="table table-striped table-bordered table-hover dataTables-example" >
                                         <thead>
                                             <tr>
-                                                <th>ID</th>
-                                                <th>Personal</th>
-                                                <th>Nombre</th>
-                                                <th>Correo</th>
-                                                <th>Permisos</th>
-                                                <th>Editar</th>
+                                                <th>Nombre del Permiso</th>
                                                 <th>Estado</th>
                                             </tr>
                                         </thead>
                                     <tbody>
-                                        @foreach($usuarios as $usuario)
+                                        @foreach($permisos as $permiso)
                                             <tr class="gradeX">
-                                                <td>{{$usuario->id}}</td>
-                                                <td>{{$usuario->personal->nombres}}</td>
-                                                <td>{{$usuario->name}}</td>
-                                                <td>{{$usuario->email}}</td>
-                                                @if($usuario->estado == 1)
-                                                <td>
-                                                    <center><a href="{{ route('usuario.permiso', $usuario->id) }}" ><button type="button" class="btn btn-s-m btn-info">Permisos</button></a></center>
-                                                </td>
-                                                <td>
-                                                    <center><a href="{{ route('usuario.edit', $usuario->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
-                                                <td>
-                                                    <center>
-                                                            <form action="{{ route('usuario.desactivar', $usuario->id)}}" method="POST">
-                                                                @csrf
-                                                                <button type="submit" class="btn btn-s-m btn-danger">Desactivar</button>
-                                                            </form>
-
-                                                    </center>
-                                                </td>
-                                                @else
-                                                <td>
-                                                    <center><a><button type="button" class="btn btn-s-m btn-secondary">Permisos</button></a></center>
-                                                </td>
-                                                <td>
-                                                    <center><a><button type="button" class="btn btn-s-m btn-secondary">Editar</button></a></center></td>
-                                                <td>
-                                                    <center>
-                                                        <form action="{{ route('usuario.activar', $usuario->id)}}" method="POST">
-                                                            @csrf
-                                                            <button type="submit" class="btn btn-s-m btn-warning">Activar</button>
-                                                        </form>
-                                                    </center>
-                                                </td>
-                                                @endif
+                                                <td>{{$permiso->nombre}}</td>
+                                                <td><center><a href="{{ route('usuario.crear', $permiso->id,$usuario->id) }}"><button type="button" class="btn btn-s-m btn-success">Activar</button></a></center></td>
                                             </tr>
                                         @endforeach
                                     </tbody>

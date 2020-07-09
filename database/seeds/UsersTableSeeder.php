@@ -17,21 +17,24 @@ class UsersTableSeeder extends Seeder
            'name' => 'Administrador',
            'email' => 'admin@admin.com',
            'personal_id' => '1',
-           'password' => bcrypt('admin@admin.com')
+           'password' => bcrypt('admin@admin.com'),
+           'estado' => 1
        ]);
         DB::table('users')->insert([
             'id' => 2 ,
             'name' => 'Ventas',
             'email' => 'ventas@ventas.com',
             'personal_id' => '3',
-            'password' => bcrypt('ventas@ventas.com')
+            'password' => bcrypt('ventas@ventas.com'),
+            'estado' => 1
         ]);
         DB::table('users')->insert([
             'id' => 3 ,
             'name' => 'Soporte',
             'email' => 'soporte@soporte.com',
             'personal_id' => '2',
-            'password' => bcrypt('soporte@soporte.com')
+            'password' => bcrypt('soporte@soporte.com'),
+            'estado' => 1
         ]);
     }
 }
