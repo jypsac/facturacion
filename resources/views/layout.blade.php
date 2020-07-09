@@ -22,10 +22,6 @@
     <link href="{{ asset('main.css') }}" rel="stylesheet">
 <link rel="icon" type="image/svg+xml" href="{{ asset('img/icono.svg') }}" sizes="any">
 
-
-
-
-
 </head>
 <style type="text/css">
 
@@ -121,16 +117,16 @@
                         <ul class="nav nav-second-level collapse">
                             <li><a href="{{route('personal.index')}}">Datos Generales</a></li>
                             {{-- <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li> --}}
-                            <li><a href="{{route('horarios.index')}}">Horarios</a></li>
+                            {{-- <li><a href="{{route('horarios.index')}}">Horarios</a></li> --}}
                             <li><a href="{{route('vendedores.index')}}">Vendedores</a></li>
                         </ul>
                     </li>
                     <li>
                         <a href="#"><i class="fa fa-inbox"></i> <span class="nav-label">Consultas</span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="{{route('venta.index')}}">Ventas</a></li>
-                            <li><a href="{{route('compra.index')}}">Compras</a></li>
-                            <li><a href="#">Almacen</a></li>
+                            {{-- <li><a href="{{route('venta.index')}}">Ventas</a></li> --}}
+                            {{-- <li><a href="{{route('compra.index')}}">Compras</a></li> --}}
+                            {{-- <li><a href="#">Almacen</a></li> --}}
                             <li>
                                 <a href="#">Garantias</a>
                                 <ul class="nav nav-third-level">
@@ -165,8 +161,8 @@
                                 <a href="#">Catalogo</a>
                                 <ul class="nav nav-third-level">
                                     <li><a href="{{route('productos.index')}}">Productos</a></li>
-                                    <li><a href="{{route('servicios.index')}}">Servicios</a></li>
-                                    <li><a href="{{route('promedios.index')}}">Promedios</a></li>
+                                    {{-- <li><a href="{{route('servicios.index')}}">Servicios</a></li> --}}
+                                    {{-- <li><a href="{{route('promedios.index')}}">Promedios</a></li> --}}
                                     <li><a href="{{route('Clasificacion')}}">Clasificacion</a></li>
                                 </ul>
                             </li>
@@ -179,7 +175,7 @@
                             <li><a href="{{ route('almacen.index') }}">Almacenes</a></li>
                             <li><a href="{{route('usuario.index')}}">Usuarios</a></li>
                             <li><a href="{{route('moneda.index')}}">Monedas</a></li>
-                            <li><a href="{{route('documento.index')}}">Tipo de Documentos</a></li>
+                            {{-- <li><a href="{{route('documento.index')}}">Tipo de Documentos</a></li> --}}
                             <li><a href="{{route('tipo_cambio.index')}}">Tipo de Cambio</a></li>
                             <li>
                                 <a href="#">Configuracion General</a>

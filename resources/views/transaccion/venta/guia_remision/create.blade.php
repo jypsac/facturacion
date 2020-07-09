@@ -8,75 +8,102 @@
 @section('value_accion', 'Atras')
 @section('content')
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<head>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("form").keypress(function(e) {
+                if (e.which == 13) {
+                    setTimeout(function() {
+                        e.target.value += ' | ';
+                    }, 4);
+                    e.preventDefault();
+                }
+            });
 
 
-<div class="wrapper wrapper-content animated fadeInRight">
+        });
+    </script>
+</head>
+<form action="{{route('guia_remision.store')}}"  enctype="multipart/form-data" method="post">
+    @csrf
+    <div class="wrapper wrapper-content animated fadeInRight">
 
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
-                <div class="row">
-                    <div class="col-sm-4 text-left" align="left">
+        <div class="row">
+            <div class="col-lg-12">
+                <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
+                    <div class="row">
+                        <div class="col-sm-4 text-left" align="left">
 
-                        <address class="col-sm-4" align="left">
+                            <address class="col-sm-4" align="left">
 
-                            <img src="{{asset('img/logos/')}}//{{$empresa->foto}}" alt="" width="300px">
-                        </address>
-                    </div>
-                    <div class="col-sm-4">
-                    </div> 
-
-                    <div class="col-sm-4 ">
-                        <div class="form-control ruc" style="height: 125px">
-                            <center>
-                                <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
-                                <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>   
-                                <h5>BO11-0001213</h5>   
-                            </center>
-
+                                <img src="{{asset('img/logos/')}}//{{$empresa->foto}}" alt="" width="300px">
+                            </address>
                         </div>
-                    </div>
-                </div><br>
-                {{--  Cabecera --}}
-                <div class="row">
-                    <div class="col-sm-6" >
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label">Cliente:</label>
-                            <div class="col-sm-10">
-                                <input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off">
-                                <datalist id="browsersc1" >
-                                    @foreach($clientes as $cliente)
-                                    <option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
-                                    @endforeach
-                                </datalist>
+                        <div class="col-sm-4">
+                        </div> 
+
+                        <div class="col-sm-4 ">
+                            <div class="form-control ruc" style="height: 125px">
+                                <center>
+                                    <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
+                                    <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>   
+                                    <h5>BO11-0001213</h5>   
+                                </center>
+
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6" >
-                        <div class="row">
-                            <label class="col-sm-2 col-form-label">F.Emision:</label>
-                            <div class="col-sm-3">
-                                <input type="text" style="font-size: 12px" name="fecha_emision" class="form-control" value="{{date("Y/m/d")}}" readonly="readonly">
-                            </div>
-                            <label class="col-sm-2 col-form-label">F.Entrega:</label>
-                            <div class="col-sm-5">
-                                <input type="date" name="fecha_entrega" class="form-control"   >
+                    </div><br>
+                    {{--  Cabecera --}}
+                    <div class="row">
+                        <div class="col-sm-6" >
+                            <div class="row">
+                                <label class="col-sm-2 col-form-label">Cliente:</label>
+                                <div class="col-sm-10">
+                                    <input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off">
+                                    <datalist id="browsersc1" >
+                                        @foreach($clientes as $cliente)
+                                        <option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
+                                        @endforeach
+                                    </datalist>
+                                </div>
                             </div>
                         </div>
-                    </div>
+                        <div class="col-sm-6" >
+                            <div class="row">
+                                <label class="col-sm-2 col-form-label">F.Emision:</label>
+                                <div class="col-sm-3">
+                                    <input type="text" style="font-size: 12px" name="fecha_emision" class="form-control" value="{{date("Y/m/d")}}" readonly="readonly">
+                                </div>
+                                <label class="col-sm-2 col-form-label">F.Entrega:</label>
+                                <div class="col-sm-5">
+                                    <input type="date" name="fecha_entrega" class="form-control" required="required"  >
+                                </div>
+                            </div>
+                        </div>
 
-                    <div class="col-sm-12" >
-                        <div class="row">
-                            <label class="col-sm-2">Observacion:</label>
-                            <div class="col-sm-10">
-                                <textarea name="observacion" id="" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                {{-- Fin Cabecera --}}
-                {{-- Tabla Mostrito --}}
-                <table   cellspacing="0" class="table table-striped ">
+                        <div class="col-sm-12" >
+                            <div class="row">
+                                <label class="col-sm-1">Vehiculo:</label>
+                                <div class="col-sm-5">
+                                   <input list="browsersc" class="form-control m-b" name="vehiculo" autocomplete="off">
+                                    <datalist id="browsersc" >
+                                        @foreach($vehiculo as $vehiculos)
+                                        <option id="{{$vehiculos->id}}">{{$vehiculos->placa}} /{{$vehiculos->marca}}</option>
+                                        @endforeach
+                                    </datalist>
+                               </div>
+                               <label class="col-sm-1">Conductor:</label>
+                               <div class="col-sm-5">
+                                   <input type="conductor" name="conductor" class="form-control"  value="0" >
+                               </div>
+                           </div>
+                       </div>
+                   </div>
+                   {{-- Fin Cabecera --}}
+                   {{-- Tabla Mostrito --}}
+                   <table   cellspacing="0" class="table table-striped ">
                     <thead>
                         <tr>
                             <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
@@ -84,6 +111,7 @@
                             <th style="width: 100px;font-size: 13px">Stock</th>
                             <th style="width: 100px;font-size: 13px">Cantidad</th>
                             <th style="width: 500px;font-size: 13px">Numeros Series</th>
+                            <th style="width: 100px;font-size: 13px">peso</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -109,6 +137,9 @@
                                 <td>
                                     <textarea name="" id="" class="form-control" placeholder="escanear N/S"></textarea>
                                 </td>
+                                <td>
+                                    <input type="text" class="form-control" value="0" readonly="readonly">
+                                </td>
 
                                 <span id="spTotal"></span>
                             </tr>
@@ -129,60 +160,60 @@
                 </div>
             </div>
         </div>
+    </form>
+
+    <style type="text/css">
+        .ruc{border-radius: 10px; height: 150px;}
+        .form-control{border-radius: 10px;}
+    </style>
+
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="{{ asset('js/inspinia.js') }}"></script>
+    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script> <script>
+        var i = 2;
+        $(".addmore").on('click', function () {
+            var data = `[
+            <tr>
+            <td>
+            <input type='checkbox' class='case'/>
+            </td>";
+            <td>
+            <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i})" autocomplete="off">
+            <datalist id="browsers" >
+            @foreach($productos as $index => $producto)
+            <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}" >
+            @endforeach
+            </datalist>
+            </td>
+
+            <td>
+            <input type='text' id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
+            </td>
+            <td>
+            <input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+            </td>
+            <td>
+            <textarea name="" id="" class="form-control" placeholder="escanear N/S"></textarea>
+            </td>
 
 
-        <style type="text/css">
-            .ruc{border-radius: 10px; height: 150px;}
-            .form-control{border-radius: 10px;}
-        </style>
+            </tr>`;
+            $('table').append(data);
+            i++;
+        });
+    </script>
 
-        <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-        <script src="{{ asset('js/popper.min.js') }}"></script>
-        <script src="{{ asset('js/bootstrap.js') }}"></script>
-        <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-        <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-        <!-- Custom and plugin javascript -->
-        <script src="{{ asset('js/inspinia.js') }}"></script>
-        <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script> <script>
-            var i = 2;
-            $(".addmore").on('click', function () {
-                var data = `[
-                <tr>
-                <td>
-                <input type='checkbox' class='case'/>
-                </td>";
-                <td>
-                <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i})" autocomplete="off">
-                <datalist id="browsers" >
-                @foreach($productos as $index => $producto)
-                <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}" >
-                @endforeach
-                </datalist>
-                </td>
-
-                <td>
-                <input type='text' id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
-                </td>
-                <td>
-                <input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
-                </td>
-                <td>
-                <textarea name="" id="" class="form-control" placeholder="escanear N/S"></textarea>
-                </td>
-
-
-                </tr>`;
-                $('table').append(data);
-                i++;
-            });
-        </script>
-
-        <script>
-            function print(){
-                var print_input=1;
-                document.getElementById("prints").value = print_input;
-                var estado = document.querySelector("#prints").value;
+    <script>
+        function print(){
+            var print_input=1;
+            document.getElementById("prints").value = print_input;
+            var estado = document.querySelector("#prints").value;
             // console.log(estado);
         }
 

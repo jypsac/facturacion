@@ -20,10 +20,17 @@ class CreateGuiaRemisionTable extends Migration
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
             $table->string('fecha_emision');
             $table->string('fecha_entrega');
-            $table->string('vehiculo_id');
+
+            $table->unsignedBigInteger('vehiculo_id')->nullable();
+            $table->foreign('vehiculo_id')->references('id')->on('vehiculos')->onDelete('cascade');
+
+            $table->string('conductor_id')->nullable();
             $table->string('estado_anulado');
-            $table->string('estado_registrado');    
-            $table->string('user_id');
+            $table->string('estado_registrado');  
+            
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');  
+
             $table->timestamps();
         });
     }

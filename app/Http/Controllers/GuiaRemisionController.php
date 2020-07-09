@@ -6,8 +6,10 @@ use App\Cliente;
 use App\Cotizacion;
 use App\Cotizacion_factura_registro;
 use App\Empresa;
+use App\Guia_remision;
 use App\Igv;
 use App\Producto;
+use App\Vehiculo;
 use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
 
@@ -20,7 +22,8 @@ class GuiaRemisionController extends Controller
      */
     public function index()
     {
-         return view('transaccion.venta.guia_remision.index');
+        $guia_remision=Guia_remision::all();
+         return view('transaccion.venta.guia_remision.index',compact('guia_remision'));
 
     }
 
@@ -40,9 +43,10 @@ class GuiaRemisionController extends Controller
         }
 
         $clientes=Cliente::all();
+        $vehiculo=Vehiculo::where('estado_activo',0)->get();
         $empresa=Empresa::first();
         $igv=Igv::first();
-       return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa'));
+       return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo'));
     }
 
 
@@ -54,8 +58,33 @@ class GuiaRemisionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {
-        //
+    { 
+        //Buscador Cliente
+        $cliente_nombre=$request->get('cliente');
+        $nombre = strstr($cliente_nombre, '-',true);
+        $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
+        $cliente_id=$cliente_buscador->id;
+        //buscador Vehiculo
+        $vehiculo_nombre=$request->get('vehiculo');
+        $placa = strstr($vehiculo_nombre, '/',true);
+        $vehiculo_buscador=Vehiculo::where('placa',$placa)->first();
+        $vehiculo_id=$vehiculo_buscador->id;
+
+        
+
+        $guia_remision=new Guia_remision;
+        $guia_remision->cod_guia='001';
+        $guia_remision->cliente_id=$cliente_id;
+        $guia_remision->fecha_emision=$request->get('fecha_emision');
+        $guia_remision->fecha_entrega=$request->get('fecha_entrega');
+        $guia_remision->vehiculo_id=$vehiculo_id;
+        $guia_remision->conductor_id=$request->get('conductor');
+        $guia_remision->estado_anulado='0';
+        $guia_remision->estado_registrado='0';
+        $guia_remision->user_id=auth()->user()->id;
+        $guia_remision->save();
+        return redirect()->route('guia_remision.show',$guia_remision->id);
+
     }
 
     /**

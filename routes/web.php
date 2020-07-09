@@ -67,6 +67,7 @@ Route::group(
 		Route::get('/guias_remision/creates/{id}' , 'GuiaRemisionController@cotizacion')->name('guias_remision.create');
 
 		/**/
+		Route::resource('/vehiculo','VehiculoController');
 
 		Route::resource('/familia','FamiliaController');
 
