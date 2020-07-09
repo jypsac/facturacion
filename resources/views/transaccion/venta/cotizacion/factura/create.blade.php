@@ -6,7 +6,6 @@
 @section('href_accion', route('cotizacion.index') )
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head>
 <script type="text/javascript">
 $(document).ready(function() {

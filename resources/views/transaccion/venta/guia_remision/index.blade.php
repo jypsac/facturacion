@@ -38,23 +38,23 @@
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Codigo de Factura</th>
+                                            <th>Codigo de Guia</th>
                                             <th>Cliente</th>
                                             <th>Ruc/DNI</th>
-                                            <th>Fecha Vencimiento</th>
+                                            <th>Fecha emision</th>
                                             <th>Ver</th> 
                                             <!-- <th>EDITAR</th> -->
                                             <th>Anular</th>
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {{-- @foreach($facturacion as $facturacions) --}}
+                                        @foreach($guia_remision as $guias_remision)
                                         <tr class="gradeX">
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
-                                            <td></td>
+                                            <td>{{$guias_remision->id}}</td>
+                                            <td>{{$guias_remision->cod_guia}}</td>
+                                            <td>{{$guias_remision->cliente->nombre}}</td>
+                                            <td>{{$guias_remision->cliente->numero_documento}}</td>
+                                            <td>{{$guias_remision->fecha_emision}}</td>
                                             <td><center><a href=""><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                             <td>
                                                {{--  @if($facturacions->estado == '0') --}}
@@ -100,7 +100,7 @@
                                             </td>
                                             
                                         </tr>
-                                        {{-- @endforeach --}}
+                                        @endforeach
                                     </tbody>
                                 </table>
                             </div>
