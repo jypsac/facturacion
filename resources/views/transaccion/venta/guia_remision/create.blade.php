@@ -67,9 +67,13 @@
 
                     <div class="col-sm-12" >
                         <div class="row">
-                            <label class="col-sm-2">Observacion:</label>
-                            <div class="col-sm-10">
-                                <textarea name="observacion" id="" class="form-control"></textarea>
+                            <label class="col-sm-1">Vehiculo:</label>
+                            <div class="col-sm-5">
+                                 <input type="vehiculo" name="vehiculo" class="form-control"   >
+                            </div>
+                            <label class="col-sm-1">Conductor:</label>
+                            <div class="col-sm-5">
+                                 <input type="conductor" name="conductor" class="form-control"   >
                             </div>
                         </div>
                     </div>
