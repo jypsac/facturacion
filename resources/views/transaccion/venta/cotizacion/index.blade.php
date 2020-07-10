@@ -81,10 +81,22 @@
                                            </form>
 
                                            @else
-                                           <button type="button" class="btn btn-w-m btn-default">Aprobado por <br> {{$cotizacions->aprobado->personal->nombres}}</button>
+                                           <button type="button" class="btn btn-w-m btn-default">Aprobado por <br>
+                                             @if($cotizacions->aprobado->personal->nombres==auth()->user()->personal->nombres)
+                                            usted
+                                            @else
+                                             {{$cotizacions->aprobado->personal->nombres}}
+                                            @endif
+                                          </button>
                                            @endif
                                        </td>
-                                       <td>{{$cotizacions->user_personal->personal->nombres}}</td>
+                                       <td>
+                                       @if($cotizacions->user_personal->personal->nombres==auth()->user()->personal->nombres)
+                                            Creado por usted
+                                        @else
+                                           Creado por  {{$cotizacions->user_personal->personal->nombres}}
+                                        @endif
+                                     </td>
                                    </tr>
                                    @endforeach
                                </tbody>

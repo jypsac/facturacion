@@ -8,8 +8,26 @@
 @section('value_accion', 'Atras')
 @section('content')
 
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<head>
+    <script type="text/javascript">
+        $(document).ready(function() {
+
+            $("form").keypress(function(e) {
+                if (e.which == 13) {
+                    setTimeout(function() {
+                        e.target.value += ' | ';
+                    }, 4);
+                    e.preventDefault();
+                }
+            });
 
 
+        });
+    </script>
+</head>
+<form action="{{route('guia_remision.store')}}"  enctype="multipart/form-data" method="post">
+    @csrf
 <div class="wrapper wrapper-content animated fadeInRight">
 
     <div class="row">
@@ -43,13 +61,14 @@
                         <div class="row">
                             <label class="col-sm-2 col-form-label">Cliente:</label>
                             <div class="col-sm-4">
-                                <input  class="form-control m-b" name="cliente"  value="{{$cotizacion->cliente->nombre}}" readonly="readonly">
+                                <input  class="form-control m-b"  value="{{$cotizacion->cliente->nombre}}" readonly="readonly">
                                 
                             </div>
-                            <label class="col-sm-2 col-form-label">Cliente:</label>
+                            <label class="col-sm-2 col-form-label">RUC/DNI:</label>
                             <div class="col-sm-4">
-                                <input  class="form-control m-b" name="cliente"  value="{{$cotizacion->cliente->numero_documento}}" readonly="readonly">
-                                
+                                <input  class="form-control m-b"   value="{{$cotizacion->cliente->numero_documento}}" readonly="readonly">
+                                <input type="text" value="{{$cotizacion->cliente->id}}" name="cliente_id" hidden="hidden">
+                                <input type="text" value="{{$cotizacion->id}}" name="id" hidden="hidden">
                             </div>
                         </div>
                     </div>
@@ -61,7 +80,7 @@
                             </div>
                             <label class="col-sm-2 col-form-label">F.Entrega:</label>
                             <div class="col-sm-5">
-                                <input type="date" name="fecha_entrega" class="form-control"   >
+                                <input type="date" name="fecha_entrega" class="form-control"  required="required" >
                             </div>
                         </div>
                     </div>
@@ -69,7 +88,7 @@
                         <div class="row">
                             <label class="col-sm-2 col-form-label">Domicilio Partida:</label>
                             <div class="col-sm-10">
-                                <textarea name="direccion" class="form-control m-b" readonly="readonly">{{$empresa->calle}}</textarea>
+                                <textarea  class="form-control m-b" readonly="readonly">{{$empresa->calle}}</textarea>
                             </div>
                         </div>
                     </div>
@@ -77,19 +96,27 @@
                         <div class="row">
                             <label class="col-sm-2 col-form-label">Domicilio Llegada:</label>
                             <div class="col-sm-10">
-                                <textarea name="direccion" class="form-control m-b" readonly="readonly">{{$cotizacion->cliente->direccion}}</textarea>
+                                <textarea  class="form-control m-b" readonly="readonly">{{$cotizacion->cliente->direccion}}</textarea>
                             </div>
                         </div>
                     </div>
-
                     <div class="col-sm-12" >
-                        <div class="row">
-                            <label class="col-sm-2">Observacion:</label>
-                            <div class="col-sm-10">
-                                <textarea name="observacion" id="" class="form-control"></textarea>
-                            </div>
-                        </div>
-                    </div>
+                            <div class="row">
+                                <label class="col-sm-1">Vehiculo:</label>
+                                <div class="col-sm-5">
+                                   <input list="browsersc" class="form-control m-b" name="vehiculo" autocomplete="off">
+                                    <datalist id="browsersc" >
+                                        @foreach($vehiculo as $vehiculos)
+                                        <option id="{{$vehiculos->id}}">{{$vehiculos->placa}} / {{$vehiculos->marca}}</option>
+                                        @endforeach
+                                    </datalist>
+                               </div>
+                               <label class="col-sm-1">Conductor:</label>
+                               <div class="col-sm-5">
+                                   <input type="text" name="conductor" class="form-control"  value="0" >
+                               </div>
+                           </div>
+                       </div>
                 </div>
                 {{-- Fin Cabecera --}}
                 {{-- Tabla Mostrito --}}
@@ -111,7 +138,7 @@
                                     <tr>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td><b>{{$cotizacion_registros->producto->marcas_i_producto->nombre}}</b> {{$cotizacion_registros->producto->nombre}}</td>
-                                        <td><textarea name="numero_serie" class="form-control" style="width: 180px;font-size: 12px"></textarea></td>
+                                        <td><textarea {{-- name="numero_serie" --}} class="form-control" style="width: 180px;font-size: 12px"></textarea></td>
                                         <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>{{$cotizacion_registros->producto->unidad_i_producto->peso}}</td>
@@ -134,7 +161,7 @@
             </div>
         </div>
 
-
+ </form>
         <style type="text/css">
             .ruc{border-radius: 10px; height: 150px;}
             .form-control{border-radius: 10px;}
