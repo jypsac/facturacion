@@ -37,6 +37,8 @@ class DatabaseSeeder extends Seeder
         $this->call(VentasRegistroTableSeeder::class);
         $this->call(BancoTableSeeder::class);
         $this->call(VehiculostableSeeder::class);
-        
+        $this->call(PermissionsTableSeeder::class);
+
+
     }
 }

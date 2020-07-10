@@ -2,13 +2,18 @@
 
 namespace App;
 
+use Spatie\Permission\Traits\HasRoles;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Models\Permission;
+
 use Illuminate\Notifications\Notifiable;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-
+    use Notifiable;
+    use HasRoles;
     use Notifiable;
 
     /**
@@ -37,6 +42,8 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+
+
      public function personal(){
         return $this->belongsTo(Personal::class,'personal_id');
     }

@@ -52,7 +52,7 @@
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="block m-t-xs font-bold">@yield('nombre',auth()->user()->personal->nombres)</span>
                                 <span class="text-muted text-xs block">@yield('area',auth()->user()->name) <b class="caret"></b></span>
-                            </a>{{-- 
+                            </a>{{--
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a class="dropdown-item" href="">Perfil</a></li>
                                 <li><a class="dropdown-item" href="">Contactos</a></li>
@@ -137,7 +137,7 @@
                             </li>
                         </ul>
                     </li>
-                    
+
                     {{-- <li>
                         <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span></a>
                         <ul class="nav nav-second-level collapse">
@@ -145,7 +145,7 @@
                             <li><a href="#">Email view</a></li>
                         </ul>
                     </li> --}}
-                    
+
                     <li>
                         <a href="#"><i class="fa fa-address-card  "></i> <span class="nav-label">Auxiliares</span></a>
                         <ul class="nav nav-second-level collapse">
@@ -172,7 +172,9 @@
                                     <li><a href="{{route('motivo.index')}}">Motivos</a></li>
                                 </ul>
                             </li>
+                            @can('almacen')
                             <li><a href="{{ route('almacen.index') }}">Almacenes</a></li>
+                            @endcan
                             <li><a href="{{route('usuario.index')}}">Usuarios</a></li>
                             <li><a href="{{route('moneda.index')}}">Monedas</a></li>
                             {{-- <li><a href="{{route('documento.index')}}">Tipo de Documentos</a></li> --}}
@@ -184,7 +186,7 @@
                                     <li><a href="{{route('unidad-medida.index')}}">Unidad de Medida</a></li>
                                     <li><a href="{{route('igv.index')}}">IGV</a></li>
                                 </ul>
-                                
+
                             </li>
                         </ul>
                     </li>
