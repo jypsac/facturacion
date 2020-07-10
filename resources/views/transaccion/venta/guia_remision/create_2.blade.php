@@ -68,6 +68,7 @@
                             <div class="col-sm-4">
                                 <input  class="form-control m-b"   value="{{$cotizacion->cliente->numero_documento}}" readonly="readonly">
                                 <input type="text" value="{{$cotizacion->cliente->id}}" name="cliente_id" hidden="hidden">
+                                <input type="text" value="{{$cotizacion->id}}" name="id" hidden="hidden">
                             </div>
                         </div>
                     </div>

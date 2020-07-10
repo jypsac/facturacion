@@ -62,36 +62,43 @@ class GuiaRemisionController extends Controller
     { 
          //id del cliente de create_2
         $id_cliente=$request->get('cliente_id');
+        $id_cotizacion=$request->get('id');
         //Buscador Cliente
         if (isset($id_cliente)) {
-           $cliente_id=$request->get('cliente_id');
-        }
-        else{
+         $cliente_id=$request->get('cliente_id');
+     }
+     else{
         $cliente_nombre=$request->get('cliente');
         $nombre = strstr($cliente_nombre, '-',true);
         $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
         $cliente_id=$cliente_buscador->id;
-        }
-        //buscador Vehiculo
-        $vehiculo_nombre=$request->get('vehiculo');
-        $placa = strstr($vehiculo_nombre, '/',true);
-        $vehiculo_buscador=Vehiculo::where('placa',$placa)->first();
-        $vehiculo_id=$vehiculo_buscador->id;
-
-        $guia_remision=new Guia_remision;
-        $guia_remision->cod_guia='001';
-        $guia_remision->cliente_id=$cliente_id;
-        $guia_remision->fecha_emision=$request->get('fecha_emision');
-        $guia_remision->fecha_entrega=$request->get('fecha_entrega');
-        $guia_remision->vehiculo_id=$vehiculo_id;
-        $guia_remision->conductor_id=$request->get('conductor');
-        $guia_remision->estado_anulado='0';
-        $guia_remision->estado_registrado='0';
-        $guia_remision->user_id=auth()->user()->id;
-        $guia_remision->save();
-        return redirect()->route('guia_remision.show',$guia_remision->id);
-
     }
+        //buscador Vehiculo
+    $vehiculo_nombre=$request->get('vehiculo');
+    $placa = strstr($vehiculo_nombre, '/',true);
+    $vehiculo_buscador=Vehiculo::where('placa',$placa)->first();
+    $vehiculo_id=$vehiculo_buscador->id;
+
+    $guia_remision=new Guia_remision;
+    $guia_remision->cod_guia='001';
+    $guia_remision->cliente_id=$cliente_id;
+    $guia_remision->fecha_emision=$request->get('fecha_emision');
+    $guia_remision->fecha_entrega=$request->get('fecha_entrega');
+    $guia_remision->vehiculo_id=$vehiculo_id;
+    $guia_remision->conductor_id=$request->get('conductor');
+    $guia_remision->estado_anulado='0';
+    $guia_remision->estado_registrado='0';
+    $guia_remision->user_id=auth()->user()->id;
+    $guia_remision->save();
+
+    if (isset($id_cliente)) {
+        $cotizacion_estado_aprobado=Cotizacion::find($id_cotizacion);
+        $cotizacion_estado_aprobado->estado_aprobado='1';
+        $cotizacion_estado_aprobado->save();
+    }
+    return redirect()->route('guia_remision.show',$guia_remision->id);
+
+}
 
     /**
      * Display the specified resource.
@@ -105,8 +112,8 @@ class GuiaRemisionController extends Controller
         $banco=Banco::all();
         $empresa=Empresa::first();
 
-     return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision'));
- }
+        return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision'));
+    }
 
     /**
      * Show the form for editing the specified resource.
