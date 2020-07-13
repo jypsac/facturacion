@@ -86,7 +86,7 @@ class PermissionsTableSeeder extends Seeder
             'planilla',
             'planilla-datos_generales',
             'planilla-vendedores',
-            'consultas-garantias'
+            'consultas-garantias',
             'consultas-garantias-guia_ingreso',
             'consultas-garantias-guia_egreso',
             'consultas-garantias-informe_tecnico',
