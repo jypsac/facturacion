@@ -82,10 +82,17 @@
                                 <th>Peso</th>
                                 </thead>
                                 <tbody>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
-                                    <td></td>
+                                   @foreach($guia_registro as $guia_registros)
+                                    <tr>
+                                        <td>{{$guia_registros->id}}</td>
+                                        <td>{{$guia_registros->producto->marcas_i_producto->nombre}} / {{$guia_registros->producto->nombre}}</td>
+                                        <td>{{$guia_registros->numero_serie}}</td>
+                                        <td>{{$guia_registros->producto->unidad_i_producto->medida}}</td>
+                                        <td>{{$guia_registros->cantidad}}</td>
+                                        <td>{{$guia_registros->producto->peso}}</td>
+                                    </tr>
+                                    
+                                      @endforeach    
                                 </tbody>
                             </table>
                         </div><!-- /table-responsive -->

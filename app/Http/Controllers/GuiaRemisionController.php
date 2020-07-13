@@ -11,6 +11,7 @@ use App\Guia_remision;
 use App\Igv;
 use App\Producto;
 use App\Vehiculo;
+use App\g_remision_registro;
 use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
 
@@ -109,10 +110,11 @@ class GuiaRemisionController extends Controller
     public function show($id)
     {   
         $guia_remision=Guia_remision::find($id);
+        $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
         $banco=Banco::all();
         $empresa=Empresa::first();
 
-        return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision'));
+        return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision','guia_registro'));
     }
 
     /**

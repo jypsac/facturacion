@@ -126,7 +126,8 @@ class GarantiaInformeTecnicoController extends Controller
        
 
         //consulta
-        $id_garantia_egreso=$garantia_guia_egreso->id;
+        $egreso=GarantiaGuiaEgreso::where('orden_servicio',$orden_servicio_egreso)->first();
+        $id_garantia_egreso=$egreso->id;
 
         $garantia_informe_tecnico= new GarantiaInformeTecnico;
         $garantia_informe_tecnico->garantia_egreso_id=$id_garantia_egreso;
