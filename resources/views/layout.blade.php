@@ -66,77 +66,124 @@
                         </div>
                     </li>
                     <!-- MENU DESPELEGABLE -->
-                    <li>
-                        <a href="{{route('inicio')}}"><i class="fa fa-magic"></i> <span class="nav-label">Inicio</span></a>
-                    </li>
+                    @can('inicio')
+                    <li><a href="{{route('inicio')}}"><i class="fa fa-magic"></i> <span class="nav-label">Inicio</span></a></li>
+                    @endcan
+                    @can('transacciones')
                     <li>
                         <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Transacciones</span></a>
                         <ul class="nav nav-second-level collapse">
+                            @can('transacciones-ventas')
                             <li>
                                 <a href="#">Ventas</a>
                                 <ul class="nav nav-third-level">
+                                    @can('transacciones-ventas-cotizaciones.index')
                                     <li><a href="{{route('cotizacion.index')}}">Cotizaciones</a></li>
+                                    @endcan
                                     {{-- <li><a href="{{route('credito.index')}}">Credito</a></li> --}}
                                     {{-- <li><a href="{{route('debito.index')}}">Debito</a></li> --}}
+                                    @can('transacciones-ventas-facturacion.index')
                                     <li><a href="{{route('facturacion.index')}}">Facturacion</a></li>
+                                    @endcan
+                                    @can('transacciones-ventas-boleta.index')
                                     <li><a href="{{route('boleta.index')}}">Boleta</a></li>
+                                    @endcan
+                                    @can('transacciones-ventas-guia_remision.index')
                                     <li><a href="{{route('guia_remision.index')}}">Guia Remision</a></li>
+                                    @endcan
                                     {{-- <li><a href="{{route('guia.index')}}">Guias</a></li> --}}
                                     {{-- <li><a href="{{route('pedidos.index')}}">Pedidos</a></li> --}}
                                 </ul>
                             </li>
+                            @endcan
                             {{-- <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li> --}}
-
+                            @can('transacciones-garantias')
                             <li>
                                 <a href="#">Garantias</a>
                                 <ul class="nav nav-third-level">
+                                    @can('transacciones-garantias-guias_ingreso.index')
                                     <li><a href="{{route('garantia_guia_ingreso.index')}}">Guias Ingreso</a></li>
+                                    @endcan
+                                    @can('transacciones-garantias-guias_egreso.index')
                                     <li><a href="{{route('garantia_guia_egreso.index')}}">Guia Egreso</a></li>
+                                    @endcan
+                                    @can('transacciones-garantias-informe_tecnico.index')
                                     <li><a href="{{route('garantia_informe_tecnico.index')}}">Informe Tecnico</a></li>
+                                    @endcan
                                 </ul>
                             </li>
+                            @endcan
                         </ul>
                     </li>
+                    @endcan
+                    @can('inventario')
                     <li>
                         <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Inventario</span></a>
                         <ul class="nav nav-second-level collapse">
+                            @can('inventario-productos_kardex')
                             <li>
                                 <a href="#">Productos Kardex</a>
                                 <ul class="nav nav-third-level">
+                                    @can('inventario-productos_kardex-entrada_producto.index')
                                     <li><a href="{{route('kardex-entrada.index')}}">Entrada Producto</a></li>
+                                    @endcan
+                                    @can('inventario-productos_kardex-salida_producto.index')
                                     <li><a href="{{route('kardex-salida.index')}}">Salida Producto</a></li>
+                                    @endcan
                                 </ul>
                             </li>
+                            @endcan
                             {{-- <li><a href="{{route('pagados.index')}}">Pagados</a></li> --}}
+                            @can('inventario-productos-inventario_inicial.index')
                             <li><a href="{{route('inventario-inicial.index')}}">Inventario Inicial</a></li>
+                            @endcan
+                            @can('inventario-toma_de_inventario.index')
                             <li><a href="{{route('periodo-consulta.index')}}">Toma de Inventario</a></li><!-- Periodo Consulta -->
+                            @endcan
                         </ul>
                     </li>
+                    @endcan
+                    @can('planilla')
                     <li>
                         <a href="#"><i class="fa fa-file-archive-o"></i> <span class="nav-label">Planilla</span></a>
                         <ul class="nav nav-second-level collapse">
+                            @can('planilla-datos_generales.index')
                             <li><a href="{{route('personal.index')}}">Datos Generales</a></li>
+                            @endcan
                             {{-- <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li> --}}
                             {{-- <li><a href="{{route('horarios.index')}}">Horarios</a></li> --}}
+                            @can('planilla-vendedores.index')
                             <li><a href="{{route('vendedores.index')}}">Vendedores</a></li>
+                            @endcan
                         </ul>
                     </li>
+                    @endcan
+                    @can('consultas')
                     <li>
                         <a href="#"><i class="fa fa-inbox"></i> <span class="nav-label">Consultas</span></a>
                         <ul class="nav nav-second-level collapse">
                             {{-- <li><a href="{{route('venta.index')}}">Ventas</a></li> --}}
                             {{-- <li><a href="{{route('compra.index')}}">Compras</a></li> --}}
                             {{-- <li><a href="#">Almacen</a></li> --}}
+                            @can('consultas-garantias')
                             <li>
                                 <a href="#">Garantias</a>
                                 <ul class="nav nav-third-level">
+                                    @can('consultas-garantias-guia_ingreso.index')
                                     <li><a href="{{route('consultas.garantias.guias_ingreso')}}">Guia Ingreso</a></li>
+                                    @endcan
+                                    @can('consultas-garantias-guia_egreso.index')
                                     <li><a href="{{route('consultas.garantias.guias_egreso')}}">Guia Egreso</a></li>
+                                    @endcan
+                                    @can('consultas-garantias-informe_tecnico.index')
                                     <li><a href="{{route('consultas.garantias.informe_tecnico')}}">Informe Tecnico</a></li>
+                                    @endcan
                                 </ul>
                             </li>
+                            @endcan
                         </ul>
                     </li>
+                    @endcan
 
                     {{-- <li>
                         <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span></a>
@@ -145,51 +192,80 @@
                             <li><a href="#">Email view</a></li>
                         </ul>
                     </li> --}}
-
+                    @can('auxiliares')
                     <li>
                         <a href="#"><i class="fa fa-address-card  "></i> <span class="nav-label">Auxiliares</span></a>
                         <ul class="nav nav-second-level collapse">
+                            @can('auxiliares-clientes.index')
                             <li><a href="{{route('cliente.index')}}">Clientes</a></li>
+                            @endcan
+                            @can('auxiliares-provedores.index')
                             <li><a href="{{route('provedor.index')}}">Provedores</a></li>
+                            @endcan
                         </ul>
                     </li>
+                    @endcan
+                    @can('maestro')
                     <li>
                         <a href="#"><i class="fa fa-magic"></i> <span class="nav-label">Maestro</span></a>
                         <ul class="nav nav-second-level collapse">
-
+                            @can('maestro-catalogo')
                             <li>
                                 <a href="#">Catalogo</a>
                                 <ul class="nav nav-third-level">
+                                    @can('maestro-catalogo-productos.index')
                                     <li><a href="{{route('productos.index')}}">Productos</a></li>
+                                    @endcan
                                     {{-- <li><a href="{{route('servicios.index')}}">Servicios</a></li> --}}
                                     {{-- <li><a href="{{route('promedios.index')}}">Promedios</a></li> --}}
+                                    @can('maestro-catalogo-clasificacion')
                                     <li><a href="{{route('Clasificacion')}}">Clasificacion</a></li>
+                                    @endcan
                                 </ul>
                             </li>
+                            @endcan
+                            @can('maestro-tablas_generales')
                             <li>
                                 <a href="#">Tablas generales</a>
                                 <ul class="nav nav-third-level">
+                                    @can('maestro-tablas_generales-motivos.index')
                                     <li><a href="{{route('motivo.index')}}">Motivos</a></li>
+                                    @endcan
                                 </ul>
                             </li>
-                            @can('almacen')
+                            @endcan
+                            @can('maestro-almacenes.index')
                             <li><a href="{{ route('almacen.index') }}">Almacenes</a></li>
                             @endcan
+                            @can('maestro-usuarios.index')
                             <li><a href="{{route('usuario.index')}}">Usuarios</a></li>
+                            @endcan
+                            @can('maestro-monedas.index')
                             <li><a href="{{route('moneda.index')}}">Monedas</a></li>
+                            @endcan
                             {{-- <li><a href="{{route('documento.index')}}">Tipo de Documentos</a></li> --}}
+                            @can('maestro-tipo_de_cambio.index')
                             <li><a href="{{route('tipo_cambio.index')}}">Tipo de Cambio</a></li>
+                            @endcan
+                            @can('maestro-configuracion_general')
                             <li>
                                 <a href="#">Configuracion General</a>
                                 <ul class="nav nav-third-level">
+                                    @can('maestro-configuracion_general.mi_empresa.index')
                                     <li><a href="{{route('empresa.index')}}">Mi Empresa</a></li>
+                                    @endcan
+                                    @can('maestro-configuracion_general.unidad_de_medida.index')
                                     <li><a href="{{route('unidad-medida.index')}}">Unidad de Medida</a></li>
+                                    @endcan
+                                    @can('maestro-configuracion_general.igv.index')
                                     <li><a href="{{route('igv.index')}}">IGV</a></li>
+                                    @endcan
                                 </ul>
-
                             </li>
+                            @endcan
                         </ul>
                     </li>
+                    @endcan
                      <!-- MENU DESPELEGABLE -->
                 </ul>
             </div>
