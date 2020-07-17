@@ -34,6 +34,9 @@ class AddForeignKeyFacturacionTable extends Migration
             $table->string('fecha_emision')->nullable();
             $table->string('fecha_vencimiento')->nullable();
 
+            $table->string('observacion')->nullable();
+            $table->string('comisionista')->nullable();
+            $table->string('user_id');
             $table->string('estado');
             
             $table->timestamps();

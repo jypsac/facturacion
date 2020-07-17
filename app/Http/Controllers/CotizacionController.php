@@ -14,12 +14,15 @@ use App\Cotizacion_factura_registro;
 use App\Cotizacion_boleta_registro;
 use App\kardex_entrada_registro;
 use App\Facturacion;
+use App\Boleta;
 use App\Igv;
 use App\Ventas_registro;
 use App\User;
 use App\Banco;
 use App\Personal_venta;
 use App\Unidad_medida;
+use App\Facturacion_registro;
+use App\Boleta_registro;
 
 use Illuminate\Http\Request;
 
@@ -77,7 +80,7 @@ class CotizacionController extends Controller
 
         if($print==1){
             $cliente_id=$request->get('cliente');
-            
+
             $sub_total=0;
             $igv=Igv::first();
 
@@ -205,6 +208,9 @@ class CotizacionController extends Controller
         $cotizacion->tipo='factura';
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
+        $cotizacion->estado_aprovar='0';
+        $cotizacion->estado_aprobado='0';
+        // $cotizacion->aprobado_por='0';
         $cotizacion->save();
 
 
@@ -304,7 +310,7 @@ class CotizacionController extends Controller
 
         if($print==1){
             $cliente_id=$request->get('cliente');
-            
+
             $sub_total=0;
             $igv=Igv::first();
 
@@ -433,6 +439,9 @@ class CotizacionController extends Controller
         $cotizacion->tipo="boleta";
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
+        $cotizacion->estado_aprovar='0';
+        $cotizacion->estado_aprobado='0';
+        // $cotizacion->aprobado_por='0';
         $cotizacion->save();
 
 
@@ -446,7 +455,7 @@ class CotizacionController extends Controller
 
         $igv_proceso=Igv::first();
         $igv_total=$igv_proceso->igv_total;
-        
+
 
         if($count_articulo = $count_cantidad  = $count_check){
             for($i=0;$i<$count_articulo;$i++){
@@ -492,7 +501,7 @@ class CotizacionController extends Controller
 
 
     public function show($id)
-    {   
+    {
         $banco=Banco::where('estado','0')->get();
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
@@ -607,7 +616,6 @@ class CotizacionController extends Controller
          public function facturar_store(Request $request)
         {
 
-
             // cambio de Estado Cotizador
             $id_cotizador=$request->get('id_cotizador');
             $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
@@ -623,7 +631,30 @@ class CotizacionController extends Controller
             $facturar->fecha_emision=$request->get('fecha_emision');
             $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
             $facturar->estado='0';
+            $facturar->user_id =auth()->user()->id;
             $facturar->save();
+
+            $buscador_id=Cotizacion::where('id',$facturar->id_cotizador)->first();
+
+            $cotizaciones_facturaciones=Cotizacion_factura_registro::where('cotizacion_id',$buscador_id->id)->get();
+
+            foreach ($cotizaciones_facturaciones as $index => $cotizacion_facturacion) {
+                $facturacion_registro=new Facturacion_registro;
+                $facturacion_registro->facturacion_id=$facturar->id;
+                $facturacion_registro->numero_serie=$request->get('numero_serie')[$index];
+                $facturacion_registro->producto_id=$cotizacion_facturacion->producto_id;
+                $facturacion_registro->stock=$cotizacion_facturacion->stock;
+                $facturacion_registro->promedio_original=$cotizacion_facturacion->promedio_original;
+                $facturacion_registro->precio=$cotizacion_facturacion->precio;
+                $facturacion_registro->cantidad=$cotizacion_facturacion->cantidad;
+                $facturacion_registro->descuento=$cotizacion_facturacion->descuento;
+                $facturacion_registro->precio_unitario_desc=$cotizacion_facturacion->precio_unitario_desc;
+                $facturacion_registro->comision=$cotizacion_facturacion->comision;
+                $facturacion_registro->precio_unitario_comi=$cotizacion_facturacion->precio_unitario_comi;
+                $facturacion_registro->save();
+            }
+
+
 
             // Creacion de Ventas Registros del Comisinista
             $cotizador=$request->get('id_cotizador');
@@ -640,11 +671,7 @@ class CotizacionController extends Controller
                  $comisionista->observacion='Viene del Cotizador';
                  $comisionista->save();
              }
-
-
             return redirect()->route('cotizacion.show',$id_cotizador);
-
-
         }
 
          public function boletear($id)
@@ -687,15 +714,36 @@ class CotizacionController extends Controller
             $cotizacion->save();
 
             // Creacion de Facturacion
-            $facturar=new Facturacion;
-            $facturar->codigo_fac=$request->get('codigo_fac');
-            $facturar->id_cotizador=$request->get('id_cotizador');
-            $facturar->orden_compra=$request->get('orden_compra');
-            $facturar->guia_remision=$request->get('guia_remision');
-            $facturar->fecha_emision=$request->get('fecha_emision');
-            $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
-            $facturar->estado='0';
-            $facturar->save();
+            $boletear=new Boleta;
+            // $boletear->codigo_fac=$request->get('codigo_bol');
+            $boletear->id_cotizador=$request->get('id_cotizador');
+            $boletear->orden_compra=$request->get('orden_compra');
+            $boletear->guia_remision=$request->get('guia_remision');
+            $boletear->fecha_emision=$request->get('fecha_emision');
+            $boletear->fecha_vencimiento=$request->get('fecha_vencimiento');
+            $boletear->estado='0';
+            $boletear->user_id =auth()->user()->id;
+            $boletear->save();
+
+            $buscador_id=Cotizacion::where('id',$boletear->id_cotizador)->first();
+
+            $cotizaciones_boletaciones=Cotizacion_boleta_registro::where('cotizacion_id',$buscador_id->id)->get();
+
+            foreach ($cotizaciones_boletaciones as $index => $cotizacion_boleta) {
+                $boleta_registro=new Boleta_registro;
+                $boleta_registro->boleta_id=$boletear->id;
+                $boleta_registro->numero_serie=$request->get('numero_serie')[$index];
+                $boleta_registro->producto_id=$cotizacion_boleta->producto_id;
+                $boleta_registro->stock=$cotizacion_boleta->stock;
+                $boleta_registro->promedio_original=$cotizacion_boleta->promedio_original;
+                $boleta_registro->precio=$cotizacion_boleta->precio;
+                $boleta_registro->cantidad=$cotizacion_boleta->cantidad;
+                $boleta_registro->descuento=$cotizacion_boleta->descuento;
+                $boleta_registro->precio_unitario_desc=$cotizacion_boleta->precio_unitario_desc;
+                $boleta_registro->comision=$cotizacion_boleta->comision;
+                $boleta_registro->precio_unitario_comi=$cotizacion_boleta->precio_unitario_comi;
+                $boleta_registro->save();
+            }
 
             // Creacion de Ventas Registros del Comisinista
             $cotizador=$request->get('id_cotizador');
@@ -718,6 +766,24 @@ class CotizacionController extends Controller
 
 
         }
+
+   public function aprobar(Request $request, $id)
+    {
+
+        $cotizacion=Cotizacion::find($id);
+        // $usuario=$cotizacion->user_id;
+
+        $cotizacion->estado_aprovar='1';
+        if (!isset($cotizacion->aprobado_por)) {
+           $cotizacion->aprobado_por=auth()->user()->id;
+        }
+
+        $cotizacion->save();
+
+        return redirect()->route('cotizacion.index');
+        // return redirect()->route('productos.index');
+
+    }
 
 
 }

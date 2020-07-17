@@ -12,11 +12,12 @@ Route::group(
 		Route::get('/' , 'ViewController@home')->name('inicio');
 
 		Route::resource('/almacen','AlmacenController');
+
 		Route::resource('/categoria','CategoriaController');
 		Route::resource('/vendedores','PersonalVentaController');
 		Route::put('vendedores/aprobar/{id}', 'PersonalVentaController@aprobar')->name('vendedores.aprobar');
 		Route::put('vendedores/procesado/{id}', 'PersonalVentaController@procesado')->name('vendedores.procesado');
-		
+
 		Route::put('vendedores/estado/{id}', 'PersonalVentaController@estado')->name('vendedores.estado');
 
 
@@ -32,7 +33,7 @@ Route::group(
 
 		Route::get('/cotizacion/create_boleta' , 'CotizacionController@create_boleta')->name('cotizacion.create_boleta');
 		Route::post('/cotizacion/store_boleta','CotizacionController@store_boleta')->name('cotizacion.store_boleta');
-		
+
 
 		//factura
 
@@ -55,10 +56,20 @@ Route::group(
 		Route::resource('/documento','DocumentoController');
 		Route::resource('/empresa','EmpresaController')->only(['index']);
 
-		Route::get('facturacion/boleta/{id}' , 'FacturacionController@show_boleta')->name('boleta');
-		Route::get('facturacion/create_boleta/' , 'FacturacionController@create_boleta')->name('create.boleta');
+		// Route::get('facturacion/boleta/{id}' , 'FacturacionController@show_boleta')->name('boleta');
+		// Route::get('facturacion/create_boleta/' , 'FacturacionController@create_boleta')->name('create.boleta');
 		Route::resource('/facturacion','FacturacionController');
-		
+		Route::resource('/boleta','BoletaController');
+
+		/*Guia Remision*/
+		Route::resource('/guia_remision','GuiaRemisionController');
+		Route::get('guias_remision/seleccionar', 'GuiaRemisionController@seleccionar')->name('guia_remision.seleccionar');
+		Route::put('cotizacion/aprobar/{id}', 'CotizacionController@aprobar')->name('cotizacion.aprobar');
+		Route::get('/guias_remision/creates/{id}' , 'GuiaRemisionController@cotizacion')->name('guias_remision.create');
+
+		/**/
+		Route::resource('/vehiculo','VehiculoController');
+
 		Route::resource('/familia','FamiliaController');
 
 		//Agregado rapido
@@ -66,7 +77,7 @@ Route::group(
 		Route::post('agregado_rapido/cliente','AgregadoRapidoController@cliente_store')->name('agregado_rapido.cliente_store');
 
 		Route::post('agregado_rapido/cliente/cotizacion','AgregadoRapidoController@cliente_cotizado')->name('agregado_rapido.cliente_cotizado');
-		
+
 		Route::post('agregado_rapido/personal_store','AgregadoRapidoController@personal_store')->name('agregado_rapido.personal_store');
 
 		//Garantias
@@ -133,6 +144,15 @@ Route::group(
 		Route::resource('/servicios','ServiciosController');
 		Route::resource('/transaccion-compra','TransaccionCompraController');
 		Route::resource('/unidad-medida','UnidadMedidaController');
+
+
+		//Usuarios
+		Route::get('/usuario/lista','UsuarioController@lista')->name('usuario.lista');
+		Route::get('usuario/crear/{id}','UsuarioController@crear')->name('usuario.crear');
+		Route::post('usuario/creacion/{guia}', 'UsuarioController@creacion')->name('usuario.creacion');
+		Route::post('usuario/desactivar/{id}', 'UsuarioController@desactivar')->name('usuario.desactivar');
+		Route::post('usuario/activar/{id}', 'UsuarioController@activar')->name('usuario.activar');
+		Route::get('usuario/permiso/{id}','UsuarioController@permiso')->name('usuario.permiso');
 		Route::resource('/usuario','UsuarioController');
 		Route::resource('/venta','VentaController');
 		Route::resource('/tipo_cambio','TipoCambioController');

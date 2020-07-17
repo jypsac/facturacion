@@ -6,6 +6,16 @@ use Illuminate\Http\Request;
 
 class AlmacenController extends Controller
 {
+
+    public function __construct(){
+        $this->middleware('permission:maestro-almacenes.index',['only' => ['index']]);
+        $this->middleware('permission:maestro-almacenes.create',['only' => ['create']]);
+        $this->middleware('permission:maestro-almacenes.store',['only' => ['store']]);
+        $this->middleware('permission:maestro-almacenes.show',['only' => ['show']]);
+        $this->middleware('permission:maestro-almacenes.edit',['only' => ['edit']]);
+        $this->middleware('permission:maestro-almacenes.update',['only' => ['update']]);
+        $this->middleware('permission:maestro-almacenes.destroy',['only' => ['destroy']]);
+    }
     /**
      * Display a listing of the resource.
      *

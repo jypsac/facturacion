@@ -36,6 +36,9 @@ class DatabaseSeeder extends Seeder
         $this->call(PersonalVentasTableSeeder::class);
         $this->call(VentasRegistroTableSeeder::class);
         $this->call(BancoTableSeeder::class);
-        
+        $this->call(VehiculostableSeeder::class);
+        $this->call(PermissionsTableSeeder::class);
+
+
     }
 }
