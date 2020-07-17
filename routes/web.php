@@ -11,7 +11,8 @@ Route::group(
 		// Route::view('/' , 'home')->name('inicio');
 		Route::get('/' , 'ViewController@home')->name('inicio');
 
-		Route::resource('/almacen','AlmacenController')->middleware('permission:almacen');
+		Route::resource('/almacen','AlmacenController');
+
 		Route::resource('/categoria','CategoriaController');
 		Route::resource('/vendedores','PersonalVentaController');
 		Route::put('vendedores/aprobar/{id}', 'PersonalVentaController@aprobar')->name('vendedores.aprobar');
