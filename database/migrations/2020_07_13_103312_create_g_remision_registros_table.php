@@ -25,7 +25,9 @@ class CreateGRemisionRegistrosTable extends Migration
             $table->unsignedBigInteger('guia_remision_id');
             $table->foreign('guia_remision_id')->references('id')->on('guia_remision')->onDelete('cascade');
 
+            $table->string('peso');
             $table->string('estado');
+
             $table->timestamps();
         });
     }
