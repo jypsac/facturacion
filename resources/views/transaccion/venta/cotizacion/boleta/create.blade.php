@@ -315,7 +315,7 @@
                                     <thead>
                                     <tr>
                                         <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-                                        <th style="width: 600px;font-size: 13px">Articulo</th>
+                                        <th style="width: 450px;font-size: 13px">Articulo</th>
                                         <th style="width: 100px;font-size: 13px">Stock</th>
                                         <th style="width: 100px;font-size: 13px">Cantidad</th>
                                         <th style="width: 100px;font-size: 13px">Precio</th>
@@ -352,12 +352,16 @@
                                         <td>
                                             <input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
                                         </td>
-                                        <td>
-                                            <input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
-                                            <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
-                                            <input type='hidden' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
-                                            <input type='text' id='descuento0' name='descuento[]' disabled="disabled" class="form-control" required  autocomplete="off"/>
-                                        </td>
+                                         <td>
+                                                                 <div style="position: relative; " > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
+                                                                 </div>
+                                                                 <div  class="div_check" > 
+                                                                     <input class="check"  type='checkbox' id='check0' name='check[]'    onclick="multi(0)" style="" autocomplete="off"/>
+                                                                 </div>
+
+                                                                 <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
+                                                                 <input type='hidden' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
+                                                             </td>
                                         <td>
                                             <input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" />
                                         </td>
@@ -438,6 +442,10 @@
         .form-control {
             border-radius: 10px
         }
+        .text_des{border-radius: 10px;border: 1px solid #e5e6e7;width: 80px;padding: 6px 12px;}
+                            .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
+                            .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
+                            .check:checked {background: #0375bd6b;}
     </style>
 
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

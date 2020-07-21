@@ -38,12 +38,12 @@
                     		</div> -->
 
                     		<label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
-                              <div class="col-sm-4"><input type="text" class="form-control" name="codigo_original" ></div>
+                              <div class="col-sm-4"><input type="text" class="form-control" name="codigo_original" required="required"></div>
 
                               <label class="col-sm-2 col-form-label">Categoria:</label>
                                <div class="col-sm-4">
-                                			<select class="form-control m-b" name="categoria_id" >
-			          						<option>Seleccione una Categoria</option>
+                                			<select class="form-control m-b" name="categoria_id" required="required">
+			          						{{-- <option>Seleccione una Categoria</option> --}}
 			          						@foreach($categorias as $categoria)
 					    					<option value="{{ $categoria->id }}">{{ $categoria->descripcion}}</option>
 					    					@endforeach
@@ -65,8 +65,8 @@
 
                   		 	<label class="col-sm-2 col-form-label">Marca:</label>
               					<div class="col-sm-10">
-               						 <select class="form-control m-b" name="marca_id">
-			          				<option>Seleccione una Marca</option>
+               						 <select class="form-control m-b" name="marca_id" required="required">
+			          				{{-- <option>Seleccione una Marca</option> --}}
 			          				@foreach($marcas as $marca)
 					    			<option value="{{ $marca->id }}">{{ $marca->nombre}}</option>
 					    			@endforeach
@@ -77,8 +77,8 @@
 							
                       			<label class="col-sm-2 col-form-label">Familia:</label>
                         		 <div class="col-sm-10">
-                         			<select class="form-control m-b" name="familia_id">
-			          				<option>Seleccione una Familia</option>
+                         			<select class="form-control m-b" name="familia_id" required="required">
+			          				{{-- <option>Seleccione una Familia</option> --}}
 			          				@foreach($familias as $familia)
 					    			<option value="{{ $familia->id }}">{{ $familia->descripcion}}</option>
 					    			@endforeach
@@ -101,13 +101,13 @@
                               <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto" required="required"></div>
 
                     			<label class="col-sm-2 col-form-label">Descripcion:</label>
-                              <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" ></textarea ></div>
+                              <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" required="required" ></textarea ></div>
 							</div>
 							<div class="row">
 								<label class="col-sm-2 col-form-label">Estado:</label>
                     				<div class="col-sm-4">
-                     					 <select class="form-control m-b" name="estado_id">
-			          							<option>Seleccione un Estado</option>
+                     					 <select class="form-control m-b" name="estado_id" required="required">
+			          							{{-- <option>Seleccione un Estado</option> --}}
 			          								@foreach($estados as $estado)
 					    						<option value="{{ $estado->id }}">{{ $estado->nombre}}</option>
 					    							@endforeach
@@ -116,8 +116,8 @@
 
                     			<label class="col-sm-2 col-form-label">Origen:</label>
                    				   <div class="col-sm-4">
-                   				   	<select class="form-control m-b" name="origen">
-			          							<option>Seleccione un Estado</option>
+                   				   	<select class="form-control m-b" name="origen" required>
+			          							{{-- <option>Seleccione un Estado</option> --}}
 			          							<option value="Producto Nacional" >Producto Nacional</option>
 			          							<option value="Producto Importado">Producto Importado</option>
 					    			</select>
@@ -142,7 +142,7 @@
                   						<div class="input-group-prepend">
                     						<span class="input-group-addon">%</span>
                   						</div>
-                  					<input type="text" class="form-control" name="descuento1" >
+                  					<input type="text" class="form-control" name="descuento1" required="required" value="0">
                 				</div>
                    			 </div>
 
@@ -152,7 +152,7 @@
                   					<div class="input-group-prepend">
                     					<span class="input-group-addon">%</span>
                  					 </div>
-                  					<input type="text" class="form-control" name="descuento2" >
+                  					<input type="text" class="form-control" name="descuento2" required="required" value="0">
                  				</div>
                   			  </div>
                     			
@@ -163,7 +163,7 @@
                   <div class="input-group-prepend">
                     <span class="input-group-addon">%</span>
                   </div>
-                  <input type="text" class="form-control" name="descuento_maximo" >
+                  <input type="text" class="form-control" name="descuento_maximo" required="required" value="0">
                 </div>
                     </div>
 
@@ -172,37 +172,51 @@
                   <div class="input-group-prepend">
                     <span class="input-group-addon">%</span>
                   </div>
-                 <input type="text" class="form-control" name="utilidad" >
+                 <input type="text" class="form-control" name="utilidad" required="required" value="0">
                 </div>
                     			
 						</div>
 					</div>
 					<div class="row">
 								 <label class="col-sm-2 col-form-label">Unida de medida:</label>
-                              <div class="col-sm-10">
+                              <div class="col-sm-4">
                               	<div class="input-group m-b">
-	                  				 <select class="form-control m-b" name="unidad_medida_id">
-										<option>Seleccione La Unidad de Medida</option>
+	                  				 <select class="form-control m-b" name="unidad_medida_id" required="required">
+										{{-- <option>Seleccione La Unidad de Medida</option> --}}
 										@foreach($unidad_medidas as $unidad_medida)
 										<option value="{{ $unidad_medida->id }}">{{ $unidad_medida->medida}}</option>
 										@endforeach
 									</select>
                					 </div>
                   			  </div>
-
+                    <label class="col-sm-2 col-form-label">Peso:</label>
+                              <div class="col-sm-2">
+                                <div class="input-group m-b">
+                             <input type="number" class="form-control" name="peso" required="required" value="0">
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="input-group m-b">
+                                  <select name="simbolo" class="form-control">
+                                    <option value="Gramos">Gramos</option>
+                                    <option value="Kilos">Kilos</option>
+                                    <option value="Toneladas">Toneladas</option>
+                                  </select>
+                                </div>
+                              </div>
                    			
                     			
 						</div>
 						<div class="row">
 								 <label class="col-sm-2 col-form-label">garantia:</label>
-                              <div class="col-sm-2"><input type="text" class="form-control" name="garantia" >
+                              <div class="col-sm-2"><input type="text" class="form-control" name="garantia" value="12 meses" >
                     		</div>
 
                    			<label class="col-sm-2 col-form-label">Stok Minimo:</label>
-                              <div class="col-sm-2"><input type="text" class="form-control" name="stock_minimo" >
+                              <div class="col-sm-2"><input type="text" class="form-control" name="stock_minimo" required="" value="0">
                     		</div>
                     		<label class="col-sm-2 col-form-label">Stock Maximo:</label>
-                              <div class="col-sm-2"><input type="text" class="form-control" name="stock_maximo" >
+                              <div class="col-sm-2"><input type="text" class="form-control" name="stock_maximo" required="" value="0" >
                     </div>
                     			
 						</div>
