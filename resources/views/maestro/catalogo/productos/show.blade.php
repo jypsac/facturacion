@@ -140,6 +140,12 @@
 	                  				 <input type="text" class="form-control" name="unidad_medida" value="{{$producto->unidad_i_producto->medida}}"  disabled="disabled">
                					 </div>
                   			  </div>
+                          <label class="col-sm-2 col-form-label">Peso:</label>
+                              <div class="col-sm-4">
+                                <div class="input-group m-b">
+                             <input type="text" class="form-control" name="peso" value="{{$producto->peso}}"  disabled="disabled">
+                         </div>
+                          </div>
 
                    			
                     			
