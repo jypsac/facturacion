@@ -140,7 +140,7 @@
 					</div>
 					<div class="row">
 								 <label class="col-sm-2 col-form-label">Unida de medida:</label>
-                              <div class="col-sm-10">
+                              <div class="col-sm-4">
                               	<div class="input-group m-b">
 	                  				 <select class="form-control m-b" name="unidad_medida_id">
 															<option value="{{$producto->unidad_i_producto->id}}" style="font-weight:bold">{{$producto->unidad_i_producto->medida}}</option>
@@ -150,6 +150,22 @@
 									</select>
                					 </div>
                   			  </div>
+                          <label class="col-sm-2 col-form-label">Peso:</label>
+                              <div class="col-sm-2">
+                                <div class="input-group m-b">
+                             <input type="number" class="form-control" name="peso" value="{{$peso}}">
+                                </div>
+                              </div>
+                              <div class="col-sm-2">
+                                <div class="input-group m-b">
+                                  <select name="simbolo" class="form-control">
+                                    <option value="{{$simbolo}}">{{$simbolo}}</option>
+                                    <option value="Kilos">Kilos</option>
+                                    <option value="Gramos">Gramos</option>
+                                    <option value="Toneladas">Toneladas</option>
+                                  </select>
+                                </div>
+                              </div>
 
                    			
                     			

@@ -138,13 +138,18 @@ class ProductosController extends Controller
     public function edit($id)
     {
         $producto=Producto::find($id);
+        $pro_peso=$producto->peso;
+
+        $simbolo = strstr($pro_peso, ' ',false);
+        $peso = strstr($pro_peso, ' ',true);
+
         $monedas=Moneda::all();
         $familias=Familia::all();
         $marcas=Marca::all();
         $estados=Estado::all();
         $categorias=Categoria::all();
         $unidad_medidas=Unidad_medida::all();
-        return view('maestro.catalogo.productos.edit',compact('unidad_medidas','categorias','marcas','estados','familias','monedas','producto'));
+        return view('maestro.catalogo.productos.edit',compact('unidad_medidas','categorias','marcas','estados','familias','monedas','producto','peso','simbolo'));
     }
 
     /**
@@ -165,6 +170,9 @@ class ProductosController extends Controller
             $name=$request->get('ori_foto');
         }
 
+        $peso=$request->get('peso');
+        $simbolo=$request->get('simbolo');
+
         $producto=Producto::find($id);
         $producto->nombre=$request->get('nombre');
         $producto->codigo_original=$request->get('codigo_original');
@@ -177,6 +185,7 @@ class ProductosController extends Controller
         $producto->utilidad=$request->get('utilidad');
         $producto->unidad_medida_id=$request->get('unidad_medida_id');
         $producto->garantia=$request->get('garantia');
+        $producto->peso=$peso.' '.$simbolo;
         $producto->stock_minimo=$request->get('stock_minimo');
         $producto->stock_maximo=$request->get('stock_maximo');
         $producto->foto=$name;
