@@ -62,6 +62,7 @@ class ProductosController extends Controller
         // categoria Abreviatura
         $categoria=$request->get('categoria_id');
         $id_igual=Categoria::where('id','=',$categoria)->first();
+        // return$id_igual;
 
         $nombre_cate=$id_igual->descripcion;
         $cate = substr($nombre_cate, 0, 1);
@@ -89,7 +90,8 @@ class ProductosController extends Controller
             $name="sin_foto.jpg";
         }
 
-        
+        $peso=$request->get('peso');
+        $simbolo=$request->get('simbolo');
 
         $producto=new Producto;
         $producto->codigo_producto=$codigo_producto;
@@ -107,6 +109,7 @@ class ProductosController extends Controller
         $producto->utilidad=$request->get('utilidad');
         $producto->unidad_medida_id=$request->get('unidad_medida_id');
         $producto->garantia=$request->get('garantia');
+        $producto->peso=$peso.' '.$simbolo;
         $producto->stock_minimo=$request->get('stock_minimo');
         $producto->stock_maximo=$request->get('stock_maximo');
         $producto->foto=$name;
