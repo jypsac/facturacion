@@ -225,7 +225,7 @@ class CotizacionController extends Controller
 
         if($count_articulo = $count_cantidad  = $count_check){
             for($i=0;$i<$count_articulo;$i++){
-                $cotizacion_registro=new Cotizacion_factura_registro();
+                $cotizacion_registro=new Cotizacion_factura_registro;
                 $cotizacion_registro->cotizacion_id=$cotizacion->id;
                 $cotizacion_registro->producto_id=$producto_id[$i];
 

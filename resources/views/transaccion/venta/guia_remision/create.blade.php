@@ -1,4 +1,4 @@
-    
+
 @extends('layout')
 
 @section('title', 'Guia Remision Agregar')
@@ -42,14 +42,14 @@
                             </address>
                         </div>
                         <div class="col-sm-4">
-                        </div> 
+                        </div>
 
                         <div class="col-sm-4 ">
                             <div class="form-control ruc" style="height: 125px">
                                 <center>
                                     <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
-                                    <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>   
-                                    <h5>BO11-0001213</h5>   
+                                    <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>
+                                    <h5>BO11-0001213</h5>
                                 </center>
 
                             </div>
@@ -120,7 +120,7 @@
                                 <input type='checkbox' class="case">
                             </td>
                             <td>
-                                <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)"  autocomplete="off">
+                                <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0)"  autocomplete="off">
                                 <datalist id="browsers2" >
                                     @foreach($productos as $index => $producto)
                                     <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}">
@@ -132,13 +132,13 @@
                                     <input type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
                                 </td>
                                 <td>
-                                    <input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
+                                    <input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"   required  autocomplete="off" />
                                 </td>
                                 <td>
-                                    <textarea name="" id="" class="form-control" placeholder="escanear N/S"></textarea>
+                                    <textarea name="series[]" id="series0" class="form-control" placeholder="escanear N/S"></textarea>
                                 </td>
                                 <td>
-                                    <input type="text" class="form-control" value="0" readonly="readonly">
+                                    <input id='peso0' name='peso[]' type="text" class="form-control" value="0" readonly="readonly">
                                 </td>
 
                                 <span id="spTotal"></span>
@@ -184,7 +184,7 @@
             <input type='checkbox' class='case'/>
             </td>";
             <td>
-            <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i})" autocomplete="off">
+            <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i})" autocomplete="off">
             <datalist id="browsers" >
             @foreach($productos as $index => $producto)
             <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}" >
@@ -193,13 +193,16 @@
             </td>
 
             <td>
-            <input type='text' id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
+                <input type='text' id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
             </td>
             <td>
-            <input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+                <input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control"  required  autocomplete="off"/>
             </td>
             <td>
-            <textarea name="" id="" class="form-control" placeholder="escanear N/S"></textarea>
+                <textarea  id='series${i}' name='series[]' class="form-control" placeholder="escanear N/S"></textarea>
+            </td>
+            <td>
+                <input id='peso${i}' name='peso[]' type="text" class="form-control" value="0"  readonly="readonly">
             </td>
 
 
@@ -209,137 +212,7 @@
         });
     </script>
 
-    <script>
-        function print(){
-            var print_input=1;
-            document.getElementById("prints").value = print_input;
-            var estado = document.querySelector("#prints").value;
-            // console.log(estado);
-        }
 
-        function comision(){
-
-            //comision
-            var comision=document.querySelector(`#comisionista`).value;
-            var separador=" ";
-            //revirtiendo la cadena
-            var reverse9=reverseString(comision);//devuelve toda la cadena articulo al reves
-            //para comision
-            var comision_v_r=reverse9.split(separador,1); //devuelve el precio en objeto al revez
-            var comision_r=comision_v_r[0];//obtiene el precio del objeto [0] al revez
-            var comision_v =reverseString(comision_v_r[0]);//convierte el precio al revez a la normalidad
-
-            var campos_num = document.getElementsByClassName("total").length;
-
-            console.log(comision_v);
-
-            document.getElementById(`comision0`).value = comision_v;
-
-            if(campos_num!=1){
-                for(var i=2;i<=campos_num;i++){
-                    document.getElementById(`comision${i}`).value = comision_v;
-                }
-            }
-            multi(0);
-            if(campos_num!=1){
-                for(var i=2;i<=campos_num;i++){
-                    multi(i);
-                }
-            }
-
-
-        }
-
-        function multi(a){
-
-
-            var total = 1;
-            var totales=0;
-            var change= false; //
-            $(`.monto${a}`).each(function(){
-                if (!isNaN(parseFloat($(this).val()))) {
-                    change= true;
-
-                    total *= parseFloat($(this).val());
-                }
-            });
-            total = (change)? total:0;
-
-            // Get the checkbox
-            var checkBox = document.getElementById(`check${a}`);
-            var cantidad = document.querySelector(`#cantidad${a}`).value;
-            var promedio_origina_descuento1=document.querySelector(`#precio_unitario_descuento${a}`).value;
-            var promedio_original2=document.querySelector(`#promedio_original${a}`).value;
-
-            if (checkBox.checked == true){
-                var descuento = document.querySelector(`#descuento${a}`).value;
-                var precio = document.querySelector(`#precio${a}`).value;
-                var promedio_original=document.querySelector(`#promedio_original${a}`).value;
-                var comision_porcentaje=document.querySelector(`#comision${a}`).value;
-                var multiplier = 100;
-                var precio_uni=precio-(promedio_original*descuento/100);
-                var precio_uni_dec=Math.round(precio_uni * multiplier) / multiplier;
-
-                document.getElementById(`check_descuento${a}`).value = descuento;
-                document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
-
-                var comisiones9=precio_uni_dec+(promedio_original*comision_porcentaje/100);
-                var comisiones=Math.round(comisiones9*multiplier)/multiplier;
-                document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
-
-                var final=comisiones*cantidad;
-                var final_decimal = Math.round(final * multiplier) / multiplier;
-                console.log(final_decimal);
-                document.getElementById(`total${a}`).value = final_decimal;
-            } else {
-                var multiplier = 100;
-                var descuento = 0;
-                var precio = document.querySelector(`#precio${a}`).value;
-                var comision_porcentaje=document.querySelector(`#comision${a}`).value;
-                var final= cantidad*precio;
-                var end9=parseFloat(precio)+(parseFloat(promedio_original2)*parseInt(comision_porcentaje)/100);
-
-                var end =Math.round(end9 * multiplier) / multiplier;
-                var final2=cantidad*end;
-                var final_decimal = Math.round(final2 * multiplier) / multiplier;
-
-                console.log("la promedio_origina_descuento1 es:"+  promedio_origina_descuento1);
-                console.log("la comision procentaje es:"+  comision_porcentaje);
-                console.log("la promedio_original2 procentaje es:"+   promedio_original2);
-                console.log("la end es:"+  end);
-
-                document.getElementById(`check_descuento${a}`).value = 0;
-                document.getElementById(`total${a}`).value = final_decimal;
-                document.getElementById(`precio_unitario_descuento${a}`).value = precio;
-                document.getElementById(`precio_unitario_comision${a}`).value = end;
-            }
-
-            var totalInp = $('[name="total"]');
-            var total_t = 0;
-
-            totalInp.each(function(){
-                total_t += parseFloat($(this).val());
-            });
-
-            var multiplier2 = 100;
-            var total_tt = Math.round(total_t * multiplier2) / multiplier2;
-
-            $('#sub_total').val(total_tt);
-
-            var igv_valor={{$igv->renta}};
-            var subtotal = document.querySelector(`#sub_total`).value;
-            var igv=subtotal*igv_valor/100;
-
-            var igv_decimal = Math.round(igv * multiplier2) / multiplier2;
-            var end=igv_decimal+parseFloat(subtotal);
-
-            var end2 = Math.round(end * multiplier2) / multiplier2;
-
-            document.getElementById("igv").value = igv_decimal;
-            document.getElementById("total_final").value = end2;
-
-        }
-    </script>
 
     <script>
         function reverseString(str) {
@@ -386,28 +259,10 @@
             console.log("el promedio original es: "+prom_v);
             console.log("el strock es: "+stock_v+"-------------")
 
-            document.getElementById(`precio${a}`).value = precio_v;
-            document.getElementById(`cantidad${a}`).value = 1;
-            document.getElementById(`precio_unitario_descuento${a}`).value = precio_v;
-            document.getElementById(`promedio_original${a}`).value = prom_v;
-            document.getElementById(`stock${a}`).value = stock_v;
-            document.getElementById(`descuento${a}`).value = descuento_v;
-            document.getElementById(`check_descuento${a}`).value =0;
 
-            //comision
-            var comision=document.querySelector(`#comisionista`).value;
-            //revirtiendo la cadena
-            var reverse9=reverseString(comision);//devuelve toda la cadena articulo al reves
-            //para comision
-            var comision_v_r=reverse9.split(separador,1); //devuelve el precio en objeto al revez
-            var comision_r=comision_v_r[0];//obtiene el precio del objeto [0] al revez
-            var comision_v =reverseString(comision_v_r[0]);//convierte el precio al revez a la normalidad
-            // console.log(comision_v);
-            if(comision){
-                document.getElementById(`comision${a}`).value = comision_v;
-            }else{
-                document.getElementById(`comision${a}`).value = 0;
-            }
+            document.getElementById(`stock${a}`).value = stock_v;
+
+
 
 
         }
