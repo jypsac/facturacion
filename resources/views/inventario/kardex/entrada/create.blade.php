@@ -106,7 +106,7 @@
 					 	<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Motivos:</label>
 							<div class="col-sm-4">
-								<select class="form-control" name="motivo">
+								<select class="form-control" name="motivo" required="required">
 									@foreach($motivos as $motivo)
 									<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
 									@endforeach
@@ -115,19 +115,19 @@
 
 							<label class="col-sm-2 col-form-label">G Remision:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="guia_remision">
+								<input type="text" class="form-control" name="guia_remision" required="required" value="0">
 							</div>
 						</div>
 
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Factura:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="factura">
+								<input type="text" class="form-control" name="factura" required="required" value="0">
 							</div>
 
 							<label class="col-sm-2 col-form-label"> Provedor:</label>
 							<div class="col-sm-4">
-								<select class="form-control" name="provedor">
+								<select class="form-control" name="provedor" required="required">
 									@foreach($provedores as $provedor)
 									<option value="{{$provedor->id}}" >{{$provedor->empresa}}</option>
 									@endforeach
@@ -147,7 +147,7 @@
 
 							<label class="col-sm-2 col-form-label"> Informaciones:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="informacion">
+								<input type="text" class="form-control" name="informacion" value="Ingreso de productos al almacen">
 							</div>
 						</div>
 						

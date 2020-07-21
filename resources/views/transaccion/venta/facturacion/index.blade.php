@@ -52,8 +52,20 @@
                                     <tr class="gradeX">
                                         <td>{{$facturacions->id}}</td>
                                         <td>{{$facturacions->codigo_fac}}</td>
+
+
+                                        @if(isset($facturacions->cliente_id)) <!-- Nombre del cliente -->
                                         <td>{{$facturacions->cliente->nombre}}</td>
+                                        @else
+                                        <td>{{$facturacions->cotizacion->cliente->nombre}}</td>
+                                        @endif
+
+                                        @if(isset($facturacions->cliente_id))<!-- documento del cliente -->
                                         <td>{{$facturacions->cliente->numero_documento}}</td>
+                                        @else
+                                        <td>{{$facturacions->cotizacion->cliente->numero_documento}}</td>
+                                        @endif
+
                                         <td>{{$facturacions->fecha_vencimiento }}</td>
                                         <td>
                                             <center>

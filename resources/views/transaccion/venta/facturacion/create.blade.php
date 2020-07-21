@@ -279,19 +279,29 @@
 
                                             <td>Guia remision</td>
                                             <td>:</td>
-                                            <td> <input type="text" class="form-control" value="0"></td>
+                                            <td> <input type="text" class="form-control" value="0" name="guia_r"></td>
 
                                             
                                         </tr>
                                         <tr>
-                                            <td>Observacion</td>
+                                            <td>Moneda</td>
                                             <td>:</td>
-                                            <td><textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
-                                            </td>
+                                            <td><select class="form-control" name="moneda" required="required">
+                                                    @foreach($moneda as $monedas)
+                                                    <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
+                                                    @endforeach
+                                                    <select></td>
 
                                             <td>Fecha</td>
                                             <td>:</td>
                                             <td><input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly"></td>
+                                        </tr>
+                                        <tr>
+                                            
+                                            <td>Observacion</td>
+                                            <td>:</td>
+                                            <td colspan="4"><textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
+                                            </td>
                                         </tr>
                                         </div>
                                         

@@ -203,7 +203,7 @@ class FacturacionController extends Controller
         $facturacion->fecha_emision=$request->get('fecha_emision');
         $facturacion->fecha_vencimiento=$nuevafechas;
         $facturacion->orden_compra=$request->get('orden_compra');
-        $facturacion->guia_remision=$request->get('guia_remision');
+        $facturacion->guia_remision=$request->get('guia_r');
         // if($comisionista!="" and $comisionista!="Sin comision - 0"){
         //     $facturacion->comisionista_id= $comisionista_buscador->id;
         // }
@@ -269,7 +269,9 @@ class FacturacionController extends Controller
     {
          $empresa=Empresa::first();
         $facturacion=Facturacion::find($id);
-       return view('transaccion.venta.facturacion.show', compact('facturacion','empresa'));
+        $facturacion_registro=Facturacion_registro::where('facturacion_id',$id)->get();
+        
+       return view('transaccion.venta.facturacion.show', compact('facturacion','empresa','facturacion_registro'));
     }
 
     public function show_boleta(Request $request,$id)
