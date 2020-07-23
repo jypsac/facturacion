@@ -1,26 +1,32 @@
- @extends('layout')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>facturacion</title>
 
- @section('title', 'Facturacion Ver')
- @section('breadcrumb', 'Facturacion')
- @section('breadcrumb2', 'Facturacion')
- @section('href_accion', route('facturacion.index'))
- @section('value_accion', 'Atras')
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
- @section('content')
- <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="ibox-title">
-            <div class="ibox-tools">
-                <style type="text/css">
-                    .procesado:before {
-                        content: "Procesado";
-                    }
-                    .procesado:hover:before {
-                        content: "Ver";
-                    }
-                </style>
-                <a class="btn btn-success"  href="{{route('facturacion.print' , $facturacion->id)}}" target="_blank">Imprimir</a>
-            </div>
-        </div>
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <!-- <script src="@yield('vue_js', '#')" defer></script> -->
+
+    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
+
+    <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    {{-- FUNCION CERRAR AUTOMATICAMENTE --}}
+    <SCRIPT LANGUAGE="JavaScript">
+        function cerrar() {
+        window.close();
+        }
+    </SCRIPT>
+
+</head>
+<body class="white-bg" onLoad="setTimeout('cerrar()',1*1000)">
 
  <div class="row">
     <div class="col-lg-12">
@@ -207,24 +213,44 @@
 
 </div>
 
-<style type="text/css">
-    .ruc{border-radius: 10px; height: 150px;}
-    .form-control{border-radius: 10px;}
-    .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
-
-</style>
-<!-- Mainly scripts -->
-<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-<script src="{{ asset('js/popper.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.js') }}"></script>
-<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-<script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
-<script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
-<!-- Custom and plugin javascript -->
-<script src="{{ asset('js/inspinia.js') }}"></script>
-<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
 
-@endsection
+
+    <style type="text/css">
+        .form-control{border-radius: 10px; height: auto;}
+        .ibox-tools a{color: white !important}
+        .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
+        .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {border-top-width: 0px;}
+    </style>
+
+    <!-- Mainly scripts -->
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+    <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="{{ asset('js/inspinia.js') }}"></script>
+    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+
+    <style type="text/css">
+        .form-control{border-radius: 10px; height: 150px;}
+    </style>
+    <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+
+    {{-- IMPRIMIR --}}
+    <script type="text/javascript">
+        window.print();
+    </script>
+</body>
+</html>
