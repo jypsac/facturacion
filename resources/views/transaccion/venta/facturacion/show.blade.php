@@ -11,7 +11,7 @@
  @if (isset($facturacion->cotizacion))
 
  <div class="wrapper wrapper-content animated fadeInRight">
-    <!-- 
+    <!--
      <form action="{{route('cotizacion.facturar_store')}}"  enctype="multipart/form-data" method="post">
         @csrf -->
         <div class="row">
@@ -26,14 +26,14 @@
                             </address>
                         </div>
                         <div class="col-sm-4">
-                        </div> 
+                        </div>
 
                         <div class="col-sm-4 ">
                             <div class="form-control ruc" style="height: 125px">
                                 <center>
                                     <h3 style="padding-top:10px ">RUC : {{$empresa->ruc}}</h3>
-                                    <h2>FACTURA ELECTRONICA</h2>   
-                                    <h5> {{$facturacion->codigo_fac}}</h5>   
+                                    <h2>FACTURA ELECTRONICA</h2>
+                                    <h5> {{$facturacion->codigo_fac}}</h5>
 
                                 </center>
 
@@ -80,7 +80,7 @@
                                 @endif
                             </tr>
                         </thead>
-                    </table> 
+                    </table>
 
                     <br>
 
@@ -103,10 +103,10 @@
 
 
                             @foreach($facturacion_registro as $facturacion_registros)
-                                <tr> 
+                                <tr>
                                  <td>{{$facturacion_registros->id}}"</td>
                              </tr>
-                            @endforeach                                       
+                            @endforeach
 
 
 
@@ -169,7 +169,7 @@
                                 </tbody>
                             </table>
                         </div><!-- /table-responsive -->
-<!-- 
+<!--
    <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp; -->
 </div>
 </div>
@@ -180,7 +180,7 @@
 </div>
 @else
 <div class="wrapper wrapper-content animated fadeInRight">
-    <!-- 
+    <!--
      <form action="{{route('cotizacion.facturar_store')}}"  enctype="multipart/form-data" method="post">
         @csrf -->
         <div class="row">
@@ -195,14 +195,14 @@
                             </address>
                         </div>
                         <div class="col-sm-4">
-                        </div> 
+                        </div>
 
                         <div class="col-sm-4 ">
                             <div class="form-control ruc" style="height: 125px">
                                 <center>
                                     <h3 style="padding-top:10px ">RUC : {{$empresa->ruc}}</h3>
-                                    <h2>FACTURA ELECTRONICA</h2>   
-                                    <h5> {{$facturacion->codigo_fac}}</h5>   
+                                    <h2>FACTURA ELECTRONICA</h2>
+                                    <h5> {{$facturacion->codigo_fac}}</h5>
 
                                 </center>
 
@@ -244,7 +244,7 @@
                                 <td>{{$facturacion->moneda->nombre }}</td>
                             </tr>
                         </thead>
-                    </table> 
+                    </table>
 
                     <br>
 
@@ -267,81 +267,59 @@
 
                                 <tr>
                                     @foreach($facturacion_registro as $facturacion_registros)
-                                <tr> 
-                                 <td>{{$facturacion_registros->producto->codigo_producto}}</td>
-                                 <td>{{$facturacion_registros->cantidad}}</td>
-                                 <td>{{$facturacion_registros->cantidad}}</td>
-                                 <td>{{$facturacion_registros->producto->nombre}} <br><strong>N/S:</strong> {{$facturacion_registros->numero_serie}}</td>
-                                 <td>{{$facturacion_registros->precio}}</td>
-                                 <td>{{$facturacion_registros->descuento}}%</td>
-                                 <td>{{$facturacion_registros->precio_unitario_desc}}</td>
-                                 <td>{{$facturacion_registros->precio_unitario_desc * $facturacion_registros->cantidad }}</td>
-                                 
+                                <tr>
+                                    <td>{{$facturacion_registros->producto->codigo_producto}}</td>
+                                    <td>{{$facturacion_registros->cantidad}}</td>
+                                    <td>{{$facturacion_registros->cantidad}}</td>
+                                    <td>{{$facturacion_registros->producto->nombre}} <br><strong>N/S:</strong> {{$facturacion_registros->numero_serie}}</td>
+                                    <td>{{$facturacion_registros->precio}}</td>
+                                    <td>{{$facturacion_registros->descuento}}%</td>
+                                    <td>{{$facturacion_registros->precio_unitario_desc}}</td>
+                                    <td>{{$facturacion_registros->precio_unitario_desc * $facturacion_registros->cantidad }}</td>
+                                    <td style="display: none">
+                                        {{$sub_total=($facturacion_registros->cantidad*$facturacion_registros->precio_unitario_desc)+$sub_total}}
+                                        {{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                        {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                    </td>
                              </tr>
-                            @endforeach                                       
+                            @endforeach
                                 </tr>
 
 
-                                <tr>
-                                    <td colspan="6" rowspan="4">
-                                        <div class="row">
-                                            <div class="col-lg-2" align="center">
-                                               <img src="https://www.codigos-qr.com/qr/php/qr_img.php?d=https%3A%2F%2Fwww.jypsac.com%2F&s=6&e=m" alt="Generador de Códigos QR Codes" height="150px" />
-                                           </div>
-                                           <div class="col-lg-10" align="center">
-                                              Representacion impresa de la Factura electrónica Puede ser <br>consultada en https://cloud.horizontcpe.com/ConsultaComprobanteE/<br> Autorizado mediante la Resolución de intendencia N° <br>0340050001931/SUNAT/SUNAT
+                            <tr>
+                                <td colspan="6" rowspan="4">
+                                    <div class="row">
+                                        <div class="col-lg-2" align="center">
+                                           <img src="https://www.codigos-qr.com/qr/php/qr_img.php?d=https%3A%2F%2Fwww.jypsac.com%2F&s=6&e=m" alt="Generador de Códigos QR Codes" height="150px" />
+                                        </div>
+                                        <div class="col-lg-10" align="center">
+                                          Representacion impresa de la Factura electrónica Puede ser <br>consultada en https://cloud.horizontcpe.com/ConsultaComprobanteE/<br> Autorizado mediante la Resolución de intendencia N° <br>0340050001931/SUNAT/SUNAT
 
-                                          </div>
-                                      </div>
+                                        </div>
+                                    </div>
 
-                                  </td>
-
-                                  <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
-                                  <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                    S/.
                                 </td>
+
+                                <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
+                                <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">S/.{{round($sub_total, 2)}}</td>
 
                             </tr>
                             <tr>
-                                        <!-- <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td> -->
-                                        <td style="background: #f3f3f4;">Op. Gravada</td>
-                                        <td style="background: #f3f3f4;">
-                                            S/.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                       <!--  <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td> -->
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">IGV</td>
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                            S/.
-                                        </td>
-                                    </tr>
-                                    <tr >
-                                        <!-- <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td> -->
-                                        <td  style="background: #f3f3f4;">Importe Total</td>
-                                        <td  style="background: #f3f3f4;">
-                                            S/.
-                                        </td>
-                                    </tr>
+                                <td style="background: #f3f3f4;">Op. Gravada</td>
+                                <td style="background: #f3f3f4;">S/.0</td>
+                            </tr>
+                            <tr>
+                                <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">IGV</td>
+                                <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">S/.{{round($igv_p, 2)}}</td>
+                            </tr>
+                            <tr >
+                                <td  style="background: #f3f3f4;">Importe Total</td>
+                                <td  style="background: #f3f3f4;">S/.{{$end}}</td>
+                            </tr>
                                 </tbody>
                             </table>
                         </div><!-- /table-responsive -->
-<!-- 
+<!--
    <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp; -->
 </div>
 </div>
@@ -349,7 +327,7 @@
 </div>
 
 <!-- </form> -->
-</div>  
+</div>
 @endif
 
 <style type="text/css">

@@ -145,6 +145,15 @@ class GuiaRemisionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function print($id){
+        $guia_remision=Guia_remision::find($id);
+        $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
+        $banco=Banco::all();
+        $empresa=Empresa::first();
+
+        return view('transaccion.venta.guia_remision.print',compact('empresa','banco','guia_remision','guia_registro'));
+    }
+
     public function show($id)
     {
         $guia_remision=Guia_remision::find($id);
@@ -196,7 +205,6 @@ class GuiaRemisionController extends Controller
 
     }
     public function cotizacion($id)
-
     {
 
         $cotizacion=Cotizacion::find($id);
@@ -216,4 +224,6 @@ class GuiaRemisionController extends Controller
         $igv=Igv::first();
         return view('transaccion.venta.guia_remision.create_2',compact('cotizacion','productos','clientes','array','array_cantidad','igv','array_promedio','empresa','cotizacion_registro','vehiculo'));
     }
+
+
 }

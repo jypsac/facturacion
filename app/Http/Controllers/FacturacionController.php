@@ -267,11 +267,14 @@ class FacturacionController extends Controller
      */
     public function show($id)
     {
-         $empresa=Empresa::first();
+        $empresa=Empresa::first();
         $facturacion=Facturacion::find($id);
         $facturacion_registro=Facturacion_registro::where('facturacion_id',$id)->get();
-        
-       return view('transaccion.venta.facturacion.show', compact('facturacion','empresa','facturacion_registro'));
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+
+       return view('transaccion.venta.facturacion.show', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total'));
     }
 
     public function show_boleta(Request $request,$id)

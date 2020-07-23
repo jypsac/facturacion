@@ -62,10 +62,15 @@ Route::group(
 		Route::resource('/boleta','BoletaController');
 
 		/*Guia Remision*/
+		Route::get('/guia_remision/print/{id}' , 'GuiaRemisionController@print')->name('guia_remision.print');
 		Route::resource('/guia_remision','GuiaRemisionController');
+
+
+
 		Route::get('guias_remision/seleccionar', 'GuiaRemisionController@seleccionar')->name('guia_remision.seleccionar');
 		Route::put('cotizacion/aprobar/{id}', 'CotizacionController@aprobar')->name('cotizacion.aprobar');
 		Route::get('/guias_remision/creates/{id}' , 'GuiaRemisionController@cotizacion')->name('guias_remision.create');
+		// Route::get('/guia_remision/print/{id}' , 'GuiaRemisionController@print')->name('guias_remision.print');
 
 		/**/
 		Route::resource('/vehiculo','VehiculoController');

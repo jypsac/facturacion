@@ -1,27 +1,35 @@
- @extends('layout')
 
- @section('title', 'Guia Remision Ver')
- @section('breadcrumb', 'Guia Remision')
- @section('breadcrumb2', 'Guia Remision')
- @section('href_accion', route('guia_remision.index'))
- @section('value_accion', 'Atras')
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+    <title>Cotizador</title>
 
- @section('content')
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+    <!-- <script src="@yield('vue_js', '#')" defer></script> -->
+
+    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
+
+    <link href="{{asset('css/plugins/awesome-bootstrap-checkbox/awesome-bootstrap-checkbox.css')}}" rel="stylesheet">
+    {{-- FUNCION CERRAR AUTOMATICAMENTE --}}
+    <SCRIPT LANGUAGE="JavaScript">
+        function cerrar() {
+        window.close();
+        }
+    </SCRIPT>
+
+</head>
+<body class="white-bg" onLoad="setTimeout('cerrar()',1*1000)">
  <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="ibox-title">
-            <div class="ibox-tools">
-                <style type="text/css">
-                    .procesado:before {
-                        content: "Procesado";
-                    }
-                    .procesado:hover:before {
-                        content: "Ver";
-                    }
-                </style>
-                <a class="btn btn-success"  href="{{route('guia_remision.print' , $guia_remision->id)}}" target="_blank">Imprimir</a>
-            </div>
-        </div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
@@ -114,7 +122,7 @@
 
                         </footer>
 
-                        <div class="row">
+                        {{-- <div class="row">
                             <div class="col-sm-3 ">
                                 <p class="form-control a"> Sub Total</p>
                                 <p class="form-control a"> S/.0</p>
@@ -131,7 +139,7 @@
                                 <p class="form-control a"> Importe Total</p>
                                 <p class="form-control a"> S/.</p>
                             </div>
-                        </div>
+                        </div> --}}
 
 
                         <br>
@@ -199,4 +207,21 @@
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
 
-    @endsection
+ <style type="text/css">
+    .form-control{border-radius: 10px; height: 150px;}
+</style>
+ <script src="js/jquery-3.1.1.min.js"></script>
+    <script src="js/popper.min.js"></script>
+    <script src="js/bootstrap.js"></script>
+    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
+
+    <!-- Custom and plugin javascript -->
+    <script src="js/inspinia.js"></script>
+
+    {{-- IMPRIMIR --}}
+    <script type="text/javascript">
+        window.print();
+    </script>
+</body>
+</html>
+
