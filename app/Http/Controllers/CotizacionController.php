@@ -2,28 +2,27 @@
 
 namespace App\Http\Controllers;
 
-use App\Cotizacion;
-use App\Marcas;
-use App\Producto;
-use App\Cliente;
-use App\Forma_pago;
-use App\Personal;
-use App\Moneda;
-use App\Empresa;
-use App\Cotizacion_factura_registro;
-use App\Cotizacion_boleta_registro;
-use App\kardex_entrada_registro;
-use App\Facturacion;
-use App\Boleta;
-use App\Igv;
-use App\Ventas_registro;
-use App\User;
 use App\Banco;
-use App\Personal_venta;
-use App\Unidad_medida;
-use App\Facturacion_registro;
+use App\Boleta;
 use App\Boleta_registro;
-
+use App\Cliente;
+use App\Cotizacion;
+use App\Cotizacion_boleta_registro;
+use App\Cotizacion_factura_registro;
+use App\Empresa;
+use App\Facturacion;
+use App\Facturacion_registro;
+use App\Forma_pago;
+use App\Igv;
+use App\Marcas;
+use App\Moneda;
+use App\Personal;
+use App\Personal_venta;
+use App\Producto;
+use App\Unidad_medida;
+use App\User;
+use App\Ventas_registro;
+use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
 
 class CotizacionController extends Controller
@@ -502,6 +501,7 @@ class CotizacionController extends Controller
 
     public function show($id)
     {
+        $facturacion=Facturacion::where('id_cotizador',$id)->first();
         $banco=Banco::where('estado','0')->get();
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
@@ -519,7 +519,7 @@ class CotizacionController extends Controller
 
         $regla=$cotizacion->tipo;
 
-         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco'));
+         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion'));
     }
 
     /**

@@ -29,6 +29,7 @@ class CreateEmpresaTable extends Migration
             $table->string('rubro');
             $table->string('moneda_principal');
             $table->text('descripcion');
+            $table->text('pagina_web');
             $table->string('foto');
             $table->timestamps();
         });

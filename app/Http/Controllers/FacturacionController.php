@@ -273,8 +273,9 @@ class FacturacionController extends Controller
         $sum=0;
         $igv=Igv::first();
         $sub_total=0;
+        $banco=Banco::all();
 
-       return view('transaccion.venta.facturacion.show', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total'));
+       return view('transaccion.venta.facturacion.show', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
     }
 
     public function show_boleta(Request $request,$id)

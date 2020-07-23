@@ -27,6 +27,7 @@ class CreateGuiaRemisionTable extends Migration
             $table->string('conductor_id')->nullable();
             $table->string('estado_anulado');
             $table->string('estado_registrado');  
+            $table->string('motivo_traslado')->nullable(); 
             
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');  
