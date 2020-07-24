@@ -58,8 +58,9 @@ Route::group(
 
 		// Route::get('facturacion/boleta/{id}' , 'FacturacionController@show_boleta')->name('boleta');
 		// Route::get('facturacion/create_boleta/' , 'FacturacionController@create_boleta')->name('create.boleta');
-		Route::get('/facturacion/print{id}','FacturacionController@print')->name('facturacion.print');
+		Route::get('/facturacion/print/{id}','FacturacionController@print')->name('facturacion.print');
 		Route::resource('/facturacion','FacturacionController');
+		Route::get('/boleta/print/{id}','BoletaController@print')->name('boleta.print');
 		Route::resource('/boleta','BoletaController');
 
 		/*Guia Remision*/
