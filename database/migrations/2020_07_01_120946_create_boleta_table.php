@@ -16,6 +16,7 @@ class CreateBoletaTable extends Migration
         Schema::create('boleta', function (Blueprint $table) {
             $table->bigIncrements('id');
 
+            $table->string('codigo_boleta');
             $table->string('orden_compra')->nullable();
             $table->string('guia_remision')->nullable();
 

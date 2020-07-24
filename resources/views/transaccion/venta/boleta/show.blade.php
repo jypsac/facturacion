@@ -1,337 +1,216 @@
  @extends('layout')
 
-@section('title', 'Facturacion Ver')
-@section('breadcrumb', 'Facturacion')
-@section('breadcrumb2', 'Facturacion')
-@section('href_accion', route('facturacion.index'))
-@section('value_accion', 'Atras')
+ @section('title', 'Boleta Ver')
+ @section('breadcrumb', 'Boleta')
+ @section('breadcrumb2', 'Boleta')
+ @section('href_accion', route('boleta.index'))
+ @section('value_accion', 'Atras')
 
-@section('content')
-@if($facturacion->cotizacion->cliente->documento_identificacion== 'RUC'|| $facturacion->cotizacion->cliente->documento_identificacion== 'Ruc'||
-$facturacion->cotizacion->cliente->documento_identificacion== 'ruc')
- <div class="wrapper wrapper-content animated fadeInRight">
-    <!-- 
-     <form action="{{route('cotizacion.facturar_store')}}"  enctype="multipart/form-data" method="post">
-                            @csrf -->
+ @section('content')
+ <div class="row">
+    <div class="col-lg-12">
+        <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
             <div class="row">
-            <div class="col-lg-12">
-                    <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
-                            <div class="row">
-                                <div class="col-sm-4 text-left" align="left">
-                                    
-                                    <address class="col-sm-4" align="left">
-                                        
-                                        <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
-                                    </address>
-                                </div>
-                                <div class="col-sm-4">
-                                </div> 
+                <div class="col-sm-4 text-left" align="left">
 
-                                <div class="col-sm-4 ">
-                                    <div class="form-control ruc" style="height: 125px">
-                                        <center>
-                                            <h3 style="padding-top:10px ">RUC : {{$empresa->ruc}}</h3>
-                                            <h2>FACTURA ELECTRONICA</h2>   
-                                            <h5> {{$facturacion->codigo_fac}}</h5>   
+                    <address class="col-sm-4" align="left">
 
-                                        </center>
-                                    
-                                    </div>
-                                </div>
-                            </div><br>
-
-                            <table class="table ">
-                                    <thead>
-
-                                <tr>
-    <td style="width: 170px"><b>Razon Social</b></td><td style="width: 3px">:</td>
-    <td  colspan="4">{{$facturacion->cotizacion->cliente->nombre}}</td>
-
-    <td style="width: 100px"><b>RUC</b></td><td style="width: 3px">:</td><td  style="width: 150px">{{$facturacion->cotizacion->cliente->numero_documento}}</td>
-                                </tr>
-                                <tr>
-    <td><b>Direccion</b></td><td style="width: 3px">:</td>
-    <td colspan="4">{{$facturacion->cotizacion->cliente->direccion}}</td>
-
-    <td><b>Orden de Compra</b></td><td>:</td>
-    <td> {{$facturacion->orden_compra}}</td>
-                                </tr>
-                                <tr>
-    <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td>
-    <td colspan="4">{{$facturacion->cotizacion->forma_pago->nombre }}</td>
-
-    <td><b>Guia Remision</b></td><td style="width: 3px">:</td>
-    <td> {{$facturacion->guia_remision}}</td>
-                                </tr>
-                                 <tr>
-    <td><b>Fecha Emision</b></td><td style="width: 3px">:</td>
-    <td>{{$facturacion->cotizacion->fecha_emision}}</td>
-
-    <td ><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td>
-    <td >{{$facturacion->cotizacion->fecha_vencimiento }}</td>
-
-    <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td>
-    <td>{{$facturacion->cotizacion->moneda->nombre }}</td>
-                                </tr>
-                                    </thead>
-                            </table> 
-
-                            <br>
-                           
-                            <div class="table-responsive">
-                                <table class="table ">
-                                    <thead>
-                                    <tr>
-                                        <th >Codigo Producto</th>
-                                        <th >Cantidad</th>
-                                        <th >Unidad</th>
-                                        <th >Descripción</th>
-                                        <th >Valor Unitario</th>
-                                        <th>Dscto.%</th>
-                                        <th>Precio Unitario</th>
-                                        <th>Valor Venta </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    
-                                     
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>                                        
-                                    </tr>
-
-                                        
-                                      <tr>
-                                        <td colspan="6" rowspan="4">
-                                            <div class="row">
-                                                <div class="col-lg-2" align="center">
-                                                 <img src="https://www.codigos-qr.com/qr/php/qr_img.php?d=https%3A%2F%2Fwww.jypsac.com%2F&s=6&e=m" alt="Generador de Códigos QR Codes" height="150px" />
-                                                </div>
-                                                <div class="col-lg-10" align="center">
-                                                  Representacion impresa de la Factura electrónica Puede ser <br>consultada en https://cloud.horizontcpe.com/ConsultaComprobanteE/<br> Autorizado mediante la Resolución de intendencia N° <br>0340050001931/SUNAT/SUNAT
-
-                                                </div>
-                                            </div>
-
-                                        </td>
-                                       
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">Sub Total</td>
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                            S/.
-                                        </td>
-
-                                    </tr>
-                                    <tr>
-                                        <!-- <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td> -->
-                                        <td style="background: #f3f3f4;">Op. Gravada</td>
-                                        <td style="background: #f3f3f4;">
-                                            S/.
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                       <!--  <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td> -->
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">IGV</td>
-                                        <td style="background: #4f4f4f73;color:white;border-left:1px solid #26262682">
-                                            S/.
-                                        </td>
-                                    </tr>
-                                    <tr >
-                                        <!-- <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td> -->
-                                        <td  style="background: #f3f3f4;">Importe Total</td>
-                                        <td  style="background: #f3f3f4;">
-                                            S/.
-                                        </td>
-                                    </tr>
-                                    </tbody>
-                                </table>
-                            </div><!-- /table-responsive -->
-<!-- 
-                             <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp; -->
-                        </div>
+                        <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
+                    </address>
                 </div>
-                
-            </div>
+                <div class="col-sm-4">
+                </div>
 
-                        <!-- </form> -->
-        </div>
-@else
+                <div class="col-sm-4 ">
+                    <div class="form-control ruc" style="height: 125px">
+                        <center>
+                            <h3 style="padding-top:10px ">RUC : {{$empresa->ruc}}</h3>
+                            <h2>BOLETA ELECTRONICA</h2>
+                            <h5> {{$boleta->codigo_boleta}}</h5>
 
- <div class="wrapper wrapper-content animated fadeInRight">
-    <!-- 
-     <form action="{{route('cotizacion.facturar_store')}}"  enctype="multipart/form-data" method="post">
-                            @csrf -->
+                        </center>
+
+                    </div>
+                </div>
+            </div><br>
+
+            <table class="table ">
+                <tbody>
+
+                    <tr>
+                        <td ><b>Señor(es)</b></td><td style="width: 3px">:</td>
+                        <td  colspan="3">
+                            @if(isset($boleta->cliente_id)){{$boleta->cliente->nombre}}
+                            @else{{$boleta->cotizacion->cliente->nombre}}
+                            @endif
+                        </td>
+
+                        <td><b>RUC</b></td><td style="width: 3px">:</td>
+                        <td colspan="4" >
+                            @if(isset($boleta->cliente_id)){{$boleta->cliente->numero_documento}}
+                            @else{{$boleta->cotizacion->cliente->numero_documento}}
+                            @endif
+                        </td>
+                    </tr>
+                    <tr>
+                        <td><b>Direccion</b></td><td style="width: 3px">:</td>
+                        <td colspan="3">
+                            @if(isset($boleta->cliente_id)){{$boleta->cliente->direccion}}
+                            @else{{$boleta->cotizacion->cliente->direccion}}
+                            @endif
+                        </td>
+
+                        <td><b>Orden de Compra</b></td><td>:</td>
+                        <td colspan="4" >
+                        {{$boleta->orden_compra}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td>
+                        <td colspan="3">
+                            @if(isset($boleta->cliente_id)){{$boleta->forma_pago->nombre }}
+                            @else{{$boleta->cotizacion->forma_pago->nombre }}
+                            @endif
+                        </td>
+
+                        <td><b>Guia Remision</b></td><td style="width: 3px">:</td>
+                        <td> {{$boleta->guia_remision}}</td>
+                    </tr>
+                    <tr>
+                        <td><b>Fecha Emision</b></td><td style="width: 3px">:</td>
+                        <td colspan="3">{{$boleta->fecha_emision}}</td>
+
+                        <td ><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td>
+                        <td >{{$boleta->fecha_vencimiento }}</td>
+
+                        <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td>
+                        <td>@if(isset($boleta->cliente_id)){{$boleta->moneda->nombre }}
+                            @else{{$boleta->cotizacion->moneda->nombre }}
+                            @endif
+                        </td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <br>
+
+            <div class="table-responsive">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th>ITEM</th>
+                            <th>Codigo Producto</th>
+                            <th>Cantidad</th>
+                            <th>Unid.Medida</th>
+                            <th>Descripción</th>
+                            <th>Valor Unitario</th>
+                            <th>Dscto.%</th>
+                            <th>Precio Unitario</th>
+                            <th>Valor Venta </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        <tr>
+                            @foreach($boleta_registro as $boleta_registros)
+                            <span hidden="hidden">{{$i=1}} </span>
+                            <tr>
+                                <td>{{$i}} </td>
+                                <td>{{$boleta_registros->producto->codigo_producto}}</td>
+                                <td>{{$boleta_registros->cantidad}}</td>
+                                <td>{{$boleta_registros->producto->unidad_i_producto->medida}}</td>
+                                <td>{{$boleta_registros->producto->nombre}} <br><strong>N/S:</strong> {{$boleta_registros->numero_serie}}</td>
+                                <td>{{$boleta_registros->precio}}</td>
+                                <td>{{$boleta_registros->descuento}}%</td>
+                                <td>{{$boleta_registros->precio_unitario_desc}}</td>
+                                <td>{{$boleta_registros->precio_unitario_desc * $boleta_registros->cantidad }}</td>
+                                <td style="display: none">{{$sub_total=($boleta_registros->cantidad*$boleta_registros->precio)-($boleta_registros->cantidad*$boleta_registros->precio*$boleta_registros->descuento/100)+$sub_total}}
+                                        S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                        {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                    </td>
+                            </tr>
+                            <span hidden="hidden">{{$i++}}</span>
+                            @endforeach
+                        </tr>
+                    </tbody>
+                </table>
+            </div><br><br><br><br>
             <div class="row">
-            <div class="col-lg-12">
-                    <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
-                            <div class="row">
-                                <div class="col-sm-4 text-left" align="left">
-                                    
-                                    <address class="col-sm-4" align="left">
-                                        
-                                        <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
-                                    </address>
-                                </div>
-                                <div class="col-sm-4">
-                                </div> 
-
-                                <div class="col-sm-4 ">
-                                    <div class="form-control ruc" style="height: 125px">
-                                        <center>
-                                            <h3 style="padding-top:10px ">RUC : {{$empresa->ruc}}</h3>
-                                            <h2>BOLETA ELECTRONICA</h2>   
-                                            <h5> {{$facturacion->codigo_fac}}</h5>   
-
-                                        </center>
-                                    
-                                    </div>
-                                </div>
-                            </div><br>
-
-                            <table class="table ">
-                                    <thead>
-
-                                <tr>
-    <td style="width: 170px"><b>Razon Social</b></td><td style="width: 3px">:</td>
-    <td  colspan="4">{{$facturacion->cotizacion->cliente->nombre}}</td>
-
-    <td style="width: 100px"><b>{{$facturacion->cotizacion->cliente->documento_identificacion}}</b></td><td style="width: 3px">:</td><td  style="width: 150px">{{$facturacion->cotizacion->cliente->numero_documento}}</td>
-                                </tr>
-                                <tr>
-    <td><b>Direccion</b></td><td style="width: 3px">:</td>
-    <td colspan="4">{{$facturacion->cotizacion->cliente->direccion}}</td>
-
-    <td><b>Orden de Compra</b></td><td>:</td>
-    <td> {{$facturacion->orden_compra}}</td>
-                                </tr>
-                                <tr>
-    <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td>
-    <td colspan="4">{{$facturacion->cotizacion->forma_pago->nombre }}</td>
-
-    <td><b>Guia Remision</b></td><td style="width: 3px">:</td>
-    <td> {{$facturacion->guia_remision}}</td>
-                                </tr>
-                                 <tr>
-    <td><b>Fecha Emision</b></td><td style="width: 3px">:</td>
-    <td>{{$facturacion->cotizacion->fecha_emision}}</td>
-
-    <td ><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td>
-    <td >{{$facturacion->cotizacion->fecha_vencimiento }}</td>
-
-    <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td>
-    <td>{{$facturacion->cotizacion->moneda->nombre }}</td>
-                                </tr>
-                                    </thead>
-                            </table> 
-
-                            <br>
-                           
-                            <div class="table-responsive">
-                                <table class="table ">
-                                    <thead>
-                                    <tr>
-                                        <th >Codigo Producto</th>
-                                        <th >Cantidad</th>
-                                        <th >Unidad</th>
-                                        <th >Descripción</th>
-                                        <th >Valor Unitario</th>
-                                        <th>Dscto.%</th>
-                                        <th>Precio Unitario</th>
-                                        <th>Valor Venta </th>
-                                    </tr>
-                                    </thead>
-                                    <tbody>
-                                    
-                                     
-                                    <tr>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>                                        
-                                    </tr>
-
-                                        
-                                      <tr>
-                                        <td colspan="6" rowspan="4">
-                                            <div class="row">
-                                                <div class="col-lg-2" align="center">
-                                                 <img src="https://www.codigos-qr.com/qr/php/qr_img.php?d=https%3A%2F%2Fwww.jypsac.com%2F&s=6&e=m" alt="Generador de Códigos QR Codes" height="150px" />
-                                                </div>
-                                                <div class="col-lg-10" align="center">
-                                                  Representacion impresa de la Factura electrónica Puede ser <br>consultada en https://cloud.horizontcpe.com/ConsultaComprobanteE/<br> Autorizado mediante la Resolución de intendencia N° <br>0340050001931/SUNAT/SUNAT
-
-                                                </div>
-                                            </div>
-
-                                        </td>
-                                       
-                                       <td  style="background: #f3f3f4;">Importe Total</td>
-                                        <td  style="background: #f3f3f4;">
-                                            S/.
-                                        </td>
-
-                                    </tr>
-                                   
-                                  
-                                  
-                                    </tbody>
-                                </table>
-                            </div><!-- /table-responsive -->
-<!-- 
-                             <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp; -->
-                        </div>
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> Sub Total</p>
+                    <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
                 </div>
-                
-            </div>
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> Op. Agravada</p>
+                    <p class="form-control a"> S/.00</p>
+                </div>
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> IGV</p>
+                    <p class="form-control a"> S/.00</p>
+                </div>
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> Importe Total</p>
+                    <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                </div>
+            </div><br>
+            <div class="row">
+                @foreach($banco as $bancos)
+                <div class="col-sm-3 " align="center">
+                    <p class="form-control" style="height: 100px">
+                      <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
+                      <br>
+                      N° S/. : {{$bancos->numero_soles}}
+                      <br>
+                      N° $ : {{$bancos->numero_dolares}}<br>
 
-                        <!-- </form> -->
-        </div>
+                  </p> 
+              </div>                  
+              @endforeach
 
-@endif
+          </div>
+          <br>
 
-        
-       
+              <div class="row">
+                        <div class="col-sm-3">
+                            <p><u>centro de Atencion : </u></p>
+                            Telefono : {{$boleta->user->personal->nombres }}<br>
+                            Telefono : {{$boleta->user->personal->telefono }}<br>
+                            Celular : {{$boleta->user->personal->celular }}<br>
+                            Email : {{$boleta->user->personal->email }}<br>
+                            Web : 
+                            <a href="{{$empresa->pagina_web}}" target="blank_">{{$empresa->pagina_web}}</a><br>
+                        </div>
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-3"></div>
+                        <div class="col-sm-3"></div>
+
+                    </div> 
+
+
+
+      </div>
+  </div>
+
+</div>
+
 <style type="text/css">
     .ruc{border-radius: 10px; height: 150px;}
     .form-control{border-radius: 10px;}
+    .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
+
 </style>
+<!-- Mainly scripts -->
+<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-  <!-- Mainly scripts -->
-    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+<!-- Custom and plugin javascript -->
+<script src="{{ asset('js/inspinia.js') }}"></script>
+<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-    <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
- <!-- Custom and plugin javascript -->
-    <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-  
 @endsection

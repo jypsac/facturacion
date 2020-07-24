@@ -20,7 +20,12 @@
                 }
             </style>
             @if($cotizacion->estado == '1')
-            <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$facturacion->id)}}" ></a>
+                @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
+                <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$facturacion->id)}}" ></a>
+                @else
+                <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta.show',$boleta->id)}}" ></a>
+
+                @endif
 
             @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc' )
             <a class="btn btn-info" href="{{route('cotizacion.facturar' , $cotizacion->id)}}">Facturar</a>
