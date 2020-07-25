@@ -206,17 +206,6 @@
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
 
- <style type="text/css">
-    .form-control{border-radius: 10px; height: 150px;}
-</style>
- <script src="js/jquery-3.1.1.min.js"></script>
-    <script src="js/popper.min.js"></script>
-    <script src="js/bootstrap.js"></script>
-    <script src="js/plugins/metisMenu/jquery.metisMenu.js"></script>
-
-    <!-- Custom and plugin javascript -->
-    <script src="js/inspinia.js"></script>
-
     {{-- IMPRIMIR --}}
     <script type="text/javascript">
         window.print();

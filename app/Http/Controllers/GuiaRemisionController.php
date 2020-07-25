@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Banco;
 use App\Cliente;
 use App\Cotizacion;
+use App\Cotizacion_boleta_registro;
 use App\Cotizacion_factura_registro;
 use App\Empresa;
 use App\Guia_remision;
@@ -209,6 +210,7 @@ class GuiaRemisionController extends Controller
 
         $cotizacion=Cotizacion::find($id);
         $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+        $cotizacion_registro_boleta=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
 
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         foreach ($productos as $index => $producto) {
@@ -222,7 +224,7 @@ class GuiaRemisionController extends Controller
         $vehiculo=Vehiculo::where('estado_activo',0)->get();
         $empresa=Empresa::first();
         $igv=Igv::first();
-        return view('transaccion.venta.guia_remision.create_2',compact('cotizacion','productos','clientes','array','array_cantidad','igv','array_promedio','empresa','cotizacion_registro','vehiculo'));
+        return view('transaccion.venta.guia_remision.create_2',compact('cotizacion','productos','clientes','array','array_cantidad','igv','array_promedio','empresa','cotizacion_registro','vehiculo','cotizacion_registro_boleta'));
     }
 
 

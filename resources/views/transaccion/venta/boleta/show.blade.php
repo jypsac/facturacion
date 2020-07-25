@@ -35,7 +35,7 @@
                 </div>
 
                 <div class="col-sm-4 ">
-                    <div class="form-control ruc" style="height: 125px">
+                    <div class="form-control ruc" >
                         <center>
                             <h3 style="padding-top:10px ">RUC : {{$empresa->ruc}}</h3>
                             <h2>BOLETA ELECTRONICA</h2>
