@@ -110,29 +110,9 @@
                         </div><!-- /table-responsive -->
 
 
-                        <footer style="padding-top: 100px">
+                        <footer style="padding-top: 150px">
 
                         </footer>
-
-                        <div class="row">
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> Sub Total</p>
-                                <p class="form-control a"> S/.0</p>
-                            </div>
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> Op. Agravada</p>
-                                <p class="form-control a"> S/.00</p>
-                            </div>
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> IGV</p>
-                                <p class="form-control a"> S/.</p>
-                            </div>
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> Importe Total</p>
-                                <p class="form-control a"> S/.</p>
-                            </div>
-                        </div>
-
 
                         <br>
                         <!-- Fin Totales de Productos -->
