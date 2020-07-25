@@ -67,8 +67,8 @@ class GarantiaGuiaIngresoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {   
-         // Obtner ID 
+    {
+         // Obtner ID
         $cliente=$request->get('cliente_id');
         $nombre = strstr($cliente, '-',true);
         $cliente_id_nombre=Cliente::where("numero_documento","=",$nombre)->first();
@@ -117,7 +117,7 @@ class GarantiaGuiaIngresoController extends Controller
         $contar=$garantia_guia_ingreso->id;
 
         return redirect()->route('garantia_guia_ingreso.show',$contar);
-        
+
     }
 
     /**
@@ -222,5 +222,17 @@ class GarantiaGuiaIngresoController extends Controller
 
     }
 
+    function email($id){
+        $mi_empresa=Empresa::first();
+        $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
+        // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
+        // $pdf=App::make('dompdf.wrapper');
+        // $pdf=loadView('welcome').;
+        $archivo="000";
+        $pdf=PDF::loadView('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','mi_empresa'));
+        $pdf->\Storage::disk('garantia_guia_ingreso')=>put
+
+        return "vista de correo";
+    }
+
 }
- 
