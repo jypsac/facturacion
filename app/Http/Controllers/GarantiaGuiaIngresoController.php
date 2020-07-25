@@ -12,6 +12,8 @@ use Barryvdh\DomPDF\Facade as PDF;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+
 
 class GarantiaGuiaIngresoController extends Controller
 {
@@ -228,11 +230,12 @@ class GarantiaGuiaIngresoController extends Controller
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome').;
-        $archivo="000";
+        $archivo=$id.".pdf";
         $pdf=PDF::loadView('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','mi_empresa'));
-        $pdf->\Storage::disk('garantia_guia_ingreso')=>put
+        $content=$pdf->download();
+        Storage::disk('garantia_guia_ingreso')->put($archivo,$content);
 
-        return "vista de correo";
+        return view('transaccion.garantias.guia_ingreso.correo',compact('id'));
     }
 
 }
