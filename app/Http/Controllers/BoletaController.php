@@ -275,6 +275,16 @@ class BoletaController extends Controller
         return view('transaccion.venta.boleta.show', compact('boleta','empresa','banco','boleta_registro','igv','sub_total'));
     }
 
+    public function print($id){
+        $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
+        $igv=Igv::first();
+        $banco=Banco::all();
+        $empresa=Empresa::first();
+        $sub_total=0;
+        $boleta=Boleta::find($id);
+        return view('transaccion.venta.boleta.print', compact('boleta','empresa','banco','boleta_registro','igv','sub_total'));
+    }
+
     public function show_boleta(Request $request,$id)
     {
 

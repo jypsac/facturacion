@@ -7,6 +7,19 @@
  @section('value_accion', 'Atras')
 
  @section('content')
+ <div class="ibox-title">
+            <div class="ibox-tools">
+                <style type="text/css">
+                    .procesado:before {
+                        content: "Procesado";
+                    }
+                    .procesado:hover:before {
+                        content: "Ver";
+                    }
+                </style>
+                <a class="btn btn-success"  href="{{route('boleta.print' , $boleta->id)}}" target="_blank">Imprimir</a>
+            </div>
+        </div>
  <div class="row">
     <div class="col-lg-12">
         <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
@@ -22,7 +35,7 @@
                 </div>
 
                 <div class="col-sm-4 ">
-                    <div class="form-control ruc" style="height: 125px">
+                    <div class="form-control ruc" >
                         <center>
                             <h3 style="padding-top:10px ">RUC : {{$empresa->ruc}}</h3>
                             <h2>BOLETA ELECTRONICA</h2>
@@ -163,8 +176,8 @@
                       <br>
                       N° $ : {{$bancos->numero_dolares}}<br>
 
-                  </p> 
-              </div>                  
+                  </p>
+              </div>
               @endforeach
 
           </div>
@@ -177,14 +190,14 @@
                             Telefono : {{$boleta->user->personal->telefono }}<br>
                             Celular : {{$boleta->user->personal->celular }}<br>
                             Email : {{$boleta->user->personal->email }}<br>
-                            Web : 
+                            Web :
                             <a href="{{$empresa->pagina_web}}" target="blank_">{{$empresa->pagina_web}}</a><br>
                         </div>
                         <div class="col-sm-3"></div>
                         <div class="col-sm-3"></div>
                         <div class="col-sm-3"></div>
 
-                    </div> 
+                    </div>
 
 
 
