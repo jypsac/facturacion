@@ -13,6 +13,10 @@ use DB;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Swift_Mailer;
+use Swift_MailTransport;
+use Swift_Message;
+use Swift_Attachment;
 
 
 class GarantiaGuiaIngresoController extends Controller
@@ -236,6 +240,57 @@ class GarantiaGuiaIngresoController extends Controller
         Storage::disk('garantia_guia_ingreso')->put($archivo,$content);
 
         return view('transaccion.garantias.guia_ingreso.correo',compact('id'));
+    } 
+    function enviar(){
+       $smtpAddress = 'smtp.gmail.com'; // = $request->smtp
+        $port = 465;
+        $encryption = 'ssl';
+        $yourEmail = Auth::user()->email; // = $request->yourmail
+        $yourPassword = Auth::user()->password;
+
+
+        //Envio del mail al corre 
+        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+        $mailer =new \Swift_Mailer($transport);
+
+        $sendto = $request->sendto;
+        $titulo = $request->titulo;
+        $mensaje = $request->mensaje;
+        
+      
+         $newfile = $request->file('archivo');
+ 
+        foreach ($newfile as $file) {
+            $nombre =  $file->getClientOriginalName();
+
+            \Storage::disk('archivo')->put($nombre,  \File::get($file));
+
+            //$arc =  $file->getClientOriginalName();
+
+            $data[] = $nombre;
+            $news[] = public_path().'/storage/archivos/'.$nombre;
+            $message = (new \Swift_Message($yourEmail)) // nombre arriba 
+             ->setFrom([ $yourEmail => $titulo])
+             ->setTo([ $sendto ])
+             
+             ->setBody($mensaje, 'text/html');
+             
+
+             foreach ($news as $attachment) {
+                $message->attach(\Swift_Attachment::fromPath($attachment));
+            }
+            
+        }
+        
+        
+            
+             if($mailer->send($message)){
+                return array($news);  
+            }   
+                return "Something went wrong :(";
+            
+        
+         
     }
 
 }
