@@ -186,17 +186,17 @@ class FacturacionController extends Controller
          $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
          $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        $personal_contador= cotizacion::all()->count();
-        $suma=$personal_contador+1;
-        $cod_comision='CO-0000'.$suma;
+        $fac= Facturacion::all()->count();
+        $suma=$fac+1;
+        $cod_fac='FC-000'.$suma;
 
         $facturacion=new facturacion;
-        $facturacion->codigo_fac="fac-00000";
+        $facturacion->codigo_fac=$cod_fac;
         $facturacion->cliente_id=$cliente_buscador->id;
         $facturacion->forma_pago_id=$request->get('forma_pago');
         // $facturacion->validez=$request->get('validez');
         $facturacion->moneda_id=$request->get('moneda');
-        $facturacion->comisionista=$cod_comision;
+        $facturacion->comisionista='0';
         // $facturacion->garantia=$request->get('garantia');
         $facturacion->user_id =auth()->user()->id;
         $facturacion->observacion=$request->get('observacion');
