@@ -17,6 +17,7 @@ use Swift_Mailer;
 use Swift_MailTransport;
 use Swift_Message;
 use Swift_Attachment;
+use Auth;
 
 
 class GarantiaGuiaIngresoController extends Controller
@@ -241,12 +242,13 @@ class GarantiaGuiaIngresoController extends Controller
 
         return view('transaccion.garantias.guia_ingreso.correo',compact('id'));
     } 
-    function enviar(){
+
+    public function enviar(Request $request){
        $smtpAddress = 'smtp.gmail.com'; // = $request->smtp
         $port = 465;
         $encryption = 'ssl';
-        $yourEmail = Auth::user()->email; // = $request->yourmail
-        $yourPassword = Auth::user()->password;
+        $yourEmail = 'danielrberru@gmail.com'; // = $request->yourmail
+        $yourPassword = ''; //colocar el password, 
 
 
         //Envio del mail al corre 
@@ -258,17 +260,17 @@ class GarantiaGuiaIngresoController extends Controller
         $mensaje = $request->mensaje;
         
       
-         $newfile = $request->file('archivo');
+        //$newfile = $request->file('archivo');
  
-        foreach ($newfile as $file) {
-            $nombre =  $file->getClientOriginalName();
+        
+            //$nombre =  $file->getClientOriginalName();
 
-            \Storage::disk('archivo')->put($nombre,  \File::get($file));
+            //\Storage::disk('archivo')->put($nombre,  \File::get($file));
 
             //$arc =  $file->getClientOriginalName();
 
-            $data[] = $nombre;
-            $news[] = public_path().'/storage/archivos/'.$nombre;
+            $file = $request->id;
+            $news[] = storage_path().'/app/public/'.$file.'.pdf';
             $message = (new \Swift_Message($yourEmail)) // nombre arriba 
              ->setFrom([ $yourEmail => $titulo])
              ->setTo([ $sendto ])
@@ -280,12 +282,12 @@ class GarantiaGuiaIngresoController extends Controller
                 $message->attach(\Swift_Attachment::fromPath($attachment));
             }
             
-        }
+         
         
         
             
              if($mailer->send($message)){
-                return array($news);  
+                return redirect()->route('garantia_guia_ingreso.index');  
             }   
                 return "Something went wrong :(";
             
