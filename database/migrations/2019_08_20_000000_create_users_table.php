@@ -18,6 +18,8 @@ class CreateUsersTable extends Migration
 
             $table->unsignedBigInteger('personal_id');
             $table->foreign('personal_id')->references('id')->on('personal')->onDelete('cascade');
+            $table->unsignedBigInteger('confi_id')->nullable();
+            $table->foreign('confi_id')->references('id')->on('configs')->onDelete('cascade');
 
             $table->string('name');
             $table->string('email')->unique();

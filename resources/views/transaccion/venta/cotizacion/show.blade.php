@@ -122,7 +122,7 @@
                                         <td>{{$i}} </td>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
-                                        <td>{{$cotizacion_registros->producto->nombre}}</td>
+                                        <td>{{$cotizacion_registros->producto->nombre}}  <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span></td>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
 
@@ -142,15 +142,16 @@
                                     @foreach($cotizacion_registro2 as $cotizacion_registros)
                                     <tr>
                                         <td>{{$i}} </td>
-                                        <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
+                                        <td>{{$cotizacion_registros->producto->codigo_producto}}
+                                        </td>
                                         <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
-                                        <td>{{$cotizacion_registros->producto->nombre}}</td>
+                                        <td>{{$cotizacion_registros->producto->nombre}} <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span></td>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
 
 
-                                        <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
-                                        <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
+                                        <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}} </td>
+                                        <td style="display: none"> {{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
                                             @if ($regla=="factura")
                                             S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}

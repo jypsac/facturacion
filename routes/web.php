@@ -12,6 +12,7 @@ Route::group(
 		Route::get('/' , 'ViewController@home')->name('inicio');
 
 		Route::resource('/almacen','AlmacenController');
+		Route::resource('/apariencia','ConfigController');
 
 		Route::resource('/categoria','CategoriaController');
 		Route::resource('/vendedores','PersonalVentaController');

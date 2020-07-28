@@ -2,9 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Config;
 use Illuminate\Http\Request;
 
-class ServiciosController extends Controller
+class ConfigController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -12,8 +13,10 @@ class ServiciosController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {
-        return view('maestro.catalogo.servicios.index');
+    {   
+        $user=auth()->user()->id;
+        $config=Config::where('id',$user)->get();
+        return view('maestro.conf_general.apariencia.index',compact('config'));  
     }
 
     /**
@@ -23,7 +26,6 @@ class ServiciosController extends Controller
      */
     public function create()
     {
-        return view('maestro.catalogo.servicios.create');
         //
     }
 
@@ -69,7 +71,14 @@ class ServiciosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $apariencia=Config::find($id);
+        $apariencia->fondo_perfil=$request->get('fondo_perfil');
+        $apariencia->borde_foto=$request->get('borde_foto');
+        $apariencia->color_borde_foto=$request->get('color_borde_foto');
+        $apariencia->foto_icono=$request->get('foto_icono');
+        $apariencia->save();
+
+        return redirect()->route('apariencia.index');
     }
 
     /**
