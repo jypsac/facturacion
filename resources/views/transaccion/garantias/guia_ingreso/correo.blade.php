@@ -6,14 +6,11 @@
 @section('href_accion', route('garantia_guia_ingreso.index') )
 @section('value_accion', 'Atras')
 @section('vue_js',  asset('js/app.js') )
+
 @section('content')
 <div>
   <div class="container">
-        <div class="content-header">
-        <div class="container-fluid">
-          <div class="row mb-2">
-          </div><!-- /.row -->
-        </div><!-- /.container-fluid -->
+        <div class="content-header"><!-- /.container-fluid -->
       </div>
       <br>
   	<div class="card-deck">
@@ -33,12 +30,12 @@
       	    </div>
       	    <div class="col-sm-12">Titulo:<input type="text" name="titulo" class="form-control" placeholder="Titulo"></div> 
             <div class="col-sm-12">Descripcion: 
-              <textarea  name="mensaje" class="form-control" placeholder="¿Que quieres enviar?" maxlength="855"></textarea>
+              <textarea  rows="4"  name="mensaje" class="form-control" placeholder="¿Que quieres enviar?" maxlength="855"></textarea>
             </div>
             <br>
             <div>Vista previa del pdf {{$id}} :
-              	<iframe width="100%" height="20px" src=""     frameborder="1"></iframe>
-                <input type="text" value="{{$id}}" name="id">
+              	<!-- <iframe width="100%" height="110px" src="file:///C:/laragon/www/facturacion/storage/app/public/{{$id}}.pdf"     frameborder="1"></iframe>-->
+                <input type="hidden" value="{{$id}}" name="id">
             </div>
               <br>
             <div class="container">

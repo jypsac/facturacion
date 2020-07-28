@@ -282,12 +282,8 @@ class GarantiaGuiaIngresoController extends Controller
                 $message->attach(\Swift_Attachment::fromPath($attachment));
             }
             
-         
-        
-        
-            
              if($mailer->send($message)){
-                return redirect()->route('garantia_guia_ingreso.index');  
+                return redirect()->route('garantia_guia_ingreso.index.');  
             }   
                 return "Something went wrong :(";
             
