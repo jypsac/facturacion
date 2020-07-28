@@ -172,7 +172,7 @@
                     <p class="form-control a"> Importe Total</p>
                     <p class="form-control a"> S/.{{$end}}</p>
                 </div>
-            </div>
+            </div><br>
             <div class="row">
                 @foreach($banco as $bancos)
                 <div class="col-sm-3 " align="center">
