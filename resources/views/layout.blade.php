@@ -26,9 +26,11 @@
 
 </head>
 <style type="text/css">
-   body {
+   body {/*
     font:90% cursive;
-    /*font:90% sans-serif;*/
+    font:90% sans-serif;
+    font:90% none;*/
+    font:@yield('tamaño_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);
 }
 
    

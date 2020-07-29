@@ -32,19 +32,19 @@
                 </div> @foreach($config as $configs)
                 <div class="ibox-content">
                     <form action="{{route('apariencia.update',$configs->id)}}"  enctype="multipart/form-data" method="post">
-                        
-                            @csrf
-                            @method('PATCH')
-                       
+
+                        @csrf
+                        @method('PATCH')
+
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example" >
-                                   <thead>
-                                       <th>Modificacion</th>
-                                       <th>Seleccione</th>
-                                       <th>Refresh</th>
-                                   </thead>
-                                   <tbody>
+                                 <thead>
+                                     <th>Modificacion</th>
+                                     <th>Seleccione</th>
+                                     <th>Refresh</th>
+                                 </thead>
+                                 <tbody>
                                     <tr>
                                         <td>Fondo del Perfil :</td>
                                         <td><select name="fondo_perfil"  class="form-control m-b">
@@ -90,17 +90,46 @@
                                         </select></td>
                                         <td><button type="sumbit" class="btn btn-success">Refresh</button></td>
                                     </tr>
-                                </tbody>
-                            </table>
+                                    <tr>
+                                        <td>TipoGrafía :</td>
+                                        <td>
+                                            <div class="row">
+                                                <div class="col-sm-3">
+                                                <select name="tamano_letra"  class="form-control">
+                                                @if($configs->tamano_letra=='')
+                                                <option value="">0%</option>
+                                                @else
+                                                <option value="{{$configs->tamano_letra}}">{{$configs->tamano_letra}}</option>
+                                                @endif
+                                                <option value="100%">100%</option>
+                                                <option value="90%">90%</option>
+                                                <option value="80%">80%</option>
+                                                <option value="70%">70%</option>
+                                                <option value="">0%</option>
+                                                </select>
+                                                </div>
+                                                <div class="col-sm-9">
+                                                <select name="letra"  class="form-control">
+                                                <option value="{{$configs->letra}}">{{$configs->letra}}</option>
+                                                <option value="cursive">cursive</option>
+                                                <option value=" sans-serif">sans-serif</option>
+                                                <option value="none">none</option>
+                                                </select>
+                                            </div>
+                                        </td>
+                                    <td><button type="sumbit" class="btn btn-success">Refresh</button></td>
+                                </tr>
+                            </tbody>
+                        </table>
 
-                        </div>
+                    </div>
 
-                       
-                    </form>
-                </div> @endforeach
-            </div>
+
+                </form>
+            </div> @endforeach
         </div>
     </div>
+</div>
 </div>
 <style>
     .form-control{border-radius: 10px}

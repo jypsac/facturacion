@@ -76,6 +76,8 @@ class ConfigController extends Controller
         $apariencia->borde_foto=$request->get('borde_foto');
         $apariencia->color_borde_foto=$request->get('color_borde_foto');
         $apariencia->foto_icono=$request->get('foto_icono');
+        $apariencia->letra=$request->get('letra');
+        $apariencia->tamano_letra=$request->get('tamano_letra');
         $apariencia->save();
 
         return redirect()->route('apariencia.index');
