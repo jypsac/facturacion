@@ -33,7 +33,7 @@
     font:@yield('tamaño_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);
 }
 
-   
+
 .nav-header {
   background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
 }
@@ -82,9 +82,7 @@
                     @can('inicio')
                     <li><a href="{{route('inicio')}}"><i class="fa fa-magic"></i> <span class="nav-label">Inicio</span></a></li>
                     @endcan
-                    @can('inicio')
-                    <li><a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Correo</span></a></li>
-                    @endcan
+
                     @can('transacciones')
                     <li>
                         <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Transacciones</span></a>
@@ -200,14 +198,20 @@
                         </ul>
                     </li>
                     @endcan
-
-                    {{-- <li>
-                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span></a>
+                    <li>
+                        <a href="mailbox.html"><i class="fa fa-bolt"></i> <span class="nav-label">facturacion Electronica </span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{route('facturacion_electronica.index')}}">index</a></li>
+                            <li><a href="#">Email view</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="#">Inbox</a></li>
                             <li><a href="#">Email view</a></li>
                         </ul>
-                    </li> --}}
+                    </li>
                     @can('auxiliares')
                     <li>
                         <a href="#"><i class="fa fa-address-card  "></i> <span class="nav-label">Auxiliares</span></a>

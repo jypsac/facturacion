@@ -34,8 +34,7 @@ class FacturacionController extends Controller
      */
     public function index()
     {
-         $facturacion=Facturacion::all();
-
+        $facturacion=Facturacion::all();
         return view('transaccion.venta.facturacion.index', compact('facturacion'));
     }
 
