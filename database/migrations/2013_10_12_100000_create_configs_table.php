@@ -22,6 +22,7 @@ class CreateConfigsTable extends Migration
             $table->string('foto_perfil');//foto de perfil
             $table->string('letra');
             $table->string('tamano_letra')->nullable();//font-size
+            $table->string('tamano_letra_perfil')->nullable();//font-size
             $table->string('color_sombra_nombre')->nullable();//sombra tiene color
             $table->string('color_nombre')->nullable();//color del titulo del nombre
 

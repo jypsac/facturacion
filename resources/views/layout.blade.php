@@ -1,13 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <link href="{{ asset('/archivos/imagenes/servicios/')}}/@yield('3', auth()->user()->config->foto_icono)" rel="shortcut icon" />
-    <title>@yield('title', 'Inicio')</title>
+    <title>@yield('title', 'Inicio')/@yield('3', auth()->user()->name)</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -26,16 +24,16 @@
 
 </head>
 <style type="text/css">
- body {font:@yield('tamaño_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);}
-.spans{color:black !important;
-font-size: 19px;
-    text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_sombra);}
+   body {font:@yield('tamano_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);}
+   .spans{color:@yield('color_nombre', auth()->user()->config->color_nombre) !important;
+    font-size: @yield('tamano_letra_perfil', auth()->user()->config->tamano_letra_perfil);
+    text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_sombra_nombre);}
 
- .nav-header {
-  background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
-}
+    .nav-header {
+      background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
+  }
 
-.btn-primary {
+  .btn-primary {
     color: #fff;
     background-color: #1a5eb3;
     border-color: #1a3bb3;
@@ -57,7 +55,7 @@ font-size: 19px;
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
-                        <div class="dropdown profile-element">
+                        <div class="dropdown profile-element" style="left: 10% ">
                             <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)"/>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="block m-t-xs font-bold spans">@yield('nombre',auth()->user()->personal->nombres)</span>
@@ -222,6 +220,7 @@ font-size: 19px;
                         </ul>
                     </li>
                     @endcan
+                    <li><a href="{{route('apariencia.index')}}"><i class="fa fa-paint-brush" aria-hidden="true"></i><span>Apariencia</span></a></li>
                     @can('maestro')
                     <li>
                         <a href="#"><i class="fa fa-magic"></i> <span class="nav-label">Maestro</span></a>
@@ -272,8 +271,6 @@ font-size: 19px;
                                     @can('maestro-configuracion_general.mi_empresa.index')
                                     <li><a href="{{route('empresa.index')}}">Mi Empresa</a></li>
                                     @endcan
-
-                                    <li><a href="{{route('apariencia.index')}}">Apariencia</a></li>
                                     @can('maestro-configuracion_general.unidad_de_medida.index')
                                     <li><a href="{{route('unidad-medida.index')}}">Unidad de Medida</a></li>
                                     @endcan
