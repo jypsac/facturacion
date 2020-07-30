@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+use Greenter\See;
+use Greenter\Ws\Services\SunatEndpoints;
 use Illuminate\Http\Request;
 use Greenter\Model\Client\Client;
 use Greenter\Model\Company\Company;
@@ -11,6 +13,9 @@ use Greenter\Model\Sale\SaleDetail;
 use Greenter\Model\Sale\Legend;
 use App\Config_fe;
 use App\Facturacion;
+use function App\facturacion_electronica;
+use DateTime;
+
 
 class FacturacionElectronicaController extends Controller
 {
@@ -88,6 +93,12 @@ class FacturacionElectronicaController extends Controller
         $invoice->setDetails([$item])
             ->setLegends([$legend]);
 
+//        $see=facturacion_electronica();
+        $see = new See();
+        $see->setService(SunatEndpoints::FE_BETA);
+        $see->setCertificate(file_get_contents(public_path('certificado/certificate.pem')));
+        $see->setCredentials('20000000001MODDATOS'/*ruc+usuario*/, 'moddatos');
+
         $result = $see->send($invoice);
 
         // Guardar XML
@@ -101,7 +112,6 @@ class FacturacionElectronicaController extends Controller
         echo $result->getCdrResponse()->getDescription();
         // Guardar CDR
         file_put_contents('R-'.$invoice->getName().'.zip', $result->getCdrZip());
-
     }
 
     /**

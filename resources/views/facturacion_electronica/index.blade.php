@@ -65,7 +65,7 @@
                                         <td>{{$facturaciones->fecha_vencimiento }}</td>
                                         <td>
                                             <center>
-                                                <a href="">
+                                                <a href="{{route('facturacion_electronica.create')}}">
                                                     <button type="button" class="btn btn-w-m btn-primary">Enviar</button>
                                                 </a>
                                             </center>
