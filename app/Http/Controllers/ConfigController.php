@@ -13,10 +13,10 @@ class ConfigController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index()
-    {   
+    {
         $user=auth()->user()->id;
         $config=Config::where('id',$user)->get();
-        return view('maestro.conf_general.apariencia.index',compact('config'));  
+        return view('maestro.conf_general.apariencia.index',compact('config'));
     }
 
     /**
@@ -78,6 +78,9 @@ class ConfigController extends Controller
         $apariencia->foto_icono=$request->get('foto_icono');
         $apariencia->letra=$request->get('letra');
         $apariencia->tamano_letra=$request->get('tamano_letra');
+        $apariencia->color_sombra_nombre=$request->get('color_sombra_nombre');
+        $apariencia->color_nombre=$request->get('color_nombre');
+        $apariencia->tamano_letra_perfil=$request->get('tamano_letra_perfil');
         $apariencia->save();
 
         return redirect()->route('apariencia.index');
