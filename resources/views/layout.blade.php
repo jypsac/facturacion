@@ -31,14 +31,7 @@
 font-size: 19px;
     text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_sombra);}
 
-
-
-<<<<<<< HEAD
  .nav-header {
-=======
-
-.nav-header {
->>>>>>> abbdb7a4698e4c26899befce67c2c7b12657fbc5
   background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
 }
 
