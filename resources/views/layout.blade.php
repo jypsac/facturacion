@@ -33,7 +33,12 @@ font-size: 19px;
 
 
 
+<<<<<<< HEAD
  .nav-header {
+=======
+
+.nav-header {
+>>>>>>> abbdb7a4698e4c26899befce67c2c7b12657fbc5
   background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
 }
 
@@ -81,9 +86,7 @@ font-size: 19px;
                     @can('inicio')
                     <li><a href="{{route('inicio')}}"><i class="fa fa-magic"></i> <span class="nav-label">Inicio</span></a></li>
                     @endcan
-                    @can('inicio')
-                    <li><a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Correo</span></a></li>
-                    @endcan
+
                     @can('transacciones')
                     <li>
                         <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Transacciones</span></a>
@@ -199,14 +202,20 @@ font-size: 19px;
                         </ul>
                     </li>
                     @endcan
-
-                    {{-- <li>
-                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span></a>
+                    <li>
+                        <a href="mailbox.html"><i class="fa fa-bolt"></i> <span class="nav-label">facturacion Electronica </span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="{{route('facturacion_electronica.index')}}">index</a></li>
+                            <li><a href="#">Email view</a></li>
+                        </ul>
+                    </li>
+                    <li>
+                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="#">Inbox</a></li>
                             <li><a href="#">Email view</a></li>
                         </ul>
-                    </li> --}}
+                    </li>
                     @can('auxiliares')
                     <li>
                         <a href="#"><i class="fa fa-address-card  "></i> <span class="nav-label">Auxiliares</span></a>

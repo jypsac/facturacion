@@ -50,7 +50,8 @@ Route::group(
 		Route::resource('/cotizacion','CotizacionController');
 		Route::resource('/empresa/banco','BancoController'); //Banco
 
-
+		//FACTURACION ELECTRONICA
+		Route::resource('/facturacion_electronica','FacturacionElectronicaController');
 
 		Route::resource('/credito','CreditoController');
 		Route::resource('/debito','DebitoController');
