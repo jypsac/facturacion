@@ -26,15 +26,14 @@
 
 </head>
 <style type="text/css">
-   body {/*
-    font:90% cursive;
-    font:90% sans-serif;
-    font:90% none;*/
-    font:@yield('tamaño_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);
-}
+ body {font:@yield('tamaño_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);}
+.spans{color:black !important;
+font-size: 19px;
+    text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_sombra);}
 
-   
-.nav-header {
+
+
+ .nav-header {
   background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
 }
 
@@ -63,8 +62,8 @@
                         <div class="dropdown profile-element">
                             <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)"/>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold">@yield('nombre',auth()->user()->personal->nombres)</span>
-                                <span class="text-muted text-xs block">@yield('area',auth()->user()->name) <b class="caret"></b></span>
+                                <span class="block m-t-xs font-bold spans">@yield('nombre',auth()->user()->personal->nombres)</span>
+                                <span class="block m-t-xs  spans ">@yield('area',auth()->user()->name) </span>
                             </a>{{--
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a class="dropdown-item" href="">Perfil</a></li>

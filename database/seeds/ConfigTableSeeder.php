@@ -18,7 +18,8 @@ class ConfiTableSeeder extends Seeder
 			'color_borde_foto' => 'white',
 			'foto_icono' => "defecto.png" ,
 			'foto_perfil' => "0" ,
-			'letra' => "0" ,
+			'letra' => "none" ,
+			'tamano_letra' => " " ,
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		]);
@@ -30,6 +31,7 @@ class ConfiTableSeeder extends Seeder
 			'foto_icono' => "defecto.png" ,
 			'foto_perfil' => "0" ,
 			'letra' => "0" ,
+			'tamano_letra' => " " ,
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		]);
@@ -41,6 +43,7 @@ class ConfiTableSeeder extends Seeder
 			'foto_icono' => "defecto.png" ,
 			'foto_perfil' => "0" ,
 			'letra' => "0" ,
+			'tamano_letra' => " " ,
 			'created_at' => '2019-10-30 11:36:57',
 			'updated_at' => "2019-10-30 11:36:57" ,
 		]);

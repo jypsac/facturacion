@@ -117,8 +117,14 @@
                                                 </select>
                                             </div>
                                         </td>
+
                                     <td><button type="sumbit" class="btn btn-success">Refresh</button></td>
                                 </tr>
+                                <tr>
+                                        <td>Sombras del Nombre:</td>
+                                        <td><input type="color"></td>
+                                        <td><button type="sumbit" class="btn btn-success">Refresh</button></td>
+                                    </tr>
                             </tbody>
                         </table>
 
