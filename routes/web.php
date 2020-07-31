@@ -101,7 +101,7 @@ Route::group(
 		//MailBox
 
 		Route::get('sendmail','MailBoxController@index')->name('sendmail');
-		Route::Post('sendmail/enviar','MailBoxController@send')->name('enviarmail');
+		Route::Post('sendmail/enviar','MailBoxController@send')->name('enviarmail'); 
 
 		//Garantias
 

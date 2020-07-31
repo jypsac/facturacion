@@ -4,6 +4,12 @@ namespace App\Http\Controllers;
 
 use App\Mailbox;
 use Illuminate\Http\Request;
+use App;
+use Swift_Mailer;
+use Swift_MailTransport;
+use Swift_Message;
+use Swift_Attachment;
+use Swift_Preferences;
 
 class MailboxController extends Controller
 {
@@ -23,7 +29,7 @@ class MailboxController extends Controller
         $port = 465;
         $encryption = 'ssl';
         $yourEmail = 'danielrberru@gmail.com'; // = $request->yourmail
-        $yourPassword = $request->password;
+        $yourPassword = 'digimonheroes@1';
 
 
         //Envio del mail al corre 
@@ -40,12 +46,12 @@ class MailboxController extends Controller
         foreach ($newfile as $file) {
             $nombre =  $file->getClientOriginalName();
 
-            \Storage::disk('archivo')->put($nombre,  \File::get($file));
+            \Storage::disk('mailbox')->put($nombre,  \File::get($file));
 
             //$arc =  $file->getClientOriginalName();
 
             $data[] = $nombre;
-            $news[] = public_path().'/storage/archivos/'.$nombre;
+            $news[] = storage_path().'/app/public/'.$nombre;
             $message = (new \Swift_Message($yourEmail)) // nombre arriba 
              ->setFrom([ $yourEmail => $titulo])
              ->setTo([ $sendto ])
