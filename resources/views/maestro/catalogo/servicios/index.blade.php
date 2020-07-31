@@ -59,7 +59,8 @@
                                 <td>{{$servicio->codigo_original}}</td>
                                 <td>{{$servicio->nombre}}</td>
                                 <td>{{$servicio->categoria}}</td>
-                                <td>{{$servicio->estado_activo}}</td>
+                                @if($servicio->estado_activo==0) <td>Activo</td>
+                                @else <td>Desactivo</td>@endif
                                 <td><img src="
                                     {{ asset('/archivos/imagenes/servicios/')}}/{{$servicio->foto}}" style="width: 45px;">
                                 </td>

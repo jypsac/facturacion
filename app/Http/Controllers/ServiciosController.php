@@ -76,7 +76,8 @@ class ServiciosController extends Controller
      */
     public function show($id)
     {
-        //
+        $servicios=Servicios::find($id);
+        return view('maestro.catalogo.servicios.show',compact('servicios'));
     }
 
     /**
