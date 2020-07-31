@@ -101,10 +101,6 @@
     <input type="text" class="form-control" name="precio" required="required" value="0">
   </div>
 </div>
-
-<label class="col-sm-2 col-form-label">garantia:</label>
-<div class="col-sm-4"><input type="text" class="form-control" name="garantia" value="12 meses" >
-</div>
 </div>
 <div class="row">
 </div>

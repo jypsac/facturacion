@@ -21,7 +21,7 @@ class ProductosController extends Controller
      */
     public function index()
 
-    {   
+    {
         // $stok=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
         $marcas=Marca::all();
         $productos=Producto::all();
@@ -78,7 +78,7 @@ class ProductosController extends Controller
         $string_code=(string)$num;
         $code_final=substr($string_code,1);
         $codigo_producto=$cate.$guion.$nombre_marca.$guion.$code_final;
-        
+
         // return $codigo_producto;
 
         if($request->hasfile('foto')){
@@ -170,7 +170,7 @@ class ProductosController extends Controller
             $destinationPath = public_path('/archivos/imagenes/productos/');
             $image1->move($destinationPath,$name);
         }else{
-            $name=$request->get('ori_foto');
+            $name=$request->get('foto_original');
         }
 
         $peso=$request->get('peso');
@@ -209,7 +209,7 @@ class ProductosController extends Controller
         $producto->codigo_original='Codigo Anulado N°'.$id;
         $producto->estado_anular='0';
         $producto->save();
-        
+
         return redirect()->route('productos.index');
     }
 }

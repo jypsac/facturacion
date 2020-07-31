@@ -7,14 +7,13 @@
 @section('value_accion', 'Atras')
 
 @section('content')
-
-
+@if ($servicios->estado_anular=='0')
+<a href="{{ route('servicios.edit', $servicios->id) }}" class='btn btn-success'><i class="fa fa-edit" aria-hidden="true"></i> </a>
+@endif
 <div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
-
  <form action="{{ route('servicios.store') }}"  enctype="multipart/form-data" method="post">
    @csrf
    <div class="row">
-
     <fieldset class="col-sm-6">
      <legend>Clasificacion del <br>Servicio</legend>
 
@@ -89,10 +88,6 @@
     <input type="text" class="form-control" name="precio" required="required"  value="{{$servicios->precio}}" readonly="">
   </div>
 </div>
-
-<label class="col-sm-2 col-form-label">garantia:</label>
-<div class="col-sm-4"><input type="text" class="form-control" name="garantia" value="12 meses" >
-</div>
 </div>
 <div class="row">
 </div>
@@ -105,10 +100,9 @@
  <div class="panel panel-default">
   <div class="panel-body">
     <div class="col-sm-12">
-     <input type="file" id="archivoInput" name="foto" onchange="return validarExt()"  />
      <div id="visorArchivo">
        <!--Aqui se desplegará el fichero-->
-       <center ><img name="foto"  src="{{ asset('/archivos/imagenes/servicios/defecto.png')}}" width="350px" height="180px" /></center>
+       <center ><img name="foto"  src="{{ asset('/archivos/imagenes/servicios/')}}/{{$servicios->foto}}" width="200px" height="auto" /></center>
      </div>
    </div>
  </div>
@@ -119,7 +113,7 @@
 
 </div>
 
-<button class="btn btn-primary" type="submit">Guardar</button>
+{{-- <button class="btn btn-primary" type="submit">Guardar</button> --}}
 
 
 </form>

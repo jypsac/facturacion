@@ -88,7 +88,8 @@ class ServiciosController extends Controller
      */
     public function edit($id)
     {
-        //
+        $servicios=Servicios::find($id);
+        return view('maestro.catalogo.servicios.edit',compact('servicios'));
     }
 
     /**
@@ -100,8 +101,33 @@ class ServiciosController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $boton=$request->get('actualizar');
+        if ($boton=='anular') {
+         $servicio= Servicios::find($id);
+         $servicio->estado_anular='1';
+         $servicio->save();
+         return redirect()->route('servicios.index');
+     }
+     elseif ($boton=='edit_servicio') {
+        if($request->hasfile('foto')){
+            $image1 =$request->file('foto');
+            $name =time().$image1->getClientOriginalName();
+            $destinationPath = public_path('/archivos/imagenes/servicios/');
+            $image1->move($destinationPath,$name);
+        }else{
+            $name=$request->get('foto');
+        }
+        $servicio= Servicios::find($id);
+        $servicio->nombre=$request->get('nombre');
+        $servicio->descripcion=$request->get('descripcion');
+        $servicio->descuento=$request->get('descuento');
+        $servicio->utilidad=$request->get('utilidad');
+        $servicio->precio=$request->get('precio');
+        $servicio->foto=$name;
+        $servicio->save();
+        return redirect()->route('servicios.show', $id);
     }
+}
 
     /**
      * Remove the specified resource from storage.
