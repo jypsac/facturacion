@@ -18,6 +18,7 @@ class CreateServiciosTable extends Migration
             $table->string('codigo_servicio');
             $table->string('codigo_original')->unique();
             $table->string('nombre');
+            $table->string('categoria');
             $table->string('precio');
             $table->integer('utilidad');
             $table->integer('descuento');

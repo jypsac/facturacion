@@ -22,12 +22,12 @@
 
 
 <div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
-	
- <form action=""  enctype="multipart/form-data" method="post">
+
+ <form action="{{ route('servicios.store') }}"  enctype="multipart/form-data" method="post">
    @csrf
    <div class="row">
 
-    <fieldset class="col-sm-6">    	
+    <fieldset class="col-sm-6">
      <legend>Clasificacion del <br>Servicio</legend>
 
      <div class="panel panel-default">
@@ -36,9 +36,10 @@
           <label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
           <div class="col-sm-4"><input type="text" class="form-control" name="codigo_original" required="required"></div>
 
+
           <label class="col-sm-2 col-form-label">Categoria:</label>
           <div class="col-sm-4">
-            <input type="text" class="form-control m-b" readonly="readonly" value="Servicios">
+            <input type="text" class="form-control m-b" readonly="readonly" value="Servicios" name="categoria">
           </div>
         </div>
 
@@ -46,9 +47,9 @@
       <br>
     </div>
 
-  </fieldset>		
+  </fieldset>
 
-  <fieldset class="col-sm-6">    	
+  <fieldset class="col-sm-6">
    <legend>Datos del <br>Servicios </legend>
 
    <div class="panel panel-default">
@@ -64,9 +65,9 @@
   </div>
 </div>
 
-</fieldset>		
+</fieldset>
 
-<fieldset class="col-sm-6">    	
+<fieldset class="col-sm-6">
  <legend>Precio del <br>Servicios</legend>
 
  <div class="panel panel-default">
@@ -92,25 +93,25 @@
 
 </div>
 <div class="row">
-<label class="col-sm-2 col-form-label">Precio:</label>
-    <div class="col-sm-4"><div class="input-group m-b">
-      <div class="input-group-prepend">
-        <span class="input-group-addon">S/.</span>
-      </div>
-      <input type="text" class="form-control" name="utilidad" required="required" value="0">
+  <label class="col-sm-2 col-form-label">Precio:</label>
+  <div class="col-sm-4"><div class="input-group m-b">
+    <div class="input-group-prepend">
+      <span class="input-group-addon">S/.</span>
     </div>
+    <input type="text" class="form-control" name="precio" required="required" value="0">
   </div>
+</div>
 
- <label class="col-sm-2 col-form-label">garantia:</label>
- <div class="col-sm-4"><input type="text" class="form-control" name="garantia" value="12 meses" >
- </div>
+<label class="col-sm-2 col-form-label">garantia:</label>
+<div class="col-sm-4"><input type="text" class="form-control" name="garantia" value="12 meses" >
+</div>
 </div>
 <div class="row">
 </div>
 </div>
 
-</fieldset>		
-<fieldset class="col-sm-6">    	
+</fieldset>
+<fieldset class="col-sm-6">
  <legend>Foto del <br>Servicio </legend>
 
  <div class="panel panel-default">
@@ -125,7 +126,7 @@
  </div>
 </div>
 
-</fieldset>		
+</fieldset>
 
 
 </div>
@@ -156,10 +157,10 @@ input#archivoInput{
 }
 .form-control{    margin-bottom: 15px;border-radius: 5px
 }
-fieldset 
+fieldset
 {
   /*border: 1px solid #ddd !important;*/
-  padding: 10px;       
+  padding: 10px;
   /*border-radius:4px ;*/
   background-color:#f5f5f5;
   padding-left:10px!important;
@@ -167,19 +168,19 @@ fieldset
   margin-bottom: 10px;
   border-left: 1px solid #ddd !important;
 
-} 
+}
 
 legend
 {
   font-size:14px;
   font-weight:bold;
-  margin-bottom: 0px; 
-  width: 35%; 
+  margin-bottom: 0px;
+  width: 35%;
   border: 1px solid #ddd;
-  border-radius: 4px; 
-  padding: 5px 5px 5px 10px; 
+  border-radius: 4px;
+  padding: 5px 5px 5px 10px;
   background-color: #ffffff;
-} 
+}
 </style>
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -205,12 +206,12 @@ legend
     else
     {
         //PRevio del PDF
-        if (archivoInput.files && archivoInput.files[0]) 
+        if (archivoInput.files && archivoInput.files[0])
         {
           var visor = new FileReader();
-          visor.onload = function(e) 
+          visor.onload = function(e)
           {
-            document.getElementById('visorArchivo').innerHTML = 
+            document.getElementById('visorArchivo').innerHTML =
             '<center><img name="foto" src="'+e.target.result+'"width="350px" height="180px" /></center>';
           };
           visor.readAsDataURL(archivoInput.files[0]);
