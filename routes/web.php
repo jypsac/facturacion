@@ -50,7 +50,16 @@ Route::group(
 		Route::resource('/cotizacion','CotizacionController');
 		Route::resource('/empresa/banco','BancoController'); //Banco
 
-		//FACTURACION ELECTRONICA
+//COTIZACIOBNES SERVICIO
+		//boleta
+
+		Route::get('/cotizacion_servicio/create_boleta' , 'CotizacionServiciosController@create_boleta')->name('cotizacion_servicio.create_boleta');
+		Route::post('/cotizacion_servicio/store_boleta','CotizacionServiciosController@store_boleta')->name('cotizacion_servicio.store_boleta');
+
+		Route::resource('/cotizacion_servicio','CotizacionServiciosController');
+
+
+//FACTURACION ELECTRONICA
 		Route::resource('/facturacion_electronica','FacturacionElectronicaController');
 
 		Route::resource('/credito','CreditoController');

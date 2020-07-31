@@ -72,7 +72,7 @@ class FacturacionElectronicaController extends Controller
             ->setMtoImpVenta(118.00)
             ->setCompany($company);
 
-        $item = (new SaleDetail())
+        $item1 = (new SaleDetail())
             ->setCodProducto('P001')
             ->setUnidad('NIU')
             ->setCantidad(2)
@@ -86,11 +86,26 @@ class FacturacionElectronicaController extends Controller
             ->setMtoValorUnitario(50.00)
             ->setMtoPrecioUnitario(59.00);
 
+        $item2 = new SaleDetail();
+        $item2->setCodProducto('P002')
+            ->setUnidad('KG')
+            ->setDescripcion('PROD 2')
+            ->setCantidad(2)
+            ->setMtoValorUnitario(50)
+            ->setMtoValorVenta(100)
+            ->setMtoBaseIgv(100)
+            ->setPorcentajeIgv(0)
+            ->setIgv(0)
+            ->setTipAfeIgv('20')
+            ->setTotalImpuestos(0)
+            ->setMtoPrecioUnitario(50)
+        ;
+
         $legend = (new Legend())
             ->setCode('1000')
             ->setValue('SON DOSCIENTOS TREINTA Y SEIS CON 00/100 SOLES');
 
-        $invoice->setDetails([$item])
+        $invoice->setDetails([$item1,$item2])
             ->setLegends([$legend]);
 
 //        $see=facturacion_electronica();
