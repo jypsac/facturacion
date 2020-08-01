@@ -91,7 +91,7 @@
                                     <li><a href="#"><span  class="nav-label">Cotizaciones</span></a>
                                     <ul class="nav nav-second-level collapse">
                                         <li><a href="{{route('cotizacion.index')}}"  style="padding-left: 80px;">C.Productos</a></li>
-                                        <li><a href="#"  style="padding-left: 80px;">C.Servicios</a></li>
+                                        <li><a href="{{route('cotizacion_servicio.index')}}"  style="padding-left: 80px;">C.Servicios</a></li>
                                     </ul></li>
                                     @endcan
                                     {{-- <li><a href="{{route('credito.index')}}">Credito</a></li> --}}

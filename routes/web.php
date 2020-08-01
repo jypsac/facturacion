@@ -52,7 +52,10 @@ Route::group(
 
 //COTIZACIOBNES SERVICIO
 		//boleta
+		Route::get('/cotizacion_servicio/create_factura' , 'CotizacionServiciosController@create_factura')->name('cotizacion_servicio.create_factura');
+		Route::post('/cotizacion_servicio/store_factura','CotizacionServiciosController@store_factura')->name('cotizacion_servicio.store_factura');
 
+		// FACTURA
 		Route::get('/cotizacion_servicio/create_boleta' , 'CotizacionServiciosController@create_boleta')->name('cotizacion_servicio.create_boleta');
 		Route::post('/cotizacion_servicio/store_boleta','CotizacionServiciosController@store_boleta')->name('cotizacion_servicio.store_boleta');
 
@@ -101,7 +104,7 @@ Route::group(
 		//MailBox
 
 		Route::get('sendmail','MailBoxController@index')->name('sendmail');
-		Route::Post('sendmail/enviar','MailBoxController@send')->name('enviarmail'); 
+		Route::Post('sendmail/enviar','MailBoxController@send')->name('enviarmail');
 
 		//Garantias
 
