@@ -9,42 +9,43 @@
 
 @section('content')
 <br/>
-<div class="col-lg-9 container animated fadeInRight">
+<div class="col-lg-10 container animated fadeInRight">
 	
 	<div class="mail-box">
-		<div class="mail-body">
+		
 			<form action ="{{route('enviarmail')}}" method="POST" enctype="multipart/form-data">
                 @csrf
-    			<div class="form-group row"><label class="col-sm-2 col-form-label">Para:</label>
-        			<div class="col-sm-10"><input type="text" class="form-control" name="enviara"></div>
+                <div class="mail-body">
+    			<div class="form-group row">
+                    <label class="col-sm-2 col-form-label">Para:</label>
+        			     <div class="col-sm-10"><input type="text" class="form-control" name="enviara"></div>
     			</div>
     			<div class="form-group row"><label class="col-sm-2 col-form-label">Tema:</label>
        		 		<div class="col-sm-10"><input type="text" class="form-control" name="titulo" ></div>
     			</div>
-			</div>
+		</div>
 			<div class="mail-text h-200">
-		    	<div class="summernote" name="mensaje">
-	       		 	<h3>Hello Jonathan! </h3>
-				        <textarea  name="mensaje" class="form-control" placeholder="¿Que quieres enviar?" maxlength="855"></textarea>
-	        		<br/>
-	        		<br/>
-	    		</div>
-	    		<br/>	
-	    		<div class="fileinput fileinput-new container" data-provides="fileinput" >
-    				<span class="btn btn-default btn-file"><span class="fileinput-new">Select file</span>
-    				<span class="fileinput-exists">Change</span>
-                        <input type="file" multiple name="archivo[]"/></span>
-    				<span class="fileinput-filename"></span>
-    				<a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-				</div> 
-	    	</div>
-	    		
+                <textarea name="mensaje" class="summernote" id="contents" >         
+                </textarea>
+            </div>	
+            <br/>
+    		<div class="fileinput fileinput-new container" data-provides="fileinput" >
+				<span class="btn btn-default btn-file"><span class="fileinput-new">Select file</span>
+				<span class="fileinput-exists">Change</span>
+                    <input type="file" multiple name="archivo[]"/></span>
+				<span class="fileinput-filename"></span>
+				<a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
+			</div> 	
 			<div class="mail-body text-right tooltip-demo">
-	    		<button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" ><i class="fa fa-reply"></i> Enviar</button>
-	    		<a href="#" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Discard email"><i class="fa fa-times"></i> Descartar</a>
+	    		<button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" >
+                    <i class="fa fa-reply"></i> Enviar
+                </button>
+	    		<a href="#" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Discard email">
+                    <i class="fa fa-times"></i> Descartar
+                </a>
 			</div>
     		</form>
-		<div class="clearfix"></div>
+
 	</div>
 </div>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
@@ -71,14 +72,15 @@
     <!-- CodeMirror -->
     <script src="{{asset('js/plugins/codemirror/codemirror.js')}}"></script>
     <script src="{{asset('js/plugins/codemirror/mode/xml/xml.js')}}"></script>
-    <script>
-        $(document).ready(function(){
 
-            $('.summernote').summernote();
+    <script type="text/javascript">
+    $(function() {
+      $('.summernote').summernote({
+        height: 200,
+      });
 
-        });
-
-    </script>
+    });
+  </script>
     <link href="css/bootstrap.min.css" rel="stylesheet">
     <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
     <link href="css/plugins/iCheck/custom.css" rel="stylesheet">

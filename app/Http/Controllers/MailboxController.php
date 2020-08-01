@@ -25,48 +25,33 @@ class MailboxController extends Controller
     }
     public function send(Request $request){
 
+
+
         $smtpAddress = 'smtp.gmail.com'; // = $request->smtp
         $port = 465;
         $encryption = 'ssl';
-        $yourEmail = 'danielrberru@gmail.com'; // = $request->yourmail
+        $yourEmail = 'danielrberru@gmail.com';
+        $mailbackup = ''; // = $request->yourmail
         $yourPassword = 'digimonheroes@1';
-
-
-        //Envio del mail al corre 
-        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
-        $mailer =new \Swift_Mailer($transport);
-
         $sendto = $request->enviara;
         $titulo = $request->titulo;
         $mensaje = $request->mensaje;
-        
-      
+
+        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+        $mailer =new \Swift_Mailer($transport);
+
          $newfile = $request->file('archivo');
  
         foreach ($newfile as $file) {
             $nombre =  $file->getClientOriginalName();
-
             \Storage::disk('mailbox')->put($nombre,  \File::get($file));
-
-            //$arc =  $file->getClientOriginalName();
-
             $data[] = $nombre;
             $news[] = storage_path().'/app/public/'.$nombre;
-            $message = (new \Swift_Message($yourEmail)) // nombre arriba 
-             ->setFrom([ $yourEmail => $titulo])
-             ->setTo([ $sendto ])
-             
-             ->setBody($mensaje, 'text/html');
-             
-
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
              foreach ($news as $attachment) {
                 $message->attach(\Swift_Attachment::fromPath($attachment));
             }
-            
         }
-        
-        
-            
              if($mailer->send($message)){
                 return back();  
             }   
