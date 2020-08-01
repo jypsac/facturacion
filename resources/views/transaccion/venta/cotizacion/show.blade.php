@@ -20,11 +20,19 @@
                 }
             </style>
             @if($cotizacion->estado == '1')
-            <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="" ></a>
+                @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
+                <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$facturacion->id)}}" ></a>
+                @else
+                <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta.show',$boleta->id)}}" ></a>
+
+                @endif
+
             @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc' )
             <a class="btn btn-info" href="{{route('cotizacion.facturar' , $cotizacion->id)}}">Facturar</a>
+
             @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
             <a class="btn btn-success"  href="{{route('cotizacion.boletear', $cotizacion->id)}}">Boletear</a>
+
             @endif
             <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
         </div>
@@ -58,7 +66,7 @@
                                 <div class="col-sm-7" align="center">
                                     <div class="form-control"><h3>Contacto Cliente</h3>
                                         <div align="left">
-                                            <strong>Nombre:</strong> &nbsp;{{$cotizacion->cliente->nombre}}<br>
+                                            <strong>Señor(es):</strong> &nbsp;{{$cotizacion->cliente->nombre}}<br>
                                             <strong>{{$cotizacion->cliente->documento_identificacion}} :</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <strong>Fecha:</strong> &nbsp;{{$cotizacion->created_at}}<br>
                                             <strong>Direccion:</strong>&nbsp; {{$cotizacion->cliente->direccion}}<br>
@@ -75,7 +83,7 @@
                                             <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
                                             <!-- <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br> -->
                                             <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                            <strong>Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                            <strong>Tipo de Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                             <!-- <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista_id}} -->
 
                                         </div>
@@ -95,6 +103,7 @@
                                 <table class="table " >
                                     <thead>
                                         <tr >
+                                            <th style="width: 100px">ITEM </th>
                                             <th style="width: 100px">Codigo </th>
                                             <th>Unidad</th>
                                             <th>Descripcion</th>
@@ -107,12 +116,13 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @if ($regla=="factura")
+                                    @if ($regla=="factura")<span hidden="hidden">{{$i=1}} </span>
                                     @foreach($cotizacion_registro as $cotizacion_registros)
-                                    <tr>
+                                    <tr> 
+                                        <td>{{$i}} </td>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
-                                        <td>{{$cotizacion_registros->producto->nombre}}</td>
+                                        <td>{{$cotizacion_registros->producto->nombre}}  <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span></td>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
 
@@ -125,21 +135,23 @@
                                         </td>
 
                                     </tr>
+                                    <span hidden="hidden">{{$i++}}</span>
+                                   @endforeach 
 
-                                    @endforeach
-
-                                    @else
+                                    @else <span hidden="hidden">{{$i=1}} </span>
                                     @foreach($cotizacion_registro2 as $cotizacion_registros)
                                     <tr>
-                                        <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
+                                        <td>{{$i}} </td>
+                                        <td>{{$cotizacion_registros->producto->codigo_producto}}
+                                        </td>
                                         <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
-                                        <td>{{$cotizacion_registros->producto->nombre}}</td>
+                                        <td>{{$cotizacion_registros->producto->nombre}} <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span></td>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
 
 
-                                        <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
-                                        <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
+                                        <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}} </td>
+                                        <td style="display: none"> {{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
                                             @if ($regla=="factura")
                                             S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}
@@ -147,6 +159,7 @@
                                         </td>
 
                                     </tr>
+                                     <span hidden="hidden">{{$i++}}</span>
 
                                     @endforeach
 
@@ -239,7 +252,7 @@
                             Telefono : {{$cotizacion->user_personal->personal->telefono }}<br>
                             Celular : {{$cotizacion->user_personal->personal->celular }}<br>
                             Email : {{$cotizacion->user_personal->personal->email }}<br>
-                            Web : <br>
+                            Web : {{$empresa->pagina_web}} <br>
                         </div>
                         <div class="col-sm-3"></div>
                         <div class="col-sm-3"></div>

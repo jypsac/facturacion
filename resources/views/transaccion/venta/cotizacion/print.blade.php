@@ -60,7 +60,7 @@
                                 <div class="col-sm-7" align="center">
                                     <div class="form-control"><h3>Contacto Cliente</h3>
                                         <div align="left">
-                                            <strong>Nombre:</strong> &nbsp;{{$cotizacion->cliente->nombre}}<br>
+                                            <strong>Señor(es):</strong>&nbsp;{{$cotizacion->cliente->nombre}}<br>
                                             <strong>{{$cotizacion->cliente->documento_identificacion}} :</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <strong>Fecha:</strong> &nbsp;{{$cotizacion->created_at}}<br>
                                             <strong>Direccion:</strong>&nbsp; {{$cotizacion->cliente->direccion}}<br>
@@ -77,7 +77,7 @@
                                             <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
                                             <!-- <strong>Plazo Entrega:</strong> &nbsp;{{$cotizacion->id }}<br> -->
                                             <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                            <strong>Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                            <strong>Tipo de Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                          <!-- <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista_id}} -->
 
                                         </div>
@@ -97,6 +97,7 @@
                                 <table class="table " >
                                     <thead>
                                     <tr>
+                                        <th style="width: 100px">ITEM </th>
                                         <th style="width: 100px">Codigo </th>
                                         <th>Unidad</th>
                                         <th>Descripcion</th>
@@ -109,9 +110,10 @@
                                     </tr>
                                     </thead>
                                     <tbody>
-                                    @if ($regla=="factura")
-                                      @foreach($cotizacion_registro as $cotizacion_registros)
-                                    <tr>
+                                     @if ($regla=="factura")<span hidden="hidden">{{$i=1}} </span>
+                                    @foreach($cotizacion_registro as $cotizacion_registros)
+                                    <tr> 
+                                        <td>{{$i}} </td>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
                                         <td>{{$cotizacion_registros->producto->nombre}}</td>
@@ -128,11 +130,13 @@
 
                                     </tr>
 
-                                      @endforeach
+                                        <span hidden="hidden">{{$i++}}</span>
+                                   @endforeach 
 
-                                      @else
-                                        @foreach($cotizacion_registro2 as $cotizacion_registros)
-                                            <tr>
+                                    @else <span hidden="hidden">{{$i=1}} </span>
+                                    @foreach($cotizacion_registro2 as $cotizacion_registros)
+                                    <tr>
+                                        <td>{{$i}} </td>
                                                 <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                                 <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
                                                 <td>{{$cotizacion_registros->producto->nombre}}</td>
@@ -148,8 +152,9 @@
                                                 </td>
 
                                             </tr>
+                                     <span hidden="hidden">{{$i++}}</span>
 
-                                        @endforeach
+                                    @endforeach
                                          
                                     @endif
                                     </tbody>

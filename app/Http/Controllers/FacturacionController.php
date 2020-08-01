@@ -34,8 +34,7 @@ class FacturacionController extends Controller
      */
     public function index()
     {
-         $facturacion=Facturacion::all();
-
+        $facturacion=Facturacion::all();
         return view('transaccion.venta.facturacion.index', compact('facturacion'));
     }
 
@@ -186,24 +185,24 @@ class FacturacionController extends Controller
          $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
          $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        $personal_contador= cotizacion::all()->count();
-        $suma=$personal_contador+1;
-        $cod_comision='CO-0000'.$suma;
+        $fac= Facturacion::all()->count();
+        $suma=$fac+1;
+        $cod_fac='FC-000'.$suma;
 
         $facturacion=new facturacion;
-        $facturacion->codigo_fac="fac-00000";
+        $facturacion->codigo_fac=$cod_fac;
         $facturacion->cliente_id=$cliente_buscador->id;
         $facturacion->forma_pago_id=$request->get('forma_pago');
         // $facturacion->validez=$request->get('validez');
         $facturacion->moneda_id=$request->get('moneda');
-        $facturacion->comisionista=$cod_comision;
+        $facturacion->comisionista='0';
         // $facturacion->garantia=$request->get('garantia');
         $facturacion->user_id =auth()->user()->id;
         $facturacion->observacion=$request->get('observacion');
         $facturacion->fecha_emision=$request->get('fecha_emision');
         $facturacion->fecha_vencimiento=$nuevafechas;
         $facturacion->orden_compra=$request->get('orden_compra');
-        $facturacion->guia_remision=$request->get('guia_remision');
+        $facturacion->guia_remision=$request->get('guia_r');
         // if($comisionista!="" and $comisionista!="Sin comision - 0"){
         //     $facturacion->comisionista_id= $comisionista_buscador->id;
         // }
@@ -267,9 +266,27 @@ class FacturacionController extends Controller
      */
     public function show($id)
     {
-         $empresa=Empresa::first();
+        $empresa=Empresa::first();
         $facturacion=Facturacion::find($id);
-       return view('transaccion.venta.facturacion.show', compact('facturacion','empresa'));
+        $facturacion_registro=Facturacion_registro::where('facturacion_id',$id)->get();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $banco=Banco::all();
+
+       return view('transaccion.venta.facturacion.show', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
+    }
+
+    function print($id){
+        $empresa=Empresa::first();
+        $facturacion=Facturacion::find($id);
+        $facturacion_registro=Facturacion_registro::where('facturacion_id',$id)->get();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $banco=Banco::all();
+
+       return view('transaccion.venta.facturacion.print', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
     }
 
     public function show_boleta(Request $request,$id)

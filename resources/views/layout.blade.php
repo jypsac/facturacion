@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
 <head>
-
-    <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>@yield('title', 'Inicio')</title>
+
+    <link href="{{ asset('/archivos/imagenes/servicios/')}}/@yield('3', auth()->user()->config->foto_icono)" rel="shortcut icon" />
+    <title>@yield('title', 'Inicio')/@yield('3', auth()->user()->name)</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -20,12 +20,19 @@
     <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
 
     <link href="{{ asset('main.css') }}" rel="stylesheet">
-<link rel="icon" type="image/svg+xml" href="{{ asset('img/icono.svg') }}" sizes="any">
+    <link rel="icon" type="image/svg+xml" href="{{ asset('img/icono.svg') }}" sizes="any">
 
 </head>
 <style type="text/css">
+ body {font:@yield('tamano_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);}
+ .spans{color:@yield('color_nombre', auth()->user()->config->color_nombre) !important;
+ font-size: @yield('tamano_letra_perfil', auth()->user()->config->tamano_letra_perfil);
+ text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_sombra_nombre);}
 
-    .nav-header {background: #1a388e !important; /*cabeza*/}
+ .nav-header {
+  background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
+}
+
 .btn-primary {
     color: #fff;
     background-color: #1a5eb3;
@@ -40,6 +47,7 @@
     background-color: #1a5eb3;
     border-color: #1a3bb3;
 }
+.rounded-circle{width: 120px; height: auto; border:@yield('2', auth()->user()->config->borde_foto) solid @yield('2', auth()->user()->config->color_borde_foto);}
 </style>
 <body class="">
     <div id="wrapper">
@@ -47,11 +55,11 @@
             <div class="sidebar-collapse">
                 <ul class="nav metismenu" id="side-menu">
                     <li class="nav-header">
-                        <div class="dropdown profile-element">
-                            <img alt="image" class="rounded-circle" style="width: 90px; height: auto;" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)"/>
+                        <div class="dropdown profile-element" style="left: 10% ">
+                            <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)"/>
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold">@yield('nombre',auth()->user()->personal->nombres)</span>
-                                <span class="text-muted text-xs block">@yield('area',auth()->user()->name) <b class="caret"></b></span>
+                                <span class="block m-t-xs font-bold spans">@yield('nombre',auth()->user()->personal->nombres)</span>
+                                <span class="block m-t-xs  spans ">@yield('area',auth()->user()->name) </span>
                             </a>{{--
                             <ul class="dropdown-menu animated fadeInRight m-t-xs">
                                 <li><a class="dropdown-item" href="">Perfil</a></li>
@@ -69,6 +77,7 @@
                     @can('inicio')
                     <li><a href="{{route('inicio')}}"><i class="fa fa-magic"></i> <span class="nav-label">Inicio</span></a></li>
                     @endcan
+
                     @can('transacciones')
                     <li>
                         <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Transacciones</span></a>
@@ -78,7 +87,12 @@
                                 <a href="#">Ventas</a>
                                 <ul class="nav nav-third-level">
                                     @can('transacciones-ventas-cotizaciones.index')
-                                    <li><a href="{{route('cotizacion.index')}}">Cotizaciones</a></li>
+                                    {{-- <li><a href="{{route('cotizacion.index')}}">Cotizaciones</a></li> --}}
+                                    <li><a href="#"><span  class="nav-label">Cotizaciones</span></a>
+                                    <ul class="nav nav-second-level collapse">
+                                        <li><a href="{{route('cotizacion.index')}}"  style="padding-left: 80px;">C.Productos</a></li>
+                                        <li><a href="{{route('cotizacion_servicio.index')}}"  style="padding-left: 80px;">C.Servicios</a></li>
+                                    </ul></li>
                                     @endcan
                                     {{-- <li><a href="{{route('credito.index')}}">Credito</a></li> --}}
                                     {{-- <li><a href="{{route('debito.index')}}">Debito</a></li> --}}
@@ -184,14 +198,20 @@
                         </ul>
                     </li>
                     @endcan
-
-                    {{-- <li>
-                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Mailbox </span></a>
+                    <li>
+                        <a href="mailbox.html"><i class="fa fa-bolt"></i> <span class="nav-label">facturacion Electronica </span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="#">Inbox</a></li>
+                            <li><a href="{{route('facturacion_electronica.index')}}">index</a></li>
                             <li><a href="#">Email view</a></li>
                         </ul>
-                    </li> --}}
+                    </li>
+                    <li>
+                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
+                        <ul class="nav nav-second-level collapse">
+                            <li><a href="#">Inbox</a></li>
+                            <li><a href="{{route('sendmail')}}">Email view</a></li>
+                        </ul>
+                    </li>
                     @can('auxiliares')
                     <li>
                         <a href="#"><i class="fa fa-address-card  "></i> <span class="nav-label">Auxiliares</span></a>
@@ -205,6 +225,7 @@
                         </ul>
                     </li>
                     @endcan
+                    <li><a href="{{route('apariencia.index')}}"><i class="fa fa-paint-brush" aria-hidden="true"></i><span>Apariencia</span></a></li>
                     @can('maestro')
                     <li>
                         <a href="#"><i class="fa fa-magic"></i> <span class="nav-label">Maestro</span></a>
@@ -216,6 +237,7 @@
                                     @can('maestro-catalogo-productos.index')
                                     <li><a href="{{route('productos.index')}}">Productos</a></li>
                                     @endcan
+                                    <li><a href="{{route('servicios.index')}}">Servicios</a></li>
                                     {{-- <li><a href="{{route('servicios.index')}}">Servicios</a></li> --}}
                                     {{-- <li><a href="{{route('promedios.index')}}">Promedios</a></li> --}}
                                     @can('maestro-catalogo-clasificacion')
@@ -266,7 +288,7 @@
                         </ul>
                     </li>
                     @endcan
-                     <!-- MENU DESPELEGABLE -->
+                    <!-- MENU DESPELEGABLE -->
                 </ul>
             </div>
         </nav>
@@ -276,11 +298,11 @@
                 <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">
                         <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                            <form role="search" class="navbar-form-custom" action="search_results.html">
-                                <div class="form-group">
-                                    <input type="text" placeholder="Buscar..." class="form-control" name="top-search" id="top-search">
-                                </div>
-                            </form>
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                            <div class="form-group">
+                                <input type="text" placeholder="Buscar..." class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>
                     </div>
                     <ul class="nav navbar-top-links navbar-right">
                         <li>
@@ -291,20 +313,20 @@
                                 <i class="fa fa-barsign-out"></i> Cerrar Secciónes
                             </a> --}}
                             <a href="{{ route('logout') }}"
-                                       onclick="event.preventDefault();
-                                                     document.getElementById('logout-form').submit();">
-                                         Cerrar Seccion
-                                    <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
-                                        @csrf
-                                    </form>
-                                    </a>
-                        </li>
-                    </ul>
-                </nav>
-            </div>
-                <div class="row wrapper border-bottom white-bg page-heading">
-                    <div class="col-sm-4">
-                        <h2>@yield('title', 'Inicio')</h2>
+                            onclick="event.preventDefault();
+                            document.getElementById('logout-form').submit();">
+                            Cerrar Seccion
+                            <form id="logout-form" action="{{ route('logout') }}" method="POST" style="display: none;">
+                                @csrf
+                            </form>
+                        </a>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+        <div class="row wrapper border-bottom white-bg page-heading">
+            <div class="col-sm-4">
+                <h2>@yield('title', 'Inicio')</h2>
                         <!-- <ol class="breadcrumb">
                             <li class="breadcrumb-item">
                                 <a>@yield('breadcrumb', '')</a>
@@ -335,18 +357,18 @@
 
 
                 <div class="footer">
-                <div class="float-right">
-                    Visitanos: &nbsp;&nbsp; <a href="https://www.facebook.com/JYPPERIFERICOS" target="_blank" ><i class="fa fa-facebook-square" aria-hidden="true"></i></a>&nbsp;
-                    <a href="https://api.whatsapp.com/send?phone=51946201443&text=Hola!%20Necesito%20Ayuda%20con%20el%20sistema%20de%20Facturación,%20Gracias!%20" target="_blank" ><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
-                </div>
-                <div>
-                    <strong>Copyright </strong> &nbsp;<a href="http://www.jypsac.com" target="_blank" > JyP Perifericos</a>&nbsp;  &copy; 2019-2020
-                </div>
+                    <div class="float-right">
+                        Visitanos: &nbsp;&nbsp; <a href="https://www.facebook.com/JYPPERIFERICOS" target="_blank" ><i class="fa fa-facebook-square" aria-hidden="true"></i></a>&nbsp;
+                        <a href="https://api.whatsapp.com/send?phone=51946201443&text=Hola!%20Necesito%20Ayuda%20con%20el%20sistema%20de%20Facturación,%20Gracias!%20" target="_blank" ><i class="fa fa-whatsapp" aria-hidden="true"></i></a>
+                    </div>
+                    <div>
+                        <strong>Copyright </strong> &nbsp;<a href="http://www.jypsac.com" target="_blank" > JyP Perifericos</a>&nbsp;  &copy; 2019-2020
+                    </div>
 
                 </div>
             </div>
-    </div>
+        </div>
 
 
-</body>
-</html>
+    </body>
+    </html>

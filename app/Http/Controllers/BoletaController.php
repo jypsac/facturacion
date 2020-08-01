@@ -61,10 +61,11 @@ class BoletaController extends Controller
         $igv=Igv::first();
 
         $empresa=Empresa::first();
-        $personal_contador= Facturacion::all()->count();
-        $suma=$personal_contador+1;
+        $boleta_contador= Boleta::all()->count();
+        $suma=$boleta_contador+1;
+        $boleta_codigo='BO-0000'.$suma;
 
-        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma'));
+        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','boleta_codigo'));
 
 
     }
@@ -185,14 +186,15 @@ class BoletaController extends Controller
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        $personal_contador= cotizacion::all()->count();
-        $suma=$personal_contador+1;
-        $cod_comision='CO-0000'.$suma;
+        $boleta_contador= Boleta::all()->count();
+        $suma=$boleta_contador+1;
+        $boleta_codigo='BO-0000'.$suma;
 
 
         $boleta=new Boleta;
+        $boleta->codigo_boleta=$boleta_codigo;
         $boleta->orden_compra=$request->get('orden_compra');
-        $boleta->guia_remision=$request->get('guia_remision');
+        $boleta->guia_remision=$request->get('guia_r');
         $boleta->cliente_id=$cliente_buscador->id;
         $boleta->moneda_id=$request->get('moneda');
         $boleta->forma_pago_id=$request->get('forma_pago');
@@ -264,22 +266,36 @@ class BoletaController extends Controller
      */
     public function show($id)
     {
-       $empresa=Empresa::first();
-       $boleta=Boleta::find($id);
-       return view('transaccion.venta.facturacion.show', compact('boleta','empresa'));
+        $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
+        $igv=Igv::first();
+        $banco=Banco::all();
+        $empresa=Empresa::first();
+        $sub_total=0;
+        $boleta=Boleta::find($id);
+        return view('transaccion.venta.boleta.show', compact('boleta','empresa','banco','boleta_registro','igv','sub_total'));
+    }
+
+    public function print($id){
+        $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
+        $igv=Igv::first();
+        $banco=Banco::all();
+        $empresa=Empresa::first();
+        $sub_total=0;
+        $boleta=Boleta::find($id);
+        return view('transaccion.venta.boleta.print', compact('boleta','empresa','banco','boleta_registro','igv','sub_total'));
+    }
+
+    public function show_boleta(Request $request,$id)
+    {
+
+       return view('transaccion.venta.facturacion.boleta');
    }
 
-   public function show_boleta(Request $request,$id)
+   public function create_boleta()
    {
 
-     return view('transaccion.venta.facturacion.boleta');
- }
-
- public function create_boleta()
- {
-
-     return view('transaccion.venta.facturacion.create_boleta');
- }
+       return view('transaccion.venta.facturacion.create_boleta');
+   }
 
     /**
      * Show the form for editing the specified resource.

@@ -9,7 +9,19 @@
  @section('content')
 
  <div class="wrapper wrapper-content animated fadeInRight">
-
+        <div class="ibox-title">
+            <div class="ibox-tools">
+                <style type="text/css">
+                    .procesado:before {
+                        content: "Procesado";
+                    }
+                    .procesado:hover:before {
+                        content: "Ver";
+                    }
+                </style>
+                <a class="btn btn-success"  href="{{route('guia_remision.print' , $guia_remision->id)}}" target="_blank">Imprimir</a>
+            </div>
+        </div>
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
@@ -91,36 +103,16 @@
                                         <td>{{$guia_registros->cantidad}}</td>
                                         <td>{{$guia_registros->producto->peso}}</td>
                                     </tr>
-                                    
-                                      @endforeach    
+
+                                      @endforeach
                                 </tbody>
                             </table>
                         </div><!-- /table-responsive -->
 
 
-                        <footer style="padding-top: 100px">
+                        <footer style="padding-top: 150px">
 
                         </footer>
-
-                        <div class="row">
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> Sub Total</p>
-                                <p class="form-control a"> S/.0</p>
-                            </div>
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> Op. Agravada</p>
-                                <p class="form-control a"> S/.00</p>
-                            </div>
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> IGV</p>
-                                <p class="form-control a"> S/.</p>
-                            </div>
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> Importe Total</p>
-                                <p class="form-control a"> S/.</p>
-                            </div>
-                        </div>
-
 
                         <br>
                         <!-- Fin Totales de Productos -->
@@ -134,8 +126,8 @@
                                   <br>
                                   N° $ : {{$bancos->numero_dolares}}<br>
 
-                              </p> 
-                          </div>                  
+                              </p>
+                          </div>
                           @endforeach
 
                       </div>

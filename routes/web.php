@@ -12,6 +12,7 @@ Route::group(
 		Route::get('/' , 'ViewController@home')->name('inicio');
 
 		Route::resource('/almacen','AlmacenController');
+		Route::resource('/apariencia','ConfigController');
 
 		Route::resource('/categoria','CategoriaController');
 		Route::resource('/vendedores','PersonalVentaController');
@@ -49,7 +50,20 @@ Route::group(
 		Route::resource('/cotizacion','CotizacionController');
 		Route::resource('/empresa/banco','BancoController'); //Banco
 
+//COTIZACIOBNES SERVICIO
+		//boleta
+		Route::get('/cotizacion_servicio/create_factura' , 'CotizacionServiciosController@create_factura')->name('cotizacion_servicio.create_factura');
+		Route::post('/cotizacion_servicio/store_factura','CotizacionServiciosController@store_factura')->name('cotizacion_servicio.store_factura');
 
+		// FACTURA
+		Route::get('/cotizacion_servicio/create_boleta' , 'CotizacionServiciosController@create_boleta')->name('cotizacion_servicio.create_boleta');
+		Route::post('/cotizacion_servicio/store_boleta','CotizacionServiciosController@store_boleta')->name('cotizacion_servicio.store_boleta');
+
+		Route::resource('/cotizacion_servicio','CotizacionServiciosController');
+
+
+//FACTURACION ELECTRONICA
+		Route::resource('/facturacion_electronica','FacturacionElectronicaController');
 
 		Route::resource('/credito','CreditoController');
 		Route::resource('/debito','DebitoController');
@@ -58,14 +72,21 @@ Route::group(
 
 		// Route::get('facturacion/boleta/{id}' , 'FacturacionController@show_boleta')->name('boleta');
 		// Route::get('facturacion/create_boleta/' , 'FacturacionController@create_boleta')->name('create.boleta');
+		Route::get('/facturacion/print/{id}','FacturacionController@print')->name('facturacion.print');
 		Route::resource('/facturacion','FacturacionController');
+		Route::get('/boleta/print/{id}','BoletaController@print')->name('boleta.print');
 		Route::resource('/boleta','BoletaController');
 
 		/*Guia Remision*/
+		Route::get('/guia_remision/print/{id}' , 'GuiaRemisionController@print')->name('guia_remision.print');
 		Route::resource('/guia_remision','GuiaRemisionController');
+
+
+
 		Route::get('guias_remision/seleccionar', 'GuiaRemisionController@seleccionar')->name('guia_remision.seleccionar');
 		Route::put('cotizacion/aprobar/{id}', 'CotizacionController@aprobar')->name('cotizacion.aprobar');
 		Route::get('/guias_remision/creates/{id}' , 'GuiaRemisionController@cotizacion')->name('guias_remision.create');
+		// Route::get('/guia_remision/print/{id}' , 'GuiaRemisionController@print')->name('guias_remision.print');
 
 		/**/
 		Route::resource('/vehiculo','VehiculoController');
@@ -80,7 +101,15 @@ Route::group(
 
 		Route::post('agregado_rapido/personal_store','AgregadoRapidoController@personal_store')->name('agregado_rapido.personal_store');
 
+		//MailBox
+
+		Route::get('sendmail','MailBoxController@index')->name('sendmail');
+		Route::Post('sendmail/enviar','MailBoxController@send')->name('enviarmail');
+
 		//Garantias
+
+		Route::POST('garantia_guia_ingreso/email/enviar','GarantiaGuiaIngresoController@enviar')->name('garantia_ingreso.enviar');
+		Route::get('garantia_guia_ingreso/email/{id}','GarantiaGuiaIngresoController@email')->name('guia_ingreso.email');
 		Route::get('garantia_guia_ingreso/pdf/{id}' , 'GarantiaGuiaIngresoController@pdf')->name('pdf_ingreso');
 		Route::get('garantia_guia_ingreso/impresionIngreso/{id}' , 'GarantiaGuiaIngresoController@print')->name('impresiones_ingreso');
 		Route::put('garantia_guia_ingreso/{guia}', 'GarantiaGuiaIngresoController@actualizar')->name('garantia_guia_ingreso.actualizar');

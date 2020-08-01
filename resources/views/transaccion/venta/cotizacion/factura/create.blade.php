@@ -7,21 +7,21 @@
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head>
-<script type="text/javascript">
-$(document).ready(function() {
+    <script type="text/javascript">
+        $(document).ready(function() {
 
-    $("form").keypress(function(e) {
-        if (e.which == 13) {
-            setTimeout(function() {
-            e.target.value += ' | ';
-          }, 4);
-          e.preventDefault();
-        }
-    });
+            $("form").keypress(function(e) {
+                if (e.which == 13) {
+                    setTimeout(function() {
+                        e.target.value += ' | ';
+                    }, 4);
+                    e.preventDefault();
+                }
+            });
 
 
-});
-</script>
+        });
+    </script>
 </head>
 @section('content')
 @if (session('repite'))
@@ -305,51 +305,55 @@ $(document).ready(function() {
                                                 </div>
                                             </div>
 
+                                            <div class="table-responsive">
+                                                <table   cellspacing="0" class="table tables  " {{-- style="width: 1150px" --}}>
+                                                    <thead>
+                                                        <tr>
+                                                            <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+                                                            <th style="width: 400px;font-size: 13px">Articulo</th>
+                                                            <th style="width: 70px;font-size: 13px">Stock</th>
+                                                            <th style="width: 40px;font-size: 13px">Cantidad</th>
+                                                            <th style="width: 100px;font-size: 13px">Precio</th>
+                                                            <th style="width: 100px;font-size: 13px">Dcto</th>
+                                                            <th style="width: 100px;font-size: 13px">PU. Dcto.</th>
+                                                            <th style="width: 100px;font-size: 13px">PU. Com.</th>
+                                                            <th style="width: 100px;font-size: 13px">Total</th>
+                                                        </tr>
+                                                    </thead>
+                                                    <tbody>
+                                                        <tr>
+                                                            <td>
+                                                                <input type='checkbox' class="case">
+                                                            </td>
+                                                            <td>
+                                                                <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)"  autocomplete="off">
+                                                                <datalist id="browsers2" >
+                                                                    @foreach($productos as $index => $producto)
+                                                                    <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}">
+                                                                        @endforeach
+                                                                    </datalist>
 
-                                            <table 	 cellspacing="0" class="table table-striped ">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-                                                        <th style="width: 600px;font-size: 13px">Articulo</th>
-                                                        <th style="width: 100px;font-size: 13px">Stock</th>
-                                                        <th style="width: 100px;font-size: 13px">Cantidad</th>
-                                                        <th style="width: 100px;font-size: 13px">Precio</th>
-                                                        <th style="width: 100px;font-size: 13px">Dcto</th>
-                                                        <th style="width: 100px;font-size: 13px">PU. Dcto.</th>
-                                                        <th style="width: 100px;font-size: 13px">PU. Com.</th>
-                                                        <th style="width: 100px;font-size: 13px">Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <input type='checkbox' class="case">
-                                                        </td>
-                                                        <td>
-                                                            <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)"  autocomplete="off">
-                                                            <datalist id="browsers2" >
-                                                                @foreach($productos as $index => $producto)
-                                                                <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}">
-                                                                    @endforeach
-                                                                </datalist>
+                                                                </td>
+                                                                <td>
+                                                                    <input type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
+                                                                </td>
+                                                                <td>
+                                                                    <input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
+                                                                </td>
+                                                                <td>
+                                                                    <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
+                                                                </td>
+                                                                <td>
+                                                                 <div style="position: relative; " > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
+                                                                 </div>
+                                                                 <div  class="div_check" > 
+                                                                     <input class="check"  type='checkbox' id='check0' name='check[]'    onclick="multi(0)" style="" autocomplete="off"/>
+                                                                 </div>
 
-                                                            </td>
-                                                            <td>
-                                                                <input type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
-                                                            </td>
-                                                            <td>
-                                                                <input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
-                                                            </td>
-                                                            <td>
-                                                                <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
-                                                            </td>
-                                                            <td>
-                                                                <input type='checkbox' id='check0' name='check[]'  class="form-control"  onclick="multi(0)"  autocomplete="off"/>
-                                                                <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
-                                                                <input type='hidden' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
-                                                                <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
-                                                            </td>
-                                                            <td>
+                                                                 <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
+                                                                 <input type='hidden' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
+                                                             </td>
+                                                             <td>
                                                                 <input type='text' id='precio_unitario_descuento0' name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento0 form-control"  required  autocomplete="off" />
                                                             </td>
                                                             <input type='hidden' name="comision[]" id='comision0'  readonly="readonly" class="form-control"  required  autocomplete="off" />
@@ -401,8 +405,8 @@ $(document).ready(function() {
                                                 </table>
 
                                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
-                                                <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                                                <a onclick="print()"><button class="btn btn-warning float-right" ><i class="fa fa-cloud" aria-hidden="true">Imprimir</i></button></a>
+                                                <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;{{-- 
+                                                <a onclick="print()"><button class="btn btn-warning float-right" ><i class="fa fa-cloud" aria-hidden="true">Imprimir</i></button></a> --}}
                                                 <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
 
 
@@ -414,6 +418,10 @@ $(document).ready(function() {
                         </div>
                         <style>
                             .form-control{border-radius: 10px}
+                            .text_des{border-radius: 10px;border: 1px solid #e5e6e7;width: 80px;padding: 6px 12px;}
+                            .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
+                            .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
+                            .check:checked {background: #0375bd6b;}
                         </style>
 
                         <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
@@ -453,10 +461,14 @@ $(document).ready(function() {
                                 <input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
                                 </td>
                                 <td>
-                                <input type='checkbox' id='check${i}' name='check[]'  class="form-control"  onclick="multi(${i})"  autocomplete="off"/>
-                                <input type='hidden' id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
+                                <div style="position: relative;" > 
+                                <input class="text_des"type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="" required onkeyup="multi(${i})"  autocomplete="off"/>
+                                </div>
+                                <div  class="div_check"> 
+                                <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
+                                </div>
+                                <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
                                 <input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
-                                <input type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="form-control" required onkeyup="multi(${i})"  autocomplete="off"/>
                                 </td>
                                 <td>
                                 <input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' readonly="readonly" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />

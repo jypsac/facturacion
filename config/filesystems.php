@@ -53,7 +53,15 @@ return [
             'root' => storage_path('app/public/'),
         ],
 
+        'garantia_guia_ingreso' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/'),
+        ],
 
+        'mailbox' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/'),
+        ],
 
         'public' => [
             'driver' => 'local',

@@ -9,4 +9,8 @@ class Boleta_registro extends Model
     protected $table='boleta_registro';
 
     protected $guarded=[];
+    
+     public function producto(){
+        return $this->belongsTo(producto::class,'producto_id');
+    } 
 }

@@ -98,7 +98,7 @@
                   						<div class="input-group-prepend">
                     						<span class="input-group-addon">%</span>
                   						</div>
-                  					<input type="text" class="form-control" name="descuento1" value="{{$producto->descuento1}}" disabled="disabled">
+                  					<input type="number" class="form-control" name="descuento1" value="{{$producto->descuento1}}" disabled="disabled">
                 				</div>
                    			 </div>
 
@@ -108,7 +108,7 @@
                   					<div class="input-group-prepend">
                     					<span class="input-group-addon">%</span>
                  					 </div>
-                  					<input type="text" class="form-control" value="{{$producto->descuento2}}" disabled="disabled">
+                  					<input type="number" class="form-control" value="{{$producto->descuento2}}" disabled="disabled">
                  				</div>
                   			  </div>
                     			
@@ -140,6 +140,12 @@
 	                  				 <input type="text" class="form-control" name="unidad_medida" value="{{$producto->unidad_i_producto->medida}}"  disabled="disabled">
                					 </div>
                   			  </div>
+                          <label class="col-sm-2 col-form-label">Peso:</label>
+                              <div class="col-sm-4">
+                                <div class="input-group m-b">
+                             <input type="text" class="form-control" name="peso" value="{{$producto->peso}}"  disabled="disabled">
+                         </div>
+                          </div>
 
                    			
                     			

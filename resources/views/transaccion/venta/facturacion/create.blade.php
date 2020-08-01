@@ -6,7 +6,23 @@
 @section('href_accion', route('facturacion.index'))
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<head>
+    <script type="text/javascript">
+        $(document).ready(function() {
 
+            $("form").keypress(function(e) {
+                if (e.which == 13) {
+                    setTimeout(function() {
+                        e.target.value += ' | ';
+                    }, 4);
+                    e.preventDefault();
+                }
+            });
+
+
+        });
+    </script>
+</head>
 @section('content')
     @if (session('repite'))
         <div class="alert alert-success">
@@ -225,7 +241,7 @@
                                         <tr>
                                             <td>Cliente</td>
                                             <td>:</td>
-                                            <td><input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off">
+                                            <td><input list="browsersc1" class="form-control m-b" name="cliente" required="required" value="{{ old('nombre')}}" autocomplete="off">
                                             <datalist id="browsersc1" >
                                                 @foreach($clientes as $cliente)
                                                     <option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
@@ -261,16 +277,33 @@
                                             <td>:</td>
                                             <td><input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}"></td>
 
+                                            <td>Guia remision</td>
+                                            <td>:</td>
+                                            <td> <input type="text" class="form-control" value="0" name="guia_r"></td>
+
+                                            
+                                        </tr>
+                                        <tr>
+                                            <td>Moneda</td>
+                                            <td>:</td>
+                                            <td><select class="form-control" name="moneda" required="required">
+                                                    @foreach($moneda as $monedas)
+                                                    <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
+                                                    @endforeach
+                                                    <select></td>
+
                                             <td>Fecha</td>
                                             <td>:</td>
                                             <td><input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly"></td>
                                         </tr>
                                         <tr>
+                                            
                                             <td>Observacion</td>
                                             <td>:</td>
-                                            <td colspan="4"><textarea class="form-control" name="observacion" id="observacion"  rows="1"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
-                                        </div></td>
+                                            <td colspan="4"><textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
+                                            </td>
                                         </tr>
+                                        </div>
                                         
                                         
                                     </tbody>
@@ -278,12 +311,11 @@
 
                             {{--FIn Cabecera --}}
                             <div class="table-responsive">
-                                <table 	 cellspacing="0" class="table tables  " style="width: 1500px">
+                                <table 	 cellspacing="0" class="table tables  " style="width: 1100px">
                                     <thead>
                                     <tr>
                                         <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
                                         <th style="width: 400px">Articulo</th>
-                                        <th>Nr Serie</th>
                                         <th>Stock</th>
                                         <th>Cantidad</th>
                                         <th>Precio</th>
@@ -305,11 +337,10 @@
                                                     <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}">
                                                 @endforeach
                                             </datalist>
+                                            <textarea type='text' id='numero_serie0'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
 
                                         </td>
-                                        <td>
-                                            <input type='text' id='numero_serie0'  name='numero_serie[]' class="form-control" required  autocomplete="off"/>
-                                        </td>
+                                        
                                         <td>
                                             <input  style="width: 76px" type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
                                         </td>
@@ -322,10 +353,10 @@
 
 
                                         <td>
-                                            <div style="position: relative;" > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/></div>
+                                            <div style="position: relative; " > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/></div>
                                            
                 
-                                            <div  class="div_check"> 
+                                            <div  class="div_check" > 
                                                 <input class="check"  type='checkbox' id='check0' name='check[]'    onclick="multi(0)" style="" autocomplete="off"/></div>
                                             <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
                                             <input type='hidden' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
@@ -353,7 +384,6 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                         <td>Subtotal :</td>
                                         <td><input id='sub_total'  disabled="disabled"  style="width: 76px"  class="form-control" required /></td>
                                     </tr>
@@ -365,12 +395,10 @@
                                         <td></td>
                                         <td></td>
                                         <td></td>
-                                        <td></td>
                                         <td>IGV :</td>
                                         <td><input id='igv'  style="width: 76px"   disabled="disabled" class="form-control" required /></td>
                                     </tr>
                                     <tr  align="center">
-                                        <td></td>
                                         <td></td>
                                         <td></td>
                                         <td></td>
@@ -399,8 +427,8 @@
     <style>
         .form-control{border-radius: 10px}
         .text_des{border-radius: 10px;border: 1px solid #e5e6e7;width: 80px;padding: 6px 12px;}
-        .check{-webkit-appearance: none;height: 28px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px}
-        .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;}
+        .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
+        .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
         .check:checked {background: #0375bd6b;}
     </style>
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
@@ -428,11 +456,8 @@
             <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}" >
 							@endforeach
             </datalist>
+             <textarea type='text' id='numero_serie0'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
     </td>
-
-    <td>
-        <input type='text' id='numero_serie${i}' name='numero_serie[]'  class="form-control" required  autocomplete="off"/>
-				</td>
     <td>
         <input type='text' style="width: 76px"  id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
 				</td>

@@ -40,7 +40,7 @@
                                     <th>Cliente</sth>
                                         <th>N° Cotizacion</th>
                                         {{-- <th>Moneda</th> --}}
-                                        <th>Cod. Comision</th>
+                                        {{-- <th>Cod. Comision</th> --}}
                                         <th>Fecha</th>
                                         <th>Ver</th> 
                                         <th>Estado</th>
@@ -55,9 +55,9 @@
                                         <td>{{$cotizacions->id}}</td>
                                         <td>{{$cotizacions->cliente->numero_documento}}</td>
                                         <td>{{$cotizacions->cliente->nombre}}</td>
-                                        <td>Proximamte</td>
+                                        <td>{{$cotizacions->cod_comision}}</td>
                                         {{-- <td>{{$cotizacions->moneda->nombre}}</td> --}}
-                                        <td>Proximamente</td>
+                                        {{-- <td>Proximamente</td> --}}
                                         <td>{{$cotizacions->created_at}}</td>
                                         <td><center><a href="{{route('cotizacion.show',$cotizacions->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                         <td>

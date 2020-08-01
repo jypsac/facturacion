@@ -19,7 +19,7 @@ class CreateBoletaRegistroTable extends Migration
             $table->unsignedBigInteger('boleta_id');
             $table->foreign('boleta_id')->references('id')->on('boleta')->onDelete('cascade');
 
-            $table->string('numero_serie');
+            $table->string('numero_serie')->nullable();
 
             $table->unsignedBigInteger('producto_id');
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
