@@ -13,25 +13,23 @@
 	
 	<div class="mail-box">
 		
-			<form action ="{{route('enviarmail')}}" method="POST" enctype="multipart/form-data">
+			<form action ="{{route('enviarmail')}}" method="POST" enctype="multipart/form-data" >
                 @csrf
                 <div class="mail-body">
     			<div class="form-group row">
                     <label class="col-sm-2 col-form-label">Para:</label>
-        			     <div class="col-sm-10"><input type="text" class="form-control" name="enviara"></div>
+        			     <div class="col-sm-10"><input type="text" required="" class="form-control" name="enviara"></div>
     			</div>
     			<div class="form-group row"><label class="col-sm-2 col-form-label">Tema:</label>
-       		 		<div class="col-sm-10"><input type="text" class="form-control" name="titulo" ></div>
+       		 		<div class="col-sm-10"><input type="text" required="" class="form-control" name="titulo" ></div>
     			</div>
 		</div>
 			<div class="mail-text h-200">
-                <textarea name="mensaje" class="summernote" id="contents" >         
+                <textarea name="mensaje" required="" class="summernote" id="contents" >         
                 </textarea>
             </div>	
             <br/>
     		<div class="fileinput fileinput-new container" data-provides="fileinput" >
-				<span class="btn btn-default btn-file"><span class="fileinput-new">Select file</span>
-				<span class="fileinput-exists">Change</span>
                     <input type="file" multiple name="archivo[]"/></span>
 				<span class="fileinput-filename"></span>
 				<a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
@@ -45,7 +43,6 @@
                 </a>
 			</div>
     		</form>
-
 	</div>
 </div>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

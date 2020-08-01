@@ -41,8 +41,8 @@ class MailboxController extends Controller
         $mailer =new \Swift_Mailer($transport);
 
          $newfile = $request->file('archivo');
- 
-        foreach ($newfile as $file) {
+        if($request->hasfile('archivo')){
+            foreach ($newfile as $file) {
             $nombre =  $file->getClientOriginalName();
             \Storage::disk('mailbox')->put($nombre,  \File::get($file));
             $data[] = $nombre;
@@ -52,6 +52,12 @@ class MailboxController extends Controller
                 $message->attach(\Swift_Attachment::fromPath($attachment));
             }
         }
+        }else{
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+
+        }
+
+        
              if($mailer->send($message)){
                 return back();  
             }   
