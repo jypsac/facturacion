@@ -115,7 +115,7 @@ class ServiciosController extends Controller
             $destinationPath = public_path('/archivos/imagenes/servicios/');
             $image1->move($destinationPath,$name);
         }else{
-            $name=$request->get('foto');
+            $name=$request->get('foto_original');
         }
         $servicio= Servicios::find($id);
         $servicio->nombre=$request->get('nombre');
