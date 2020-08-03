@@ -19,6 +19,7 @@ class CreateClientesTable extends Migration
             $table->string('direccion');
             $table->string('email')->unique()->nullable();
             $table->string('telefono')->nullable();
+            $table->string('anexo')->nullable();
             $table->string('celular')->nullable();
             $table->string('empresa')->nullable();
             $table->string('documento_identificacion');
@@ -31,7 +32,7 @@ class CreateClientesTable extends Migration
             $table->string('cod_postal')->nullable();
             $table->string('aniversario')->nullable();
             $table->string('fecha_registro')->nullable();
-            // 
+            //
             $table->timestamps();
         });
 
