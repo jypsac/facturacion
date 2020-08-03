@@ -248,7 +248,7 @@ class GarantiaGuiaIngresoController extends Controller
         $port = 465;
         $encryption = 'ssl';
         $yourEmail = 'danielrberru@gmail.com'; // = $request->yourmail
-        $yourPassword = ''; //colocar el password, 
+        $yourPassword = 'digimonheroes@1'; //colocar el password, 
 
 
         //Envio del mail al corre 
@@ -258,36 +258,35 @@ class GarantiaGuiaIngresoController extends Controller
         $sendto = $request->sendto;
         $titulo = $request->titulo;
         $mensaje = $request->mensaje;
-        
-      
-        //$newfile = $request->file('archivo');
- 
-        
-            //$nombre =  $file->getClientOriginalName();
+        $file = $request->id;
 
-            //\Storage::disk('archivo')->put($nombre,  \File::get($file));
+        $pdfile = storage_path().'/app/public/'.$file.'.pdf';
 
-            //$arc =  $file->getClientOriginalName();
+        $newfile = $request->file('archivo');
 
-            $file = $request->id;
-            $news[] = storage_path().'/app/public/'.$file.'.pdf';
-            $message = (new \Swift_Message($yourEmail)) // nombre arriba 
-             ->setFrom([ $yourEmail => $titulo])
-             ->setTo([ $sendto ])
-             
-             ->setBody($mensaje, 'text/html');
-             
-
-             foreach ($news as $attachment) {
-                $message->attach(\Swift_Attachment::fromPath($attachment));
+        if($request->hasfile('archivo')){
+            foreach ($newfile as $dofile) {
+                $nombre =  $dofile->getClientOriginalName();
+                \Storage::disk('mailbox')->put($nombre,  \File::get($dofile));
+                $news[] = storage_path().'/app/public/'.$nombre;
+                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+                $message->attach(\Swift_Attachment::fromPath($pdfile));
+                 foreach ($news as $attachment) {
+                    $message->attach(\Swift_Attachment::fromPath($attachment));
+                }
             }
+        }else{
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+            $message->attach(\Swift_Attachment::fromPath($pdfile));
+
+        }
+
+        if($mailer->send($message)){
+           return redirect()->route('garantia_guia_ingreso.index');  
+        }   
+           return "Something went wrong :(";
             
-             if($mailer->send($message)){
-                return redirect()->route('garantia_guia_ingreso.index.');  
-            }   
-                return "Something went wrong :(";
             
-        
          
     }
 

@@ -25,8 +25,6 @@ class MailboxController extends Controller
     }
     public function send(Request $request){
 
-
-
         $smtpAddress = 'smtp.gmail.com'; // = $request->smtp
         $port = 465;
         $encryption = 'ssl';
@@ -43,25 +41,23 @@ class MailboxController extends Controller
          $newfile = $request->file('archivo');
         if($request->hasfile('archivo')){
             foreach ($newfile as $file) {
-            $nombre =  $file->getClientOriginalName();
-            \Storage::disk('mailbox')->put($nombre,  \File::get($file));
-            $data[] = $nombre;
-            $news[] = storage_path().'/app/public/'.$nombre;
-            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
-             foreach ($news as $attachment) {
-                $message->attach(\Swift_Attachment::fromPath($attachment));
+                $nombre =  $file->getClientOriginalName();
+                \Storage::disk('mailbox')->put($nombre,  \File::get($file));
+ 
+                $news[] = storage_path().'/app/public/'.$nombre;
+                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+                 foreach ($news as $attachment) {
+                    $message->attach(\Swift_Attachment::fromPath($attachment));
+                }
             }
-        }
         }else{
             $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
 
         }
-
-        
-             if($mailer->send($message)){
-                return back();  
-            }   
-                return "Something went wrong :(";
+        if($mailer->send($message)){
+            return back();  
+        }   
+         return "Something went wrong :(";
             
     }
 
