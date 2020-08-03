@@ -51,11 +51,11 @@ Route::group(
 		Route::resource('/empresa/banco','BancoController'); //Banco
 
 //COTIZACIOBNES SERVICIO
-		//boleta
+		//FACTURA
 		Route::get('/cotizacion_servicio/create_factura' , 'CotizacionServiciosController@create_factura')->name('cotizacion_servicio.create_factura');
 		Route::post('/cotizacion_servicio/store_factura','CotizacionServiciosController@store_factura')->name('cotizacion_servicio.store_factura');
 
-		// FACTURA
+		// boleta
 		Route::get('/cotizacion_servicio/create_boleta' , 'CotizacionServiciosController@create_boleta')->name('cotizacion_servicio.create_boleta');
 		Route::post('/cotizacion_servicio/store_boleta','CotizacionServiciosController@store_boleta')->name('cotizacion_servicio.store_boleta');
 

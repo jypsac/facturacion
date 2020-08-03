@@ -35,7 +35,7 @@ class CotizacionServiciosController extends Controller
         $servicios=Servicios::where('estado_anular',0)->get();
 
         foreach ($servicios as $index => $servicio) {
-            $utilidad[]=$servicio->precio*($servicio->utilidad-$servicio->descuento1)/100;
+            $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
             $array[]=$servicio->precio+$utilidad[$index];
         }
 
@@ -55,9 +55,9 @@ class CotizacionServiciosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store_factura(Request $request)
     {
-        //
+        return $request;
     }
 
     /**
@@ -66,9 +66,26 @@ class CotizacionServiciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function create_boleta()
     {
-        //
+        $servicios=Servicios::where('estado_anular',0)->get();
+        $igv_proceso=Igv::first();
+        $igv_total=$igv_proceso->igv_total;
+
+        foreach ($servicios as $index => $servicio) {
+            $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+            $igv[]=$servicio->precio*$igv_total/100;
+            $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+        }
+
+        $forma_pagos=Forma_pago::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
+        $moneda=Moneda::all();
+        $personales=Personal::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
+        $igv=Igv::first();
+
+        return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
     }
 
     /**
@@ -77,21 +94,10 @@ class CotizacionServiciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
-    {
-        //
-    }
 
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
+    public function store_boleta(Request $request)
     {
-        //
+        return $request;
     }
 
     /**

@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title', 'Cotizacion Servicio - Factura')
-@section('breadcrumb', 'Cotizacion Servicio - Factura')
-@section('breadcrumb2', 'Cotizacion Servicio - Factura')
+@section('title', 'Cotizacion Servicio - Boleta')
+@section('breadcrumb', 'Cotizacion Servicio - Boleta')
+@section('breadcrumb2', 'Cotizacion Servicio - Boleta')
 @section('href_accion', route('cotizacion_servicio.index') )
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -51,7 +51,7 @@
 
 <div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
-    <a href="{{route('cotizacion_servicio.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Boleta</span></a>
+    <a href="{{route('cotizacion_servicio.create_factura')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a>
 
 </div>
 <!-- Modal CLiente -->
@@ -201,7 +201,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('cotizacion_servicio.store_factura')}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('cotizacion_servicio.store_boleta')}}"  enctype="multipart/form-data" method="post">
                         @csrf
                         <div class="row">
                             <div class="col-sm-6">
@@ -356,7 +356,7 @@
 
                                                     </tbody><br>
                                                     <tbody>
-                                                        <tr style="background-color: #f5f5f500;" align="center">
+                                                        {{-- <tr style="background-color: #f5f5f500;" align="center">
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
@@ -373,7 +373,7 @@
                                                             <td></td>
                                                             <td>IGV :</td>
                                                             <td><input id='igv'  disabled="disabled" class="form-control" required /></td>
-                                                        </tr>
+                                                        </tr> --}}
                                                         <tr  align="center">
                                                             <td></td>
                                                             <td></td>
@@ -560,19 +560,19 @@
             var multiplier2 = 100;
             var total_tt = Math.round(total_t * multiplier2) / multiplier2;
 
-            $('#sub_total').val(total_tt);
+            $('#total_final').val(total_tt);
 
-            var igv_valor={{$igv->renta}};
-            var subtotal = document.querySelector(`#sub_total`).value;
-            var igv=subtotal*igv_valor/100;
+            // var igv_valor={{$igv->renta}};
+            // var subtotal = document.querySelector(`#sub_total`).value;
+            // var igv=subtotal*igv_valor/100;
 
-            var igv_decimal = Math.round(igv * multiplier2) / multiplier2;
-            var end=igv_decimal+parseFloat(subtotal);
+            // var igv_decimal = Math.round(igv * multiplier2) / multiplier2;
+            // var end=igv_decimal+parseFloat(subtotal);
 
-            var end2 = Math.round(end * multiplier2) / multiplier2;
+            // var end2 = Math.round(end * multiplier2) / multiplier2;
 
-            document.getElementById("igv").value = igv_decimal;
-            document.getElementById("total_final").value = end2;
+            // document.getElementById("igv").value = igv_decimal;
+            // document.getElementById("total_final").value = end2;
 
         }
     </script>
