@@ -13,10 +13,10 @@ class VehiculostableSeeder extends Seeder
     {
         DB::table('vehiculos')->insert([
 			'id' => 1 ,
-			'placa' => 'A7T-601',
-            'marca' => 'Daewond',
-            'modelo' => 'Raser',
-			'año' => '1995',
+			'placa' => 'B5R365',
+            'marca' => 'TOYOTA  ',
+            'modelo' => 'LAN CRUICE',
+			'año' => '2000',
             'estado_activo' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
@@ -43,6 +43,6 @@ class VehiculostableSeeder extends Seeder
             'updated_at' => date('2019-08-01 00:00:00')
         ]);
 
-        
+
     }
 }

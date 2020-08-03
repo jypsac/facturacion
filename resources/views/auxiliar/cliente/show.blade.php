@@ -22,81 +22,81 @@
         <div class="col-lg-12">
 
           <div class="row">
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Nombre:</h4>
                <p>{{$cliente_show->nombre}}</p>
             </div>
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Direccion:</h4>
                <p>{{$cliente_show->direccion}}</p>
             </div>
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Email:</h4>
           <p>{{$cliente_show->email}}</p>
             </div>
           </div><hr>
 
           <div class="row">
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Pais:</h4>
           <p>{{$cliente_show->pais}}</p>
             </div>
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Departamento:</h4>
           <p>{{$cliente_show->departamento}}</p>
             </div>
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Ciudad:</h4>
           <p>{{$cliente_show->ciudad}}</p>
             </div>
           </div><hr>
 
           <div class="row">
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Codigo Postal:</h4>
           <p>{{$cliente_show->cod_postal}}</p>
             </div>
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
              <h4>Telefono:</h4>
           <p>{{$cliente_show->numero_documento}}</p>
             </div>
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Celular:</h4>
           <p>{{$cliente_show->celular}}</p>
             </div>
-            
+
           </div><hr>
 
           <div class="row">
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Documento De Identifiacion:</h4>
           <p>{{$cliente_show->documento_identificacion}}</p>
             </div>
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
              <h4>Numero Documento:</h4>
           <p>{{$cliente_show->numero_documento}}</p>
             </div>
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Tipo de Cliente:</h4>
           <p>{{$cliente_show->tipo_cliente}}</p>
             </div>
-            
+
           </div><hr>
 
           <div class="row">
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
               <h4>Fecha de Aniversario:</h4>
           <p>{{$cliente_show->aniversario}}</p>
             </div>
-            <div class="col-lg-4"> 
+            <div class="col-lg-4">
              <h4>Fecha de Registro:</h4>
           <p>{{$cliente_show->fecha_registro}}</p>
             </div>
-            <!-- <div class="col-lg-4"> 
+            <!-- <div class="col-lg-4">
               <h4>Tipo de Cliente:</h4>
           <p>{{$cliente_show->tipo_cliente}}</p>
             </div> -->
-            
+
           </div><hr>
 
 
@@ -125,7 +125,7 @@
               <form action="{{ route('contacto.destroy', $contacto->id)}}" method="POST">
                 @csrf
              @method('delete')
-             <input type="text" style=" width: 0px" hidden="hidden" name="id_cli" value="{{$contacto->clientes_id}}">  
+             <input type="text" style=" width: 0px" hidden="hidden" name="id_cli" value="{{$contacto->clientes_id}}">
                 <button type="submit" class="btn btn-s-m btn-danger"><i class="fa fa-trash-o"></i></button>
                </form>
                <th>{{-- <button type="" class="btn btn-s-m btn-info"></button> --}}
@@ -148,23 +148,23 @@
     	  <h4>Email:</h4>
           <p>{{$contacto->email}}</p><hr>
     	</div>
-     
-    	
+
+
     </div>
     @endforeach
     </div>
-                           
+
 </div>
 </div>
 {{-- Modal Contacto Principal --}}
-                            
+
                             <div id="modal-form" class="modal fade" aria-hidden="true">
                                 <div class="modal-dialog" style="margin-top: 12%">
                                     <div class="modal-content">
                                         <div class="modal-body">
-                                            
+
                                              <div class="ibox-content float-e-margins">
-                        
+
                                                <h3 class="font-bold col-lg-12" align="center">
                                               ¿Esta Seguro que Deseas Cambiar como "Contacto Principal"?
                                                </h3>
@@ -181,6 +181,7 @@
                                 </div>
                             </div>
 {{-- Fin Modal Contacto Principal --}}
+
 
 <!-- Mainly scripts -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

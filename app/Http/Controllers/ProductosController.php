@@ -170,7 +170,7 @@ class ProductosController extends Controller
             $destinationPath = public_path('/archivos/imagenes/productos/');
             $image1->move($destinationPath,$name);
         }else{
-            $name='sin_foto';
+            $name=$request->get('foto_original');
         }
 
         $peso=$request->get('peso');
