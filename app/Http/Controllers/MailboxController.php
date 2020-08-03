@@ -30,7 +30,7 @@ class MailboxController extends Controller
         $encryption = 'ssl';
         $yourEmail = 'danielrberru@gmail.com';
         $mailbackup = ''; // = $request->yourmail
-        $yourPassword = 'digimonheroes@1';
+        $yourPassword = '';
         $sendto = $request->enviara;
         $titulo = $request->titulo;
         $mensaje = $request->mensaje;

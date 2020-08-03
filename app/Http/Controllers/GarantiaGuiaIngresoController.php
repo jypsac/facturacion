@@ -248,7 +248,7 @@ class GarantiaGuiaIngresoController extends Controller
         $port = 465;
         $encryption = 'ssl';
         $yourEmail = 'danielrberru@gmail.com'; // = $request->yourmail
-        $yourPassword = 'digimonheroes@1'; //colocar el password, 
+        $yourPassword = ''; //colocar el password, 
 
 
         //Envio del mail al corre 
