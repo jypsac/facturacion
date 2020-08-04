@@ -24,7 +24,7 @@ class AddForeignKeyCotizacionServicioFacturaRegistroTable extends Migration
             // $table->integer('stock'); STOCK INFINITO
             $table->double('promedio_original',17,2);
             $table->double('precio',17,2);
-            $table->integer('cantidad');
+
             $table->integer('descuento');
             $table->double('precio_unitario_desc',17,2);
             $table->integer('comision');

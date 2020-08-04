@@ -71,9 +71,6 @@ class CotizacionController extends Controller
      */
     public function store_factura(Request $request)
     {
-        //El input esta activo
-
-        //  return $request;
 
         $print=$request->get('print');
 

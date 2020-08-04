@@ -336,11 +336,12 @@
                                                             </td>
                                                             <td>
                                                                 {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
-                                                                <div style="position: relative; " > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
+                                                                <div style="position: relative; " > <input class="text_des" type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
                                                                  </div>
                                                                  <div class="div_check" >
                                                                      <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
                                                                  </div>
+                                                                 <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
                                                             </td>
                                                             <td>
                                                                 <input type='text' id='descuento_unitario0' name='descuento_unitario[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
@@ -387,8 +388,8 @@
                                                 </table>
 
                                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
-                                                <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;{{--
-                                                <a onclick="print()"><button class="btn btn-warning float-right" ><i class="fa fa-cloud" aria-hidden="true">Imprimir</i></button></a> --}}
+                                                <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
+                                                <a onclick="print()"><button class="btn btn-warning" ><i class="fa fa-cloud" aria-hidden="true">Imprimir</i></button></a>
                                                 <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
 
 
@@ -446,12 +447,12 @@
                                      <div class="div_check" >
                                          <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
                                      </div>
+                                     <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
                                 </td>
 
                                 <td>
                                 <input type='text' id='descuento_unitario${i}' name='descuento_unitario[]' readonly="readonly" class="descuento_unitario${i} form-control"  required  autocomplete="off" />
                                 </td>
-
 
 
                                 <td>
@@ -539,12 +540,14 @@
                 var precio_final=parseFloat(descuento_p)+parseFloat(precio) ;
                 var precio_final_redondeado=Math.round(precio_final * multiplier) / multiplier;
                 document.getElementById(`total${a}`).value = precio_final_redondeado;
+                document.getElementById(`check_descuento${a}`).value = descuento;
             }else{
                 document.getElementById(`descuento_unitario${a}`).value = precio;
                 var descuento_p=precio*comision/100;
                 var precio_final=parseFloat(descuento_p)+parseFloat(precio) ;
                 console.log(descuento_p);
                 var precio_final_redondeado=Math.round(precio_final * multiplier) / multiplier;
+                document.getElementById(`check_descuento${a}`).value = 0;
                 document.getElementById(`total${a}`).value = precio_final_redondeado;
             }
 
