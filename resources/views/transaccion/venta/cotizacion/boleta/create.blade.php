@@ -355,7 +355,7 @@
                                                                 <td>
                                                                    <div style="position: relative; " > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
                                                                    </div>
-                                                                   <div  class="div_check" > 
+                                                                   <div  class="div_check" >
                                                                        <input class="check"  type='checkbox' id='check0' name='check[]'    onclick="multi(0)" style="" autocomplete="off"/>
                                                                    </div>
 
@@ -423,7 +423,7 @@
 
                        <a onclick="print()">
                         <button class="btn btn-warning float-right"><i class="fa fa-cloud"
-                         aria-hidden="true">Imprimir</i>
+                         aria-hidden="true">Imprimirsss</i>
                      </button>
                  </a>
 
@@ -487,14 +487,14 @@
         <td>
         <div style="position: relative; " > <input class="text_des"type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"  onkeyup="multi(${i})" />
         </div>
-        <div  class="div_check" > 
+        <div  class="div_check" >
         <input class="check"  type='checkbox' id='check${i}' name='check[]'    onclick="multi(${i})" style="" autocomplete="off"/>
         </div>
 
         <input type='hidden' id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
         <input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
         </td>
-        
+
         <td>
         <input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
         </td>
