@@ -21,25 +21,5 @@ class UsersTableSeeder extends Seeder
            'estado' => 1,
            'confi_id' => 1
        ]);
-        DB::table('users')->insert([
-            'id' => 2 ,
-            'name' => 'Ventas',
-            'email' => 'ventas@ventas.com',
-            'personal_id' => '3',
-            'password' => bcrypt('ventas@ventas.com'),
-            'estado' => 1,
-            'confi_id' => 2
-
-        ]);
-        DB::table('users')->insert([
-            'id' => 3 ,
-            'name' => 'Soporte',
-            'email' => 'soporte@soporte.com',
-            'personal_id' => '2',
-            'password' => bcrypt('soporte@soporte.com'),
-            'estado' => 1,
-            'confi_id' => 3
-
-        ]);
     }
 }

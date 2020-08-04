@@ -9,15 +9,15 @@
 @section('content')
  @if($producto->estado_anular == '1')
 <div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
-        
+
         <form action="{{ route('productos.update',$producto->id) }}"  enctype="multipart/form-data" method="post">
 							@csrf
 							@method('PATCH')
 		 <div class="row">
-            
-        <fieldset class="col-sm-6">    	
+
+        <fieldset class="col-sm-6">
 					<legend>Clasificacion del <br>Producto</legend>
-					
+
 				<div class="panel panel-default">
 					<div class="panel-body" align="left">
 						<div class="row">
@@ -41,7 +41,7 @@
                       			</div>
 						</div>
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Familia:</label>
                         		 <div class="col-sm-10">
                          		 <input type="text" class="form-control" value="{{$producto->familia_i_producto->descripcion}}" disabled="disabled">
@@ -50,12 +50,12 @@
 						</div>
 						<br>
 				</div>
-					
-		</fieldset>		
 
-		<fieldset class="col-sm-6">    	
+		</fieldset>
+
+		<fieldset class="col-sm-6">
 					<legend>Datos del <br>Producto </legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -63,7 +63,7 @@
                               <div class="col-sm-10"><input type="text" class="form-control" name="nombre" value="{{$producto->nombre}}"></div>
 
                     			<label class="col-sm-2 col-form-label">Descripcion:</label>
-                              <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" >{{$producto->descripcion}}</textarea ></div>
+                              <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" required="required">{{$producto->descripcion}}</textarea ></div>
 							</div>
 							<div class="row">
 								<label class="col-sm-2 col-form-label">Estado:</label>
@@ -88,12 +88,12 @@
 
 						</div>
 					</div>
-					
-		</fieldset>		
 
-		<fieldset class="col-sm-6">    	
+		</fieldset>
+
+		<fieldset class="col-sm-6">
 					<legend>Precio del <br>Producto</legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -116,7 +116,7 @@
                   					<input type="text" class="form-control" name="descuento2" value="{{$producto->descuento2}}" >
                  				</div>
                   			  </div>
-                    			
+
 						</div>
 						<div class="row">
 								 <label class="col-sm-2 col-form-label">Descuento Maximo:</label>
@@ -135,7 +135,7 @@
                   </div>
                  <input type="text" class="form-control" name="utilidad" value="{{$producto->utilidad}}"  >
                 </div>
-                    			
+
 						</div>
 					</div>
 					<div class="row">
@@ -167,8 +167,8 @@
                                 </div>
                               </div>
 
-                   			
-                    			
+
+
 						</div>
 						<div class="row">
 								 <label class="col-sm-2 col-form-label">garantia:</label>
@@ -181,19 +181,19 @@
                     		<label class="col-sm-2 col-form-label">Stock Maximo:</label>
                               <div class="col-sm-2"><input type="text" class="form-control" name="stock_maximo"  value="{{$producto->stock_maximo}}"  >
                     </div>
-                    			
+
 						</div>
-						
+
 
 
 					</div>
 
-						
-					
-		</fieldset>		
-		<fieldset class="col-sm-6">    	
+
+
+		</fieldset>
+		<fieldset class="col-sm-6">
 					<legend>Foto del <br>Producto </legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body">
                               <div class="col-sm-12">
@@ -203,13 +203,14 @@
 													<center ><img name="foto" src="{{asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" width="390px" height="200px" /></center>
                               					</div><input type="text" value="{{$producto->foto}}" class="form-control" name="ori_foto" hidden="hidden">
                               	</div>
+                                <input type="text" value="{{$producto->foto}}" hidden="hidden" name="foto_original">
 						</div>
-							
-		</fieldset>		
+
+		</fieldset>
 
 
     </div>
-							
+
 							<button class="btn btn-primary" type="submit">Grabar</button>
 					</form>
 </div>
@@ -218,14 +219,14 @@
 	@elseif($producto->estado_anular == '0')
 		@include("maestro.catalogo.productos.show");
 	@endif
-                
+
 <style>
 	.form-control{    margin-bottom: 15px;
 }
-   fieldset 
+   fieldset
   {
     /*border: 1px solid #ddd !important;*/
-    padding: 10px;       
+    padding: 10px;
     /*border-radius:4px ;*/
     background-color:#f5f5f5;
     padding-left:10px!important;
@@ -233,19 +234,19 @@
     margin-bottom: 10px;
     border-left: 1px solid #ddd !important;
 
-  } 
-  
+  }
+
     legend
     {
       font-size:14px;
       font-weight:bold;
-      margin-bottom: 0px; 
-      width: 35%; 
+      margin-bottom: 0px;
+      width: 35%;
       border: 1px solid #ddd;
-      border-radius: 4px; 
-      padding: 5px 5px 5px 10px; 
+      border-radius: 4px;
+      padding: 5px 5px 5px 10px;
       background-color: #ffffff;
-    } 
+    }
 </style>
 
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
@@ -273,12 +274,12 @@
     else
     {
         //PRevio del PDF
-        if (archivoInput.files && archivoInput.files[0]) 
+        if (archivoInput.files && archivoInput.files[0])
         {
             var visor = new FileReader();
-            visor.onload = function(e) 
+            visor.onload = function(e)
             {
-                document.getElementById('visorArchivo').innerHTML = 
+                document.getElementById('visorArchivo').innerHTML =
                 '<center><img name="foto" src="'+e.target.result+'"width="390px" height="200px" /></center>';
             };
             visor.readAsDataURL(archivoInput.files[0]);
@@ -291,15 +292,15 @@
 			function readURL(input) {
 			  if (input.files && input.files[0]) {
 				var reader = new FileReader();
-				
+
 				reader.onload = function(e) {
 				  $('#blah').attr('src', e.target.result);
 				}
-				
+
 				reader.readAsDataURL(input.files[0]);
 			  }
 			}
-			
+
 			$("#imgInp").change(function() {
 			  readURL(this);
 			});
@@ -308,15 +309,15 @@
 		function readURL(input) {
 		  if (input.files && input.files[0]) {
 			var reader = new FileReader();
-			
+
 			reader.onload = function(e) {
 			  $('#blah').attr('src', e.target.result);
 			}
-			
+
 			reader.readAsDataURL(input.files[0]);
 		  }
 		}
-		
+
 		$("#imgInp").change(function() {
 		  readURL(this);
 		});
@@ -408,7 +409,7 @@
 				text-align: center;
 				color:black;
 			}
-			
+
 			input#archivoInput{
 				position:absolute;
 				top:0px;
