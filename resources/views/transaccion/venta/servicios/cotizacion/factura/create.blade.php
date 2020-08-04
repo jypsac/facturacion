@@ -385,6 +385,7 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
+                                        </div>
 
                                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;{{--
