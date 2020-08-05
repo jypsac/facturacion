@@ -108,9 +108,9 @@
 									<div class="form-group">
 										<label>Documento Identificacion *</label>
 										<select class="form-control m-b" name="documento_identificacion" >
-											<option value="dni">DNI</option>
+											<option value="DNI">DNI</option>
 											<option value="pasaporte">Pasaporte</option>
-											<option value="ruc">Ruc</option>
+											<option value="RUC">Ruc</option>
 										</select>
 									</div>
 									<div class="form-group">
