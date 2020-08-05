@@ -11,7 +11,6 @@ use App\Personal;
 use Barryvdh\DomPDF\Facade as PDF;
 use DB;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Swift_Mailer;
 use Swift_MailTransport;
@@ -260,7 +259,7 @@ class GarantiaGuiaIngresoController extends Controller
         $mensaje = $request->mensaje;
         $file = $request->id;
 
-        $pdfile = storage_path().'/app/public/'.$file.'.pdf';
+        $pdfile = storage_path().'/app/public/guia_ingreso/'.$file.'.pdf';
 
         $newfile = $request->file('archivo');
 

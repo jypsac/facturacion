@@ -55,7 +55,11 @@ return [
 
         'garantia_guia_ingreso' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/'),
+            'root' => storage_path('app/public/guia_ingreso/'),
+        ],
+        'garantias_guias_egreso' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/guia_egreso/'),
         ],
 
         'mailbox' => [

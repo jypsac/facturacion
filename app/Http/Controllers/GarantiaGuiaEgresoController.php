@@ -10,6 +10,12 @@ use App\Marca;
 use App\Empresa;
 use App\Cliente;
 use Carbon\Carbon;
+use Illuminate\Support\Facades\Storage;
+use Swift_Mailer;
+use Swift_MailTransport;
+use Swift_Message;
+use Swift_Attachment;
+use Auth;
 
 class GarantiaGuiaEgresoController extends Controller
 {
@@ -154,5 +160,66 @@ class GarantiaGuiaEgresoController extends Controller
         $pdf=PDF::loadView('transaccion.garantias.guia_egreso.show_pdf',compact('garantias_guias_egreso','mi_empresa'));
     //     return $pdf->download();
         return $pdf->download('Guia Egreso - '.$archivo.' .pdf');
-}
+    }
+    function email($id){
+        $mi_empresa=Empresa::first();
+        $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
+        // return view('transaccion.garantias.guia_egreso.show_print',compact('garantia_guia_egreso','mi_empresa'));
+        // $pdf=App::make('dompdf.wrapper');
+        // $pdf=loadView('welcome').;
+        $archivo=$id.".pdf";
+        $pdf=PDF::loadView('transaccion.garantias.guia_egreso.show_pdf',compact('garantias_guias_egreso','mi_empresa'));
+        $content=$pdf->download();
+        Storage::disk('garantias_guias_egreso')->put($archivo,$content);
+
+        return view('transaccion.garantias.guia_egreso.correo',compact('id'));
+    } 
+
+    public function enviar(Request $request){
+       $smtpAddress = 'smtp.gmail.com'; // = $request->smtp
+        $port = 465;
+        $encryption = 'ssl';
+        $yourEmail = 'danielrberru@gmail.com'; // = $request->yourmail
+        $yourPassword = 'digimonheroes@1'; //colocar el password, 
+
+
+        //Envio del mail al corre 
+        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+        $mailer =new \Swift_Mailer($transport);
+
+        $sendto = $request->sendto;
+        $titulo = $request->titulo;
+        $mensaje = $request->mensaje;
+        $file = $request->id;
+
+        $pdfile = storage_path().'/app/public/guia_egreso/'.$file.'.pdf';
+
+        $newfile = $request->file('archivo');
+
+        if($request->hasfile('archivo')){
+            foreach ($newfile as $dofile) {
+                $nombre =  $dofile->getClientOriginalName();
+                \Storage::disk('mailbox')->put($nombre,  \File::get($dofile));
+                $news[] = storage_path().'/app/public/'.$nombre;
+                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+                $message->attach(\Swift_Attachment::fromPath($pdfile));
+                 foreach ($news as $attachment) {
+                    $message->attach(\Swift_Attachment::fromPath($attachment));
+                }
+            }
+        }else{
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+            $message->attach(\Swift_Attachment::fromPath($pdfile));
+
+        }
+
+        if($mailer->send($message)){
+           return redirect()->route('garantia_guia_egreso.index');  
+        }   
+           return "Something went wrong :(";
+            
+            
+         
+    }
+
 }
