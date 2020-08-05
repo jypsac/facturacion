@@ -5,7 +5,7 @@
 @section('breadcrumb2', 'productos')
 @section('value_accion', 'Agregar')
 @section('href_accion', route('productos.create'))
-{{-- 
+{{--
 @section('data-toggle', 'modal')
 @section('href_accion', '#modal-form')
 @section('value_accion', 'Agregar') --}}
@@ -28,7 +28,7 @@
                                                                     <select class="form-control m-b" name="familia"> @foreach($marcas as $marca)
                                                                     <option value="{{$marca->id}}" >{{$marca->nombre}}</option>
                                                                     @endforeach
-                                                                    
+
                                                                     </select>
                                                                 </div>
                                                             </div>
@@ -115,9 +115,9 @@
  <div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">
                                     <div class="modal-content" >
                                         <div class="modal-body" style="padding: 0px;">
-                                            
+
                                              <div class="ibox-content float-e-margins">
-                        
+
                                                <h3 class="font-bold col-lg-12" align="center">
                                               ¿Esta Seguro que Deseas Anular el Producto: {{$producto->nombre}}".?<br>
                                              <h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4>
@@ -130,13 +130,13 @@
                                             <button type="submit" class="btn btn-w-m btn-primary">Anular</button>
                                             {{-- <button type="button" class="btn btn-w-m btn-danger" data-dismiss="modal">Cancelar</button> --}}</center>
                                         </form>
-                                                 
+
                                                </p>
                                               </div>
 
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
 </div>
 
 
@@ -147,22 +147,22 @@
  <div class="modal-dialog" style="margin-top: 12%">
                                     <div class="modal-content">
                                         <div class="modal-body">
-                                            
+
                                              <div class="ibox-content float-e-margins">
-                        
+
                                                <h3 class="font-bold col-lg-12" align="center">
                                              Lo Lamentamos, dicho producto fue anulado.
                                                </h3>
-                                              
+
                                               </div>
 
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
 </div>
 
                                      @endif
-                                    
+
                                 </td>
                             </tr>
                         @endforeach
@@ -173,6 +173,7 @@
         </div>
         </div>
     </div>
+
 </div>
 
 

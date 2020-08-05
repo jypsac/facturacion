@@ -59,6 +59,17 @@ class ProductosController extends Controller
         );
 
 
+        $id_producto=$request->get('marca_id');
+        $marca= Marca::where("id","=",$id_producto)->first();
+        $abreviatura=$marca->abreviatura;
+        $marca_cantidad= Producto::where("marca_id","=",$id_producto)->count();
+        $marca_cantidad++;
+        $contador=1000000;
+        $marca_cantidad=$contador+$marca_cantidad;
+        $marca_cantidad=(string)$marca_cantidad;
+        $marca_cantidad=substr($marca_cantidad,1);
+        $codigo=$abreviatura.'-'.$marca_cantidad;
+
         // categoria Abreviatura
         $categoria=$request->get('categoria_id');
         $id_igual=Categoria::where('id','=',$categoria)->first();
@@ -66,20 +77,6 @@ class ProductosController extends Controller
 
         $nombre_cate=$id_igual->descripcion;
         $cate = substr($nombre_cate, 0, 1);
-        // marca abrebiatura
-        $marca=$request->get('marca_id');
-        $id_igual_marca=Marca::where('id','=',$marca)->first();
-        $nombre_marca=$id_igual_marca->abreviatura;
-        $contador=1000000;
-        $guion='-';
-        $code=Producto::count();
-        $code++;
-        $num=$contador+$code;
-        $string_code=(string)$num;
-        $code_final=substr($string_code,1);
-        $codigo_producto=$cate.$guion.$nombre_marca.$guion.$code_final;
-
-        // return $codigo_producto;
 
         if($request->hasfile('foto')){
             $image1 =$request->file('foto');
@@ -94,7 +91,7 @@ class ProductosController extends Controller
         $simbolo=$request->get('simbolo');
 
         $producto=new Producto;
-        $producto->codigo_producto=$codigo_producto;
+        $producto->codigo_producto=$codigo;
         $producto->codigo_original=$request->get('codigo_original');
         $producto->categoria_id=$request->get('categoria_id');
         $producto->familia_id=$request->get('familia_id');
@@ -116,6 +113,7 @@ class ProductosController extends Controller
         $producto->estado_anular='1';
         $producto->save();
         return redirect()->route('productos.index');
+
 
 
     }

@@ -14,9 +14,9 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox ">
-                        
-                        
-                            
+
+
+
                             <div id="modal-form" class="modal fade" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -32,7 +32,7 @@
                                                                 <div class="col-sm-10">
                                                                     <select class="form-control m-b" name="familia">
                                                                     @foreach($marcas as $marca)
-                                                                    <option value="{{$marca->id}}" >{{$marca->nombre}}</option>
+                                                                    <option value="{{$marca->id}}" >{{$marca->nombre_empresa}}</option>
                                                                     @endforeach
                                                                     </select>
                                                                 </div>
@@ -49,7 +49,7 @@
                                     </div>
                                     </div>
                                 </div>
-                       
+
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -74,7 +74,7 @@
                                 </a>
                             </div>
                         </div>
-                        
+
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example" >
@@ -223,5 +223,5 @@
 
         });
     </script>
-    
+
 @endsection

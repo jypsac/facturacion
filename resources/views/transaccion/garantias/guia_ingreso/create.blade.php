@@ -271,7 +271,7 @@
 												<div class="col-sm-4">
 														<input type="email" class="form-control" name="email" required>
 							                    </div>
-							                    
+
 
 
 						                </div>
@@ -289,15 +289,15 @@
                 </div>
  <form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" method="post">
 	@csrf
-	            		
+
 <div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
-	
+
     <div class="row">
-            
-        <fieldset class="col-sm-6">    	
+
+        <fieldset class="col-sm-6">
 					<legend>Datos<br>Generales</legend>
-			
-					
+
+
 				<div class="panel panel-default">
 					<div class="panel-body" align="left">
 						<div class="row">
@@ -331,7 +331,7 @@
 
 
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Ing. Asignado:</label>
                         		 <div class="col-sm-10">
                          		 <input list="browsers1" class="form-control m-b" name="personal_lab_id" required autocomplete="off">
@@ -345,7 +345,7 @@
 						</div>
 
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Cliente:</label>
                         		 <div class="col-sm-10">
                          		<input list="browsersc1" class="form-control m-b" name="cliente_id" required autocomplete="off">
@@ -358,7 +358,7 @@
 
 						</div>
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Asunto:</label>
                         		 <div class="col-sm-10">
                          		<input type="text" class="form-control" name="asunto" required>
@@ -367,15 +367,15 @@
 						</div>
 
 
-						
+
 						<br>
 				</div>
-					
-		</fieldset>		
 
-		<fieldset class="col-sm-6">    	
+		</fieldset>
+
+		<fieldset class="col-sm-6">
 					<legend> Datos del <br> Equipoo </legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -390,12 +390,12 @@
 								<label class="col-sm-2 col-form-label">Codigo Interno:</label>
                               <div class="col-sm-10">
                      					 <input type="text" class="form-control" name="codigo_interno" required>
-                              	
+
                               </div>
 
                     			<label class="col-sm-2 col-form-label">Fecha de Compra:</label>
                               <div class="col-sm-10">
-                              	
+
                    				  <input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}" required>
                               </div>
 							</div>
@@ -403,12 +403,12 @@
 
 						</div>
 					</div>
-					
-		</fieldset>		
 
-		<fieldset class="col-sm-12">    	
+		</fieldset>
+
+		<fieldset class="col-sm-12">
 					<legend> Informe del <br>Problema</legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -419,7 +419,7 @@
                 				</div>
                    			 </div>
 
-                   			
+
 							</div>
 						</div>
 
@@ -435,7 +435,7 @@
                 				</div>
                    			 </div>
 
-                   			
+
 							</div>
 						</div>
 
@@ -450,31 +450,31 @@
                 				</div>
                    			 </div>
 
-                   			
+
 							</div>
 						</div>
 
 					</div>
 
-						
-					
-		</fieldset>	
+
+
+		</fieldset>
 		 <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
-	                       
+
 
 
     </div>
 
 </div>
- </form>	
-                
+ </form>
+
 <style>
 	.form-control{    margin-bottom: 15px;
 }
-   fieldset 
+   fieldset
   {
     /*border: 1px solid #ddd !important;*/
-    padding: 10px;       
+    padding: 10px;
     /*border-radius:4px ;*/
     background-color:#f5f5f5;
     padding-left:10px!important;
@@ -482,19 +482,19 @@
     margin-bottom: 10px;
     border-left: 1px solid #ddd !important;
 
-  } 
-  
+  }
+
     legend
     {
       font-size:14px;
       font-weight:bold;
-      margin-bottom: 0px; 
-      width: 35%; 
+      margin-bottom: 0px;
+      width: 35%;
       border: 1px solid #ddd;
-      border-radius: 4px; 
-      padding: 5px 5px 5px 10px; 
+      border-radius: 4px;
+      padding: 5px 5px 5px 10px;
       background-color: #ffffff;
-    } 
+    }
 </style>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
