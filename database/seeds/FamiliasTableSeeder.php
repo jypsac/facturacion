@@ -11,7 +11,35 @@ class FamiliasTableSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('familias')->insert([
+    	DB::table('familias')->insert([
+			'id' => 1 ,
+			'codigo' => '001',
+			'descripcion' => 'VALVULAS DIRECCIONAL',
+			'created_at' => date('2019-08-01 00:00:00'),
+           	'updated_at' => date('2019-08-01 00:00:00')
+		]);
+		DB::table('familias')->insert([
+			'id' => 2 ,
+			'codigo' => '002',
+			'descripcion' => 'BOMBAS DE PALETAS ',
+			'created_at' => date('2019-08-01 00:00:00'),
+           	'updated_at' => date('2019-08-01 00:00:00')
+		]);
+		DB::table('familias')->insert([
+			'id' => 3 ,
+			'codigo' => '003',
+			'descripcion' => 'BOMBAS DE PISTONES',
+			'created_at' => date('2019-08-01 00:00:00'),
+           	'updated_at' => date('2019-08-01 00:00:00')
+		]);
+		DB::table('familias')->insert([
+			'id' => 4 ,
+			'codigo' => '004',
+			'descripcion' => 'BOMBAS DE ENGRANAJES',
+			'created_at' => date('2019-08-01 00:00:00'),
+           	'updated_at' => date('2019-08-01 00:00:00')
+		]);
+        /*DB::table('familias')->insert([
 			'id' => 1 ,
 			'codigo' => '001',
 			'descripcion' => 'TABLETS',
@@ -120,6 +148,6 @@ class FamiliasTableSeeder extends Seeder
 			'descripcion' => 'EQUIPOS INALAMBRICOS',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
-		]);
+		]);*/
     }
 }

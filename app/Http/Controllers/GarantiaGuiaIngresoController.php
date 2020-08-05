@@ -240,17 +240,17 @@ class GarantiaGuiaIngresoController extends Controller
         Storage::disk('garantia_guia_ingreso')->put($archivo,$content);
 
         return view('transaccion.garantias.guia_ingreso.correo',compact('id'));
-    } 
+    }
 
     public function enviar(Request $request){
        $smtpAddress = 'smtp.gmail.com'; // = $request->smtp
         $port = 465;
         $encryption = 'ssl';
         $yourEmail = 'danielrberru@gmail.com'; // = $request->yourmail
-        $yourPassword = ''; //colocar el password, 
+        $yourPassword = ''; //colocar el password,
 
 
-        //Envio del mail al corre 
+        //Envio del mail al corre
         $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
         $mailer =new \Swift_Mailer($transport);
 
@@ -281,12 +281,12 @@ class GarantiaGuiaIngresoController extends Controller
         }
 
         if($mailer->send($message)){
-           return redirect()->route('garantia_guia_ingreso.index');  
-        }   
+           return redirect()->route('garantia_guia_ingreso.index');
+        }
            return "Something went wrong :(";
-            
-            
-         
+
+
+
     }
 
 }
