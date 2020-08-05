@@ -312,6 +312,7 @@
                                                             <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
                                                             <th style="width: 400px;font-size: 13px">Articulo</th>
                                                             <th style="width: 100px;font-size: 13px">Precio</th>
+                                                            <th style="width: 100px;font-size: 13px">Cantidad</th>
                                                             <th style="width: 100px;font-size: 13px">Descuento</th>
                                                             <th style="width: 100px;font-size: 13px">Precio U desc</th>
                                                             <th style="width: 100px;font-size: 13px">PU. Com.</th>
@@ -335,13 +336,17 @@
                                                                 <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
                                                             </td>
                                                             <td>
+                                                                <input type='text' id='cantidad0' name='cantidad[]' class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
+                                                            </td>
+                                                            <td>
                                                                 {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
-                                                                <div style="position: relative; " > <input class="text_des" type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
-                                                                 </div>
-                                                                 <div class="div_check" >
-                                                                     <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
-                                                                 </div>
-                                                                 <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
+                                                                <div style="position: relative;">
+                                                                    <input class="text_des" type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
+                                                                </div>
+                                                                <div class="div_check" >
+                                                                    <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
+                                                                </div>
+                                                                <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
                                                             </td>
                                                             <td>
                                                                 <input type='text' id='descuento_unitario0' name='descuento_unitario[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
@@ -363,6 +368,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
+                                                            <td></td>
                                                             <td>Subtotal :</td>
                                                             <td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
                                                         </tr>
@@ -372,10 +378,12 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
+                                                            <td></td>
                                                             <td>IGV :</td>
                                                             <td><input id='igv'  disabled="disabled" class="form-control" required /></td>
                                                         </tr>
                                                         <tr  align="center">
+                                                            <td></td>
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
@@ -434,21 +442,21 @@
                                 @endforeach
                                 </datalist>
                                 </td>
-
-
-
                                 <td>
-                                <input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+                                    <input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
                                 </td>
-
+                                <td>
+                                    <input type='text' id='cantidad${i}' name='cantidad[]' class="monto0 form-control" onkeyup="multi(${i})" required  autocomplete="off" />
+                                </td>
                                 <td>
                                     {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
-                                    <div style="position: relative; " > <input class="text_des"type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
-                                     </div>
-                                     <div class="div_check" >
-                                         <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
-                                     </div>
-                                     <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
+                                    <div style="position: relative; ">
+                                        <input class="text_des"type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
+                                    </div>
+                                    <div class="div_check" >
+                                        <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
+                                    </div>
+                                    <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
                                 </td>
 
                                 <td>
@@ -530,9 +538,10 @@
             var comision=document.querySelector(`#comision${a}`).value;
             var descuento=document.querySelector(`#descuento${a}`).value;
             var checkBox = document.getElementById(`check${a}`);
+            var cantidad = document.getElementById(`cantidad${a}`).value;
 
             var multiplier = 100;
-            // console.log(checkBox.checked);
+
 
             if (checkBox.checked == true){
                 precio=precio-(precio*descuento/100);
@@ -540,16 +549,19 @@
                 var descuento_p=precio*comision/100;
                 var precio_final=parseFloat(descuento_p)+parseFloat(precio) ;
                 var precio_final_redondeado=Math.round(precio_final * multiplier) / multiplier;
-                document.getElementById(`total${a}`).value = precio_final_redondeado;
+                var final_end=precio_final_redondeado*parseFloat(cantidad);
+
+                document.getElementById(`total${a}`).value = final_end;
                 document.getElementById(`check_descuento${a}`).value = descuento;
             }else{
                 document.getElementById(`descuento_unitario${a}`).value = precio;
                 var descuento_p=precio*comision/100;
                 var precio_final=parseFloat(descuento_p)+parseFloat(precio) ;
-                console.log(descuento_p);
+
                 var precio_final_redondeado=Math.round(precio_final * multiplier) / multiplier;
+                var final_end=precio_final_redondeado*parseFloat(cantidad);
                 document.getElementById(`check_descuento${a}`).value = 0;
-                document.getElementById(`total${a}`).value = precio_final_redondeado;
+                document.getElementById(`total${a}`).value = final_end;
             }
 
 
@@ -611,6 +623,7 @@
 
             document.getElementById(`precio${a}`).value = precio_v;
             document.getElementById(`descuento${a}`).value = descuento_v;
+            document.getElementById(`cantidad${a}`).value = 1;
             //comision
             var comision=document.querySelector(`#comisionista`).value;
             //revirtiendo la cadena
