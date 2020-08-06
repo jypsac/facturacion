@@ -42,57 +42,37 @@
                                     <th>Fecha</th>
                                     <th>Ver</th>
                                     <th>Estado</th>
-                                    <th>Estado Aprobado</th>
                                     <th>Creado por</th>
                                 </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($cotizaciones_servicios as $cotizacion_servicio)
+                                  @foreach($cotizaciones_servicios as $cotizacion_servicio)
                                     <tr class="gradeX">
-                                        <td>{{$cotizacion_servicio->id}}</td>
-                                        <td>{{$cotizacion_servicio->cliente->numero_documento}}</td>
-                                        <td>{{$cotizacion_servicio->cliente->nombre}}</td>
-                                        <td>{{$cotizacion_servicio->cod_comision}}</td>
-                                        <td>{{$cotizacion_servicio->created_at}}</td>
-                                        <td><center><a href="{{route('cotizacion.show',$cotizacion_servicio->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
-                                        <td>
+                                      <td>{{$cotizacion_servicio->id}}</td>
+                                      <td>{{$cotizacion_servicio->cliente->numero_documento}}</td>
+                                      <td>{{$cotizacion_servicio->cliente->nombre}}</td>
+                                      <td>{{$cotizacion_servicio->cod_comision}}</td>
+                                      <td>{{$cotizacion_servicio->created_at}}</td>
+                                      <td><center><a href="{{route('cotizacion_servicio.show',$cotizacion_servicio->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                      <td>
                                             @if($cotizacion_servicio->estado =='0')
                                               <button type="button" class="btn btn-w-m btn-info">En Proceso</button>
                                             @else
                                               <button type="button" class="btn btn-w-m btn-default">Procesado</button>
                                             @endif
-                                        </td>
-                                        <td>
-                                            @if($cotizacion_servicio->estado_aprovar =='0')
-                                            <form action="{{ route('cotizacion.aprobar', $cotizacion_servicio->id)}}" method="POST">
-                                              @csrf
-                                              @method('put')
-                                              <center>
-                                               <button type="submit" class="btn btn-w-m btn-info">Aprobar</button>
-                                           </form>
-
-                                           @else
-                                           <button type="button" class="btn btn-w-m btn-default">Aprobado por <br>
-                                             @if($cotizacion_servicio->aprobado->personal->nombres==auth()->user()->personal->nombres)
-                                            usted
-                                            @else
-                                             {{$cotizacion_servicio->aprobado->personal->nombres}}
-                                            @endif
-                                          </button>
-                                           @endif
-                                       </td>
-                                       <td>
-                                       @if($cotizacion_servicio->user_personal->personal->nombres==auth()->user()->personal->nombres)
+                                      </td>
+                                      <td>
+                                        @if($cotizacion_servicio->user_personal->personal->nombres==auth()->user()->personal->nombres)
                                             Creado por usted
                                         @else
                                            Creado por  {{$cotizacion_servicio->user_personal->personal->nombres}}
                                         @endif
-                                     </td>
-                                   </tr>
-                                   @endforeach
-                               </tbody>
-                           </table>
-                       </div>
+                                      </td>
+                                    </tr>
+                                  @endforeach
+                                </tbody>
+                            </table>
+                        </div>
                    </div>
                </div>
            </div>

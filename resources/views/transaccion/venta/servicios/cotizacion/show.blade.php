@@ -9,7 +9,7 @@
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="ibox-title">
+    {{-- <div class="ibox-title">
         <div class="ibox-tools">
             <style type="text/css">
                 .procesado:before {
@@ -21,28 +21,24 @@
             </style>
             @if($cotizacion->estado == '1')
                 @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
-                <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$facturacion->id)}}" ></a>
+                    <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$facturacion->id)}}" ></a>
                 @else
-                <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta.show',$boleta->id)}}" ></a>
-
+                    <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta.show',$boleta->id)}}" ></a>
                 @endif
-
             @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc' )
-            <a class="btn btn-info" href="{{route('cotizacion.facturar' , $cotizacion->id)}}">Facturar</a>
-
+                <a class="btn btn-info" href="{{route('cotizacion.facturar' , $cotizacion->id)}}">Facturar</a>
             @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
-            <a class="btn btn-success"  href="{{route('cotizacion.boletear', $cotizacion->id)}}">Boletear</a>
-
+                <a class="btn btn-success"  href="{{route('cotizacion.boletear', $cotizacion->id)}}">Boletear</a>
             @endif
             <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
         </div>
-    </div>
+    </div> --}}
+
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
                 <div class="row">
                     <div class="col-sm-4 text-left" align="left">
-
                         <address class="col-sm-4" align="left">
                                         <!-- <h5>De:</h5>
                                         <i class=" fa fa-user">:</i><strong > {{$empresa->nombre}}</strong><br>

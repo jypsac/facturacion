@@ -2,10 +2,13 @@
 
 namespace App\Http\Controllers;
 
+use App\Banco;
+use App\Boleta;
 use App\Cliente;
 use App\Cotizacion_Servicios;
 use App\Cotizacion_Servicios_boleta_registro;
 use App\Cotizacion_Servicios_factura_registro;
+use App\Facturacion;
 use App\Forma_pago;
 use App\Igv;
 use App\Moneda;
@@ -437,18 +440,29 @@ class CotizacionServiciosController extends Controller
 
     public function show($id)
     {
-        return $id;
+         $servicios=Servicios::where('estado_anular',0)->get();
+        $igv_proceso=Igv::first();
+        $igv_total=$igv_proceso->igv_total;
+
+        foreach ($servicios as $index => $servicio) {
+            $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+            $igv[]=$servicio->precio*$igv_total/100;
+            $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+        }
+
+
         $facturacion=Facturacion::where('id_cotizador',$id)->first();
         $boleta=Boleta::where('id_cotizador',$id)->first();
         $banco=Banco::where('estado','0')->get();
         $moneda=Moneda::where('principal',1)->first();
-        $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_id',$id)->get();
-        $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_id',$id)->get();
+        $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
+        $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+
         foreach ($cotizacion_registro as $cotizacion_registros) {
-           $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+           $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
        }
 
-        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
+
        $cotizacion=Cotizacion::find($id);
        $empresa=Empresa::first();
        $sum=0;
