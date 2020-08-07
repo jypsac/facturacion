@@ -11,18 +11,21 @@ class ServicioSeeder extends Seeder
      */
     public function run()
     {
-        $servicio=new Servicios;
-        $servicio->codigo_servicio="SERV-00001";
-        $servicio->codigo_original =123;
-        $servicio->nombre="Formateos";
-        $servicio->categoria="Servicios";
-        $servicio->precio=100;
-        $servicio->utilidad=50;
-        $servicio->descuento=10;
-        $servicio->descripcion="instalacion de windows";
-        $servicio->foto="defecto.png";
-        $servicio->estado_anular=0;
-        $servicio->estado_activo=0;
-        $servicio->save();
+        DB::table('servicios')->insert([
+            'codigo_servicio'=>"SERV-00001",
+            'codigo_original'=>123,
+            'nombre'=>"Formateos",
+            'categoria'=>"Servicios",
+            'precio'=>100,
+            'utilidad'=>50,
+            'descuento'=>10,
+            'descripcion'=>"instalacion de windows",
+            'foto'=>"defecto.png",
+            'estado_anular'=>0,
+            'estado_activo'=>0,
+            'created_at' => date('2019-08-01 00:00:00'),
+            'updated_at' => date('2019-08-01 00:00:00')
+        ]);
     }
+
 }
