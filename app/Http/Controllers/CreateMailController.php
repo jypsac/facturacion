@@ -15,7 +15,7 @@ class CreateMailController extends Controller
      */
     public function index()
     {
-        return view('mailbox.config');
+       return view('mailbox.index');
     }
 
     /**
@@ -23,21 +23,11 @@ class CreateMailController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request)
+     public function create()
     {
-       $cmail= new CreateMail;
-       $cmail->id_usuario = Auth::user()->id;
-       $cmail->email = $request->emai;
-       $cmail->password = $request->password;
-       $cmail->email_backup = $request->bakupmail;
-       $cmail->smtp = $request->smtp;
-       $cmail->port = $request->port;
-       $cmail->encryption = $request->encryp;
-       $cmail->save();
-       return back();
+     return view('mailbox.create');
     }
-
-    /**
+  /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
@@ -45,16 +35,15 @@ class CreateMailController extends Controller
      */
     public function store(Request $request)
     {
-        //
     }
 
     /**
      * Display the specified resource.
      *
-     * @param  \App\CreateMail  $createMail
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show(CreateMail $createMail)
+    public function show($id)
     {
         //
     }
@@ -62,10 +51,10 @@ class CreateMailController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\CreateMail  $createMail
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit(CreateMail $createMail)
+    public function edit($id)
     {
         //
     }
@@ -74,10 +63,10 @@ class CreateMailController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\CreateMail  $createMail
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, CreateMail $createMail)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -85,10 +74,10 @@ class CreateMailController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\CreateMail  $createMail
+     * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy(CreateMail $createMail)
+    public function destroy($id)
     {
         //
     }

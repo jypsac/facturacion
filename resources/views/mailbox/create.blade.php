@@ -1,14 +1,14 @@
 @extends('layout')
 
-@section('title', 'Enviar - Email')
-@section('breadcrumb', 'Crear Guia de Ingreso')
-@section('breadcrumb2', 'Garantia')
-@section('href_accion', route('inicio') )
+@section('title', 'Redactar Email')
+@section('breadcrumb', 'Redactar Email')
+@section('breadcrumb2', 'Redactar Email')
+{{-- @section('href_accion', route('usuario.lista')) --}}
 @section('value_accion', 'Atras')
-@section('vue_js',  asset('js/app.js') )
 
 @section('content')
-<br/>
+
+
 <style type="text/css">
     .note-toolbar-wrapper{
         height: 0% !important;
@@ -21,7 +21,7 @@
     }
     div.form-group.note-form-group.note-group-select-from-files{
         display: none !important;
-    } 
+    }
     div.fileinput.fileinput-exists{
         left: 25px !important;
     }
@@ -30,10 +30,10 @@
     }
 </style>
 <div class="col-lg-10 container animated fadeInRight">
-	
+
 	<div class="mail-box">
-		
-			<form action ="{{route('enviarmail')}}" method="POST" enctype="multipart/form-data" >
+
+			<form action ="" method="POST" enctype="multipart/form-data" >
                 @csrf
                 <div class="mail-body">
         			<div class="form-group row">
@@ -47,9 +47,9 @@
         			</div>
 		        </div>
     			<div class="mail-text h-200">
-                    <textarea name="mensaje" required="" class="summernote" id="contents" >         
+                    <textarea name="mensaje" required="" class="summernote" id="contents" >
                     </textarea>
-                </div>	
+                </div>
                 <br/>
         		<div class="fileinput fileinput-new" data-provides="fileinput">
                     <span class="btn btn-default btn-file" style="left: 20px !important;">
@@ -59,7 +59,7 @@
                     </span>
                     <span class="fileinput-filename" style="padding-left: 30px"></span>
                     <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                </div>	
+                </div>
 			<div class="mail-body text-right tooltip-demo">
 	    		<button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" >
                     <i class="fa fa-reply"></i> Enviar
@@ -71,13 +71,18 @@
     		</form>
 	</div>
 </div>
-	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+
+
+    <!-- Mainly scripts -->
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
     <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    <!-- Custom and plugin javascript -->
+    <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+ <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
@@ -101,4 +106,4 @@
 
     <link href="{{asset('css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/codemirror/codemirror.css')}}" rel="stylesheet">
-@stop
+@endsection
