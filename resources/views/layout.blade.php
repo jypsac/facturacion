@@ -210,6 +210,7 @@
                         <ul class="nav nav-second-level collapse">
                             <li><a href="#">Inbox</a></li>
                             <li><a href="{{route('sendmail')}}">Email view</a></li>
+                            <li><a href="{{route('config')}}">Configuracion</a></li>
                         </ul>
                     </li>
                     @can('auxiliares')

@@ -105,6 +105,9 @@ Route::group(
 
 		Route::get('sendmail','MailBoxController@index')->name('sendmail');
 		Route::Post('sendmail/enviar','MailBoxController@send')->name('enviarmail');
+		Route::get('configuracion_mail','CreateMailController@index')->name('config');
+		Route::Post('configuracion_mail/save','CreateMailController@create')->name('guardar');
+
 
 		//Garantias
 

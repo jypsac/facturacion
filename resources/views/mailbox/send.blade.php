@@ -36,21 +36,21 @@
 			<form action ="{{route('enviarmail')}}" method="POST" enctype="multipart/form-data" >
                 @csrf
                 <div class="mail-body">
-    			<div class="form-group row">
-                    <label class="col-sm-2 col-form-label">Para:</label>
-        			     <div class="col-sm-10">
-                            <input type="email" required="" class="form-control" name="enviara">
-                        </div>
-    			</div>
-    			<div class="form-group row"><label class="col-sm-2 col-form-label">Tema:</label>
-       		 		<div class="col-sm-10"><input type="text" required="" class="form-control" name="titulo" ></div>
-    			</div>
-		</div>
-			<div class="mail-text h-200">
-                <textarea name="mensaje" required="" class="summernote" id="contents" >         
-                </textarea>
-            </div>	
-            <br/>
+        			<div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Para:</label>
+            			     <div class="col-sm-10">
+                                <input type="email" required="" class="form-control" name="enviara">
+                            </div>
+        			</div>
+        			<div class="form-group row"><label class="col-sm-2 col-form-label">Tema:</label>
+           		 		<div class="col-sm-10"><input type="text" required="" class="form-control" name="titulo" ></div>
+        			</div>
+		        </div>
+    			<div class="mail-text h-200">
+                    <textarea name="mensaje" required="" class="summernote" id="contents" >         
+                    </textarea>
+                </div>	
+                <br/>
         		<div class="fileinput fileinput-new" data-provides="fileinput">
                     <span class="btn btn-default btn-file" style="left: 20px !important;">
                         <span class="fileinput-new">Seleccionar</span>
@@ -97,13 +97,8 @@
 
     });
   </script>
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="font-awesome/css/font-awesome.css" rel="stylesheet">
-    <link href="css/plugins/iCheck/custom.css" rel="stylesheet">
-    <link href="css/plugins/summernote/summernote-bs4.css" rel="stylesheet">
-    <link href="css/animate.css" rel="stylesheet">
+    <link href="{{asset('css/plugins/summernote/summernote-bs4.css')}}" rel="stylesheet">
 
-    <link href="css/plugins/jasny/jasny-bootstrap.min.css" rel="stylesheet">
-    <link href="css/plugins/codemirror/codemirror.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
+    <link href="{{asset('css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/codemirror/codemirror.css')}}" rel="stylesheet">
 @stop
