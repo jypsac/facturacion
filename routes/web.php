@@ -5,7 +5,6 @@
 
 Route::group(
 	[ 'middleware' => 'auth' ],
-
 		function(){
 
 		// Route::view('/' , 'home')->name('inicio');
@@ -102,10 +101,7 @@ Route::group(
 		Route::post('agregado_rapido/personal_store','AgregadoRapidoController@personal_store')->name('agregado_rapido.personal_store');
 
 		//MailBox
-
-		Route::get('sendmail','MailBoxController@index')->name('sendmail');
-		Route::Post('sendmail/enviar','MailBoxController@send')->name('enviarmail');
-
+		Route::resource('/email','CreateMailController');
 		//Garantias
 
 		Route::POST('garantia_guia_ingreso/email/enviar','GarantiaGuiaIngresoController@enviar')->name('garantia_ingreso.enviar');
