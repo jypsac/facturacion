@@ -8,6 +8,7 @@ use App\Cliente;
 use App\Cotizacion_Servicios;
 use App\Cotizacion_Servicios_boleta_registro;
 use App\Cotizacion_Servicios_factura_registro;
+use App\Empresa;
 use App\Facturacion;
 use App\Forma_pago;
 use App\Igv;
@@ -440,38 +441,36 @@ class CotizacionServiciosController extends Controller
 
     public function show($id)
     {
-         $servicios=Servicios::where('estado_anular',0)->get();
-        $igv_proceso=Igv::first();
-        $igv_total=$igv_proceso->igv_total;
-
-        foreach ($servicios as $index => $servicio) {
-            $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-            $igv[]=$servicio->precio*$igv_total/100;
-            $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
-        }
-
 
         $facturacion=Facturacion::where('id_cotizador',$id)->first();
         $boleta=Boleta::where('id_cotizador',$id)->first();
         $banco=Banco::where('estado','0')->get();
         $moneda=Moneda::where('principal',1)->first();
-        $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
-        $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+        $cotizacion=Cotizacion_Servicios::find($id);
 
-        foreach ($cotizacion_registro as $cotizacion_registros) {
-           $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
-       }
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $regla=$cotizacion->tipo;
+        $i=1;
 
+        if($cotizacion->tipo=="factura"){
+            //FACTURA
+            $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
+            foreach ($cotizacion_registro as $cotizacion_registros) {
+               $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+            }
+            return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
+        }else{
+            //BOLETA
+            $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+            foreach ($cotizacion_registro as $cotizacion_registros) {
+                $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+            }
+            return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
+        }
 
-       $cotizacion=Cotizacion::find($id);
-       $empresa=Empresa::first();
-       $sum=0;
-       $igv=Igv::first();
-       $sub_total=0;
-
-       $regla=$cotizacion->tipo;
-
-       return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta'));
    }
 
     /**

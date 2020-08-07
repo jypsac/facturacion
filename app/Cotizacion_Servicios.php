@@ -34,4 +34,6 @@ class Cotizacion_Servicios extends Model
         return $this->belongsTo(user::class,'aprobado_por');
     }
 
+
+
 }
