@@ -15,6 +15,14 @@ class CreateMailboxesTable extends Migration
     {
         Schema::create('mailboxes', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->integer()//Id  de la persona que envia
+            $table->string('remitente');
+            $table->string('destinatario');
+            $table->string('titulo');
+            $table->string('mensaje');
+            $table->string('archivo')->nullable();
+            $table->string('pdf')->nullable();
+            $table->string('fecha_hora');
             $table->timestamps();
         });
     }

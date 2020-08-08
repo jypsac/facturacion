@@ -35,6 +35,16 @@ class CreateMailController extends Controller
      */
     public function store(Request $request)
     {
+        $configmail = new CreateMail;
+        $configmail->id_usuario = Auth::User()->id;
+        $configmail->email =$request->get('email') ; //coloca
+        $configmail->password = $request->get('password') ;
+        $configmail->email_backup = $request->get('email_backup');
+        $configmail->smtp =$request->get('smtp') ;
+        $configmail->port = $request->get('port');
+        $configmail->encryption= $request->get('encryp') ;
+        $configmail-> save();
+        return back();
     }
 
     /**
