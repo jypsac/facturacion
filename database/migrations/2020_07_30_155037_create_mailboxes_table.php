@@ -15,7 +15,8 @@ class CreateMailboxesTable extends Migration
     {
         Schema::create('mailboxes', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer()//Id  de la persona que envia
+            $table->unsignedBigInteger('id_usuario')->nullable();
+            $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade'); 
             $table->string('remitente');
             $table->string('destinatario');
             $table->string('titulo');
