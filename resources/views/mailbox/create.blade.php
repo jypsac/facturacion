@@ -33,8 +33,9 @@
 
 	<div class="mail-box">
 
-			<form action ="" method="POST" enctype="multipart/form-data" >
+			<form action ="{{route('email.store')}}" method="POST" enctype="multipart/form-data" >
                 @csrf
+                <input type="text" name="boton" value="mensaje">
                 <div class="mail-body">
         			<div class="form-group row">
                         <label class="col-sm-2 col-form-label">Para:</label>

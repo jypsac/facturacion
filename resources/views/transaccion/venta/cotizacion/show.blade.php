@@ -118,7 +118,7 @@
                                 <tbody>
                                     @if ($regla=="factura")<span hidden="hidden">{{$i=1}} </span>
                                     @foreach($cotizacion_registro as $cotizacion_registros)
-                                    <tr> 
+                                    <tr>
                                         <td>{{$i}} </td>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
@@ -136,7 +136,7 @@
 
                                     </tr>
                                     <span hidden="hidden">{{$i++}}</span>
-                                   @endforeach 
+                                   @endforeach
 
                                     @else <span hidden="hidden">{{$i=1}} </span>
                                     @foreach($cotizacion_registro2 as $cotizacion_registros)
@@ -173,7 +173,7 @@
 
                         </footer>
 
-                        <!-- Totales de Productos --> 
+                        <!-- Totales de Productos -->
                         @if ($regla=="factura")
                         <h3 align="left">
                             <?php $v=new CifrasEnLetras() ;
@@ -240,8 +240,8 @@
                                   <br>
                                   N° $ : {{$bancos->numero_dolares}}<br>
 
-                              </p> 
-                          </div>                  
+                              </p>
+                          </div>
                           @endforeach
 
                       </div>

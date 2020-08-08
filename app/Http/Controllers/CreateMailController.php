@@ -35,6 +35,11 @@ class CreateMailController extends Controller
      */
     public function store(Request $request)
     {
+        $boton=$request->get('boton');
+        if ($boton=='mensaje') {
+           $hola='hola';
+           return $hola;
+        }/*
         $configmail = new CreateMail;
         $configmail->id_usuario = Auth::User()->id;
         $configmail->email =$request->get('email') ; //coloca
@@ -44,7 +49,7 @@ class CreateMailController extends Controller
         $configmail->port = $request->get('port');
         $configmail->encryption= $request->get('encryp') ;
         $configmail-> save();
-        return back();
+        return back();*/
     }
 
     /**
