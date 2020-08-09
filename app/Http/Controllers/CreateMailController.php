@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\CreateMail;
 use Illuminate\Http\Request;
 use App;
+use Mailbox;
 
 class CreateMailController extends Controller
 {
@@ -15,7 +16,8 @@ class CreateMailController extends Controller
      */
     public function index()
     {
-       return view('mailbox.index');
+       $mailbox =App\Mailbox::all();
+       return view('mailbox.index',compact('mailbox'));
     }
 
     /**

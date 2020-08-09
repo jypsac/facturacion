@@ -9,10 +9,12 @@
 @section('content')
 </br>
     <div class="col animated fadeInRight">
+        @foreach($mailbox as $row)
             <div class="mail-box-header">
                 <h2>
                     Bandeja de Salida
                 </h2>
+
                 <div class="mail-tools tooltip-demo m-t-md">
                     <div class="btn-group float-right">
                         <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
@@ -31,14 +33,15 @@
                         <td class="check-mail">
                             <input type="checkbox" class="i-checks">
                         </td>
-                        <td class="mail-ontact"><a href="mail_detail.html">Anna Smith</a></td>
-                        <td class="mail-subject"><a href="mail_detail.html">Lorem ipsum dolor noretek imit set.</a></td>
+                        <td class="mail-ontact"><a href="mail_detail.html">{{$row->destinatario}}</a></td>
+                        <td class="mail-subject" ><a href="mail_detail.html" >{!!$row->mensaje!!}</a></td>
                         <td class=""><i class="fa fa-paperclip"></i></td>
-                        <td class="text-right mail-date">6.10 AM</td>
+                        <td class="text-right mail-date">{{$row->fecha_hora}}</td>
                     </tr>
                     </tbody>
                 </table>
             </div>
+            @endforeach
         </div>
 
     <!-- Mainly scripts -->
