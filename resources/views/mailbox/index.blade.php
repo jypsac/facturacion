@@ -9,7 +9,7 @@
 @section('content')
 </br>
     <div class="col animated fadeInRight">
-        @foreach($mailbox as $row)
+        
             <div class="mail-box-header">
                 <h2>
                     Bandeja de Salida
@@ -26,7 +26,7 @@
                 </div>
             </div>
             <div class="mail-box">
-
+                @foreach($mailbox as $row)
                     <table class="table table-hover table-mail">
                     <tbody>
                     <tr class="unread">
@@ -40,8 +40,9 @@
                     </tr>
                     </tbody>
                 </table>
+                @endforeach
             </div>
-            @endforeach
+            
         </div>
 
     <!-- Mainly scripts -->
