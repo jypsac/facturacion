@@ -2,13 +2,15 @@
 
 namespace App\Http\Controllers;
 
-use App\Mailbox;
-use Illuminate\Http\Request;
 use App;
-use Swift_Mailer;
-use Swift_MailTransport;
-use Swift_Message;
+use App\CreateMail;
+use App\Mailbox;
+use App\User;
+use Illuminate\Http\Request;
 use Swift_Attachment;
+use Swift_MailTransport;
+use Swift_Mailer;
+use Swift_Message;
 use Swift_Preferences;
 
 class MailboxController extends Controller
@@ -20,8 +22,11 @@ class MailboxController extends Controller
      */
     public function index()
     {
-         //$mail = Mailbox::all();
-         return view('mailbox.send');
+        $id_usuario=auth()->user()->id;
+        $user=User::where('id',$id_usuario)->first();
+        $config_email=CreateMail::where('id_usuario',$id_usuario)->get();
+        return view('mailbox.configuracion.index',compact('config_email','user'));
+
     }
     public function send(Request $request){
 
@@ -43,7 +48,7 @@ class MailboxController extends Controller
             foreach ($newfile as $file) {
                 $nombre =  $file->getClientOriginalName();
                 \Storage::disk('mailbox')->put($nombre,  \File::get($file));
- 
+
                 $news[] = storage_path().'/app/public/'.$nombre;
                 $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
                  foreach ($news as $attachment) {
@@ -55,10 +60,10 @@ class MailboxController extends Controller
 
         }
         if($mailer->send($message)){
-            return back();  
-        }   
+            return back();
+        }
          return "Something went wrong :(";
-            
+
     }
 
     /**
@@ -68,7 +73,7 @@ class MailboxController extends Controller
      */
     public function create()
     {
-        //
+        return view('mailbox.configuracion.create');
     }
 
     /**

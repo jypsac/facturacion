@@ -19,7 +19,8 @@ class UsersTableSeeder extends Seeder
            'personal_id' => '1',
            'password' => bcrypt('123'),
            'estado' => 1,
-           'confi_id' => 1
+           'confi_id' => 1,
+           'email_creado' => 0
        ]);
          DB::table('users')->insert([
            'id' => 2 ,
@@ -28,7 +29,8 @@ class UsersTableSeeder extends Seeder
            'personal_id' => '2',
            'password' => bcrypt('123'),
            'estado' => 1,
-           'confi_id' => 1
+           'confi_id' => 2,
+           'email_creado' => 0
        ]);
          DB::table('users')->insert([
            'id' => 3 ,
@@ -37,7 +39,8 @@ class UsersTableSeeder extends Seeder
            'personal_id' => '3',
            'password' => bcrypt('123'),
            'estado' => 1,
-           'confi_id' => 1
+           'confi_id' =>3,
+           'email_creado' => 0
        ]);
     }
 }
