@@ -15,10 +15,20 @@ class CreateMailController extends Controller
      */
     public function index()
     {
+<<<<<<< HEAD
        $mailbox =Mailbox::all();
        return view('mailbox.index',compact('mailbox'));
    }
+=======
+        $mailbox =App\Mailbox::all();
+        return view('mailbox.index',compact('mailbox'));
+    }
+>>>>>>> 5fd5b98eff894e5340a8b134d0c270b27adc1065
 
+    public function create()
+    {
+     return view('mailbox.config');
+    }
     /**
      * Show the form for creating a new resource.
      *

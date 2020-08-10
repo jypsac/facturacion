@@ -209,7 +209,11 @@
                         <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="{{route('email.index')}}">Inbox</a></li>
+<<<<<<< HEAD
                             <li><a href="{{route('configuracion_email.index')}}">Configuracion</a></li>
+=======
+                            <li><a href="">Configuracion</a></li>
+>>>>>>> 5fd5b98eff894e5340a8b134d0c270b27adc1065
                         </ul>
                     </li>
                     @can('auxiliares')
