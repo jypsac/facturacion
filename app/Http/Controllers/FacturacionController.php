@@ -42,9 +42,9 @@ class FacturacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create(Request $request){
-        $facturacion_input=$request->get('facturacion');
-        if ($facturacion_input=='producto') {
+    public function create(){
+
+
          $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
          foreach ($productos as $index => $producto) {
             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
@@ -65,28 +65,8 @@ class FacturacionController extends Controller
         $categoria='producto';
 
         return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria'));
-    }
-    elseif ($facturacion_input=='servicio') {
-      $servicios=Servicios::where('estado_anular',0)->get();
 
-      foreach ($servicios as $index => $servicio) {
-        $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-        $array[]=$servicio->precio+$utilidad[$index];
-    }
 
-    $forma_pagos=Forma_pago::all();
-    $clientes=Cliente::where('documento_identificacion','ruc')->get();
-    $moneda=Moneda::all();
-    $personales=Personal::all();
-    $p_venta=Personal_venta::where('estado','0')->get();
-    $igv=Igv::first();
-    $categoria='servicio';
-    $empresa=Empresa::first();
-    $personal_contador= Facturacion::all()->count();
-    $suma=$personal_contador+1;
-
-    return view('transaccion.venta.facturacion.create',compact('servicios','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria'));
-}
 }
 
     /**

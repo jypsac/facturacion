@@ -17,22 +17,15 @@
                             <div class="modal-body">
                                 <div class="row" align="center">
                                     <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
-
                                         <p>Selecciona el Tipo de Facturacion</p>
                                     </div>
-                                        <div class="col-sm-6">
-                                        <form action="{{ route('facturacion.create') }}"  enctype="multipart/form-data" method="get">
-                                            <input type="text" value="producto" name="facturacion" hidden="hidden">
-                                            <button class="btn btn-sm btn-primary " type="submit"><strong>Productos</strong></button>
-                                        </form></div>
-                                        <div class="col-sm-6">
-                                        <form action="{{ route('facturacion.create') }}"  enctype="multipart/form-data" method="get">
-                                            <input type="text" value="servicio" name="facturacion" hidden="hidden">
-                                            <button class="btn btn-sm btn-primary" type="submit"><strong>Servicios</strong></button>
-                                        </form></div>
-
+                                    <div class="col-sm-6">
+                                        <a href="{{ route('facturacion.create') }}"><button class="btn btn-sm btn-primary" type="submit"><strong>Productos</strong></button></a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="{{ route('facturacion_servicio.create') }}"><button class="btn btn-sm btn-primary" type="submit"><strong>Servicios</strong></button></a>
+                                    </div>
                                 </div>
-
                             </div>
                         </div>
                     </div>

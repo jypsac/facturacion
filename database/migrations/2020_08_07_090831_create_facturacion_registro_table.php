@@ -24,7 +24,7 @@ class CreateFacturacionRegistroTable extends Migration
 
             $table->string('numero_serie')->nullable();
 
-            $table->unsignedBigInteger('producto_id');
+            $table->unsignedBigInteger('producto_id')->nullable();
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
 
             $table->integer('stock')->nullable();
