@@ -60,6 +60,8 @@ Route::group(
 
 		Route::resource('/cotizacion_servicio','CotizacionServiciosController');
 
+//FACTURACION SERVICIOS
+		Route::resource('/facturacion_servicio','FacturacionServicioController');
 
 //FACTURACION ELECTRONICA
 		Route::resource('/facturacion_electronica','FacturacionElectronicaController');
