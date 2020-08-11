@@ -104,6 +104,8 @@ Route::group(
 
 		//MailBox
 		Route::resource('/email','CreateMailController');
+		Route::resource('/configuracion_email','MailboxController');
+
 		//Garantias
 
 		Route::POST('garantia_guia_ingreso/email/enviar','GarantiaGuiaIngresoController@enviar')->name('garantia_ingreso.enviar');

@@ -1,11 +1,9 @@
 @extends('layout')
-
 @section('title', 'Redactar Email')
 @section('breadcrumb', 'Redactar Email')
 @section('breadcrumb2', 'Redactar Email')
-{{-- @section('href_accion', route('usuario.lista')) --}}
+@section('href_accion', route('email.index'))
 @section('value_accion', 'Atras')
-
 @section('content')
 
 
@@ -40,11 +38,11 @@
         			<div class="form-group row">
                         <label class="col-sm-2 col-form-label">Para:</label>
             			     <div class="col-sm-10">
-                                <input type="email" required="" class="form-control" name="enviara">
+                                <input type="email" required="" class="form-control" name="remitente">
                             </div>
         			</div>
-        			<div class="form-group row"><label class="col-sm-2 col-form-label">Tema:</label>
-           		 		<div class="col-sm-10"><input type="text" required="" class="form-control" name="titulo" ></div>
+        			<div class="form-group row"><label class="col-sm-2 col-form-label">Asunto:</label>
+           		 		<div class="col-sm-10"><input type="text" required="" class="form-control" name="asunto" ></div>
         			</div>
 		        </div>
     			<div class="mail-text h-200">
@@ -56,7 +54,8 @@
                     <span class="btn btn-default btn-file" style="left: 20px !important;">
                         <span class="fileinput-new">Seleccionar</span>
                     <span class="fileinput-exists">Cambiar</span>
-                        <input  type="file" name="archivo[]" multiple="" />
+                        <input  type="file" name="archivos[]" multiple="" />
+                        <input type="file" name="archivo">
                     </span>
                     <span class="fileinput-filename" style="padding-left: 30px"></span>
                     <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
@@ -65,6 +64,7 @@
 	    		<button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" >
                     <i class="fa fa-reply"></i> Enviar
                 </button>
+                <input type="text" name="fecha_hora" value="{{ date('Y-m-d H:i:s') }}" hidden="hidden">
 	    		<a href="/index" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" >
                     <i class="fa fa-times"></i> Descartar
                 </a>
