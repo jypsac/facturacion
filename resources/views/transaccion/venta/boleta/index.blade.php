@@ -1,12 +1,43 @@
 @extends('layout')
-
 @section('title', 'Boleta')
 @section('breadcrumb', 'Boleta')
 @section('breadcrumb2', 'Boleta')
-@section('href_accion', route('boleta.create'))
+@section('data-toggle', 'modal')
+@section('href_accion', '#modal-form')
 @section('value_accion', 'Agregar')
+@section('content')
 
 @section('content')
+<!-- modal -->
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div id="modal-form" class="modal fade" aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-body">
+                                <div class="row" align="center">
+                                    <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
+                                        <p>Selecciona el Tipo de Facturacion</p>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="{{ route('boleta.create') }}"><button class="btn btn-sm btn-primary" type="submit"><strong>Productos</strong></button></a>
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <a href="{{ route('boleta_servicio.create') }}"><button class="btn btn-sm btn-primary" type="submit"><strong>Servicios</strong></button></a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{{-- fimodal --}}
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
 
