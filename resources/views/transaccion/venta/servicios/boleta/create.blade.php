@@ -206,7 +206,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label">Cliente:</label>
+                                    <label class="col-sm-2 col-form-label">Clientessss:</label>
                                     <div class="col-sm-10">
                                         <input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off" onclick="Clear(this);">
                                         <datalist id="browsersc1" >

@@ -179,7 +179,7 @@ class FacturacionServicioController extends Controller
                 $cotizacion_registro->save();
             }
         }else {
-            return redirect()->route('facturacion_servicio.create_factura')->with('campo', 'Falto introducir un campo de la tabla productos');
+            return redirect()->route('facturacion_servicio.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
         return redirect()->route('facturacion.show',$facturacion->id);
     }
