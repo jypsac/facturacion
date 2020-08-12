@@ -41,6 +41,8 @@ class CreateBoletaTable extends Migration
             $table->string('user_id');
             $table->string('estado');
 
+            $table->string('tipo')->nullable();
+
             $table->timestamps();
         });
     }

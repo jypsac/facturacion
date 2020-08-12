@@ -35,6 +35,8 @@ class CreateBoletaRegistroTable extends Migration
             $table->double('precio_unitario_desc',17,2);
             $table->integer('comision');
             $table->double('precio_unitario_comi',17,2);
+
+
             $table->timestamps();
         });
     }

@@ -85,7 +85,14 @@
                                     <td>{{$boleta->forma_pago_id}}</td>
                                     <td>{{$boleta->fecha_emision}}</td>
                                     <td>{{$boleta->fecha_vencimiento }}</td>
-                                    <td><center><a href="{{route('boleta.show',$boleta->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                    <td><center>
+                                        @if($boleta->producto_id==NULL)
+                                        <a href="{{route('boleta_servicio.show',$boleta->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER SERVICIO</button></a>
+                                        @else
+                                        <a href="{{route('boleta.show',$boleta->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER PRODUCTO</button></a>
+                                        @endif
+                                        </center>
+                                    </td>
                                     {{-- <td>
                                         @if($boleta->estado == '0')
                                              Button trigger modal

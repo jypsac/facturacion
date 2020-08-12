@@ -2,10 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Banco;
 use App\Boleta;
 use App\Boleta_registro;
 use App\Cliente;
 use App\Cotizacion_Servicios;
+use App\Empresa;
 use App\Forma_pago;
 use App\Igv;
 use App\Moneda;
@@ -188,7 +190,7 @@ class BoletaServicioController extends Controller
         }else {
             return redirect()->route('boleta_servicio.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
-        return redirect()->route('boleta.show',$boleta->id);
+        return redirect()->route('boleta_servicio.show',$boleta->id);
 
     }
 
@@ -200,7 +202,13 @@ class BoletaServicioController extends Controller
      */
     public function show($id)
     {
-        //
+        $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
+        $igv=Igv::first();
+        $banco=Banco::all();
+        $empresa=Empresa::first();
+        $sub_total=0;
+        $boleta=Boleta::find($id);
+        return view('transaccion.venta.servicios.boleta.show', compact('boleta','empresa','banco','boleta_registro','igv','sub_total'));
     }
 
     /**

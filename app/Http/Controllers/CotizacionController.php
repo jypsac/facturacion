@@ -731,6 +731,7 @@ public function boletear_store(Request $request)
     $boletear->fecha_vencimiento=$request->get('fecha_vencimiento');
     $boletear->estado='0';
     $boletear->user_id =auth()->user()->id;
+    $boletear->tipo='1';
     $boletear->save();
 
     $buscador_id=Cotizacion::where('id',$boletear->id_cotizador)->first();
