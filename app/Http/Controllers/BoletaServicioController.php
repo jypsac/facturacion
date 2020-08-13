@@ -137,6 +137,7 @@ class BoletaServicioController extends Controller
             $boleta->comisionista_id= $comisionista_buscador->id;
         }
         $boleta->estado='0';
+        $boleta->tipo='servicio';
         $boleta->save();
 
         $check = $request->input('descuento_unitario');

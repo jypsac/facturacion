@@ -133,6 +133,7 @@ class FacturacionServicioController extends Controller
             $facturacion->comisionista_id= $comisionista_buscador->id;
         }
         $facturacion->estado='0';
+        $facturacion->estado='servicio';
         $facturacion->save();
 
         $check = $request->input('descuento_unitario');

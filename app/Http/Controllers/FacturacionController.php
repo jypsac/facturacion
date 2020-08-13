@@ -209,6 +209,7 @@ class FacturacionController extends Controller
         //     $facturacion->comisionista_id= $comisionista_buscador->id;
         // }
         $facturacion->estado='0';
+        $facturacion->tipo='producto';
         $facturacion->save();
 
 
