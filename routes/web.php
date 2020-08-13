@@ -53,10 +53,14 @@ Route::group(
 		//FACTURA
 		Route::get('/cotizacion_servicio/create_factura' , 'CotizacionServiciosController@create_factura')->name('cotizacion_servicio.create_factura');
 		Route::post('/cotizacion_servicio/store_factura','CotizacionServiciosController@store_factura')->name('cotizacion_servicio.store_factura');
+		Route::get('/cotizacion_servicio/facturar/{id}' , 'CotizacionServiciosController@facturar')->name('cotizacion_servicio.facturar');
+		Route::post('/cotizacion_servicio/facturar_store' , 'CotizacionServiciosController@facturar_store')->name('cotizacion_servicio.facturar_store');
 
 		// boleta
 		Route::get('/cotizacion_servicio/create_boleta' , 'CotizacionServiciosController@create_boleta')->name('cotizacion_servicio.create_boleta');
 		Route::post('/cotizacion_servicio/store_boleta','CotizacionServiciosController@store_boleta')->name('cotizacion_servicio.store_boleta');
+		Route::get('/cotizacion_servicio/boletear/{id}' , 'CotizacionServiciosController@boletear')->name('cotizacion_servicio.boletear');
+		Route::post('/cotizacion_servicio/boletear_store' , 'CotizacionServiciosController@boletear_store')->name('cotizacion_servicio.boletear_store');
 
 		Route::resource('/cotizacion_servicio','CotizacionServiciosController');
 
