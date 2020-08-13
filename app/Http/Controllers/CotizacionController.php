@@ -633,6 +633,7 @@ public function facturar_store(Request $request)
     $facturar->fecha_emision=$request->get('fecha_emision');
     $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
     $facturar->estado='0';
+    $facturar->tipo='producto';
     $facturar->user_id =auth()->user()->id;
     $facturar->save();
 
@@ -731,7 +732,7 @@ public function boletear_store(Request $request)
     $boletear->fecha_vencimiento=$request->get('fecha_vencimiento');
     $boletear->estado='0';
     $boletear->user_id =auth()->user()->id;
-    $boletear->tipo='1';
+    $boletear->tipo='producto';
     $boletear->save();
 
     $buscador_id=Cotizacion::where('id',$boletear->id_cotizador)->first();

@@ -206,7 +206,7 @@ class BoletaController extends Controller
         }
         $boleta->user_id =auth()->user()->id;
         $boleta->estado='0';
-        $boleta->tipo='1';
+        $boleta->tipo='producto';
         $boleta->save();
 
 

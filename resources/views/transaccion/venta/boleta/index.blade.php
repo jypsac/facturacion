@@ -86,9 +86,9 @@
                                     <td>{{$boleta->fecha_emision}}</td>
                                     <td>{{$boleta->fecha_vencimiento }}</td>
                                     <td><center>
-                                        @if($boleta->producto_id==NULL)
+                                        @if($boleta->tipo==2)
                                         <a href="{{route('boleta_servicio.show',$boleta->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER SERVICIO</button></a>
-                                        @else
+                                        @elseif($boleta->tipo==1)
                                         <a href="{{route('boleta.show',$boleta->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER PRODUCTO</button></a>
                                         @endif
                                         </center>
