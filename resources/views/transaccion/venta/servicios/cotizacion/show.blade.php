@@ -21,18 +21,35 @@
             </style>
 
             {{-- PROCESADO --}}
-            @if($cotizacion->estado == '1')
+            {{-- @if($cotizacion->estado == '1')
                 @if($cotizacion->cliente->documento_identificacion == 'Ruc' || $cotizacion->cliente->documento_identificacion == 'RUC' || $cotizacion->cliente->documento_identificacion == 'ruc')
+                    <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$facturacion->id)}}" ></a>
+                @else
+                    <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta.show',$boleta->id)}}" ></a>
+                @endif --}}
+            {{-- SIN PROCESAR --}}
+            {{-- @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc' )
+                <a class="btn btn-info" href="{{route('cotizacion_servicio.facturar' , $cotizacion->id)}}">Facturar</a>
+            @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
+                <a class="btn btn-success"  href="{{route('cotizacion_servicio.boletear', $cotizacion->id)}}">Boletear</a>
+            @endif --}}
+
+            @if($cotizacion->estado == '1')
+                @if($cotizacion->tipo=='factura')
                     <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$facturacion->id)}}" ></a>
                 @else
                     <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta.show',$boleta->id)}}" ></a>
                 @endif
             {{-- SIN PROCESAR --}}
-            @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc' )
+            @elseif($cotizacion->tipo=='factura')
                 <a class="btn btn-info" href="{{route('cotizacion_servicio.facturar' , $cotizacion->id)}}">Facturar</a>
-            @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
+            @elseif($cotizacion->tipo=='boleta')
                 <a class="btn btn-success"  href="{{route('cotizacion_servicio.boletear', $cotizacion->id)}}">Boletear</a>
             @endif
+            {{-- IMPRECION --}}
+
+
+
             {{-- IMPRECION --}}
             <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
         </div>

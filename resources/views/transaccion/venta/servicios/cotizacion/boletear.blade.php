@@ -107,12 +107,11 @@
                                 <span hidden="hidden">{{$i=1}} </span>
                                 <tr>
                                     <td>{{$i}}</td>
-                                    <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
+                                    <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
                                     <td>{{$cotizacion_registros->cantidad}}</td>
                                     <td>
-                                        {{$cotizacion_registros->producto->nombre}}
-                                        <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span>
-                                        <textarea class="form-control col-sm-12" name="numero_serie[{{$index}}]" placeholder="N° Serie"></textarea>
+                                        {{$cotizacion_registros->servicio->nombre}}
+                                        <span style="font-size: 10px">{{$cotizacion_registros->servicio->descripcion}}</span>
                                     </td>
                                     <td>S/.{{$cotizacion_registros->precio}}</td>
                                     <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>

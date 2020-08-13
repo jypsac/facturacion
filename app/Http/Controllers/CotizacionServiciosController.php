@@ -475,7 +475,30 @@ class CotizacionServiciosController extends Controller
 
 //ENVIO DE FACTURAR A VISTA
     public function facturar($id){
-        return "facturar";
+        $facturacion=Facturacion::where('id_cotizador',$id)->first();
+        $boleta=Boleta::where('id_cotizador',$id)->first();
+        $banco=Banco::where('estado','0')->get();
+        $moneda=Moneda::where('principal',1)->first();
+        $cotizacion=Cotizacion_Servicios::find($id);
+
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $regla=$cotizacion->tipo;
+        $i=1;
+
+        $fac= Facturacion::all()->count();
+        $suma=$fac+1;
+        $cod_fac='FC-000'.$suma;
+
+        $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
+            foreach ($cotizacion_registro as $cotizacion_registros) {
+               $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+            }
+            return view('transaccion.venta.servicios.cotizacion.facturar', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','cod_fac'));
+
+
     }
 
 //GUARDADO DE COTIZACION A FACTURA
@@ -485,7 +508,29 @@ class CotizacionServiciosController extends Controller
 
 //ENVIO DE BOLETEAR A VISTA
     public function boletear($id){
-        return "boletear";
+        $facturacion=Facturacion::where('id_cotizador',$id)->first();
+        $boleta=Boleta::where('id_cotizador',$id)->first();
+        $banco=Banco::where('estado','0')->get();
+        $moneda=Moneda::where('principal',1)->first();
+        $cotizacion=Cotizacion_Servicios::find($id);
+
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $regla=$cotizacion->tipo;
+        $i=1;
+
+        $boleta_contador= Boleta::all()->count();
+        $suma=$boleta_contador+1;
+        $boleta_codigo='BO-0000'.$suma;
+
+        $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+            foreach ($cotizacion_registro as $cotizacion_registros) {
+                $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+            }
+            return view('transaccion.venta.servicios.cotizacion.boletear', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','boleta_codigo'));
+
     }
 //GUARDADO DE COTIZACION A BOLETA
     public function boletear_store(Request $request){

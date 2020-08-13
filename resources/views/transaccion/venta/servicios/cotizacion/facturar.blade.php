@@ -108,12 +108,12 @@
                             <tbody>
                                 @foreach($cotizacion_registro as $index => $cotizacion_registros)
                                 <tr>
-                                    <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
+                                    <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
                                     <td>{{$cotizacion_registros->cantidad}}</td>
                                     <td>
-                                        {{$cotizacion_registros->producto->nombre}}
-                                        <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span>
-                                        <input type="text" class="form-control col-sm-4" name="numero_serie[{{$index}}]" placeholder="N° Serie">
+                                        {{$cotizacion_registros->servicio->nombre}}
+                                        <span style="font-size: 10px">{{$cotizacion_registros->servicio->descripcion}}</span>
+
                                     </td>
                                     <td>S/.{{$cotizacion_registros->precio}}</td>
                                     <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
