@@ -473,6 +473,25 @@ class CotizacionServiciosController extends Controller
 
    }
 
+//ENVIO DE FACTURAR A VISTA
+    public function facturar($id){
+        return "facturar";
+    }
+
+//GUARDADO DE COTIZACION A FACTURA
+    public function facturar_store(Request $request){
+        return "facturar_store";
+    }
+
+//ENVIO DE BOLETEAR A VISTA
+    public function boletear($id){
+        return "boletear";
+    }
+//GUARDADO DE COTIZACION A BOLETA
+    public function boletear_store(Request $request){
+        return "boletear_store";
+    }
+
     /**
      * Remove the specified resource from storage.
      *

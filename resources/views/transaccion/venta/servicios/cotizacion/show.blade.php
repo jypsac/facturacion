@@ -3,7 +3,7 @@
 @section('title', 'Cotizacion Servicio Ver')
 @section('breadcrumb', 'Cotizacion Servicio')
 @section('breadcrumb2', 'Cotizacion Servicio')
-@section('href_accion', route('cotizacion.index'))
+@section('href_accion', route('cotizacion_servicio.index'))
 @section('value_accion', 'Atras')
 
 @section('content')
@@ -29,9 +29,9 @@
                 @endif
             {{-- SIN PROCESAR --}}
             @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc' )
-                <a class="btn btn-info" href="{{route('cotizacion.facturar' , $cotizacion->id)}}">Facturar</a>
+                <a class="btn btn-info" href="{{route('cotizacion_servicio.facturar' , $cotizacion->id)}}">Facturar</a>
             @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'DNI' ||$cotizacion->cliente->documento_identificacion == 'dni' ||$cotizacion->cliente->documento_identificacion == 'pasaporte' ||$cotizacion->cliente->documento_identificacion == 'Pasaporte' )
-                <a class="btn btn-success"  href="{{route('cotizacion.boletear', $cotizacion->id)}}">Boletear</a>
+                <a class="btn btn-success"  href="{{route('cotizacion_servicio.boletear', $cotizacion->id)}}">Boletear</a>
             @endif
             {{-- IMPRECION --}}
             <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
@@ -121,7 +121,7 @@
                                     <span hidden="hidden">{{$i++}}</span>
                                 @endforeach
                             @else
-                                @foreach($cotizacion_registro2 as $cotizacion_registros)
+                                @foreach($cotizacion_registro as $cotizacion_registros)
                                 <tr>
                                     <td>{{$i}} </td>
                                     <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
