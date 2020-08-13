@@ -3,7 +3,7 @@
 @section('title', 'Servicio - Boleta')
 @section('breadcrumb', 'Servicio - Boleta')
 @section('breadcrumb2', 'Servicio - Boleta')
-@section('href_accion', route('boleta_servicio.index') )
+@section('href_accion', route('boleta.index') )
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head>

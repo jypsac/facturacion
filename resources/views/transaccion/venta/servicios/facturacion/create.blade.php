@@ -3,7 +3,7 @@
 @section('title', 'Servicio - Factura')
 @section('breadcrumb', 'Servicio - Factura')
 @section('breadcrumb2', 'Servicio - Factura')
-@section('href_accion', route('facturacion_servicio.index') )
+@section('href_accion', route('facturacion.index') )
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head>

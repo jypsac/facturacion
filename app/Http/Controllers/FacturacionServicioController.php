@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Banco;
 use App\Cliente;
+use App\Empresa;
 use App\Facturacion;
 use App\Facturacion_registro;
 use App\Forma_pago;
@@ -133,7 +135,7 @@ class FacturacionServicioController extends Controller
             $facturacion->comisionista_id= $comisionista_buscador->id;
         }
         $facturacion->estado='0';
-        $facturacion->estado='servicio';
+        $facturacion->tipo='servicio';
         $facturacion->save();
 
         $check = $request->input('descuento_unitario');
@@ -182,7 +184,7 @@ class FacturacionServicioController extends Controller
         }else {
             return redirect()->route('facturacion_servicio.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
-        return redirect()->route('facturacion.show',$facturacion->id);
+        return redirect()->route('facturacion_servicio.show',$facturacion->id);
     }
 
     /**
@@ -193,7 +195,16 @@ class FacturacionServicioController extends Controller
      */
     public function show($id)
     {
-        //
+
+        $empresa=Empresa::first();
+        $facturacion=Facturacion::find($id);
+        $facturacion_registro=Facturacion_registro::where('facturacion_id',$id)->get();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $banco=Banco::all();
+
+        return view('transaccion.venta.servicios.facturacion.show', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
     }
 
     /**

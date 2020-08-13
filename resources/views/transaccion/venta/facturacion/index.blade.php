@@ -98,9 +98,16 @@
                                     <td>{{$facturacions->fecha_vencimiento }}</td>
                                     <td>
                                         <center>
-                                            <a href="{{route('facturacion.show',$facturacions->id)}}">
-                                                <button type="button" class="btn btn-w-m btn-primary">VER</button>
+                                            @if($facturacions->tipo=='servicio')
+                                            <a href="{{route('facturacion_servicio.show',$facturacions->id)}}">
+                                                <button type="button" class="btn btn-w-m btn-primary">VER SERVICIO</button>
                                             </a>
+                                            @elseif($facturacions->tipo=='producto')
+                                            <a href="{{route('facturacion.show',$facturacions->id)}}">
+                                                <button type="button" class="btn btn-w-m btn-primary">VER PRODUCTOSSSS</button>
+                                            </a>
+                                        @endif
+
                                         </center>
                                     </td>
                                     <td>
