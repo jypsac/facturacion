@@ -9,7 +9,7 @@
 @section('content')
 </br>
     <div class="col animated fadeInRight">
-        
+
             <div class="mail-box-header">
 
 
@@ -32,7 +32,7 @@
                     <td class="check-mail">
                         <input type="checkbox" class="i-checks">
                     </td>
-                    <td ><a href="#">{{$row->destinatario}}</a></td>
+                    <td ><a href="{{ route('email.show', $row->id) }}">{{$row->destinatario}}</a></td>
                     <td width="100px"> <div class="pre">{!!$row->mensaje!!}</div></td>
                     <td class=""><i class="fa fa-paperclip"></i></td>
                     <td class="text-right mail-date">{{$row->fecha_hora}}</td>
@@ -42,6 +42,16 @@
         </table>
     </div>
 </div>
+<style>
+    .blockquote{font-size: 12px !important;text-decoration-line: none !important;}
+    span{font-size: 12px !important; background: none !important;font-family: open sans !important;text-align: left !important;font-weight: normal !important;}
+    li{font-size: 12px !important;  text-align: left !important;font-weight: normal !important; }
+    ol{font-size: 12px !important; padding-left: 12px !important;font-weight: normal !important;}
+    b{font-size: 12px !important; font-weight: normal !important;}
+    .table .table-bordered{display:none !important;}
+    h1, h2, h3, h4, h5, h6{font-size: 12px !important; margin-top: 0px!important;font-family: open sans !important;}
+    .pre{background-color: #eff2f305 !important; border: 1px solid #d1dade05 !important;height: 25px; width: 500px; overflow: hidden !important;padding: 0;text-decoration: none !important;}
+</style>
 
 <!-- Mainly scripts -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
