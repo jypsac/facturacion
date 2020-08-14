@@ -13,6 +13,11 @@ class Facturacion extends Model
 	public function cotizacion(){
         return $this->belongsTo(Cotizacion::class,'id_cotizador');
     }
+
+    public function cotizacion_servicio(){
+        return $this->belongsTo(Cotizacion_Servicios::class,'id_cotizador_servicio');
+    }
+
     public function forma_pago(){
         return $this->belongsTo(Forma_pago::class,'forma_pago_id');
     }

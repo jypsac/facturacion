@@ -284,8 +284,12 @@ class FacturacionController extends Controller
         $igv=Igv::first();
         $sub_total=0;
         $banco=Banco::all();
+        if ($facturacion->id_cotizador_servicio==NULL) {
+            return view('transaccion.venta.facturacion.show', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
+        }else{
+            return view('transaccion.venta.facturacion.show_servicio', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
+        }
 
-        return view('transaccion.venta.facturacion.show', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
     }
 
     function print($id){

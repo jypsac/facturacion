@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Banco;
 use App\Boleta;
+use App\Boleta_registro;
 use App\Cliente;
 use App\Cotizacion_Servicios;
 use App\Cotizacion_Servicios_boleta_registro;
@@ -505,8 +506,7 @@ class CotizacionServiciosController extends Controller
 
 //GUARDADO DE COTIZACION A FACTURA
     public function facturar_store(Request $request){
-
-
+        // return $request;
     // cambio de Estado Cotizador
     $id_cotizador=$request->get('id_cotizador');
     $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
@@ -516,13 +516,16 @@ class CotizacionServiciosController extends Controller
     $suma=$fac+1;
     $cod_fac='FC-000'.$suma;
 
-
     // Creacion de Facturacion
     $facturar=new Facturacion;
     $facturar->codigo_fac=$cod_fac;
-    $facturar->id_cotizador=$request->get('id_cotizador');
+    $facturar->id_cotizador_servicio=$request->get('id_cotizador');
     $facturar->orden_compra=$request->get('orden_compra');
     $facturar->guia_remision=$request->get('guia_remision');
+    $facturar->cliente_id=$cotizacion->cliente_id;
+    $facturar->moneda_id=$cotizacion->moneda_id;
+    $facturar->forma_pago_id=$cotizacion->forma_pago_id;
+    $facturar->comisionista=$cotizacion->comisionista_id;
     $facturar->fecha_emision=$request->get('fecha_emision');
     $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
     $facturar->estado='0';
@@ -530,7 +533,7 @@ class CotizacionServiciosController extends Controller
     $facturar->user_id =auth()->user()->id;
     $facturar->save();
 
-    $buscador_id=Cotizacion_Servicios::where('id',$facturar->id_cotizador)->first();
+    $buscador_id=Cotizacion_Servicios::where('id',$facturar->id_cotizador_servicio)->first();
 
     $cotizaciones_facturaciones=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$buscador_id->id)->get();
 
@@ -594,8 +597,70 @@ class CotizacionServiciosController extends Controller
     }
 //GUARDADO DE COTIZACION A BOLETA
     public function boletear_store(Request $request){
-        return "boletear_store";
+
+    $id_cotizador=$request->get('id_cotizador');
+    $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
+    $cotizacion->estado=1;
+    $cotizacion->save();
+    $fac= Boleta::all()->count();
+    $suma=$fac+1;
+    $cod_bol='FC-000'.$suma;
+
+    // Creacion de Facturacion
+    $boletear=new Boleta;
+    $boletear->codigo_boleta=$cod_bol;
+    $boletear->id_cotizador_servicio=$request->get('id_cotizador');
+    $boletear->orden_compra=$request->get('orden_compra');
+    $boletear->guia_remision=$request->get('guia_remision');
+    $boletear->cliente_id=$cotizacion->cliente_id;
+    $boletear->moneda_id=$cotizacion->moneda_id;
+    $boletear->forma_pago_id=$cotizacion->forma_pago_id;
+    $boletear->comisionista=$cotizacion->comisionista_id;
+    $boletear->fecha_emision=$request->get('fecha_emision');
+    $boletear->fecha_vencimiento=$request->get('fecha_vencimiento');
+    $boletear->estado='0';
+    $boletear->tipo='servicio';
+    $boletear->user_id =auth()->user()->id;
+    $boletear->save();
+
+    $buscador_id=Cotizacion_Servicios::where('id',$boletear->id_cotizador_servicio)->first();
+
+    $cotizaciones_boletaciones=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$buscador_id->id)->get();
+
+    foreach ($cotizaciones_boletaciones as $index => $cotizacion_boleta) {
+        $boleta_registro=new Boleta_registro();
+        $boleta_registro->boleta_id=$boletear->id;
+        $boleta_registro->servicio_id=$cotizacion_boleta->servicio_id;
+        $boleta_registro->promedio_original=$cotizacion_boleta->promedio_original;
+        $boleta_registro->precio=$cotizacion_boleta->precio;
+        $boleta_registro->cantidad=$cotizacion_boleta->cantidad;
+        $boleta_registro->descuento=$cotizacion_boleta->descuento;
+        $boleta_registro->precio_unitario_desc=$cotizacion_boleta->precio_unitario_desc;
+        $boleta_registro->comision=$cotizacion_boleta->comision;
+        $boleta_registro->precio_unitario_comi=$cotizacion_boleta->precio_unitario_comi;
+        $boleta_registro->save();
     }
+
+    // Creacion de Ventas Registros del Comisinista
+    $cotizador=$request->get('id_cotizador');
+    $id_comisionista=$request->get('id_comisionista');
+    $comisionista=Cotizacion_Servicios::where('id',$cotizador)->first();
+    $id_comi=$comisionista->comisionista_id;
+
+    if(isset($id_comi)){
+       $comisionista=new Ventas_registro;
+       $comisionista->id_facturacion=$request->get('fac_id');
+       $comisionista->comisionista=$request->get('id_comisionista');
+       $comisionista->estado_aprobado='0';
+       $comisionista->pago_efectuado='0';
+       $comisionista->estado_fac='0';
+       $comisionista->observacion='Viene del Cotizador';
+       $comisionista->save();
+    }
+
+    return redirect()->route('boleta.show',$id_cotizador);
+    }
+
 
     /**
      * Remove the specified resource from storage.
