@@ -43,7 +43,7 @@ class MailboxController extends Controller
         $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
         $mailer =new \Swift_Mailer($transport);
 
-         $newfile = $request->file('archivo');
+        $newfile = $request->file('archivo');
         if($request->hasfile('archivo')){
             foreach ($newfile as $file) {
                 $nombre =  $file->getClientOriginalName();
@@ -51,7 +51,7 @@ class MailboxController extends Controller
 
                 $news[] = storage_path().'/app/public/'.$nombre;
                 $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
-                 foreach ($news as $attachment) {
+                foreach ($news as $attachment) {
                     $message->attach(\Swift_Attachment::fromPath($attachment));
                 }
             }
@@ -62,7 +62,7 @@ class MailboxController extends Controller
         if($mailer->send($message)){
             return back();
         }
-         return "Something went wrong :(";
+        return "Something went wrong :(";
 
     }
 
@@ -84,7 +84,21 @@ class MailboxController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $id_usuario=auth()->user()->id;
+        $configmail = new CreateMail;
+        $configmail->id_usuario =auth()->user()->id;
+        $configmail->email =$request->get('email') ;
+        $configmail->password = $request->get('password') ;
+        $configmail->email_backup = 'desarrollo@jypsac.com';
+        $configmail->smtp =$request->get('smtp') ;
+        $configmail->port = $request->get('port');
+        $configmail->encryption= $request->get('encryp') ;
+        $configmail-> save();
+
+        $user=User::find($id_usuario);
+        $user->email_creado='1';
+        $user->save();
+        return redirect()->route('configuracion_email.index');
     }
 
     /**
@@ -116,9 +130,16 @@ class MailboxController extends Controller
      * @param  \App\Mailbox  $mailbox
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Mailbox $mailbox)
+    public function update(Request $request, $id)
     {
-        //
+        $configmail=CreateMail::find($id);
+        $configmail->email =$request->get('email') ;
+        $configmail->password = $request->get('password') ;
+        $configmail->smtp =$request->get('smtp') ;
+        $configmail->port = $request->get('port');
+        $configmail->encryption= $request->get('encryp') ;
+        $configmail->save();
+        return redirect()->route('configuracion_email.index');
     }
 
     /**

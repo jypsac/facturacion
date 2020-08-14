@@ -26,7 +26,7 @@ class CreateMailController extends Controller
     public function create()
     {
      return view('mailbox.create');
-    }
+ }
   /**
      * Store a newly created resource in storage.
      *
@@ -38,35 +38,19 @@ class CreateMailController extends Controller
     $id_usuario=auth()->user()->id;
     $correo_busqueda=CreateMail::where('id_usuario',$id_usuario)->first();
     $correo=$correo_busqueda->email;
-    $boton=$request->get('boton');
 
-    if ($boton=='mensaje') {
-        $mail = new Mailbox;
-        $mail->id_usuario =auth()->user()->id;
-        $mail->destinatario =$correo;
-        $mail->remitente =$request->get('remitente') ;
-        $mail->asunto =$request->get('asunto') ;
-        $mail->mensaje =$request->get('mensaje') ;
-        $mail->archivo =$request->get('archivo') ;
-        $mail->pdf =$request->get('pdf') ;
-        $mail->fecha_hora =$request->get('fecha_hora') ;
-        $mail-> save();
-        return redirect()->route('email.index');
-        }
-    elseif ($boton=='configuracion') {
-        $configmail = new CreateMail;
-        $configmail->id_usuario = Auth::User()->id;
-        $configmail->email =$request->get('email') ; //coloca
-        $configmail->password = $request->get('password') ;
-        $configmail->email_backup = $request->get('email_backup');
-        $configmail->smtp =$request->get('smtp') ;
-        $configmail->port = $request->get('port');
-        $configmail->encryption= $request->get('encryp') ;
-        $configmail-> save();
-        return 'se guardo bien confi';
-
-    }
-    }
+    $mail = new Mailbox;
+    $mail->id_usuario =auth()->user()->id;
+    $mail->destinatario =$correo;
+    $mail->remitente =$request->get('remitente') ;
+    $mail->asunto =$request->get('asunto') ;
+    $mail->mensaje =$request->get('mensaje') ;
+    $mail->archivo =$request->get('archivo') ;
+    $mail->pdf =$request->get('pdf') ;
+    $mail->fecha_hora =$request->get('fecha_hora') ;
+    $mail-> save();
+    return redirect()->route('email.index');
+}
 
     /**
      * Display the specified resource.
@@ -76,7 +60,9 @@ class CreateMailController extends Controller
      */
     public function show($id)
     {
-        return 'holi';
+
+        $mail=Mailbox::find($id);
+        return view('mailbox.show',compact('mail'));
     }
 
     /**

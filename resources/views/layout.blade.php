@@ -199,14 +199,14 @@
                     </li>
                     @endcan
                     <li>
-                        <a href="mailbox.html"><i class="fa fa-bolt"></i> <span class="nav-label">facturacion Electronica </span></a>
+                        <a href="#"><i class="fa fa-bolt"></i> <span class="nav-label">facturacion Electronica </span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="{{route('facturacion_electronica.index')}}">index</a></li>
                             <li><a href="#">Email view</a></li>
                         </ul>
                     </li>
                     <li>
-                        <a href="mailbox.html"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
+                        <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
                         <ul class="nav nav-second-level collapse">
                             <li><a href="{{route('email.index')}}">Inbox</a></li>
                             <li><a href="{{route('configuracion_email.index')}}">Configuracion</a></li>
