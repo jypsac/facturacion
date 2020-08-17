@@ -47,9 +47,10 @@ class CreateMailController extends Controller
         $yourEmail = $correo;
         //$mailbackup =  ; // = $request->yourmail
         $yourPassword = $correo_busqueda->password;
-        $sendto = $request->get('remitente') ;
+        $sendto = $request->get('remitente')  ;
         $titulo = $request->get('asunto');
         $mensaje = $request->get('mensaje');
+        $bakcup=    $correo_busqueda->email_backup ;
 
         $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
         $mailer =new \Swift_Mailer($transport);
@@ -61,13 +62,13 @@ class CreateMailController extends Controller
                 \Storage::disk('mailbox')->put($nombre,  \File::get($file));
 
                 $news[] = storage_path().'/app/public/'.$nombre;
-                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
                 foreach ($news as $attachment) {
                     $message->attach(\Swift_Attachment::fromPath($attachment));
                 }
             }
         }else{
-            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
 
         }
         if($mailer->send($message)){
