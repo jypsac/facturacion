@@ -57,6 +57,7 @@
                         <span class="fileinput-new">Seleccionar</span>
                     <span class="fileinput-exists">Cambiar</span>
                         <input  type="file" name="archivo[]" multiple="" />
+                         <input type="file" name="archivo">
                     </span>
                     <span class="fileinput-filename" style="padding-left: 30px"></span>
                     <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
@@ -65,6 +66,7 @@
           <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" >
                     <i class="fa fa-reply"></i> Enviar
                 </button>
+                <input type="text" name="fecha_hora" value="{{ date('Y-m-d H:i:s') }}" hidden="hidden">
           <a href="/index" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" >
                     <i class="fa fa-times"></i> Descartar
                 </a>

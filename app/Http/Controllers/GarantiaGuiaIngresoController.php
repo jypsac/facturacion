@@ -9,6 +9,8 @@ use App\Cliente;
 use App\Empresa;
 use App\Personal_datos_laborales;
 use App\Personal;
+use App\CreateMail;
+use App\Mailbox;
 use Barryvdh\DomPDF\Facade as PDF;
 use DB;
 use Carbon\Carbon;
@@ -244,47 +246,62 @@ class GarantiaGuiaIngresoController extends Controller
     }
 
     public function enviar(Request $request){
-       $smtpAddress = 'smtp.gmail.com'; // = $request->smtp
-        $port = 465;
-        $encryption = 'ssl';
-        $yourEmail = 'danielrberru@gmail.com'; // = $request->yourmail
-        $yourPassword = ''; //colocar el password,
+            $id_usuario=auth()->user()->id;
+    $correo_busqueda=CreateMail::where('id_usuario',$id_usuario)->first();
+    $correo=$correo_busqueda->email;
 
+    /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
 
-        //Envio del mail al corre
+        $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
+        $port = $correo_busqueda->port;
+        $encryption = $correo_busqueda->encryption;
+        $yourEmail = $correo;
+        //$mailbackup =  ; // = $request->yourmail
+        $yourPassword = $correo_busqueda->password;
+        $sendto = $request->get('sendto')  ;
+        $titulo = $request->get('titulo');
+        $mensaje = $request->get('mensaje');
+        $bakcup=    $correo_busqueda->email_backup ;
+        
+        $file = $request->id;
+        $pdfile = storage_path().'/app/public/guia_ingreso/'.$file.'.pdf';
+        
         $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
         $mailer =new \Swift_Mailer($transport);
 
-        $sendto = $request->sendto;
-        $titulo = $request->titulo;
-        $mensaje = $request->mensaje;
-        $file = $request->id;
-
-        $pdfile = storage_path().'/app/public/guia_ingreso/'.$file.'.pdf';
-
         $newfile = $request->file('archivo');
-
         if($request->hasfile('archivo')){
-            foreach ($newfile as $dofile) {
-                $nombre =  $dofile->getClientOriginalName();
-                \Storage::disk('mailbox')->put($nombre,  \File::get($dofile));
+            foreach ($newfile as $file) {
+                $nombre =  $file->getClientOriginalName();
+                \Storage::disk('mailbox')->put($nombre,  \File::get($file));
+
                 $news[] = storage_path().'/app/public/'.$nombre;
-                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
                 $message->attach(\Swift_Attachment::fromPath($pdfile));
-                 foreach ($news as $attachment) {
+                foreach ($news as $attachment) {
                     $message->attach(\Swift_Attachment::fromPath($attachment));
                 }
             }
         }else{
-            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
             $message->attach(\Swift_Attachment::fromPath($pdfile));
 
         }
-
         if($mailer->send($message)){
-           return redirect()->route('garantia_guia_ingreso.index');
-        }
-           return "Something went wrong :(";
+          $mail = new Mailbox;
+          $mail->id_usuario =auth()->user()->id;
+          $mail->destinatario =$correo;
+          $mail->remitente =$request->get('sendto') ;
+          $mail->asunto =$request->get('titulo') ;
+          $mail->mensaje =$request->get('mensaje') ;
+          $mail->archivo =$request->get('archivo') ;
+          $mail->pdf = $pdfile ;
+          $mail->fecha_hora =$request->get('fecha_hora') ;
+          $mail-> save();
+
+          return redirect()->route('garantia_guia_ingreso.index');
+      }
+      return "Something went wrong :(";
 
 
 
