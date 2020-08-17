@@ -6,7 +6,7 @@ use App;
 use App\CreateMail;
 use App\Mailbox;
 use Illuminate\Http\Request;
-class CreateMailController extends Controller
+class CreateMailController extends Controller 
 {
     /**
      * Display a listing of the resource.
@@ -49,8 +49,44 @@ class CreateMailController extends Controller
     $mail->pdf =$request->get('pdf') ;
     $mail->fecha_hora =$request->get('fecha_hora') ;
     $mail-> save();
-    return redirect()->route('email.index');
-}
+
+    /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
+
+        $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
+        $port = $correo_busqueda->port;
+        $encryption = $correo_busqueda->encryption;
+        $yourEmail = $correo;
+        //$mailbackup =  ; // = $request->yourmail
+        $yourPassword = $correo_busqueda->password;
+        $sendto = $request->get('remitente') ;
+        $titulo = $request->get('asunto');
+        $mensaje = $request->get('mensaje');
+
+        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+        $mailer =new \Swift_Mailer($transport);
+
+        $newfile = $request->file('archivo');
+        if($request->hasfile('archivo')){
+            foreach ($newfile as $file) {
+                $nombre =  $file->getClientOriginalName();
+                \Storage::disk('mailbox')->put($nombre,  \File::get($file));
+
+                $news[] = storage_path().'/app/public/'.$nombre;
+                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+                foreach ($news as $attachment) {
+                    $message->attach(\Swift_Attachment::fromPath($attachment));
+                }
+            }
+        }else{
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
+
+        }
+        if($mailer->send($message)){
+            return redirect()->route('email.index');
+        }
+        return "Something went wrong :(";
+    
+    }
 
     /**
      * Display the specified resource.
