@@ -72,12 +72,15 @@ class CreateMailController extends Controller
 
         }
         if($mailer->send($message)){
+            $mensaje =$request->get('mensaje') ;
+            $texto= strip_tags($mensaje);
           $mail = new Mailbox;
           $mail->id_usuario =auth()->user()->id;
           $mail->destinatario =$correo;
           $mail->remitente =$request->get('remitente') ;
           $mail->asunto =$request->get('asunto') ;
           $mail->mensaje =$request->get('mensaje') ;
+          $mail->mensaje_sin_html =$texto ;
           $mail->archivo =$request->get('archivo') ;
           $mail->pdf =$request->get('pdf') ;
           $mail->fecha_hora =$request->get('fecha_hora') ;

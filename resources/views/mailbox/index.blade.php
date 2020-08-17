@@ -7,51 +7,119 @@
 @section('value_accion', 'Redactar')
 
 @section('content')
-</br>
-    <div class="col animated fadeInRight">
-
-            <div class="mail-box-header">
-
-
-        <div class="mail-tools tooltip-demo m-t-md">
-            <div class="btn-group float-right">
-                <button class="btn btn-white btn-sm"><i class="fa fa-arrow-left"></i></button>
-                <button class="btn btn-white btn-sm"><i class="fa fa-arrow-right"></i></button>
-            </div>
-
-            <a href="" class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="left" title="Refresh inbox"><i class="fa fa-refresh"></i> Refresh</a>
-            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Mark as important"><i class="fa fa-exclamation"></i> </button>
-            <button class="btn btn-white btn-sm" data-toggle="tooltip" data-placement="top" title="Move to trash"><i class="fa fa-trash-o"></i> </button>
-
-        </div>
-    </div>
-    <div class="mail-box">
-        <table class="table table-hover table-mail">
-            <tbody>@foreach($mailbox as $row)
-                <tr  class="unread">
-                    <td class="check-mail">
-                        <input type="checkbox" class="i-checks">
-                    </td>
-                    <td ><a href="{{ route('email.show', $row->id) }}">{{$row->destinatario}}</a></td>
-                    <td width="100px"> <div class="pre">{!!$row->mensaje!!}</div></td>
-                    <td class=""><i class="fa fa-paperclip"></i></td>
-                    <td class="text-right mail-date">{{$row->fecha_hora}}</td>
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+<style>#page-wrapper{height: 500px;}</style>
+<div class="fh-breadcrumb">
+    <div class="fh-column">
+        <div class="full-height-scroll">
+            <ul class="list-group elements-list">
+                @foreach($mailbox as $row)
+               <li class="list-group-item">
+                <a class="nav-link" data-toggle="tab" href="#tab-{{$row->id}}">
+                    <small class="float-right text-muted">{{$row->fecha_hora}}</small>
+                    <strong style="font-size: 10px">{{$row->remitente}}</strong>
+                    <div class="small m-t-xs">
+                        <p class="m-b-xs">
+                            {{$row->mensaje_sin_html}}
+                        </p>
+                        <p class="m-b-none">
+                            <i class="fa fa-map-marker"></i> San Francisko 12/100
+                        </p>
+                    </div>
+                </a>
+            </li>
+            @endforeach
+        </ul>
     </div>
 </div>
-<style>
-    .blockquote{font-size: 12px !important;text-decoration-line: none !important;}
-    span{font-size: 12px !important; background: none !important;font-family: open sans !important;text-align: left !important;font-weight: normal !important;}
-    li{font-size: 12px !important;  text-align: left !important;font-weight: normal !important; }
-    ol{font-size: 12px !important; padding-left: 12px !important;font-weight: normal !important;}
-    b{font-size: 12px !important; font-weight: normal !important;}
-    .table .table-bordered{display:none !important;}
-    h1, h2, h3, h4, h5, h6{font-size: 12px !important; margin-top: 0px!important;font-family: open sans !important;}
-    .pre{background-color: #eff2f305 !important; border: 1px solid #d1dade05 !important;height: 25px; width: 500px; overflow: hidden !important;padding: 0;text-decoration: none !important;}
-</style>
+
+<div class="full-height">
+    <div class="full-height-scroll white-bg border-left">
+
+        <div class="element-detail-box">
+
+            <div class="tab-content">
+                @foreach($mailbox as $row)
+                <div id="tab-{{$row->id}}" class="tab-pane">
+
+                    <div class="float-right">
+                        <div class="tooltip-demo">
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="left" title="Plug this message"><i class="fa fa-plug"></i> Plug it</button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark as important"><i class="fa fa-exclamation"></i> </button>
+                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to trash"><i class="fa fa-trash-o"></i> </button>
+
+                        </div>
+                    </div>
+                    <div class="small text-muted">
+                        <i class="fa fa-clock-o"></i> Friday, 12 April 2014, 12:32 am
+                    </div>
+
+                    <h1>
+                        Their separate existence is a myth
+                    </h1>
+
+                  {!!$row->mensaje!!}
+                    <p class="small">
+                        <strong>Best regards, Anthony Smith </strong>
+                    </p>
+
+                    <div class="m-t-lg">
+                        <p>
+                            <span><i class="fa fa-paperclip"></i> 2 attachments - </span>
+                            <a href="#">Download all</a>
+                            |
+                            <a href="#">View all images</a>
+                        </p>
+
+                        <div class="attachment">
+                            <div class="file-box">
+                                <div class="file">
+                                    <a href="#">
+                                        <span class="corner"></span>
+
+                                        <div class="icon">
+                                            <i class="fa fa-file"></i>
+                                        </div>
+                                        <div class="file-name">
+                                            Document_2014.doc
+                                            <br>
+                                            <small>Added: Jan 11, 2014</small>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <div class="file-box">
+                                <div class="file">
+                                    <a href="#">
+                                        <span class="corner"></span>
+
+                                        <div class="icon">
+                                            <i class="fa fa-line-chart"></i>
+                                        </div>
+                                        <div class="file-name">
+                                            Seels_2015.xls
+                                            <br>
+                                            <small>Added: May 13, 2015</small>
+                                        </div>
+                                    </a>
+                                </div>
+
+                            </div>
+                            <div class="clearfix"></div>
+                        </div>
+                    </div>
+
+                </div>
+                @endforeach
+            </div>
+
+        </div>
+
+    </div>
+</div>
+
+</div>
 
 <!-- Mainly scripts -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

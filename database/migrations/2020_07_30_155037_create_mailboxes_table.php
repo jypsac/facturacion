@@ -21,6 +21,7 @@ class CreateMailboxesTable extends Migration
             $table->string('remitente');
             $table->string('asunto');
             $table->text('mensaje');
+            $table->text('mensaje_sin_html');
             $table->string('archivo')->nullable();
             $table->string('pdf')->nullable();
             $table->string('fecha_hora');

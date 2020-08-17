@@ -23,7 +23,7 @@ class CreateCreateMailsTable extends Migration
             $table->string('email_backup');
             $table->string('smtp');
             $table->integer('port');
-            $table->string('encryption');
+            $table->string('encryption')->nullable();
             $table->timestamps();
 
         });
