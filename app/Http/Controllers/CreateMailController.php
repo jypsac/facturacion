@@ -6,7 +6,7 @@ use App;
 use App\CreateMail;
 use App\Mailbox;
 use Illuminate\Http\Request;
-class CreateMailController extends Controller 
+class CreateMailController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,9 +15,9 @@ class CreateMailController extends Controller
      */
     public function index()
     {
-       $mailbox =Mailbox::all();
-       return view('mailbox.index',compact('mailbox'));
-   }
+     $mailbox =Mailbox::all();
+     return view('mailbox.index',compact('mailbox'));
+ }
     /**
      * Show the form for creating a new resource.
      *
@@ -25,8 +25,8 @@ class CreateMailController extends Controller
      */
     public function create()
     {
-     return view('mailbox.create');
- }
+       return view('mailbox.create');
+   }
   /**
      * Store a newly created resource in storage.
      *
@@ -38,17 +38,6 @@ class CreateMailController extends Controller
     $id_usuario=auth()->user()->id;
     $correo_busqueda=CreateMail::where('id_usuario',$id_usuario)->first();
     $correo=$correo_busqueda->email;
-
-    $mail = new Mailbox;
-    $mail->id_usuario =auth()->user()->id;
-    $mail->destinatario =$correo;
-    $mail->remitente =$request->get('remitente') ;
-    $mail->asunto =$request->get('asunto') ;
-    $mail->mensaje =$request->get('mensaje') ;
-    $mail->archivo =$request->get('archivo') ;
-    $mail->pdf =$request->get('pdf') ;
-    $mail->fecha_hora =$request->get('fecha_hora') ;
-    $mail-> save();
 
     /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
 
@@ -82,11 +71,24 @@ class CreateMailController extends Controller
 
         }
         if($mailer->send($message)){
-            return redirect()->route('email.index');
-        }
-        return "Something went wrong :(";
-    
-    }
+          $mail = new Mailbox;
+          $mail->id_usuario =auth()->user()->id;
+          $mail->destinatario =$correo;
+          $mail->remitente =$request->get('remitente') ;
+          $mail->asunto =$request->get('asunto') ;
+          $mail->mensaje =$request->get('mensaje') ;
+          $mail->archivo =$request->get('archivo') ;
+          $mail->pdf =$request->get('pdf') ;
+          $mail->fecha_hora =$request->get('fecha_hora') ;
+          $mail-> save();
+
+          return redirect()->route('email.index');
+      }
+      return "Something went wrong :(";
+
+
+
+  }
 
     /**
      * Display the specified resource.
