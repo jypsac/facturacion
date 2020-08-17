@@ -47,18 +47,18 @@
 										<div class="row">
 											<label class="col-sm-2 col-form-label">SMPT:</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" name="smtp" value="smtp.gmail.com">
+												<input type="text" class="form-control" name="smtp" value="25">
 											</div>
 
 											<label class="col-sm-2 col-form-label">PORT:</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" name="port" value="465 " >
+												<input type="text" class="form-control" name="port" value="110 " >
 											</div>
 										</div>
 										<div class="row">
 											<label class="col-sm-2 col-form-label">Encryption:</label>
 											<div class="col-sm-4">
-												<input type="text" class="form-control" name="encryp" value="587">
+												<input type="text" class="form-control" name="encryp" value="ssl">
 											</div>
 										</div>
 										<br>
