@@ -3,10 +3,11 @@
 namespace App\Http\Controllers;
 
 use App;
-use App\CreateMail;
-use App\Mailbox;
+use App\EmailConfiguraciones;
+use App\EmailBandejaEnvios;
 use Illuminate\Http\Request;
-class CreateMailController extends Controller
+
+class EmailBandejaEnviosController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -15,7 +16,7 @@ class CreateMailController extends Controller
      */
     public function index()
     {
-     $mailbox =Mailbox::all();
+     $mailbox =EmailBandejaEnvios::all();
      return view('mailbox.index',compact('mailbox'));
  }
     /**
@@ -36,7 +37,7 @@ class CreateMailController extends Controller
   public function store(Request $request)
   {
     $id_usuario=auth()->user()->id;
-    $correo_busqueda=CreateMail::where('id_usuario',$id_usuario)->first();
+    $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
     $correo=$correo_busqueda->email;
 
     /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
@@ -74,7 +75,7 @@ class CreateMailController extends Controller
         if($mailer->send($message)){
             $mensaje =$request->get('mensaje') ;
             $texto= strip_tags($mensaje);
-          $mail = new Mailbox;
+          $mail = new EmailBandejaEnvios;
           $mail->id_usuario =auth()->user()->id;
           $mail->destinatario =$correo;
           $mail->remitente =$request->get('remitente') ;
@@ -103,7 +104,7 @@ class CreateMailController extends Controller
     public function show($id)
     {
 
-        $mail=Mailbox::find($id);
+        $mail=EmailBandejaEnvios::find($id);
         return view('mailbox.show',compact('mail'));
     }
 
@@ -125,7 +126,7 @@ class CreateMailController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+     public function update(Request $request, $id)
     {
         //
     }
@@ -141,3 +142,4 @@ class CreateMailController extends Controller
         //
     }
 }
+

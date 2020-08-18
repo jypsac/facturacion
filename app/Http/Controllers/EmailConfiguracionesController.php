@@ -3,8 +3,7 @@
 namespace App\Http\Controllers;
 
 use App;
-use App\CreateMail;
-use App\Mailbox;
+use App\EmailConfiguraciones;
 use App\User;
 use Illuminate\Http\Request;
 use Swift_Attachment;
@@ -13,7 +12,7 @@ use Swift_Mailer;
 use Swift_Message;
 use Swift_Preferences;
 
-class MailboxController extends Controller
+class EmailConfiguracionesController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -24,7 +23,7 @@ class MailboxController extends Controller
     {
         $id_usuario=auth()->user()->id;
         $user=User::where('id',$id_usuario)->first();
-        $config_email=CreateMail::where('id_usuario',$id_usuario)->get();
+        $config_email=EmailConfiguraciones::where('id_usuario',$id_usuario)->get();
         return view('mailbox.configuracion.index',compact('config_email','user'));
 
     }
@@ -85,7 +84,7 @@ class MailboxController extends Controller
     public function store(Request $request)
     {
         $id_usuario=auth()->user()->id;
-        $configmail = new CreateMail;
+        $configmail = new EmailConfiguraciones;
         $configmail->id_usuario =auth()->user()->id;
         $configmail->email =$request->get('email') ;
         $configmail->password = $request->get('password') ;
@@ -104,10 +103,10 @@ class MailboxController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\Mailbox  $mailbox
+     * @param  \App\EmailConfiguraciones  $mailbox
      * @return \Illuminate\Http\Response
      */
-    public function show(Mailbox $mailbox)
+    public function show( $id)
     {
         //
     }
@@ -115,10 +114,10 @@ class MailboxController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\Mailbox  $mailbox
+     * @param  \App\EmailConfiguraciones  $mailbox
      * @return \Illuminate\Http\Response
      */
-    public function edit(Mailbox $mailbox)
+    public function edit($id)
     {
         //
     }
@@ -127,12 +126,12 @@ class MailboxController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\Mailbox  $mailbox
+     * @param  \App\EmailConfiguraciones  $mailbox
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
     {
-        $configmail=CreateMail::find($id);
+        $configmail=EmailConfiguraciones::find($id);
         $configmail->email =$request->get('email') ;
         $configmail->password = $request->get('password') ;
         $configmail->smtp =$request->get('smtp') ;
@@ -145,10 +144,11 @@ class MailboxController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\Mailbox  $mailbox
+     * @param  \App\EmailConfiguraciones  $EmailConfiguraciones
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Mailbox $mailbox)
+
+    public function destroy($id)
     {
         //
     }

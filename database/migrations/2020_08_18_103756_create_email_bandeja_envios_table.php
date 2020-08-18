@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateCreateMailsTable extends Migration
+class CreateEmailBandejaEnviosTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,19 +13,19 @@ class CreateCreateMailsTable extends Migration
      */
     public function up()
     {
-        Schema::create('create_mails', function (Blueprint $table) {
+        Schema::create('email_bandeja_envios', function (Blueprint $table) {
             $table->bigIncrements('id');
-
             $table->unsignedBigInteger('id_usuario')->nullable();
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
-            $table->string('email');
-            $table->string('password');
-            $table->string('email_backup');
-            $table->string('smtp');
-            $table->integer('port');
-            $table->string('encryption')->nullable();
+            $table->string('destinatario');
+            $table->string('remitente');
+            $table->string('asunto');
+            $table->text('mensaje');
+            $table->text('mensaje_sin_html');
+            $table->string('archivo')->nullable();
+            $table->string('pdf')->nullable();
+            $table->string('fecha_hora');
             $table->timestamps();
-
         });
     }
 
@@ -36,6 +36,6 @@ class CreateCreateMailsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('create_mails');
+        Schema::dropIfExists('email_bandeja_envios');
     }
 }

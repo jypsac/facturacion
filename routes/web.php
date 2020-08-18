@@ -110,8 +110,8 @@ Route::group(
 		Route::post('agregado_rapido/personal_store','AgregadoRapidoController@personal_store')->name('agregado_rapido.personal_store');
 
 		//MailBox
-		Route::resource('/email','CreateMailController');
-		Route::resource('/configuracion_email','MailboxController');
+		Route::resource('/email','EmailBandejaEnviosController');
+		Route::resource('/configuracion_email','EmailConfiguracionesController');
 
 		//Garantias
 

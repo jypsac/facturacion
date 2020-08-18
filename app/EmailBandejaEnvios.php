@@ -4,9 +4,9 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 
-class Mailbox extends Model
+class EmailBandejaEnvios extends Model
 {
-	protected $table = 'mailboxes';
+	protected $table = 'email_bandeja_envios';
 
 	protected $guarded = [];
 	public function usuario(){

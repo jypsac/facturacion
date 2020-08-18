@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateMailboxesTable extends Migration
+class CreateEmailConfiguracionesTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,18 +13,16 @@ class CreateMailboxesTable extends Migration
      */
     public function up()
     {
-        Schema::create('mailboxes', function (Blueprint $table) {
+        Schema::create('email_configuraciones', function (Blueprint $table) {
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_usuario')->nullable();
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
-            $table->string('destinatario');
-            $table->string('remitente');
-            $table->string('asunto');
-            $table->text('mensaje');
-            $table->text('mensaje_sin_html');
-            $table->string('archivo')->nullable();
-            $table->string('pdf')->nullable();
-            $table->string('fecha_hora');
+            $table->string('email');
+            $table->string('password');
+            $table->string('email_backup');
+            $table->string('smtp');
+            $table->integer('port');
+            $table->string('encryption')->nullable();
             $table->timestamps();
         });
     }
@@ -36,6 +34,6 @@ class CreateMailboxesTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('mailboxes');
+        Schema::dropIfExists('email_configuraciones');
     }
 }
