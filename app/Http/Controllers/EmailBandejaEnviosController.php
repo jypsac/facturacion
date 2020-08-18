@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use App;
-use App\EmailConfiguraciones;
+use App\Cliente;
 use App\EmailBandejaEnvios;
+use App\EmailConfiguraciones;
+use App\User;
 use Illuminate\Http\Request;
 
 class EmailBandejaEnviosController extends Controller
@@ -16,9 +18,12 @@ class EmailBandejaEnviosController extends Controller
      */
     public function index()
     {
-     $mailbox =EmailBandejaEnvios::all();
-     return view('mailbox.index',compact('mailbox'));
- }
+        $id_usuario=auth()->user()->id;
+        $user=User::where('id',$id_usuario)->first();
+        $clientes=Cliente::all();
+        $mailbox =EmailBandejaEnvios::all();
+        return view('mailbox.index',compact('mailbox','user','clientes'));
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -26,8 +31,8 @@ class EmailBandejaEnviosController extends Controller
      */
     public function create()
     {
-       return view('mailbox.create');
-   }
+
+    }
   /**
      * Store a newly created resource in storage.
      *
@@ -75,25 +80,25 @@ class EmailBandejaEnviosController extends Controller
         if($mailer->send($message)){
             $mensaje =$request->get('mensaje') ;
             $texto= strip_tags($mensaje);
-          $mail = new EmailBandejaEnvios;
-          $mail->id_usuario =auth()->user()->id;
-          $mail->destinatario =$correo;
-          $mail->remitente =$request->get('remitente') ;
-          $mail->asunto =$request->get('asunto') ;
-          $mail->mensaje =$request->get('mensaje') ;
-          $mail->mensaje_sin_html =$texto ;
-          $mail->archivo =$request->get('archivo') ;
-          $mail->pdf =$request->get('pdf') ;
-          $mail->fecha_hora =$request->get('fecha_hora') ;
-          $mail-> save();
+            $mail = new EmailBandejaEnvios;
+            $mail->id_usuario =auth()->user()->id;
+            $mail->destinatario =$correo;
+            $mail->remitente =$request->get('remitente') ;
+            $mail->asunto =$request->get('asunto') ;
+            $mail->mensaje =$request->get('mensaje') ;
+            $mail->mensaje_sin_html =$texto ;
+            $mail->archivo =$request->get('archivo') ;
+            $mail->pdf =$request->get('pdf') ;
+            $mail->fecha_hora =$request->get('fecha_hora') ;
+            $mail-> save();
 
-          return redirect()->route('email.index');
-      }
-      return "Something went wrong :(";
+            return redirect()->route('email.index');
+        }
+        return "Something went wrong :(";
 
 
 
-  }
+    }
 
     /**
      * Display the specified resource.
@@ -123,7 +128,7 @@ class EmailBandejaEnviosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         //
     }

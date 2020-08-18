@@ -2,9 +2,14 @@
 @section('title', 'Email')
 @section('breadcrumb', 'Email')
 @section('breadcrumb2', 'Email')
+@if( $user->email_creado==0)
+@section('href_accion', route('configuracion_email.index'))
+@section('value_accion', 'Redactar')
+@elseif( $user->email_creado==1)
 @section('data-toggle', 'modal')
 @section('href_accion', '#redactar')
 @section('value_accion', 'Redactar')
+@endif
 @section('content')
 <!-- Modal Create  -->
 <div class="modal fade" id="redactar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -21,82 +26,88 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Para:</label>
                                     <div class="col-sm-10">
-                                        <input type="email" required="" class="form-control" name="remitente">
+                                        <input type="email" required="" class="form-control" name="remitente" list="browsers" >
+
+                                        <datalist id="browsers">
+                                            @foreach($clientes as $cliente )
+                                            <option value="{{$cliente->email}}">
+                                                @endforeach
+                                            </datalist>
+                                        </div>
+                                    </div>
+                                    <div class="form-group row"><label class="col-sm-2 col-form-label">Asunto:</label>
+                                        <div class="col-sm-10"><input type="text" required="" class="form-control" name="asunto" ></div>
                                     </div>
                                 </div>
-                                <div class="form-group row"><label class="col-sm-2 col-form-label">Asunto:</label>
-                                    <div class="col-sm-10"><input type="text" required="" class="form-control" name="asunto" ></div>
+                                <div class="mail-text h-200">
+                                    <textarea name="mensaje" required="" class="summernote" id="contents" >
+                                    </textarea>
                                 </div>
-                            </div>
-                            <div class="mail-text h-200">
-                                <textarea name="mensaje" required="" class="summernote" id="contents" >
-                                </textarea>
-                            </div>
-                            <br/>
-                            <div class="fileinput fileinput-new" data-provides="fileinput">
-                                <span class="btn btn-default btn-file" style="left: 20px !important;">
-                                    <span class="fileinput-new">Seleccionar</span>
-                                    <span class="fileinput-exists">Cambiar</span>
-                                    <input  type="file" name="archivos[]" multiple="" />
-                                    <input type="file" name="archivo">
-                                </span>
-                                <span class="fileinput-filename" style="padding-left: 30px"></span>
-                                <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                            </div>
-                            <div class="mail-body text-right tooltip-demo">
-                                <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" >
-                                    <i class="fa fa-reply"></i> Enviar
-                                </button>
-                                <input type="text" name="fecha_hora" value="{{ date('Y-m-d H:i:s') }}" hidden="hidden">
-                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            </div>
-                        </form>
+                                <br/>
+                                <div class="fileinput fileinput-new" data-provides="fileinput">
+                                    <span class="btn btn-default btn-file" style="left: 20px !important;">
+                                        <span class="fileinput-new">Seleccionar</span>
+                                        <span class="fileinput-exists">Cambiar</span>
+                                        <input  type="file" name="archivos[]" multiple="" />
+                                        <input type="file" name="archivo">
+                                    </span>
+                                    <span class="fileinput-filename" style="padding-left: 30px"></span>
+                                    <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
+                                </div>
+                                <div class="mail-body text-right tooltip-demo">
+                                    <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" >
+                                        <i class="fa fa-reply"></i> Enviar
+                                    </button>
+                                    <input type="text" name="fecha_hora" value="{{ date('Y-m-d H:i:s') }}" hidden="hidden">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                </div>
+                            </form>
+                        </div>
                     </div>
-                </div>
-                {{--  --}}
+                    {{--  --}}
 
+                </div>
             </div>
         </div>
     </div>
-</div>
-<!-- / Modal Create  -->
+    <!-- / Modal Create  -->
 
-<div class="fh-breadcrumb">
-    <div class="fh-column">
-        <div class="full-height-scroll">
-            <ul class="list-group elements-list">
-                @foreach($mailbox as $row)
-                <li class="list-group-item">
-                    <a class="nav-link" data-toggle="tab" href="#tab-{{$row->id}}" style="padding-top: 5px;padding-bottom: 5px;">
-                        <span hidden="hidden">{{$mensaje_limitado=$row->mensaje_sin_html}}
-                        {{$cate = substr($mensaje_limitado, 0, 10)}}</span>
-                        <strong style="font-size: 10px">{{$row->remitente}}</strong>
-                        <div class="small m-t-xs">
-                            <p class="m-b-xs">
-                              {{$cate}}...
-                          </p>
-                          <p class="m-b-none">
-                            <i class="fa fa-map-marker"></i> Lima,Perú <span class="float-right text-muted">{{$row->fecha_hora}}</span>
-                        </p>
-                    </div>
-                </a>
-            </li>
-            @endforeach
-        </ul>
+    <div class="fh-breadcrumb">
+        <div class="fh-column">
+            <div class="full-height-scroll">
+                <ul class="list-group elements-list">
+                    @foreach($mailbox as $row)
+                    <li class="list-group-item">
+                        <a class="nav-link" data-toggle="tab" href="#tab-{{$row->id}}" style="padding-top: 5px;padding-bottom: 5px;">
+                            <span hidden="hidden">{{$mensaje_limitado=$row->mensaje_sin_html}}
+                            {{$cate = substr($mensaje_limitado, 0, 10)}}</span>
+                            <strong style="font-size: 10px">{{$row->remitente}}</strong>
+                            <div class="small m-t-xs">
+                                <p class="m-b-xs">
+                                  {{$cate}}...
+                              </p>
+                              <p class="m-b-none">
+                                <i class="fa fa-map-marker"></i> Lima,Perú <span class="float-right text-muted">{{$row->fecha_hora}}</span>
+                            </p>
+                        </div>
+                    </a>
+                </li>
+                @endforeach
+            </ul>
+        </div>
     </div>
-</div>
 
-<div class="full-height">
-    <div class="full-height-scroll white-bg border-left">
+    <div class="full-height">
+        <div class="full-height-scroll white-bg border-left">
 
-        <div class="element-detail-box">
+            <div class="element-detail-box">
 
-            <div class="tab-content">
-                @foreach($mailbox as $row)
-                <div id="tab-{{$row->id}}" class="tab-pane">
+                <div class="tab-content">
+                    @foreach($mailbox as $row)
+                    <div id="tab-{{$row->id}}" class="tab-pane">
 
-                    <div class="float-right">
-                        <div class="tooltip-demo">
+                        <div class="float-right">
+                            <div class="tooltip-demo">
                             {{-- <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="left" title="Plug this message"><i class="fa fa-plug"></i> Plug it</button>
                             <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
                             <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark as important"><i class="fa fa-exclamation"></i> </button> --}}
@@ -114,14 +125,14 @@
                             <div  class="rounded-circle" style="background: #8D8D8D; width: 50px; height: 50px ;color: white" align="center">{{$str = strtoupper($remi)}}</div>
                         </div>
                         <div class="col-sm-1" style="padding-left: 0px">
-                         {{$row->asunto}}
-                     </div>
+                           {{$row->asunto}}
+                       </div>
 
-                 </div></h1>
-                 {{-- <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)" style="width: 50px" /> --}}
-                 <h5>to: {{$row->remitente}}</h5>
-                 {!!$row->mensaje!!}
-                 <p class="small">
+                   </div></h1>
+                   {{-- <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)" style="width: 50px" /> --}}
+                   <h5>to: {{$row->remitente}}</h5>
+                   {!!$row->mensaje!!}
+                   <p class="small">
                     <strong>Best regards, Anthony Smith </strong>
                 </p>
 
