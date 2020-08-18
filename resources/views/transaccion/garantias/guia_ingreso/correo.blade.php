@@ -21,7 +21,7 @@
     }
     div.form-group.note-form-group.note-group-select-from-files{
         display: none !important;
-    } 
+    }
     div.fileinput.fileinput-exists{
         left: 25px !important;
     }
@@ -30,9 +30,9 @@
     }
 </style>
 <div class="col-lg-10 container animated fadeInRight">
-  
+
   <div class="mail-box">
-    
+
       <form action ="{{route('garantia_ingreso.enviar')}}" method="POST" enctype="multipart/form-data" >
                 @csrf
                 <input type="hidden" value="{{$id}}" name="id">
@@ -48,9 +48,9 @@
           </div>
     </div>
       <div class="mail-text h-200">
-                <textarea name="mensaje" required="" class="summernote" id="contents" >         
+                <textarea name="mensaje" required="" class="summernote" id="contents" >
                 </textarea>
-            </div>  
+            </div>
             <br/>
             <div class="fileinput fileinput-new" data-provides="fileinput">
                     <span class="btn btn-default btn-file" style="left: 20px !important;">
@@ -61,7 +61,7 @@
                     </span>
                     <span class="fileinput-filename" style="padding-left: 30px"></span>
                     <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                </div>  
+                </div>
       <div class="mail-body text-right tooltip-demo">
           <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" >
                     <i class="fa fa-reply"></i> Enviar

@@ -103,9 +103,6 @@ class EmailBandejaEnviosController extends Controller
      */
     public function show($id)
     {
-
-        $mail=EmailBandejaEnvios::find($id);
-        return view('mailbox.show',compact('mail'));
     }
 
     /**
