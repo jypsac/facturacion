@@ -26,8 +26,7 @@
                                 <div class="form-group row">
                                     <label class="col-sm-2 col-form-label">Para:</label>
                                     <div class="col-sm-10">
-                                        <input type="email" required="" class="form-control" name="remitente" list="browsers" >
-
+                                        <input type="email" required="" class="form-control" name="remitente" list="browsers" autocomplete="off" >
                                         <datalist id="browsers">
                                             @foreach($clientes as $cliente )
                                             <option value="{{$cliente->email}}">
@@ -55,11 +54,14 @@
                                     <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
                                 </div>
                                 <div class="mail-body text-right tooltip-demo">
-                                    <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top" >
+                                    <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"   onclick="doAction(this, 'i', 'Loading')">
                                         <i class="fa fa-reply"></i> Enviar
                                     </button>
                                     <input type="text" name="fecha_hora" value="{{ date('Y-m-d H:i:s') }}" hidden="hidden">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                    <span id="i" hidden="" ><i  class="fa fa-spinner fa-pulse fa-2x fa-fw"  ></i></span>
+                                    <span id="Loading" hidden=""><span style="width: 20px" class="sr-only">Loading...</span></span>
+
                                 </div>
                             </form>
                         </div>
@@ -72,7 +74,10 @@
     </div>
     <!-- / Modal Create  -->
 
-    <div class="fh-breadcrumb">
+
+
+
+      <div class="fh-breadcrumb">
         <div class="fh-column">
             <div class="full-height-scroll">
                 <ul class="list-group elements-list">
@@ -125,14 +130,16 @@
                             <div  class="rounded-circle" style="background: #8D8D8D; width: 50px; height: 50px ;color: white" align="center">{{$str = strtoupper($remi)}}</div>
                         </div>
                         <div class="col-sm-1" style="padding-left: 0px">
-                           {{$row->asunto}}
-                       </div>
+                         {{$row->asunto}}
+                     </div>
 
-                   </div></h1>
-                   {{-- <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)" style="width: 50px" /> --}}
-                   <h5>to: {{$row->remitente}}</h5>
-                   {!!$row->mensaje!!}
-                   <p class="small">
+                 </div></h1>
+                 {{-- <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)" style="width: 50px" /> --}}
+                 <h5>to: {{$row->remitente}}</h5>
+                 <hr>
+                 {!!$row->mensaje!!}
+                 <p class="small">
+                    {{-- Firma --}}
                     <strong>Best regards, Anthony Smith </strong>
                 </p>
 
@@ -145,13 +152,13 @@
                         </p>
 
                         <div class="attachment">
+                            @if(isset($row->archivo) )
                             <div class="file-box">
                                 <div class="file">
                                     <a href="#">
                                         <span class="corner"></span>
-
                                         <div class="icon">
-                                            <i class="fa fa-file"></i>
+                                            <i class="fa fa-file-pdf-o"></i>
                                         </div>
                                         <div class="file-name">
                                             Document_2014.doc
@@ -162,13 +169,14 @@
                                 </div>
 
                             </div>
-                           {{--  <div class="file-box">
+                            @endif
+                            <div class="file-box">
                                 <div class="file">
                                     <a href="#">
                                         <span class="corner"></span>
 
                                         <div class="icon">
-                                            <i class="fa fa-line-chart"></i>
+                                            <i class="fa fa-file-pdf-o"></i>
                                         </div>
                                         <div class="file-name">
                                             Seels_2015.xls
@@ -178,7 +186,7 @@
                                     </a>
                                 </div>
 
-                            </div> --}}
+                            </div>
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -234,7 +242,12 @@ span.fileinput-filename{
 <script src="{{asset('js/plugins/summernote/summernote-bs4.js')}}"></script>
 <!-- Jasny -->
 <script src="{{asset('js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
-
+ <script>
+        function doAction(ele, param1, param2) {
+          var a = document.getElementById(param1).innerHTML;
+          var b = document.getElementById(param2).innerHTML;
+          ele.innerHTML = a + " " + b;
+      }</script>
 <script type="text/javascript">
     $(function() {
       $('.summernote').summernote({
