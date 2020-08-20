@@ -100,11 +100,12 @@ class EmailBandejaEnviosController extends Controller
 
   }
 
-  function email(Request $request){
+  function save(Request $request){
 
     $tipo = $request->get('tipo');
     $id =$request->get('id');
     $redic=$request->get('redict');
+    $clientes=$request->get('cliente');
      if($tipo = 'App\GarantiaGuiaIngreso'){
         $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
     }
@@ -119,11 +120,76 @@ class EmailBandejaEnviosController extends Controller
       $content=$pdf->download();
       Storage::disk($redic)->put($archivo,$content);
 
-      return $garantia_guia_ingreso;
+      return view('mailbox.create',compact('archivo','clientes','redic'));
     }
-  public function sendpdf(Request $request){
 
-  }
+    public function send(Request $request){
+
+    $id_usuario=auth()->user()->id;
+    $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
+    $correo=$correo_busqueda->email;
+
+    /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
+
+        $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
+        $port = $correo_busqueda->port;
+        $encryption = $correo_busqueda->encryption;
+        $yourEmail = $correo;
+        //$mailbackup =  ; // = $request->yourmail
+        $yourPassword = $correo_busqueda->password;
+        $sendto = $request->get('remitente')  ;
+        $titulo = $request->get('asunto');
+        $mensaje = $request->get('mensaje');
+        $bakcup=    $correo_busqueda->email_backup ;
+
+        $file = $request->archivo;
+        $pdf=$request->get('pdf');
+        $carpet =$request->get('redict');
+        $pdfile = storage_path().'/app/public/'.$carpet.'/'.$pdf;
+
+        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+        $mailer =new \Swift_Mailer($transport);
+
+        $newfile = $request->file('archivo');
+        if($request->hasfile('archivo')){
+          foreach ($newfile as $file) {
+            $nombre =  $file->getClientOriginalName();
+            \Storage::disk('mailbox')->put($nombre,  \File::get($file));
+
+            $news[] = storage_path().'/app/public/'.$nombre;
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
+            $message->attach(\Swift_Attachment::fromPath($pdfile));
+            foreach ($news as $attachment) {
+              $message->attach(\Swift_Attachment::fromPath($attachment));
+            }
+          }
+        }else{
+          $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
+          $message->attach(\Swift_Attachment::fromPath($pdfile));
+
+        }
+        if($mailer->send($message)){
+          $mensaje =$request->get('mensaje') ;
+            $texto= strip_tags($mensaje);
+          $mail = new EmailBandejaEnvios;
+          $mail->id_usuario =auth()->user()->id;
+          $mail->destinatario =$correo;
+          $mail->remitente =$request->get('remitente') ;
+          $mail->asunto =$request->get('asunto') ;
+          $mail->mensaje =$request->get('mensaje') ;
+          $mail->mensaje_sin_html =$texto ;
+          $mail->archivo =$request->get('archivo') ;
+          $mail->pdf = $pdfile;
+          $mail->fecha_hora =$request->get('fecha_hora') ;
+          $mail-> save();
+
+          return redirect()->route('email.index');
+        }
+        return "Something went wrong :(";
+
+
+
+    }
     /**
      * Display the specified resource.
      *

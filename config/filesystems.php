@@ -55,11 +55,11 @@ return [
 
         'garantia_guia_ingreso' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/guia_ingreso/'),
+            'root' => storage_path('app/public/garantia_guia_ingreso/'),
         ],
         'garantias_guias_egreso' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/guia_egreso/'),
+            'root' => storage_path('app/public/garantias_guias_egreso/'),
         ],
 
         'mailbox' => [
