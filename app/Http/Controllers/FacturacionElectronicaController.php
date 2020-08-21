@@ -27,12 +27,11 @@ class FacturacionElectronicaController extends Controller
      */
     public function index()
     {
-        $name='facturacion';
-        $facturacion=DB::table($name)->get();
-        return $facturacion;
 
+        $facturacion=Facturacion::all();
+        // return $facturacion;
 
-        return view('facturacion_electronica.index',compact('facturacion'));
+        return view('facturacion_electronica.factura.index',compact('facturacion'));
     }
 
     /**
@@ -40,8 +39,16 @@ class FacturacionElectronicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function factura(Request $request)
     {
+        $id=$request->input('factura_id');
+        $factura=Facturacion::find($id);
+
+        // VALIDACION SI LA FACTURA YA HA SIDO ENVIADA
+            // CREACION DE NUEVO CAMPO EN MIGRACION PARA DETERMINAR SU ESTADO
+        //FINAL DE VALIDACION
+
+
         $client=new Client();
         $client->setTipoDoc('6')->setNumDoc('20000000001')->setRznSocial('EMPRESA 1');
 
@@ -77,7 +84,6 @@ class FacturacionElectronicaController extends Controller
             ->setMtoImpVenta(118.00)
             ->setCompany($company);
 
-
         $item = (new SaleDetail())
             ->setCodProducto('P001')
             ->setUnidad('NIU')
@@ -99,7 +105,7 @@ class FacturacionElectronicaController extends Controller
         $invoice->setDetails([$item])
         ->setLegends([$legend]);
 
-//        $see=facturacion_electronica();
+//      $see=facturacion_electronica();
         $see = new See();
         $see->setService(SunatEndpoints::FE_BETA);
         $see->setCertificate(file_get_contents(public_path('certificado/certificate.pem')));

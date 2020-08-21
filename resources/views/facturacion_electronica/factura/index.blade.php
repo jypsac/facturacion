@@ -65,9 +65,11 @@
                                         <td>{{$facturaciones->fecha_vencimiento }}</td>
                                         <td>
                                             <center>
-                                                <a href="{{route('facturacion_electronica.create')}}">
-                                                    <button type="button" class="btn btn-w-m btn-primary">Enviar</button>
-                                                </a>
+                                                <form action="{{route('facturacion_electronica.factura_sunat')}}" method="POST">
+                                                    @csrf
+                                                        <input type="hidden" name="factura_id" value="{{$facturaciones->id}}">
+                                                        <button type="submit" class="btn btn-w-m btn-primary">Enviar</button>
+                                                </form>
                                             </center>
                                         </td>
                                     </tr>
