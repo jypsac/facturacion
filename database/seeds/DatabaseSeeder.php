@@ -40,6 +40,7 @@ class DatabaseSeeder extends Seeder
         $this->call(VehiculostableSeeder::class);
         $this->call(PermissionsTableSeeder::class);
         $this->call(ServicioSeeder::class);
+        $this->call(ConfigFacturacionElectronicaSeeder::class);
 
 
     }
