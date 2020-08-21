@@ -3,20 +3,17 @@
 namespace App\Http\Controllers;
 
 use App;
-<<<<<<< HEAD
 use App\Cliente;
 use App\EmailBandejaEnvios;
 use App\EmailBandejaEnviosArchivos;
-=======
->>>>>>> 011c65afda04c032ff3473dcd984b591c09526f9
 use App\EmailConfiguraciones;
-use App\EmailBandejaEnvios;
-use Illuminate\Http\Request;
 use App\Empresa;
 use App\GarantiaGuiaIngreso;
+use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
-use DB;
 use Carbon\Carbon;
+use DB;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 class EmailBandejaEnviosController extends Controller
 {
@@ -27,19 +24,14 @@ class EmailBandejaEnviosController extends Controller
      */
     public function index()
     {
-<<<<<<< HEAD
         $id_usuario=auth()->user()->id;
         $user=User::where('id',$id_usuario)->first();
         $clientes=Cliente::all();
         $mailbox =EmailBandejaEnvios::all();
         $mailbox_file =EmailBandejaEnviosArchivos::all();
         return view('mailbox.index',compact('mailbox','user','clientes','mailbox_file'));
-    }
-=======
-     $mailbox =EmailBandejaEnvios::all();
-     return view('mailbox.index',compact('mailbox'));
+
  }
->>>>>>> 011c65afda04c032ff3473dcd984b591c09526f9
     /**
      * Show the form for creating a new resource.
      *
@@ -96,7 +88,6 @@ class EmailBandejaEnviosController extends Controller
         if($mailer->send($message)){
             $mensaje =$request->get('mensaje') ;
             $texto= strip_tags($mensaje);
-<<<<<<< HEAD
             $mail = new EmailBandejaEnvios;
             $mail->id_usuario =auth()->user()->id;
             $mail->destinatario =$correo;
@@ -108,24 +99,8 @@ class EmailBandejaEnviosController extends Controller
             $mail-> save();
 
             return redirect()->route('email.index');
-=======
-          $mail = new EmailBandejaEnvios;
-          $mail->id_usuario =auth()->user()->id;
-          $mail->destinatario =$correo;
-          $mail->remitente =$request->get('remitente') ;
-          $mail->asunto =$request->get('asunto') ;
-          $mail->mensaje =$request->get('mensaje') ;
-          $mail->mensaje_sin_html =$texto ;
-          $mail->archivo =$request->get('archivo') ;
-          $mail->pdf =$request->get('pdf') ;
-          $mail->fecha_hora =$request->get('fecha_hora') ;
-          $mail-> save();
-
-          return redirect()->route('email.index');
       }
       return "Something went wrong :(";
-
-
 
   }
 
@@ -138,7 +113,7 @@ class EmailBandejaEnviosController extends Controller
      if($tipo = 'App\GarantiaGuiaIngreso'){
         $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
     }
-    
+
       $mi_empresa=Empresa::first();
       $garantia_guia_ingreso = $tipo::find($id);
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
@@ -213,12 +188,8 @@ class EmailBandejaEnviosController extends Controller
           $mail-> save();
 
           return redirect()->route('email.index');
->>>>>>> 011c65afda04c032ff3473dcd984b591c09526f9
         }
         return "Something went wrong :(";
-
-
-
     }
     /**
      * Display the specified resource.
