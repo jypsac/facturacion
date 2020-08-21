@@ -23,6 +23,7 @@ class CreateEmailConfiguracionesTable extends Migration
             $table->string('smtp');
             $table->integer('port');
             $table->string('encryption')->nullable();
+            $table->string('firma')->nullable();
             $table->timestamps();
         });
     }

@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App;
 use App\Cliente;
 use App\EmailBandejaEnvios;
+use App\EmailBandejaEnviosArchivos;
 use App\EmailConfiguraciones;
 use App\User;
 use Illuminate\Http\Request;
@@ -22,7 +23,8 @@ class EmailBandejaEnviosController extends Controller
         $user=User::where('id',$id_usuario)->first();
         $clientes=Cliente::all();
         $mailbox =EmailBandejaEnvios::all();
-        return view('mailbox.index',compact('mailbox','user','clientes'));
+        $mailbox_file =EmailBandejaEnviosArchivos::all();
+        return view('mailbox.index',compact('mailbox','user','clientes','mailbox_file'));
     }
     /**
      * Show the form for creating a new resource.
@@ -87,8 +89,6 @@ class EmailBandejaEnviosController extends Controller
             $mail->asunto =$request->get('asunto') ;
             $mail->mensaje =$request->get('mensaje') ;
             $mail->mensaje_sin_html =$texto ;
-            $mail->archivo =$request->get('archivo') ;
-            $mail->pdf =$request->get('pdf') ;
             $mail->fecha_hora =$request->get('fecha_hora') ;
             $mail-> save();
 

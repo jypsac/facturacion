@@ -77,7 +77,7 @@
 
 
 
-      <div class="fh-breadcrumb">
+    <div class="fh-breadcrumb">
         <div class="fh-column">
             <div class="full-height-scroll">
                 <ul class="list-group elements-list">
@@ -126,33 +126,35 @@
                     <span hidden="hidden">{{$remitente_limi=$row->remitente}}
                     {{$remi = substr($remitente_limi, 0, 1)}}</span>
                     <h1><div class="row">
-                        <div class="col-sm-1">
+                        <div class="col-sm-1" style=" padding-right: 0px;">
                             <div  class="rounded-circle" style="background: #8D8D8D; width: 50px; height: 50px ;color: white" align="center">{{$str = strtoupper($remi)}}</div>
                         </div>
-                        <div class="col-sm-1" style="padding-left: 0px">
-                         {{$row->asunto}}
-                     </div>
+                        <div class="col-sm-3" style="padding-left: 0px">
+                           {{$row->asunto}}
+                       </div>
 
-                 </div></h1>
-                 {{-- <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)" style="width: 50px" /> --}}
-                 <h5>to: {{$row->remitente}}</h5>
-                 <hr>
-                 {!!$row->mensaje!!}
-                 <p class="small">
+                   </div></h1>
+                   {{-- <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)" style="width: 50px" /> --}}
+                   <h5>to: {{$row->remitente}}</h5>
+                   <hr>
+                   {!!$row->mensaje!!}
+                   <p class="small">
                     {{-- Firma --}}
                     <strong>Best regards, Anthony Smith </strong>
                 </p>
 
                 <div class="m-t-lg">
                     <p>
-                        <span><i class="fa fa-paperclip"></i> 2 attachments </span>
+                        <span><i class="fa fa-paperclip"></i> Archivos </span>
                             {{-- <a href="#">Download all</a>
                             |
                             <a href="#">View all images</a> --}}
                         </p>
 
                         <div class="attachment">
-                            @if(isset($row->archivo) )
+                            @foreach($mailbox_file as $mailbox_files)
+                            @if($mailbox_files->id_bandeja_envios ==  $row->id)
+                            @if( isset($mailbox_files->archivo) )
                             <div class="file-box">
                                 <div class="file">
                                     <a href="#">
@@ -161,32 +163,40 @@
                                             <i class="fa fa-file-pdf-o"></i>
                                         </div>
                                         <div class="file-name">
-                                            Document_2014.doc
+                                            {{$mailbox_files->archivo}}
                                             <br>
-                                            <small>Added: Jan 11, 2014</small>
+                                            <small>Añadido: {{$mailbox_files->fecha_hora}}</small>
+                                        </div>
+                                    </a>
+                                </div>
+                            </div>
+                            @endif
+                            @endif
+                            @endforeach
+
+                            @foreach($mailbox_file as $mailbox_files)
+                            @if($mailbox_files->id_bandeja_envios ==  $row->id)
+                            @if( isset($mailbox_files->imagen) )
+                            <div class="file-box">
+                                <div class="file">
+                                    <a href="#">
+                                        <span class="corner"></span>
+
+                                        <div class="icon">
+                                            <i class="fa fa-file-pdf-o"></i>
+                                        </div>
+                                        <div class="file-name">
+                                           {{$mailbox_files->imagen}}
+                                            <br>
+                                                <small>Añadido: {{$mailbox_files->fecha_hora}}</small>
                                         </div>
                                     </a>
                                 </div>
 
                             </div>
                             @endif
-                            <div class="file-box">
-                                <div class="file">
-                                    <a href="#">
-                                        <span class="corner"></span>
-
-                                        <div class="icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <div class="file-name">
-                                            Seels_2015.xls
-                                            <br>
-                                            <small>Added: May 13, 2015</small>
-                                        </div>
-                                    </a>
-                                </div>
-
-                            </div>
+                            @endif
+                            @endforeach
                             <div class="clearfix"></div>
                         </div>
                     </div>
@@ -242,13 +252,13 @@ span.fileinput-filename{
 <script src="{{asset('js/plugins/summernote/summernote-bs4.js')}}"></script>
 <!-- Jasny -->
 <script src="{{asset('js/plugins/jasny/jasny-bootstrap.min.js')}}"></script>
- <script>
-        function doAction(ele, param1, param2) {
-          var a = document.getElementById(param1).innerHTML;
-          var b = document.getElementById(param2).innerHTML;
-          ele.innerHTML = a + " " + b;
-      }</script>
-<script type="text/javascript">
+<script>
+    function doAction(ele, param1, param2) {
+      var a = document.getElementById(param1).innerHTML;
+      var b = document.getElementById(param2).innerHTML;
+      ele.innerHTML = a + " " + b;
+  }</script>
+  <script type="text/javascript">
     $(function() {
       $('.summernote').summernote({
         height: 200,
