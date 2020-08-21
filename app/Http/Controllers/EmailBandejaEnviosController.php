@@ -24,14 +24,14 @@ class EmailBandejaEnviosController extends Controller
      */
     public function index()
     {
-        $id_usuario=auth()->user()->id;
-        $user=User::where('id',$id_usuario)->first();
-        $clientes=Cliente::all();
-        $mailbox =EmailBandejaEnvios::all();
-        $mailbox_file =EmailBandejaEnviosArchivos::all();
-        return view('mailbox.index',compact('mailbox','user','clientes','mailbox_file'));
+      $id_usuario=auth()->user()->id;
+      $user=User::where('id',$id_usuario)->first();
+      $clientes=Cliente::all();
+      $mailbox =EmailBandejaEnvios::all();
+      $mailbox_file =EmailBandejaEnviosArchivos::all();
+      return view('mailbox.index',compact('mailbox','user','clientes','mailbox_file'));
 
- }
+    }
     /**
      * Show the form for creating a new resource.
      *
@@ -39,7 +39,7 @@ class EmailBandejaEnviosController extends Controller
      */
     public function create()
     {
-       return view('mailbox.create');
+     return view('mailbox.create');
    }
   /**
      * Store a newly created resource in storage.
@@ -51,6 +51,10 @@ class EmailBandejaEnviosController extends Controller
   {
     $id_usuario=auth()->user()->id;
     $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
+    $firma=$correo_busqueda->firma;
+    $mensaje_html = $request->get('mensaje');
+    $mensaje_con_firma =$mensaje_html.'<img name="firma" src="/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" />';
+    // return $mensaje_con_firma;
     $correo=$correo_busqueda->email;
 
     /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
@@ -63,7 +67,7 @@ class EmailBandejaEnviosController extends Controller
         $yourPassword = $correo_busqueda->password;
         $sendto = $request->get('remitente')  ;
         $titulo = $request->get('asunto');
-        $mensaje = $request->get('mensaje');
+        $mensaje = $mensaje_con_firma;
         $bakcup=    $correo_busqueda->email_backup ;
 
         $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
@@ -93,7 +97,7 @@ class EmailBandejaEnviosController extends Controller
             $mail->destinatario =$correo;
             $mail->remitente =$request->get('remitente') ;
             $mail->asunto =$request->get('asunto') ;
-            $mail->mensaje =$request->get('mensaje') ;
+            $mail->mensaje =$mensaje_con_firma;
             $mail->mensaje_sin_html =$texto ;
             $mail->fecha_hora =$request->get('fecha_hora') ;
             $mail-> save();
@@ -110,24 +114,24 @@ class EmailBandejaEnviosController extends Controller
     $id =$request->get('id');
     $redic=$request->get('redict');
     $clientes=$request->get('cliente');
-     if($tipo = 'App\GarantiaGuiaIngreso'){
-        $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
+    if($tipo = 'App\GarantiaGuiaIngreso'){
+      $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
     }
 
-      $mi_empresa=Empresa::first();
-      $garantia_guia_ingreso = $tipo::find($id);
+    $mi_empresa=Empresa::first();
+    $garantia_guia_ingreso = $tipo::find($id);
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome').;
-      $archivo="guia_ingreso".$id.".pdf";
-      $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa'));
-      $content=$pdf->download();
-      Storage::disk($redic)->put($archivo,$content);
+    $archivo="guia_ingreso".$id.".pdf";
+    $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa'));
+    $content=$pdf->download();
+    Storage::disk($redic)->put($archivo,$content);
 
-      return view('mailbox.create',compact('archivo','clientes','redic'));
-    }
+    return view('mailbox.create',compact('archivo','clientes','redic'));
+  }
 
-    public function send(Request $request){
+  public function send(Request $request){
 
     $id_usuario=auth()->user()->id;
     $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
@@ -174,7 +178,7 @@ class EmailBandejaEnviosController extends Controller
         }
         if($mailer->send($message)){
           $mensaje =$request->get('mensaje') ;
-            $texto= strip_tags($mensaje);
+          $texto= strip_tags($mensaje);
           $mail = new EmailBandejaEnvios;
           $mail->id_usuario =auth()->user()->id;
           $mail->destinatario =$correo;
@@ -190,7 +194,7 @@ class EmailBandejaEnviosController extends Controller
           return redirect()->route('email.index');
         }
         return "Something went wrong :(";
-    }
+      }
     /**
      * Display the specified resource.
      *
@@ -200,8 +204,8 @@ class EmailBandejaEnviosController extends Controller
     public function show($id)
     {
 
-        $mail=EmailBandejaEnvios::find($id);
-        return view('mailbox.show',compact('mail'));
+      $mail=EmailBandejaEnvios::find($id);
+      return view('mailbox.show',compact('mail'));
     }
 
     /**
@@ -222,7 +226,7 @@ class EmailBandejaEnviosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-     public function update(Request $request, $id)
+    public function update(Request $request, $id)
     {
         //
     }
@@ -238,5 +242,5 @@ class EmailBandejaEnviosController extends Controller
         //
     }
 
-}
+  }
 

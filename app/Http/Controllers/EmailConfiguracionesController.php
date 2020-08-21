@@ -27,44 +27,6 @@ class EmailConfiguracionesController extends Controller
         return view('mailbox.configuracion.index',compact('config_email','user'));
 
     }
-    public function send(Request $request){
-
-        $smtpAddress = 'smtp.gmail.com'; // = $request->smtp
-        $port = 465;
-        $encryption = 'ssl';
-        $yourEmail = 'danielrberru@gmail.com';
-        $mailbackup = ''; // = $request->yourmail
-        $yourPassword = '';
-        $sendto = $request->enviara;
-        $titulo = $request->titulo;
-        $mensaje = $request->mensaje;
-
-        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
-        $mailer =new \Swift_Mailer($transport);
-
-        $newfile = $request->file('archivo');
-        if($request->hasfile('archivo')){
-            foreach ($newfile as $file) {
-                $nombre =  $file->getClientOriginalName();
-                \Storage::disk('mailbox')->put($nombre,  \File::get($file));
-
-                $news[] = storage_path().'/app/public/'.$nombre;
-                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
-                foreach ($news as $attachment) {
-                    $message->attach(\Swift_Attachment::fromPath($attachment));
-                }
-            }
-        }else{
-            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
-
-        }
-        if($mailer->send($message)){
-            return back();
-        }
-        return "Something went wrong :(";
-
-    }
-
     /**
      * Show the form for creating a new resource.
      *
@@ -72,7 +34,6 @@ class EmailConfiguracionesController extends Controller
      */
     public function create()
     {
-        return view('mailbox.configuracion.create');
     }
 
     /**
@@ -83,6 +44,15 @@ class EmailConfiguracionesController extends Controller
      */
     public function store(Request $request)
     {
+        // $firma=$request->get('firma') ;
+        if($request->hasfile('firma')){
+            $image1 =$request->file('firma');
+            $name =time().$image1->getClientOriginalName();
+            $destinationPath = public_path('/archivos/imagenes/firmas/');
+            $image1->move($destinationPath,$name);
+        }else{
+            $name="";
+        }
         $id_usuario=auth()->user()->id;
         $configmail = new EmailConfiguraciones;
         $configmail->id_usuario =auth()->user()->id;
@@ -91,6 +61,7 @@ class EmailConfiguracionesController extends Controller
         $configmail->email_backup = 'desarrollo@jypsac.com';
         $configmail->smtp =$request->get('smtp') ;
         $configmail->port = $request->get('port');
+        $configmail->firma = $name;
         $configmail->encryption= $request->get('encryp') ;
         $configmail-> save();
 
@@ -131,12 +102,21 @@ class EmailConfiguracionesController extends Controller
      */
     public function update(Request $request, $id)
     {
+         if($request->hasfile('firma')){
+            $image1 =$request->file('firma');
+            $name =time().$image1->getClientOriginalName();
+            $destinationPath = public_path('/archivos/imagenes/firmas/');
+            $image1->move($destinationPath,$name);
+        }else{
+            $name=$request->get('firma_nombre') ;
+        }
         $configmail=EmailConfiguraciones::find($id);
         $configmail->email =$request->get('email') ;
         $configmail->password = $request->get('password') ;
         $configmail->smtp =$request->get('smtp') ;
         $configmail->port = $request->get('port');
         $configmail->encryption= $request->get('encryp') ;
+        $configmail->firma = $name;
         $configmail->save();
         return redirect()->route('configuracion_email.index');
     }
