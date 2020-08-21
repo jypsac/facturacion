@@ -201,8 +201,9 @@
                     <li>
                         <a href="#"><i class="fa fa-bolt"></i> <span class="nav-label">facturacion Electronica </span></a>
                         <ul class="nav nav-second-level collapse">
-                            <li><a href="{{route('facturacion_electronica.index')}}">index</a></li>
-                            <li><a href="#">Email view</a></li>
+                            <li><a href="{{route('facturacion_electronica.index')}}">Facturas</a></li>
+                            <li><a href="#">Boletas</a></li>
+                            <li><a href="#">Resumen diario</a></li>
                         </ul>
                     </li>
                     <li>
