@@ -112,6 +112,8 @@ Route::group(
 		//MailBox
 		Route::resource('/email','EmailBandejaEnviosController');
 		Route::resource('/configuracion_email','EmailConfiguracionesController');
+		Route::post('/email/save','EmailBandejaEnviosController@save')->name('email.save');
+		Route::post('email/send','EmailBandejaEnviosController@send')->name('email.send');
 
 		//Garantias
 

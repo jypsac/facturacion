@@ -2,19 +2,20 @@
 
 namespace App\Http\Controllers;
 
+use App\Config_fe;
+use App\Facturacion;
+use DateTime;
+use Greenter\Model\Client\Client;
+use Greenter\Model\Company\Address;
+use Greenter\Model\Company\Company;
+use Greenter\Model\Sale\Invoice;
+use Greenter\Model\Sale\Legend;
+use Greenter\Model\Sale\SaleDetail;
 use Greenter\See;
 use Greenter\Ws\Services\SunatEndpoints;
 use Illuminate\Http\Request;
-use Greenter\Model\Client\Client;
-use Greenter\Model\Company\Company;
-use Greenter\Model\Company\Address;
-use Greenter\Model\Sale\Invoice;
-use Greenter\Model\Sale\SaleDetail;
-use Greenter\Model\Sale\Legend;
-use App\Config_fe;
-use App\Facturacion;
+use Illuminate\Support\Facades\DB;
 use function App\facturacion_electronica;
-use DateTime;
 
 
 class FacturacionElectronicaController extends Controller
@@ -26,7 +27,11 @@ class FacturacionElectronicaController extends Controller
      */
     public function index()
     {
-        $facturacion=Facturacion::all();
+        $name='facturacion';
+        $facturacion=DB::table($name)->get();
+        return $facturacion;
+
+
         return view('facturacion_electronica.index',compact('facturacion'));
     }
 
@@ -54,7 +59,7 @@ class FacturacionElectronicaController extends Controller
             ->setNombreComercial('EMPRESA')
             ->setAddress($address);
 
-// Venta
+        // Venta
         $invoice = (new Invoice())
             ->setUblVersion('2.1')
             ->setTipoOperacion('0101') // Catalog. 51
@@ -72,7 +77,8 @@ class FacturacionElectronicaController extends Controller
             ->setMtoImpVenta(118.00)
             ->setCompany($company);
 
-        $item1 = (new SaleDetail())
+
+        $item = (new SaleDetail())
             ->setCodProducto('P001')
             ->setUnidad('NIU')
             ->setCantidad(2)
@@ -86,27 +92,12 @@ class FacturacionElectronicaController extends Controller
             ->setMtoValorUnitario(50.00)
             ->setMtoPrecioUnitario(59.00);
 
-        $item2 = new SaleDetail();
-        $item2->setCodProducto('P002')
-            ->setUnidad('KG')
-            ->setDescripcion('PROD 2')
-            ->setCantidad(2)
-            ->setMtoValorUnitario(50)
-            ->setMtoValorVenta(100)
-            ->setMtoBaseIgv(100)
-            ->setPorcentajeIgv(0)
-            ->setIgv(0)
-            ->setTipAfeIgv('20')
-            ->setTotalImpuestos(0)
-            ->setMtoPrecioUnitario(50)
-        ;
-
         $legend = (new Legend())
             ->setCode('1000')
             ->setValue('SON DOSCIENTOS TREINTA Y SEIS CON 00/100 SOLES');
 
-        $invoice->setDetails([$item1,$item2])
-            ->setLegends([$legend]);
+        $invoice->setDetails([$item])
+        ->setLegends([$legend]);
 
 //        $see=facturacion_electronica();
         $see = new See();

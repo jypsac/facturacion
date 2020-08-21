@@ -26,6 +26,14 @@
                          --}}
 
                         .<a href="{{route('guia_ingreso.email',$garantia_guia_ingreso->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a>
+                        <form action="{{route('email.save')}}" method="post">
+                            @csrf
+                            <input type="text" hidden="hidden" name="tipo" value="App\GarantiaGuiaIngreso"/>
+                            <input type="text" hidden="hidden" name="id" value="{{$garantia_guia_ingreso->id}}"/>
+                            <input type="text" hidden="hidden" name="redict" value="garantia_guia_ingreso">
+                            <input type="text" hidden="hidden" name="cliente" value="{{$garantia_guia_ingreso->clientes_i->email}}"> 
+                            <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
+                        </form>
 
 
                         <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
