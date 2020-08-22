@@ -111,9 +111,8 @@
                     </tr>
                 </tbody>
             </table>
-
             <br>
-
+@if($boleta->tipo=="producto")
             <div class="table-responsive">
                 <table class="table ">
                     <thead>
@@ -130,8 +129,6 @@
                         </tr>
                     </thead>
                     <tbody>
-
-
                         <tr>
                             @foreach($boleta_registro as $boleta_registros)
                             <span hidden="hidden">{{$i=1}} </span>
@@ -155,7 +152,51 @@
                         </tr>
                     </tbody>
                 </table>
-            </div><br><br><br><br>
+            </div>
+@else
+<div class="table-responsive">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th>ITEM</th>
+                            <th>Codigo Servicio</th>
+                            <th>Cantidad</th>
+                            <th>Descripción</th>
+                            <th>Valor Unitario</th>
+                            <th>Dscto.%</th>
+                            <th>Precio Unitario</th>
+                            <th>Valor Venta </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            @foreach($boleta_registro as $boleta_registros)
+                            <span hidden="hidden">{{$i=1}} </span>
+                            <tr>
+                                <td>{{$i}} </td>
+                                <td>{{$boleta_registros->servicio->codigo_servicio}}</td>
+                                <td>{{$boleta_registros->cantidad}}</td>
+
+                                <td>{{$boleta_registros->servicio->nombre}} </td>
+                                <td>{{$boleta_registros->precio}}</td>
+                                <td>{{$boleta_registros->descuento}}%</td>
+                                <td>{{$boleta_registros->precio_unitario_desc}}</td>
+                                <td>{{$boleta_registros->precio_unitario_desc * $boleta_registros->cantidad }}</td>
+                                <td style="display: none">{{$sub_total=($boleta_registros->cantidad*$boleta_registros->precio)-($boleta_registros->cantidad*$boleta_registros->precio*$boleta_registros->descuento/100)+$sub_total}}
+                                        S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                        {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                    </td>
+                            </tr>
+                            <span hidden="hidden">{{$i++}}</span>
+                            @endforeach
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+@endif
+
+
+            <br><br><br><br>
             <div class="row">
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Sub Total</p>

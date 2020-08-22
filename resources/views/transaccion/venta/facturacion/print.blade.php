@@ -111,7 +111,7 @@
             </table>
 
             <br>
-
+@if($facturacion->tipo=="producto")
             <div class="table-responsive">
                 <table class="table ">
                     <thead>
@@ -154,7 +154,55 @@
                         </tr>
                     </tbody>
                 </table>
-            </div><br><br><br><br>
+            </div>
+@else
+    <div class="table-responsive">
+                <table class="table ">
+                    <thead>
+                        <tr>
+                            <th>ITEM</th>
+                            <th>Codigo Producto</th>
+                            <th>Cantidad</th>
+
+                            <th>Descripción</th>
+                            <th>Valor Unitario</th>
+                            <th>Dscto.%</th>
+                            <th>Precio Unitario</th>
+                            <th>Valor Venta </th>
+                        </tr>
+                    </thead>
+                    <tbody>
+
+
+                        <tr>
+                            @foreach($facturacion_registro as $facturacion_registros)
+                            <span hidden="hidden">{{$i=1}} </span>
+                            <tr>
+                                <td>{{$i}} </td>
+                                <td>{{$facturacion_registros->servicio->codigo_servicio}}</td>
+                                <td>{{$facturacion_registros->cantidad}}</td>
+
+                                <td>{{$facturacion_registros->servicio->nombre}}</td>
+                                <td>{{$facturacion_registros->precio}}</td>
+                                <td>{{$facturacion_registros->descuento}}%</td>
+                                <td>{{$facturacion_registros->precio_unitario_desc}}</td>
+                                <td>{{$facturacion_registros->precio_unitario_desc * $facturacion_registros->cantidad }}</td>
+                                <td style="display: none">
+                                    {{$sub_total=($facturacion_registros->cantidad*$facturacion_registros->precio_unitario_desc)+$sub_total}}
+                                    {{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                    {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                </td>
+                            </tr>
+                            <span hidden="hidden">{{$i++}}</span>
+                            @endforeach
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+@endif
+
+
+            <br><br><br><br>
             <div class="row">
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Sub Total</p>

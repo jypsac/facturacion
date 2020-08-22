@@ -22,7 +22,7 @@
         </div>
  <div class="row">
     <div class="col-lg-12">
-        <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
+       <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
             <div class="row">
                 <div class="col-sm-4 text-left" align="left">
 
