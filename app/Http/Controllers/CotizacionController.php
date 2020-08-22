@@ -578,7 +578,7 @@ class CotizacionController extends Controller
 
        $regla=$cotizacion->tipo;
 
-       return view('transaccion.venta.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda",'regla','banco'));
+       return view('transaccion.venta.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv',"array","sub_total","moneda",'banco'));
    }
 
 
