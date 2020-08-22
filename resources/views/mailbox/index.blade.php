@@ -48,7 +48,7 @@
                                         <span class="fileinput-new">Seleccionar</span>
                                         <span class="fileinput-exists">Cambiar</span>
                                         <input  type="file" name="archivos[]" multiple="" />
-                                        <input type="file" name="archivo">
+                                        {{-- <input type="file" name="archivo"> --}}
                                     </span>
                                     <span class="fileinput-filename" style="padding-left: 30px"></span>
                                     <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>

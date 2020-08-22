@@ -73,8 +73,8 @@ class EmailBandejaEnviosController extends Controller
         $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
         $mailer =new \Swift_Mailer($transport);
 
-        $newfile = $request->file('archivo');
-        if($request->hasfile('archivo')){
+        $newfile = $request->file('archivos');
+        if($request->hasfile('archivos')){
             foreach ($newfile as $file) {
                 $nombre =  $file->getClientOriginalName();
                 \Storage::disk('mailbox')->put($nombre,  \File::get($file));
@@ -102,6 +102,14 @@ class EmailBandejaEnviosController extends Controller
             $mail->fecha_hora =$request->get('fecha_hora') ;
             $mail-> save();
 
+  $newfile2 = $request->file('archivos');
+foreach ($newfile2 as $file2) {
+  $guardar_email_archivo=new EmailBandejaEnviosArchivos;
+  $guardar_email_archivo->id_bandeja_envios=$mail->id;
+  $guardar_email_archivo->archivo= $file2->getClientOriginalName();
+  $guardar_email_archivo->fecha_hora=Carbon::now();
+  $guardar_email_archivo->save();
+}
             return redirect()->route('email.index');
       }
       return "Something went wrong :(";
