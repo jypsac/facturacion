@@ -17,7 +17,7 @@
                         content: "Ver";
                     }
                 </style>
-                <a class="btn btn-success"  href="{{route('boleta.print' , $boleta->id)}}" target="_blank">Imprimir</a>
+                <a class="btn btn-success"  href="{{route('boleta.print',$boleta->id)}}" target="_blank">Imprimir</a>
             </div>
         </div>
  <div class="row">

@@ -209,6 +209,7 @@ class BoletaServicioController extends Controller
         $empresa=Empresa::first();
         $sub_total=0;
         $boleta=Boleta::find($id);
+        // return $boleta->id;
         return view('transaccion.venta.servicios.boleta.show', compact('boleta','empresa','banco','boleta_registro','igv','sub_total'));
     }
 
