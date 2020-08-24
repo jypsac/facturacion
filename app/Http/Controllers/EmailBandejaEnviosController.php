@@ -99,7 +99,7 @@ class EmailBandejaEnviosController extends Controller
             $mail->asunto =$request->get('asunto') ;
             $mail->mensaje =$mensaje_con_firma;
             $mail->mensaje_sin_html =$texto ;
-            $mail->fecha_hora =$request->get('fecha_hora') ;
+            $mail->fecha_hora =Carbon::now() ;
             $mail-> save();
 
   $newfile2 = $request->file('archivos');
@@ -122,16 +122,24 @@ foreach ($newfile2 as $file2) {
     $id =$request->get('id');
     $redic=$request->get('redict');
     $clientes=$request->get('cliente');
-    if($tipo = 'App\GarantiaGuiaIngreso'){
-      $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
-    }
+
+    
 
     $mi_empresa=Empresa::first();
-    $garantia_guia_ingreso = $tipo::find($id);
+    if($tipo == 'App\GarantiaGuiaIngreso'){
+      $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
+      $garantia_guia_ingreso = $tipo::find($id);
+      $name = 'Guia_Ingreso_';
+    }
+    else if($tipo == 'App\GarantiaGuiaEgreso'){
+      $rutapdf= 'transaccion.garantias.guia_egreso.show_pdf';
+      $garantias_guias_egreso = $tipo::find($id);
+      $name = 'Guia_Egreso_';
+    }
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome').;
-    $archivo="guia_ingreso".$id.".pdf";
+    $archivo=$name.$id.".pdf";
     $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa'));
     $content=$pdf->download();
     Storage::disk($redic)->put($archivo,$content);
@@ -194,10 +202,24 @@ foreach ($newfile2 as $file2) {
           $mail->asunto =$request->get('asunto') ;
           $mail->mensaje =$request->get('mensaje') ;
           $mail->mensaje_sin_html =$texto ;
-          $mail->archivo =$request->get('archivo') ;
-          $mail->pdf = $pdfile;
-          $mail->fecha_hora =$request->get('fecha_hora') ;
+          $mail->fecha_hora =Carbon::now();
           $mail-> save();
+
+          $newfile2 = $request->file('archivos');
+          if($request->hasfile('archivo')){
+            foreach ($newfile2 as $file2) {
+              $guardar_email_archivo=new EmailBandejaEnviosArchivos;
+              $guardar_email_archivo->id_bandeja_envios=$mail->id;
+              $guardar_email_archivo->archivo= $file2->getClientOriginalName();
+              $guardar_email_archivo->fecha_hora=Carbon::now();
+              $guardar_email_archivo->save();
+            }
+          }
+          $archivo_pdf = new EmailBandejaEnviosArchivos;
+          $archivo_pdf->id_bandeja_envios=$mail->id;
+          $archivo_pdf->archivo=$pdf;
+          $archivo_pdf->fecha_hora=Carbon::now();
+          $archivo_pdf->save();
 
           return redirect()->route('email.index');
         }

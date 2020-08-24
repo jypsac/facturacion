@@ -1,7 +1,7 @@
 
 @extends('layout')
 
-@section('title', 'Ver - Guia de Ingreso')
+@section('title', 'Enviar' $archivo ' ')
 @section('breadcrumb', 'Ver Guia de Ingreso')
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_guia_ingreso.index'))
@@ -9,73 +9,68 @@
 
 @section('content')
 <br/>
-<div class="col-lg-10 container animated fadeInRight" >
-                    <div class="mail-box">
-
-                        <form action ="{{route('email.send')}}" method="POST" enctype="multipart/form-data" >
-                            @csrf
-                            <div class="mail-body">
-                                <div class="form-group row">
-                                    <label class="col-sm-2 col-form-label">Para:</label>
-                                    <div class="col-sm-10">
-                                        <input type="email" required="" value="{{$clientes}}" class="form-control" name="remitente" >
-                                        </div>
-                                    </div>
-                                    <div class="form-group row"><label class="col-sm-2 col-form-label">Asunto:</label>
-                                        <div class="col-sm-10"><input type="text" required="" class="form-control" name="asunto" ></div>
-                                    </div>
-                                </div>
-                                <div class="mail-text h-200">
-                                    <textarea name="mensaje" required="" class="summernote" id="contents" >
-                                    </textarea>
-                                </div>
-                                <br/>
-                                <div class="form-group row container">
-                                    <div class="col-lg-3">
-                                        <div class="file">
-                                                <span class="corner"></span>
-                                                <div class="icon">
-                                                    <i class="fa fa-file" ></i>
-                                                </div>
-                                            <div class="file-name">
-                                                <input type="text" name="redict" hidden="hidden" value="{{$redic}}">
-                                                <input type="text" name="pdf" hidden="hidden" value="{{$archivo}}">
-                                                {{$archivo}}
-                                                <br/>
-                                                <small>{{ date('Y-m-d H:i:s') }} </small>
-                                            </div>
-                                        </div>  
-                                    </div>
-                                    <div class="col-lg-9">
-                                        <div class="fileinput fileinput-new" data-provides="fileinput">
-                                            <span class="btn btn-default btn-file" style="left: 20px !important;">
-                                                <span class="fileinput-new">Seleccionar</span>
-                                                <span class="fileinput-exists">Cambiar</span>
-                                                <input  type="file" name="archivos[]" multiple="" />
-                                                
-                                            </span>
-                                            <span class="fileinput-filename" style="padding-left: 30px"></span>
-                                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                
-                                <div class="mail-body text-right tooltip-demo">
-                                    <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"   onclick="doAction(this, 'i', 'Loading')">
-                                        <i class="fa fa-reply"></i> Enviar
-                                    </button>
-                                    <input type="text" name="fecha_hora" value="{{ date('Y-m-d H:i:s') }}" hidden="hidden">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                    <span id="i" hidden="" ><i  class="fa fa-spinner fa-pulse fa-2x fa-fw"  ></i></span>
-                                    <span id="Loading" hidden=""><span style="width: 20px" class="sr-only">Loading...</span></span>
-
-                                </div>
-                            </form>
+    <div class="col-lg-10 container animated fadeInRight" >
+        <div class="mail-box">
+            <form action ="{{route('email.send')}}" method="POST" enctype="multipart/form-data" >
+                @csrf
+                <div class="mail-body">
+                    <div class="form-group row">
+                        <label class="col-sm-2 col-form-label">Para:</label>
+                        <div class="col-sm-10">
+                            <input type="email" required="" value="{{$clientes}}" class="form-control" name="remitente" >
                         </div>
-                        <br/>
                     </div>
-                    <br/>
+                    <div class="form-group row"><label class="col-sm-2 col-form-label">Asunto:</label>
+                        <div class="col-sm-10"><input type="text" required="" class="form-control" name="asunto" ></div>
+                    </div>
+                </div>
+                <div class="mail-text h-200">
+                    <textarea name="mensaje" required="" class="summernote" id="contents" >
+                    </textarea>
+                </div>
+                <br/>
+                <div class="form-group row container">
+                    <div class="col-lg-3">
+                        <div class="file">
+                                <span class="corner"></span>
+                                <div class="icon">
+                                    <i class="fa fa-file" ></i>
+                                </div>
+                            <div class="file-name">
+                                <input type="text" name="redict" hidden="hidden" value="{{$redic}}">
+                                <input type="text" name="pdf" hidden="hidden" value="{{$archivo}}">
+                                {{$archivo}}
+                                <br/>
+                                <small>{{ date('Y-m-d H:i:s') }} </small>
+                            </div>
+                        </div>  
+                    </div>
+                    <div class="col-lg-9">
+                        <div class="fileinput fileinput-new" data-provides="fileinput">
+                            <span class="btn btn-default btn-file" style="left: 20px !important;">
+                                <span class="fileinput-new">Seleccionar</span>
+                                <span class="fileinput-exists">Cambiar</span>
+                                <input  type="file" name="archivos[]" multiple="" />
+                                
+                            </span>
+                            <span class="fileinput-filename" style="padding-left: 30px"></span>
+                            <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
+                        </div>
+                    </div>
+                </div>
+                <div class="mail-body text-right tooltip-demo">
+                    <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"   onclick="doAction(this, 'i', 'Loading')">
+                        <i class="fa fa-reply"></i> Enviar
+                    </button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    <span id="i" hidden="" ><i  class="fa fa-spinner fa-pulse fa-2x fa-fw"  ></i></span>
+                    <span id="Loading" hidden=""><span style="width: 20px" class="sr-only">Loading...</span></span>
+                </div>
+            </form>
+        </div>
+        <br/>
+    </div>
+<br/>
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.js') }}"></script>

@@ -31,6 +31,7 @@
                                             @foreach($clientes as $cliente )
                                             <option value="{{$cliente->email}}">
                                                 @endforeach
+                                            </option>
                                             </datalist>
                                         </div>
                                     </div>
@@ -57,7 +58,6 @@
                                     <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"   onclick="doAction(this, 'i', 'Loading')">
                                         <i class="fa fa-reply"></i> Enviar
                                     </button>
-                                    <input type="text" name="fecha_hora" value="{{ date('Y-m-d H:i:s') }}" hidden="hidden">
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                     <span id="i" hidden="" ><i  class="fa fa-spinner fa-pulse fa-2x fa-fw"  ></i></span>
                                     <span id="Loading" hidden=""><span style="width: 20px" class="sr-only">Loading...</span></span>
@@ -157,7 +157,7 @@
                             @if( isset($mailbox_files->archivo) )
                             <div class="file-box">
                                 <div class="file">
-                                    <a href="#">
+                                    <a href="{{ url('/storage/app/public/'.$mailbox_files->archivo.'') }}">
                                         <span class="corner"></span>
                                         <div class="icon">
                                             <i class="fa fa-file-pdf-o"></i>
@@ -175,27 +175,27 @@
                             @endforeach
 
                             @foreach($mailbox_file as $mailbox_files)
-                            @if($mailbox_files->id_bandeja_envios ==  $row->id)
-                            @if( isset($mailbox_files->imagen) )
-                            <div class="file-box">
-                                <div class="file">
-                                    <a href="#">
-                                        <span class="corner"></span>
+                                @if($mailbox_files->id_bandeja_envios ==  $row->id)
+                                    @if( isset($mailbox_files->imagen) )
+                                    <div class="file-box">
+                                        <div class="file">
+                                            <a href="#">
+                                                <span class="corner"></span>
 
-                                        <div class="icon">
-                                            <i class="fa fa-file-pdf-o"></i>
+                                                <div class="icon">
+                                                    <i class="fa fa-file-pdf-o"></i>
+                                                </div>
+                                                <div class="file-name">
+                                                   {{$mailbox_files->imagen}}
+                                                    <br>
+                                                        <small>Añadido: {{$mailbox_files->fecha_hora}}</small>
+                                                </div>
+                                            </a>
                                         </div>
-                                        <div class="file-name">
-                                           {{$mailbox_files->imagen}}
-                                            <br>
-                                                <small>Añadido: {{$mailbox_files->fecha_hora}}</small>
-                                        </div>
-                                    </a>
-                                </div>
 
-                            </div>
-                            @endif
-                            @endif
+                                    </div>
+                                    @endif
+                                @endif
                             @endforeach
                             <div class="clearfix"></div>
                         </div>
@@ -212,8 +212,9 @@
 
 </div>
 <!-- Mainly scripts -->
-
-<style>#page-wrapper{height: 500px;}
+</br>
+<style>
+/*#page-wrapper{height: 500px;}*/
 .note-toolbar-wrapper{
     height: 0% !important;
 }

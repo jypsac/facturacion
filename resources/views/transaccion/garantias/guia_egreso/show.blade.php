@@ -28,7 +28,14 @@
                         <!-- <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_egreso' ,$garantias_guias_egreso->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Gmail </a> -->
 
                         .<a href="{{route('guia_egreso.email',$garantias_guias_egreso->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a> 
-
+                        <form action="{{route('email.save')}}" method="post">
+                            @csrf
+                            <input type="text" hidden="hidden" name="tipo" value="App\GarantiaGuiaEgreso"/>
+                            <input type="text" hidden="hidden" name="id" value="{{$garantias_guias_egreso->id}}"/>
+                            <input type="text" hidden="hidden" name="redict" value="garantias_guias_egreso">
+                            <input type="text" hidden="hidden" name="cliente" value="{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->email}}"> 
+                            <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
+                        </form>
                         <a href="{{route('impresiones_egreso' ,$garantias_guias_egreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
                     </div>
                 </div>
