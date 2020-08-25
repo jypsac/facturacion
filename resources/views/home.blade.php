@@ -13,7 +13,7 @@
 
 @if(!$consulta)
 	<script>
-		window.location.href = "http://facturacion.test/tipo_cambio/create";
+		window.location.href = "{{route('tipo_cambio.create')}}";
 	</script>
 @endif
 
