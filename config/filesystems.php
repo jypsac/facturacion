@@ -61,6 +61,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public/garantias_guias_egreso/'),
         ],
+        'garantias_informe_tecnico' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/garantias_informe_tecnico/'),
+        ],
 
         'mailbox' => [
             'driver' => 'local',

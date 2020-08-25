@@ -102,14 +102,14 @@ class EmailBandejaEnviosController extends Controller
             $mail->fecha_hora =Carbon::now() ;
             $mail-> save();
 
-  $newfile2 = $request->file('archivos');
-foreach ($newfile2 as $file2) {
-  $guardar_email_archivo=new EmailBandejaEnviosArchivos;
-  $guardar_email_archivo->id_bandeja_envios=$mail->id;
-  $guardar_email_archivo->archivo= $file2->getClientOriginalName();
-  $guardar_email_archivo->fecha_hora=Carbon::now();
-  $guardar_email_archivo->save();
-}
+            $newfile2 = $request->file('archivos');
+            foreach ($newfile2 as $file2) {
+              $guardar_email_archivo=new EmailBandejaEnviosArchivos;
+              $guardar_email_archivo->id_bandeja_envios=$mail->id;
+              $guardar_email_archivo->archivo= $file2->getClientOriginalName();
+              $guardar_email_archivo->fecha_hora=Carbon::now();
+              $guardar_email_archivo->save();
+            }
             return redirect()->route('email.index');
       }
       return "Something went wrong :(";
@@ -135,6 +135,10 @@ foreach ($newfile2 as $file2) {
       $rutapdf= 'transaccion.garantias.guia_egreso.show_pdf';
       $garantias_guias_egreso = $tipo::find($id);
       $name = 'Guia_Egreso_';
+    }else if($tipo == 'App\GarantiaInformeTecnico'){
+      $rutapdf= 'transaccion.garantias.informe_tecnico.show_pdf';
+      $garantias_informe_tecnico = $tipo::find($id);
+      $name = 'Informe_Tecnico_';
     }
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');

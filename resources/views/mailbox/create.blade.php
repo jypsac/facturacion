@@ -1,7 +1,7 @@
 
 @extends('layout')
 
-@section('title', 'Enviar' $archivo ' ')
+@section('title','Enviar - '.$archivo )
 @section('breadcrumb', 'Ver Guia de Ingreso')
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_guia_ingreso.index'))

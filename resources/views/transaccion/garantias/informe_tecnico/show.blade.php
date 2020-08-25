@@ -22,8 +22,18 @@
                         <form class="btn" style="text-align: none;padding-right: 0" action="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}">
                         <input type="text" name="archivo" maxlength="50" value="{{$garantias_informe_tecnico->orden_servicio}}">
                          <button type="submit" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </button></form>  
+
                         <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a><!-- 
                         <a href="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a> -->
+                         <form action="{{route('email.save')}}" method="post">
+                            @csrf
+                            <input type="text" hidden="hidden" name="tipo" value="App\GarantiaInformeTecnico"/>
+                            <input type="text" hidden="hidden" name="id" value="{{$garantias_informe_tecnico->id}}"/>
+                            <input type="text" hidden="hidden" name="redict" value="garantias_informe_tecnico">
+                            <input type="text" hidden="hidden" name="cliente" value="{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}"> 
+                            <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
+                        </form>
+
                         <a href="{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
                     </div>
                 </div>
