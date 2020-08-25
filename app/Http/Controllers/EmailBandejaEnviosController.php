@@ -4,10 +4,17 @@ namespace App\Http\Controllers;
 
 use App;
 use App\Cliente;
+use App\Cotizacion;
 use App\EmailBandejaEnvios;
 use App\EmailBandejaEnviosArchivos;
 use App\EmailConfiguraciones;
 use App\Empresa;
+use App\Banco;
+use App\Moneda;
+use App\Cotizacion_factura_registro;
+use App\Cotizacion_boleta_registro;
+use App\kardex_entrada_registro;
+use App\Igv;
 use App\GarantiaGuiaIngreso;
 use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
@@ -123,32 +130,62 @@ class EmailBandejaEnviosController extends Controller
     $redic=$request->get('redict');
     $clientes=$request->get('cliente');
 
-    
+    if($tipo == 'App\Cotizacion'){
+      $rutapdf = 'transaccion.venta.cotizacion.print';
+      $name = 'Cotizacion_';
 
-    $mi_empresa=Empresa::first();
-    if($tipo == 'App\GarantiaGuiaIngreso'){
-      $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
-      $garantia_guia_ingreso = $tipo::find($id);
-      $name = 'Guia_Ingreso_';
-    }
-    else if($tipo == 'App\GarantiaGuiaEgreso'){
-      $rutapdf= 'transaccion.garantias.guia_egreso.show_pdf';
-      $garantias_guias_egreso = $tipo::find($id);
-      $name = 'Guia_Egreso_';
-    }else if($tipo == 'App\GarantiaInformeTecnico'){
-      $rutapdf= 'transaccion.garantias.informe_tecnico.show_pdf';
-      $garantias_informe_tecnico = $tipo::find($id);
-      $name = 'Informe_Tecnico_';
+      $empresa=Empresa::first();
+
+      $banco=Banco::where('estado','0')->get();
+      $moneda=Moneda::where('principal',1)->first();
+      $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+      $cotizacion_registro2=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+      foreach ($cotizacion_registro as $cotizacion_registros) {
+         $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+      }
+
+        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
+       $cotizacion=Cotizacion::find($id);
+       $empresa=Empresa::first();
+       $sum=0;
+       $igv=Igv::first();
+       $sub_total=0;
+
+       $regla=$cotizacion->tipo;
+       $archivo=$name.$regla.$id.".pdf";
+       $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco'));
+
+       $contenido=$pdf->download();
+       Storage::disk($redic)->put($archivo,$contenido);
+
+        return view('mailbox.create',compact('archivo','clientes','redic'));
+
+    }else{
+      $mi_empresa=Empresa::first();
+      if($tipo == 'App\GarantiaGuiaIngreso'){
+        $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
+        $garantia_guia_ingreso = $tipo::find($id);
+        $name = 'Guia_Ingreso_';
+      }
+      elseif($tipo == 'App\GarantiaGuiaEgreso'){
+        $rutapdf= 'transaccion.garantias.guia_egreso.show_pdf';
+        $garantias_guias_egreso = $tipo::find($id);
+        $name = 'Guia_Egreso_';
+      }elseif($tipo == 'App\GarantiaInformeTecnico'){
+        $rutapdf= 'transaccion.garantias.informe_tecnico.show_pdf';
+        $garantias_informe_tecnico = $tipo::find($id);
+        $name = 'Informe_Tecnico_';
+      }
+      $archivo=$name.$id.".pdf";
+      $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa'));
+      $content=$pdf->download();
+      Storage::disk($redic)->put($archivo,$content);
+      return view('mailbox.create',compact('archivo','clientes','redic'));
     }
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome').;
-    $archivo=$name.$id.".pdf";
-    $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa'));
-    $content=$pdf->download();
-    Storage::disk($redic)->put($archivo,$content);
-
-    return view('mailbox.create',compact('archivo','clientes','redic'));
+    
   }
 
   public function send(Request $request){

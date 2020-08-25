@@ -8,16 +8,23 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Cotizacion- Impresion</title>
 
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    {{-- <link href="{{ url('css/bootstrap.min.css') }}" rel="stylesheet"> --}}
+    <link href="{{ url('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
+
+
+ <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+
+
+  {{--   <link href="{{ url('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ url('css/style.css') }}" rel="stylesheet"> --}}
 
     <script src="@yield('vue_js', '#')" defer></script>
-
-    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
+{{-- 
+    <link href="{{ url('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{ url('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet"> --}}
 
     {{-- FUNCION CERRAR AUTOMATICAMENTE --}}
     <SCRIPT LANGUAGE="JavaScript">
@@ -25,7 +32,7 @@
         window.close();
         }
     </SCRIPT>
-
+    
 </head>
 
 {{-- LLAMADO AL BODY EN FUNCION CERRAR CON UNA DURACION DE 10 SEGUNDOS --}}
