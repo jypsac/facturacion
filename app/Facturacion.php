@@ -25,7 +25,7 @@ class Facturacion extends Model
         return $this->belongsTo(User::class,'user_id');
     }
     public function cliente(){
-        return $this->belongsTo(cliente::class,'cliente_id');
+        return $this->belongsTo(Cliente::class,'cliente_id');
     }
      public function moneda(){
         return $this->belongsTo(Moneda::class,'moneda_id');

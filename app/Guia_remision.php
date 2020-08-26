@@ -14,7 +14,7 @@ class Guia_remision extends Model
         return $this->belongsTo(Cliente::class,'cliente_id');
     }
     public function user_personal(){
-        return $this->belongsTo(user::class,'user_id');
+        return $this->belongsTo(User::class,'user_id');
     }
     public function vehiculo(){
         return $this->belongsTo(Vehiculo::class,'vehiculo_id');
