@@ -41,7 +41,7 @@ class ProductosController extends Controller
         $estados=Estado::all();
         $categorias=Categoria::all();
         $unidad_medidas=Unidad_medida::all();
-        return view('maestro.catalogo.productos.create',compact('unidad_medidas','categorias','marcas','estados','familias','monedas','orden_servicio'));
+        return view('maestro.catalogo.productos.create',compact('unidad_medidas','categorias','marcas','estados','familias','monedas'));
     }
 
     /**
