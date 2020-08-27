@@ -112,7 +112,7 @@
                                     <tbody>
                                      @if ($regla=="factura")<span hidden="hidden">{{$i=1}} </span>
                                     @foreach($cotizacion_registro as $cotizacion_registros)
-                                    <tr> 
+                                    <tr>
                                         <td>{{$i}} </td>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
@@ -131,7 +131,7 @@
                                     </tr>
 
                                         <span hidden="hidden">{{$i++}}</span>
-                                   @endforeach 
+                                   @endforeach
 
                                     @else <span hidden="hidden">{{$i=1}} </span>
                                     @foreach($cotizacion_registro2 as $cotizacion_registros)
@@ -155,17 +155,17 @@
                                      <span hidden="hidden">{{$i++}}</span>
 
                                     @endforeach
-                                         
+
                                     @endif
                                     </tbody>
                                 </table>
                             </div><!-- /table-responsive -->
 
                         <footer style="padding-top: 150px">
-                       
+
                         </footer>
 
-                        <!-- Totales de Productos --> 
+                        <!-- Totales de Productos -->
                                 @if ($regla=="factura")
                                 <h3 align="left">
                             <?php $v=new CifrasEnLetras() ;
@@ -219,7 +219,7 @@
                                 </div>
                                     @endif
 
-         
+
                                 <br>
                         <!-- Fin Totales de Productos -->
                             <div class="row">
@@ -231,9 +231,9 @@
                                          N° Soles: {{$bancos->numero_soles}}
                                          <br>
                                           N° Dolares: {{$bancos->numero_dolares}}<br>
-                                         </p> 
-                                    </div>  
-                                                 
+                                         </p>
+                                    </div>
+
                             @endforeach
                             </div>
                             <br><br><br><br><br>
@@ -243,7 +243,7 @@
                                 Telefono : {{$cotizacion->user_personal->personal->telefono }}<br>
                                 Celular : {{$cotizacion->user_personal->personal->celular }}<br>
                                 Email : {{$cotizacion->user_personal->personal->email }}<br>
-                                Web : <br>
+                                Web : {{$empresa->pagina_web}}<br>
                                     </div>
                                     <div class="col-sm-3"></div>
                                     <div class="col-sm-3"></div>
@@ -251,14 +251,14 @@
                                         <hr>
                                         <center>{{$cotizacion->user_personal->personal->nombres }}</center>
                                     </div>
-                                    
-                                </div>        
-                                
+
+                                </div>
+
 
                         </div>
                 </div>
             </div>
-           
+
         </div>
 
 <style type="text/css">
@@ -267,7 +267,7 @@
     .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
     .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {border-top-width: 0px;}
 </style>
-    
+
 
 
 
