@@ -28,10 +28,10 @@ class Cotizacion_Servicios extends Model
     }
 
      public function user_personal(){
-        return $this->belongsTo(user::class,'user_id');
+        return $this->belongsTo(User::class,'user_id');
     }
     public function aprobado(){
-        return $this->belongsTo(user::class,'aprobado_por');
+        return $this->belongsTo(User::class,'aprobado_por');
     }
 
 

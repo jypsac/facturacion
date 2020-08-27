@@ -18,6 +18,13 @@
                 .procesado:hover:before {
                     content: "Ver";
                 }
+                .bot{
+                background-color: #1c84c6; border: none; color: white; cursor: pointer;font-size: 13px; 
+                }
+                
+                form.btn.btn-success:hover{
+                    background-color: #1c84c6;
+                }
             </style>
 
             {{-- PROCESADO --}}
@@ -52,6 +59,14 @@
 
             {{-- IMPRECION --}}
             <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
+            &nbsp<form action="{{route('email.save')}}" method="post" class="btn btn-success" style="height: 33px">
+                @csrf
+                <input type="text" hidden="hidden" name="tipo" value="App\Cotizacion"/>
+                <input type="text" hidden="hidden" name="id" value="{{$cotizacion->id}}"/>
+                <input type="text" hidden="hidden" name="redict" value="ventas_cotizacion"/>
+                <input type="text" hidden="hidden" name="cliente" value="{{$cotizacion->cliente->email}}"/> 
+                <button type="submit" class="bot"  >Enviar</button>
+             </form>
         </div>
     </div>
 
@@ -99,7 +114,7 @@
                 </div>
                 <br>
                 <div class="row">
-                    <div class="col-sm-12" >S
+                    <div class="col-sm-12" >
                         <h4>Observacion:</h4>
                         {{$cotizacion->observacion }}
                     </div>

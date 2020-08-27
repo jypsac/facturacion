@@ -18,6 +18,13 @@
                 .procesado:hover:before {
                     content: "Ver";
                 }
+                .bot{
+                background-color: #1c84c6; border: none; color: white; cursor: pointer;font-size: 13px; 
+                }
+                
+                form.btn.btn-success:hover{
+                    background-color: #1c84c6;
+                }
             </style>
             @if($cotizacion->estado == '1')
                 @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
@@ -34,7 +41,16 @@
             <a class="btn btn-success"  href="{{route('cotizacion.boletear', $cotizacion->id)}}">Boletear</a>
 
             @endif
-            <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
+            <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" >Imprimir</a>
+
+        &nbsp<form action="{{route('email.save')}}" method="post" class="btn btn-success" style="height: 33px">
+                @csrf
+                <input type="text" hidden="hidden" name="tipo" value="App\Cotizacion"/>
+                <input type="text" hidden="hidden" name="id" value="{{$cotizacion->id}}"/>
+                <input type="text" hidden="hidden" name="redict" value="ventas_cotizacion"/>
+                <input type="text" hidden="hidden" name="cliente" value="{{$cotizacion->cliente->email}}"/> 
+                <button type="submit" class="bot"  >Enviar</button>
+             </form>
         </div>
     </div>
     <div class="row">
@@ -274,6 +290,7 @@
         .ibox-tools a{color: white !important}
         .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
         .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {border-top-width: 0px;}
+       
     </style>
     <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

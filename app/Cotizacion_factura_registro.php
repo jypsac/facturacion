@@ -11,6 +11,6 @@ class Cotizacion_factura_registro extends Model
     protected $guarded = [];
 
     public function producto(){
-        return $this->belongsTo(producto::class,'producto_id');
-    } 
+        return $this->belongsTo(Producto::class,'producto_id');
+    }
 }

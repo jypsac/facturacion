@@ -10,6 +10,6 @@ class EmailBandejaEnvios extends Model
 
 	protected $guarded = [];
 	public function usuario(){
-		return $this->belongsTo(user::class,'id_usuario');
+		return $this->belongsTo(User::class,'id_usuario');
 	}
 }

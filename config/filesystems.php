@@ -65,6 +65,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public/garantias_informe_tecnico/'),
         ],
+        'ventas_cotizacion' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/ventas_cotizacion/'),
+        ],
 
         'mailbox' => [
             'driver' => 'local',
