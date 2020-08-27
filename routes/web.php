@@ -4,7 +4,7 @@
 // });
 
 Route::group(
-	[ 'middleware' => 'auth' ],
+	[ 'middleware' => ['auth','cambio_diario']],
 		function(){
 
 		// Route::view('/' , 'home')->name('inicio');
@@ -200,7 +200,7 @@ Route::group(
 		Route::get('usuario/permiso/{id}','UsuarioController@permiso')->name('usuario.permiso');
 		Route::resource('/usuario','UsuarioController');
 		Route::resource('/venta','VentaController');
-		Route::resource('/tipo_cambio','TipoCambioController');
+
 
 		Route::view('/clasificacion' , 'partials.clasificacion')->name('Clasificacion');
 
@@ -210,5 +210,5 @@ Route::group(
 
 	});
 	Auth::routes();
-
+	Route::resource('/tipo_cambio','TipoCambioController');
 	Route::get('/home', 'HomeController@index')->name('home');

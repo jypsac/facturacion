@@ -11,11 +11,11 @@
 @section('value_accion', '>>>')
 @section('content')
 
-@if(!$consulta)
+{{-- @if(!$consulta)
 	<script>
 		window.location.href = "{{route('tipo_cambio.create')}}";
 	</script>
-@endif
+@endif --}}
 
 @endsection
 @include('partials.page_script_general')
