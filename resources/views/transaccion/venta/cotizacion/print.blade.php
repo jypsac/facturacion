@@ -40,43 +40,40 @@
 <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
-                            <div class="row">
-                                <div class="col-sm-4 text-left" align="left">
-
-                                    <address class="col-sm-4" align="left">
+                    <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 20px;">
+                            <div>
+                                <div  style="text-align: left;align-content: left;width: 45%;float: left;" align="left" >
+                                    <address >
                                         <!-- <h5>De:</h5>
                                         <i class=" fa fa-user">:</i><strong > {{$empresa->nombre}}</strong><br>
                                         <i class=" fa fa-building">:</i> <br>
                                         <i class="fa fa-phone">:</i>  -->
-                                        <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
+                                        <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="250px">
                                     </address>
                                 </div>
-                                <div class="col-sm-4">
+                                    <div style="text-align: right;right: auto;" align="right"   >
+                                        <h4>{{$empresa->nombre}}</h4>
+                                        <h4>{{$empresa->ruc}}</h4>
+                                        <h4>{{$empresa->calle}}</h4>
+                                        <h4 class="text-navy">Cotizacion N°: {{$cotizacion->cod_comision}}</h4>
+                                    </div>
                                 </div>
-
-                                <div class="col-sm-3 ">
-                                    <h4>{{$empresa->nombre}}</h4>
-                                    <h4>{{$empresa->ruc}}</h4>
-                                    <h4>{{$empresa->calle}}</h4>
-                                    <h4 class="text-navy">Cotizacion N°: {{$cotizacion->cod_comision}}</h4>
-
-                                </div>
-                            </div><br>
-                            <div class="row">
-                                <div class="col-sm-7" align="center">
+                            </div>
+                            <br>
+                            <div >
+                                <div class="" style="align-content: left;width: 55%;float: left;padding-right: 5px" align="center">
                                     <div class="form-control"><h3>Contacto Cliente</h3>
                                         <div align="left">
                                             <strong>Señor(es):</strong>&nbsp;{{$cotizacion->cliente->nombre}}<br>
-                                            <strong>{{$cotizacion->cliente->documento_identificacion}} :</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>{{$cotizacion->cliente->documento_identificacion}} :</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <strong>Fecha:</strong> &nbsp;{{$cotizacion->created_at}}<br>
                                             <strong>Direccion:</strong>&nbsp; {{$cotizacion->cliente->direccion}}<br>
-                                            <strong>Telefono:</strong>&nbsp; {{$cotizacion->cliente->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>Telefono:</strong>&nbsp; {{$cotizacion->cliente->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <strong>Celular:</strong>&nbsp; {{$cotizacion->cliente->celular}}<br>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="col-sm-5" align="center">
+                                <div class="" align="center" style="text-align: center;align-content: left;width: 45%;float: left;padding-left: 5px" align="left">
                                     <div class="form-control" ><h3>Condiciones Generales</h3>
                                         <div align="left">
                                             <!-- <strong>Precios:</strong> &nbsp;{{$cotizacion->id }}<br> -->
@@ -86,12 +83,10 @@
                                             <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                             <strong>Tipo de Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                          <!-- <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista_id}} -->
-
                                         </div>
                                     </div>
+                                    <br>
                                 </div>
-
-
                             </div><br>
                             <div class="row">
                                 <div class="col-sm-12" >
@@ -100,12 +95,12 @@
                                 </div>
                             </div><br>
 
-                            <div class="table-responsive">
-                                <table class="table " >
+                            <div class="">
+                                <table class="table" style="border-radius: 5px">
                                     <thead>
                                     <tr>
-                                        <th style="width: 100px">ITEM </th>
-                                        <th style="width: 100px">Codigo </th>
+                                        <th>ITEM </th>
+                                        <th>Codigo </th>
                                         <th>Unidad</th>
                                         <th>Descripcion</th>
                                         <th>Cantidad</th>
@@ -136,6 +131,7 @@
                                         </td>
 
                                     </tr>
+
 
                                         <span hidden="hidden">{{$i++}}</span>
                                    @endforeach 
@@ -185,54 +181,73 @@
 
                                 Son : {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
                                  </h3>
-
-                                <div class="row">
-                                    <div class="col-sm-3 ">
-                                        <p class="form-control a"> Sub Total</p>
-                                        <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                                
+                                <div class="" style="text-align: center;" align="center">
+                                    <div style="width: 20%;height: 248px;float: left;">
                                     </div>
-                                    <div class="col-sm-3 ">
-                                        <p class="form-control a"> Op. Agravada</p>
-                                        <p class="form-control a"> S/.00</p>
+                                    <div style="width: 20%;height: 248px;float: left;">
                                     </div>
-                                    <div class="col-sm-3 ">
-                                        <p class="form-control a"> IGV</p>
-                                        <p class="form-control a"> S/.{{round($igv_p, 2)}}</p>
+                                    <div style="width: 20%;height: 248px;float: left;">
                                     </div>
-                                     <div class="col-sm-3 ">
-                                        <p class="form-control a"> Importe Total</p>
-                                        <p class="form-control a"> S/.{{$end}}</p>
+                                    <div style="width: 25%;height: 248px;float: left;">
+                                    </div>
+                                    <div style="align-items: right;text-align: center;align-content: right;" align="right">
+                                        <div class=" " style="padding: inherit;">
+                                            <p class="" ><strong> Sub Total</strong></p>
+                                            <p class=""  > S/.{{round($sub_total, 2)}}</p>
+                                        </div>
+                                        <div class=" ">
+                                            <p class=""> <strong>Op. Agravada</strong></p>
+                                            <p class=""  > S/.00</p>
+                                        </div>
+                                        <div class=" ">
+                                            <p class=""> <strong>IGV</strong></p>
+                                            <p class=""  > S/.{{round($igv_p, 2)}}</p>
+                                        </div>
+                                         <div class=" ">
+                                            <p class=""> <strong>Importe Total</strong></p>
+                                            <p class=""  > S/.{{$end}}</p>
+                                        </div>
                                     </div>
                                 </div>
                                     @else
-                                <div class="row">
-
-                                    <div class="col-sm-3 ">
-                                        <p class="form-control a"> Sub Total</p>
-                                        <p class="form-control a"> S/.{{$end=round($sub_total, 2)}}</p>
+                                 <div class="" style="text-align: center;" align="center">
+                                    <div style="width: 20%;height: 248px;float: left;">
+                                    </div>
+                                    <div style="width: 20%;height: 248px;float: left;">
+                                    </div>
+                                    <div style="width: 20%;height: 248px;float: left;">
+                                    </div>
+                                    <div style="width: 25%;height: 248px;float: left;">
+                                    </div>
+                                    <div style="align-items: right;text-align: center;align-content: right;" align="right">
+                                        <div class=" " style="padding: inherit;">
+                                        <p class=""> <strong> Sub Total</strong></p>
+                                        <p class=""> S/.{{$end=round($sub_total, 2)}}</p>
                                     </div>
                                     <div class="col-sm-3 ">
-                                        <p class="form-control a"> Op. Agravada</p>
-                                        <p class="form-control a"> S/.00</p>
+                                        <p class=""><strong> Op. Agravada</strong></p>
+                                        <p class=""> S/.00</p>
                                     </div>
-                                    <div class="col-sm-3 ">
-                                        <p class="form-control a"> IGV</p>
-                                        <p class="form-control a"> S/.00</p>
+                                    <div class=" ">
+                                        <p class=""> <strong>IGV</strong></p>
+                                        <p class=""> S/.00</p>
                                     </div>
-                                     <div class="col-sm-3 ">
-                                        <p class="form-control a"> Importe Total</p>
-                                        <p class="form-control a"> S/.{{$end=round($sub_total, 2)}}</p>
+                                     <div class="">
+                                        <p class=""> <strong>Importe Total</strong></p>
+                                        <p class=""> S/.{{$end=round($sub_total, 2)}}</p>
                                     </div>
+                                </div>
                                 </div>
                                     @endif
 
          
                                 <br>
                         <!-- Fin Totales de Productos -->
-                            <div class="row">
+                            <div class="">
                              @foreach($banco as $bancos)
-                                     <div class="col-sm-3 " align="center">
-                                         <p class="form-control" style="height: 100px;font-size: 10px">
+                                     <div class="" align="center" style="width: 25%;float: left;padding: 5px;">
+                                         <p class="form-control" style="height: 100px;font-size: 10px;padding: 16px;">
                                          <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
                                          <br>
                                          N° Soles: {{$bancos->numero_soles}}
@@ -246,7 +261,7 @@
                             <br><br><br><br><br>
                                 <div class="row">
                                     <div class="col-sm-3">
-                                        <p><u>centro de Atencion : </u></p>
+                                        <p><u>Centro de Atencion : </u></p>
                                 Telefono : {{$cotizacion->user_personal->personal->telefono }}<br>
                                 Celular : {{$cotizacion->user_personal->personal->celular }}<br>
                                 Email : {{$cotizacion->user_personal->personal->email }}<br>
@@ -267,7 +282,6 @@
             </div>
            
         </div>
-
 <style type="text/css">
     .form-control{border-radius: 10px; height: 150px;}
     .ibox-tools a{color: white !important}
