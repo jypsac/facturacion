@@ -58,7 +58,7 @@
 
 
             {{-- IMPRECION --}}
-            <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
+            <a class="btn btn-success"  href="{{route('cotizacion_servicio.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
             &nbsp<form action="{{route('email.save')}}" method="post" class="btn btn-success" style="height: 33px">
                 @csrf
                 <input type="text" hidden="hidden" name="tipo" value="App\Cotizacion"/>

@@ -45,6 +45,7 @@ Route::group(
 		Route::post('/cotizacion/facturar_store' , 'CotizacionController@facturar_store')->name('cotizacion.facturar_store');
 		Route::get('/cotizacion/boletear/{id}' , 'CotizacionController@boletear')->name('cotizacion.boletear');
 		Route::post('/cotizacion/boletear_store' , 'CotizacionController@boletear_store')->name('cotizacion.boletear_store');
+		Route::get('/cotizacion/print_cotizacion_servicio/{id}' , 'CotizacionServiciosController@print')->name('cotizacion_servicio.print');
 
 		Route::resource('/cotizacion','CotizacionController');
 		Route::resource('/empresa/banco','BancoController'); //Banco
