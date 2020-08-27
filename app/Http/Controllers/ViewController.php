@@ -11,10 +11,8 @@ class ViewController extends Controller
     public function home()
     {
         $consulta=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
-        
-            return view('home',compact('consulta'));
-        
-        
-        
+        return view('home',compact('consulta'));
     }
+
+
 }
