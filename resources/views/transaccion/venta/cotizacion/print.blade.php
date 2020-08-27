@@ -8,23 +8,16 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <title>Cotizacion- Impresion</title>
 
-    {{-- <link href="{{ url('css/bootstrap.min.css') }}" rel="stylesheet"> --}}
-    <link href="{{ url('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
 
-
-
- <link rel="stylesheet" href="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
-  <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-
-
-  {{--   <link href="{{ url('css/animate.css') }}" rel="stylesheet">
-    <link href="{{ url('css/style.css') }}" rel="stylesheet"> --}}
+    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
 
     <script src="@yield('vue_js', '#')" defer></script>
-{{-- 
-    <link href="{{ url('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{ url('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet"> --}}
+
+    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
 
     {{-- FUNCION CERRAR AUTOMATICAMENTE --}}
     <SCRIPT LANGUAGE="JavaScript">
@@ -32,7 +25,7 @@
         window.close();
         }
     </SCRIPT>
-    
+
 </head>
 
 {{-- LLAMADO AL BODY EN FUNCION CERRAR CON UNA DURACION DE 10 SEGUNDOS --}}
@@ -40,40 +33,43 @@
 <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
                 <div class="col-lg-12">
-                    <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 20px;">
-                            <div>
-                                <div  style="text-align: left;align-content: left;width: 45%;float: left;" align="left" >
-                                    <address >
+                    <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
+                            <div class="row">
+                                <div class="col-sm-4 text-left" align="left">
+
+                                    <address class="col-sm-4" align="left">
                                         <!-- <h5>De:</h5>
                                         <i class=" fa fa-user">:</i><strong > {{$empresa->nombre}}</strong><br>
                                         <i class=" fa fa-building">:</i> <br>
                                         <i class="fa fa-phone">:</i>  -->
-                                        <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="250px">
+                                        <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
                                     </address>
                                 </div>
-                                    <div style="text-align: right;right: auto;" align="right"   >
-                                        <h4>{{$empresa->nombre}}</h4>
-                                        <h4>{{$empresa->ruc}}</h4>
-                                        <h4>{{$empresa->calle}}</h4>
-                                        <h4 class="text-navy">Cotizacion N°: {{$cotizacion->cod_comision}}</h4>
-                                    </div>
+                                <div class="col-sm-4">
                                 </div>
-                            </div>
-                            <br>
-                            <div >
-                                <div class="" style="align-content: left;width: 55%;float: left;padding-right: 5px" align="center">
+
+                                <div class="col-sm-3 ">
+                                    <h4>{{$empresa->nombre}}</h4>
+                                    <h4>{{$empresa->ruc}}</h4>
+                                    <h4>{{$empresa->calle}}</h4>
+                                    <h4 class="text-navy">Cotizacion N°: {{$cotizacion->cod_comision}}</h4>
+
+                                </div>
+                            </div><br>
+                            <div class="row">
+                                <div class="col-sm-7" align="center">
                                     <div class="form-control"><h3>Contacto Cliente</h3>
                                         <div align="left">
                                             <strong>Señor(es):</strong>&nbsp;{{$cotizacion->cliente->nombre}}<br>
-                                            <strong>{{$cotizacion->cliente->documento_identificacion}} :</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>{{$cotizacion->cliente->documento_identificacion}} :</strong> &nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <strong>Fecha:</strong> &nbsp;{{$cotizacion->created_at}}<br>
                                             <strong>Direccion:</strong>&nbsp; {{$cotizacion->cliente->direccion}}<br>
-                                            <strong>Telefono:</strong>&nbsp; {{$cotizacion->cliente->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                            <strong>Telefono:</strong>&nbsp; {{$cotizacion->cliente->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                             <strong>Celular:</strong>&nbsp; {{$cotizacion->cliente->celular}}<br>
                                         </div>
                                     </div>
                                 </div>
-                                <div class="" align="center" style="text-align: center;align-content: left;width: 45%;float: left;padding-left: 5px" align="left">
+                                <div class="col-sm-5" align="center">
                                     <div class="form-control" ><h3>Condiciones Generales</h3>
                                         <div align="left">
                                             <!-- <strong>Precios:</strong> &nbsp;{{$cotizacion->id }}<br> -->
@@ -83,10 +79,12 @@
                                             <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                             <strong>Tipo de Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                          <!-- <strong>Comisonista:</strong> &nbsp;{{$cotizacion->comisionista_id}} -->
+
                                         </div>
                                     </div>
-                                    <br>
                                 </div>
+
+
                             </div><br>
                             <div class="row">
                                 <div class="col-sm-12" >
@@ -95,19 +93,19 @@
                                 </div>
                             </div><br>
 
-                            <div class="">
-                                <table class="table" style="border-radius: 5px">
+                            <div class="table-responsive">
+                                <table class="table " >
                                     <thead>
                                     <tr>
-                                        <th>ITEM </th>
-                                        <th>Codigo </th>
+                                        <th style="width: 100px">ITEM </th>
+                                        <th style="width: 100px">Codigo </th>
                                         <th>Unidad</th>
                                         <th>Descripcion</th>
                                         <th>Cantidad</th>
                                         <th style="width: 86px">P.Unitario</th>
                                         <th>Total</th>
 
-                                        <th style="display: none">S/.</th><!--
+                                        <th style="display: none">{{$simbologia=$cotizacion->moneda->simbolo}}.</th><!--
                                         <th style="background: #f3f3f4">Precio Total</th> -->
                                     </tr>
                                     </thead>
@@ -125,13 +123,12 @@
                                         <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
                                         <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
                                             @if ($regla=="factura")
-                                            S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                          {{$simbologia=$cotizacion->moneda->simbolo}}.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                             @endif
                                         </td>
 
                                     </tr>
-
 
                                         <span hidden="hidden">{{$i++}}</span>
                                    @endforeach
@@ -149,7 +146,7 @@
                                                 <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
                                                 <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
                                                     @if ($regla=="factura")
-                                                        S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                                        {{$simbologia=$cotizacion->moneda->simbolo}}.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                                         {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                                     @endif
                                                 </td>
@@ -179,75 +176,56 @@
                             $end_final=strstr($end, '.');
                             ?>
 
-                                Son : {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
+                                Son : {{$letra_final}} {{$end_final}}/100 {{$simbologia=$cotizacion->moneda->nombre}}
                                  </h3>
-                                
-                                <div class="" style="text-align: center;" align="center">
-                                    <div style="width: 20%;height: 248px;float: left;">
+
+                                <div class="row">
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> Sub Total</p>
+                                        <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}</p>
                                     </div>
-                                    <div style="width: 20%;height: 248px;float: left;">
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> Op. Agravada</p>
+                                        <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
                                     </div>
-                                    <div style="width: 20%;height: 248px;float: left;">
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> IGV</p>
+                                        <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}}</p>
                                     </div>
-                                    <div style="width: 25%;height: 248px;float: left;">
-                                    </div>
-                                    <div style="align-items: right;text-align: center;align-content: right;" align="right">
-                                        <div class=" " style="padding: inherit;">
-                                            <p class="" ><strong> Sub Total</strong></p>
-                                            <p class=""  > S/.{{round($sub_total, 2)}}</p>
-                                        </div>
-                                        <div class=" ">
-                                            <p class=""> <strong>Op. Agravada</strong></p>
-                                            <p class=""  > S/.00</p>
-                                        </div>
-                                        <div class=" ">
-                                            <p class=""> <strong>IGV</strong></p>
-                                            <p class=""  > S/.{{round($igv_p, 2)}}</p>
-                                        </div>
-                                         <div class=" ">
-                                            <p class=""> <strong>Importe Total</strong></p>
-                                            <p class=""  > S/.{{$end}}</p>
-                                        </div>
+                                     <div class="col-sm-3 ">
+                                        <p class="form-control a"> Importe Total</p>
+                                        <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end}}</p>
                                     </div>
                                 </div>
                                     @else
-                                 <div class="" style="text-align: center;" align="center">
-                                    <div style="width: 20%;height: 248px;float: left;">
-                                    </div>
-                                    <div style="width: 20%;height: 248px;float: left;">
-                                    </div>
-                                    <div style="width: 20%;height: 248px;float: left;">
-                                    </div>
-                                    <div style="width: 25%;height: 248px;float: left;">
-                                    </div>
-                                    <div style="align-items: right;text-align: center;align-content: right;" align="right">
-                                        <div class=" " style="padding: inherit;">
-                                        <p class=""> <strong> Sub Total</strong></p>
-                                        <p class=""> S/.{{$end=round($sub_total, 2)}}</p>
+                                <div class="row">
+
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> Sub Total</p>
+                                        <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}}</p>
                                     </div>
                                     <div class="col-sm-3 ">
-                                        <p class=""><strong> Op. Agravada</strong></p>
-                                        <p class=""> S/.00</p>
+                                        <p class="form-control a"> Op. Agravada</p>
+                                        <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
                                     </div>
-                                    <div class=" ">
-                                        <p class=""> <strong>IGV</strong></p>
-                                        <p class=""> S/.00</p>
+                                    <div class="col-sm-3 ">
+                                        <p class="form-control a"> IGV</p>
+                                        <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
                                     </div>
-                                     <div class="">
-                                        <p class=""> <strong>Importe Total</strong></p>
-                                        <p class=""> S/.{{$end=round($sub_total, 2)}}</p>
+                                     <div class="col-sm-3 ">
+                                        <p class="form-control a"> Importe Total</p>
+                                        <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}}</p>
                                     </div>
-                                </div>
                                 </div>
                                     @endif
 
 
                                 <br>
                         <!-- Fin Totales de Productos -->
-                            <div class="">
+                            <div class="row">
                              @foreach($banco as $bancos)
-                                     <div class="" align="center" style="width: 25%;float: left;padding: 5px;">
-                                         <p class="form-control" style="height: 100px;font-size: 10px;padding: 16px;">
+                                     <div class="col-sm-3 " align="center">
+                                         <p class="form-control" style="height: 100px;font-size: 10px">
                                          <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
                                          <br>
                                          N° Soles: {{$bancos->numero_soles}}
@@ -260,15 +238,15 @@
                             </div>
                             <br><br><br><br><br>
                                 <div class="row">
-                                    <div class="col-sm-3">
-                                        <p><u>Centro de Atencion : </u></p>
+                                    <div class="col-sm-4">
+                                        <p><u>centro de Atencion : </u></p>
                                 Telefono : {{$cotizacion->user_personal->personal->telefono }}<br>
                                 Celular : {{$cotizacion->user_personal->personal->celular }}<br>
                                 Email : {{$cotizacion->user_personal->personal->email }}<br>
                                 Web : {{$empresa->pagina_web}}<br>
                                     </div>
                                     <div class="col-sm-3"></div>
-                                    <div class="col-sm-3"></div>
+                                    <div class="col-sm-2"></div>
                                     <div class="col-sm-3"><br><br>
                                         <hr>
                                         <center>{{$cotizacion->user_personal->personal->nombres }}</center>
@@ -282,6 +260,7 @@
             </div>
 
         </div>
+
 <style type="text/css">
     .form-control{border-radius: 10px; height: 150px;}
     .ibox-tools a{color: white !important}
