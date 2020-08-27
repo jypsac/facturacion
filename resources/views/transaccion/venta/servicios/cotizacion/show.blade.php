@@ -61,7 +61,7 @@
             <a class="btn btn-success"  href="{{route('cotizacion_servicio.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
             &nbsp<form action="{{route('email.save')}}" method="post" class="btn btn-success" style="height: 33px">
                 @csrf
-                <input type="text" hidden="hidden" name="tipo" value="App\Cotizacion"/>
+                <input type="text" hidden="hidden" name="tipo" value="App\Cotizacion_Servicios"/>
                 <input type="text" hidden="hidden" name="id" value="{{$cotizacion->id}}"/>
                 <input type="text" hidden="hidden" name="redict" value="ventas_cotizacion"/>
                 <input type="text" hidden="hidden" name="cliente" value="{{$cotizacion->cliente->email}}"/> 

@@ -11,8 +11,11 @@ use App\EmailConfiguraciones;
 use App\Empresa;
 use App\Banco;
 use App\Moneda;
+use App\Cotizacion_Servicios;
 use App\Cotizacion_factura_registro;
 use App\Cotizacion_boleta_registro;
+use App\Cotizacion_Servicios_factura_registro;
+use App\Cotizacion_Servicios_boleta_registro;
 use App\kardex_entrada_registro;
 use App\Igv;
 use App\GarantiaGuiaIngreso;
@@ -132,7 +135,7 @@ class EmailBandejaEnviosController extends Controller
 
     if($tipo == 'App\Cotizacion'){
       $rutapdf = 'transaccion.venta.cotizacion.print';
-      $name = 'Cotizacion_';
+      $name = 'Cotizacion_Producto_';
 
       $empresa=Empresa::first();
 
@@ -160,7 +163,38 @@ class EmailBandejaEnviosController extends Controller
 
         return view('mailbox.create',compact('archivo','clientes','redic'));
 
-    }else{
+    }elseif ($tipo=='App\Cotizacion_Servicios') {
+
+        $rutapdf = 'transaccion.venta.servicios.cotizacion.print';
+        $name = 'Cotizacion_Servicio_';
+
+        $banco=Banco::where('estado','0')->get();
+        $moneda=Moneda::where('principal',1)->first();
+        $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
+        $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+        foreach ($cotizacion_registro as $cotizacion_registros) {
+           $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+       }
+
+        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
+       $cotizacion=Cotizacion_Servicios::find($id);
+       $empresa=Empresa::first();
+       $sum=0;
+       $igv=Igv::first();
+       $sub_total=0;
+       $end=0;
+       $regla=$cotizacion->tipo;
+       
+        $archivo=$name.$regla.$id.".pdf";
+        $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco'));
+
+       $contenido=$pdf->download();
+       Storage::disk($redic)->put($archivo,$contenido);
+       return view('mailbox.create',compact('archivo','clientes','redic'));
+
+    }
+
+    else{
       $mi_empresa=Empresa::first();
       if($tipo == 'App\GarantiaGuiaIngreso'){
         $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';

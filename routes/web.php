@@ -62,7 +62,7 @@ Route::group(
 		Route::post('/cotizacion_servicio/store_boleta','CotizacionServiciosController@store_boleta')->name('cotizacion_servicio.store_boleta');
 		Route::get('/cotizacion_servicio/boletear/{id}' , 'CotizacionServiciosController@boletear')->name('cotizacion_servicio.boletear');
 		Route::post('/cotizacion_servicio/boletear_store' , 'CotizacionServiciosController@boletear_store')->name('cotizacion_servicio.boletear_store');
-
+	 
 		Route::resource('/cotizacion_servicio','CotizacionServiciosController');
 
 //FACTURACION SERVICIOS
