@@ -113,12 +113,14 @@ class EmailBandejaEnviosController extends Controller
             $mail-> save();
 
             $newfile2 = $request->file('archivos');
-            foreach ($newfile2 as $file2) {
-              $guardar_email_archivo=new EmailBandejaEnviosArchivos;
-              $guardar_email_archivo->id_bandeja_envios=$mail->id;
-              $guardar_email_archivo->archivo= $file2->getClientOriginalName();
-              $guardar_email_archivo->fecha_hora=Carbon::now();
-              $guardar_email_archivo->save();
+            if($request->hasfile('archivos')){
+              foreach ($newfile2 as $file2) {
+                $guardar_email_archivo=new EmailBandejaEnviosArchivos;
+                $guardar_email_archivo->id_bandeja_envios=$mail->id;
+                $guardar_email_archivo->archivo= $file2->getClientOriginalName();
+                $guardar_email_archivo->fecha_hora=Carbon::now();
+                $guardar_email_archivo->save();
+              }
             }
             return redirect()->route('email.index');
       }
