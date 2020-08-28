@@ -155,24 +155,9 @@ class KardexEntradaController extends Controller
                     $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
                     $kardex_entrada_registro->producto_id=$producto_id[$i];
                     $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
+                    //monedas
                     $kardex_entrada_registro->precio=$request->get('precio')[$i];
-                    $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
-                    $kardex_entrada_registro->estado=1;
-                    $kardex_entrada_registro->save();
-                }
-            }else {
-                return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');
-            }
-            return redirect()->route('kardex-entrada.index');
-        }else{
-            //cuando la moneda es la secundaria
-            if($count_articulo = $count_cantidad = $count_precio){
-                for($i=0;$i<$count_articulo;$i++){
-                    $kardex_entrada_registro=new kardex_entrada_registro();
-                    $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
-                    $kardex_entrada_registro->producto_id=$producto_id[$i];
-                    $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
-                    $kardex_entrada_registro->precio=($request->get('precio')[$i])*$cambio->venta;
+
                     $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
                     $kardex_entrada_registro->estado=1;
                     $kardex_entrada_registro->save();

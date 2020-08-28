@@ -35,12 +35,14 @@ class UsersTableSeeder extends Seeder
          DB::table('users')->insert([
            'id' => 3 ,
            'name' => 'logistica',
-           'email' => 'hidro3@hidromaxsac.com',
+           'email' => 'admin@admin.com',
            'personal_id' => '3',
-           'password' => bcrypt('123'),
+           'password' => bcrypt('admin@admin.com'),
            'estado' => 1,
            'confi_id' =>3,
            'email_creado' => 0
        ]);
+
+       
     }
 }

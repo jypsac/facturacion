@@ -22,12 +22,13 @@ class AddForeignKeyKardexEntradaRegistroTable extends Migration
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
 
             $table->integer('cantidad_inicial');
-            $table->double('precio',10,2);
+            $table->double('precio_nacional',10,2);
+            $table->double('precio_extranjero',10,2);
 
             $table->integer('cantidad');
             $table->boolean('estado');
 
-            $table->timestamps();
+            $table->timestamps();   
         });
     }
 
