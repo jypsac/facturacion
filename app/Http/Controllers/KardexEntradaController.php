@@ -79,6 +79,19 @@ class KardexEntradaController extends Controller
      */
     public function store(Request $request)
     {
+      // return $request;
+        $this->validate($request,[
+            'motivo' => ['required','exists:motivos,id'],
+            'factura' => ['required'],
+            'almacen' => ['required','exists:almacen,id'],
+            'clasificacion' => ['required','exists:categorias,id'],
+            'guia_remision' => ['required'],
+            'provedor' => ['required','exists:provedores,id'],
+            'moneda' => ['required','exists:monedas,id'],
+          ]
+        );
+        $data = $request->all();
+
         //codigo para convertir nombre a producto
         $cantidad_p = $request->input('cantidad');
         $count_cantidad_p=count($cantidad_p);
@@ -139,15 +152,15 @@ class KardexEntradaController extends Controller
         //contador de valores de precio
         $precio = $request->input('precio');
         $count_precio=count($precio);
-        
+
 
         //convertido a moneda principal
         $moneda_principal=Moneda::where('principal',1)->first();
         $moneda_principal_id=$moneda_principal->id;
-        
+
         $kardex_entrada_moneda_id=$kardex_entrada->moneda_id;
 
-        if($moneda_principal_id==$kardex_entrada_moneda_id){
+
             //cuando la moneda es la principal
             if($count_articulo = $count_cantidad = $count_precio){
                 for($i=0;$i<$count_articulo;$i++){
@@ -156,8 +169,15 @@ class KardexEntradaController extends Controller
                     $kardex_entrada_registro->producto_id=$producto_id[$i];
                     $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
                     //monedas
-                    $kardex_entrada_registro->precio=$request->get('precio')[$i];
-
+                    if($moneda_principal_id==$kardex_entrada_moneda_id){
+                      $kardex_entrada_registro->precio_nacional=$request->get('precio')[$i];
+                      $precio_nacional=$request->get('precio')[$i];
+                      $kardex_entrada_registro->precio_extranjero=$precio_nacional*$cambio->compra;
+                    }else{
+                      $kardex_entrada_registro->precio_extranjero=$request->get('precio')[$i];
+                      $precio_extranjero=$request->get('precio')[$i];
+                      $kardex_entrada_registro->precio_nacional=$precio_extranjero*$cambio->compra;
+                    }
                     $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
                     $kardex_entrada_registro->estado=1;
                     $kardex_entrada_registro->save();
@@ -166,9 +186,9 @@ class KardexEntradaController extends Controller
                 return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');
             }
             return redirect()->route('kardex-entrada.index');
-        }
 
-        
+
+
     }
 
     /**

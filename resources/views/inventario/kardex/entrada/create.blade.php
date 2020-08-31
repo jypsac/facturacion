@@ -18,7 +18,17 @@
 			{{ session('campo') }}
 		</div>
 	@endif
-	
+	@if($errors->any())
+	<div style="padding-top: 20px;">
+		<div class="alert alert-danger">
+	    	<a class="alert-link" href="#">
+	      	@foreach ($errors->all() as $error)
+	      		<li style="color: red">{{ $error }}</li>
+	      	@endforeach
+	    	</a>
+	  	</div>
+	</div>
+	@endif
 <div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1">
 		<i class="fa fa-user-o" aria-hidden="true"></i>
@@ -75,7 +85,7 @@
 			</div>
 		</div>
 	</div>
-							
+
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -150,7 +160,7 @@
 								<input type="text" class="form-control" name="informacion" value="Ingreso de productos al almacen">
 							</div>
 						</div>
-						
+
 
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Categoria:</label>
