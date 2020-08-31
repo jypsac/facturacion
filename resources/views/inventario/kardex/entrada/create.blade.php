@@ -185,7 +185,7 @@
 						<table cellspacing="0" class="table table-striped " width="100%">
 							<thead>
 								<tr>
-									<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+									<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()"  /></th>
 										<th style="width: 600px">Producto  <a href="{{route('productos.create')}}" class="btn btn-warning" target="blanck" style="padding-top: 0px;padding-bottom: 0px; padding-left: 4px;padding-right: 4px;" ><i class="fa fa-plus-square" aria-hidden="true" ></a></th>
 									<th style="width: 100px">Cantidad</th>
 									<th style="width: 100px">Precio</th>
@@ -198,7 +198,7 @@
 										<input type='checkbox' class="case">
 									</td>
 									<td>
-										<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' autocomplete="off">
+										<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
 											<datalist id="browsers2" >
 												@foreach($productos as $producto)
 												<option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}">
@@ -256,7 +256,7 @@
 					<input type='checkbox' class='case'/>
 				</td>";
 				<td>
-					<input list="browsers" class="form-control " name="articulo[]" required id='articulo' autocomplete="off">
+					<input list="browsers" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
 						<datalist id="browsers" >
 							@foreach($productos as $producto)
 							<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
@@ -333,6 +333,10 @@
                 source: ["item 1","item 2","item 3"]
             });
         });
+        function Clear(elem)
+        {
+            elem.value='';
+        }
 	</script>
 
 @endsection
