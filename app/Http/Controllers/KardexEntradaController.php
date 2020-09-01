@@ -31,7 +31,21 @@ class KardexEntradaController extends Controller
         $almacenes=Almacen::all();
         $clasificaciones=Categoria::all();
         $kardex_entradas=Kardex_entrada::all();
-        return view('inventario.kardex.entrada.index' ,compact('kardex_entradas','almacenes','clasificaciones'));
+        foreach ($kardex_entradas as $value => $kardex_entrada) {
+          $kardex_entrada_registros=kardex_entrada_registro::where('kardex_entrada_id',$kardex_entrada->id)->get();
+          foreach ($kardex_entrada_registros as $value2 => $kardex_entrada_registro) {
+            $KER_cantidad_inicial=$kardex_entrada_registro->cantidad_inicial;
+            $KER_cantidad=$kardex_entrada_registro->cantidad;
+            if($KER_cantidad_inicial==$KER_cantidad){
+              $validador=1;
+            }else{
+              $validador=0;
+              break;
+            }
+          }
+          $array_final[$value]=$validador;
+        }
+        return view('inventario.kardex.entrada.index' ,compact('kardex_entradas','almacenes','clasificaciones','array_final'));
 
     }
 
@@ -173,10 +187,12 @@ class KardexEntradaController extends Controller
                       $kardex_entrada_registro->precio_nacional=$request->get('precio')[$i];
                       $precio_nacional=$request->get('precio')[$i];
                       $kardex_entrada_registro->precio_extranjero=$precio_nacional*$cambio->compra;
+                      $kardex_entrada_registro->cambio=$cambio->compra;
                     }else{
                       $kardex_entrada_registro->precio_extranjero=$request->get('precio')[$i];
                       $precio_extranjero=$request->get('precio')[$i];
-                      $kardex_entrada_registro->precio_nacional=$precio_extranjero*$cambio->compra;
+                      $kardex_entrada_registro->precio_nacional=$precio_extranjero*$cambio->venta;
+                      $kardex_entrada_registro->cambio=$cambio->venta;
                     }
                     $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
                     $kardex_entrada_registro->estado=1;
@@ -247,8 +263,8 @@ class KardexEntradaController extends Controller
      */
     public function destroy($id)
     {
-        $destroy=Kardex_entrada::findOrFail($id);
-        $destroy->delete();
+        $estado=Kardex_entrada::findOrFail($id);
+        $estado->delete();
 
         return redirect()->route('kardex-entrada.index');
     }
