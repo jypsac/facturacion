@@ -9,11 +9,11 @@
 @section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-     
+
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">
-                    <h5>Lista de Boletas</h5> 
+                    <h5>Lista de Boletas</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -42,7 +42,7 @@
                                     <th>Cliente</th>
                                     <th>Ruc/DNI</th>
                                     <th>Fecha emision</th>
-                                    <th>Ver</th> 
+                                    <th>Ver</th>
                                     <!-- <th>EDITAR</th> -->
                                     <th>Anular</th>
                                 </tr>
@@ -57,48 +57,45 @@
                                     <td>{{$guias_remision->fecha_emision}}</td>
                                     <td><center><a href="{{route('guia_remision.show' , $guias_remision->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                     <td>
-                                     {{--  @if($facturacions->estado == '0') --}}
-                                     <!-- Button trigger modal -->
-                                     <button type="button" class="btn btn-s-m btn-danger" data-toggle="modal" data-target="#1">
-                                       Anular
-                                   </button>
+                                      @if($guias_remision->estado_anulado == '0')
+                                      <!-- Button trigger modal -->
+                                      <button type="button" class="btn btn-s-m btn-danger" data-toggle="modal" data-target="#1">
+                                         Anular
+                                     </button>
 
-                                   <!-- Modal -->
-                                   <div class="modal fade" id="1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                       <div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">
-                                        <div class="modal-content" >
-                                            <div class="modal-body" style="padding: 0px;">
-                                                
-                                               <div class="ibox-content float-e-margins">
-                                                
-                                                 <h3 class="font-bold col-lg-12" align="center">
-                                                  ¿Esta Seguro que Deseas Anular la Factura: ".?<br>
-                                                  <h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4>
-                                              </h3>
-                                              <p align="center">
-                                                <form action="" method="POST">
-                                                    @csrf
-                                                    @method('delete')
-                                                    <center>
+                                     <!-- Modal -->
+                                     <div class="modal fade" id="1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                         <div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">
+                                            <div class="modal-content" >
+                                                <div class="modal-body" style="padding: 0px;">
+
+                                                 <div class="ibox-content float-e-margins">
+
+                                                   <h3 class="font-bold col-lg-12" align="center">
+                                                      ¿Esta Seguro que Deseas Anular la Guia de remision: ".?<br>
+                                                      <h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4>
+                                                  </h3>
+                                                  <p align="center">
+                                                    <form action="{{route('guia_remision.destroy', $guias_remision->id)}}" method="POST">
+                                                      @csrf
+                                                      @method('delete')
+                                                      <center>
                                                         <button type="submit" class="btn btn-w-m btn-primary">Anular</button>
                                                         {{-- <button type="button" class="btn btn-w-m btn-danger" data-dismiss="modal">Cancelar</button> --}}</center>
                                                     </form>
-                                                    
+
                                                 </p>
                                             </div>
 
                                         </div>
                                     </div>
-                                </div> 
+                                </div>
                             </div>
-
-
-                            {{--  @elseif($facturacions->estado == '1') --}}
-                            {{--   <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#modal123">Anulado</button> --}}
-
-                            {{--  @endif --}}
+                            @elseif($guias_remision->estado_anulado == '1')
+                            <button type="button" class="btn btn-secondary" >Anulado</button>
+                            @endif
                         </td>
-                        
+
                     </tr>
                     @endforeach
                 </tbody>

@@ -116,7 +116,7 @@
                                         <td>{{$i}} </td>
                                         <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
-                                        <td>{{$cotizacion_registros->producto->nombre}}</td>
+                                        <td>{{$cotizacion_registros->producto->nombre}}  <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span></td>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
 
