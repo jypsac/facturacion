@@ -44,11 +44,11 @@
                                 <th>Factura</th>
                                 <th>Ver</th>
                                 {{-- <th>Editar</th> --}}
-                                {{-- <th>Anular</th> --}}
+                                <th>Anular</th>
                             </tr>
                         </thead>
                     <tbody>
-                        @foreach($kardex_entradas as $kardex_entrada)
+                        @foreach($kardex_entradas as $value => $kardex_entrada)
                             <tr class="gradeX">
                                 <td>{{$kardex_entrada->id}}</td>
                                 <td>{{$kardex_entrada->motivo->nombre}}</td>
@@ -58,15 +58,19 @@
                                 <td>{{$kardex_entrada->factura}}</td>
                                 <td><center><a href="{{ route('kardex-entrada.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 {{-- <td><center><a href="{{ route('kardex-entrada.edit', $kardex_entrada->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
-                                {{-- <td>
+                                <td>
                                     <center>
+                                        @if($array_final[$value]==1)
                                         <form action="{{ route('kardex-entrada.destroy', $kardex_entrada->id)}}" method="POST">
                                             @csrf
                                             @method('delete')
-                                            <button type="submit" class="btn btn-s-m btn-danger">Anular</button>
+                                            <button type="submit" class="btn btn-s-m btn-danger">Anular {{$array_final[$value]}}</button>
                                         </form>
+                                        @else
+                                        <button class="btn btn-s-m btn-danger">no se puede anular {{$array_final[$value]}}</button>
+                                        @endif
                                     </center>
-                                </td> --}}
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>

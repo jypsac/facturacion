@@ -24,11 +24,11 @@ class AddForeignKeyKardexEntradaRegistroTable extends Migration
             $table->integer('cantidad_inicial');
             $table->double('precio_nacional',10,2);
             $table->double('precio_extranjero',10,2);
-
             $table->integer('cantidad');
+            $table->double('cambio',10,2);
             $table->boolean('estado');
 
-            $table->timestamps();   
+            $table->timestamps();
         });
     }
 
