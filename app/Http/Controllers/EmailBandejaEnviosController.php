@@ -186,7 +186,7 @@ class EmailBandejaEnviosController extends Controller
        $sub_total=0;
        $end=0;
        $regla=$cotizacion->tipo;
-       
+
         $archivo=$name.$regla.$id.".pdf";
         $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco'));
 
@@ -221,7 +221,7 @@ class EmailBandejaEnviosController extends Controller
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome').;
-    
+
   }
 
   public function send(Request $request){
