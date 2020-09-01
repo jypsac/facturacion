@@ -138,7 +138,7 @@
                             Telefono : {{$guia_remision->user_personal->personal->telefono }}<br>
                             Celular : {{$guia_remision->user_personal->personal->celular }}<br>
                             Email : {{$guia_remision->user_personal->personal->email }}<br>
-                            Web : <br>
+                            Web : {{$empresa->pagina_web}}<br>
                         </div>
                         <div class="col-sm-3"></div>
                         <div class="col-sm-3"></div>

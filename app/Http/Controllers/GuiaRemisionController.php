@@ -149,7 +149,7 @@ class GuiaRemisionController extends Controller
     public function print($id){
         $guia_remision=Guia_remision::find($id);
         $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
-        $banco=Banco::all();
+        $banco=Banco::where('estado','0')->get();
         $empresa=Empresa::first();
 
         return view('transaccion.venta.guia_remision.print',compact('empresa','banco','guia_remision','guia_registro'));
@@ -159,7 +159,7 @@ class GuiaRemisionController extends Controller
     {
         $guia_remision=Guia_remision::find($id);
         $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
-        $banco=Banco::all();
+        $banco=Banco::where('estado','0')->get();
         $empresa=Empresa::first();
 
         return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision','guia_registro'));
@@ -195,7 +195,10 @@ class GuiaRemisionController extends Controller
      */
     public function destroy($id)
     {
-        //
+      $guia_remision= Guia_remision::find($id);
+        $guia_remision->estado_anulado='1';
+        $guia_remision->save();
+        return redirect()->route('guia_remision.index');
     }
 
     public function seleccionar()
