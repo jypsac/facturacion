@@ -3,59 +3,15 @@
 @section('title', 'Inventario Inicial')
 @section('breadcrumb', 'Inventario Inicial')
 @section('breadcrumb2', 'Inventario Inicial')
-@section('data-toggle', 'modal')
-@section('href_accion', '#modal-form')
+
+@section('href_accion', route('inventario-inicial.create'))
 @section('value_accion', 'Agregar')
 
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox ">
-                <div id="modal-form" class="modal fade" aria-hidden="true">
-                    <div class="modal-dialog">
-                        <div class="modal-content">
-                            <div class="modal-body">
-                                <div class="row">
-                                    <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
-                                        <form action="{{ route('inventario-inicial.create') }}"  enctype="multipart/form-data" method="get">
-                                        <p>Selecciona Almacen</p>
-                                            <div class="form-group">
-                                                <div class="form-group row"><label class="col-sm-2 col-form-label">Almacen:</label>
-                                                    <div class="col-sm-10">
-                                                        <select class="form-control m-b" name="almacen">
-                                                        @foreach($almacenes as $almacen)
-                                                        <option value="{{$almacen->id}}" >{{$almacen->nombre}}</option>
-                                                        @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
 
-                                        <p>Selecciona Clasificacion</p>
-                                            <div class="form-group">
-                                                <div class="form-group row"><label class="col-sm-2 col-form-label">Clasificaion:</label>
-                                                    <div class="col-sm-10">
-                                                        <select class="form-control m-b" name="clasificacion">
-                                                        @foreach($clasificaciones as $clasificacion)
-                                                        <option value="{{$clasificacion->id}}" >{{$clasificacion->descripcion}}</option>
-                                                        @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                            <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
-                                        </form>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-            </div>
-        </div>
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">
@@ -88,18 +44,18 @@
                                     <th>Provedor</th>
                                     <th>Almacen </th>
                                     <th>Ver</th>
-                                    
+
                                 </tr>
                             </thead>
                         <tbody>
                             @foreach($kardex_entradas as $kardex_entrada)
                             <tr class="gradeX">
-                                <td>{{$kardex_entrada->id}}</td> 
+                                <td>{{$kardex_entrada->id}}</td>
                                 <td>{{$kardex_entrada->motivo->nombre}}</td>
                                 <td>{{$kardex_entrada->provedor->empresa}}</td>
                                 <td>{{$kardex_entrada->almacen->nombre}}</td>
                                 <td><center><a href="{{ route('inventario-inicial.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                
+
                             </tr>
                         @endforeach
                         </tbody>
