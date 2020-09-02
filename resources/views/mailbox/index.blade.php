@@ -157,7 +157,7 @@
                             @if( isset($mailbox_files->archivo) )
                             <div class="file-box">
                                 <div class="file">
-                                    <a href="../storage/app/public/{{($mailbox_files->archivo) }}" download="{{$mailbox_files->archivo}}">
+                                    <a href="" download="{{$mailbox_files->archivo}}">
                                         <span class="corner"></span>
                                         <div class="icon">
                                             <i class="fa fa-file-pdf-o"></i>
