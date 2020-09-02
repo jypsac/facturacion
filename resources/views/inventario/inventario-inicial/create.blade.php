@@ -40,14 +40,21 @@
 					 	<div class="form-group  row">
                             <label class="col-sm-2 col-form-label">Motivos :</label>
 		                    <div class="col-sm-10">
-                                <input type="text" class="form-control" name="NN" value="Inventario Inicial" disabled>
+                                <input type="text" class="form-control"  value="Inventario Inicial" disabled>
                             </div>
 						</div>
-						
-                        {{-- Datos pasados de almacen y clasificacion --}}
-                        <input type="hidden" name="motivo" value="4" >
-                        <input type="hidden" name="almacen" value="{{$almacen}}">
-                        <input type="hidden" name="clasificacion" value="{{$clasificacion}}">
+
+                        <div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Almacen :</label>
+		                    <div class="col-sm-10">
+                                <select class="form-control" name='almacen' required>
+									@foreach($almacenes as $almacen)
+									<option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
+									@endforeach
+								</select>
+                            </div>
+						</div>
+
 
                         <div class="form-group  row">
                             <label class="col-sm-2 col-form-label">Provedor:</label>
@@ -55,6 +62,17 @@
                                 <select class="form-control" name='provedor' required>
 									@foreach($provedores as $provedor)
 									<option value="{{$provedor->id}}">{{$provedor->empresa}}</option>
+									@endforeach
+								</select>
+                            </div>
+						</div>
+
+						<div class="form-group  row">
+                            <label class="col-sm-2 col-form-label">Moneda:</label>
+		                    <div class="col-sm-10">
+                                <select class="form-control" name='moneda' required>
+									@foreach($monedas as $moneda)
+									<option value="{{$moneda->id}}">{{$moneda->nombre}}</option>
 									@endforeach
 								</select>
                             </div>
