@@ -98,7 +98,7 @@ class KardexEntradaController extends Controller
             'motivo' => ['required','exists:motivos,id'],
             'factura' => ['required'],
             'almacen' => ['required','exists:almacen,id'],
-            'clasificacion' => ['required','exists:categorias,id'],
+            // 'clasificacion' => ['required','exists:categorias,id'],
             'guia_remision' => ['required'],
             'provedor' => ['required','exists:provedores,id'],
             'moneda' => ['required','exists:monedas,id'],
@@ -152,7 +152,7 @@ class KardexEntradaController extends Controller
         $kardex_entrada->motivo_id=$request->get('motivo');
         $kardex_entrada->provedor_id=$request->get('provedor');
         $kardex_entrada->guia_remision=$request->get('guia_remision');
-        $kardex_entrada->categoria_id=$request->get('clasificacion');
+        $kardex_entrada->categoria_id='2';
         $kardex_entrada->factura=$request->get('factura');
         $kardex_entrada->almacen_id=$request->get('almacen');
         $kardex_entrada->moneda_id=$request->get('moneda');
@@ -186,7 +186,7 @@ class KardexEntradaController extends Controller
                     if($moneda_principal_id==$kardex_entrada_moneda_id){
                       $kardex_entrada_registro->precio_nacional=$request->get('precio')[$i];
                       $precio_nacional=$request->get('precio')[$i];
-                      $kardex_entrada_registro->precio_extranjero=$precio_nacional*$cambio->compra;
+                      $kardex_entrada_registro->precio_extranjero=$precio_nacional/$cambio->compra;
                       $kardex_entrada_registro->cambio=$cambio->compra;
                     }else{
                       $kardex_entrada_registro->precio_extranjero=$request->get('precio')[$i];
@@ -216,9 +216,11 @@ class KardexEntradaController extends Controller
     public function show($id)
     {
         $mi_empresa=Empresa::first();
+        $moneda_nacional=Moneda::where('id','1')->first();
+        $moneda_extranjera=Moneda::where('id','2')->first();
         $kardex_entradas=Kardex_entrada::find($id);
         $kardex_entradas_registros=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
-        return view('inventario.kardex.entrada.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa'));
+        return view('inventario.kardex.entrada.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera'));
     }
 
     /**

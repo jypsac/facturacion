@@ -165,11 +165,12 @@
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Categoria:</label>
 								<div class="col-sm-4">
-									<select class="form-control" name="clasificacion">
+									<input class="form-control" name="clasificacion" disabled="direccion" value="PRODUCTOS">
+									{{-- <select class="form-control" name="clasificacion">
 										@foreach($categorias as $categorias)
 										<option value="{{$categorias->id}}">{{$categorias->descripcion}}</option>
 										@endforeach
-									</select>
+									</select> --}}
 								</div>
 
 							<label class="col-sm-2 col-form-label" >Moneda:</label>

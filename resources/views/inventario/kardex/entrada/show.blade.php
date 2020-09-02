@@ -3,27 +3,27 @@
 @section('title', 'Ver')
 @section('breadcrumb', 'kardex_entradas-Ver')
 @section('breadcrumb2', 'kardex_entradas-Ver')
-@section('href_accion', route('kardex-entrada.index') ) 
+@section('href_accion', route('kardex-entrada.index') )
 @section('value_accion', 'Atras')
 
 @section('content')
-    
+
             <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
             <div class="col-lg-12">
                     <div class="ibox-content p-xl">
                             <div class="row">
                                 <div class="col-sm-6">
-                                    
+
                                     <address class="col-sm-6">
                                         <h5>De:</h5>
                                         <i class=" fa fa-user">:</i><strong > {{$kardex_entradas->provedor->empresa}}</strong><br>
                                         <i class=" fa fa-building">:</i> {{$kardex_entradas->provedor->direccion}}<br>
                                         <i class="fa fa-phone">:</i> {{$kardex_entradas->provedor->celular_provedor}}
                                     </address>
-                                </div> 
+                                </div>
                                 <div class="col-sm-3">
-                                </div> 
+                                </div>
 
                                 <div class="col-sm-3 text-right">
                                     <h4>Guia Entrada</h4>
@@ -41,24 +41,29 @@
                             </div>
 
                             <div class="table-responsive m-t">
-                                <table class="table invoice-table">
+                                <table class="table invoice-table" >
                                     <thead>
                                     <tr>
                                         <th>Producto</th>
                                         <th>Cantidad</th>
-                                        <th>Precio unitario</th>
-                                        <th style="background: #f3f3f4">Precio Total</th>
+                                        <th>Precio Nacional</th>
+                                        <th>Precio Dolar</th>
+                                        <th style="background: #f3f3f4">Precio Total {{$moneda_nacional->simbolo}}. </th>
+                                        <th style="background: #f3f3f4">Precio Total {{$moneda_extranjera->simbolo}}</th>
                                     </tr>
                                     </thead>
                                     <tbody>
                                      @foreach($kardex_entradas_registros as $kardex_entradas_registro)
                                     <tr>
-                                        <td><strong>{{$kardex_entradas_registro->producto->nombre}}</strong><br>
+                                        <td><strong>{{$kardex_entradas_registro->producto->nombre}}/
+                                        {{$kardex_entradas_registro->producto->codigo_original}}</strong><br>
                                             <small>{{$kardex_entradas_registro->producto->descripcion}}</small>
                                         </td>
                                         <td>{{$kardex_entradas_registro->cantidad_inicial}}</td>
-                                        <td>{{$kardex_entradas_registro->precio}}</td>
-                                        <td style="background: #f3f3f4">{{$kardex_entradas_registro->precio * $kardex_entradas_registro->cantidad_inicial}}</td>
+                                        <td>{{$moneda_nacional->simbolo}} {{$kardex_entradas_registro->precio_nacional}}</td>
+                                        <td>{{$moneda_extranjera->simbolo}} {{$kardex_entradas_registro->precio_extranjero}}</td>
+                                        <td style="background: #f3f3f4">{{$moneda_nacional->simbolo}}.{{$kardex_entradas_registro->precio_nacional * $kardex_entradas_registro->cantidad_inicial}}</td>
+                                        <td style="background: #f3f3f4">{{$moneda_extranjera->simbolo}}{{$moneda_nacional->precio_extranjero}}{{$kardex_entradas_registro->precio_extranjero * $kardex_entradas_registro->cantidad_inicial}}</td>
                                     </tr>
                                       @endforeach
                                     </tbody>
@@ -89,13 +94,13 @@
                         @endforeach --}}
                             {{--  --}}
 
-                           
-                                
+
+
                         </div>
                 </div>
             </div>
         </div>
-       
+
 
 
         <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
