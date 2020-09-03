@@ -48,11 +48,12 @@ class TipoCambioController extends Controller
         $cambio=new TipoCambio;
         $cambio->compra=$request->get('compra');
         $cambio->venta=$request->get('venta');
+        $cambio->paralelo=$request->get('paralelo');
         $cambio->fecha=Carbon::now()->format('Y-m-d');
         $cambio->save();
 
         return redirect()->route('tipo_cambio.index');
-        
+
     }
 
     /**

@@ -39,6 +39,7 @@
                                                 <th>Nr</th>
                                                 <th>Compra</th>
                                                 <th>Venta</th>
+                                                <th>Paralelo</th>
                                                 <th>Fecha de creacion</th>
                                                 <th>Actualizar</th>
                                             </tr>
@@ -49,6 +50,7 @@
                                                 <td>{{$tipo_cambios->id}}</td>
                                                 <td>{{$tipo_cambios->compra}}</td>
                                                 <td>{{$tipo_cambios->venta}}</td>
+                                                <td>{{$tipo_cambios->paralelo}}</td>
                                                 <td>{{$tipo_cambios->created_at}}</td>
                                                 <td>--</td>
                                             </tr>

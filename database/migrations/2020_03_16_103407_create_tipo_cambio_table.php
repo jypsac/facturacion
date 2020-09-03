@@ -17,6 +17,7 @@ class CreateTipoCambioTable extends Migration
             $table->bigIncrements('id');
             $table->decimal('compra');
             $table->decimal('venta');
+            $table->decimal('paralelo');
             $table->date('fecha');
             $table->timestamps();
         });
