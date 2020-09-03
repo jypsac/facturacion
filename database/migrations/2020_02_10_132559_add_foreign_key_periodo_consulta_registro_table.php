@@ -22,7 +22,8 @@ class AddForeignKeyPeriodoConsultaRegistroTable extends Migration
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
 
             $table->integer('cantidad_inicial');
-            $table->double('precio');
+            $table->double('precio_nacional');
+            $table->double('precio_extranjero');
             $table->integer('cantidad');
             $table->timestamps();
         });

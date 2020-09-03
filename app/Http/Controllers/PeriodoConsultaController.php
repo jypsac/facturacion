@@ -51,7 +51,7 @@ class PeriodoConsultaController extends Controller
         $registro->informacion=$request->input('informacion');
         $registro->save();
 
-        //Ubicacion de alamacen+
+        //Ubicacion de alamacen
         $kardex_entrada_almacen=kardex_entrada::where('almacen_id',$registro->almacen_id)->where('categoria_id',$registro->categoria_id)->get();
 
         foreach($kardex_entrada_almacen as $kardex_entrada_alm){
@@ -61,7 +61,8 @@ class PeriodoConsultaController extends Controller
                 $register->periodo_consulta_id=$registro->id;
                 $register->producto_id=$periodo->producto_id;
                 $register->cantidad_inicial=$periodo->cantidad_inicial;
-                $register->precio=$periodo->precio;
+                $register->precio_nacional=$periodo->precio_nacional;
+                $register->precio_extranjero=$periodo->precio_extranjero;
                 $register->cantidad=$periodo->cantidad;
                 $register->save();
             }
@@ -87,7 +88,7 @@ class PeriodoConsultaController extends Controller
         //     if($periodo_consulta_registros[$i]->producto_id =){
         //         $array[]= $periodo_consulta_registros[$i]->producto_id , $periodo_consulta_registros[$i]->cantidad;
         //     }
-        // }   
+        // }
 
         return view('inventario.periodo-consulta.show',compact('periodo_consulta','periodo_consulta_registros'));
         // return  var_dump($array);

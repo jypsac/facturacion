@@ -65,7 +65,8 @@
                         <th scope="col">ID</th>
                         <th scope="col">Producto</th>
                         <th scope="col">Cantidad Inicial</th>
-                        <th scope="col">Precio</th>
+                        <th scope="col">Precio nacional</th>
+                        <th scope="col">Precio extranjero</th>
                         <th scope="col">Cantidad</th>
                         {{-- <th scope="col">Nombre</th>
                         <th scope="col">Informacion</th>
@@ -80,7 +81,8 @@
                             <td>{{$periodo_consulta_registro->id}}</td>
                             <td>{{$periodo_consulta_registro->periodo_producto->nombre}}</td>
                             <td>{{$periodo_consulta_registro->cantidad_inicial}}</td>
-                            <td>{{$periodo_consulta_registro->precio}}</td>
+                            <td>{{$periodo_consulta_registro->precio_nacional}}</td>
+                            <td>{{$periodo_consulta_registro->precio_extranjero}}</td>
                             <td>{{$periodo_consulta_registro->cantidad}}</td>
                             {{-- <td>{{$periodo_consulta->nombre}}</td>
                             <td>{{$periodo_consulta->informacion}}</td>
