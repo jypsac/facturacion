@@ -39,8 +39,6 @@
                                                 <th>ID</th>
                                                 <th>codigo</th>
                                                 <th>Descripcion</th>
-                                                <th>EDITAR</th>
-                                                <th>Eliminar</th>
                                             </tr>
                                         </thead>
                                     <tbody>
@@ -49,17 +47,6 @@
                                                 <td>{{$categoria->id}}</td>
                                                 <td>{{$categoria->codigo}}</td>
                                                 <td>{{$categoria->descripcion}}</td>
-
-                                                <td><center><a href="{{ route('categoria.edit', $categoria->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
-                                                <td>
-                                                    <center>
-                                                        <form action="{{ route('categoria.destroy', $categoria->id)}}" method="POST">
-                                                            @csrf
-                                                            @method('delete')
-                                                            <button type="submit" class="btn btn-s-m btn-danger">Eliminar</button>
-                                                        </form>
-                                                    </center>
-                                                </td>
                                             </tr>
                                         @endforeach
                                     </tbody>

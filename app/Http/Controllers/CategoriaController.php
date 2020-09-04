@@ -65,8 +65,7 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-        $categoria=Categoria::find($id);
-        return view('maestro.catalogo.clasificacion.categoria.edit',compact('categoria'));
+       
     }
 
     /**
@@ -78,12 +77,7 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $categoria=Categoria::find($id);
-        $categoria->codigo=$request->get('codigo');
-        $categoria->descripcion=$request->get('descripcion');
-        $categoria->save();
-
-        return redirect()->route('categoria.index');
+        
     }
 
     /**
@@ -94,9 +88,6 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        $categoria=Categoria::findOrFail($id);
-        $categoria->delete();
-
-        return redirect()->route('categoria.index');
+        
     }
 }
