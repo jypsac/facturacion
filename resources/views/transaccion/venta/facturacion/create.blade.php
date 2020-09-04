@@ -151,7 +151,7 @@
         </div>
     </div>
 </div>
-<!-- Fin Modal Clieb¿nte -->
+<!-- Fin Modal Cliente -->
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -182,9 +182,7 @@
                         {{-- Cabecera --}}
                         <div class="row">
                             <div class="col-sm-4 text-left" align="left">
-
                                 <address class="col-sm-4" align="left">
-
                                     <img src="{{asset('img/logos/logo.png')}}" alt="" width="300px">
                                 </address>
                             </div>
@@ -198,7 +196,6 @@
                                         <h2>FACTURA ELECTRONICA</h2>
                                         <h5>FC-000{{$suma}}</h5>
                                     </center>
-
                                 </div>
                             </div>
                         </div><br>
@@ -213,171 +210,167 @@
                                             @foreach($clientes as $cliente)
                                             <option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
                                             @endforeach
-                                        </datalist></td>
-
-                                        <td>Comisionista</td>
-                                        <td>:</td>
-                                        <td> <input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="Sin comision - 0" onkeyup="comision()" autocomplete="off">
+                                        </datalist>
+                                    </td>
+                                    <td>Comisionista</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="Sin comision - 0" onkeyup="comision()" autocomplete="off">
                                             <datalist id="browsersc2" >
                                                 <option id="">Sin comision - 0 </option>
                                                 @foreach($p_venta as $p_ventas)
                                                 <option id="{{$p_ventas->id}}">{{$p_ventas->cod_vendedor}} - {{$p_ventas->personal->personal_l->nombres}} - <span style="color: red">{{$p_ventas->comision}}</span></option>
                                                 @endforeach
                                             </datalist>
-                                        </td>
-                                    </tr>
-                                    <tr>
-                                        <td>Orden de compra</td>
-                                        <td>:</td>
-                                        <td><input type="text" class="form-control m-b" name="orden_compra" required  autocomplete="off" value="0"></td>
-
-                                        <td>Forma de pago</td>
-                                        <td>:</td>
-                                        <td><select class="form-control" name="forma_pago" required="required">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Orden de compra</td>
+                                    <td>:</td>
+                                    <td><input type="text" class="form-control m-b" name="orden_compra" required  autocomplete="off" value="0"></td>
+                                    <td>Forma de pago</td>
+                                    <td>:</td>
+                                    <td>
+                                        <select class="form-control" name="forma_pago" required="required">
                                             @foreach($forma_pagos as $forma_pago)
                                             <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
                                             @endforeach
-                                            <select></td>
-                                            </tr>
-                                            <tr>
-                                                <td>Vendedor</td>
-                                                <td>:</td>
-                                                <td><input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}"></td>
+                                        <select>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Vendedor</td>
+                                    <td>:</td>
+                                    <td><input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}"></td>
+                                    <td>Guia remision</td>
+                                    <td>:</td>
+                                    <td><input type="text" class="form-control" value="0" name="guia_r"></td>
+                                </tr>
+                                <tr>
+                                    <td>Moneda</td>
+                                    <td>:</td>
+                                    <td>
+                                        <select class="form-control" name="moneda" required="required">
+                                            @foreach($moneda as $monedas)
+                                                <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
+                                             @endforeach
+                                        <select>
+                                    </td>
+                                    <td>Fecha</td>
+                                    <td>:</td>
+                                    <td><input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly"></td>
+                                </tr>
+                                <tr>
+                                    <td>Observacion</td>
+                                    <td>:</td>
+                                    <td colspan="4">
+                                        <textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
+                                    </td>
+                                </tr>             
+                            </tbody>
+                        </table>
 
-                                                <td>Guia remision</td>
-                                                <td>:</td>
-                                                <td> <input type="text" class="form-control" value="0" name="guia_r"></td>
-
-
-                                            </tr>
-                                            <tr>
-                                                <td>Moneda</td>
-                                                <td>:</td>
-                                                <td><select class="form-control" name="moneda" required="required">
-                                                    @foreach($moneda as $monedas)
-                                                    <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
+                        {{--FIn Cabecera --}}
+                        @if($categoria=='servicio')
+                        <div class="table-responsive">
+                            <table cellspacing="0" class="table tablese  ">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+                                        <th style="width: 400px;font-size: 13px">Articulo</th>
+                                        <th style="width: 100px;font-size: 13px">Precio</th>
+                                        <th style="width: 100px;font-size: 13px">Descuento</th>
+                                        <th style="width: 100px;font-size: 13px">Precio U desc</th>
+                                        <th style="width: 100px;font-size: 13px">PU. Com.</th>
+                                        <th style="width: 100px;font-size: 13px">Total</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <tr>
+                                        <td><input type='checkbox' class="case"></td>
+                                        <td>
+                                            <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)" onclick="Clear(this);" autocomplete="off">
+                                                <datalist id="browsers2" >
+                                                    @foreach($servicios as $index => $servicio)
+                                                        <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 0 0 {{$servicio->descuento}} {{$array[$index]}}">
                                                     @endforeach
-                                                    <select></td>
-
-                                                        <td>Fecha</td>
-                                                        <td>:</td>
-                                                        <td><input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly"></td>
-                                                    </tr>
-                                                    <tr>
-
-                                                        <td>Observacion</td>
-                                                        <td>:</td>
-                                                        <td colspan="4"><textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
-                                                        </td>
-                                                    </tr>
-                                                </div>
-
-
-                                            </tbody>
-                                        </table>
-
-                                        {{--FIn Cabecera --}}
-                                        @if($categoria=='servicio')
-                                        <div class="table-responsive">
-                                            <table   cellspacing="0" class="table tablese  ">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-                                                        <th style="width: 400px;font-size: 13px">Articulo</th>
-                                                        <th style="width: 100px;font-size: 13px">Precio</th>
-                                                        <th style="width: 100px;font-size: 13px">Descuento</th>
-                                                        <th style="width: 100px;font-size: 13px">Precio U desc</th>
-                                                        <th style="width: 100px;font-size: 13px">PU. Com.</th>
-                                                        <th style="width: 100px;font-size: 13px">Total</th>
-                                                    </tr>
-                                                </thead>
-                                                <tbody>
-                                                    <tr>
-                                                        <td>
-                                                            <input type='checkbox' class="case">
-                                                        </td>
-                                                        <td>
-                                                            <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)" onclick="Clear(this);" autocomplete="off">
-                                                            <datalist id="browsers2" >
-                                                                @foreach($servicios as $index => $servicio)
-                                                                <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 0 0 {{$servicio->descuento}} {{$array[$index]}}">
-                                                                    @endforeach
-                                                                </datalist>
-                                                            </td>
-                                                            <td>
-                                                                <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
-                                                            </td>
-                                                            <td>
-                                                                {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
-                                                                <div style="position: relative; " > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
-                                                                </div>
-                                                                <div class="div_check" >
-                                                                 <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
-                                                             </div>
-                                                         </td>
-                                                         <td>
-                                                            <input type='text' id='descuento_unitario0' name='descuento_unitario[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
-                                                        </td>
-                                                        <td>
-                                                            <input type='text' id='comision0' name='comision[]' readonly="readonly" class="form-control" required  autocomplete="off" />
-                                                        </td>
-                                                        <td>
-                                                            <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
-                                                        </td>
-                                                        <span id="spTotal"></span>
-                                                    </tr>
-
-                                                </tbody><br>
-                                                <tbody>
-                                                    <tr style="background-color: #f5f5f500;" align="center">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>Subtotal :</td>
-                                                        <td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
-                                                    </tr>
-                                                    <tr style="background-color: #f5f5f500;" align="center">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>IGV :</td>
-                                                        <td><input id='igv'  disabled="disabled" class="form-control" required /></td>
-                                                    </tr>
-                                                    <tr  align="center">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>Total :</td>
-                                                        <td><input id='total_final'  disabled="disabled" class="form-control" required /></td>
-                                                    </tr>
-                                                </tbody>
-                                            </table>
-                                        </div>
-                                        <input type="text" name="facturacion" value="servicio">
-                                        <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
-                                        <button type="button" class='addmores btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                                        <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
-                                        @elseif($categoria=='producto')
-                                        <div class="table-responsive">
-                                            <table   cellspacing="0" class="table tables  " style="width: 1100px">
-                                                <thead>
-                                                    <tr>
-                                                        <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-                                                        <th style="width: 400px">Articulo</th>
-                                                        <th>Stock</th>
-                                                        <th>Cantidad</th>
-                                                        <th>Precio</th>
-                                                        <th>Dcto</th>
-                                                        <th>PU. Dcto.</th>
-                                                        <th>PU. Com.</th>
-                                                        <th>Total</th>
-                                                    </tr>
+                                                </datalist>
+                                        </td>
+                                        <td>
+                                            <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
+                                        </td>
+                                        <td>
+                                            {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
+                                            <div style="position: relative; "> 
+                                                <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
+                                            </div>
+                                            <div class="div_check" >
+                                                <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type='text' id='descuento_unitario0' name='descuento_unitario[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
+                                        </td>
+                                        <td>
+                                            <input type='text' id='comision0' name='comision[]' readonly="readonly" class="form-control" required  autocomplete="off" />
+                                        </td>
+                                        <td>
+                                            <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
+                                        </td>
+                                        <span id="spTotal"></span>
+                                    </tr>
+                                </tbody>
+                                <br>
+                                <tbody>
+                                    <tr style="background-color: #f5f5f500;" align="center">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Subtotal :</td>
+                                        <td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
+                                    </tr>
+                                    <tr style="background-color: #f5f5f500;" align="center">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>IGV :</td>
+                                        <td><input id='igv'  disabled="disabled" class="form-control" required /></td>
+                                    </tr>
+                                    <tr align="center">
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td></td>
+                                        <td>Total :</td>
+                                        <td><input id='total_final'  disabled="disabled" class="form-control" required /></td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                            <input type="text" name="facturacion" value="servicio">
+                            <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
+                            <button type="button" class='addmores btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
+                            <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
+                        @elseif($categoria=='producto')
+                        <div class="table-responsive">
+                            <table cellspacing="0" class="table tables  " style="width: 1100px">
+                                <thead>
+                                    <tr>
+                                        <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+                                        <th style="width: 400px">Articulo</th>
+                                        <th>Stock</th>
+                                        <th>Cantidad</th>
+                                        <th>Precio</th>
+                                        <th>Dcto</th>
+                                        <th>PU. Dcto.</th>
+                                        <th>PU. Com.</th>
+                                        <th>Total</th>
+                                    </tr>
                                                 </thead>
                                                 <tbody>
                                                     <tr>
