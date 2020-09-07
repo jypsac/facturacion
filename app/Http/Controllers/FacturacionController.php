@@ -64,7 +64,7 @@ class FacturacionController extends Controller
         $suma=$personal_contador+1;
         $categoria='producto';
 
-        
+
         return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria'));
 
 
@@ -223,21 +223,23 @@ class FacturacionController extends Controller
         $check = $request->input('check_descuento');
         $count_check=count($check);
 
+//validacion dependiendo de la amoneda escogida
+
         if($count_articulo = $count_cantidad  = $count_check){
             for($i=0;$i<$count_articulo;$i++){
                 $facturacion_registro=new Facturacion_registro();
                 $facturacion_registro->facturacion_id=$facturacion->id;
                 $facturacion_registro->producto_id=$producto_id[$i];
                 $facturacion_registro->numero_serie=$request->get('numero_serie')[$i];
-                
+
                 $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
-                $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
-                $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')+$utilidad;
-                $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio');
+                $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
+                $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
                 // $array_pu_desc=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio');
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $desc_comprobacion=$request->get('check_descuento')[$i];
-                $facturacion_registro->precio=$array;
+                $facturacion_registro->precio_nacional=$array;
                 $facturacion_registro->stock=$stock;
                 $facturacion_registro->cantidad=$request->get('cantidad')[$i];
                 $facturacion_registro->descuento=$request->get('check_descuento')[$i];
