@@ -242,13 +242,14 @@
                                     <li><a href="{{route('servicios.index')}}">Servicios</a></li>
                                     {{-- <li><a href="{{route('servicios.index')}}">Servicios</a></li> --}}
                                     {{-- <li><a href="{{route('promedios.index')}}">Promedios</a></li> --}}
-                                    @can('maestro-catalogo-clasificacion')
+                                   {{--  @can('maestro-catalogo-clasificacion')
                                     <li><a href="{{route('Clasificacion')}}">Clasificacion</a></li>
-                                    @endcan
+                                    @endcan --}}
                                 </ul>
                             </li>
                             @endcan
-                            @can('maestro-tablas_generales')
+
+                           {{--  @can('maestro-tablas_generales')
                             <li>
                                 <a href="#">Tablas generales</a>
                                 <ul class="nav nav-third-level">
@@ -257,16 +258,16 @@
                                     @endcan
                                 </ul>
                             </li>
-                            @endcan
+                            @endcan --}}
                             @can('maestro-almacenes.index')
                             <li><a href="{{ route('almacen.index') }}">Almacenes</a></li>
                             @endcan
                             @can('maestro-usuarios.index')
                             <li><a href="{{route('usuario.index')}}">Usuarios</a></li>
                             @endcan
-                            @can('maestro-monedas.index')
+                           {{--  @can('maestro-monedas.index')
                             <li><a href="{{route('moneda.index')}}">Monedas</a></li>
-                            @endcan
+                            @endcan --}}
                             {{-- <li><a href="{{route('documento.index')}}">Tipo de Documentos</a></li> --}}
                             @can('maestro-tipo_de_cambio.index')
                             <li><a href="{{route('tipo_cambio.index')}}">Tipo de Cambio</a></li>
@@ -278,12 +279,15 @@
                                     @can('maestro-configuracion_general.mi_empresa.index')
                                     <li><a href="{{route('empresa.index')}}">Mi Empresa</a></li>
                                     @endcan
-                                    @can('maestro-configuracion_general.unidad_de_medida.index')
+                                    @can('maestro-catalogo-clasificacion')
+                                    <li><a href="{{route('Clasificacion')}}">Configuracion del Sistema</a></li>
+                                    @endcan
+                                   {{--  @can('maestro-configuracion_general.unidad_de_medida.index')
                                     <li><a href="{{route('unidad-medida.index')}}">Unidad de Medida</a></li>
-                                    @endcan
-                                    @can('maestro-configuracion_general.igv.index')
+                                    @endcan --}}
+                                   {{--  @can('maestro-configuracion_general.igv.index')
                                     <li><a href="{{route('igv.index')}}">IGV</a></li>
-                                    @endcan
+                                    @endcan --}}
                                 </ul>
                             </li>
                             @endcan
