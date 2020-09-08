@@ -26,6 +26,7 @@ class AddForeignKeyCotizacionFacturaRegistroTable extends Migration
             $table->double('precio_nacional',17,2);
             $table->double('precio_extranjero',17,2);
             $table->integer('cantidad');
+            $table->double('cambio',17,2);
             $table->integer('descuento');
             $table->double('precio_unitario_desc',17,2);
             $table->integer('comision');
