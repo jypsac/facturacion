@@ -46,7 +46,7 @@ class PersonalController extends Controller
             $image->move(public_path().'/profile/images',$name);
         }
         else{
-            $name="perfil.svg"; 
+            $name="perfil.svg";
         }
         // Personal::create(request()->all());
         $personal=new Personal;
@@ -68,7 +68,7 @@ class PersonalController extends Controller
         $personal->estado_trabajador_laboral='Activo';
         $personal->foto=$name;
         $personal->save();
-        return redirect()->route('personal.show', $personal->id); 
+        return redirect()->route('personal.show', $personal->id);
 
     }
 
@@ -151,8 +151,8 @@ class PersonalController extends Controller
             $personal->save();
         }
         // return redirect()->route('personal.index');
-        return redirect()->route('personal.show', $personal->id); 
-        
+        return redirect()->route('personal.show', $personal->id);
+
     }
 
     /**

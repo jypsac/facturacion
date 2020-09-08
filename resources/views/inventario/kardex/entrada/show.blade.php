@@ -14,7 +14,6 @@
                     <div class="ibox-content p-xl">
                             <div class="row">
                                 <div class="col-sm-6">
-
                                     <address class="col-sm-6">
                                         <h5>De:</h5>
                                         <i class=" fa fa-user">:</i><strong > {{$kardex_entradas->provedor->empresa}}</strong><br>
@@ -67,33 +66,8 @@
                                     </tr>
                                       @endforeach
                                     </tbody>
-                                </table>
-                            </div><!-- /table-responsive -->
-
-                            {{--  --}}
-                            {{--  @foreach($kardex_entradas_registros as $kardex_entradas_registro)
-                            <tr class="gradeX">
-                                <td>{{$kardex_entradas_registro->id}}</td>
-                                <td>{{$kardex_entrada->motivo}}</td>
-                                <td>{{$kardex_entrada->provedor->empresa}}</td>
-                                <td>{{$kardex_entrada->almacen->nombre}}</td>
-                                <td>{{$kardex_entrada->guia_remision}}</td>
-                                <td>{{$kardex_entrada->factura}}</td>
-                                <td><center><a href="{{ route('kardex-entrada.show', $kardex_entrada->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                <td><center><a href="{{ route('kardex-entrada.edit', $kardex_entrada->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
-                                <td>
-                                    <center>
-                                        <form action="{{ route('kardex-entrada.destroy', $kardex_entrada->id)}}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-s-m btn-danger">Anular</button>
-                                        </form>
-                                    </center>
-                                </td>
-                            </tr>
-                        @endforeach --}}
-                            {{--  --}}
-
+                                </table><p aling="right"><b>Nota:</b> Guia Emitada en {{$kardex_entradas->moneda->nombre}}</p>
+                            </div>
 
 
                         </div>

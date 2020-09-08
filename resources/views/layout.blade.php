@@ -89,159 +89,159 @@
                                     @can('transacciones-ventas-cotizaciones.index')
                                     {{-- <li><a href="{{route('cotizacion.index')}}">Cotizaciones</a></li> --}}
                                     <li><a href="#"><span  class="nav-label">Cotizaciones</span></a>
-                                    <ul class="nav nav-second-level collapse">
-                                        <li><a href="{{route('cotizacion.index')}}"  style="padding-left: 80px;">C.Productos</a></li>
-                                        <li><a href="{{route('cotizacion_servicio.index')}}"  style="padding-left: 80px;">C.Servicios</a></li>
-                                    </ul></li>
-                                    @endcan
-                                    {{-- <li><a href="{{route('credito.index')}}">Credito</a></li> --}}
-                                    {{-- <li><a href="{{route('debito.index')}}">Debito</a></li> --}}
-                                    @can('transacciones-ventas-facturacion.index')
-                                    <li><a href="{{route('facturacion.index')}}">Facturacion</a></li>
-                                    @endcan
-                                    @can('transacciones-ventas-boleta.index')
-                                    <li><a href="{{route('boleta.index')}}">Boleta</a></li>
-                                    @endcan
-                                    @can('transacciones-ventas-guia_remision.index')
-                                    <li><a href="{{route('guia_remision.index')}}">Guia Remision</a></li>
-                                    @endcan
-                                    {{-- <li><a href="{{route('guia.index')}}">Guias</a></li> --}}
-                                    {{-- <li><a href="{{route('pedidos.index')}}">Pedidos</a></li> --}}
-                                </ul>
-                            </li>
-                            @endcan
-                            {{-- <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li> --}}
-                            @can('transacciones-garantias')
-                            <li>
-                                <a href="#">Garantias</a>
-                                <ul class="nav nav-third-level">
-                                    @can('transacciones-garantias-guias_ingreso.index')
-                                    <li><a href="{{route('garantia_guia_ingreso.index')}}">Guias Ingreso</a></li>
-                                    @endcan
-                                    @can('transacciones-garantias-guias_egreso.index')
-                                    <li><a href="{{route('garantia_guia_egreso.index')}}">Guia Egreso</a></li>
-                                    @endcan
-                                    @can('transacciones-garantias-informe_tecnico.index')
-                                    <li><a href="{{route('garantia_informe_tecnico.index')}}">Informe Tecnico</a></li>
-                                    @endcan
-                                </ul>
-                            </li>
-                            @endcan
-                        </ul>
-                    </li>
-                    @endcan
-                    @can('inventario')
-                    <li>
-                        <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Inventario</span></a>
-                        <ul class="nav nav-second-level collapse">
-                            @can('inventario-productos_kardex')
-                            <li>
-                                <a href="#">Productos Kardex</a>
-                                <ul class="nav nav-third-level">
-                                    @can('inventario-productos_kardex-entrada_producto.index')
-                                    <li><a href="{{route('kardex-entrada.index')}}">Entrada Producto</a></li>
-                                    @endcan
-                                    @can('inventario-productos_kardex-salida_producto.index')
-                                    <li><a href="{{route('kardex-salida.index')}}">Salida Producto</a></li>
-                                    @endcan
-                                </ul>
-                            </li>
-                            @endcan
-                            {{-- <li><a href="{{route('pagados.index')}}">Pagados</a></li> --}}
-                            @can('inventario-productos-inventario_inicial.index')
-                            <li><a href="{{route('inventario-inicial.index')}}">Inventario Inicial</a></li>
-                            @endcan
-                            @can('inventario-toma_de_inventario.index')
-                            <li><a href="{{route('periodo-consulta.index')}}">Toma de Inventario</a></li><!-- Periodo Consulta -->
-                            @endcan
-                        </ul>
-                    </li>
-                    @endcan
-                    @can('planilla')
-                    <li>
-                        <a href="#"><i class="fa fa-file-archive-o"></i> <span class="nav-label">Planilla</span></a>
-                        <ul class="nav nav-second-level collapse">
-                            @can('planilla-datos_generales.index')
-                            <li><a href="{{route('personal.index')}}">Datos Generales</a></li>
-                            @endcan
-                            {{-- <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li> --}}
-                            {{-- <li><a href="{{route('horarios.index')}}">Horarios</a></li> --}}
-                            @can('planilla-vendedores.index')
-                            <li><a href="{{route('vendedores.index')}}">Vendedores</a></li>
-                            @endcan
-                        </ul>
-                    </li>
-                    @endcan
-                    @can('consultas')
-                    <li>
-                        <a href="#"><i class="fa fa-inbox"></i> <span class="nav-label">Consultas</span></a>
-                        <ul class="nav nav-second-level collapse">
-                            {{-- <li><a href="{{route('venta.index')}}">Ventas</a></li> --}}
-                            {{-- <li><a href="{{route('compra.index')}}">Compras</a></li> --}}
-                            {{-- <li><a href="#">Almacen</a></li> --}}
-                            @can('consultas-garantias')
-                            <li>
-                                <a href="#">Garantias</a>
-                                <ul class="nav nav-third-level">
-                                    @can('consultas-garantias-guia_ingreso.index')
-                                    <li><a href="{{route('consultas.garantias.guias_ingreso')}}">Guia Ingreso</a></li>
-                                    @endcan
-                                    @can('consultas-garantias-guia_egreso.index')
-                                    <li><a href="{{route('consultas.garantias.guias_egreso')}}">Guia Egreso</a></li>
-                                    @endcan
-                                    @can('consultas-garantias-informe_tecnico.index')
-                                    <li><a href="{{route('consultas.garantias.informe_tecnico')}}">Informe Tecnico</a></li>
-                                    @endcan
-                                </ul>
-                            </li>
-                            @endcan
-                        </ul>
-                    </li>
-                    @endcan
-                    <li>
-                        <a href="#"><i class="fa fa-bolt"></i> <span class="nav-label">facturacion Electronica </span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="{{route('facturacion_electronica.index')}}">Facturas</a></li>
-                            <li><a href="#">Boletas</a></li>
-                            <li><a href="#">Resumen diario</a></li>
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
-                        <ul class="nav nav-second-level collapse">
-                            <li><a href="{{route('email.index')}}">Inbox</a></li>
-                            <li><a href="{{route('configuracion_email.index')}}">Configuracion</a></li>
+                                        <ul class="nav nav-second-level collapse">
+                                            <li><a href="{{route('cotizacion.index')}}"  style="padding-left: 80px;">C.Productos</a></li>
+                                            <li><a href="{{route('cotizacion_servicio.index')}}"  style="padding-left: 80px;">C.Servicios</a></li>
+                                        </ul></li>
+                                        @endcan
+                                        {{-- <li><a href="{{route('credito.index')}}">Credito</a></li> --}}
+                                        {{-- <li><a href="{{route('debito.index')}}">Debito</a></li> --}}
+                                        @can('transacciones-ventas-facturacion.index')
+                                        <li><a href="{{route('facturacion.index')}}">Facturacion</a></li>
+                                        @endcan
+                                        @can('transacciones-ventas-boleta.index')
+                                        <li><a href="{{route('boleta.index')}}">Boleta</a></li>
+                                        @endcan
+                                        @can('transacciones-ventas-guia_remision.index')
+                                        <li><a href="{{route('guia_remision.index')}}">Guia Remision</a></li>
+                                        @endcan
+                                        {{-- <li><a href="{{route('guia.index')}}">Guias</a></li> --}}
+                                        {{-- <li><a href="{{route('pedidos.index')}}">Pedidos</a></li> --}}
+                                    </ul>
+                                </li>
+                                @endcan
+                                {{-- <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li> --}}
+                                @can('transacciones-garantias')
+                                <li>
+                                    <a href="#">Garantias</a>
+                                    <ul class="nav nav-third-level">
+                                        @can('transacciones-garantias-guias_ingreso.index')
+                                        <li><a href="{{route('garantia_guia_ingreso.index')}}">Guias Ingreso</a></li>
+                                        @endcan
+                                        @can('transacciones-garantias-guias_egreso.index')
+                                        <li><a href="{{route('garantia_guia_egreso.index')}}">Guia Egreso</a></li>
+                                        @endcan
+                                        @can('transacciones-garantias-informe_tecnico.index')
+                                        <li><a href="{{route('garantia_informe_tecnico.index')}}">Informe Tecnico</a></li>
+                                        @endcan
+                                    </ul>
+                                </li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
+                        @can('inventario')
+                        <li>
+                            <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Inventario</span></a>
+                            <ul class="nav nav-second-level collapse">
+                                @can('inventario-productos_kardex')
+                                <li>
+                                    <a href="#">Productos Kardex</a>
+                                    <ul class="nav nav-third-level">
+                                        @can('inventario-productos_kardex-entrada_producto.index')
+                                        <li><a href="{{route('kardex-entrada.index')}}">Entrada Producto</a></li>
+                                        @endcan
+                                        @can('inventario-productos_kardex-salida_producto.index')
+                                        <li><a href="{{route('kardex-salida.index')}}">Salida Producto</a></li>
+                                        @endcan
+                                    </ul>
+                                </li>
+                                @endcan
+                                {{-- <li><a href="{{route('pagados.index')}}">Pagados</a></li> --}}
+                                @can('inventario-productos-inventario_inicial.index')
+                                <li><a href="{{route('inventario-inicial.index')}}">Inventario Inicial</a></li>
+                                @endcan
+                                @can('inventario-toma_de_inventario.index')
+                                <li><a href="{{route('periodo-consulta.index')}}">Toma de Inventario</a></li><!-- Periodo Consulta -->
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
+                        @can('planilla')
+                        <li>
+                            <a href="#"><i class="fa fa-file-archive-o"></i> <span class="nav-label">Planilla</span></a>
+                            <ul class="nav nav-second-level collapse">
+                                @can('planilla-datos_generales.index')
+                                <li><a href="{{route('personal.index')}}">Datos Generales</a></li>
+                                @endcan
+                                {{-- <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li> --}}
+                                {{-- <li><a href="{{route('horarios.index')}}">Horarios</a></li> --}}
+                                @can('planilla-vendedores.index')
+                                <li><a href="{{route('vendedores.index')}}">Vendedores</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
+                        @can('consultas')
+                        <li>
+                            <a href="#"><i class="fa fa-inbox"></i> <span class="nav-label">Consultas</span></a>
+                            <ul class="nav nav-second-level collapse">
+                                {{-- <li><a href="{{route('venta.index')}}">Ventas</a></li> --}}
+                                {{-- <li><a href="{{route('compra.index')}}">Compras</a></li> --}}
+                                {{-- <li><a href="#">Almacen</a></li> --}}
+                                @can('consultas-garantias')
+                                <li>
+                                    <a href="#">Garantias</a>
+                                    <ul class="nav nav-third-level">
+                                        @can('consultas-garantias-guia_ingreso.index')
+                                        <li><a href="{{route('consultas.garantias.guias_ingreso')}}">Guia Ingreso</a></li>
+                                        @endcan
+                                        @can('consultas-garantias-guia_egreso.index')
+                                        <li><a href="{{route('consultas.garantias.guias_egreso')}}">Guia Egreso</a></li>
+                                        @endcan
+                                        @can('consultas-garantias-informe_tecnico.index')
+                                        <li><a href="{{route('consultas.garantias.informe_tecnico')}}">Informe Tecnico</a></li>
+                                        @endcan
+                                    </ul>
+                                </li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
+                        <li>
+                            <a href="#"><i class="fa fa-bolt"></i> <span class="nav-label">facturacion Electronica </span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a href="{{route('facturacion_electronica.index')}}">Facturas</a></li>
+                                <li><a href="#">Boletas</a></li>
+                                <li><a href="#">Resumen diario</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
+                            <ul class="nav nav-second-level collapse">
+                                <li><a href="{{route('email.index')}}">Inbox</a></li>
+                                <li><a href="{{route('configuracion_email.index')}}">Configuracion</a></li>
 
-                        </ul>
-                    </li>
-                    @can('auxiliares')
-                    <li>
-                        <a href="#"><i class="fa fa-address-card  "></i> <span class="nav-label">Auxiliares</span></a>
-                        <ul class="nav nav-second-level collapse">
-                            @can('auxiliares-clientes.index')
-                            <li><a href="{{route('cliente.index')}}">Clientes</a></li>
-                            @endcan
-                            @can('auxiliares-provedores.index')
-                            <li><a href="{{route('provedor.index')}}">Provedores</a></li>
-                            @endcan
-                        </ul>
-                    </li>
-                    @endcan
-                    <li><a href="{{route('apariencia.index')}}"><i class="fa fa-paint-brush" aria-hidden="true"></i><span>Apariencia</span></a></li>
-                    @can('maestro')
-                    <li>
-                        <a href="#"><i class="fa fa-magic"></i> <span class="nav-label">Maestro</span></a>
-                        <ul class="nav nav-second-level collapse">
-                            @can('maestro-catalogo')
-                            <li>
-                                <a href="#">Catalogo</a>
-                                <ul class="nav nav-third-level">
-                                    @can('maestro-catalogo-productos.index')
-                                    <li><a href="{{route('productos.index')}}">Productos</a></li>
-                                    @endcan
-                                    <li><a href="{{route('servicios.index')}}">Servicios</a></li>
-                                    {{-- <li><a href="{{route('servicios.index')}}">Servicios</a></li> --}}
-                                    {{-- <li><a href="{{route('promedios.index')}}">Promedios</a></li> --}}
+                            </ul>
+                        </li>
+                        @can('auxiliares')
+                        <li>
+                            <a href="#"><i class="fa fa-address-card  "></i> <span class="nav-label">Auxiliares</span></a>
+                            <ul class="nav nav-second-level collapse">
+                                @can('auxiliares-clientes.index')
+                                <li><a href="{{route('cliente.index')}}">Clientes</a></li>
+                                @endcan
+                                @can('auxiliares-provedores.index')
+                                <li><a href="{{route('provedor.index')}}">Provedores</a></li>
+                                @endcan
+                            </ul>
+                        </li>
+                        @endcan
+                        <li><a href="{{route('apariencia.index')}}"><i class="fa fa-paint-brush" aria-hidden="true"></i><span>Apariencia</span></a></li>
+                        @can('maestro')
+                        <li>
+                            <a href="#"><i class="fa fa-magic"></i> <span class="nav-label">Maestro</span></a>
+                            <ul class="nav nav-second-level collapse">
+                                @can('maestro-catalogo')
+                                <li>
+                                    <a href="#">Catalogo</a>
+                                    <ul class="nav nav-third-level">
+                                        @can('maestro-catalogo-productos.index')
+                                        <li><a href="{{route('productos.index')}}">Productos</a></li>
+                                        @endcan
+                                        <li><a href="{{route('servicios.index')}}">Servicios</a></li>
+                                        {{-- <li><a href="{{route('servicios.index')}}">Servicios</a></li> --}}
+                                        {{-- <li><a href="{{route('promedios.index')}}">Promedios</a></li> --}}
                                    {{--  @can('maestro-catalogo-clasificacion')
                                     <li><a href="{{route('Clasificacion')}}">Clasificacion</a></li>
                                     @endcan --}}
@@ -272,49 +272,46 @@
                             @can('maestro-tipo_de_cambio.index')
                             <li><a href="{{route('tipo_cambio.index')}}">Tipo de Cambio</a></li>
                             @endcan
-                            @can('maestro-configuracion_general')
-                            <li>
-                                <a href="#">Configuracion General</a>
-                                <ul class="nav nav-third-level">
-                                    @can('maestro-configuracion_general.mi_empresa.index')
-                                    <li><a href="{{route('empresa.index')}}">Mi Empresa</a></li>
-                                    @endcan
-                                    @can('maestro-catalogo-clasificacion')
-                                    <li><a href="{{route('Clasificacion')}}">Configuracion del Sistema</a></li>
-                                    @endcan
-                                   {{--  @can('maestro-configuracion_general.unidad_de_medida.index')
-                                    <li><a href="{{route('unidad-medida.index')}}">Unidad de Medida</a></li>
-                                    @endcan --}}
-                                   {{--  @can('maestro-configuracion_general.igv.index')
-                                    <li><a href="{{route('igv.index')}}">IGV</a></li>
-                                    @endcan --}}
-                                </ul>
-                            </li>
-                            @endcan
+
                         </ul>
                     </li>
-                    @endcan
-                    <!-- MENU DESPELEGABLE -->
-                </ul>
-            </div>
-        </nav>
-        {{-- Menu Superior --}}
-        <div id="page-wrapper" class="gray-bg">
-            <div class="row border-bottom">
-                <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
-                    <div class="navbar-header">
-                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                        <form role="search" class="navbar-form-custom" action="search_results.html">
-                            <div class="form-group">
-                                <input type="text" placeholder="Buscar..." class="form-control" name="top-search" id="top-search">
-                            </div>
-                        </form>
-                    </div>
-                    <ul class="nav navbar-top-links navbar-right">
-                        <li>
-                            <span class="m-r-sm text-muted welcome-message">Bienvenido :@yield('nombres',auth()->user()->personal->nombres)</span>
-                        </li>
-                        <li>
+                    <li>
+                        <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">Configuracion General</span></a>
+                        <ul class="nav nav-second-level collapse">
+                           @can('maestro-catalogo-clasificacion')
+                           <li><a href="{{route('Clasificacion')}}">Configuracion del Sistema</a></li>
+                           @endcan
+                           {{-- <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li> --}}
+                           {{-- <li><a href="{{route('horarios.index')}}">Horarios</a></li> --}}
+                           @can('maestro-configuracion_general.mi_empresa.index')
+                           <li><a href="{{route('empresa.index')}}">Mi Empresa</a></li>
+                           @endcan
+                       </ul>
+                   </li>
+
+                   @endcan
+
+                   <!-- MENU DESPELEGABLE -->
+               </ul>
+           </div>
+       </nav>
+       {{-- Menu Superior --}}
+       <div id="page-wrapper" class="gray-bg">
+        <div class="row border-bottom">
+            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+                <div class="navbar-header">
+                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                    <form role="search" class="navbar-form-custom" action="search_results.html">
+                        <div class="form-group">
+                            <input type="text" placeholder="Buscar..." class="form-control" name="top-search" id="top-search">
+                        </div>
+                    </form>
+                </div>
+                <ul class="nav navbar-top-links navbar-right">
+                    <li>
+                        <span class="m-r-sm text-muted welcome-message">Bienvenido :@yield('nombres',auth()->user()->personal->nombres)</span>
+                    </li>
+                    <li>
                             {{-- <a href="{{route('home')}}">
                                 <i class="fa fa-barsign-out"></i> Cerrar Secciónes
                             </a> --}}

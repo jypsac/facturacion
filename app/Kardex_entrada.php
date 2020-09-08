@@ -12,7 +12,7 @@ class Kardex_entrada extends Model
 
     public function provedor(){
         return $this->belongsTo(Provedor::class,'provedor_id');
-    }  
+    }
 
     public function almacen(){
         return $this->belongsTo(Almacen::class,'almacen_id');
@@ -20,6 +20,9 @@ class Kardex_entrada extends Model
      public function motivo(){
         return $this->belongsTo(Motivo::class,'motivo_id');
     }
+    public function moneda(){
+        return $this->belongsTo(Moneda::class,'moneda_id');
+    }
 
-   
+
 }

@@ -12,7 +12,7 @@
 
 <div style="padding-top: 20px;padding-bottom: 50px">
 <div class="container" style=" padding-top: 30px; background: white;">
-      <div class="jumbotron" 
+      <div class="jumbotron"
       style="padding: 10px 40px ;
       background-image: url('https://www.iwantwallpaper.co.uk/images/muriva-bluff-embossed-brick-effect-wallpaper-j30309-p711-1303_image.jpg'); background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;"
        >
@@ -36,7 +36,7 @@
                             </div>
 
                  </th>
-                
+
              </tr>
              <td>
                  <a class="btn btn-lg btn-success" href="{{ route('personal.edit', $personales->id) }}" style="background-color: #1ab394; border-color: #1ab394"> <i class="fa fa-edit"></i></a>
@@ -47,13 +47,13 @@
 
                @else
                   <a class="btn btn-lg btn-success" href="{{ route('personal-datos-laborales.show', $personales->id) }}" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-eye"></i></a>
-              
-               
+
+
                @endif
              </td>
 
      </table>
-                        
+
       </div>
 
       <div class="row marketing">
@@ -61,8 +61,8 @@
           <h4>Fecha Nacimiento</h4>
           <p>{{$personales->fecha_nacimiento}} </p><hr>
 
-          <h4>Celular</h4>
-          <p>{{$personales->celular}} </p><hr>
+          <h4>Celular/Telefono</h4>
+          <p>{{$personales->celular}}  / {{$personales->telefono}} </p><hr>
 
 
           <h4>Genero</h4>
@@ -82,7 +82,7 @@
 
         </div>
         <div class="col-lg-6">
-         
+
 
           <h4>Documento Identificacion</h4>
           <p>{{$personales->documento_identificacion}} </p><hr>
@@ -90,25 +90,25 @@
           <h4>Estado Civil</h4>
           <p>{{$personales->estado_civil}} </p><hr>
 
-        
+
 
         </div>
         <div class="col-lg-6">
          <h4>Numero Documento</h4>
           <p>{{$personales->numero_documento}} </p><hr>
-          
+
 
           <h4>Direccion Domiciliaria</h4>
           <p>{{$personales->direccion}} </p><hr>
 
-          
+
         </div>
       </div>
 
 
-    </div> 
-    </div> 
-                              
+    </div>
+    </div>
+
         	<!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -123,5 +123,5 @@
 
     <!-- blueimp gallery -->
     <script src="{{ asset('js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
-  
+
 @endsection
