@@ -28,12 +28,13 @@ class AddForeignKeyFacturacionTable extends Migration
             $table->unsignedBigInteger('moneda_id')->nullable();
             $table->foreign('moneda_id')->references('id')->on('monedas')->onDelete('cascade');
 
+
             $table->unsignedBigInteger('forma_pago_id')->nullable();
             $table->foreign('forma_pago_id')->references('id')->on('forma_pago')->onDelete('cascade');
 
             $table->string('fecha_emision')->nullable();
             $table->string('fecha_vencimiento')->nullable();
-
+            $table->double('cambio',17,2);
             $table->string('observacion')->nullable();
             $table->string('comisionista')->nullable();
             $table->string('user_id');

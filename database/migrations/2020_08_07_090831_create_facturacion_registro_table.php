@@ -33,7 +33,6 @@ class CreateFacturacionRegistroTable extends Migration
             $table->double('precio_extranjero',17,2);
             $table->double('precio',17,2);
             $table->integer('cantidad');
-            $table->double('cambio',17,2);
             $table->integer('descuento');
             $table->double('precio_unitario_desc',17,2);
             $table->integer('comision');
