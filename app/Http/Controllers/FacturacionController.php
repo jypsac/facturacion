@@ -250,10 +250,16 @@ class FacturacionController extends Controller
                 //precio extranjero
                 // if($moneda->id == $moneda_registrada){
                     //precio nacional
+
+                //solo un precio
+
                     $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                     $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
                     $facturacion_registro->precio_nacional=$array;
                     $facturacion_registro->precio_extranjero=$array*$cambio->paralelo;
+
+
+
                 // }else{
                 //     //precio extranjero
                 //     $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
