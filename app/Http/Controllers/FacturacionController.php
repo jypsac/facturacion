@@ -18,10 +18,12 @@ use App\Personal;
 use App\Personal_venta;
 use App\Producto;
 use App\Servicios;
+use App\TipoCambio;
 use App\Unidad_medida;
 use App\User;
 use App\Ventas_registro;
 use App\kardex_entrada_registro;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class FacturacionController extends Controller
@@ -151,39 +153,32 @@ class FacturacionController extends Controller
 
             }
         }
-        // Comisionista cobnvertir id
+        // Comisionista convertir id
 
         $comisionista=$request->get('comisionista');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $numero = strstr($comisionista, '-',true);
-
-            // $numero_doc=personal::where('numero_documento',$numero)->first();
-            // $id_personal=$numero_doc->id;
 
             $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
             $id_personal=$cod_vendedor->id;
 
             $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
             //Comision segun comisionista
-            // $personal_venta=Personal_venta::where('id_personal',$comisionista_buscador->id)->first();
             $comi=$comisionista_buscador->comision;
         }else{
             $comi=0;
         }
-
-
 
         //Convertir nombre del cliente a id
         $cliente_nombre=$request->get('cliente');
         $nombre = strstr($cliente_nombre, '-',true);
 
         $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
-        // return $cliente_buscador->id;
 
         $forma_pago_id=$request->get('forma_pago');
         $formapago= Forma_pago::find($forma_pago_id);
         $dias= $formapago->dias;
-        /*Fecha vencimiento*/
+        /*Fecha vencimiento --------------------------------------------------- */
         $fecha =date("d-m-Y");
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
@@ -237,36 +232,22 @@ class FacturacionController extends Controller
                 //$facturacion_registro->servicio_id = no esta porque esto es registro para productos
                 $facturacion_registro->numero_serie=$request->get('numero_serie')[$i];
                 $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
-                //para stock --------------------------------------------------------
+                //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $facturacion_registro->stock=$stock;
                 //promedio original --------------------------------------------------------
                 $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
                 $facturacion_registro->promedio_original=$array2;
-                //precio nacional --------------------------------------------------------
-
-
-
-                //precio extranjero
-                // if($moneda->id == $moneda_registrada){
-                    //precio nacional
-
-                //solo un precio
-
+                //precio --------------------------------------------------------
+                if($moneda->id == $moneda_registrada){
                     $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                     $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
-                    $facturacion_registro->precio_nacional=$array;
-                    $facturacion_registro->precio_extranjero=$array*$cambio->paralelo;
-
-
-
-                // }else{
-                //     //precio extranjero
-                //     $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-                //     $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
-                //     $facturacion_registro->precio_nacional=$array;
-
-                // }
+                    $facturacion_registro->precio=$array;
+                }else{
+                    $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                    $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
+                    $facturacion_registro->precio=$array*$cambio->paralelo;
+                }
                 $facturacion_registro->cantidad=$request->get('cantidad')[$i];
                 $facturacion_registro->descuento=$request->get('check_descuento')[$i];
                 $facturacion_registro->comision=$comi;
@@ -277,7 +258,7 @@ class FacturacionController extends Controller
                 }else{
                     $facturacion_registro->precio_unitario_desc=$array;
                 }
-                //precio unitraio comision ----------------------------------------
+                //precio unitario comision ----------------------------------------
                 if($desc_comprobacion <> 0){
                     $facturacion_registro->precio_unitario_comi=($array-($array*$desc_comprobacion/100))+($array*$comi/100);
                 }else{
@@ -285,45 +266,6 @@ class FacturacionController extends Controller
                 }
                 $facturacion_registro->save();
 
-            }
-        }else {
-            return redirect()->route('facturacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
-        }
-        return redirect()->route('facturacion.show',$facturacion->id);
-
-
-        if($count_articulo = $count_cantidad  = $count_check){
-            for($i=0;$i<$count_articulo;$i++){
-                $facturacion_registro=new Facturacion_registro();
-                $facturacion_registro->facturacion_id=$facturacion->id;
-                $facturacion_registro->producto_id=$producto_id[$i];
-                $facturacion_registro->numero_serie=$request->get('numero_serie')[$i];
-
-                $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
-                $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-                $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
-                $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
-                // $array_pu_desc=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio');
-                $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
-                $desc_comprobacion=$request->get('check_descuento')[$i];
-                $facturacion_registro->precio_nacional=$array;
-                $facturacion_registro->stock=$stock;
-                $facturacion_registro->cantidad=$request->get('cantidad')[$i];
-                $facturacion_registro->descuento=$request->get('check_descuento')[$i];
-                $facturacion_registro->promedio_original=$array2;
-                if($desc_comprobacion <> 0){
-                    $facturacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
-                }else{
-                    $facturacion_registro->precio_unitario_desc=$array;
-                }
-                $facturacion_registro->comision=$comi;
-                if($desc_comprobacion <> 0){
-                    $facturacion_registro->precio_unitario_comi=($array-($array*$desc_comprobacion/100))+($array*$comi/100);
-                }else{
-                    $facturacion_registro->precio_unitario_comi=$array+($array*$comi/100);
-                }
-
-                $facturacion_registro->save();
             }
         }else {
             return redirect()->route('facturacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');

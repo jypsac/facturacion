@@ -29,8 +29,7 @@ class CreateFacturacionRegistroTable extends Migration
 
             $table->integer('stock')->nullable();
             $table->double('promedio_original',17,2);
-            $table->double('precio_nacional',17,2);
-            $table->double('precio_extranjero',17,2);
+            $table->double('precio',17,2);
             $table->integer('cantidad');
             $table->integer('descuento');
             $table->integer('comision');
