@@ -16,7 +16,7 @@ class MonedaController extends Controller
     public function index()
     {
 
-        return view('maestro.moneda.index',[
+        return view('configuracion_general.moneda.index',[
             'moneda' => Moneda::all()
         ]);
     }
@@ -29,7 +29,7 @@ class MonedaController extends Controller
     public function create()
     {
         $paises=Pais::all();
-        return view('maestro.moneda.create',compact('paises'));
+        return view('configuracion_general.moneda.create',compact('paises'));
     }
 
     /**
@@ -71,7 +71,7 @@ class MonedaController extends Controller
     {
         $moneda = Moneda::find($id);
         $paises=Pais::all();
-        return view('maestro.moneda.edit' ,compact('moneda','paises'));
+        return view('configuracion_general.moneda.edit' ,compact('moneda','paises'));
     }
 
     /**

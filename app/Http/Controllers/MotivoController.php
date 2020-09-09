@@ -15,7 +15,7 @@ class MotivoController extends Controller
     public function index()
     {
         $motivos=Motivo::all();
-        return view('maestro.tablas_generales.motivo.index',compact('motivos'));
+        return view('configuracion_general.motivo.index',compact('motivos'));
     }
 
     /**
@@ -25,7 +25,7 @@ class MotivoController extends Controller
      */
     public function create()
     {
-        return view('maestro.tablas_generales.motivo.create');
+        return view('configuracion_general.motivo.create');
     }
 
     /**
@@ -63,7 +63,7 @@ class MotivoController extends Controller
     public function edit($id)
     {
         $motivo=Motivo::find($id);
-        return view('maestro.tablas_generales.motivo.edit',compact('motivo'));
+        return view('configuracion_general.motivo.edit',compact('motivo'));
     }
 
     /**

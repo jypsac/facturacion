@@ -16,7 +16,7 @@ class CategoriaController extends Controller
     public function index()
     {
         $categorias=Categoria::all();
-        return view('maestro.catalogo.clasificacion.categoria.index',compact('categorias'));
+        return view('configuracion_general.categoria.index',compact('categorias'));
     }
 
     /**
@@ -27,7 +27,7 @@ class CategoriaController extends Controller
     public function create()
     {
 
-        return view('maestro.catalogo.clasificacion.categoria.create');
+        return view('configuracion_general.categoria.create');
     }
 
     /**
@@ -38,12 +38,21 @@ class CategoriaController extends Controller
      */
     public function store(Request $request)
     {
+        // contador par codigo
+        $suma=Categoria::all()->count();
+        $suma ++;
+        $cien=1000+$suma;
+        $contador=substr($cien,1);
+        $nombre=$request->get('descripcion');
+        $nombre=strtoupper($nombre);
+
         $categoria=new Categoria;
-        $categoria->codigo=$request->get('codigo');
-        $categoria->descripcion=$request->get('descripcion');
+        $categoria->codigo=$contador;
+        $categoria->descripcion=$nombre;
         $categoria->save();
 
         return redirect()->route('categoria.index');
+        // return $nombre;
     }
 
     /**
@@ -65,7 +74,7 @@ class CategoriaController extends Controller
      */
     public function edit($id)
     {
-       
+
     }
 
     /**
@@ -77,7 +86,14 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        
+        $nombre=$request->get('descripcion');
+        $nombre=strtoupper($nombre);
+        $categoria=Categoria::find($id);
+        $categoria->descripcion=$nombre;
+        $categoria->save();
+
+        return redirect()->route('categoria.index');
+
     }
 
     /**
@@ -88,6 +104,6 @@ class CategoriaController extends Controller
      */
     public function destroy($id)
     {
-        
+
     }
 }

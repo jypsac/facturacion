@@ -15,7 +15,7 @@ class UnidadMedidaController extends Controller
     public function index()
     {
         $unidad_de_medida=Unidad_medida::all();
-        return view('maestro.conf_general.unidad-de-medida.index',compact('unidad_de_medida'));
+        return view('configuracion_general.unidad-de-medida.index',compact('unidad_de_medida'));
     }
 
     /**
@@ -25,7 +25,7 @@ class UnidadMedidaController extends Controller
      */
     public function create()
     {
-        return view('maestro.conf_general.unidad-de-medida.create');
+        return view('configuracion_generall.unidad-de-medida.create');
     }
 
     /**
@@ -61,7 +61,7 @@ class UnidadMedidaController extends Controller
     public function edit($id)
     {
         $unidad_de_medida=Unidad_medida::find($id);
-        return view('maestro.conf_general.unidad-de-medida.edit',compact('unidad_de_medida'));
+        return view('configuracion_general.unidad-de-medida.edit',compact('unidad_de_medida'));
     }
 
     /**

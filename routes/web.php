@@ -13,7 +13,7 @@ Route::group(
 		Route::resource('/almacen','AlmacenController');
 		Route::resource('/apariencia','ConfigController');
 
-		Route::resource('/categoria','CategoriaController')->only(['index','create','store']);;
+		Route::resource('/categoria','CategoriaController')->only(['index','create','store','update']);;
 		Route::resource('/vendedores','PersonalVentaController');
 		Route::put('vendedores/aprobar/{id}', 'PersonalVentaController@aprobar')->name('vendedores.aprobar');
 		Route::put('vendedores/procesado/{id}', 'PersonalVentaController@procesado')->name('vendedores.procesado');

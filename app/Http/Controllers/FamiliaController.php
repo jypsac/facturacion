@@ -15,7 +15,7 @@ class FamiliaController extends Controller
     public function index()
     {
         $familias=Familia::all();
-        return view('maestro.catalogo.clasificacion.familia.index',compact('familias'));
+        return view('configuracion_general.familia.index',compact('familias'));
     }
 
     /**
@@ -25,7 +25,7 @@ class FamiliaController extends Controller
      */
     public function create()
     {
-        return view('maestro.catalogo.clasificacion.familia.create');
+        return view('configuracion_general.familia.create');
     }
 
     /**
@@ -36,9 +36,16 @@ class FamiliaController extends Controller
      */
     public function store(Request $request)
     {
+        $suma=Familia::all()->count();
+        $suma ++;
+        $cien=1000+$suma;
+        $contador=substr($cien,1);
+        $nombre=$request->get('descripcion');
+        $nombre=strtoupper($nombre);
+
         $familia=new Familia;
-        $familia->codigo=$request->get('codigo');
-        $familia->descripcion=$request->get('descripcion');
+        $familia->codigo=$contador;
+        $familia->descripcion=$nombre;
         $familia->save();
 
         return redirect()->route('familia.index');
@@ -64,7 +71,7 @@ class FamiliaController extends Controller
     public function edit($id)
     {
         $familia=Familia::find($id);
-        return view('maestro.catalogo.clasificacion.familia.edit',compact('familia'));
+        return view('configuracion_general.familia.edit',compact('familia'));
     }
 
     /**
@@ -76,12 +83,15 @@ class FamiliaController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $nombre=$request->get('descripcion');
+        $nombre=strtoupper($nombre);
         $familia=Familia::find($id);
-        $familia->codigo=$request->get('codigo');
-        $familia->descripcion=$request->get('descripcion');
+        $familia->descripcion=$nombre;
         $familia->save();
 
         return redirect()->route('familia.index');
+
     }
 
     /**

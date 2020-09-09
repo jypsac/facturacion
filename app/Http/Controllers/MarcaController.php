@@ -16,7 +16,7 @@ class MarcaController extends Controller
     public function index()
     {
         $marcas=Marca::all();
-        return view('maestro.catalogo.clasificacion.marca.index',compact('marcas'));
+        return view('configuracion_general.marca.index',compact('marcas'));
     }
 
     /**
@@ -26,7 +26,7 @@ class MarcaController extends Controller
      */
     public function create()
     {
-        return view('maestro.catalogo.clasificacion.marca.create');
+        return view('configuracion_general.marca.create');
     }
 
     /**
@@ -44,12 +44,16 @@ class MarcaController extends Controller
         }else{
             $nombre_imagen="defecto.png";
         }
+        $suma=Marca::all()->count();
+        $suma ++;
+        $cien=100000+$suma;
+        $contador=substr($cien,1);
 
         $marca=new Marca;
-        $marca->nombre=$request->get('nombre');
-        $marca->codigo=$request->get('codigo');
-        $marca->abreviatura=$request->get('abreviatura');
-        $marca->nombre_empresa=$request->get('nombre_empresa');
+        $marca->nombre=strtoupper($request->get('nombre'));
+        $marca->codigo=$contador;
+        $marca->abreviatura=strtoupper($request->get('abreviatura'));
+        $marca->nombre_empresa=strtoupper($request->get('nombre_empresa'));
         $marca->descripcion=$request->get('descripcion');
         $marca->imagen=$nombre_imagen;
         $marca->save();
@@ -77,7 +81,7 @@ class MarcaController extends Controller
     public function edit($id)
     {
         $marca=Marca::find($id);
-        return view('maestro.catalogo.clasificacion.marca.edit',compact('marca'));
+        return view('configuracion_general.marca.edit',compact('marca'));
     }
 
     /**

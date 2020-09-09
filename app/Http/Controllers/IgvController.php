@@ -15,7 +15,7 @@ class IgvController extends Controller
     public function index()
     {
         $igv=Igv::first();
-        return view('maestro.conf_general.igv.index',compact('igv'));
+        return view('configuracion_general.igv.index',compact('igv'));
     }
 
     /**
@@ -59,7 +59,7 @@ class IgvController extends Controller
     public function edit($id)
     {
         $igv=Igv::find($id);
-        return view('maestro.conf_general.igv.edit',compact('igv'));
+        return view('configuracion_general.igv.edit',compact('igv'));
     }
 
     /**

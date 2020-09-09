@@ -17,7 +17,7 @@ class EmpresaController extends Controller
     {
         $mi_empresa=Empresa::first();
         $banco=Banco::all();
-        return view('maestro.conf_general.empresa.index',compact('mi_empresa','banco'));
+        return view('configuracion_general.empresa.index',compact('mi_empresa','banco'));
     }
 
     /**
