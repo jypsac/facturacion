@@ -103,10 +103,9 @@ class MarcaController extends Controller
         }
 
         $marca=Marca::find($id);
-        $marca->nombre=$request->get('nombre');
-        $marca->codigo=$request->get('codigo');
-        $marca->abreviatura=$request->get('abreviatura');
-        $marca->nombre_empresa=$request->get('nombre_empresa');
+        $marca->nombre=strtoupper($request->get('nombre'));
+        $marca->abreviatura=strtoupper($request->get('abreviatura'));
+        $marca->nombre_empresa=strtoupper($request->get('nombre_empresa'));
         $marca->descripcion=$request->get('descripcion');
         $marca->imagen=$nombre_imagen;
         $marca->save();

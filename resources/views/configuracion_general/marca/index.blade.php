@@ -47,8 +47,41 @@
                                         </div>
                                         <label class="col-sm-2 col-form-label">Foto:</label>
                                         <div class="col-sm-10">
-                                            <input type="file" class="form-control" name="imagen">
-                                        </div>
+                                            <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0  ;" id="archivoInput" name="imagen" onchange="return validarExt()"  />
+                                                                               <span id="visorArchivo">
+                                                                                <!--Aqui se desplegará el fichero-->
+                                                                                <img name="imagen" src="" width="300px" height="200px" />
+                                                                            </span>
+                                                                        </span>
+                                        </div><script type="text/javascript">
+                                {{-- Fotooos --}}
+                                function validarExt()
+                                {
+                                    var archivoInput = document.getElementById('archivoInput');
+                                    var archivoRuta = archivoInput.value;
+                                    var extPermitidas = /(.jpg|.png|.jfif)$/i;
+                                    if(!extPermitidas.exec(archivoRuta)){
+                                        alert('Asegurese de haber seleccionado una Imagen');
+                                        archivoInput.value = '';
+                                        return false;
+                                    }
+
+                                    else
+                                    {
+        //PRevio del PDF
+        if (archivoInput.files && archivoInput.files[0])
+        {
+            var visor = new FileReader();
+            visor.onload = function(e)
+            {
+                document.getElementById('visorArchivo').innerHTML =
+                '<img name="imagen" src="'+e.target.result+'"width="300px" height="200px" />';
+            };
+            visor.readAsDataURL(archivoInput.files[0]);
+        }
+    }
+}
+</script>
                                     </div>
                                 </div>
                             </div>
@@ -154,49 +187,85 @@
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Foto:</label>
                                                                             <div class="col-sm-10">
-                                                                                <input type="file" class="form-control" name="imagen">
-                                                                            </div>
-                                                                        </div>
+                                                                               <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0  ;" id="archivoInput{{$marca->id}}" name="imagen" onchange="return validarExt{{$marca->id}}()"  />
+                                                                               <span id="visorArchivo{{$marca->id}}">
+                                                                                <!--Aqui se desplegará el fichero-->
+                                                                                <img name="imagen" src="{{asset('storage/marcas/'.$marca->imagen)}}" width="300px" height="200px" />
+                                                                                <input type="text" name="imagenes" hidden="hidden" value="{{$marca->imagen}}">
+                                                                            </span>
+                                                                        </span>
                                                                     </div>
+                                                                </div>
+                                                            </div>
 
-                                                                </fieldset>
-                                                                <button class="btn btn-primary" type="submit">Grabar</button>
-                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
+                                                        </fieldset>
+                                                        <button class="btn btn-primary" type="submit">Grabar</button>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </form>
                                                 </div>
                                             </div>
                                         </div>
-                                        <!-- / Modal Create  -->
+                                    </div>
+                                </div>
+                                <!-- / Modal Create  -->
 
-                                    </tr>
-                                    @endforeach
-                                </tbody>
-                            </table>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <style>
-        .col-sm-10{padding-bottom: 5px;padding-top: 5px;}
-        .form-control{border-radius: 5px}
-    </style>
-    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+                            </tr>
+                            <script type="text/javascript">
+                                {{-- Fotooos --}}
+                                function validarExt{{$marca->id}}()
+                                {
+                                    var archivoInput{{$marca->id}} = document.getElementById('archivoInput{{$marca->id}}');
+                                    var archivoRuta = archivoInput{{$marca->id}}.value;
+                                    var extPermitidas = /(.jpg|.png|.jfif)$/i;
+                                    if(!extPermitidas.exec(archivoRuta)){
+                                        alert('Asegurese de haber seleccionado una Imagen');
+                                        archivoInput{{$marca->id}}.value = '';
+                                        return false;
+                                    }
 
-    <!-- Custom and plugin javascript -->
-    <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+                                    else
+                                    {
+        //PRevio del PDF
+        if (archivoInput{{$marca->id}}.files && archivoInput{{$marca->id}}.files[0])
+        {
+            var visor = new FileReader();
+            visor.onload = function(e)
+            {
+                document.getElementById('visorArchivo{{$marca->id}}').innerHTML =
+                '<img name="imagen" src="'+e.target.result+'"width="300px" height="200px" />';
+            };
+            visor.readAsDataURL(archivoInput{{$marca->id}}.files[0]);
+        }
+    }
+}
+</script>
+@endforeach
+</tbody>
+</table>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<style>
+    .col-sm-10{padding-bottom: 5px;padding-top: 5px;}
+    .form-control{border-radius: 5px}
+</style>
+<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    <script>
+<!-- Custom and plugin javascript -->
+<script src="{{ asset('js/inspinia.js') }}"></script>
+<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-        $(document).ready(function () {
+
+<script>
+
+    $(document).ready(function () {
 
         // Add slimscroll to element
         $('.scroll_content').slimscroll({
