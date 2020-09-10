@@ -86,6 +86,8 @@ Route::group(
 		// Route::get('facturacion/boleta/{id}' , 'FacturacionController@show_boleta')->name('boleta');
 		// Route::get('facturacion/create_boleta/' , 'FacturacionController@create_boleta')->name('create.boleta');
 		Route::get('/facturacion/print/{id}','FacturacionController@print')->name('facturacion.print');
+		Route::post('/facturacion/ajax','FacturacionController@ajax')->name('facturacion.ajax');
+		Route::post('/facturacion/create_ajax','FacturacionController@create_ajax')->name('facturacion.create_ajax');
 		Route::resource('/facturacion','FacturacionController');
 		Route::get('/boleta/print/{id}','BoletaController@print')->name('boleta.print');
 		Route::resource('/boleta','BoletaController');

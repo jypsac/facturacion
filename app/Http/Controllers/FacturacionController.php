@@ -44,9 +44,13 @@ class FacturacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function ajax()
+    {
+        $msg = "Ejemplo rapido";
+        return response()->json(array('msg'=> $msg), 200);
+    }
+
     public function create(){
-
-
          $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
          foreach ($productos as $index => $producto) {
             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
@@ -68,9 +72,38 @@ class FacturacionController extends Controller
 
 
         return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria'));
-
-
 }
+
+    public function create_ajax(){
+        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        foreach ($productos as $index => $producto) {
+            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
+            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+        }
+
+        $forma_pagos=Forma_pago::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
+        $moneda=Moneda::all();
+        $personales=Personal::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
+        $igv=Igv::first();
+        $empresa=Empresa::first();
+        $personal_contador= Facturacion::all()->count();
+        $suma=$personal_contador+1;
+        $categoria='producto';
+
+
+
+        return response()->json(array(
+            'productos'=> $productos,
+            'utilidad'=> $utilidad,
+            'array'=> $array,
+            'array_cantidad'=> $array_cantidad,
+            'array_promedio'=> $array_promedio,
+        ), 200);
+    }
 
     /**
      * Store a newly created resource in storage.

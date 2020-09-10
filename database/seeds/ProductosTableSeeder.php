@@ -1,5 +1,6 @@
 <?php
 
+use App\Producto;
 use Illuminate\Database\Seeder;
 
 class ProductosTableSeeder extends Seeder
@@ -400,5 +401,7 @@ class ProductosTableSeeder extends Seeder
             'created_at' => '2020-08-01 11:36:57',
             'updated_at' => "2020-08-01 11:36:58" ,
         ]);
+
+        factory(Producto::class,10000)->create();
     }
 }
