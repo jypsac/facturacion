@@ -99,7 +99,7 @@ class MarcaController extends Controller
             $nombre_imagen = time().$imagen->getClientOriginalName();
             $imagen =$request->file('imagen')->storeAs('marcas',$nombre_imagen);
         }else{
-            $nombre_imagen="defecto.png";
+            $nombre_imagen=$request->get('imagenes');
         }
 
         $marca=Marca::find($id);

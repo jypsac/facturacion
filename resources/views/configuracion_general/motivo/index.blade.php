@@ -15,7 +15,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Marca</h5>
+                <h5 class="modal-title" id="exampleModalLabel"> Motivo</h5>
                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
@@ -24,10 +24,10 @@
                 {{-- ccccccccccccccccc --}}
                 <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
 
-                    <form action="{{ route('marca.store') }}"  enctype="multipart/form-data" method="post">
+                    <form action="{{ route('motivo.store') }}"  enctype="multipart/form-data" method="post">
                         @csrf
                         <fieldset >
-                            <legend> Agregar Marca </legend>
+                            <legend> Agregar Motivo </legend>
                             <div>
                                 <div class="panel-body" >
                                     <div class="row">
@@ -35,29 +35,18 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" name="nombre">
                                         </div>
-                                        <label class="col-sm-2 col-form-label">Abreviatura:</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="abreviatura">
-                                        </div><label class="col-sm-2 col-form-label">Empresa:</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="nombre_empresa">
-                                        </div><label class="col-sm-2 col-form-label">Descripcion:</label>
-                                        <div class="col-sm-10">
-                                            <textarea type="text" class="form-control" name="descripcion"></textarea>
-                                        </div>
-
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
-                    </fieldset>
-                    <button class="btn btn-primary" type="submit">Grabar</button>
-                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                </form>
+                        </fieldset>
+                        <button class="btn btn-primary" type="submit">Grabar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                    </form>
+                </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 <!-- / Modal Create  -->
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -92,7 +81,7 @@
                                     <th>ID</th>
                                     <th>Nombre</th>
                                     <th>Fecha de creacion</th>
-                                    <th>Fecha de creacion</th>
+                                    <th>Fecha de Modificacion</th>
                                     <th>EDITAR</th>
                                 </tr>
                             </thead>
@@ -103,7 +92,47 @@
                                 <td>{{$motivo->nombre}}</td>
                                 <td>{{$motivo->created_at}}</td>
                                 <td>{{$motivo->updated_at}}</td>
-                                <td><center><a href="{{ route('motivo.edit', $motivo->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
+                                <td><button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$motivo->id}}">Editar</button>
+                                    <div class="modal fade" id="exampleModal{{$motivo->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog" role="document">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel"> Edit Motivo</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                </div>
+                                                <div style="padding-left: 15px;padding-right: 15px;">
+                                                    {{-- ccccccccccccccccc --}}
+                                                    <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+
+                                                        <form action="{{ route('motivo.update',$motivo->id) }}"  enctype="multipart/form-data" method="post">
+                                                            @csrf
+                                                            @method('PATCH')
+                                                            <fieldset >
+                                                                <legend> Editar Motivo </legend>
+                                                                <div>
+                                                                    <div class="panel-body" >
+                                                                        <div class="row">
+                                                                         <label class="col-sm-2 col-form-label">Nombre:</label>
+                                                                         <div class="col-sm-10">
+                                                                            <input type="text" class="form-control" value="{{$motivo->nombre}}" name="nombre">
+                                                                        </div>
+
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </fieldset>
+                                                        <button class="btn btn-primary" type="submit">Grabar</button>
+                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- / Modal Create  --></td>
                             </tr>
                             @endforeach
                         </tbody>

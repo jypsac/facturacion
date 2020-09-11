@@ -48,26 +48,26 @@
                                         <label class="col-sm-2 col-form-label">Foto:</label>
                                         <div class="col-sm-10">
                                             <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0  ;" id="archivoInput" name="imagen" onchange="return validarExt()"  />
-                                                                               <span id="visorArchivo">
-                                                                                <!--Aqui se desplegará el fichero-->
-                                                                                <img name="imagen" src="" width="300px" height="200px" />
-                                                                            </span>
-                                                                        </span>
-                                        </div><script type="text/javascript">
-                                {{-- Fotooos --}}
-                                function validarExt()
-                                {
-                                    var archivoInput = document.getElementById('archivoInput');
-                                    var archivoRuta = archivoInput.value;
-                                    var extPermitidas = /(.jpg|.png|.jfif)$/i;
-                                    if(!extPermitidas.exec(archivoRuta)){
-                                        alert('Asegurese de haber seleccionado una Imagen');
-                                        archivoInput.value = '';
-                                        return false;
-                                    }
+                                            <span id="visorArchivo">
+                                                <!--Aqui se desplegará el fichero-->
+                                                <img name="imagen" src="" width="300px" height="200px" />
+                                            </span>
+                                        </span>
+                                    </div><script type="text/javascript">
+                                        {{-- Fotooos --}}
+                                        function validarExt()
+                                        {
+                                            var archivoInput = document.getElementById('archivoInput');
+                                            var archivoRuta = archivoInput.value;
+                                            var extPermitidas = /(.jpg|.png|.jfif)$/i;
+                                            if(!extPermitidas.exec(archivoRuta)){
+                                                alert('Asegurese de haber seleccionado una Imagen');
+                                                archivoInput.value = '';
+                                                return false;
+                                            }
 
-                                    else
-                                    {
+                                            else
+                                            {
         //PRevio del PDF
         if (archivoInput.files && archivoInput.files[0])
         {
@@ -82,18 +82,18 @@
     }
 }
 </script>
-                                    </div>
-                                </div>
-                            </div>
+</div>
+</div>
+</div>
 
-                        </fieldset>
-                        <button class="btn btn-primary" type="submit">Grabar</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
+</fieldset>
+<button class="btn btn-primary" type="submit">Grabar</button>
+<button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+</form>
+</div>
+</div>
+</div>
+</div>
 </div>
 <!-- / Modal Create  -->
 
@@ -147,7 +147,6 @@
                                     <td>{{$marca->descripcion}}</td>
                                     <td><img src="{{asset('storage/marcas/'.$marca->imagen)}}" style="width: 150px;height:50px">
                                     </td>
-
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$marca->id}}">Editar</button>
                                         <div class="modal fade" id="exampleModal{{$marca->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -171,8 +170,8 @@
                                                                     <div>
                                                                         <div class="panel-body" >
                                                                             <div class="row">
-                                                                             <label class="col-sm-2 col-form-label">Nombre:</label>
-                                                                             <div class="col-sm-10">
+                                                                               <label class="col-sm-2 col-form-label">Nombre:</label>
+                                                                               <div class="col-sm-10">
                                                                                 <input type="text" class="form-control" value="{{$marca->nombre}}" name="nombre">
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Abreviatura:</label>
@@ -187,8 +186,8 @@
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Foto:</label>
                                                                             <div class="col-sm-10">
-                                                                               <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0  ;" id="archivoInput{{$marca->id}}" name="imagen" onchange="return validarExt{{$marca->id}}()"  />
-                                                                               <span id="visorArchivo{{$marca->id}}">
+                                                                             <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0  ;" id="archivoInput{{$marca->id}}" name="imagen" onchange="return validarExt{{$marca->id}}()"  />
+                                                                             <span id="visorArchivo{{$marca->id}}">
                                                                                 <!--Aqui se desplegará el fichero-->
                                                                                 <img name="imagen" src="{{asset('storage/marcas/'.$marca->imagen)}}" width="300px" height="200px" />
                                                                                 <input type="text" name="imagenes" hidden="hidden" value="{{$marca->imagen}}">
@@ -208,23 +207,23 @@
                                     </div>
                                 </div>
                                 <!-- / Modal Create  -->
+                            </td>
+                        </tr>
+                        <script type="text/javascript">
+                            {{-- Fotooos --}}
+                            function validarExt{{$marca->id}}()
+                            {
+                                var archivoInput{{$marca->id}} = document.getElementById('archivoInput{{$marca->id}}');
+                                var archivoRuta = archivoInput{{$marca->id}}.value;
+                                var extPermitidas = /(.jpg|.png|.jfif)$/i;
+                                if(!extPermitidas.exec(archivoRuta)){
+                                    alert('Asegurese de haber seleccionado una Imagen');
+                                    archivoInput{{$marca->id}}.value = '';
+                                    return false;
+                                }
 
-                            </tr>
-                            <script type="text/javascript">
-                                {{-- Fotooos --}}
-                                function validarExt{{$marca->id}}()
+                                else
                                 {
-                                    var archivoInput{{$marca->id}} = document.getElementById('archivoInput{{$marca->id}}');
-                                    var archivoRuta = archivoInput{{$marca->id}}.value;
-                                    var extPermitidas = /(.jpg|.png|.jfif)$/i;
-                                    if(!extPermitidas.exec(archivoRuta)){
-                                        alert('Asegurese de haber seleccionado una Imagen');
-                                        archivoInput{{$marca->id}}.value = '';
-                                        return false;
-                                    }
-
-                                    else
-                                    {
         //PRevio del PDF
         if (archivoInput{{$marca->id}}.files && archivoInput{{$marca->id}}.files[0])
         {

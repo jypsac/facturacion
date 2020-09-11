@@ -15,10 +15,9 @@ class MonedaController extends Controller
      */
     public function index()
     {
-
-        return view('configuracion_general.moneda.index',[
-            'moneda' => Moneda::all()
-        ]);
+        $moneda=Moneda::all();
+        $paises=Pais::all();
+        return view('configuracion_general.moneda.index',compact('moneda','paises'));
     }
 
     /**
@@ -83,14 +82,16 @@ class MonedaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $moneda=Moneda::find($id);
-        $moneda->nombre=$request->get('nombre');
-        $moneda->simbolo=$request->get('simbolo');
-        $moneda->codigo=$request->get('codigo');
-        $moneda->pais=$request->get('pais');
-        $moneda->descripcion=$request->get('descripcion');
-        $moneda->save();
-        return redirect()->route('moneda.index');
+        $nombre=$request->get('che');
+        return $nombre;
+        // $moneda=Moneda::find($id);
+        // $moneda->nombre=$request->get('nombre');
+        // $moneda->simbolo=$request->get('simbolo');
+        // $moneda->codigo=$request->get('codigo');
+        // $moneda->pais=$request->get('pais');
+        // $moneda->descripcion=$request->get('descripcion');
+        // $moneda->save();
+        // return redirect()->route('moneda.index');
     }
 
     public function principal($id)

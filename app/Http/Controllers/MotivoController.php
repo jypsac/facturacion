@@ -38,6 +38,7 @@ class MotivoController extends Controller
     {
         $motivo=new Motivo;
         $motivo->nombre=$request->get('nombre');
+        $motivo->nombre=$request->get('nombre');
         $motivo->save();
 
         return redirect()->route('motivo.index');
