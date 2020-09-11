@@ -3,9 +3,12 @@
 @section('title', 'Moneda')
 @section('breadcrumb', 'Moneda')
 @section('breadcrumb2', 'Moneda')
+@if($cantidad_monedas==2)
+@else
 @section('data-toggle', 'modal')
 @section('href_accion', '#exampleModal')
 @section('value_accion', 'Agregar')
+@endif
 
 @section('content')
 
@@ -31,18 +34,18 @@
                             <div>
                                 <div class="panel-body" >
                                     <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
-                                       <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
-                                   </div>
+                                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
+                                 </div>
 
-                                   <div class="form-group  row"><label class="col-sm-2 col-form-label">Simbolo:</label>
-                                       <div class="col-sm-10"><input type="text" class="form-control" name="simbolo"></div>
-                                   </div>
+                                 <div class="form-group  row"><label class="col-sm-2 col-form-label">Simbolo:</label>
+                                     <div class="col-sm-10"><input type="text" class="form-control" name="simbolo"></div>
+                                 </div>
 
-                                   <div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo:</label>
-                                       <div class="col-sm-10"><input type="text" class="form-control" name="codigo"></div>
-                                   </div>
+                                 <div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo:</label>
+                                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo"></div>
+                                 </div>
 
-                                   <div class="form-group row"><label class="col-sm-2 col-form-label">Seleccionar Pais:</label>
+                                 <div class="form-group row"><label class="col-sm-2 col-form-label">Seleccionar Pais:</label>
                                     <div class="col-sm-10">
                                         <select class="form-control m-b" name="pais">
                                             <option>Seleccione</option>
@@ -52,20 +55,16 @@
                                         </select>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
 
-                                <div class="form-group  row"><label class="col-sm-2 col-form-label">Descripcion:</label>
-                                   <div class="col-sm-10"><input type="text" class="form-control" name="descripcion"></div>
-                               </div>
-                           </div>
-                       </div>
-
-                   </fieldset>
-                   <button class="btn btn-primary" type="submit">Grabar</button>
-                   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-               </form>
-           </div>
-       </div>
-   </div>
+                    </fieldset>
+                    <button class="btn btn-primary" type="submit">Grabar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
+            </div>
+        </div>
+    </div>
 </div>
 </div>
 <!-- / Modal Create  -->
@@ -162,12 +161,12 @@
                                                                             <div class="col-sm-4">
                                                                                 @if($monedas->principal == 0)
                                                                                 <div class="switch-button">
-                                                                                    <input type="checkbox" name="che" id="switch-label1" class="switch-button__checkbox" >
+                                                                                    <input type="checkbox" name="principal" id="switch-label1" class="switch-button__checkbox" >
                                                                                     <label for="switch-label1" class="switch-button__label"></label>
                                                                                 </div>
                                                                                 @else
                                                                                 <div class="switch-button">
-                                                                                    <input type="checkbox" name="che" id="switch-label" class="switch-button__checkbox" checked="">
+                                                                                    <input type="checkbox" name="principal" id="switch-labels" class="switch-button__checkbox" checked="">
                                                                                     <label for="switch-label" class="switch-button__label"></label>
                                                                                 </div>
                                                                                 @endif
@@ -178,7 +177,7 @@
                                                                         <div class="form-group row"><label class="col-sm-2 col-form-label">Seleccionar Pais:</label>
                                                                             <div class="col-sm-10">
                                                                                 <select class="form-control m-b" name="pais">
-                                                                                    <option>Seleccione</option>
+                                                                                    <option value="{{$monedas->pais}}">{{$monedas->pais}}</option>
                                                                                     @foreach($paises as $pais)
                                                                                     <option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
                                                                                     @endforeach

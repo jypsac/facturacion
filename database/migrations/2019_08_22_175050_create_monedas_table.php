@@ -19,7 +19,6 @@ class CreateMonedasTable extends Migration
             $table->string('simbolo');
             $table->string('codigo');
             $table->string('pais');
-            $table->text('descripcion');
             $table->boolean('principal')->nullable();
             $table->timestamps();
         });

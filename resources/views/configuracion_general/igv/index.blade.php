@@ -1,10 +1,8 @@
 @extends('layout')
-
 @section('title', 'Configuracion del IGV')
 @section('breadcrumb', 'IGV')
 @section('breadcrumb2', 'IGV')
-@section('href_accion' ,route('igv.edit',1))
-@section('value_accion', 'editar')
+
 
 @section('content')
 	<div class="wrapper wrapper-content animated fadeIn">
@@ -15,43 +13,74 @@
                     <h5>IGV</h5>
                     </div>
                         <div class="ibox-content">
-                            <div class="row">
-                                <div class="col-lg-4">
-                                    <div class="panel panel-success">
-                                        <div class="panel-heading">
-                                            Ultima Actualizacion
-                                        </div>
-                                        <div class="panel-body">
-                                            <center><p>{{$igv->updated_at}}</p></center>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="panel panel-success">
-                                        <div class="panel-heading">
-                                            Igv
-                                        </div>
-                                        <div class="panel-body">
-                                            <center><p>{{$igv->igv_total}}</p></center>
-                                        </div>
-                                    </div>
-                                </div>
-                                <div class="col-lg-4">
-                                    <div class="panel panel-success">
-                                        <div class="panel-heading">
-                                            Renta
-                                        </div>
-                                        <div class="panel-body">
-                                            <center><p>{{$igv->renta}}</p></center>
-                                        </div>
-                                    </div>
-                                </div>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                                <tr>
+                                    <th>IGV</th>
+                                    <th>Renta</th>
+                                    <th>Fecha Creacion</th>
+                                    <th>EDITAR</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="gradeX">
+                                    <td>{{$igv->igv_total}}%</td>
+                                    <td>{{$igv->renta}}%</td>
+                                    <td>{{$igv->updated_at}}</td>
+                                   <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">Editar</button>
+                                        <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document">
+                                                <div class="modal-content">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"> Edit IGV</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div style="padding-left: 15px;padding-right: 15px;">
+                                                        {{-- ccccccccccccccccc --}}
+                                                        <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
 
+                                                            <form action="{{ route('igv.update',$igv->id) }}"  enctype="multipart/form-data" method="post">
+                                                                @csrf
+                                                                @method('PATCH')
+                                                                <fieldset >
+                                                                    <legend> Editar IGV </legend>
+                                                                    <div>
+                                                                        <div class="panel-body" >
+                                                                            <div class="row">
+                                                                                <label class="col-sm-2 col-form-label">IGV:</label>
+                                                                                <div class="col-sm-4">
+                                                                                    <input type="text" class="form-control" name="igv_total" value="{{$igv->igv_total}}">
+                                                                                </div>
+                                                                                <label class="col-sm-2 col-form-label">Renta:</label>
+                                                                                <div class="col-sm-4">
+                                                                                    <input type="text" name="renta" class="form-control" value="{{$igv->renta}}">
+                                                                                </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
 
-                            </div>
+                                                                </fieldset>
+                                                                <button class="btn btn-primary" type="submit">Grabar</button>
+                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <!-- / Modal Create  -->
 
+                                    </td>
+                                </tr>
 
-                        </div>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
                     </div>
                 </div>
         </div>

@@ -16,8 +16,9 @@ class MonedaController extends Controller
     public function index()
     {
         $moneda=Moneda::all();
+        $cantidad_monedas=count($moneda);
         $paises=Pais::all();
-        return view('configuracion_general.moneda.index',compact('moneda','paises'));
+        return view('configuracion_general.moneda.index',compact('moneda','paises','cantidad_monedas'));
     }
 
     /**
@@ -82,22 +83,31 @@ class MonedaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $nombre=$request->get('che');
-        return $nombre;
-        // $moneda=Moneda::find($id);
-        // $moneda->nombre=$request->get('nombre');
-        // $moneda->simbolo=$request->get('simbolo');
-        // $moneda->codigo=$request->get('codigo');
-        // $moneda->pais=$request->get('pais');
-        // $moneda->descripcion=$request->get('descripcion');
-        // $moneda->save();
-        // return redirect()->route('moneda.index');
+       $btn_principal=$request->get('principal');
+       if ($btn_principal=='on') {
+        $principal='1';
+        $buscar_principa=Moneda::where('principal',1)->first();
+        $id_principal=$buscar_principa->id;
+        $moneda=Moneda::find($id_principal);
+        $moneda->principal=0;
+        $moneda->save();
     }
+    else{ $principal='0';}
 
-    public function principal($id)
-    {
-        return redirect()->route('moneda.index');
-    }
+    $moneda=Moneda::find($id);
+    $moneda->nombre=$request->get('nombre');
+    $moneda->simbolo=$request->get('simbolo');
+    $moneda->codigo=strtoupper($request->get('codigo'));
+    $moneda->principal=$principal;
+    $moneda->pais=$request->get('pais');
+    $moneda->save();
+    return redirect()->route('moneda.index');
+}
+
+public function principal($id)
+{
+    return redirect()->route('moneda.index');
+}
 
     /**
      * Remove the specified resource from storage.
