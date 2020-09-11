@@ -77,24 +77,11 @@ class FacturacionController extends Controller
     public function create_ajax(){
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         foreach ($productos as $index => $producto) {
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
+            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
         }
-
-        $forma_pagos=Forma_pago::all();
-        $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        $moneda=Moneda::all();
-        $personales=Personal::all();
-        $p_venta=Personal_venta::where('estado','0')->get();
-        $igv=Igv::first();
-        $empresa=Empresa::first();
-        $personal_contador= Facturacion::all()->count();
-        $suma=$personal_contador+1;
-        $categoria='producto';
-
-
 
         return response()->json(array(
             'productos'=> $productos,
@@ -230,8 +217,9 @@ class FacturacionController extends Controller
         $facturacion->codigo_fac=$cod_fac;
         $facturacion->orden_compra=$request->get('orden_compra');
         $facturacion->guia_remision=$request->get('guia_r');
-        //$facturacion->id_cotizador  = id cotizador es solo para productos que vengan de una cotizacion
-        //$facturacion->id_cotizador_servicio  = id_cotizador_servicio es solo para servicios que vengan de una cotizacion
+        
+
+
         $facturacion->cliente_id=$cliente_buscador->id;
         $facturacion->moneda_id=$request->get('moneda');
         $facturacion->forma_pago_id=$request->get('forma_pago');
