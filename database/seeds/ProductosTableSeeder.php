@@ -402,6 +402,6 @@ class ProductosTableSeeder extends Seeder
             'updated_at' => "2020-08-01 11:36:58" ,
         ]);
 
-        factory(Producto::class,10000)->create();
+        factory(Producto::class,10)->create();
     }
 }
