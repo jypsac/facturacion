@@ -62,7 +62,7 @@
                         </a>
                     </div>
                 </div>
-                <button id='myajax'>click me</button>
+                <button type="button" id='myajax'>click me</button>
                 <div id='msg'>
                         mensaje
                 </div>
@@ -215,7 +215,7 @@
        //we will send data and recive data fom our AjaxController
 
        $.ajax({
-          url:'/facturacion/ajax',
+          url:'/facturacion/create/ajax',
           data:{'name':"luis"},
           type:'post',
           success: function (response) {
