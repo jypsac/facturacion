@@ -25,7 +25,7 @@ class EmpresaSeeder extends Seeder
 			'calle' => 'Calle Felix Tello Rojas Mz H Lote 25 Urb Honor y Lealtad de Surco',
 			'codigo_postal' => '50304',
 			'rubro' => ' Venta Partes, Piezas, Accesorios.',
-			'moneda_principal' => 'Soles',
+			'moneda_principal' => '1',
 			'descripcion' => 'Nos especializamos ela comercialización de bombas y motores óleo hidráulicos de calidad nueva y de las mejores marca líder en el mercado. Por ese motivo ofrecemos y contamos en stock productos de calidad de marcas internacionales como: Rexroth, Parker, Vickers, Eaton, Denison Hydraulics',
 			'pagina_web' => 'https://hidromaxsac.com/',
 			'foto' => 'logo.png',

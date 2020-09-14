@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Empresa;
 use App\Moneda;
 use App\Pais;
 use Illuminate\Http\Request;
@@ -88,9 +89,12 @@ class MonedaController extends Controller
         $principal='1';
         $buscar_principa=Moneda::where('principal',1)->first();
         $id_principal=$buscar_principa->id;
+
         $moneda=Moneda::find($id_principal);
         $moneda->principal=0;
         $moneda->save();
+
+
     }
     else{ $principal='0';}
 
@@ -101,6 +105,14 @@ class MonedaController extends Controller
     $moneda->principal=$principal;
     $moneda->pais=$request->get('pais');
     $moneda->save();
+    /*Buscador de moneda Principal*/
+    $principal_mone=Moneda::where('principal',1)->first();
+    $id_prin_mone=$principal_mone->id;
+    $ids_empresa=1;/*id empresa*/
+
+    $empresa=Empresa::find($ids_empresa); /*Cambio de moneda de empresa*/
+    $empresa->moneda_principal=$id_prin_mone;
+    $empresa->save();
     return redirect()->route('moneda.index');
 }
 

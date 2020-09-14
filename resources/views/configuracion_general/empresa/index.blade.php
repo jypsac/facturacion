@@ -57,7 +57,7 @@
           <p>{{$mi_empresa->rubro}}</p><hr>
 
           <h4>Moneda Principal</h4>
-          <p>{{$mi_empresa->moneda_principal}}</p><hr>
+          <p>{{$mi_empresa->moneda->nombre}}</p><hr>
         </div>
       </div>
 
@@ -76,18 +76,18 @@
                           @else
                           <strong> estado: Desactivado</strong>
                           @endif
-                         
+
                           <br><br>
                           <a  class="btn btn-lg btn-success" href="{{ route('banco.edit', $bancos->id) }}" style="padding: 3px 5px 3px 7px; " > <i  class="fa fa-edit"></i></a>
-                        </p> 
-                      </div>                  
+                        </p>
+                      </div>
           @endforeach
-       
-        
+
+
       </div>
 
 
-    </div> 
+    </div>
      <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -109,7 +109,7 @@
 
     });
 
-</script> 
+</script>
 <style type="text/css">
   .banco{border-radius: 5px;border: 1px solid black }
 </style>
