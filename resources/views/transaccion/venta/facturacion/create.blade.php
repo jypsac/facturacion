@@ -266,15 +266,13 @@
                                     <td colspan="4">
                                         <textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
                                     </td>
-                                </tr>             
+                                </tr>
                             </tbody>
                         </table>
 
 
-                        <button id='myajax'>click me</button>
-                        <div id='msg'>
-                                mensaje
-                        </div>
+
+
 
                         {{--FIn Cabecera --}}
                         @if($categoria=='servicio')
@@ -307,7 +305,7 @@
                                         </td>
                                         <td>
                                             {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
-                                            <div style="position: relative; "> 
+                                            <div style="position: relative; ">
                                                 <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
                                             </div>
                                             <div class="div_check" >
@@ -471,6 +469,35 @@
                                                 <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
                                                 @endif
                                             </form>
+                                              <button id='myajax'>click me</button>
+                                            <div id='msg'>
+                                                    mensaje
+                                            </div>
+                                            <script>
+                                                $('#myajax').click(function(){
+                                                   $.ajax({
+                                                      url:'/facturacion/create_ajax',
+                                                      data:{'name':"luis"},
+                                                      type:'post',
+                                                      headers: {
+                                                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                                      },
+                                                      success: function (response) {
+                                                        $("#msg").html(response.msg);
+                                                      },
+                                                      statusCode: {
+                                                         404: function() {
+                                                            alert('web not found');
+                                                         }
+                                                      },
+                                                      error:function(x,xs,xt){
+                                                          //nos dara el error si es que hay alguno
+                                                          window.open(JSON.stringify(x));
+                                                          //alert('error: ' + JSON.stringify(x) +"\n error string: "+ xs + "\n error throwed: " + xt);
+                                                      }
+                                                   });
+                                                });
+                                            </script>
                                         </div>
                                     </div>
                                 </div>
@@ -850,9 +877,13 @@
             $('.tablese').append(data);
             i++;
         });
+
+
     </script>
 
     <script>
+
+
         function print(){
             var print_input=1;
             document.getElementById("prints").value = print_input;
@@ -1059,36 +1090,6 @@
                 radioClass: 'iradio_square-green',
             });
         });
-
-
-    $.ajaxSetup({
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-            }
-    });
-
-    $('#myajax').click(function(){
-       //we will send data and recive data fom our AjaxController
-
-       $.ajax({
-          url:'/facturacion/create_ajax',
-          data:{'name':"luis"},
-          type:'post',
-          success: function (response) {
-                      $("#msg").html(response.productos);
-          },
-          statusCode: {
-             404: function() {
-                alert('web not found');
-             }
-          },
-          error:function(x,xs,xt){
-              //nos dara el error si es que hay alguno
-              window.open(JSON.stringify(x));
-              //alert('error: ' + JSON.stringify(x) +"\n error string: "+ xs + "\n error throwed: " + xt);
-          }
-       });
-    });
 
 
 
