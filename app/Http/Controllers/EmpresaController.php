@@ -72,7 +72,26 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        return 'hola';
+        $empresa=Empresa::find($id);
+        $empresa->nombre=$request->get('nombre');
+        $empresa->razon_social=$request->get('razon_social');
+        $empresa->ruc=$request->get('ruc');
+        $empresa->telefono=$request->get('telefono');
+        $empresa->movil=$request->get('movil');
+        $empresa->correo=$request->get('correo');
+        $empresa->pais=$request->get('pais');
+        $empresa->region_provincia=$request->get('region_provincia');
+        $empresa->ciudad=$request->get('ciudad');
+        $empresa->calle=$request->get('calle');
+        $empresa->codigo_postal=$request->get('codigo_postal');
+        $empresa->rubro=$request->get('rubro');
+        $empresa->moneda_principal=$request->get('moneda_principal');
+        $empresa->descripcion=$request->get('descripcion');
+        $empresa->pagina_web=$request->get('pagina_web');
+        $empresa->foto=$request->get('foto');
+        $empresa->save();
+
     }
 
     /**

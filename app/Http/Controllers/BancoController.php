@@ -58,7 +58,7 @@ class BancoController extends Controller
     public function edit($id)
     {
        $banco=Banco::find($id);
-        return view('maestro.conf_general.empresa.banco_edit',compact('banco'));
+        return view('configuracion_general.empresa.banco_edit',compact('banco'));
     }
 
     /**
