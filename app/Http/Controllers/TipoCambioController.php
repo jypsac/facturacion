@@ -16,10 +16,11 @@ class TipoCambioController extends Controller
      */
     public function index()
     {
+        $consulta=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();/*Consulta .sí se hizo hoy el cambio*/
         $moneda1=Moneda::where('principal',1)->first();
         $moneda2=Moneda::where('principal',0)->first();
         $tipo_cambio=TipoCambio::all();
-        return view('maestro.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2'));
+        return view('maestro.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2','consulta'));
     }
 
     /**
@@ -29,7 +30,8 @@ class TipoCambioController extends Controller
      */
     public function create()
     {
-        return view('maestro.tipo_cambio.create');
+        $moneda_principal=Moneda::where('principal',1)->first();
+        return view('maestro.tipo_cambio.create',compact('moneda_principal'));
     }
 
     /**
@@ -45,38 +47,41 @@ class TipoCambioController extends Controller
         $moneda2=Moneda::where('principal',0)->first();
         $tipo_cambio=TipoCambio::all();
         /**/
-
-        $consulta=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();/*si se hizo hoy el cambio*/
-        if($consulta){
-            $error= "no puede generar otro tipo de cambio , en el mismo dia";
-            return view('maestro.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2','error'));
-        }
         $moneda_principal=Moneda::where('principal',1)->first();
+        /*Recibiendo datos*/
+        $compra=$request->get('compra');
+        $venta=$request->get('venta');
+        $paralelo=$request->get('paralelo');
+        /**/
+        $consulta=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();/*Consulta .sí se hizo hoy el cambio*/
+
+        if($consulta){/*Consulta para que redirija error si hace doble tipo de cambio*/
+            $error= "no puede generar otro tipo de cambio , en el mismo dia";
+            return view('maestro.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2','error','consulta'));
+        }
 
         if ($moneda_principal->id =='1')/*pregunta si esta en Soles(Nacional)*/ {
-            $compra=$request->get('compra');
-            $paralelo=$request->get('paralelo');
             if ($compra<$paralelo) {
-               $error= 'el tipo de Cambio "Paralelo"('.$paralelo.') debe ser menor al tipo de Cambio "Compra("'.$compra.')';
-               return view('maestro.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2','error'));
+               $paralelo_recomendado=$compra-0.05;
+               $error= 'el tipo de Cambio "Paralelo"('.$paralelo.') debe ser menor al tipo de Cambio "Compra"('.$compra.'). ';
+               return view('maestro.tipo_cambio.create',compact('error','moneda_principal','compra','venta','paralelo_recomendado'));
            }
        }
-       elseif ($moneda_principal->id =='2')/*pregunta si esta en Dolares(Extranjero)*/  {
-            $compra=$request->get('compra');
-            $paralelo=$request->get('paralelo');
-            if ($compra>$paralelo) {
-            $error= 'el tipo de Cambio "Paralelo"('.$paralelo.') debe ser Mayor al tipo de Cambio "Compra("'.$compra.')';
-            return view('maestro.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2','error'));
-            }
-    }
-        $cambio=new TipoCambio;
-        $cambio->compra=$request->get('compra');
-        $cambio->venta=$request->get('venta');
-        $cambio->paralelo=$request->get('paralelo');
-        $cambio->fecha=Carbon::now()->format('Y-m-d');
-        $cambio->save();
+        elseif ($moneda_principal->id =='2')/*pregunta si esta en Dolares(Extranjero)*/  {
+             if ($compra>$paralelo) {
+           $paralelo_recomendado=$compra+0.05;
+           $error= 'el tipo de Cambio "Paralelo"('.$paralelo.') debe ser Mayor al tipo de Cambio "Compra"('.$compra.')';
+           return view('maestro.tipo_cambio.create',compact('error','moneda_principal','compra','venta','paralelo_recomendado'));
+             }
+        }
+   $cambio=new TipoCambio;
+   $cambio->compra=$request->get('compra');
+   $cambio->venta=$request->get('venta');
+   $cambio->paralelo=$request->get('paralelo');
+   $cambio->fecha=Carbon::now()->format('Y-m-d');
+   $cambio->save();
 
-    return redirect()->route('tipo_cambio.index');
+   return redirect()->route('tipo_cambio.index');
 
 }
 

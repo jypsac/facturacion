@@ -3,8 +3,12 @@
 @section('title', 'Tipo de cambio')
 @section('breadcrumb', 'Cambio')
 @section('breadcrumb2', 'Cambio')
+
+@if($consulta)
+@else
 @section('href_accion', route('tipo_cambio.create'))
 @section('value_accion', 'Agregar Cambio Diario')
+@endif
 
 @section('content')
 
