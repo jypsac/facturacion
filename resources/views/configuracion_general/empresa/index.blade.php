@@ -158,9 +158,9 @@
           <br>
           N° Dolares: {{$bancos->numero_dolares}}<br>
           @if($bancos->estado==0)
-          <strong> estado: Activado</strong>
+          <strong> Estado: Activado</strong>
           @else
-          <strong> estado: Desactivado</strong>
+          <strong> Estado: Desactivado</strong>
           @endif
           <br>
           <br>
