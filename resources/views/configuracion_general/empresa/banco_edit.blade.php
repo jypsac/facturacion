@@ -1,5 +1,4 @@
 @extends('layout')
-
 @section('title', 'Configuracion de Empresa')
 @section('breadcrumb', 'Empresa')
 @section('breadcrumb2', 'Empresa')
@@ -19,20 +18,20 @@
       <div class="row ">
 
         <div class="col-lg-6">
-        	<div class="row"> 
+        	<div class="row">
         		<label class="col-sm-3 ">N° Soles: </label>
         		<div class="col-sm-9"><input class="form-control" type="text" name="numero_soles" value="{{$banco->numero_soles}}" ></div>
         	</div>
         </div>
 
         <div class="col-lg-6">
-        	<div class="row"> 
+        	<div class="row">
         		<label class="col-sm-3 ">N° Dolares: </label>
         		<div class="col-sm-9"><input class="form-control" type="text" name="numero_dolares" value="{{$banco->numero_dolares}}" ></div>
         	</div>
         </div>
         <div class="col-lg-6">
-        	<div class="row"> 
+        	<div class="row">
         		<label class="col-sm-3 ">Estado: </label>
         		<div class="col-sm-9">
         			<select class="form-control" name="estado">
@@ -41,7 +40,7 @@
         				@else
         				<option value="1">Desactivado</option>
         				@endif
-        				
+
         				@if($banco->estado==0)
         				<option value="1">Desactivado</option>
         				@else

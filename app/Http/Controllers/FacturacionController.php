@@ -217,7 +217,7 @@ class FacturacionController extends Controller
         $facturacion->codigo_fac=$cod_fac;
         $facturacion->orden_compra=$request->get('orden_compra');
         $facturacion->guia_remision=$request->get('guia_r');
-        
+
 
 
         $facturacion->cliente_id=$cliente_buscador->id;
@@ -316,7 +316,7 @@ class FacturacionController extends Controller
         $sum=0;
         $igv=Igv::first();
         $sub_total=0;
-        $banco=Banco::all();
+        $banco=Banco::where('estado',0)->get();
         if ($facturacion->id_cotizador_servicio==NULL) {
             return view('transaccion.venta.facturacion.show', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
         }else{
@@ -332,7 +332,7 @@ class FacturacionController extends Controller
         $sum=0;
         $igv=Igv::first();
         $sub_total=0;
-        $banco=Banco::all();
+        $banco=Banco::where('estado',0)->get();
 
         return view('transaccion.venta.facturacion.print', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
     }
