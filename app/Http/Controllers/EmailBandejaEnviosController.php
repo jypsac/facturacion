@@ -37,7 +37,7 @@ class EmailBandejaEnviosController extends Controller
       $id_usuario=auth()->user()->id;
       $user=User::where('id',$id_usuario)->first();
       $clientes=Cliente::all();
-      $mailbox =EmailBandejaEnvios::all();
+      $mailbox =EmailBandejaEnvios::OrderBy('id','desc')->get();
       $mailbox_file =EmailBandejaEnviosArchivos::all();
       return view('mailbox.index',compact('mailbox','user','clientes','mailbox_file'));
 
@@ -63,7 +63,15 @@ class EmailBandejaEnviosController extends Controller
     $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
     $firma=$correo_busqueda->firma;
     $mensaje_html = $request->get('mensaje');
-    $mensaje_con_firma =$mensaje_html.'<img name="firma" src="/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" />';
+    
+
+    if($firma == null){
+      $mensaje_con_firma = $mensaje_html;
+    }else{
+      $mensaje_con_firma =$mensaje_html.'<img name="firma" src="../archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" />';
+    }
+
+
     // return $mensaje_con_firma;
     $correo=$correo_busqueda->email;
 
