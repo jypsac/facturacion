@@ -63,14 +63,12 @@ class EmailBandejaEnviosController extends Controller
     $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
     $firma=$correo_busqueda->firma;
     $mensaje_html = $request->get('mensaje');
-    
+
 
     if($firma == null){
-      $mensaje_con_firma = $mensaje_html;
+      $mensaje_con_firma =$mensaje_html.'<script>$( "table" ).removeClass( "table table-bordered" ).addClass( "table table-striped table-bordered table-hover dataTables-example" );</script>';
     }else{
-      $mensaje_con_firma ='<body>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer><style> table.table-table-bordered, td, th {
-  border: 1px solid black !important;
-}</style>';
+      $mensaje_con_firma =$mensaje_html.'<br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer><script>$( "table" ).removeClass( "table table-bordered" ).addClass( "table table-striped table-bordered table-hover dataTables-example" );</script>';
     }
 
 
@@ -95,87 +93,87 @@ class EmailBandejaEnviosController extends Controller
 
         $newfile = $request->file('archivos');
         if($request->hasfile('archivos')){
-            foreach ($newfile as $file) {
-                $nombre =  $file->getClientOriginalName();
-                \Storage::disk('mailbox')->put($nombre,  \File::get($file));
+          foreach ($newfile as $file) {
+            $nombre =  $file->getClientOriginalName();
+            \Storage::disk('mailbox')->put($nombre,  \File::get($file));
 
-                $news[] = storage_path().'/app/public/'.$nombre;
-                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
-                foreach ($news as $attachment) {
-                    $message->attach(\Swift_Attachment::fromPath($attachment));
-                }
+            $news[] = storage_path().'/app/public/'.$nombre;
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
+            foreach ($news as $attachment) {
+              $message->attach(\Swift_Attachment::fromPath($attachment));
             }
+          }
         }else{
-            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
+          $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
 
         }
         if($mailer->send($message)){
-            $mensaje =$request->get('mensaje') ;
-            $texto= strip_tags($mensaje);
-            $mail = new EmailBandejaEnvios;
-            $mail->id_usuario =auth()->user()->id;
-            $mail->destinatario =$correo;
-            $mail->remitente =$request->get('remitente') ;
-            $mail->asunto =$request->get('asunto') ;
-            $mail->mensaje =$mensaje_con_firma;
-            $mail->mensaje_sin_html =$texto ;
-            $mail->fecha_hora =Carbon::now() ;
-            $mail-> save();
+          $mensaje =$request->get('mensaje') ;
+          $texto= strip_tags($mensaje);
+          $mail = new EmailBandejaEnvios;
+          $mail->id_usuario =auth()->user()->id;
+          $mail->destinatario =$correo;
+          $mail->remitente =$request->get('remitente') ;
+          $mail->asunto =$request->get('asunto') ;
+          $mail->mensaje =$mensaje_con_firma;
+          $mail->mensaje_sin_html =$texto ;
+          $mail->fecha_hora =Carbon::now() ;
+          $mail-> save();
 
-            $newfile2 = $request->file('archivos');
-            if($request->hasfile('archivos')){
-              foreach ($newfile2 as $file2) {
-                $guardar_email_archivo=new EmailBandejaEnviosArchivos;
-                $guardar_email_archivo->id_bandeja_envios=$mail->id;
-                $guardar_email_archivo->archivo= $file2->getClientOriginalName();
-                $guardar_email_archivo->fecha_hora=Carbon::now();
-                $guardar_email_archivo->save();
-              }
+          $newfile2 = $request->file('archivos');
+          if($request->hasfile('archivos')){
+            foreach ($newfile2 as $file2) {
+              $guardar_email_archivo=new EmailBandejaEnviosArchivos;
+              $guardar_email_archivo->id_bandeja_envios=$mail->id;
+              $guardar_email_archivo->archivo= $file2->getClientOriginalName();
+              $guardar_email_archivo->fecha_hora=Carbon::now();
+              $guardar_email_archivo->save();
             }
-            return redirect()->route('email.index');
+          }
+          return redirect()->route('email.index');
+        }
+        return "Something went wrong :(";
+
       }
-      return "Something went wrong :(";
 
-  }
+      function save(Request $request){
 
-  function save(Request $request){
+        $tipo = $request->get('tipo');
+        $id =$request->get('id');
+        $redic=$request->get('redict');
+        $clientes=$request->get('cliente');
 
-    $tipo = $request->get('tipo');
-    $id =$request->get('id');
-    $redic=$request->get('redict');
-    $clientes=$request->get('cliente');
+        if($tipo == 'App\Cotizacion'){
+          $rutapdf = 'transaccion.venta.cotizacion.print';
+          $name = 'Cotizacion_Producto_';
 
-    if($tipo == 'App\Cotizacion'){
-      $rutapdf = 'transaccion.venta.cotizacion.print';
-      $name = 'Cotizacion_Producto_';
+          $empresa=Empresa::first();
 
-      $empresa=Empresa::first();
-
-      $banco=Banco::where('estado','0')->get();
-      $moneda=Moneda::where('principal',1)->first();
-      $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
-      $cotizacion_registro2=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
-      foreach ($cotizacion_registro as $cotizacion_registros) {
-         $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
-      }
+          $banco=Banco::where('estado','0')->get();
+          $moneda=Moneda::where('principal',1)->first();
+          $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+          $cotizacion_registro2=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+          foreach ($cotizacion_registro as $cotizacion_registros) {
+           $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+         }
 
         // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
-       $cotizacion=Cotizacion::find($id);
-       $empresa=Empresa::first();
-       $sum=0;
-       $igv=Igv::first();
-       $sub_total=0;
+         $cotizacion=Cotizacion::find($id);
+         $empresa=Empresa::first();
+         $sum=0;
+         $igv=Igv::first();
+         $sub_total=0;
 
-       $regla=$cotizacion->tipo;
-       $archivo=$name.$regla.$id.".pdf";
-       $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco'));
+         $regla=$cotizacion->tipo;
+         $archivo=$name.$regla.$id.".pdf";
+         $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco'));
 
-       $contenido=$pdf->download();
-       Storage::disk($redic)->put($archivo,$contenido);
+         $contenido=$pdf->download();
+         Storage::disk($redic)->put($archivo,$contenido);
 
-        return view('mailbox.create',compact('archivo','clientes','redic'));
+         return view('mailbox.create',compact('archivo','clientes','redic'));
 
-    }elseif ($tipo=='App\Cotizacion_Servicios') {
+       }elseif ($tipo=='App\Cotizacion_Servicios') {
 
         $rutapdf = 'transaccion.venta.servicios.cotizacion.print';
         $name = 'Cotizacion_Servicio_';
@@ -185,7 +183,7 @@ class EmailBandejaEnviosController extends Controller
         $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
         $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
         foreach ($cotizacion_registro as $cotizacion_registros) {
-           $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+         $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
        }
 
         // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
@@ -197,16 +195,16 @@ class EmailBandejaEnviosController extends Controller
        $end=0;
        $regla=$cotizacion->tipo;
 
-        $archivo=$name.$regla.$id.".pdf";
-        $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco'));
+       $archivo=$name.$regla.$id.".pdf";
+       $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco'));
 
        $contenido=$pdf->download();
        Storage::disk($redic)->put($archivo,$contenido);
        return view('mailbox.create',compact('archivo','clientes','redic'));
 
-    }
+     }
 
-    else{
+     else{
       $mi_empresa=Empresa::first();
       if($tipo == 'App\GarantiaGuiaIngreso'){
         $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
