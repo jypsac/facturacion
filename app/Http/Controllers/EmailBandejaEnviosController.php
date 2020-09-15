@@ -68,7 +68,7 @@ class EmailBandejaEnviosController extends Controller
     if($firma == null){
       $mensaje_con_firma = $mensaje_html;
     }else{
-      $mensaje_con_firma ='<body>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer><style> table.table-table-bordered, td, th {
+      $mensaje_con_firma ='<body>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer><style> table.table.table-bordered,tr,tbody, td, th {
   border: 1px solid black !important;
 }</style>';
     }
