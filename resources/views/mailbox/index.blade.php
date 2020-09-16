@@ -222,9 +222,9 @@
 div.note-editable.card-block{
     max-height: 2% !important;
 }
-table.table.table-bordered{
-    border: currentColor; !important;
-}
+ table.table.table-bordered, td, th {
+  border: 1px solid black !important;
+} 
 div.form-group.note-form-group.note-group-select-from-files{
     display: none !important;
 }
@@ -264,6 +264,7 @@ span.fileinput-filename{
     $(function() {
       $('.summernote').summernote({
         height: 200,
+       
     });
 
   });
