@@ -100,13 +100,41 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $user=User::find($id);
-        $user->name=$request->get('name');
-        $user->email=$request->get('correo');
-        $user->password=bcrypt($request->get('password'));
-        $user->save();
+        // recibiendo Datos
+        $usuarios=User::all();
+        $contrasena_confirmar=$request->get('contrasena_confirmar');
+        $correo_new=$request->get('correo');
+        $password_new=$request->get('password_new');
 
-        return redirect()->route('usuario.index');
+        $contra=User::where('id',$id)->first();
+
+        if (password_verify($contrasena_confirmar, $contra->password)){
+            if (isset($password_new)) {
+                $user=User::find($id);
+                $user->email=$correo_new;
+                $user->password=bcrypt($password_new);
+                $user->save();
+                $mensaje='Contraseña Modificada Correctamente';
+                return view('maestro.usuario.index',compact('usuarios','mensaje'));
+            }
+            else{
+                $user=User::find($id);
+                $user->email=$correo_new;
+                $user->save();
+                return redirect()->route('usuario.index');
+            }
+        }
+        else {
+            $error='Contraseña de Confirmacion Erronea';
+            return $error;
+        // return '¡La contraseña no es la misma!';
+        }
+    // $user=User::find($id);
+    // $user->email=$request->get('correo');
+    // $user->password=bcrypt($request->get('password'));
+    // $user->save();
+
+    // return redirect()->route('usuario.index');
     }
 
     /**
