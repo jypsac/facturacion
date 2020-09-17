@@ -76,19 +76,19 @@ class FacturacionController extends Controller
 
     public function create_ajax(){
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-        foreach ($productos as $index => $producto) {
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
-            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
-        }
-
+        // foreach ($productos as $index => $producto) {
+        //     $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+        //     $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
+        //     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+        //     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
+        // }
+                    //envio de cambio por el porcedimiento
         return response()->json(array(
             'productos'=> $productos,
-            'utilidad'=> $utilidad,
-            'array'=> $array,
-            'array_cantidad'=> $array_cantidad,
-            'array_promedio'=> $array_promedio,
+            // 'utilidad'=> $utilidad,
+            // 'array'=> $array,
+            // 'array_cantidad'=> $array_cantidad,
+            // 'array_promedio'=> $array_promedio,
         ), 200);
     }
 

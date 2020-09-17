@@ -483,7 +483,18 @@
                                                           'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                                                       },
                                                       success: function (response) {
-                                                        $("#msg").html(response.msg);
+                                                        // $("#msg").html(response.msg);
+
+                                                            $('#msg').html(response.productos);
+                                                            // $('#razon_social').val(datos[1]);
+                                                            // $('#fecha_actividad').val(datos[2]);
+                                                            // $('#condicion').val(datos[3]);
+                                                            // $('#tipo').val(datos[4]);
+                                                            // $('#estado').val(datos[5]);
+                                                            // $('#fecha_inscripcion').val(datos[6]);
+                                                            // $('#domicilio').val(datos[7]);
+                                                            // $('#emision').val(datos[8]);
+
                                                       },
                                                       statusCode: {
                                                          404: function() {
@@ -497,7 +508,40 @@
                                                       }
                                                    });
                                                 });
+// $(function(){
+//     $('#botoncito').on('click', function(){
+//         var ruc = $('#ruc').val();
+//         var url = "";
+//         $('.ajaxgif').removeClass('hide');
+//         $.ajax({
+//             type:'GET',
+//             url:url,
+//             data:'ruc='+ruc,
+//             success: function(datos_dni){
+//                 $('.ajaxgif').addClass('hide');
+//                 var datos = eval(datos_dni);
+//                 var nada ='nada';
+//                 if(datos[0]==nada){
+//                     alert('DNI o RUC no válido o no registrado');
+//                 }else{
+//                     $('#numero_ruc').val(datos[0]);
+//                     $('#razon_social').val(datos[1]);
+//                     $('#fecha_actividad').val(datos[2]);
+//                     $('#condicion').val(datos[3]);
+//                     $('#tipo').val(datos[4]);
+//                     $('#estado').val(datos[5]);
+//                     $('#fecha_inscripcion').val(datos[6]);
+//                     $('#domicilio').val(datos[7]);
+//                     $('#emision').val(datos[8]);
+//                 }
+//             }
+//         });
+//         return false;
+//     });
+// });
+
                                             </script>
+
                                         </div>
                                     </div>
                                 </div>
