@@ -65,6 +65,7 @@ class PersonalController extends Controller
         $personal->profesion=$request->get('profesion');
         $personal->direccion=$request->get('direccion');
         $personal->estado=0;
+        $personal->usuario_registrado=0;
         $personal->estado_trabajador_laboral='Activo';
         $personal->foto=$name;
         $personal->save();

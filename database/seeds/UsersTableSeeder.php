@@ -43,6 +43,6 @@ class UsersTableSeeder extends Seeder
            'email_creado' => 0
        ]);
 
-       
+
     }
 }

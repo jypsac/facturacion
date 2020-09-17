@@ -8,6 +8,15 @@
 
 @section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
+	@if(isset($error))
+    <div>
+      <div class="alert alert-danger">
+        <div class="alert-link" href="#">
+          <li style="color: red;">{{ $error }}</li>
+      </div>
+  </div>
+</div>
+@endif
 	<div class="row">
 		<div class="col-lg-12">
             <div class="ibox">
