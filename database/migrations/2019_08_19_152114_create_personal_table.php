@@ -31,6 +31,7 @@ class CreatePersonalTable extends Migration
             $table->string('direccion');
             $table->string('estado_trabajador_laboral');
             $table->boolean('estado');
+            $table->boolean('usuario_registrado');
             $table->string('foto')->default('perfil.svg');
             $table->timestamps();
         });
@@ -70,6 +71,6 @@ class CreatePersonalTable extends Migration
     {
         Schema::dropIfExists('personal_datos_laborales');
         Schema::dropIfExists('personal');
-        
+
     }
 }

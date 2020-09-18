@@ -47,7 +47,7 @@ class ClienteController extends Controller
             'nombre.numero_documento' => 'El numero de documentacion ya ha sido registrado',
             'nombre.email' => 'El correo ya existe'
         ]);
-         
+
         $data = $request->all();
 
         $cliente= new Cliente;
@@ -59,7 +59,7 @@ class ClienteController extends Controller
         // $cliente->empresa=$request->get('empresa');
         $cliente->documento_identificacion=$request->get('documento_identificacion');
         $cliente->numero_documento=$request->get('numero_documento');
-        
+
         $cliente->ciudad=$request->get('ciudad');
         $cliente->departamento=$request->get('departamento');
         $cliente->pais=$request->get('pais');
@@ -108,13 +108,13 @@ class ClienteController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    
+
     public function show($id)
     {
 
         $cliente_show=Cliente::find($id);
         $contacto_show=Contacto::where('clientes_id','=',$id)->orderBy('primer_contacto','DESC')->get();
-        return view('auxiliar.cliente.show',compact('cliente_show','contacto_show')); 
+        return view('auxiliar.cliente.show',compact('cliente_show','contacto_show'));
     }
 
     /**
