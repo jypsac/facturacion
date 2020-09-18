@@ -44,7 +44,7 @@
                                             <th>Descripcion</th>
                                             {{-- <th>Ver</th> --}}
                                             <th>EDITAR</th>
-                                            <th>Eliminar</th>
+                                            <th>Desactivar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -62,7 +62,7 @@
                                             <form action="{{route('almacen.destroy',$almacen->id)}}" method="POST">
                                               @csrf
                                               @method('delete')
-                                              <button type="submit" class="btn btn-w-m btn-danger">Eliminar</button>
+                                              <button type="submit" class="btn btn-w-m btn-danger">Desca</button>
                                             </form></center>
                                             </td>
                                         </tr>
