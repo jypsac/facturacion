@@ -83,14 +83,14 @@ class EmailBandejaEnviosController extends Controller
     }
       </style>'.$mensaje_html.'</body>';
     }else{
-      $mensaje_con_firma ='<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
+      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
       $(document).ready(function(){
           $("table").removeClass("table table-bordered").addClass("css");
       });
       </script>
       <style>
-    .css,table,tr,td{
+   .css,table,tr,td{
       padding: 15px;
       border: 1px solid black;
       border-collapse: collapse;
@@ -98,7 +98,7 @@ class EmailBandejaEnviosController extends Controller
     table{
       width:100%;
     }
-      </style>'.$mensaje_html.'<br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>'; 
+      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>'; 
     }
 
 
