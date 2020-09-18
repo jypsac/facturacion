@@ -73,42 +73,32 @@ class EmailBandejaEnviosController extends Controller
       });
       </script>
       <style>
-      .css{
-      width=100%;
-      }
-        .css,tbody,tr,td {
-    margin-bottom: 1rem;
-    background-color: transparent;
-    padding: 8px;
-    border: 1px solid black;
-    border-collapse: collapse;
+   .css,table,tr,td{
+      padding: 15px;
+      border: 1px solid black;
+      border-collapse: collapse;
         }
-    th, td {
-    padding: 15px;
+    table{
+      width:100%;
     }
       </style>'.$mensaje_html.'</body>';
     }else{
-      $mensaje_con_firma ='<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-    <script>
-    $(document).ready(function(){
-        $("table").removeClass("table table-bordered").addClass("css");
-    });
-    </script>
-    <style>
-      .css{
-      width=100%;
-      }
-        .css,tbody,tr,td {
-    margin-bottom: 1rem;
-    background-color: transparent;
-    padding: 8px;
-    border: 1px solid black;
-    border-collapse: collapse;
+      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      $(document).ready(function(){
+          $("table").removeClass("table table-bordered").addClass("css");
+      });
+      </script>
+      <style>
+   .css,table,tr,td{
+      padding: 15px;
+      border: 1px solid black;
+      border-collapse: collapse;
         }
-    th, td {
-    padding: 15px;
+    table{
+      width:100%;
     }
-      </style>'.$mensaje_html.'<br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>'; 
+      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>'; 
     }
 
 
