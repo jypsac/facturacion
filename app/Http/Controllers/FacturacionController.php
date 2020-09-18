@@ -339,15 +339,13 @@ class FacturacionController extends Controller
 
     public function show_boleta(Request $request,$id)
     {
+        return view('transaccion.venta.facturacion.boleta');
+    }
 
-     return view('transaccion.venta.facturacion.boleta');
- }
-
- public function create_boleta()
- {
-
-     return view('transaccion.venta.facturacion.create_boleta');
- }
+     public function create_boleta()
+     {
+         return view('transaccion.venta.facturacion.create_boleta');
+     }
 
     /**
      * Show the form for editing the specified resource.
