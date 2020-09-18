@@ -66,15 +66,39 @@ class EmailBandejaEnviosController extends Controller
 
 
     if($firma == null){
-      $mensaje_con_firma =$mensaje_html.'<script>$( "table" ).removeClass( "table table-bordered" ).addClass( "table table-striped table-bordered table-hover dataTables-example" );</script>';
+      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      $(document).ready(function(){
+          $("table").removeClass("table table-bordered").addClass("css");
+      });
+      </script>
+      <style>
+   .css,table,tr,td{
+      padding: 15px;
+      border: 1px solid black;
+      border-collapse: collapse;
+        }
+    table{
+      width:100%;
+    }
+      </style>'.$mensaje_html.'</body>';
     }else{
-<<<<<<< HEAD
-      $mensaje_con_firma =$mensaje_html.'<br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer><script>$( "table" ).removeClass( "table table-bordered" ).addClass( "table table-striped table-bordered table-hover dataTables-example" );</script>';
-=======
-      $mensaje_con_firma ='<body>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer><style> table.table.table-bordered,tr,tbody, td, th {
-  border: 1px solid black !important;
-}</style>';
->>>>>>> d17dd1068344f8b55745a30b3b2091aea7e509c7
+      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      $(document).ready(function(){
+          $("table").removeClass("table table-bordered").addClass("css");
+      });
+      </script>
+      <style>
+   .css,table,tr,td{
+      padding: 15px;
+      border: 1px solid black;
+      border-collapse: collapse;
+        }
+    table{
+      width:100%;
+    }
+      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>'; 
     }
 
 

@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'Facturacion Productos')
+@section('title', 'Facturaciona Productos')
 @section('breadcrumb', 'Facturacion')
 @section('breadcrumb2', 'Facturacion')
 @section('href_accion', route('facturacion.index'))
@@ -17,43 +17,41 @@
                     e.preventDefault();
                 }
             });
-
-
         });
     </script>
 </head>
 @section('content')
-@if (session('repite'))
-<div class="alert alert-success">
-    {{ session('repite') }}
-</div>
-@endif
 
-@if (session('campo'))
-<div class="alert alert-success">
-    {{ session('campo') }}
-</div>
-@endif
-
-@if($errors->any())
-<div style="padding-top: 20px;">
-    <div class="alert alert-danger">
-        <a class="alert-link" href="#">
-            @foreach ($errors->all() as $error)
-            <li style="color: red">{{ $error }}</li>
-            @endforeach
-        </a>
-    </div>
-</div>
-@endif
-
+    @if (session('repite'))
+        <div class="alert alert-success">
+            {{ session('repite') }}
+        </div>
+    @endif
+    @if (session('campo'))
+        <div class="alert alert-success">
+            {{ session('campo') }}
+        </div>
+    @endif
+    @if($errors->any())
+        <div style="padding-top: 20px;">
+            <div class="alert alert-danger">
+                <a class="alert-link" href="#">
+                    @foreach ($errors->all() as $error)
+                        <li style="color: red">{{ $error }}</li>
+                    @endforeach
+                </a>
+            </div>
+        </div>
+    @endif
 
 <div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
-
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1">
+        <i class="fa fa-user-o" aria-hidden="true"></i>
+        <span>cliente</span>
+    </a>
 </div>
-<!-- Modal CLiente -->
 
+<!-- Modal CLiente -->
 <div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
         <div class="modal-content" style="width: 100%">
@@ -68,7 +66,6 @@
                     </div>
                 </div>
             </form>
-
             <script>
                 $(function(){
                     $('#botoncito').on('click', function(){
@@ -105,8 +102,10 @@
             <!-- Fin Consulta API -->
             <form action="{{ route('agregado_rapido.cliente_cotizado') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
                 @csrf
-                <h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
-                <div class="form-group row ">
+                <h1>
+                    <i class="fa fa-user-o" aria-hidden="true"></i>
+                </h1>
+                <div class="form-group row">
                     <label class="col-sm-2 col-form-label" >Tipo Documento:</label>
                     <div class="col-sm-4">
                         <select class="form-control m-b" name="documento_identificacion" >
@@ -115,49 +114,55 @@
                             <option value="pasaporte">Pasaporte</option>
                         </select>
                     </div>
+
                     <label class="col-sm-2 col-form-label">Numero de Documento:</label>
                     <div class="col-sm-4">
                         <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required value="{{ old('numero_documento')}}" autocomplete="off" type="number">
-                        <datalist id="browserdoc" >
-                            @foreach($clientes as $cliente)
-                            <option id="a">{{$cliente->numero_documento}} - existente</option>
-                            @endforeach
-                        </datalist>
+                            <datalist id="browserdoc" >
+                                @foreach($clientes as $cliente)
+                                <option id="a">{{$cliente->numero_documento}} - existente</option>
+                                @endforeach
+                            </datalist>
                     </div>
                 </div>
+
                 <div class="form-group row" >
                     <label class="col-sm-2 col-form-label" >Cliente:</label>
                     <div class="col-sm-4">
                         <input list="browsersc" class="form-control m-b" name="nombre" id="razon_social" required value="{{ old('nombre')}}" autocomplete="off">
                         <datalist id="browsersc" >
                             @foreach($clientes as $cliente)
-                            <option id="a">{{$cliente->nombre}} - existente</option>
+                                <option id="a">{{$cliente->nombre}} - existente</option>
                             @endforeach
                         </datalist>
                     </div>
+
                     <label class="col-sm-2 col-form-label">Direccion:</label>
                     <div class="col-sm-4">
                         <input type="text" class="form-control" name="direccion" id="domicilio" class="form-control" required value="{{ old('direccion')}}" autocomplete="off">
                     </div>
                 </div>
+
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" >correo:</label>
+                    <label class="col-sm-2 col-form-label">correo:</label>
                     <div class="col-sm-4">
                         <input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}" autocomplete="off">
                     </div>
                 </div>
+
                 <input type="submit"class="btn btn-primary" value="Grabar">
             </form>
         </div>
     </div>
 </div>
+
 <!-- Fin Modal Cliente -->
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-title">
-                    <h5>Agregar </h5>
+                    <h5>Agregar</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -186,31 +191,30 @@
                                     <img src="{{asset('img/logos/logo.png')}}" alt="" width="300px">
                                 </address>
                             </div>
+                            <div class="col-sm-4"></div>
                             <div class="col-sm-4">
-                            </div>
-
-                            <div class="col-sm-4 ">
-                                <div class="form-control ruc" style="height: 125px">
+                                <div class="form-control ruc" style="height:125px">
                                     <center>
-                                        <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
+                                        <h3 style="padding-top:10px">{{$empresa->ruc}}</h3>
                                         <h2>FACTURA ELECTRONICA</h2>
                                         <h5>FC-000{{$suma}}</h5>
                                     </center>
                                 </div>
                             </div>
-                        </div><br>
-
+                        </div>
+                        <br>
                         <table class="table">
                             <tbody>
                                 <tr>
                                     <td>Cliente</td>
                                     <td>:</td>
-                                    <td><input list="browsersc1" class="form-control m-b" name="cliente" required="required" value="{{ old('nombre')}}" autocomplete="off">
-                                        <datalist id="browsersc1" >
-                                            @foreach($clientes as $cliente)
-                                            <option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
-                                            @endforeach
-                                        </datalist>
+                                    <td>
+                                        <input list="browsersc1" class="form-control m-b" name="cliente" required="required" value="{{ old('nombre')}}" autocomplete="off">
+                                            <datalist id="browsersc1" >
+                                                @foreach($clientes as $cliente)
+                                                <option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
+                                                @endforeach
+                                            </datalist>
                                     </td>
                                     <td>Comisionista</td>
                                     <td>:</td>
@@ -227,13 +231,15 @@
                                 <tr>
                                     <td>Orden de compra</td>
                                     <td>:</td>
-                                    <td><input type="text" class="form-control m-b" name="orden_compra" required  autocomplete="off" value="0"></td>
+                                    <td>
+                                        <input type="text" class="form-control m-b" name="orden_compra" required  autocomplete="off" value="0">
+                                    </td>
                                     <td>Forma de pago</td>
                                     <td>:</td>
                                     <td>
                                         <select class="form-control" name="forma_pago" required="required">
                                             @foreach($forma_pagos as $forma_pago)
-                                            <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
+                                                <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
                                             @endforeach
                                         <select>
                                     </td>
@@ -241,7 +247,9 @@
                                 <tr>
                                     <td>Vendedor</td>
                                     <td>:</td>
-                                    <td><input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}"></td>
+                                    <td>
+                                        <input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}">
+                                    </td>
                                     <td>Guia remision</td>
                                     <td>:</td>
                                     <td><input type="text" class="form-control" value="0" name="guia_r"></td>
@@ -250,7 +258,7 @@
                                     <td>Moneda</td>
                                     <td>:</td>
                                     <td>
-                                        <select class="form-control" name="moneda" required="required">
+                                        <select class="form-control" name="moneda" required="required" >
                                             @foreach($moneda as $monedas)
                                                 <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
                                              @endforeach
@@ -258,7 +266,9 @@
                                     </td>
                                     <td>Fecha</td>
                                     <td>:</td>
-                                    <td><input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly"></td>
+                                    <td>
+                                        <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td>Observacion</td>
@@ -270,9 +280,7 @@
                             </tbody>
                         </table>
 
-
-
-
+                        <div id="resultado_moneda"></div>
 
                         {{--FIn Cabecera --}}
                         @if($categoria=='servicio')
@@ -620,13 +628,17 @@
                                 i++;
                             });
                         </script>
+<script type="text/javascript">
+    const selectElement = document.querySelector('.moneda');
+    selectElement.addEvertListener('change',(event) => {
+        const resultado = document.querySelector('.resultado_moneda');
+        resultado.textContent=`La moneda presente es ${event.target.value}`;
+    });
+</script>
 
 
-
-                        <script>
-
-                            function comision(){
-
+    <script>
+            function comision(){
             //comision
             var comision=document.querySelector(`#comisionista`).value;
             var separador=" ";
@@ -1135,14 +1147,10 @@
             });
         });
 
-
-
-
     </script>
     <style type="text/css">
         .a{color: red}
     </style>
-
 
     @endif
 
