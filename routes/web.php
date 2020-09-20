@@ -122,6 +122,7 @@ Route::group(
 		Route::resource('/configuracion_email','EmailConfiguracionesController');
 		Route::post('/email/save','EmailBandejaEnviosController@save')->name('email.save');
 		Route::post('email/send','EmailBandejaEnviosController@send')->name('email.send');
+		Route::post('email/trash','EmailBandejaEnviosController@trash')->name('email.trash');
 
 		//Garantias
 

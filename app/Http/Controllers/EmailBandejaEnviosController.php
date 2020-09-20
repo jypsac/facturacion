@@ -37,7 +37,7 @@ class EmailBandejaEnviosController extends Controller
       $id_usuario=auth()->user()->id;
       $user=User::where('id',$id_usuario)->first();
       $clientes=Cliente::all();
-      $mailbox =EmailBandejaEnvios::OrderBy('id','desc')->get();
+      $mailbox =EmailBandejaEnvios::where('estado','0')->OrderBy('id','desc')->get();
       $mailbox_file =EmailBandejaEnviosArchivos::all();
       return view('mailbox.index',compact('mailbox','user','clientes','mailbox_file'));
 
@@ -111,6 +111,7 @@ class EmailBandejaEnviosController extends Controller
         $port = $correo_busqueda->port;
         $encryption = $correo_busqueda->encryption;
         $yourEmail = $correo;
+        $estado = '0';
         //$mailbackup =  ; // = $request->yourmail
         $yourPassword = $correo_busqueda->password;
         $sendto = $request->get('remitente')  ;
@@ -147,6 +148,7 @@ class EmailBandejaEnviosController extends Controller
           $mail->asunto =$request->get('asunto') ;
           $mail->mensaje =$mensaje_con_firma;
           $mail->mensaje_sin_html =$texto ;
+          $mail->estado= $estado;
           $mail->fecha_hora =Carbon::now() ;
           $mail-> save();
 
@@ -346,6 +348,21 @@ class EmailBandejaEnviosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+    public function trash(Request $request){
+      $id = $request->get('id');
+      $mail =EmailBandejaEnvios::find($id);
+      $mail ->id_usuario=$mail->id_usuario;
+      $mail->destinatario=$mail->destinatario;
+      $mail->remitente=$mail->remitente;
+      $mail->asunto =$mail->asunto;
+      $mail->mensaje=$mail->mensaje;
+      $mail->mensaje_sin_html=$mail->mensaje_sin_html;
+      $mail->fecha_hora=$mail->fecha_hora;
+      $mail->estado = '1';
+      $mail->save();  
+      return back();  
+    }
+
     public function show($id)
     {
 
