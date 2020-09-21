@@ -85,16 +85,16 @@ class TipoCambioController extends Controller
 
     }
 
-    public function sunat_cambio(){
-// https://www.deperu.com/api/rest/cotizaciondolar.json
+    public function sunat_cambio(Request $request){
+        // https://www.deperu.com/api/rest/cotizaciondolar.json
         // https://www.youtube.com/watch?v=WTxYp9ECnPY
         $data = file_get_contents("https://www.deperu.com/api/rest/cotizaciondolar.json");
         $info = json_decode($data, true);
-        $data=array(
+        $datos=array(
             0 => $info['Cotizacion'][0]['Compra'],
             1 => $info['Cotizacion'][0]['Venta'],
         );
-        return $data;
+        echo json_encode($datos);
     }
 
     /**

@@ -215,6 +215,6 @@ Route::group(
 
 	});
 	Auth::routes();
-	Route::get('/sunat_cambio','TipoCambioController@sunat_cambio');
+	Route::post('/sunat_cambio','TipoCambioController@sunat_cambio');
 	Route::resource('/tipo_cambio','TipoCambioController')->middleware('auth');
 	Route::get('/home', 'HomeController@index')->name('home');

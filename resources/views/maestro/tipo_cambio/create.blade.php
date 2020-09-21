@@ -6,6 +6,7 @@
 @section('href_accion', route('tipo_cambio.index') )
 @section('value_accion', 'Atras')
 
+{{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> --}}
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -41,21 +42,23 @@
                 </a>
             </div>
         </div>
+
+        <button id='myajax'>Llenado por medio de SUNAT</button>
+
         <div class="ibox-content">
            <form action="{{ route('tipo_cambio.store') }}"  enctype="multipart/form-data" method="post">
                @csrf
                <div class="alert alert-warning">
-                {{-- Revisar correctamente el tipo de cambio ,el tipo de cambio solo se efectua 1 vez al dia y la actualización de esta solo podra hacerla el administrador una vez realizada <a class="alert-link"> ---Precaución</a>. --}}
+                {{-- Revisar correctamente el tipo de cambio ,el tipo de cambio solo se efectua 1 vez al dia y la actualización de esta solo podra hacerla el administrador una vez realizada <a class="alert-link"> -Precaución</a>. --}}
                 <p>Moneda Principal:<b> {{$moneda_principal->nombre}}</b></p>
             </div>
-            <button type="button" name="sunat">Llenado Sunat</button>
             <div class="form-group  row"><label class="col-sm-2 col-form-label">Compra:</label>
 
              <div class="col-sm-10">
                 @if(isset($compra))
-                <input type="text" class="form-control" name="compra" value="{{$compra}}">
+                <input type="text" class="form-control" name="compra" id="compra" value="{{$compra}}">
                 @else
-                <input type="text" class="form-control" name="compra" >
+                <input type="text" class="form-control" name="compra"  id="compra">
                 @endif
             </div>
         </div>
@@ -63,9 +66,9 @@
         <div class="form-group  row"><label class="col-sm-2 col-form-label">Venta:</label>
          <div class="col-sm-10">
              @if(isset($venta))
-             <input type="text" class="form-control" name="venta" value="{{$venta}}">
+             <input type="text" class="form-control" name="venta" id="venta" value="{{$venta}}">
              @else
-             <input type="text" class="form-control" name="venta" >
+             <input type="text" class="form-control" name="venta"  id="venta">
              @endif
          </div>
      </div>
@@ -95,4 +98,30 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+<script type="text/javascript">
+  $('#myajax').click(function(){
+     $.ajax({
+        url:'/sunat_cambio',
+        data:{'name':"luis"},
+        type:'post',
+        headers: {
+            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        },
+        success: function (response) {
+          var datos = eval(response);
+              $('#compra').val(datos[0]);
+              $('#venta').val(datos[1]);
+        },
+        statusCode: {
+           404: function() {
+              alert('web not found');
+           }
+        },
+        error:function(x,xs,xt){
+            window.open(JSON.stringify(x));
+        }
+     });
+  });
+</script>
 @endsection

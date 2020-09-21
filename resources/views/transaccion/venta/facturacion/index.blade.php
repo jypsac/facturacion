@@ -213,13 +213,12 @@
 
     $('#myajax').click(function(){
        //we will send data and recive data fom our AjaxController
-
        $.ajax({
           url:'/facturacion/create/ajax',
           data:{'name':"luis"},
           type:'post',
           success: function (response) {
-                      $("#msg").html(response.msg);
+            $("#msg").html(response.msg);
           },
           statusCode: {
              404: function() {
