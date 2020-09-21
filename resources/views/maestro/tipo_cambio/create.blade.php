@@ -48,7 +48,7 @@
                 {{-- Revisar correctamente el tipo de cambio ,el tipo de cambio solo se efectua 1 vez al dia y la actualización de esta solo podra hacerla el administrador una vez realizada <a class="alert-link"> ---Precaución</a>. --}}
                 <p>Moneda Principal:<b> {{$moneda_principal->nombre}}</b></p>
             </div>
-
+            <button type="button" name="sunat">Llenado Sunat</button>
             <div class="form-group  row"><label class="col-sm-2 col-form-label">Compra:</label>
 
              <div class="col-sm-10">

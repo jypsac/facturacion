@@ -122,6 +122,7 @@ Route::group(
 		Route::resource('/configuracion_email','EmailConfiguracionesController');
 		Route::post('/email/save','EmailBandejaEnviosController@save')->name('email.save');
 		Route::post('email/send','EmailBandejaEnviosController@send')->name('email.send');
+		Route::post('email/trash','EmailBandejaEnviosController@trash')->name('email.trash');
 
 		//Garantias
 
@@ -214,5 +215,6 @@ Route::group(
 
 	});
 	Auth::routes();
+	Route::get('/sunat_cambio','TipoCambioController@sunat_cambio');
 	Route::resource('/tipo_cambio','TipoCambioController')->middleware('auth');
 	Route::get('/home', 'HomeController@index')->name('home');

@@ -23,6 +23,7 @@ class CreateEmailBandejaEnviosTable extends Migration
             $table->text('mensaje');
             $table->text('mensaje_sin_html');
             $table->string('fecha_hora');
+            $table->boolean('estado');
             $table->timestamps();
         });
     }

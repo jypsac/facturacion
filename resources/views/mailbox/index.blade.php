@@ -116,8 +116,12 @@
                             {{-- <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="left" title="Plug this message"><i class="fa fa-plug"></i> Plug it</button>
                             <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
                             <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark as important"><i class="fa fa-exclamation"></i> </button> --}}
+                            <form action="{{route('email.trash')}}" method="post">    
+                                @csrf
                             <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to trash"><i class="fa fa-trash-o"></i> </button>
-
+                            <input type="hidden" name="id" value="{{$row->id}}" />
+                                
+                            </form>
                         </div>
                     </div>
                     <div class="small text-muted">
