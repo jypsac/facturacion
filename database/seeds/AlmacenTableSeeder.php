@@ -17,7 +17,8 @@ class AlmacenTableSeeder extends Seeder
             'abreviatura' => 'ALM1',
             'direccion' => 'Calle Cuzco nr1 Lima-Lima',
             'responsable' => 'Humberto Garcia',
-			'descripcion' => 'Almacen de impresoras',
+            'descripcion' => 'Almacen de impresoras',
+			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
         ]);
@@ -43,6 +44,6 @@ class AlmacenTableSeeder extends Seeder
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
         ]);
-        
+
     }
 }

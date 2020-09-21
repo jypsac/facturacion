@@ -20,6 +20,7 @@ class CreateAlmacenTable extends Migration
             $table->text('direccion');
             $table->string('responsable');
             $table->text('descripcion');
+            $table->boolean('estado');
             $table->timestamps();
         });
     }
