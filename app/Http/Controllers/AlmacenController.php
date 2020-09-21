@@ -23,8 +23,9 @@ class AlmacenController extends Controller
      */
     public function index()
     {
+        $aleatorio=rand(600000000, 900000000) ;
         $almacenes=Almacen::all();
-        return view('maestro.almacen.index',compact('almacenes'));
+        return view('maestro.almacen.index',compact('almacenes','aleatorio'));
     }
 
     /**
@@ -52,6 +53,7 @@ class AlmacenController extends Controller
         $almacen->responsable=$request->get('responsable');
         $almacen->direccion=$request->get('direccion');
         $almacen->descripcion=$request->get('descripcion');
+        $almacen->estado='0';
         $almacen->save();
 
         return redirect()->route('almacen.index');
@@ -88,16 +90,21 @@ class AlmacenController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $almacen=Almacen::find($id);
-        $almacen->nombre=$request->get('nombre');
-        $almacen->abreviatura=$request->get('abreviatura');
-        $almacen->responsable=$request->get('responsable');
-        $almacen->direccion=$request->get('direccion');
-        $almacen->descripcion=$request->get('descripcion');
-        $almacen->save();
+      $estado=$request->get('estado');
+      if ($estado=='on') { $estado_numero='0'; }
+      else{ $estado_numero='1';}
 
-        return redirect()->route('almacen.index');
-    }
+      $almacen=Almacen::find($id);
+      $almacen->nombre=$request->get('nombre');
+      $almacen->abreviatura=$request->get('abreviatura');
+      $almacen->responsable=$request->get('responsable');
+      $almacen->direccion=$request->get('direccion');
+      $almacen->descripcion=$request->get('descripcion');
+      $almacen->estado=$estado_numero;
+      $almacen->save();
+
+      return redirect()->route('almacen.index');
+  }
 
     /**
      * Remove the specified resource from storage.
@@ -105,10 +112,9 @@ class AlmacenController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-        $almacen=Almacen::findorFail($id);
-        $almacen->delete();
-        return redirect()->route('almacen.index');
-    }
+
+
+ }
 }

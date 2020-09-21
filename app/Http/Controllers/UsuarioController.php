@@ -2,10 +2,11 @@
 
 namespace App\Http\Controllers;
 
+use App\Almacen;
+use App\Config;
 use App\Permiso;
 use App\Personal;
 use App\User;
-use App\Config;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -18,7 +19,8 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuarios=User::all();
-        return view('maestro.usuario.index',compact('usuarios'));
+        $almacen=Almacen::all();
+        return view('maestro.usuario.index',compact('usuarios','almacen'));
     }
 
     /**

@@ -28,6 +28,9 @@ class CreateUsersTable extends Migration
             $table->rememberToken();
             $table->boolean('estado');
             $table->boolean('email_creado');
+
+            $table->unsignedBigInteger('almacen_id')->nullable();
+            $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
             $table->timestamps();
         });
     }

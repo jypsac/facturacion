@@ -2,13 +2,13 @@
 
 namespace App;
 
-use Spatie\Permission\Traits\HasRoles;
-use Spatie\Permission\Models\Role;
-use Spatie\Permission\Models\Permission;
-
-use Illuminate\Notifications\Notifiable;
+use App\Almacen;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Foundation\Auth\User as Authenticatable;
+use Illuminate\Notifications\Notifiable;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\Traits\HasRoles;
 
 class User extends Authenticatable
 {
@@ -49,6 +49,9 @@ class User extends Authenticatable
     }
      public function config(){
         return $this->belongsTo(Config::class,'confi_id');
+    }
+    public function almacen(){
+        return $this->belongsTo(Almacen::class,'almacen_id');
     }
 
 

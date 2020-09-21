@@ -20,7 +20,8 @@ class UsersTableSeeder extends Seeder
            'password' => bcrypt('123'),
            'estado' => 1,
            'confi_id' => 1,
-           'email_creado' => 0
+           'email_creado' => 0,
+           'almacen_id' => 1
        ]);
          DB::table('users')->insert([
            'id' => 2 ,
@@ -30,7 +31,8 @@ class UsersTableSeeder extends Seeder
            'password' => bcrypt('123'),
            'estado' => 1,
            'confi_id' => 2,
-           'email_creado' => 0
+           'email_creado' => 0,
+           'almacen_id' => 1
        ]);
          DB::table('users')->insert([
            'id' => 3 ,
@@ -40,7 +42,8 @@ class UsersTableSeeder extends Seeder
            'password' => bcrypt('admin@admin.com'),
            'estado' => 1,
            'confi_id' =>3,
-           'email_creado' => 0
+           'email_creado' => 0,
+           'almacen_id' => 1
        ]);
 
 

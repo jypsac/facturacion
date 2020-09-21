@@ -65,6 +65,7 @@
                                 <th>Personal</th>
                                 <th>Nombre</th>
                                 <th>Correo</th>
+                                <th>Activo/desactivo</th>
                                 <th>Permisos</th>
                                 <th>Editar</th>
                             </tr>
@@ -77,6 +78,10 @@
                                 <td>{{$usuario->name}}</td>
                                 <td>{{$usuario->email}}</td>
                                 @if($usuario->estado == 1)
+                                <td>Activo</td>
+                                @elseif($usuario->estado == 0)
+                                <td>Desactivo</td>
+                                @endif
                                 <td>
                                     <center><a {{-- href="{{ route('usuario.permiso', $usuario->id) }}" --}} ><button type="button" class="btn btn-s-m btn-info">Permisos</button></a></center>
                                 </td>
@@ -104,6 +109,14 @@
 
                                                                                 <label class="col-sm-3 col-form-label">Contraseña:</label>
                                                                                 <div class="col-sm-9"><input type="password" class="form-control" name="password_new" placeholder="******" ></div>
+
+                                                                                <label class="col-sm-3 col-form-label">Almacen Asignado:</label>
+                                                                                <div class="col-sm-4"><input type="text" class="form-control" name="" value="{{$usuario->almacen->nombre}}" ></div>
+
+                                                                                <label class="col-sm-3 col-form-label">Activo/desactivo:</label>
+                                                                                <div class="col-sm-2"><input type="text
+                                                                                    " class="form-control" name="password_new" ></div>
+
                                                                                 <div class="col-sm-12">
                                                                                     {{-- Boton 2do modal --}}
                                                                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#2do_modal{{$usuario->id}}">Guardar</button>
@@ -164,21 +177,7 @@
                             <!-- / Modal Create  -->
 
                         </td>
-                        @else
-                        <td>
-                            <center><a><button type="button" class="btn btn-s-m btn-secondary">Permisos</button></a></center>
-                        </td>
-                        <td>
-                            <center><a><button type="button" class="btn btn-s-m btn-secondary">Editar</button></a></center></td>
-                            <td>
-                                <center>
-                                    <form action="{{ route('usuario.activar', $usuario->id)}}" method="POST">
-                                        @csrf
-                                        <button type="submit" class="btn btn-s-m btn-warning">Activar</button>
-                                    </form>
-                                </center>
-                            </td>
-                            @endif
+
                         </tr>
                         @endforeach
                     </tbody>
