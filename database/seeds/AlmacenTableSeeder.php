@@ -30,6 +30,7 @@ class AlmacenTableSeeder extends Seeder
             'direccion' => 'Calle Cuzco nr2 Lima-Lima',
             'responsable' => 'Humberto Garcia',
 			'descripcion' => 'Almacen de monitores',
+            'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
         ]);
@@ -41,6 +42,7 @@ class AlmacenTableSeeder extends Seeder
             'direccion' => 'Calle Cuzco nr3 Lima-Lima',
             'responsable' => 'Patricio Perz',
 			'descripcion' => 'Almacen de equipos a usar ',
+            'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
         ]);
