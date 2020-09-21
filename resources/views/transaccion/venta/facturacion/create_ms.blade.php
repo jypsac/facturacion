@@ -1,7 +1,7 @@
 @extends('layout')
-@section('title', 'Facturacion Productos M.Principal')
-@section('breadcrumb', 'Facturacion M.Principal')
-@section('breadcrumb2', 'Facturacion M.Principal')
+@section('title', 'Facturacion Productos M.Secundaria')
+@section('breadcrumb', 'Facturacion M.Secundaria')
+@section('breadcrumb2', 'Facturacion M.secundaria')
 @section('href_accion', route('facturacion.index'))
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
