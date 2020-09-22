@@ -348,7 +348,7 @@ class EmailBandejaEnviosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function trash(Request $request){
+    public function delete(Request $request){
       $id = $request->get('id');
       $mail =EmailBandejaEnvios::find($id);
       $mail ->id_usuario=$mail->id_usuario;
@@ -361,6 +361,19 @@ class EmailBandejaEnviosController extends Controller
       $mail->estado = '1';
       $mail->save();  
       return back();  
+    }
+
+    public function trash()
+    {
+      $id_usuario=auth()->user()->id;
+      $user=User::where('id',$id_usuario)->first();
+      $clientes=Cliente::all();
+      $mailbox =EmailBandejaEnvios::where('estado','1')->OrderBy('updated_at','desc')->get();
+      $count = count($mailbox);
+
+      $mailbox_file =EmailBandejaEnviosArchivos::all();
+      return view('mailbox.delete',compact('mailbox','user','clientes','mailbox_file','count'));
+
     }
 
     public function show($id)
@@ -399,9 +412,16 @@ class EmailBandejaEnviosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->get('id');
+        // $archivos =EmailBandejaEnviosArchivos::findOrFail('id_bandeja_envios',$id)->get();
+        // $archivos->delete();
+        $email=EmailBandejaEnvios::findOrFail($id);
+         $email->delete();
+       
+
+        return back() ;
     }
 
   }

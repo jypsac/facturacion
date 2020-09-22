@@ -7,6 +7,7 @@
 @section('value_accion', 'Agregar')
 
 @section('content')
+
 <div class="wrapper wrapper-content animated fadeInRight">
     @if(isset($mensaje))
     <div>
@@ -17,20 +18,20 @@
   </div>
 </div>
 @elseif(isset($mensaje_creacion))
-    <div>
-      <div class="alert alert-primary">
-        <div class="alert-link" href="#">
-          <li style="color: blue;">{{ $mensaje_creacion }}Si no ve el Usuario, Haga Click<a href="../">Aqui</a></li>
-      </div>
+<div>
+  <div class="alert alert-primary">
+    <div class="alert-link" href="#">
+      <li style="color: blue;">{{ $mensaje_creacion }}Si no ve el Usuario, Haga Click<a href="../">Aqui</a></li>
   </div>
 </div>
+</div>
 @elseif(isset($error))
-    <div>
-      <div class="alert alert-danger">
-        <div class="alert-link" href="#">
-          <li style="color: red;">{{ $error }}</li>
-      </div>
+<div>
+  <div class="alert alert-danger">
+    <div class="alert-link" href="#">
+      <li style="color: red;">{{ $error }}</li>
   </div>
+</div>
 </div>
 @endif
 <div class="row">
@@ -63,8 +64,9 @@
                             <tr>
                                 <th>ID</th>
                                 <th>Personal</th>
-                                <th>Nombre</th>
+                                <th>Cargo</th>
                                 <th>Correo</th>
+                                <th>Almacen Asignado</th>
                                 <th>Activo/desactivo</th>
                                 <th>Permisos</th>
                                 <th>Editar</th>
@@ -77,6 +79,7 @@
                                 <td>{{$usuario->personal->nombres}}</td>
                                 <td>{{$usuario->name}}</td>
                                 <td>{{$usuario->email}}</td>
+                                <td>{{$usuario->almacen->nombre}}</td>
                                 @if($usuario->estado == 1)
                                 <td>Activo</td>
                                 @elseif($usuario->estado == 0)
@@ -85,6 +88,7 @@
                                 <td>
                                     <center><a {{-- href="{{ route('usuario.permiso', $usuario->id) }}" --}} ><button type="button" class="btn btn-s-m btn-info">Permisos</button></a></center>
                                 </td>
+                                @if($usuario->estado_validacion == 1)
                                 <td>
                                     <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$usuario->id}}">Editar</button>
                                     <div class="modal fade" id="exampleModal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -111,54 +115,128 @@
                                                                                 <div class="col-sm-9"><input type="password" class="form-control" name="password_new" placeholder="******" ></div>
 
                                                                                 <label class="col-sm-3 col-form-label">Almacen Asignado:</label>
-                                                                                <div class="col-sm-4"><input type="text" class="form-control" name="" value="{{$usuario->almacen->nombre}}" ></div>
+                                                                                <div class="col-sm-4">
+                                                                                    <select class="form-control" name="almacen_id">
+                                                                                        <option value="{{$usuario->almacen->id}}">{{$usuario->almacen->nombre}}</option>
+                                                                                        <option value="" disabled="">-------------</option>
+                                                                                        @foreach($almacen as $almacens)
+                                                                                        <option value="{{$almacens->id}}">{{$almacens->nombre}}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
 
                                                                                 <label class="col-sm-3 col-form-label">Activo/desactivo:</label>
-                                                                                <div class="col-sm-2"><input type="text
-                                                                                    " class="form-control" name="password_new" ></div>
+                                                                                <div class="col-sm-2">
+                                                                                    @if($usuario->estado == 1)
+                                                                                <div class="switch-button">
+                                                                                    <input type="checkbox" name="estado" id="switch-label{{$usuario->id}}" class="switch-button__checkbox" checked="">
+                                                                                    <label for="switch-label{{$usuario->id}}" class="switch-button__label"></label>
+                                                                                </div>
+                                                                                @else
+                                                                                <div class="switch-button">
+                                                                                    <input type="checkbox" name="estado" id="aswitch-label{{$usuario->id}}" class="switch-button__checkbox" >
+                                                                                    <label for="aswitch-label{{$usuario->id}}" class="switch-button__label"></label>
+                                                                                </div>
+                                                                                @endif
 
-                                                                                <div class="col-sm-12">
-                                                                                    {{-- Boton 2do modal --}}
-                                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#2do_modal{{$usuario->id}}">Guardar</button>
-                                                                                    <div class="modal fade" id="2do_modal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                                        <div class="modal-dialog" role="document">
-                                                                                            <div class="modal-content">
-                                                                                                <div class="modal-header">
-                                                                                                    <h5 class="modal-title" id="exampleModalLabel"> Confirmar Contraseña para Realizar Cambios</h5>
-                                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                                        <span aria-hidden="true">&times;</span>
-                                                                                                    </button>
-                                                                                                </div>
-                                                                                                <div style="padding-left: 15px;padding-right: 15px;">
-                                                                                                    {{-- ccccccccccccccccc --}}
-                                                                                                    <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
-                                                                                                        <fieldset >
-                                                                                                            <div>
-                                                                                                                <div class="panel-body" >
-                                                                                                                    <div class="row">
-                                                                                                                        <label class="col-sm-3 col-form-label">Contraseña Usuario:</label>
-                                                                                                                        <div class="col-sm-9">
-                                                                                                                            <input required="required" type="password" class="form-control" name="contrasena_confirmar" placeholder="******">
+                                                                                </div>
+
+                                                                                    <div class="col-sm-12">
+                                                                                        {{-- Boton 2do modal --}}
+                                                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#2do_modal{{$usuario->id}}">Guardar</button>
+                                                                                        <div class="modal fade" id="2do_modal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                                            <div class="modal-dialog" role="document">
+                                                                                                <div class="modal-content">
+                                                                                                    <div class="modal-header">
+                                                                                                        <h5 class="modal-title" id="exampleModalLabel"> Confirmar Contraseña para Realizar Cambios</h5>
+                                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                                            <span aria-hidden="true">&times;</span>
+                                                                                                        </button>
+                                                                                                    </div>
+                                                                                                    <div style="padding-left: 15px;padding-right: 15px;">
+                                                                                                        {{-- ccccccccccccccccc --}}
+                                                                                                        <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+                                                                                                            <fieldset >
+                                                                                                                <div>
+                                                                                                                    <div class="panel-body" >
+                                                                                                                        <div class="row">
+                                                                                                                            <label class="col-sm-3 col-form-label">Contraseña Usuario:</label>
+                                                                                                                            <div class="col-sm-9">
+                                                                                                                                <input required="required" type="password" class="form-control" name="contrasena_confirmar" placeholder="******">
+                                                                                                                                <input type="text" name="contrasena_adm" value="{{auth()->user()->password}}" hidden="">
+                                                                                                                            </div>
                                                                                                                         </div>
                                                                                                                     </div>
                                                                                                                 </div>
-                                                                                                            </div>
 
-                                                                                                        </fieldset>
-                                                                                                        <button class="btn btn-primary" type="submit">Guardar</button>
-                                                                                                        {{--   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                                                                                                            </fieldset>
+                                                                                                            <button class="btn btn-primary" type="submit">Guardar</button>
+                                                                                                            {{--   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
+                                                                                                        </div>
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
+                                                                                        <!-- / Modal Create  -->
+
+
+                                                                                        {{--  --}}
+                                                                                        {{-- <button class="btn btn-primary" type="submit">Grabar</button> --}}
+                                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                                     </div>
-                                                                                    <!-- / Modal Create  -->
-
-
-                                                                                    {{--  --}}
-                                                                                    {{-- <button class="btn btn-primary" type="submit">Grabar</button> --}}
-                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                                 </div>
+                                                                            </div>
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+
+                                                        </fieldset>
+
+                                                    </form>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- / Modal Create  -->
+
+                            </td>
+                            @elseif($usuario->estado_validacion == 0)
+                            <td>
+                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$usuario->id}}">Editar</button>
+                                <div class="modal fade" id="exampleModal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                    <div class="modal-dialog" role="document">
+                                        <div class="modal-content">
+                                            <div style="padding-left: 15px;padding-right: 15px;">
+                                                {{-- ccccccccccccccccc --}}
+                                                <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+
+                                                    <form action="{{ route('usuario.update',$usuario->id) }}"  enctype="multipart/form-data" method="post">
+                                                        @csrf
+                                                        @method('PATCH')
+                                                        <fieldset >
+                                                            <legend style="height: 240px;"> <img src="
+                                                                {{ asset('/profile/images/')}}/{{$usuario->personal->foto}}" style="width: 200px;height: 200px;border-radius: 5px"> <br>{{$usuario->personal->nombres}} {{$usuario->personal->apellidos}}
+                                                                <p style="font-size: 15px">{{$usuario->name}}</p></legend>
+                                                                <div>
+                                                                    <div class="panel-body" >
+                                                                        <div class="row">
+                                                                            <label class="col-sm-3 col-form-label">Correo:</label>
+                                                                            <div class="col-sm-9"><input type="text" class="form-control" name="correo" value="{{$usuario->email}}"></div>
+                                                                             <label class="col-sm-3 col-form-label">Codigo de Confirmacion:</label>
+                                                                            <div class="col-sm-3"><input type="text" class="form-control" name="cod_1" maxlength="3"></div>
+                                                                            <div class="col-sm-3"><input type="text" class="form-control" name="cod_2"  maxlength="3"></div>
+                                                                            <div class="col-sm-3"><input type="text" class="form-control" name="cod_3"  maxlength="3"></div>
+                                                                            <div class="col-sm-12">
+                                                                            <div class="col-sm-9">
+                                                                                <p>No me a llegado el Codigo de confirmacion </p>
+                                                                            </div>
+                                                                                <button class="btn btn-primary" type="submit">Guardar</button>
+                                                                                <input type="submit" name="holi" class="btn btn-primary" value="Reenviar">
+                                                                                <input type="submit" name="holi" class="btn btn-primary" value="Cambiar">
+
+                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -177,14 +255,16 @@
                             <!-- / Modal Create  -->
 
                         </td>
+                        @endif
 
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-            </div>
+
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
     </div>
+</div>
 </div>
 </div>
 </div>
@@ -192,48 +272,83 @@
 <style>
     .col-sm-9{padding-bottom: 15px}
     .form-control{border-radius: 5px}
-</style>
-<!-- Mainly scripts -->
-<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-<script src="{{ asset('js/popper.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.js') }}"></script>
-<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    :root {
+        --color-button: #fdffff;
+    }
+    .switch-button {
+        display: inline-block;
+        padding-top: 9px;
+        padding-right: 30px;
+    }
+    .switch-button .switch-button__checkbox {
+        display: none;
+    }
+    .switch-button .switch-button__label {
+        background-color:#1f1f1f66;
+        width: 2rem;
+        height: 1rem;
+        border-radius: 3rem;
+        display: inline-block;
+        position: relative;
+    }
+    .switch-button .switch-button__label:before {
+        transition: .6s;
+        display: block;
+        position: absolute;
+        width: 1rem;
+        height: 1rem;
+        background-color: var(--color-button);
+        content: '';
+        border-radius: 50%;
+        box-shadow: inset 0px 0px 0px 1px black;
+    }
+    .switch-button .switch-button__checkbox:checked + .switch-button__label {
+        background-color: #1c84c6;
+    }
+    .switch-button .switch-button__checkbox:checked + .switch-button__label:before {
+        transform: translateX(1rem);
+    </style>
+    <!-- Mainly scripts -->
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-<script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
-<script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
-<!-- Custom and plugin javascript -->
-<script src="{{ asset('js/inspinia.js') }}"></script>
-<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="{{ asset('js/inspinia.js') }}"></script>
+    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-<!-- Page-Level Scripts -->
-<script>
-    $(document).ready(function(){
-        $('.dataTables-example').DataTable({
-            pageLength: 25,
-            responsive: true,
-            dom: '<"html5buttons"B>lTfgitp',
-            buttons: [
-            { extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: 'ExampleFile'},
-            {extend: 'pdf', title: 'ExampleFile'},
+    <!-- Page-Level Scripts -->
+    <script>
+        $(document).ready(function(){
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                { extend: 'copy'},
+                {extend: 'csv'},
+                {extend: 'excel', title: 'ExampleFile'},
+                {extend: 'pdf', title: 'ExampleFile'},
 
-            {extend: 'print',
-            customize: function (win){
-                $(win.document.body).addClass('white-bg');
-                $(win.document.body).css('font-size', '10px');
+                {extend: 'print',
+                customize: function (win){
+                    $(win.document.body).addClass('white-bg');
+                    $(win.document.body).css('font-size', '10px');
 
-                $(win.document.body).find('table')
-                .addClass('compact')
-                .css('font-size', 'inherit');
+                    $(win.document.body).find('table')
+                    .addClass('compact')
+                    .css('font-size', 'inherit');
+                }
             }
-        }
-        ]
+            ]
 
-    });
+        });
 
-    });
+        });
 
-</script>
-@endsection
+    </script>
+    @endsection

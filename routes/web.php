@@ -126,7 +126,9 @@ Route::group(
 		Route::resource('/configuracion_email','EmailConfiguracionesController');
 		Route::post('/email/save','EmailBandejaEnviosController@save')->name('email.save');
 		Route::post('email/send','EmailBandejaEnviosController@send')->name('email.send');
-		Route::post('email/trash','EmailBandejaEnviosController@trash')->name('email.trash');
+		Route::post('email/delete','EmailBandejaEnviosController@delete')->name('email.delete');
+		Route::get('/trash','EmailBandejaEnviosController@trash')->name('email.trash');	
+		Route::post('/trash/delete','EmailBandejaEnviosController@destroy')->name('email.destroy');
 
 		//Garantias
 

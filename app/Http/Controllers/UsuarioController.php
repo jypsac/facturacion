@@ -30,8 +30,9 @@ class UsuarioController extends Controller
      */
     public function lista()
     {
+        $almacen=Almacen::all();
         $personales=Personal::where('usuario_registrado',0)->get();
-        return view('maestro.usuario.lista',compact('personales'));
+        return view('maestro.usuario.lista',compact('personales','almacen'));
     }
 
 
@@ -71,10 +72,13 @@ class UsuarioController extends Controller
         $usuarios=User::all();
         $name=$request->get('name');
         $email=$request->get('correo');
+        $almacen_id=$request->get('almacen_id');
         $password=$request->get('password');
         $password_2=$request->get('password_2');
+        $numero_validacion=rand(600000000, 900000000) ;
 
         if ($password_2==$password) {
+            /*Apariencia de su interfaz*/
             $apariencia=new Config();
             $apariencia->fondo_perfil='paisaje_noche.jpg';
             $apariencia->borde_foto="3px" ;
@@ -88,13 +92,17 @@ class UsuarioController extends Controller
             $apariencia->tamano_letra_perfil= "12px " ;
             $apariencia->save();
 
+            /*Creacion del Nuevo Usuario*/
             $user=new User();
             $user->personal_id=$id;
             $user->confi_id=$apariencia->id;
             $user->name=$name;
             $user->email=$email;
             $user->password=bcrypt($password);
-            $user->estado=1;
+            $user->almacen_id=$almacen_id;
+            $user->numero_validacion=$numero_validacion;
+            $user->estado_validacion=0;
+            $user->estado=0;
             $user->email_creado=0;
             $user->save();
 
@@ -103,14 +111,13 @@ class UsuarioController extends Controller
             $user->save();
 
             $mensaje_creacion='Usuario "'.$email.'" Agregado Correctamente ';
-            return view('maestro.usuario.index',compact('usuarios','mensaje_creacion'));
-            return redirect()->route('usuario.index',compact('mensaje_creacion'));
+            return redirect()->route('usuario.index');
         }
         else{
+            $almacen=Almacen::all();
             $errores='Las Contraseñas No Coinciden, Intentelo nuevamente';
             $personales=Personal::where('usuario_registrado',0)->get();
-            return view('maestro.usuario.lista',compact('personales','errores'));
-            return redirect()->route('usuario.lista',compact('errores'));
+            return view('maestro.usuario.lista',compact('personales','errores','almacen'));
         }
 
     }
@@ -147,41 +154,42 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // recibiendo Datos
         $usuarios=User::all();
+        $almacen=Almacen::all();
         $contrasena_confirmar=$request->get('contrasena_confirmar');
         $correo_new=$request->get('correo');
         $password_new=$request->get('password_new');
+        $contrasena_adm=$request->get('contrasena_adm');
+        $almacen_id=$request->get('almacen_id');
+        $estado=$request->get('estado');
+        if ($estado=='on') { $estado_numero='1'; }
+        else{ $estado_numero='0';}
 
-        $contra=User::where('id',$id)->first();
-
-        if (password_verify($contrasena_confirmar, $contra->password)){
+        if (password_verify($contrasena_confirmar, $contrasena_adm)){
             if (isset($password_new)) {
                 $user=User::find($id);
                 $user->email=$correo_new;
+                $user->almacen_id=$almacen_id;
+                $user->estado=$estado_numero;
                 $user->password=bcrypt($password_new);
                 $user->save();
-                $mensaje='Contraseña Modificada Correctamente';
-                return view('maestro.usuario.index',compact('usuarios','mensaje'));
+                return redirect()->route('usuario.index');
             }
             else{
                 $user=User::find($id);
                 $user->email=$correo_new;
+                $user->almacen_id=$almacen_id;
+                $user->estado=$estado_numero;
                 $user->save();
                 return redirect()->route('usuario.index');
             }
         }
         else {
-            $error='Contraseña de Confirmacion Erronea';
-            return view('maestro.usuario.index',compact('usuarios','error'));
-        // return '¡La contraseña no es la misma!';
+            $error='Contraseña delAdministrador Erronea - Ningun Cambio Realizado';
+            return view('maestro.usuario.index',compact('usuarios','error','almacen'));
         }
-    // $user=User::find($id);
-    // $user->email=$request->get('correo');
-    // $user->password=bcrypt($request->get('password'));
-    // $user->save();
 
-    // return redirect()->route('usuario.index');
+
     }
 
     /**
