@@ -50,18 +50,18 @@ class KardexEntradaRegistroSeeder extends Seeder
             'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
         ]);
-        DB::table('kardex_entrada_registro')->insert([
-            'id' => 4 ,
-            'kardex_entrada_id' => 2,
-            'producto_id' => 2,
-            'cantidad_inicial' => 7700,
-            'precio_nacional' => 100,
-            'precio_extranjero' => 355.35,
-            'cantidad' => 7700,
-            'estado' => 1,
-            'cambio' => 3.55,
-            'created_at' => date('2019-08-01 00:00:00'),
-           	'updated_at' => date('2019-08-01 00:00:00')
-        ]);
+        // DB::table('kardex_entrada_registro')->insert([
+        //     'id' => 4 ,
+        //     'kardex_entrada_id' => 2,
+        //     'producto_id' => 2,
+        //     'cantidad_inicial' => 7700,
+        //     'precio_nacional' => 100,
+        //     'precio_extranjero' => 355.35,
+        //     'cantidad' => 7700,
+        //     'estado' => 1,
+        //     'cambio' => 3.55,
+        //     'created_at' => date('2019-08-01 00:00:00'),
+        //    	'updated_at' => date('2019-08-01 00:00:00')
+        // ]);
     }
 }

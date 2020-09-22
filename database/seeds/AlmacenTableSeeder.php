@@ -23,29 +23,29 @@ class AlmacenTableSeeder extends Seeder
            	'updated_at' => date('2019-08-01 00:00:00')
         ]);
 
-        DB::table('almacen')->insert([
-			'id' => 2 ,
-			'nombre' => 'Almacen 2',
-            'abreviatura' => 'ALM2',
-            'direccion' => 'Calle Cuzco nr2 Lima-Lima',
-            'responsable' => 'Humberto Garcia',
-			'descripcion' => 'Almacen de monitores',
-            'estado' => '0',
-			'created_at' => date('2019-08-01 00:00:00'),
-           	'updated_at' => date('2019-08-01 00:00:00')
-        ]);
+   //      DB::table('almacen')->insert([
+			// 'id' => 2 ,
+			// 'nombre' => 'Almacen 2',
+   //          'abreviatura' => 'ALM2',
+   //          'direccion' => 'Calle Cuzco nr2 Lima-Lima',
+   //          'responsable' => 'Humberto Garcia',
+			// 'descripcion' => 'Almacen de monitores',
+   //          'estado' => '0',
+			// 'created_at' => date('2019-08-01 00:00:00'),
+   //         	'updated_at' => date('2019-08-01 00:00:00')
+   //      ]);
 
-        DB::table('almacen')->insert([
-			'id' => 3 ,
-			'nombre' => 'Almacen 3',
-            'abreviatura' => 'ALM3',
-            'direccion' => 'Calle Cuzco nr3 Lima-Lima',
-            'responsable' => 'Patricio Perz',
-			'descripcion' => 'Almacen de equipos a usar ',
-            'estado' => '0',
-			'created_at' => date('2019-08-01 00:00:00'),
-           	'updated_at' => date('2019-08-01 00:00:00')
-        ]);
+   //      DB::table('almacen')->insert([
+			// 'id' => 3 ,
+			// 'nombre' => 'Almacen 3',
+   //          'abreviatura' => 'ALM3',
+   //          'direccion' => 'Calle Cuzco nr3 Lima-Lima',
+   //          'responsable' => 'Patricio Perz',
+			// 'descripcion' => 'Almacen de equipos a usar ',
+   //          'estado' => '0',
+			// 'created_at' => date('2019-08-01 00:00:00'),
+   //         	'updated_at' => date('2019-08-01 00:00:00')
+   //      ]);
 
     }
 }

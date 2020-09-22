@@ -24,19 +24,19 @@ class KardexEntradaSeeder extends Seeder
             'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
         ]);
-        
-        DB::table('kardex_entrada')->insert([
-            'id' => 2 ,
-            'motivo_id' => 1,
-            'provedor_id' => 1,
-            'categoria_id' => 1,
-            'almacen_id' => 2,
-            'moneda_id' => 2,
-            'guia_remision' => "00002",
-            'factura' => "1",
-            'informacion' => "informacion de prueba 2",
-            'created_at' => date('2019-08-01 00:00:00'),
-           	'updated_at' => date('2019-08-01 00:00:00')
-		]);
+
+  //       DB::table('kardex_entrada')->insert([
+  //           'id' => 2 ,
+  //           'motivo_id' => 1,
+  //           'provedor_id' => 1,
+  //           'categoria_id' => 1,
+  //           'almacen_id' => 2,
+  //           'moneda_id' => 2,
+  //           'guia_remision' => "00002",
+  //           'factura' => "1",
+  //           'informacion' => "informacion de prueba 2",
+  //           'created_at' => date('2019-08-01 00:00:00'),
+  //          	'updated_at' => date('2019-08-01 00:00:00')
+		// ]);
     }
 }

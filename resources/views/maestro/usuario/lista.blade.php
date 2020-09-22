@@ -86,7 +86,7 @@
                                                                     <legend style="height: 250px;"> <img src="
                                                                         {{ asset('/profile/images/')}}/{{$personal->foto}}" style="width: 200px;height: 200px;border-radius: 5px"> <br>{{$personal->nombres}} {{$personal->apellidos}}
                                                                         <p style="font-size: 15px;width: 200px">
-                                                                            <select name="name" class="form-control">
+                                                                            <select name="name" class="form-control" required="required">
                                                                                 <option value="Administrador">Administrador</option>
                                                                                 <option value="Colaborador">Colaborador</option>
                                                                             </select>
@@ -103,6 +103,14 @@
 
                                                                                 <label class="col-sm-2 col-form-label">Confirmar Contraseña:</label>
                                                                                 <div class="col-sm-10" style="padding-bottom: 10px"><input type="password" class="form-control" name="password_2"  autocomplete="off" placeholder="******" required="required"></div>
+                                                                                <label class="col-sm-2 col-form-label">Almacen Asignado:</label>
+                                                                                <div class="col-sm-10">
+                                                                                    <select class="form-control" name="almacen_id">
+                                                                                        @foreach($almacen as $almacens)
+                                                                                        <option value="{{$almacens->id}}">{{$almacens->nombre}}</option>
+                                                                                        @endforeach
+                                                                                    </select>
+                                                                                </div>
                                                                                 <div class="col-sm-12">
                                                                                     <button class="btn btn-primary" type="submit">Registrar</button>
                                                                                 </div>
