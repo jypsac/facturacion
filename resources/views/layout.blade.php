@@ -211,6 +211,7 @@
                             <ul class="nav nav-second-level collapse">
                                 <li><a href="{{route('email.index')}}">Inbox</a></li>
                                 <li><a href="{{route('configuracion_email.index')}}">Configuracion</a></li>
+                                <li><a href="{{route('email.trash')}}">Papelera</a></li>
 
                             </ul>
                         </li>
