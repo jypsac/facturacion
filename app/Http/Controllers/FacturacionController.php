@@ -61,7 +61,7 @@ class FacturacionController extends Controller
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        $moneda=Moneda::all();
+        $moneda=Moneda::where('principal','1')->first();
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
@@ -74,22 +74,27 @@ class FacturacionController extends Controller
         return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria'));
 }
 
-    public function create_ajax(){
+    public function create_ms(){
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-        // foreach ($productos as $index => $producto) {
-        //     $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-        //     $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
-        //     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-        //     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
-        // }
-                    //envio de cambio por el porcedimiento
-        return response()->json(array(
-            'productos'=> $productos,
-            // 'utilidad'=> $utilidad,
-            // 'array'=> $array,
-            // 'array_cantidad'=> $array_cantidad,
-            // 'array_promedio'=> $array_promedio,
-        ), 200);
+         foreach ($productos as $index => $producto) {
+            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
+            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
+        }
+
+        $forma_pagos=Forma_pago::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
+        $moneda=Moneda::where('principal','0')->first();
+        $personales=Personal::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
+        $igv=Igv::first();
+        $empresa=Empresa::first();
+        $personal_contador= Facturacion::all()->count();
+        $suma=$personal_contador+1;
+        $categoria='producto';
+
+        return view('transaccion.venta.facturacion.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria'));
     }
 
     /**
@@ -98,7 +103,7 @@ class FacturacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id_moneda)
     {
         $facturacion_input=$request->get('facturacion');
         if ($facturacion_input=='producto') {
@@ -111,7 +116,7 @@ class FacturacionController extends Controller
             $igv=Igv::first();
 
             $forma_pago_id=$request->get('forma_pago');
-            $moneda_id=$request->get('moneda');
+            $moneda_id=$id_moneda;
             $validez=$request->get('validez');
             $garantia=$request->get('garantia');
             $user_id =auth()->user()->id;
@@ -221,7 +226,7 @@ class FacturacionController extends Controller
 
 
         $facturacion->cliente_id=$cliente_buscador->id;
-        $facturacion->moneda_id=$request->get('moneda');
+        $facturacion->moneda_id=$id_moneda;
         $facturacion->forma_pago_id=$request->get('forma_pago');
         $facturacion->fecha_emision=$request->get('fecha_emision');
         $facturacion->fecha_vencimiento=$nuevafechas;

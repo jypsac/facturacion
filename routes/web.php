@@ -89,7 +89,11 @@ Route::group(
 		Route::post('/facturacion/create/ajax','FacturacionController@ajax')->name('facturacion.ajax');
 		// Route::post('/facturacion/create/sss','FacturacionController@ajax')->name('facturacion.ajax');
 		Route::post('/facturacion/create_ajax','FacturacionController@create_ajax')->name('facturacion.create_ajax');
-		Route::resource('/facturacion','FacturacionController');
+
+		Route::get('/facturacion/create_ms','FacturacionController@create_ms')->name('facturacion.create_ms');
+		// Route::post('/facturacion/store/{id}','FacturacionController@store')->name('facturacion.store');
+		Route::resource('/facturacion','FacturacionController')->except(['store']);
+		Route::put('/facturacion/store/{id_moneda}','FacturacionController@store')->name('facturacion.store');
 		Route::get('/boleta/print/{id}','BoletaController@print')->name('boleta.print');
 		Route::resource('/boleta','BoletaController');
 

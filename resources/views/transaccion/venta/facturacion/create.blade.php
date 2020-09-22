@@ -51,6 +51,8 @@
     </a>
 </div>
 
+
+
 <!-- Modal CLiente -->
 <div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
@@ -182,8 +184,9 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('facturacion.store')}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('facturacion.store',$moneda->id)}}"  enctype="multipart/form-data" method="post">
                         @csrf
+                        @method('put')
                         {{-- Cabecera --}}
                         <div class="row">
                             <div class="col-sm-4 text-left" align="left">
@@ -258,11 +261,11 @@
                                     <td>Moneda</td>
                                     <td>:</td>
                                     <td>
-                                        <select class="form-control" name="moneda" required="required" >
-                                            @foreach($moneda as $monedas)
-                                                <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
-                                             @endforeach
-                                        <select>
+                                        <input type="text" name="moneda" class="form-control" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">
+                                        <br>
+                                        <a href="{{route('facturacion.create_ms')}}"><button type="button" class='addmores btn btn-success'>Cambiar</button></a>
+
+
                                     </td>
                                     <td>Fecha</td>
                                     <td>:</td>
@@ -477,47 +480,6 @@
                                                 <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
                                                 @endif
                                             </form>
-                                              <button id='myajax'>click me</button>
-                                            <div id='msg'>
-                                                    mensaje
-                                            </div>
-                                            <script>
-                                                $('#myajax').click(function(){
-                                                   $.ajax({
-                                                      url:'/facturacion/create_ajax',
-                                                      data:{'name':"luis"},
-                                                      type:'post',
-                                                      headers: {
-                                                          'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                                                      },
-                                                      success: function (response) {
-                                                        // $("#msg").html(response.msg);
-
-                                                            $('#msg').html(response.productos);
-                                                            // $('#razon_social').val(datos[1]);
-                                                            // $('#fecha_actividad').val(datos[2]);
-                                                            // $('#condicion').val(datos[3]);
-                                                            // $('#tipo').val(datos[4]);
-                                                            // $('#estado').val(datos[5]);
-                                                            // $('#fecha_inscripcion').val(datos[6]);
-                                                            // $('#domicilio').val(datos[7]);
-                                                            // $('#emision').val(datos[8]);
-
-                                                      },
-                                                      statusCode: {
-                                                         404: function() {
-                                                            alert('web not found');
-                                                         }
-                                                      },
-                                                      error:function(x,xs,xt){
-                                                          //nos dara el error si es que hay alguno
-                                                          window.open(JSON.stringify(x));
-                                                          //alert('error: ' + JSON.stringify(x) +"\n error string: "+ xs + "\n error throwed: " + xt);
-                                                      }
-                                                   });
-                                                });
-
-                                            </script>
 
                                         </div>
                                     </div>
@@ -597,15 +559,6 @@
                                 i++;
                             });
                         </script>
-<script type="text/javascript">
-    const selectElement = document.querySelector('.moneda');
-    selectElement.addEvertListener('change',(event) => {
-        const resultado = document.querySelector('.resultado_moneda');
-        resultado.textContent=`La moneda presente es ${event.target.value}`;
-    });
-</script>
-
-
     <script>
             function comision(){
             //comision
