@@ -123,7 +123,7 @@ Route::group(
 		Route::post('/email/save','EmailBandejaEnviosController@save')->name('email.save');
 		Route::post('email/send','EmailBandejaEnviosController@send')->name('email.send');
 		Route::post('email/delete','EmailBandejaEnviosController@delete')->name('email.delete');
-		Route::get('/trash','EmailBandejaEnviosController@trash')->name('email.trash');	
+		Route::get('/trash','EmailBandejaEnviosController@trash')->name('email.trash');
 		Route::post('/trash/delete','EmailBandejaEnviosController@destroy')->name('email.destroy');
 
 		//Garantias
@@ -202,7 +202,7 @@ Route::group(
 		Route::get('/usuario/lista','UsuarioController@lista')->name('usuario.lista');
 		Route::get('usuario/crear/{id}','UsuarioController@crear')->name('usuario.crear');
 		Route::post('usuario/creacion/{guia}', 'UsuarioController@creacion')->name('usuario.creacion');
-		Route::post('usuario/desactivar/{id}', 'UsuarioController@desactivar')->name('usuario.desactivar');
+		Route::post('usuario/envio_codigo/{id}', 'UsuarioController@envio_codigo')->name('usuario.envio_codigo');
 		Route::post('usuario/activar/{id}', 'UsuarioController@activar')->name('usuario.activar');
 		Route::get('usuario/permiso/{id}','UsuarioController@permiso')->name('usuario.permiso');
 		Route::resource('/usuario','UsuarioController');

@@ -110,7 +110,27 @@ class UsuarioController extends Controller
             $user->usuario_registrado=1;
             $user->save();
 
-            $mensaje_creacion='Usuario "'.$email.'" Agregado Correctamente ';
+            /* envio*/
+            /* Confi*/
+            $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
+            $port = '25';
+            $encryption = '';
+            $yourEmail = 'desarrollo@jypsac.com';
+            $yourPassword = '=+WQyq73%cC"';
+            $sendto = $email;
+            $titulo = 'Usuario:Codigo Confirmacion';
+            $mensaje = $numero_validacion;
+            // $bakcup=    $correo_busqueda->email_backup ;
+            /*Fin Confi*/
+            $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+            $mailer =new \Swift_Mailer($transport);
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto])->setBody($mensaje, 'text/html');
+            if($mailer->send($message)){
+                return redirect()->route('usuario.index');
+            }else{
+                return "Something went wrong :(";
+            }
+            /*fin envio*/
             return redirect()->route('usuario.index');
         }
         else{
@@ -154,6 +174,7 @@ class UsuarioController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $usuarios=User::all();
         $almacen=Almacen::all();
         $contrasena_confirmar=$request->get('contrasena_confirmar');
@@ -198,34 +219,65 @@ class UsuarioController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function desactivar($id)
+    public function  envio_codigo(Request $request, $id)
     {
-        //la eliminacion del usuario sera por medio de un estado (desactivado)
-        $user=User::find($id);
-        $user->estado=0;
-        $user->save();
+        $cod_1=$request->get('cod_1');
+        $cod_2=$request->get('cod_2');
+        $cod_3=$request->get('cod_3');
+        $user=User::where('id',$id)->first();
+        $codigo_usuario=$user->numero_validacion;
+        $accion=$request->get('accion');
+        $correo_envio=$request->get('correo');
+        $codigo_validacion=$cod_1.$cod_2.$cod_3;
 
-        return redirect()->route('usuario.index');
+        if ($accion=='Reenviar Codigo') {
+            /* envio*/
+            /* Confi*/
+        $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
+        $port = '25';
+        $encryption = '';
+        $yourEmail = 'desarrollo@jypsac.com';
+        $yourPassword = '=+WQyq73%cC"';
+        $sendto = $correo_envio;
+        $titulo = 'Sistema-Codigo Confirmacion';
+        $mensaje = 'mensaje de confirm';
+        // $bakcup=    $correo_busqueda->email_backup ;
+        /*Fin Confi*/
+        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+        $mailer =new \Swift_Mailer($transport);
+        $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto])->setBody($mensaje, 'text/html');
+        if($mailer->send($message)){
+            return redirect()->route('usuario.index');
+        }else{
+            return "Something went wrong :(";
+        }
+        /*fin envio*/
+
     }
+    elseif ($accion=='Validar') {
+     if ($codigo_validacion==$codigo_usuario) {
+       $user=User::find($id);
+       $user->estado_validacion='1';
+       $user->estado='1';
+       $user->save();
+       return redirect()->route('usuario.index');
+   }
+}
 
-    public function activar($id)
-    {
-        //la eliminacion del usuario sera por medio de un estado (desactivado)
-        $user=User::find($id);
-        $user->estado=1;
-        $user->save();
+}
 
-        return redirect()->route('usuario.index');
-    }
+public function activar($id)
+{
+}
 
-    public function permiso($id){
+public function permiso($id){
 
-        $usuario=User::find($id);
-        $permisos=Permiso::all();
-        return view('maestro.usuario.permisos.lista',compact('usuario','permiso'));
-    }
+    $usuario=User::find($id);
+    $permisos=Permiso::all();
+    return view('maestro.usuario.permisos.lista',compact('usuario','permiso'));
+}
 
-    public function asignar_permiso(){
+public function asignar_permiso(){
         //asignamiento de permisos
-    }
+}
 }

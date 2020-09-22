@@ -90,7 +90,7 @@
                                 </td>
                                 @if($usuario->estado_validacion == 1)
                                 <td>
-                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$usuario->id}}">Editar</button>
+                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$usuario->id}}">Editar</button> <i class="fa fa-check" aria-hidden="true"></i>
                                     <div class="modal fade" id="exampleModal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                         <div class="modal-dialog" role="document">
                                             <div class="modal-content">
@@ -128,115 +128,62 @@
                                                                                 <label class="col-sm-3 col-form-label">Activo/desactivo:</label>
                                                                                 <div class="col-sm-2">
                                                                                     @if($usuario->estado == 1)
-                                                                                <div class="switch-button">
-                                                                                    <input type="checkbox" name="estado" id="switch-label{{$usuario->id}}" class="switch-button__checkbox" checked="">
-                                                                                    <label for="switch-label{{$usuario->id}}" class="switch-button__label"></label>
-                                                                                </div>
-                                                                                @else
-                                                                                <div class="switch-button">
-                                                                                    <input type="checkbox" name="estado" id="aswitch-label{{$usuario->id}}" class="switch-button__checkbox" >
-                                                                                    <label for="aswitch-label{{$usuario->id}}" class="switch-button__label"></label>
-                                                                                </div>
-                                                                                @endif
+                                                                                    <div class="switch-button">
+                                                                                        <input type="checkbox" name="estado" id="switch-label{{$usuario->id}}" class="switch-button__checkbox" checked="">
+                                                                                        <label for="switch-label{{$usuario->id}}" class="switch-button__label"></label>
+                                                                                    </div>
+                                                                                    @else
+                                                                                    <div class="switch-button">
+                                                                                        <input type="checkbox" name="estado" id="aswitch-label{{$usuario->id}}" class="switch-button__checkbox" >
+                                                                                        <label for="aswitch-label{{$usuario->id}}" class="switch-button__label"></label>
+                                                                                    </div>
+                                                                                    @endif
 
                                                                                 </div>
 
-                                                                                    <div class="col-sm-12">
-                                                                                        {{-- Boton 2do modal --}}
-                                                                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#2do_modal{{$usuario->id}}">Guardar</button>
-                                                                                        <div class="modal fade" id="2do_modal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                                                            <div class="modal-dialog" role="document">
-                                                                                                <div class="modal-content">
-                                                                                                    <div class="modal-header">
-                                                                                                        <h5 class="modal-title" id="exampleModalLabel"> Confirmar Contraseña para Realizar Cambios</h5>
-                                                                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                                                            <span aria-hidden="true">&times;</span>
-                                                                                                        </button>
-                                                                                                    </div>
-                                                                                                    <div style="padding-left: 15px;padding-right: 15px;">
-                                                                                                        {{-- ccccccccccccccccc --}}
-                                                                                                        <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
-                                                                                                            <fieldset >
-                                                                                                                <div>
-                                                                                                                    <div class="panel-body" >
-                                                                                                                        <div class="row">
-                                                                                                                            <label class="col-sm-3 col-form-label">Contraseña Usuario:</label>
-                                                                                                                            <div class="col-sm-9">
-                                                                                                                                <input required="required" type="password" class="form-control" name="contrasena_confirmar" placeholder="******">
-                                                                                                                                <input type="text" name="contrasena_adm" value="{{auth()->user()->password}}" hidden="">
-                                                                                                                            </div>
+                                                                                <div class="col-sm-12">
+                                                                                    {{-- Boton 2do modal --}}
+                                                                                    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#2do_modal{{$usuario->id}}">Guardar</button>
+                                                                                    <div class="modal fade" id="2do_modal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                                                        <div class="modal-dialog" role="document">
+                                                                                            <div class="modal-content">
+                                                                                                <div class="modal-header">
+                                                                                                    <h5 class="modal-title" id="exampleModalLabel"> Confirmar Contraseña para Realizar Cambios</h5>
+                                                                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                                                        <span aria-hidden="true">&times;</span>
+                                                                                                    </button>
+                                                                                                </div>
+                                                                                                <div style="padding-left: 15px;padding-right: 15px;">
+                                                                                                    {{-- ccccccccccccccccc --}}
+                                                                                                    <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+                                                                                                        <fieldset >
+                                                                                                            <div>
+                                                                                                                <div class="panel-body" >
+                                                                                                                    <div class="row">
+                                                                                                                        <label class="col-sm-3 col-form-label">Contraseña Usuario:</label>
+                                                                                                                        <div class="col-sm-9">
+                                                                                                                            <input required="required" type="password" class="form-control" name="contrasena_confirmar" placeholder="******">
+                                                                                                                            <input type="text" name="contrasena_adm" value="{{auth()->user()->password}}" hidden="">
                                                                                                                         </div>
                                                                                                                     </div>
                                                                                                                 </div>
+                                                                                                            </div>
 
-                                                                                                            </fieldset>
-                                                                                                            <button class="btn btn-primary" type="submit">Guardar</button>
-                                                                                                            {{--   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
-                                                                                                        </div>
+                                                                                                        </fieldset>
+                                                                                                        <button class="btn btn-primary" type="submit">Guardar</button>
+                                                                                                        {{--   <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button> --}}
                                                                                                     </div>
                                                                                                 </div>
                                                                                             </div>
                                                                                         </div>
-                                                                                        <!-- / Modal Create  -->
-
-
-                                                                                        {{--  --}}
-                                                                                        {{-- <button class="btn btn-primary" type="submit">Grabar</button> --}}
-                                                                                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                                     </div>
+                                                                                    <!-- / Modal Create  -->
+
+
+                                                                                    {{--  --}}
+                                                                                    {{-- <button class="btn btn-primary" type="submit">Grabar</button> --}}
+                                                                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                                 </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-
-                                                        </fieldset>
-
-                                                    </form>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- / Modal Create  -->
-
-                            </td>
-                            @elseif($usuario->estado_validacion == 0)
-                            <td>
-                                <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$usuario->id}}">Editar</button>
-                                <div class="modal fade" id="exampleModal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog" role="document">
-                                        <div class="modal-content">
-                                            <div style="padding-left: 15px;padding-right: 15px;">
-                                                {{-- ccccccccccccccccc --}}
-                                                <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
-
-                                                    <form action="{{ route('usuario.update',$usuario->id) }}"  enctype="multipart/form-data" method="post">
-                                                        @csrf
-                                                        @method('PATCH')
-                                                        <fieldset >
-                                                            <legend style="height: 240px;"> <img src="
-                                                                {{ asset('/profile/images/')}}/{{$usuario->personal->foto}}" style="width: 200px;height: 200px;border-radius: 5px"> <br>{{$usuario->personal->nombres}} {{$usuario->personal->apellidos}}
-                                                                <p style="font-size: 15px">{{$usuario->name}}</p></legend>
-                                                                <div>
-                                                                    <div class="panel-body" >
-                                                                        <div class="row">
-                                                                            <label class="col-sm-3 col-form-label">Correo:</label>
-                                                                            <div class="col-sm-9"><input type="text" class="form-control" name="correo" value="{{$usuario->email}}"></div>
-                                                                             <label class="col-sm-3 col-form-label">Codigo de Confirmacion:</label>
-                                                                            <div class="col-sm-3"><input type="text" class="form-control" name="cod_1" maxlength="3"></div>
-                                                                            <div class="col-sm-3"><input type="text" class="form-control" name="cod_2"  maxlength="3"></div>
-                                                                            <div class="col-sm-3"><input type="text" class="form-control" name="cod_3"  maxlength="3"></div>
-                                                                            <div class="col-sm-12">
-                                                                            <div class="col-sm-9">
-                                                                                <p>No me a llegado el Codigo de confirmacion </p>
-                                                                            </div>
-                                                                                <button class="btn btn-primary" type="submit">Guardar</button>
-                                                                                <input type="submit" name="holi" class="btn btn-primary" value="Reenviar">
-                                                                                <input type="submit" name="holi" class="btn btn-primary" value="Cambiar">
-
-                                                                                <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                                             </div>
                                                                         </div>
                                                                     </div>
@@ -255,21 +202,73 @@
                             <!-- / Modal Create  -->
 
                         </td>
-                        @endif
+                        @elseif($usuario->estado_validacion == 0)
+                        <td>
+                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$usuario->id}}">Editar</button> <i class="fa fa-times" aria-hidden="true"></i>
+                            <div class="modal fade" id="exampleModal{{$usuario->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog" role="document">
+                                    <div class="modal-content" style="width: 550px">
+                                        <div style="padding-left: 15px;padding-right: 15px;">
+                                            {{-- ccccccccccccccccc --}}
+                                            <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+
+                                                <form action="{{ route('usuario.envio_codigo',$usuario->id) }}"  enctype="multipart/form-data" method="post">
+                                                    @csrf
+                                                    <fieldset >
+                                                        <legend style="height: 240px;"> <img src="
+                                                            {{ asset('/profile/images/')}}/{{$usuario->personal->foto}}" style="width: 200px;height: 200px;border-radius: 5px"> <br>{{$usuario->personal->nombres}} {{$usuario->personal->apellidos}}
+                                                            <p style="font-size: 15px">{{$usuario->name}}</p></legend>
+                                                            <div>
+                                                                <div class="panel-body" >
+                                                                    <div class="row">
+                                                                        <label class="col-sm-3 col-form-label">Correo:</label>
+                                                                        <div class="col-sm-6"><input type="text" class="form-control" name="correo" value="{{$usuario->email}}"></div>
+                                                                        <div class="col-sm-3" style="padding-bottom: 15px"> <input type="submit" name="accion" class="btn btn-s-m btn-info" value="Cambiar Correo"></div>
+                                                                        <label class="col-sm-3 col-form-label">Codigo de Confirmacion:</label>
+                                                                        <div class="col-sm-3"><input type="text" class="form-control" name="cod_1" maxlength="3"></div>
+                                                                        <div class="col-sm-3"><input type="text" class="form-control" name="cod_2"  maxlength="3"></div>
+                                                                        <div class="col-sm-3"><input type="text" class="form-control" name="cod_3"  maxlength="3"></div>
+
+                                                                        <div class="col-sm-12">
+                                                                            <p>No me ha llegado el Codigo de confirmacion<input type="submit" name="accion" class="reenviar"  value="Reenviar Codigo" style="border: none;background: #ff000000;"> </p>
+                                                                        </div>
+                                                                        <div class="col-sm-12">
+                                                                             <input type="submit" name="accion" class="btn btn-s-m btn-info" value="Validar">
+                                                                        </div>
+                                                                    </div>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
+                                                </fieldset>
+
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <!-- / Modal Create  -->
+
+                    </td>
+                    @endif
 
 
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
 </div>
 </div>
 </div>
 </div>
 
 <style>
+    .reenviar{transition: 0.2s;color: #f72f2f}
+    .reenviar:hover{color: #676a6c}
     .col-sm-9{padding-bottom: 15px}
     .form-control{border-radius: 5px}
     :root {
