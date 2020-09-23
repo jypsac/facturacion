@@ -19,7 +19,7 @@ class UsuarioController extends Controller
     public function index()
     {
         $usuarios=User::all();
-        $almacen=Almacen::all();
+        $almacen=Almacen::where('estado',0)->get();
         return view('maestro.usuario.index',compact('usuarios','almacen'));
     }
 
@@ -206,8 +206,8 @@ class UsuarioController extends Controller
             }
         }
         else {
-            $error='Contraseña delAdministrador Erronea - Ningun Cambio Realizado';
-            return view('maestro.usuario.index',compact('usuarios','error','almacen'));
+            $errores='Contraseña delAdministrador Erronea - Ningun Cambio Realizado';
+            return view('maestro.usuario.index',compact('usuarios','errores','almacen'));
         }
 
 
@@ -221,48 +221,135 @@ class UsuarioController extends Controller
      */
     public function  envio_codigo(Request $request, $id)
     {
-        $cod_1=$request->get('cod_1');
-        $cod_2=$request->get('cod_2');
-        $cod_3=$request->get('cod_3');
-        $user=User::where('id',$id)->first();
-        $codigo_usuario=$user->numero_validacion;
-        $accion=$request->get('accion');
-        $correo_envio=$request->get('correo');
-        $codigo_validacion=$cod_1.$cod_2.$cod_3;
 
-        if ($accion=='Reenviar Codigo') {
-            /* envio*/
-            /* Confi*/
-        $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
-        $port = '25';
-        $encryption = '';
-        $yourEmail = 'desarrollo@jypsac.com';
-        $yourPassword = '=+WQyq73%cC"';
-        $sendto = $correo_envio;
-        $titulo = 'Sistema-Codigo Confirmacion';
-        $mensaje = 'mensaje de confirm';
-        // $bakcup=    $correo_busqueda->email_backup ;
-        /*Fin Confi*/
-        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
-        $mailer =new \Swift_Mailer($transport);
-        $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto])->setBody($mensaje, 'text/html');
-        if($mailer->send($message)){
-            return redirect()->route('usuario.index');
-        }else{
-            return "Something went wrong :(";
+     /*Codigo recibido del index*/
+     $cod_1=$request->get('cod_1');
+     $cod_2=$request->get('cod_2');
+     $cod_3=$request->get('cod_3');
+     $codigo_validacion=$cod_1.$cod_2.$cod_3;
+
+
+     $user=User::where('id',$id)->first();/*id del usuario*/
+     $id_personal=$user->personal_id;
+     $nombre_personal=Personal::where('id',$id_personal)->first();/*nombre id del personal agregado al usuario*/
+
+     $codigo_usuario=$user->numero_validacion;
+     $codigo1 = substr($codigo_usuario, 0, 3);
+     $codigo2 = substr($codigo_usuario, 3, 3);
+     $codigo3 = substr($codigo_usuario, 6, 3);
+     $codigo_unido=$codigo1.'-'.$codigo2.'-'.$codigo3;/*Codigo unido */
+
+     $accion=$request->get('accion');
+     $correo_envio=$request->get('correo');
+
+
+     if ($accion=='Reenviar Codigo') {
+        /* envio*/
+        /* Confi*/
+        $numero_validacions=rand(600000000, 900000000) ;
+        $user=User::find($id);
+        $user->email=$request->get('correo');
+        $user->numero_validacion=$numero_validacions;
+        $user->save();
+
+        $codigo_mensaje=$numero_validacions;
+        $codigo_1 = substr($codigo_mensaje, 0, 3);
+        $codigo_2 = substr($codigo_mensaje, 3, 3);
+        $codigo_3 = substr($codigo_mensaje, 6, 3);
+        $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
+         $cuerpo_mensaje='<h3>Hola '.$nombre_personal->nombres.'!! <br> Este es tu Código de Confirmación del Sistema Facturación: <b>'.$codigo_unidos.'</b></h3>Por tu Seguridad y de la cuenta no comparta este código con nadie,para Dudas comuníquese al área de soporte.<br> Correo: desarrollo@jypsac.com ';
+
+            $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
+            $port = '25';
+            $encryption = '';
+            $yourEmail = 'desarrollo@jypsac.com';
+            $yourPassword = '=+WQyq73%cC"';
+            $sendto = $correo_envio;
+            $titulo = 'Sistema-Codigo Confirmacion';
+            $mensaje = $cuerpo_mensaje;
+            // $bakcup=    $correo_busqueda->email_backup ;
+            /*Fin Confi*/
+            $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+            $mailer =new \Swift_Mailer($transport);
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto])->setBody($mensaje, 'text/html');
+            if($mailer->send($message)){
+                return redirect()->route('usuario.index');
+            }
+            else{
+                return "Something went wrong :(";
+            }
+            /*fin envio*/
         }
-        /*fin envio*/
+        elseif ($accion=='Validar') {
+            if ($codigo_validacion==$codigo_usuario) {
+                $user=User::find($id);
+                $user->estado_validacion='1';
+                $user->estado='1';
+                $user->save();
+                return redirect()->route('usuario.index');
+            }
+            else{
+             $usuarios=User::all();
+             $almacen=Almacen::where('estado',0)->get();
+             $errores='Los Códigos son Incorrectos, si no tiene aún los códigos, Presione Reenviar.';
+             return view('maestro.usuario.index',compact('usuarios','errores','almacen'));
+         }
+
+     }
+     elseif ($accion=='Cambiar Correo') {
+        if ($user->email==$correo_envio) {
+            $numero_validacion=rand(600000000, 900000000) ;
+            $user=User::find($id);
+            $user->email=$request->get('correo');
+            $user->numero_validacion=$numero_validacion;
+            $user->save();
+            return redirect()->route('usuario.index');
+        }
+        else{
+            $this->validate($request,[
+                'correo' => ['required','email','unique:users,email'],
+            ],[
+                'correo.unique' => 'El Correo "'.$correo_envio.'" ya esta Registrado, Use otro correo para registrar este usuario.',
+            ]);
+
+            $data = $request->all();
+            $numero_validacion=rand(600000000, 900000000) ;
+            $user=User::find($id);
+            $user->email=$request->get('correo');
+            $user->numero_validacion=$numero_validacion;
+            $user->save();
+
+             $codigo_mensaje=$numero_validacion;
+            $codigo_1 = substr($codigo_mensaje, 0, 3);
+            $codigo_2 = substr($codigo_mensaje, 3, 3);
+            $codigo_3 = substr($codigo_mensaje, 6, 3);
+            $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
+            $cuerpo_mensaje='<h3>Hola '.$nombre_personal->nombres.'!! <br> Este es tu Código de Confirmación del Sistema Facturación: <b>'.$codigo_unidos.'</b></h3>Por tu Seguridad y de la cuenta no comparta este código con nadie,para Dudas comuníquese al área de soporte.<br> Correo: desarrollo@jypsac.com ';
+
+            $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
+            $port = '25';
+            $encryption = '';
+            $yourEmail = 'desarrollo@jypsac.com';
+            $yourPassword = '=+WQyq73%cC"';
+            $sendto = $correo_envio;
+            $titulo = 'Sistema-Codigo Confirmacion';
+            $mensaje = $cuerpo_mensaje;
+            // $bakcup=    $correo_busqueda->email_backup ;
+            /*Fin Confi*/
+            $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+            $mailer =new \Swift_Mailer($transport);
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto])->setBody($mensaje, 'text/html');
+            if($mailer->send($message)){
+                return redirect()->route('usuario.index');
+            }
+            else{
+                return "Something went wrong :(";
+            }
+            /*fin envio*/
+            return redirect()->route('usuario.index');
+        }
 
     }
-    elseif ($accion=='Validar') {
-     if ($codigo_validacion==$codigo_usuario) {
-       $user=User::find($id);
-       $user->estado_validacion='1';
-       $user->estado='1';
-       $user->save();
-       return redirect()->route('usuario.index');
-   }
-}
 
 }
 

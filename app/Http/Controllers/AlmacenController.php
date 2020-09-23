@@ -23,9 +23,8 @@ class AlmacenController extends Controller
      */
     public function index()
     {
-        $aleatorio=rand(600000000, 900000000) ;
         $almacenes=Almacen::all();
-        return view('maestro.almacen.index',compact('almacenes','aleatorio'));
+        return view('maestro.almacen.index',compact('almacenes'));
     }
 
     /**
