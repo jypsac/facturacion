@@ -17,7 +17,7 @@ class CreateEmailConfiguracionesTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('id_usuario')->nullable();
             $table->foreign('id_usuario')->references('id')->on('users')->onDelete('cascade');
-            $table->string('email');
+            $table->string('email')->unique();
             $table->string('password');
             $table->string('email_backup');
             $table->string('smtp');

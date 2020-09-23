@@ -8,28 +8,25 @@
 
 @section('content')
 
+
 <div class="wrapper wrapper-content animated fadeInRight">
-    @if(isset($mensaje))
-    <div>
-      <div class="alert alert-primary">
-        <div class="alert-link" href="#">
-          <li style="color: blue;">{{ $mensaje }}</li>
-      </div>
+    @if($errors->any())
+
+    <div style="padding-top: 20px;">
+       <div class="alert alert-danger">
+        <a class="alert-link" href="#">
+          @foreach ($errors->all() as $error)
+          <li class="error">{{ $error }}</li>
+          @endforeach
+      </a>
   </div>
 </div>
-@elseif(isset($mensaje_creacion))
-<div>
-  <div class="alert alert-primary">
-    <div class="alert-link" href="#">
-      <li style="color: blue;">{{ $mensaje_creacion }}Si no ve el Usuario, Haga Click<a href="../">Aqui</a></li>
-  </div>
-</div>
-</div>
-@elseif(isset($error))
+@endif
+@if(isset($errores))
 <div>
   <div class="alert alert-danger">
     <div class="alert-link" href="#">
-      <li style="color: red;">{{ $error }}</li>
+      <li style="color: red;">{{ $errores }}</li>
   </div>
 </div>
 </div>
@@ -233,33 +230,33 @@
                                                                             <p>No me ha llegado el Codigo de confirmacion<input type="submit" name="accion" class="reenviar"  value="Reenviar Codigo" style="border: none;background: #ff000000;"> </p>
                                                                         </div>
                                                                         <div class="col-sm-12">
-                                                                             <input type="submit" name="accion" class="btn btn-s-m btn-info" value="Validar">
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-                                                    </div>
+                                                                           <input type="submit" name="accion" class="btn btn-s-m btn-info" value="Validar">
+                                                                       </div>
+                                                                   </div>
+                                                               </div>
+                                                           </div>
+                                                       </div>
+                                                   </div>
 
-                                                </fieldset>
+                                               </fieldset>
 
-                                            </form>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- / Modal Create  -->
+                                           </form>
+                                       </div>
+                                   </div>
+                               </div>
+                           </div>
+                       </div>
+                       <!-- / Modal Create  -->
 
-                    </td>
-                    @endif
+                   </td>
+                   @endif
 
 
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
-    </div>
+               </tr>
+               @endforeach
+           </tbody>
+       </table>
+   </div>
 </div>
 </div>
 </div>
