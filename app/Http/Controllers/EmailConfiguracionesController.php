@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App;
 use App\EmailConfiguraciones;
+use App\Permiso;
 use App\User;
 use Illuminate\Http\Request;
 use Swift_Attachment;
@@ -44,6 +45,13 @@ class EmailConfiguracionesController extends Controller
      */
     public function store(Request $request)
     {
+        $this->validate($request,[
+            'email' => ['required','email','unique:email_configuraciones,email'],
+        ],[
+            'email.unique' => 'El correo ya existe',
+        ]);
+
+        $correo = $request->get('email');
         // $firma=$request->get('firma') ;
         if($request->hasfile('firma')){
             $image1 =$request->file('firma');
@@ -56,7 +64,7 @@ class EmailConfiguracionesController extends Controller
         $id_usuario=auth()->user()->id;
         $configmail = new EmailConfiguraciones;
         $configmail->id_usuario =auth()->user()->id;
-        $configmail->email =$request->get('email') ;
+        $configmail->email =$correo ;
         $configmail->password = $request->get('password') ;
         $configmail->email_backup = 'desarrollo@jypsac.com';
         $configmail->smtp =$request->get('smtp') ;
@@ -102,6 +110,14 @@ class EmailConfiguracionesController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+            'email' => ['required','email','unique:email_configuraciones,email,'.$id],
+        ],[
+            'email.unique' => 'El correo ya existe',
+        ]);
+
+
+        $correo = $request->get('email');
          if($request->hasfile('firma')){
             $image1 =$request->file('firma');
             $name =time().$image1->getClientOriginalName();
@@ -111,7 +127,7 @@ class EmailConfiguracionesController extends Controller
             $name=$request->get('firma_nombre') ;
         }
         $configmail=EmailConfiguraciones::find($id);
-        $configmail->email =$request->get('email') ;
+        $configmail->email = $correo ;
         $configmail->password = $request->get('password') ;
         $configmail->smtp =$request->get('smtp') ;
         $configmail->port = $request->get('port');

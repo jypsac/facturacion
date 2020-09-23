@@ -12,7 +12,17 @@
 
 @section('content')
 <!-- Modal Create  -->
-
+@if($errors->any())
+<div style="padding-top: 10px">
+      <div class="alert alert-danger">
+            <a class="alert-link" href="#">
+	          @foreach ($errors->all() as $error)
+	          <li style="color: red">{{ $error }}</li>
+	          @endforeach
+        	</a>
+      </div>
+ </div>
+@endif
 <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
@@ -43,7 +53,7 @@
 											<label class="col-sm-2 col-form-label">Contraseña:</label>
 											<div class="col-sm-10">
 												<div class="input-group m-b">
-													<input type="password" class="form-control" name="password" id="txtPassword">
+													<input type="password" class="form-control" name="password" id="txtPassword" required="">
 													<div class="input-group-prepend">
 														<span class="input-group-addon" style="height: 35.22222px;margin-top: 5px;">
 															<i class="fa fa-eye-slash " id="ojo" onclick="mostrarPassword()"></i></span>
@@ -54,7 +64,7 @@
 											<div class="row">
 												<label class="col-sm-2 col-form-label">SMPT:</label>
 												<div class="col-sm-4">
-													<input type="text" class="form-control" name="smtp" placeholder="smtp.gmail.com">
+													<input type="text" class="form-control" name="smtp" placeholder="smtp.gmail.com" required="">
 												</div>
 
 												<label class="col-sm-2 col-form-label">PORT:</label>
@@ -65,7 +75,7 @@
 											<div class="row">
 												<label class="col-sm-2 col-form-label">Encryption:</label>
 												<div class="col-sm-4">
-													<select class="form-control" name="encryp">
+													<select class="form-control" name="encryp" required="">
 														<option value="">Ninguno</option>
 														<option value="SSL">SSL</option>
 														<option value="TLS">TLS</option>
@@ -98,7 +108,7 @@
 			</div>
 		</div>
 		<!-- / Modal Create  -->
-		<div class="wrapper wrapper-content animated fadeInRight">
+		<div class="wrapper wrapper-content animated fadeInRight" >
 			<div class="row">
 				<div class="col-lg-12">
 					<div class="ibox ">
