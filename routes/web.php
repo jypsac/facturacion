@@ -94,8 +94,11 @@ Route::group(
 		// Route::post('/facturacion/store/{id}','FacturacionController@store')->name('facturacion.store');
 		Route::resource('/facturacion','FacturacionController')->except(['store']);
 		Route::put('/facturacion/store/{id_moneda}','FacturacionController@store')->name('facturacion.store');
+
+		Route::get('/boleta/create_ms','BoletaController@create_ms')->name('boleta.create_ms');
 		Route::get('/boleta/print/{id}','BoletaController@print')->name('boleta.print');
-		Route::resource('/boleta','BoletaController');
+		Route::resource('/boleta','BoletaController')->except(['store']);
+		Route::put('/boleta/store/{id_moneda}','BoletaController@store')->name('boleta.store');
 
 		/*Guia Remision*/
 		Route::get('/guia_remision/print/{id}' , 'GuiaRemisionController@print')->name('guia_remision.print');

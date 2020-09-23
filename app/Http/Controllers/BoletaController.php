@@ -47,15 +47,15 @@ class BoletaController extends Controller
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
         foreach ($productos as $index => $producto) {
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index];
+            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio');
+            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
         }
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        $moneda=Moneda::all();
+        $moneda=Moneda::where('principal','1')->first();
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
@@ -67,6 +67,32 @@ class BoletaController extends Controller
 
         return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','boleta_codigo'));
 
+    }
+
+    public function create_ms()
+    {
+        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+
+        foreach ($productos as $index => $producto) {
+            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
+            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
+        }
+
+        $forma_pagos=Forma_pago::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
+        $moneda=Moneda::where('principal','0')->first();
+        $personales=Personal::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
+        $igv=Igv::first();
+
+        $empresa=Empresa::first();
+        $boleta_contador= Boleta::all()->count();
+        $suma=$boleta_contador+1;
+        $boleta_codigo='BO-0000'.$suma;
+
+        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','boleta_codigo'));
 
     }
 
