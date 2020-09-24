@@ -43,7 +43,6 @@
             </div>
         </div>
 
-        <button id='myajax'>Llenado por medio de SUNAT</button>
 
         <div class="ibox-content">
            <form action="{{ route('tipo_cambio.store') }}"  enctype="multipart/form-data" method="post">
@@ -56,9 +55,9 @@
 
              <div class="col-sm-10">
                 @if(isset($compra))
-                <input type="text" class="form-control" name="compra" id="compra" value="{{$compra}}">
+                <input type="text" class="form-control" name="compra" id="compra" value="{{$compra}}" required="">
                 @else
-                <input type="text" class="form-control" name="compra"  id="compra">
+                <input type="text" class="form-control" name="compra"  id="compra" required="">
                 @endif
             </div>
         </div>
@@ -66,9 +65,9 @@
         <div class="form-group  row"><label class="col-sm-2 col-form-label">Venta:</label>
          <div class="col-sm-10">
              @if(isset($venta))
-             <input type="text" class="form-control" name="venta" id="venta" value="{{$venta}}">
+             <input type="text" class="form-control" name="venta" id="venta" value="{{$venta}}" required="">
              @else
-             <input type="text" class="form-control" name="venta"  id="venta">
+             <input type="text" class="form-control" name="venta"  id="venta" required="">
              @endif
          </div>
      </div>
@@ -76,13 +75,15 @@
      <div class="form-group  row"><label class="col-sm-2 col-form-label">Paralelo:</label>
        <div class="col-sm-10">
            @if(isset($paralelo_recomendado))
-           <input type="text" class="form-control" name="paralelo" value="{{$paralelo_recomendado}}">
+           <input type="text" class="form-control" name="paralelo" value="{{$paralelo_recomendado}}" required="">
            @else
-           <input type="text" class="form-control" name="paralelo" >
+           <input type="text" class="form-control" name="paralelo" required="">
        @endif</div>
    </div>
 
    <button class="btn btn-primary" type="submit">Guardar</button>
+    <input id='myajax' type="button" class="btn btn-info" value="Automatico por Sunat">
+
 </form>
 </div>
 </div>
