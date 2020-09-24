@@ -16,7 +16,7 @@ class ConfigController extends Controller
     {
         $user=auth()->user()->id;
         $config=Config::where('id',$user)->get();
-        return view('maestro.conf_general.apariencia.index',compact('config'));
+        return view('configuracion_general.apariencia.index',compact('config'));
     }
 
     /**

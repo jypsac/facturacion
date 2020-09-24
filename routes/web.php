@@ -216,7 +216,8 @@ Route::group(
 		Route::resource('/venta','VentaController');
 
 
-		Route::view('/clasificacion' , 'partials.clasificacion')->name('Clasificacion');
+		Route::view('/configuracion_general' , 'configuracion_general.configuracion_general')->name('Configuracion');
+
 
 		//Ajax
 		Route::get('/inventario.kardex.entrada.create', 'KardexEntradaController@index');

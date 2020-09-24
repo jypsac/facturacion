@@ -20,7 +20,7 @@ class TipoCambioController extends Controller
         $moneda1=Moneda::where('principal',1)->first();
         $moneda2=Moneda::where('principal',0)->first();
         $tipo_cambio=TipoCambio::all();
-        return view('maestro.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2','consulta'));
+        return view('configuracion_general.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2','consulta'));
     }
 
     /**
@@ -31,7 +31,7 @@ class TipoCambioController extends Controller
     public function create()
     {
         $moneda_principal=Moneda::where('principal',1)->first();
-        return view('maestro.tipo_cambio.create',compact('moneda_principal'));
+        return view('configuracion_general.tipo_cambio.create',compact('moneda_principal'));
     }
 
     /**
@@ -57,21 +57,21 @@ class TipoCambioController extends Controller
 
         if($consulta){/*Consulta para que redirija error si hace doble tipo de cambio*/
             $error= "no puede generar otro tipo de cambio , en el mismo dia";
-            return view('maestro.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2','error','consulta'));
+            return view('configuracion_general.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2','error','consulta'));
         }
 
         if ($moneda_principal->id =='1')/*pregunta si esta en Soles(Nacional)*/ {
             if ($compra<$paralelo) {
                $paralelo_recomendado=$compra-0.05;
                $error= 'el tipo de Cambio "Paralelo"('.$paralelo.') debe ser menor al tipo de Cambio "Compra"('.$compra.'). ';
-               return view('maestro.tipo_cambio.create',compact('error','moneda_principal','compra','venta','paralelo_recomendado'));
+               return view('configuracion_general.tipo_cambio.create',compact('error','moneda_principal','compra','venta','paralelo_recomendado'));
            }
        }
         elseif ($moneda_principal->id =='2')/*pregunta si esta en Dolares(Extranjero)*/  {
              if ($compra>$paralelo) {
            $paralelo_recomendado=$compra+0.05;
            $error= 'el tipo de Cambio "Paralelo"('.$paralelo.') debe ser Mayor al tipo de Cambio "Compra"('.$compra.')';
-           return view('maestro.tipo_cambio.create',compact('error','moneda_principal','compra','venta','paralelo_recomendado'));
+           return view('configuracion_general.tipo_cambio.create',compact('error','moneda_principal','compra','venta','paralelo_recomendado'));
              }
         }
        $cambio=new TipoCambio;

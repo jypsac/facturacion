@@ -20,7 +20,7 @@ class UsuarioController extends Controller
     {
         $usuarios=User::all();
         $almacen=Almacen::where('estado',0)->get();
-        return view('maestro.usuario.index',compact('usuarios','almacen'));
+        return view('configuracion_general.usuario.index',compact('usuarios','almacen'));
     }
 
     /**
@@ -32,7 +32,7 @@ class UsuarioController extends Controller
     {
         $almacen=Almacen::all();
         $personales=Personal::where('usuario_registrado',0)->get();
-        return view('maestro.usuario.lista',compact('personales','almacen'));
+        return view('configuracion_general.usuario.lista',compact('personales','almacen'));
     }
 
 
@@ -44,7 +44,7 @@ class UsuarioController extends Controller
     public function crear($id)
     {
         $personal=Personal::find($id);
-        return view('maestro.usuario.create',compact('personal'));
+        return view('configuracion_general.usuario.create',compact('personal'));
     }
 
 
@@ -137,7 +137,7 @@ class UsuarioController extends Controller
             $almacen=Almacen::all();
             $errores='Las Contraseñas No Coinciden, Intentelo nuevamente';
             $personales=Personal::where('usuario_registrado',0)->get();
-            return view('maestro.usuario.lista',compact('personales','errores','almacen'));
+            return view('configuracion_general.usuario.lista',compact('personales','errores','almacen'));
         }
 
     }
@@ -162,7 +162,7 @@ class UsuarioController extends Controller
     public function edit($id)
     {
         $usuario=User::find($id);
-        return view('maestro.usuario.edit',compact('usuario'));
+        return view('configuracion_general.usuario.edit',compact('usuario'));
     }
 
     /**
@@ -207,7 +207,7 @@ class UsuarioController extends Controller
         }
         else {
             $errores='Contraseña delAdministrador Erronea - Ningun Cambio Realizado';
-            return view('maestro.usuario.index',compact('usuarios','errores','almacen'));
+            return view('configuracion_general.usuario.index',compact('usuarios','errores','almacen'));
         }
 
 
@@ -292,7 +292,7 @@ class UsuarioController extends Controller
              $usuarios=User::all();
              $almacen=Almacen::where('estado',0)->get();
              $errores='Los Códigos son Incorrectos, si no tiene aún los códigos, Presione Reenviar.';
-             return view('maestro.usuario.index',compact('usuarios','errores','almacen'));
+             return view('configuracion_general.usuario.index',compact('usuarios','errores','almacen'));
          }
 
      }
@@ -361,7 +361,7 @@ public function permiso($id){
 
     $usuario=User::find($id);
     $permisos=Permiso::all();
-    return view('maestro.usuario.permisos.lista',compact('usuario','permiso'));
+    return view('configuracion_general.usuario.permisos.lista',compact('usuario','permiso'));
 }
 
 public function asignar_permiso(){
