@@ -37,46 +37,66 @@
                         <table class="table table-striped table-bordered table-hover dataTables-example" >
                             <thead>
                                 <tr>
-                                    <th>ITEM</th>
+                                    <th>Tema</th>
                                     <th>TIPO CONFIGURACION</th>
                                     <th>Ver</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 <tr class="gradeX">
-                                    <td>1</td>
+                                    <td><img src="https://www.flaticon.es/svg/static/icons/svg/2897/2897818.svg" width="13px" alt=""></td>
+                                    <td>Almacen</td>
+                                    <td><a class="btn btn-primary" href="{{ route('almacen.index') }}"><i class="fa fa-gear"></i></a></td>
+                                </tr>
+                                <tr class="gradeX">
+                                    <td><img src="https://www.flaticon.es/svg/static/icons/svg/852/852890.svg" width="13px" alt=""></td>
+                                    <td>Apariencia</td>
+                                    <td><a class="btn btn-primary" href="{{route('apariencia.index')}}"><i class="fa fa-gear"></i></a></td>
+                                </tr>
+                                <tr class="gradeX">
+                                    <td><img src="https://www.flaticon.es/svg/static/icons/svg/25/25622.svg" width="13px" alt=""></td>
                                     <td>Categorias</td>
                                     <td><a class="btn btn-primary" href="{{route('categoria.index')}}"><i class="fa fa-gear"></i></a></td>
                                 </tr>
                                  <tr class="gradeX">
-                                    <td>2</td>
+                                    <td><img src="https://www.flaticon.es/svg/static/icons/svg/3076/3076591.svg" width="15px" alt=""></td>
                                     <td>Familias</td>
                                     <td><a class="btn btn-primary" href="{{route('familia.index')}}"><i class="fa fa-gear"></i></a></td>
                                 </tr>
                                 <tr class="gradeX">
-                                    <td>3</td>
+                                    <td><img src="https://www.flaticon.es/svg/static/icons/svg/25/25345.svg" width="13px" alt=""></td>
                                     <td>Marcas</td>
                                     <td><a class="btn btn-primary" href="{{route('marca.index')}}"><i class="fa fa-gear"></i></a></td>
                                 </tr>
                                 <tr class="gradeX">
-                                    <td>4</td>
+                                    <td><img src="https://www.flaticon.es/svg/static/icons/svg/25/25605.svg" width="13px" alt=""></td>
                                     <td>Motivo</td>
                                     <td><a class="btn btn-primary" href="{{route('motivo.index')}}"><i class="fa fa-gear"></i></a></td>
                                 </tr>
                                 <tr class="gradeX">
-                                    <td>5</td>
+                                    <td><i class="fa fa-money" aria-hidden="true"></i></td>
                                     <td>Monedas</td>
                                     <td><a class="btn btn-primary" href="{{route('moneda.index')}}"><i class="fa fa-gear"></i></a></td>
                                 </tr>
                                 <tr class="gradeX">
-                                    <td>6</td>
+                                    <td><i class="fa fa-pie-chart"></i></td>
                                     <td>IGV</td>
                                     <td><a class="btn btn-primary" href="{{route('igv.index')}}"><i class="fa fa-gear"></i></a></td>
                                 </tr>
                                 <tr class="gradeX">
-                                    <td>7</td>
+                                    <td><i class="fa fa-balance-scale"></i></td>
                                     <td>Unidades de Medidas</td>
                                     <td><a class="btn btn-primary" href="{{route('unidad-medida.index')}}"><i class="fa fa-gear"></i></a></td>
+                                </tr>
+                                <tr class="gradeX">
+                                    <td><img src="https://www.flaticon.es/svg/static/icons/svg/929/929493.svg" width="15px" alt=""></td>
+                                    <td>Usuarios</td>
+                                    <td><a class="btn btn-primary" href="{{route('usuario.index')}}"><i class="fa fa-gear"></i></a></td>
+                                </tr>
+                                <tr class="gradeX">
+                                    <td><img src="https://www.flaticon.es/premium-icon/icons/svg/2460/2460831.svg" width="16px" alt=""></td>
+                                    <td>Tipo de Cambio</td>
+                                    <td><a class="btn btn-primary" href="{{route('tipo_cambio.index')}}"><i class="fa fa-gear"></i></a></td>
                                 </tr>
                             </tbody>
                         </table>

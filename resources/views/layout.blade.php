@@ -24,16 +24,16 @@
 
 </head>
 <style type="text/css">
- body {font:@yield('tamano_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);}
- .spans{color:@yield('color_nombre', auth()->user()->config->color_nombre) !important;
- font-size: @yield('tamano_letra_perfil', auth()->user()->config->tamano_letra_perfil);
- text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_sombra_nombre);}
+   body {font:@yield('tamano_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);}
+   .spans{color:@yield('color_nombre', auth()->user()->config->color_nombre) !important;
+   font-size: @yield('tamano_letra_perfil', auth()->user()->config->tamano_letra_perfil);
+   text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_sombra_nombre);}
 
- .nav-header {
-  background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
-}
+   .nav-header {
+      background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
+  }
 
-.btn-primary {
+  .btn-primary {
     color: #fff;
     background-color: #1a5eb3;
     border-color: #1a3bb3;
@@ -60,14 +60,7 @@
                             <a data-toggle="dropdown" class="dropdown-toggle" href="#">
                                 <span class="block m-t-xs font-bold spans">@yield('nombre',auth()->user()->personal->nombres)</span>
                                 <span class="block m-t-xs  spans ">@yield('area',auth()->user()->name) </span>
-                            </a>{{--
-                            <ul class="dropdown-menu animated fadeInRight m-t-xs">
-                                <li><a class="dropdown-item" href="">Perfil</a></li>
-                                <li><a class="dropdown-item" href="">Contactos</a></li>
-                                <li><a class="dropdown-item" href="">Mail</a></li>
-                                <li class="dropdown-divider"></li>
-                                <li><a class="dropdown-item" href="">Cerrar Seccion</a></li>
-                            </ul> --}}
+                            </a>
                         </div>
                         <div class="logo-element">
                             IN+
@@ -94,8 +87,6 @@
                                             <li><a href="{{route('cotizacion_servicio.index')}}"  style="padding-left: 80px;">C.Servicios</a></li>
                                         </ul></li>
                                         @endcan
-                                        {{-- <li><a href="{{route('credito.index')}}">Credito</a></li> --}}
-                                        {{-- <li><a href="{{route('debito.index')}}">Debito</a></li> --}}
                                         @can('transacciones-ventas-facturacion.index')
                                         <li><a href="{{route('facturacion.index')}}">Facturacion</a></li>
                                         @endcan
@@ -105,8 +96,6 @@
                                         @can('transacciones-ventas-guia_remision.index')
                                         <li><a href="{{route('guia_remision.index')}}">Guia Remision</a></li>
                                         @endcan
-                                        {{-- <li><a href="{{route('guia.index')}}">Guias</a></li> --}}
-                                        {{-- <li><a href="{{route('pedidos.index')}}">Pedidos</a></li> --}}
                                     </ul>
                                 </li>
                                 @endcan
@@ -164,8 +153,6 @@
                                 @can('planilla-datos_generales.index')
                                 <li><a href="{{route('personal.index')}}">Datos Generales</a></li>
                                 @endcan
-                                {{-- <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li> --}}
-                                {{-- <li><a href="{{route('horarios.index')}}">Horarios</a></li> --}}
                                 @can('planilla-vendedores.index')
                                 <li><a href="{{route('vendedores.index')}}">Vendedores</a></li>
                                 @endcan
@@ -176,9 +163,6 @@
                         <li>
                             <a href="#"><i class="fa fa-inbox"></i> <span class="nav-label">Consultas</span></a>
                             <ul class="nav nav-second-level collapse">
-                                {{-- <li><a href="{{route('venta.index')}}">Ventas</a></li> --}}
-                                {{-- <li><a href="{{route('compra.index')}}">Compras</a></li> --}}
-                                {{-- <li><a href="#">Almacen</a></li> --}}
                                 @can('consultas-garantias')
                                 <li>
                                     <a href="#">Garantias</a>
@@ -228,91 +212,50 @@
                             </ul>
                         </li>
                         @endcan
-                        <li><a href="{{route('apariencia.index')}}"><i class="fa fa-paint-brush" aria-hidden="true"></i><span>Apariencia</span></a></li>
+
                         @can('maestro')
                         <li>
-                            <a href="#"><i class="fa fa-magic"></i> <span class="nav-label">Maestro</span></a>
+                            <a href="#"><i class="fa fa-archive" aria-hidden="true"></i><span class="nav-label">Produtos y Servicios</span></a>
                             <ul class="nav nav-second-level collapse">
-                                @can('maestro-catalogo')
-                                <li>
-                                    <a href="#">Catalogo</a>
-                                    <ul class="nav nav-third-level">
-                                        @can('maestro-catalogo-productos.index')
-                                        <li><a href="{{route('productos.index')}}">Productos</a></li>
-                                        @endcan
-                                        <li><a href="{{route('servicios.index')}}">Servicios</a></li>
-                                        {{-- <li><a href="{{route('servicios.index')}}">Servicios</a></li> --}}
-                                        {{-- <li><a href="{{route('promedios.index')}}">Promedios</a></li> --}}
-                                   {{--  @can('maestro-catalogo-clasificacion')
-                                    <li><a href="{{route('Clasificacion')}}">Clasificacion</a></li>
-                                    @endcan --}}
-                                </ul>
-                            </li>
-                            @endcan
+                                <li><a href="{{route('productos.index')}}">Productos</a></li>
+                                <li><a href="{{route('servicios.index')}}">Servicios</a></li>
+                            </ul>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">Configuracion General</span></a>
+                            <ul class="nav nav-second-level collapse">
+                             @can('maestro-catalogo-clasificacion')
+                             <li><a href="{{route('Configuracion')}}">Configuracion del Sistema</a></li>
+                             @endcan
+                             @can('maestro-configuracion_general.mi_empresa.index')
+                             <li><a href="{{route('empresa.index')}}">Mi Empresa</a></li>
+                             @endcan
+                         </ul>
+                     </li>
 
-                           {{--  @can('maestro-tablas_generales')
-                            <li>
-                                <a href="#">Tablas generales</a>
-                                <ul class="nav nav-third-level">
-                                    @can('maestro-tablas_generales-motivos.index')
-                                    <li><a href="{{route('motivo.index')}}">Motivos</a></li>
-                                    @endcan
-                                </ul>
-                            </li>
-                            @endcan --}}
-                            @can('maestro-almacenes.index')
-                            <li><a href="{{ route('almacen.index') }}">Almacenes</a></li>
-                            @endcan
-                            @can('maestro-usuarios.index')
-                            <li><a href="{{route('usuario.index')}}">Usuarios</a></li>
-                            @endcan
-                           {{--  @can('maestro-monedas.index')
-                            <li><a href="{{route('moneda.index')}}">Monedas</a></li>
-                            @endcan --}}
-                            {{-- <li><a href="{{route('documento.index')}}">Tipo de Documentos</a></li> --}}
-                            @can('maestro-tipo_de_cambio.index')
-                            <li><a href="{{route('tipo_cambio.index')}}">Tipo de Cambio</a></li>
-                            @endcan
+                     @endcan
 
-                        </ul>
-                    </li>
-                    <li>
-                        <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">Configuracion General</span></a>
-                        <ul class="nav nav-second-level collapse">
-                           @can('maestro-catalogo-clasificacion')
-                           <li><a href="{{route('Clasificacion')}}">Configuracion del Sistema</a></li>
-                           @endcan
-                           {{-- <li><a href="{{route('personal-datos-laborales.index')}}">Datos Laborales</a></li> --}}
-                           {{-- <li><a href="{{route('horarios.index')}}">Horarios</a></li> --}}
-                           @can('maestro-configuracion_general.mi_empresa.index')
-                           <li><a href="{{route('empresa.index')}}">Mi Empresa</a></li>
-                           @endcan
-                       </ul>
-                   </li>
-
-                   @endcan
-
-                   <!-- MENU DESPELEGABLE -->
-               </ul>
-           </div>
-       </nav>
-       {{-- Menu Superior --}}
-       <div id="page-wrapper" class="gray-bg">
-        <div class="row border-bottom">
-            <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
-                <div class="navbar-header">
-                    <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
-                    <form role="search" class="navbar-form-custom" action="search_results.html">
-                        <div class="form-group">
-                            <input type="text" placeholder="Buscar..." class="form-control" name="top-search" id="top-search">
-                        </div>
-                    </form>
-                </div>
-                <ul class="nav navbar-top-links navbar-right">
-                    <li>
-                        <span class="m-r-sm text-muted welcome-message">Bienvenido :@yield('nombres',auth()->user()->personal->nombres)</span>
-                    </li>
-                    <li>
+                     <!-- MENU DESPELEGABLE -->
+                 </ul>
+             </div>
+         </nav>
+         {{-- Menu Superior --}}
+         <div id="page-wrapper" class="gray-bg">
+            <div class="row border-bottom">
+                <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
+                    <div class="navbar-header">
+                        <a class="navbar-minimalize minimalize-styl-2 btn btn-primary " href="#"><i class="fa fa-bars"></i> </a>
+                        <form role="search" class="navbar-form-custom" action="search_results.html">
+                            <div class="form-group">
+                                <input type="text" placeholder="Buscar..." class="form-control" name="top-search" id="top-search">
+                            </div>
+                        </form>
+                    </div>
+                    <ul class="nav navbar-top-links navbar-right">
+                        <li>
+                            <span class="m-r-sm text-muted welcome-message">Bienvenido :@yield('nombres',auth()->user()->personal->nombres)</span>
+                        </li>
+                        <li>
                             {{-- <a href="{{route('home')}}">
                                 <i class="fa fa-barsign-out"></i> Cerrar Secciónes
                             </a> --}}

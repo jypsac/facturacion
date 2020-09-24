@@ -7,15 +7,15 @@ use Illuminate\Http\Request;
 class AlmacenController extends Controller
 {
 
-    public function __construct(){
-        $this->middleware('permission:maestro-almacenes.index',['only' => ['index']]);
-        $this->middleware('permission:maestro-almacenes.create',['only' => ['create']]);
-        $this->middleware('permission:maestro-almacenes.store',['only' => ['store']]);
-        $this->middleware('permission:maestro-almacenes.show',['only' => ['show']]);
-        $this->middleware('permission:maestro-almacenes.edit',['only' => ['edit']]);
-        $this->middleware('permission:maestro-almacenes.update',['only' => ['update']]);
-        $this->middleware('permission:maestro-almacenes.destroy',['only' => ['destroy']]);
-    }
+    // public function __construct(){
+    //     $this->middleware('permission:configuracion_general-almacenes.index',['only' => ['index']]);
+    //     $this->middleware('permission:configuracion_general-almacenes.create',['only' => ['create']]);
+    //     $this->middleware('permission:configuracion_general-almacenes.store',['only' => ['store']]);
+    //     $this->middleware('permission:configuracion_general-almacenes.show',['only' => ['show']]);
+    //     $this->middleware('permission:configuracion_general-almacenes.edit',['only' => ['edit']]);
+    //     $this->middleware('permission:configuracion_general-almacenes.update',['only' => ['update']]);
+    //     $this->middleware('permission:configuracion_general-almacenes.destroy',['only' => ['destroy']]);
+    // }
     /**
      * Display a listing of the resource.
      *
@@ -24,7 +24,7 @@ class AlmacenController extends Controller
     public function index()
     {
         $almacenes=Almacen::all();
-        return view('maestro.almacen.index',compact('almacenes'));
+        return view('configuracion_general.almacen.index',compact('almacenes'));
     }
 
     /**
@@ -35,7 +35,7 @@ class AlmacenController extends Controller
     public function create()
     {
         $almacenes=Almacen::all();
-        return view('maestro.almacen.create');
+        return view('configuracion_general.almacen.create');
     }
 
     /**
@@ -66,7 +66,7 @@ class AlmacenController extends Controller
      */
     public function show($id)
     {
-        return view('maestro.almacen.show');
+        return view('configuracion_general.almacen.show');
     }
 
     /**
@@ -78,7 +78,7 @@ class AlmacenController extends Controller
     public function edit($id)
     {
         $almacen=Almacen::find($id);
-        return view('maestro.almacen.edit',compact('almacen'));
+        return view('configuracion_general.almacen.edit',compact('almacen'));
     }
     /**
      * Update the specified resource in storage.
