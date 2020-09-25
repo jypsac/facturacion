@@ -50,7 +50,9 @@ class FacturacionController extends Controller
         return response()->json(array('msg'=> $msg), 200);
     }
 
+// creacion para productos
     public function create(){
+
          $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
          foreach ($productos as $index => $producto) {
             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
@@ -69,9 +71,27 @@ class FacturacionController extends Controller
         $personal_contador= Facturacion::all()->count();
         $suma=$personal_contador+1;
         $categoria='producto';
+        // GENERACION DE NUMERO DE FACTURA
+        $ultima_factura=Facturacion::latest()->first();
+        $factura_num=$ultima_factura->codigo_fac;
+        $factura_num_string_porcion= explode("-", $factura_num);
+        $factura_num_string=$factura_num_string_porcion[1];
+        $factura_num=(int)$factura_num_string;
+        $factura_num++;
+
+        // $nr_facturas=$facturas_total->count();
+        // $nr_facturas++;
 
 
-        return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria'));
+            // obtencion de la sucursal
+        $sucursal=auth()->user()->almacen->codigo_sunat;
+        // exprecion del numero de fatura
+        $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+        $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+
+        $factura_numero="F".$sucursal_nr."-".$factura_nr;
+
+        return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','factura_numero'));
 }
 
     public function create_ms(){

@@ -17,6 +17,8 @@ class CreateAlmacenTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombre');
             $table->string('abreviatura');
+            //codigo sunat hara que los codigos de las boleta y facturas sean de diferenstes sucusrsales
+            $table->integer('codigo_sunat');
             $table->text('direccion');
             $table->string('responsable');
             $table->text('descripcion');
