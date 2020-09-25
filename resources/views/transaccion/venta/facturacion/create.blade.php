@@ -200,7 +200,7 @@
                                     <center>
                                         <h3 style="padding-top:10px">{{$empresa->ruc}}</h3>
                                         <h2>FACTURA ELECTRONICA</h2>
-                                        <h5>FC-000{{$suma}}</h5>
+                                        <h5>{{$factura_numero}}</h5>
                                     </center>
                                 </div>
                             </div>
