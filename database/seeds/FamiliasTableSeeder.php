@@ -15,6 +15,7 @@ class FamiliasTableSeeder extends Seeder
 			'id' => 1 ,
 			'codigo' => '001',
 			'descripcion' => 'VALVULAS DIRECCIONAL',
+			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -22,6 +23,7 @@ class FamiliasTableSeeder extends Seeder
 			'id' => 2 ,
 			'codigo' => '002',
 			'descripcion' => 'BOMBAS DE PALETAS ',
+			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -29,6 +31,7 @@ class FamiliasTableSeeder extends Seeder
 			'id' => 3 ,
 			'codigo' => '003',
 			'descripcion' => 'BOMBAS DE PISTONES',
+			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -36,6 +39,7 @@ class FamiliasTableSeeder extends Seeder
 			'id' => 4 ,
 			'codigo' => '004',
 			'descripcion' => 'BOMBAS DE ENGRANAJES',
+			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
