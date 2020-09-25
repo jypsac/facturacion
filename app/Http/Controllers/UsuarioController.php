@@ -110,6 +110,13 @@ class UsuarioController extends Controller
             $user->usuario_registrado=1;
             $user->save();
 
+            $nombre_personal=Personal::where('id',$id)->first();
+            $codigo_mensaje=$numero_validacion;
+            $codigo_1 = substr($codigo_mensaje, 0, 3);
+            $codigo_2 = substr($codigo_mensaje, 3, 3);
+            $codigo_3 = substr($codigo_mensaje, 6, 3);
+            $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
+            $cuerpo_mensaje='<h3>Hola '.$nombre_personal->nombres.'!! <br> Este es tu Código de Confirmación del Sistema Facturación: <b>'.$codigo_unidos.'</b></h3>Por tu Seguridad y de la cuenta no comparta este código con nadie,para Dudas comuníquese al área de soporte.<br> Correo: desarrollo@jypsac.com ';
             /* envio*/
             /* Confi*/
             $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
@@ -118,8 +125,8 @@ class UsuarioController extends Controller
             $yourEmail = 'desarrollo@jypsac.com';
             $yourPassword = '=+WQyq73%cC"';
             $sendto = $email;
-            $titulo = 'Usuario:Codigo Confirmacion';
-            $mensaje = $numero_validacion;
+            $titulo = 'Sistema-Codigo Confirmacion';
+            $mensaje = $cuerpo_mensaje;
             // $bakcup=    $correo_busqueda->email_backup ;
             /*Fin Confi*/
             $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
@@ -257,7 +264,7 @@ class UsuarioController extends Controller
         $codigo_2 = substr($codigo_mensaje, 3, 3);
         $codigo_3 = substr($codigo_mensaje, 6, 3);
         $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
-         $cuerpo_mensaje='<h3>Hola '.$nombre_personal->nombres.'!! <br> Este es tu Código de Confirmación del Sistema Facturación: <b>'.$codigo_unidos.'</b></h3>Por tu Seguridad y de la cuenta no comparta este código con nadie,para Dudas comuníquese al área de soporte.<br> Correo: desarrollo@jypsac.com ';
+        $cuerpo_mensaje='<h3>Hola '.$nombre_personal->nombres.'!! <br> Este es tu Código de Confirmación del Sistema Facturación: <b>'.$codigo_unidos.'</b></h3>Por tu Seguridad y de la cuenta no comparta este código con nadie,para Dudas comuníquese al área de soporte.<br> Correo: desarrollo@jypsac.com ';
 
             $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
             $port = '25';
@@ -319,7 +326,7 @@ class UsuarioController extends Controller
             $user->numero_validacion=$numero_validacion;
             $user->save();
 
-             $codigo_mensaje=$numero_validacion;
+            $codigo_mensaje=$numero_validacion;
             $codigo_1 = substr($codigo_mensaje, 0, 3);
             $codigo_2 = substr($codigo_mensaje, 3, 3);
             $codigo_3 = substr($codigo_mensaje, 6, 3);
