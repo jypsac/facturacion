@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('title', 'Boleta Agregar')
-@section('breadcrumb', 'Boleta')
-@section('breadcrumb2', 'Boleta')
+@section('breadcrumb', 'Boleta M.Principal')
+@section('breadcrumb2', 'Boleta M.Principal')
 @section('href_accion', route('boleta.index'))
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -206,8 +206,9 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('boleta.store')}}" enctype="multipart/form-data" method="post">
+                    <form action="{{route('boleta.store',$moneda->id)}}" enctype="multipart/form-data" method="post">
                         @csrf
+                         @method('put')
 
                         <div class="row">
                             <div class="col-sm-4 text-left" align="left">
@@ -287,7 +288,7 @@
                                                 <td>:</td>
                                                 <td> <input type="text" class="form-control" value="0" name="guia_r"></td>
 
-                                                
+
                                             </tr>
                                             <tr>
                                                 <td>Moneda</td>
@@ -296,28 +297,25 @@
                                                     @foreach($moneda as $monedas)
                                                     <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
                                                     @endforeach
-                                                    <select></td>
+                                                    <select>
+                                            </td>
 
                                                         <td>Fecha</td>
                                                         <td>:</td>
                                                         <td><input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly"></td>
                                                     </tr>
                                                     <tr>
-                                                        
+
                                                         <td>Observacion</td>
                                                         <td>:</td>
                                                         <td colspan="4"><textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
                                                         </td>
                                                     </tr>
                                                 </div>
-                                                
-                                                
+
+
                                             </tbody>
                                         </table>
-
-
-
-
 
                                         <div class="div table-responsive">
 
@@ -364,9 +362,9 @@
                                                         </td>
                                                         <td>
                                                             <div style="position: relative; " > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/></div>
-                                                            
-                                                            
-                                                            <div  class="div_check" > 
+
+
+                                                            <div  class="div_check" >
                                                                 <input class="check"  type='checkbox' id='check0' name='check[]'    onclick="multi(0)" style="" autocomplete="off"/></div>
                                                                 <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
                                                                 <input type='hidden' id='promedio_original0' name='promedio_original[]'  class="form-control"  required >
@@ -462,10 +460,10 @@
                             <input type='text' id='precio${i}' name='precio[]' disabled="disabled" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
                             </td>
                             <td>
-                            <div style="position: relative;" > 
+                            <div style="position: relative;" >
                             <input class="text_des"type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="" required onkeyup="multi(${i})"  autocomplete="off"/>
                             </div>
-                            <div  class="div_check"> 
+                            <div  class="div_check">
                             <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
                             </div>
                             <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
