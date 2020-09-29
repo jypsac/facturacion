@@ -289,7 +289,7 @@
 
                             <a data-toggle="@yield('data-toggle', '')"  href="@yield('href_accion', '#')" class="btn btn-primary">@yield('value_accion', '#')</a>
 
-                            <a data-toggle="@yield('data-config', '')"  href="@yield('config', '')" class="@yield('class', 'btn btn-primary')" >@yield('nombre', 'Actualizar')</a>
+                            <a id="actualizar" data-toggle="@yield('data-config', '')"  href="@yield('config', '')"  class="@yield('class', 'btn btn-primary')" >@yield('nombre', 'Actualizar')</a>
                         </div><!--
                         @yield('div', '') -->
 
