@@ -1,17 +1,246 @@
+
 @extends('layout')
 @section('title', 'Email')
 @section('breadcrumb', 'Email')
 @section('breadcrumb2', 'Email')
+
 @if( $user->email_creado==0)
-@section('href_accion', route('configuracion_email.index'))
-@section('value_accion', 'Redactar')
+    @section('data-toggle', 'modal')
+    @section('href_accion', '#configu')
+    @section('value_accion', 'Redactar')
+    @section('data-config', 'modal')
+    @section('config', '#configu')
+    @section('nombre', '')  
+    @section('class', 'btn btn-primary fa fa-gear')
+   
 @elseif( $user->email_creado==1)
-@section('data-toggle', 'modal')
-@section('href_accion', '#redactar')
-@section('value_accion', 'Redactar')
+    @section('data-toggle', 'modal')
+    @section('href_accion', '#redactar')
+    @section('value_accion', 'Redactar')
+
+    @section('data-config', 'modal')
+    @section('config', '#edits')
+    @section('nombre', '')  
+    @section('class', 'btn btn-primary fa fa-gear')
+    
 @endif
 @section('content')
-<!-- Modal Create  -->
+
+
+{{-- Modal Configuracion --}}
+<div class="modal fade" id="configu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+
+            </div>
+            <div style="padding-left: 15px;padding-right: 15px;">
+                {{-- ccccccccccccccccc --}}
+                <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+
+                    <form action="{{route('email.configstore')}}"  enctype="multipart/form-data" method="post">
+                        @csrf
+                        <div class="row"> 
+                            <fieldset >
+                                <legend> Agregar Configuracion </legend>
+                                {{-- <div> --}}
+                                    <div class="panel-body" align="left">
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Email:</label>
+                                            <div class="col-sm-10"><input type="text" class="form-control" name="email">
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label">Contraseña:</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group m-b">
+                                                    <input type="password" class="form-control" name="password" id="txtPassword" required="">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-addon" style="height: 35.22222px;margin-top: 5px;">
+                                                            <i class="fa fa-eye-slash " id="ojo" onclick="mostrarPassword()"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">SMPT:</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="smtp" placeholder="smtp.gmail.com" required="">
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label">PORT:</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="port" value="110 " >
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Encryption:</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control" name="encryp" required="">
+                                                    <option value="">Ninguno</option>
+                                                    <option value="SSL">SSL</option>
+                                                    <option value="TLS">TLS</option>
+                                                </select>
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Firma (opcional):</label>
+                                            <div class="col-sm-10">
+                                                <input type="file" id="archivoInput" name="firma" onchange="return validarExt()"  />
+                                                <span id="visorArchivo">
+                                                    <!--Aqui se desplegará el fichero-->
+                                                    <img name="firma"  src="" width="390px" height="200px" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Grabar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{-- Fin de modal configuracion --}}
+
+
+{{-- Modal Editar Configuracion --}}
+@foreach($config_email as $config_emails)
+<div class="modal fade" id="edits" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel"> Editar Correo</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+            <div style="padding-left: 15px;padding-right: 15px;">
+                {{-- ccccccccccccccccc --}}
+                <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+
+                    <form action="{{route('email.configupdate',$config_emails->id)}}"  enctype="multipart/form-data" method="post">
+                        @csrf
+                        
+                        <div class="row">
+                            <fieldset>
+                                <legend> Configuracion </legend>
+                                    <div class="panel-body" align="left">
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Email:</label>
+                                            <div class="col-sm-10"><input type="text" class="form-control" name="email" value="{{$config_emails->email}}">
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label">Contraseña:</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group m-b">
+                                                    <input type="password" class="form-control" value="{{$config_emails->password}}" name="password" id="txtPassword{{$config_emails->id}}">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-addon" style="height: 35.22222px;margin-top: 5px;">
+                                                            <i class="fa fa-eye-slash "  id="ojo{{$config_emails->id}}" onclick="mostrarPassword{{$config_emails->id}}()"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">SMPT:</label>
+                                            <div class="col-sm-4">
+
+                                                <input type="text" class="form-control" name="smtp" value="{{$config_emails->smtp}}">
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label">PORT:</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="port" value="{{$config_emails->port}} " >
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Encryption:</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control" name="encryp">
+                                                    <option value="{{$config_emails->encryption}}">{{$config_emails->encryption}}</option>
+                                                    <option value="">Ninguno</option>
+                                                    <option value="SSL">SSL</option>
+                                                    <option value="TLS">TLS</option>
+                                                </select>
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Firma (opcional):</label>
+                                            <div class="col-sm-10">
+                                                <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0 ;" id="archivoInput{{$config_emails->id}}" name="firma" onchange="return validarExt{{$config_emails->id}}()"  />
+                                                <span id="visorArchivo{{$config_emails->id}}">
+                                                    <!--Aqui se desplegará el fichero-->
+                                                    <img name="firma" src="{{asset('/archivos/imagenes/firmas/')}}/{{$config_emails->firma}}" width="390px" height="200px" />
+                                                    <input type="text" name="firma_nombre" hidden="hidden" value="{{$config_emails->firma}}">
+                                                </span>
+                                            </div>
+                                        </div>
+                                    <br>
+                                </div>
+                            </fieldset>
+                        </div>
+                        <button class="btn btn-primary" type="submit">Grabar</button>
+                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        <script type="text/javascript">
+                        function validarExt{{$config_emails->id}}()
+                        {
+                        var archivoInput{{$config_emails->id}} = document.getElementById('archivoInput{{$config_emails->id}}');
+                        var archivoRuta = archivoInput{{$config_emails->id}}.value;
+                        var extPermitidas = /(.jpg|.png|.jfif)$/i;
+                        if(!extPermitidas.exec(archivoRuta)){
+                            alert('Asegurese de haber seleccionado una Imagen');
+                            archivoInput{{$config_emails->id}}.value = '';
+                            return false;
+                        }
+
+                        else
+                        {
+                        //PRevio del PDF
+                        if (archivoInput{{$config_emails->id}}.files && archivoInput{{$config_emails->id}}.files[0])
+                        {
+                            var visor = new FileReader();
+                            visor.onload = function(e)
+                            {
+                                document.getElementById('visorArchivo{{$config_emails->id}}').innerHTML =
+                                '<img name="firma" src="'+e.target.result+'"width="390px" height="200px" />';
+                            };
+                            visor.readAsDataURL(archivoInput{{$config_emails->id}}.files[0]);
+                        }
+                        }
+                        }
+                        </script>
+                        <script type="text/javascript">
+                        {{-- scrpti de ver y ocultar contraseña del Foreach --}}
+                        function mostrarPassword{{$config_emails->id}}(){
+                        var cambio = document.getElementById("txtPassword{{$config_emails->id}}");
+                        if(cambio.type == "password"){
+                            cambio.type = "text";
+                            $('#ojo{{$config_emails->id}}').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+                        }else{
+                            cambio.type = "password";
+                            $('#ojo{{$config_emails->id}}').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+                        }
+                        }
+
+                        </script>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+@endforeach
+
+{{-- Modal Editar Confg¿figuracion Fin --}}
+
+
+<!-- Modal Create Redactar  -->
 <div class="modal fade" id="redactar" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" style="width: 700px;margin-left: 400px;">
         <div class="modal-content" style="width: 702px;">
@@ -19,7 +248,7 @@
                 {{--  --}}
                 <div class="col-lg-10 container animated fadeInRight" style="width: 600px;padding-left: 0px;padding-right: 0px;margin-right: 30px;margin-left: 60px;">
                     <div class="mail-box">
-
+                        @foreach($config_email as $config_emails)
                         <form action ="{{route('email.store')}}" method="POST" enctype="multipart/form-data" >
                             @csrf
                             <div class="mail-body">
@@ -67,7 +296,7 @@
                         </div>
                     </div>
                     {{--  --}}
-
+                    @endforeach
                 </div>
             </div>
         </div>
@@ -239,6 +468,24 @@ span.fileinput-filename{
     left: 25px !importants;
 }
 </style>
+<style>
+    .form-control{margin-top: 5px; border-radius: 5px}
+    p#texto{
+        text-align: center;
+        color:black;
+    }
+
+    input#archivoInput{
+        position:absolute;
+        top:0px;
+        left:0px;
+        right:0px;
+        bottom:0px;
+        width:100%;
+        height:100%;
+        opacity: 0  ;
+    }
+</style>
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -272,6 +519,52 @@ span.fileinput-filename{
     });
 
   });
+</script>
+<script type="text/javascript">
+        // <div class="col-sm-10">
+        // <div class="input-group m-b">
+        // <input type="password" class="form-control" name="password" id="txtPassword">
+        // <div class="input-group-prepend">
+        // <span class="input-group-addon" style="height: 35.22222px;margin-top: 5px;">
+        // <i class="fa fa-eye " id="ojo" onclick="mostrarPassword()"></i></span>
+        // </div>
+        // </div>
+        // </div>
+function mostrarPassword(){
+    var cambio = document.getElementById("txtPassword");
+    if(cambio.type == "password"){
+        cambio.type = "text";
+        $('#ojo').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+    }else{
+        cambio.type = "password";
+        $('#ojo').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+    }
+}
+</script>
+<script type="text/javascript">
+        {{-- Fotooos --}}
+function validarExt(){
+    var archivoInput = document.getElementById('archivoInput');
+    var archivoRuta = archivoInput.value;
+    var extPermitidas = /(.jpg|.png|.jfif)$/i;
+    if(!extPermitidas.exec(archivoRuta)){
+        alert('Asegurese de haber seleccionado una Imagen');
+        archivoInput.value = '';
+        return false;
+    }else{
+        //PRevio del PDF
+        if (archivoInput.files && archivoInput.files[0])
+        {
+            var visor = new FileReader();
+            visor.onload = function(e)
+            {
+                document.getElementById('visorArchivo').innerHTML =
+                '<img name="firma" src="'+e.target.result+'"width="390px" height="200px" />';
+            };
+            visor.readAsDataURL(archivoInput.files[0]);
+        }
+    }
+}
 </script>
 <link href="{{asset('css/plugins/summernote/summernote-bs4.css')}}" rel="stylesheet">
 

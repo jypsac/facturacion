@@ -4,62 +4,49 @@
 @section('breadcrumb2', 'Papelera')
 @section('data-toggle', '#')
 @section('href_accion', '#')
-@section('value_accion', '>>>>>>>')
+@section('value_accion', '#')
 @section('content') 
        
-    <div class="fh-breadcrumb">
-
-        @if($count == 0)
-        <div class="fh-column">        
+<div class="fh-breadcrumb">
+    @if($count == 0)
+    <div class="fh-column">        
+    </div>
+     <div class="full-height">
+        <div class="full-height-scroll white-bg border-left">
+        <h2 style="align-content: center;"><center>No hay elementos en la Papelera</center></h2>
         </div>
-         <div class="full-height">
-            <div class="full-height-scroll white-bg border-left">
-            <h2 style="align-content: center;"><center>No hay elementos en la Papelera</center></h2>
-            </div>
-         </div>
-
-
-        @else
-         
-        <div class="fh-column">
-          
-            <div class="full-height-scroll">
-                <ul class="list-group elements-list">
-                      @foreach($mailbox as $row)
-                    <li class="list-group-item">
-                        <a class="nav-link" data-toggle="tab" href="#tab-{{$row->id}}" style="padding-top: 5px;padding-bottom: 5px;">
-                            <span hidden="hidden">{{$mensaje_limitado=$row->mensaje_sin_html}}
-                            {{$cate = substr($mensaje_limitado, 0, 10)}}</span>
-                            <strong style="font-size: 10px">{{$row->remitente}}</strong>
-                            <div class="small m-t-xs">
-                                <p class="m-b-xs">
-                                  {{$cate}}...
-                              </p>
-                              <p class="m-b-none">
+     </div>
+    @else
+    <div class="fh-column">
+        <div class="full-height-scroll">
+            <ul class="list-group elements-list">
+                  @foreach($mailbox as $row)
+                <li class="list-group-item">
+                    <a class="nav-link" data-toggle="tab" href="#tab-{{$row->id}}" style="padding-top: 5px;padding-bottom: 5px;">
+                        <span hidden="hidden">{{$mensaje_limitado=$row->mensaje_sin_html}}
+                        {{$cate = substr($mensaje_limitado, 0, 10)}}</span>
+                        <strong style="font-size: 10px">{{$row->remitente}}</strong>
+                        <div class="small m-t-xs">
+                            <p class="m-b-xs">
+                              {{$cate}}...
+                            </p>
+                            <p class="m-b-none">
                                 <i class="fa fa-map-marker"></i> Lima,Perú <span class="float-right text-muted">{{$row->fecha_hora}}</span>
                             </p>
                         </div>
                     </a>
                 </li>
-                    @endforeach     
+                @endforeach     
             </ul>
         </div>
-       
     </div>
-        @endif    
+        
             
-
-         
-                        
-
     <div class="full-height">
         <div class="full-height-scroll white-bg border-left">
-
             <div class="element-detail-box">
-
                 <div class="tab-content">
                     @foreach($mailbox as $row)
-
                     <div id="tab-{{$row->id}}" class="tab-pane">
                         <div class="float-right">
                             <div class="tooltip-demo">
@@ -69,26 +56,24 @@
                             <form action="{{route('email.destroy')}}" method="post">    
                                 @csrf
                                 <input type="hidden" name="id" value="{{$row->id}}" /> 
-                            <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to trash"><i class="fa fa-trash-o"></i> </button>
-                                 
+                                <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to trash"><i class="fa fa-trash-o"></i> </button>
                             </form>
-
+                            </div>
                         </div>
-                    </div>
-                    <div class="small text-muted">
-                        <i class="fa fa-clock-o"></i> {{$row->fecha_hora}}
-                    </div>
-                    <span hidden="hidden">{{$remitente_limi=$row->remitente}}
-                    {{$remi = substr($remitente_limi, 0, 1)}}</span>
-                    <h1><div class="row">
-                        <div class="col-sm-1" style=" padding-right: 0px;">
+                        <div class="small text-muted">
+                            <i class="fa fa-clock-o"></i> {{$row->fecha_hora}}
+                        </div>
+                        <span hidden="hidden">{{$remitente_limi=$row->remitente}}
+                        {{$remi = substr($remitente_limi, 0, 1)}}</span>
+                        <h1><div class="row">
+                            <div class="col-sm-1" style=" padding-right: 0px;">
                             <div  class="rounded-circle" style="background: #8D8D8D; width: 50px; height: 50px ;color: white" align="center">{{$str = strtoupper($remi)}}</div>
-                        </div>
-                        <div class="col-sm-3" style="padding-left: 0px">
-                           {{$row->asunto}}
-                       </div>
+                            </div>
+                            <div class="col-sm-3" style="padding-left: 0px">
+                               {{$row->asunto}}
+                           </div>
 
-                   </div></h1>
+                        </div></h1>
                    {{-- <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)" style="width: 50px" /> --}}
                    <h5>to: {{$row->remitente}}</h5>
                    <hr>
@@ -96,77 +81,69 @@
                    <p class="small">
                     {{-- Firma --}}
                     <strong>Best regards, Anthony Smith </strong>
-                </p>
-
-                <div class="m-t-lg">
-                    <p>
-                        <span><i class="fa fa-paperclip"></i> Archivos </span>
-                            {{-- <a href="#">Download all</a>
-                            |
-                            <a href="#">View all images</a> --}}
-                        </p>
-
-                        <div class="attachment">
-                            @foreach($mailbox_file as $mailbox_files)
-                            @if($mailbox_files->id_bandeja_envios ==  $row->id)
-                            @if( isset($mailbox_files->archivo) )
-                            <div class="file-box">
-                                <div class="file">
-                                    <a href="" download="{{$mailbox_files->archivo}}">
-                                        <span class="corner"></span>
-                                        <div class="icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <div class="file-name">
-                                            {{$mailbox_files->archivo}}
-                                            <br>
-                                            <small>Añadido: {{$mailbox_files->fecha_hora}}</small>
-                                        </div>
-                                    </a>
-
-                                </div>
-                            </div>
-                            @endif
-                            @endif
-                            @endforeach
-
-                            @foreach($mailbox_file as $mailbox_files)
+                    </p>
+                    <div class="m-t-lg">
+                            <span><i class="fa fa-paperclip"></i> Archivos </span>
+                                {{-- <a href="#">Download all</a>
+                                |
+                                <a href="#">View all images</a> --}}
+                            <div class="attachment">
+                                @foreach($mailbox_file as $mailbox_files)
                                 @if($mailbox_files->id_bandeja_envios ==  $row->id)
-                                    @if( isset($mailbox_files->imagen) )
-                                    <div class="file-box">
-                                        <div class="file">
-                                            <a href="#">
-                                                <span class="corner"></span>
-
-                                                <div class="icon">
-                                                    <i class="fa fa-file-pdf-o"></i>
-                                                </div>
-                                                <div class="file-name">
-                                                   {{$mailbox_files->imagen}}
-                                                    <br>
-                                                        <small>Añadido: {{$mailbox_files->fecha_hora}}</small>
-                                                </div>
-                                            </a>
-                                        </div>
+                                @if( isset($mailbox_files->archivo) )
+                                <div class="file-box">
+                                    <div class="file">
+                                        <a href="" download="{{$mailbox_files->archivo}}">
+                                            <span class="corner"></span>
+                                            <div class="icon">
+                                                <i class="fa fa-file-pdf-o"></i>
+                                            </div>
+                                            <div class="file-name">
+                                                {{$mailbox_files->archivo}}
+                                                <br>
+                                                <small>Añadido: {{$mailbox_files->fecha_hora}}</small>
+                                            </div>
+                                        </a>
 
                                     </div>
-                                    @endif
+                                </div>
                                 @endif
-                            @endforeach
-                            <div class="clearfix"></div>
+                                @endif
+                                @endforeach
+
+                                @foreach($mailbox_file as $mailbox_files)
+                                    @if($mailbox_files->id_bandeja_envios ==  $row->id)
+                                        @if( isset($mailbox_files->imagen) )
+                                        <div class="file-box">
+                                            <div class="file">
+                                                <a href="#">
+                                                    <span class="corner"></span>
+
+                                                    <div class="icon">
+                                                        <i class="fa fa-file-pdf-o"></i>
+                                                    </div>
+                                                    <div class="file-name">
+                                                       {{$mailbox_files->imagen}}
+                                                        <br>
+                                                            <small>Añadido: {{$mailbox_files->fecha_hora}}</small>
+                                                    </div>
+                                                </a>
+                                            </div>
+
+                                        </div>
+                                        @endif
+                                    @endif
+                                @endforeach
+                                <div class="clearfix"></div>
+                            </div>
                         </div>
                     </div>
-                    
+                    @endforeach
                 </div>
-                @endforeach
-
             </div>
-
         </div>
-
     </div>
-</div>
-
+    @endif
 </div>
 <!-- Mainly scripts -->
 
