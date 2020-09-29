@@ -193,7 +193,7 @@
                         <li>
                             <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
                             <ul class="nav nav-second-level collapse">
-                                <li><a href="{{route('email.index')}}">Inbox</a></li>
+                                <li><a href="{{route('email.index')}}">Bandeja de Entrada</a></li>
                                 {{-- <li><a href="{{route('configuracion_email.index')}}">Configuracion</a></li> --}}
                                 <li><a href="{{route('email.trash')}}">Papelera</a></li>
 
