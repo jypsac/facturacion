@@ -39,7 +39,8 @@ class EmailBandejaEnviosController extends Controller
       $clientes=Cliente::all();
       $mailbox =EmailBandejaEnvios::where('estado','0')->where('id_usuario',$id_usuario)->OrderBy('id','desc')->get();
       $mailbox_file =EmailBandejaEnviosArchivos::all();
-      return view('mailbox.index',compact('mailbox','user','clientes','mailbox_file'));
+      $config_email=EmailConfiguraciones::where('id_usuario',$id_usuario)->get();
+      return view('mailbox.index',compact('mailbox','user','clientes','mailbox_file','config_email'));
 
     }
     /**
@@ -423,6 +424,69 @@ class EmailBandejaEnviosController extends Controller
 
         return back() ;
     }
+    public function configstore(Request $request){
 
-  }
+      $this->validate($request,[
+            'email' => ['required','email','unique:email_configuraciones,email'],
+        ],[
+            'email.unique' => 'El correo ya existe',
+        ]);
+
+        $correo = $request->get('email');
+        // $firma=$request->get('firma') ;
+        if($request->hasfile('firma')){
+            $image1 =$request->file('firma');
+            $name =time().$image1->getClientOriginalName();
+            $destinationPath = public_path('/archivos/imagenes/firmas/');
+            $image1->move($destinationPath,$name);
+        }else{
+            $name="";
+        }
+        $id_usuario=auth()->user()->id;
+        $configmail = new EmailConfiguraciones;
+        $configmail->id_usuario =auth()->user()->id;
+        $configmail->email =$correo ;
+        $configmail->password = $request->get('password') ;
+        $configmail->email_backup = 'desarrollo@jypsac.com';
+        $configmail->smtp =$request->get('smtp') ;
+        $configmail->port = $request->get('port');
+        $configmail->firma = $name;
+        $configmail->encryption= $request->get('encryp') ;
+        $configmail-> save();
+
+        $user=User::find($id_usuario);
+        $user->email_creado='1';
+        $user->save();
+        return redirect()->route('email.index');
+    }
+
+
+    public function configupdate(Request $request,$id){
+      $this->validate($request,[
+            'email' => ['required','email','unique:email_configuraciones,email,'.$id],
+        ],[
+            'email.unique' => 'El correo ya existe',
+        ]);
+
+
+        $correo = $request->get('email');
+         if($request->hasfile('firma')){
+            $image1 =$request->file('firma');
+            $name =time().$image1->getClientOriginalName();
+            $destinationPath = public_path('/archivos/imagenes/firmas/');
+            $image1->move($destinationPath,$name);
+        }else{
+            $name=$request->get('firma_nombre') ;
+        }
+        $configmail=EmailConfiguraciones::find($id);
+        $configmail->email = $correo ;
+        $configmail->password = $request->get('password') ;
+        $configmail->smtp =$request->get('smtp') ;
+        $configmail->port = $request->get('port');
+        $configmail->encryption= $request->get('encryp') ;
+        $configmail->firma = $name;
+        $configmail->save();
+        return redirect()->route('email.index');
+    }
+}
 

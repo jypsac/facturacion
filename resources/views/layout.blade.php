@@ -194,7 +194,7 @@
                             <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li><a href="{{route('email.index')}}">Inbox</a></li>
-                                <li><a href="{{route('configuracion_email.index')}}">Configuracion</a></li>
+                                {{-- <li><a href="{{route('configuracion_email.index')}}">Configuracion</a></li> --}}
                                 <li><a href="{{route('email.trash')}}">Papelera</a></li>
 
                             </ul>
@@ -288,7 +288,8 @@
                             <a style="visibility:@yield('visibility', 'hidden')" {{-- data-toggle="@yield('a', '')" --}}  href="@yield('ruta', '')" class="btn btn-primary">@yield('name', '')</a>
 
                             <a data-toggle="@yield('data-toggle', '')"  href="@yield('href_accion', '#')" class="btn btn-primary">@yield('value_accion', '#')</a>
-                            <a href="" class="btn btn-primary">actualizar</a>
+
+                            <a data-toggle="@yield('data-config', '')"  href="@yield('config', '')" class="@yield('class', 'btn btn-primary')" >@yield('nombre', 'Actualizar')</a>
                         </div><!--
                         @yield('div', '') -->
 
