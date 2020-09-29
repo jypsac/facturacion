@@ -31,7 +31,7 @@ class UsuarioController extends Controller
     public function lista()
     {
         $almacen=Almacen::all();
-        $personales=Personal::where('usuario_registrado',0)->get();
+        $personales=Personal::where('usuario_registrado',0)->where('estado',1)->get();
         return view('configuracion_general.usuario.lista',compact('personales','almacen'));
     }
 

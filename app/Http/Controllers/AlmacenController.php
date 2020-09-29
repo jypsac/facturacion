@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Almacen;
+use App\Personal;
 use Illuminate\Http\Request;
 
 class AlmacenController extends Controller
@@ -24,7 +25,8 @@ class AlmacenController extends Controller
     public function index()
     {
         $almacenes=Almacen::all();
-        return view('configuracion_general.almacen.index',compact('almacenes'));
+        $personal=Personal::where('estado',1)->get();
+        return view('configuracion_general.almacen.index',compact('almacenes','personal'));
     }
 
     /**
@@ -34,8 +36,7 @@ class AlmacenController extends Controller
      */
     public function create()
     {
-        $almacenes=Almacen::all();
-        return view('configuracion_general.almacen.create');
+
     }
 
     /**
@@ -52,6 +53,10 @@ class AlmacenController extends Controller
         $almacen->responsable=$request->get('responsable');
         $almacen->direccion=$request->get('direccion');
         $almacen->descripcion=$request->get('descripcion');
+        $almacen->cod_fac=$request->get('cod_fac');
+        $almacen->cod_bol=$request->get('cod_bol');
+        $almacen->cod_guia=$request->get('cod_guia');
+        $almacen->codigo_sunat=$request->get('codigo_sunat');
         $almacen->estado='0';
         $almacen->save();
 
@@ -66,7 +71,7 @@ class AlmacenController extends Controller
      */
     public function show($id)
     {
-        return view('configuracion_general.almacen.show');
+
     }
 
     /**
@@ -77,8 +82,7 @@ class AlmacenController extends Controller
      */
     public function edit($id)
     {
-        $almacen=Almacen::find($id);
-        return view('configuracion_general.almacen.edit',compact('almacen'));
+
     }
     /**
      * Update the specified resource in storage.
@@ -99,6 +103,7 @@ class AlmacenController extends Controller
       $almacen->responsable=$request->get('responsable');
       $almacen->direccion=$request->get('direccion');
       $almacen->descripcion=$request->get('descripcion');
+      $almacen->codigo_sunat=$request->get('codigo_sunat');
       $almacen->estado=$estado_numero;
       $almacen->save();
 
@@ -115,5 +120,5 @@ class AlmacenController extends Controller
     {
 
 
- }
+    }
 }

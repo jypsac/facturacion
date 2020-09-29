@@ -20,9 +20,15 @@ class CreateAlmacenTable extends Migration
             //codigo sunat hara que los codigos de las boleta y facturas sean de diferenstes sucusrsales
             $table->integer('codigo_sunat');
             $table->text('direccion');
-            $table->string('responsable');
+            // $table->string('responsable');
             $table->text('descripcion');
+            $table->string('cod_fac');
+            $table->string('cod_bol');
+            $table->string('cod_guia');
             $table->boolean('estado');
+
+            $table->unsignedBigInteger('responsable')->nullable();
+            $table->foreign('responsable')->references('id')->on('personal')->onDelete('cascade');
             $table->timestamps();
         });
     }

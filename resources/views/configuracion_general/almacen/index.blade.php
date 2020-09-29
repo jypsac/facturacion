@@ -29,158 +29,195 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Nombre:</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="nombre">
+                                    <input type="text" placeholder="Almacen" class="form-control" name="nombre" autocomplete="off" required="required">
                                 </div>
 
                                 <label class="col-sm-2 col-form-label">Abreviatura:</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="abreviatura">
+                                    <input type="text" class="form-control" name="abreviatura" autocomplete="off" required="required" placeholder="ALM.">
                                 </div>
 
                                 <label class="col-sm-2 col-form-label">Responsable:</label>
                                 <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="responsable">
-                                </div>
+                                    <select name="responsable" required  class="form-control m-b" autocomplete="off" required="required">
+                                      @foreach($personal as $personals)
+                                      <option value="{{$personals->id}}" > {{$personals->nombres}} {{$personals->apellidos}}</option>
+                                      @endforeach
+                                  </select>
+                              </div>
 
-                                <label class="col-sm-2 col-form-label">Dirección:</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="direccion">
-                                </div>
-
-                                <label class="col-sm-2 col-form-label">Descripcion:</label>
-                                <div class="col-sm-4">
-                                    <input type="text" class="form-control" name="descripcion">
-                                </div>
+                              <label class="col-sm-2 col-form-label">Dirección:</label>
+                              <div class="col-sm-4">
+                                <input type="text" class="form-control" placeholder="Av. , Calle, Ciudad" name="direccion" autocomplete="off" required="required">
                             </div>
 
-                            <button class="btn btn-primary" type="submit" name="action">Guardar</button>
+                            <label class="col-sm-2 col-form-label">Descripcion:</label>
+                            <div class="col-sm-4">
+                                <textarea class="form-control" name="descripcion" autocomplete="off" required="required">Almacen Localizado en ...</textarea>
+                            </div>
 
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-    <!-- / Modal Create  -->
-    <div class="wrapper wrapper-content animated fadeInRight">
-        <div class="row">
-            <div class="col-lg-12">
-                <div class="ibox ">
-                    <div class="ibox-title">
-                        <h5>Creacion de Almacen</h5>
-                        <div class="ibox-tools">
-                            <a class="collapse-link">
-                                <i class="fa fa-chevron-up"></i>
-                            </a>
-                            <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                <i class="fa fa-wrench"></i>
-                            </a>
-                            <ul class="dropdown-menu dropdown-user">
-                                <li><a href="#" class="dropdown-item">Config option 1</a>
-                                </li>
-                                <li><a href="#" class="dropdown-item">Config option 2</a>
-                                </li>
-                            </ul>
-                            <a class="close-link">
-                                <i class="fa fa-times"></i>
-                            </a>
+                            <label class="col-sm-2 col-form-label">Codigo Sunat:</label>
+                            <div class="col-sm-4">
+                                <input  type="text" class="form-control" name="codigo_sunat" autocomplete="off" required="required" placeholder="Numero de sucursal">
+                            </div>
+                            <div class="col-sm-12">
+                                <p class="form-control"  style="background: #57b59738;text-align: left;font-family: fangsong;"><b>Nota:</b> Dichos campos es el inicio del conteo de cada recibo, posteriormente no hay edición ni cambios. Tome su tiempo de colocarlos bien.</p>
+                            </div>
+                            <label class="col-sm-2 col-form-label">Cod.Facturacion:</label>
+                            <div class="col-sm-2">
+                                <input type="text" value="0" class="form-control" name="cod_fac" autocomplete="off" required="required">
+                            </div>
+                            <label class="col-sm-2 col-form-label">Cod.Boleta:</label>
+                            <div class="col-sm-2">
+                                <input type="text" value="0" class="form-control" name="cod_bol" autocomplete="off" required="required">
+                            </div>
+                            <label class="col-sm-2 col-form-label">Cod.Guia R.:</label>
+                            <div class="col-sm-2">
+                                <input type="text" value="0" class="form-control" name="cod_guia" autocomplete="off" required="required">
+                            </div>
                         </div>
-                    </div>
-                    <div class="ibox-content">
-                        <div class="table-responsive">
-                            <table class="table table-striped table-bordered table-hover dataTables-example" >
-                                <thead>
-                                    <tr>
-                                        <th>Id</th>
-                                        <th>Nombre</th>
-                                        <th>Abreviatura</th>
-                                        <th>Direccion</th>
-                                        <th>Responsable</th>
-                                        <th>Descripcion</th>
-                                        <th>Activo/Desactivo</th>
-                                        <th>Editar</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    @foreach($almacenes as $almacen)
-                                    <tr class="gradeX">
-                                        <td>{{$almacen->id}}</td>
-                                        <td>{{$almacen->nombre}}</td>
-                                        <td>{{$almacen->abreviatura}}</td>
-                                        <td>{{$almacen->direccion}}</td>
-                                        <td>{{$almacen->responsable}}</td>
-                                        <td>{{$almacen->descripcion}}</td>
-                                        <td>@if($almacen->estado==0)Activo @elseif($almacen->estado==1)Desactivo @endif</td>
-                                        <td>
-                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$almacen->id}}">Editar</button>
-                                            <div class="modal fade" id="exampleModal{{$almacen->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                                <div class="modal-dialog" role="document"style="margin-left: 450px;">
-                                                    <div class="modal-content" style="width: 702px;">
-                                                        <div class="modal-header">
-                                                            <h5 class="modal-title" id="exampleModalLabel"> Edit Categoría</h5>
-                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                <span aria-hidden="true">&times;</span>
-                                                            </button>
-                                                        </div>
-                                                        <div style="padding-left: 15px;padding-right: 15px;">
-                                                            {{-- ccccccccccccccccc --}}
-                                                            <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
 
-                                                                <form action="{{route('almacen.update',$almacen->id)}}"  enctype="multipart/form-data" method="post">
-                                                                    @csrf
-                                                                    @method('PATCH')
-                                                                    <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
-                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="nombre" value="{{$almacen->nombre}}"></div>
 
-                                                                       <label class="col-sm-2 col-form-label">Abreviatura:</label>
-                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="abreviatura" value="{{$almacen->abreviatura}}"></div>
+                        <button class="btn btn-primary" type="submit" name="action">Guardar</button>
 
-                                                                       <label class="col-sm-2 col-form-label">Responsable:</label>
-                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="responsable" value="{{$almacen->responsable}}"></div>
-
-                                                                       <label class="col-sm-2 col-form-label">Dirección:</label>
-                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="direccion" value="{{$almacen->direccion}}"></div>
-
-                                                                       <label class="col-sm-2 col-form-label">Descripcion:</label>
-                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="descripcion" value="{{$almacen->descripcion}}"></div>
-
-                                                                       <label class="col-sm-2 col-form-label">Activo/desactivo:</label>
-                                                                       <div class="col-sm-3">
-                                                                        @if($almacen->estado == 0)
-                                                                        <div class="switch-button">
-                                                                            <input type="checkbox" name="estado" id="switch-label{{$almacen->id}}" class="switch-button__checkbox" checked="">
-                                                                            <label for="switch-label{{$almacen->id}}" class="switch-button__label"></label>
-                                                                        </div>
-                                                                        @else
-                                                                        <div class="switch-button">
-                                                                            <input type="checkbox" name="estado" id="aswitch-label{{$almacen->id}}" class="switch-button__checkbox" >
-                                                                            <label for="aswitch-label{{$almacen->id}}" class="switch-button__label"></label>
-                                                                        </div>
-                                                                        @endif
-                                                                    </div>
-                                                                </div>
-                                                                <button class="btn btn-primary" type="submit" name="action">Editar</button>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- / Modal Create  -->
-
-                                    </td>
-
-                                </tr>
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
 </div>
+<!-- / Modal Create  -->
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="ibox-title">
+                    <h5>Creacion de Almacen</h5>
+                    <div class="ibox-tools">
+                        <a class="collapse-link">
+                            <i class="fa fa-chevron-up"></i>
+                        </a>
+                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
+                            <i class="fa fa-wrench"></i>
+                        </a>
+                        <ul class="dropdown-menu dropdown-user">
+                            <li><a href="#" class="dropdown-item">Config option 1</a>
+                            </li>
+                            <li><a href="#" class="dropdown-item">Config option 2</a>
+                            </li>
+                        </ul>
+                        <a class="close-link">
+                            <i class="fa fa-times"></i>
+                        </a>
+                    </div>
+                </div>
+                <div class="ibox-content">
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                                <tr>
+                                    <th>Id</th>
+                                    <th>Nombre</th>
+                                    <th>Abreviatura</th>
+                                    <th>Direccion</th>
+                                    <th>Responsable</th>
+                                    <th>Descripcion</th>
+                                    <th>Activo/Desactivo</th>
+                                    <th>Editar</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($almacenes as $almacen)
+                                <tr class="gradeX">
+                                    <td>{{$almacen->id}}</td>
+                                    <td>{{$almacen->nombre}}</td>
+                                    <td>{{$almacen->abreviatura}}</td>
+                                    <td>{{$almacen->direccion}}</td>
+                                    <td>{{$almacen->responsable}}</td>
+                                    <td>{{$almacen->descripcion}}</td>
+                                    <td>@if($almacen->estado==0)Activo @elseif($almacen->estado==1)Desactivo @endif</td>
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$almacen->id}}">Editar</button>
+                                        <div class="modal fade" id="exampleModal{{$almacen->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                            <div class="modal-dialog" role="document"style="margin-left: 450px;">
+                                                <div class="modal-content" style="width: 702px;">
+                                                    <div class="modal-header">
+                                                        <h5 class="modal-title" id="exampleModalLabel"> Edit Categoría</h5>
+                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                            <span aria-hidden="true">&times;</span>
+                                                        </button>
+                                                    </div>
+                                                    <div style="padding-left: 15px;padding-right: 15px;">
+                                                        {{-- ccccccccccccccccc --}}
+                                                        <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+
+                                                            <form action="{{route('almacen.update',$almacen->id)}}"  enctype="multipart/form-data" method="post">
+                                                                @csrf
+                                                                @method('PATCH')
+                                                                <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
+                                                                   <div class="col-sm-4"><input type="text" class="form-control" name="nombre" value="{{$almacen->nombre}}"></div>
+
+                                                                   <label class="col-sm-2 col-form-label">Abreviatura:</label>
+                                                                   <div class="col-sm-4"><input type="text" class="form-control" name="abreviatura" value="{{$almacen->abreviatura}}"></div>
+
+                                                                   <label class="col-sm-2 col-form-label">Responsable:</label>
+                                                                   <div class="col-sm-4">
+                                                                    <select class="form-control" name="responsable">
+                                                                        <option value="{{$almacen->personal->id}}">{{$almacen->personal->nombres}}</option>
+                                                                        <option disabled="disabled">----------------------------</option>
+                                                                        @foreach($personal as $personals)
+                                                                        <option value="{{$personals->id}}">{{$personals->nombres}}</option>
+                                                                        @endforeach
+                                                                    </select>
+                                                                </div>
+                                                                   <label class="col-sm-2 col-form-label">Dirección:</label>
+                                                                   <div class="col-sm-4"><input type="text" class="form-control" name="direccion" value="{{$almacen->direccion}}"></div>
+
+                                                                   <label class="col-sm-2 col-form-label">Descripcion:</label>
+                                                                   <div class="col-sm-4"><input type="text" class="form-control" name="descripcion" value="{{$almacen->descripcion}}"></div>
+
+                                                                   <label class="col-sm-2 col-form-label">Activo/desactivo:</label>
+                                                                   <div class="col-sm-1">
+                                                                    @if($almacen->estado == 0)
+                                                                    <div class="switch-button">
+                                                                        <input type="checkbox" name="estado" id="switch-label{{$almacen->id}}" class="switch-button__checkbox" checked="">
+                                                                        <label for="switch-label{{$almacen->id}}" class="switch-button__label"></label>
+                                                                    </div>
+                                                                    @else
+                                                                    <div class="switch-button">
+                                                                        <input type="checkbox" name="estado" id="aswitch-label{{$almacen->id}}" class="switch-button__checkbox" >
+                                                                        <label for="aswitch-label{{$almacen->id}}" class="switch-button__label"></label>
+                                                                    </div>
+                                                                    @endif
+                                                                </div>
+                                                                <label class="col-sm-2 col-form-label">Codigo Sunat:</label>
+                                                                <div class="col-sm-1">
+                                                                    <input style="padding-right: 0;padding-left:  7px"  type="text" class="form-control" name="codigo_sunat" autocomplete="off" required="required" value="{{$almacen->codigo_sunat}}" placeholder="Numero de sucursal">
+                                                                </div>
+                                                            </div>
+                                                            <button class="btn btn-primary" type="submit" name="action">Editar</button>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    <!-- / Modal Create  -->
+
+                                </td>
+
+                            </tr>
+                            @endforeach
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
 <style>
+    .form-control{border-radius: 5px}
     .col-sm-4{padding-bottom: 10px}
     :root {
         --color-button: #fdffff;
