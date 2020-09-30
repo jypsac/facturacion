@@ -47,6 +47,19 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request,[
+            'nombre' => ['required'],
+            'abreviatura' => ['required'],
+            'responsable' => ['required'],
+            'direccion' => ['required'],
+            'descripcion' => ['required'],
+            'cod_fac' => ['required','integer'],
+            'cod_bol' => ['required','integer'],
+            'cod_guia' => ['required','integer'],
+            'codigo_sunat' => ['required'],
+        ]);
+
         $almacen=new Almacen;
         $almacen->nombre=$request->get('nombre');
         $almacen->abreviatura=$request->get('abreviatura');
@@ -58,9 +71,6 @@ class AlmacenController extends Controller
         $almacen->cod_guia=$request->get('cod_guia');
         $almacen->codigo_sunat=$request->get('codigo_sunat');
         $almacen->estado='0';
-        $almacen->cod_fac=$request->get('cod_fac');
-        $almacen->cod_bol=$request->get('cod_bol');
-        $almacen->cod_guia=$request->get('cod_guia');
         $almacen->save();
 
         return redirect()->route('almacen.index');
@@ -96,24 +106,59 @@ class AlmacenController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $estado=$request->get('estado');
-      if ($estado=='on') { $estado_numero='0'; }
-      else{ $estado_numero='1';}
+        $this->validate($request,[
+            'nombre' => ['required'],
+            'abreviatura' => ['required'],
+            'responsable' => ['required'],
+            'direccion' => ['required'],
+            'descripcion' => ['required'],
+            'codigo_sunat' => ['required'],
+        ]);
 
-      $almacen=Almacen::find($id);
-      $almacen->nombre=$request->get('nombre');
-      $almacen->abreviatura=$request->get('abreviatura');
-      $almacen->responsable=$request->get('responsable');
-      $almacen->direccion=$request->get('direccion');
-      $almacen->descripcion=$request->get('descripcion');
-      $almacen->codigo_sunat=$request->get('codigo_sunat');
-      $almacen->estado=$estado_numero;
-      $almacen->cod_fac=$request->get('cod_fac');
-      $almacen->cod_bol=$request->get('cod_bol');
-      $almacen->cod_guia=$request->get('cod_guia');
-      $almacen->save();
+        $estado=$request->get('estado');
+        if($estado=='on'){
+            $estado_numero='0';
+        }
+        else{
+            $estado_numero='1';
+        }
 
-      return redirect()->route('almacen.index');
+        // OBTENCION DE CAMPOS
+        $nr_fac=$request->get('cod_fac');
+        $nr_bol=$request->get('cod_bol');
+        $nr_guia=$request->get('cod_guia');
+
+        $almacen=Almacen::where('id', $id)->first();
+        $almacen=Almacen::find($id);
+        $almacen->nombre=$request->get('nombre');
+        $almacen->abreviatura=$request->get('abreviatura');
+        $almacen->responsable=$request->get('responsable');
+        $almacen->direccion=$request->get('direccion');
+        $almacen->descripcion=$request->get('descripcion');
+        $almacen->codigo_sunat=$request->get('codigo_sunat');
+        $almacen->estado=$estado_numero;
+        if(is_numeric($almacen->cod_fac) and is_numeric($nr_fac)){
+            $almacen->cod_fac=$request->get('cod_fac');
+        }
+        // VALIDACION EXTRA SI RECIVE UN TEXTO DENTRO DEL IF,PARA ENVIARLO COMO ALERTA
+        // else{
+        //     return  redirect()->route('almacen.index')->with('campo', 'Los campos numericos de factura no pueden ser modificados');
+        // }
+        if(is_numeric($almacen->cod_bol) and is_numeric($nr_bol)){
+            $almacen->cod_bol=$request->get('cod_bol');
+        }
+        // else{
+        //     return  redirect()->route('almacen.index')->with('campo', 'Los campos numericos de boleta no pueden ser modificados');
+        // }
+        if(is_numeric($almacen->cod_guia) and is_numeric($nr_guia)){
+            $almacen->cod_guia=$request->get('cod_guia');
+        }
+        // else{
+        //     return  redirect()->route('almacen.index')->with('campo', 'Los campos numericos de guia no pueden ser modificados');
+        // }
+        $almacen->save();
+        return redirect()->route('almacen.index');
+
   }
 
     /**

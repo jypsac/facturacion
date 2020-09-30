@@ -10,7 +10,22 @@
     @section('content')
 
     <!-- Modal Create  -->
-
+@if($errors->any())
+<div style="padding-top: 10px">
+      <div class="alert alert-danger">
+            <a class="alert-link" href="#">
+              @foreach ($errors->all() as $error)
+              <li style="color: red">{{ $error }}</li>
+              @endforeach
+            </a>
+      </div>
+ </div>
+@endif
+@if (session('campo'))
+        <div class="alert alert-success">
+            {{ session('campo') }}
+        </div>
+@endif
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
         <div class="modal-dialog" role="document" style="margin-left: 450px;">
             <div class="modal-content" style="width: 702px;">
@@ -29,7 +44,7 @@
                             <div class="form-group  row">
                                 <label class="col-sm-2 col-form-label">Nombre:</label>
                                 <div class="col-sm-4">
-                                    <input type="text" placeholder="Almacen" class="form-control" name="nombre" autocomplete="off" required="required">
+                                    <input type="text" placeholder="Almacen" class="form-control" name="nombre" autocomplete="off" >
                                 </div>
 
                                 <label class="col-sm-2 col-form-label">Abreviatura:</label>
@@ -61,7 +76,7 @@
                                 <input  type="text" class="form-control" name="codigo_sunat" autocomplete="off" required="required" placeholder="Numero de sucursal">
                             </div>
                             <div class="col-sm-12">
-                                <p class="form-control"  style="background: #57b59738;text-align: left;font-family: fangsong;"><b>Nota:</b> Dichos campos es el inicio del conteo de cada recibo, posteriormente no hay edición ni cambios. Tome su tiempo de colocarlos bien.</p>
+                                <p class="form-control"  style="background: #57b59738;text-align: left;font-family: fangsong;"><b>Nota:</b> Dichos campos es el inicio del conteo de cada recibo, posteriormente no hay edición ni cambios. Tome su tiempo de colocarlos correctamente.</p>
                             </div>
                             <label class="col-sm-2 col-form-label">Cod.Facturacion:</label>
                             <div class="col-sm-2">
@@ -194,6 +209,26 @@
                                                                         <div class="col-sm-1">
                                                                             <input style="padding-right: 0;padding-left:  7px"  type="text" class="form-control" name="codigo_sunat" autocomplete="off" required="required" value="{{$almacen->codigo_sunat}}" placeholder="Numero de sucursal">
                                                                         </div>
+                                                                    </div>
+                                                                    <div class="form-group  row">
+                                                                        @if(is_numeric($almacen->cod_fac))
+                                                                        <label class="col-sm-2 col-form-label">Cod.Facturacion:</label>
+                                                                            <div class="col-sm-2">
+                                                                                <input type="text" value="{{$almacen->cod_fac}}" class="form-control" name="cod_fac" autocomplete="off" required="required">
+                                                                            </div>
+                                                                        @endif
+                                                                        @if(is_numeric($almacen->cod_bol))
+                                                                            <label class="col-sm-2 col-form-label">Cod.Boleta:</label>
+                                                                            <div class="col-sm-2">
+                                                                                <input type="text" value="{{$almacen->cod_bol}}" class="form-control" name="cod_bol" autocomplete="off" required="required">
+                                                                            </div>
+                                                                        @endif
+                                                                        @if(is_numeric($almacen->cod_guia))
+                                                                            <label class="col-sm-2 col-form-label">Cod.Guia R.:</label>
+                                                                            <div class="col-sm-2">
+                                                                                <input type="text" value="{{$almacen->cod_guia}}" class="form-control" name="cod_guia" autocomplete="off" required="required">
+                                                                            </div>
+                                                                        @endif
                                                                     </div>
                                                                     <button class="btn btn-primary" type="submit" name="action">Editar</button>
                                                                 </form>
