@@ -23,6 +23,9 @@ class CreateAlmacenTable extends Migration
             $table->string('responsable');
             $table->text('descripcion');
             $table->boolean('estado');
+            $table->string('cod_fac');
+            $table->string('cod_bol');
+            $table->string('cod_guia');
             $table->timestamps();
         });
     }

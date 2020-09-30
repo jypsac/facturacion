@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Almacen;
 use App\Banco;
 use App\Cliente;
 use App\Cotizacion;
@@ -71,6 +72,7 @@ class FacturacionController extends Controller
         $personal_contador= Facturacion::all()->count();
         $suma=$personal_contador+1;
         $categoria='producto';
+
         // GENERACION DE NUMERO DE FACTURA
         $ultima_factura=Facturacion::latest()->first();
         $factura_num=$ultima_factura->codigo_fac;
@@ -79,15 +81,22 @@ class FacturacionController extends Controller
         $factura_num=(int)$factura_num_string;
         $factura_num++;
 
-        // $nr_facturas=$facturas_total->count();
-        // $nr_facturas++;
-
-
-            // obtencion de la sucursal
+        // obtencion de la sucursal
         $sucursal=auth()->user()->almacen->codigo_sunat;
-        // exprecion del numero de fatura
-        $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-        $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+
+        //obtencion del almacen
+        $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
+        $factura_cod_fac=$factura_primera->cod_fac;
+        if (is_numeric($factura_cod_fac)) {
+            // exprecion del numero de fatura
+            $factura_cod_fac++;
+            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+        }else{
+            // exprecion del numero de fatura
+            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+        }
 
         $factura_numero="F".$sucursal_nr."-".$factura_nr;
 

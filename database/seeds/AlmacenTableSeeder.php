@@ -20,8 +20,11 @@ class AlmacenTableSeeder extends Seeder
       'responsable' => 'Humberto Garcia',
       'descripcion' => 'Almacen de impresoras',
 			'estado' => '0',
+      'cod_fac' => '100',
+      'cod_bol' => '200',
+      'cod_guia' => '10',
 			'created_at' => date('2019-08-01 00:00:00'),
-           	'updated_at' => date('2019-08-01 00:00:00')
+      'updated_at' => date('2019-08-01 00:00:00')
         ]);
 
    //      DB::table('almacen')->insert([

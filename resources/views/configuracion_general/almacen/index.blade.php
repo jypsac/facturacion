@@ -53,6 +53,25 @@
                                 </div>
                             </div>
 
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">NR Factura:</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="cod_fac" value="0">
+                                </div>
+
+                                <label class="col-sm-2 col-form-label">NR Boleta:</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="cod_bol" value="0">
+                                </div>
+
+                                <label class="col-sm-2 col-form-label">NR Guia:</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="cod_guia" value="0">
+                                </div>
+                            </div>
+
+
                             <button class="btn btn-primary" type="submit" name="action">Guardar</button>
 
                         </form>
@@ -129,7 +148,8 @@
                                                                 <form action="{{route('almacen.update',$almacen->id)}}"  enctype="multipart/form-data" method="post">
                                                                     @csrf
                                                                     @method('PATCH')
-                                                                    <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombre:</label>
+                                                                    <div class="form-group  row">
+                                                                        <label class="col-sm-2 col-form-label">Nombre:</label>
                                                                        <div class="col-sm-4"><input type="text" class="form-control" name="nombre" value="{{$almacen->nombre}}"></div>
 
                                                                        <label class="col-sm-2 col-form-label">Abreviatura:</label>
@@ -158,6 +178,17 @@
                                                                         </div>
                                                                         @endif
                                                                     </div>
+                                                                </div>
+
+                                                                <div class="form-group  row">
+                                                                        <label class="col-sm-2 col-form-label">cod_fac:</label>
+                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="cod_fac" value=""></div>
+
+                                                                       <label class="col-sm-2 col-form-label">cod_bol:</label>
+                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="cod_bol" value=""></div>
+
+                                                                       <label class="col-sm-2 col-form-label">Nr Guia:</label>
+                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="cod_guia" value=""></div>
                                                                 </div>
                                                                 <button class="btn btn-primary" type="submit" name="action">Editar</button>
                                                             </form>
