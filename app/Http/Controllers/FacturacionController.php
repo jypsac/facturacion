@@ -73,13 +73,7 @@ class FacturacionController extends Controller
         $suma=$personal_contador+1;
         $categoria='producto';
 
-        // GENERACION DE NUMERO DE FACTURA
-        $ultima_factura=Facturacion::latest()->first();
-        $factura_num=$ultima_factura->codigo_fac;
-        $factura_num_string_porcion= explode("-", $factura_num);
-        $factura_num_string=$factura_num_string_porcion[1];
-        $factura_num=(int)$factura_num_string;
-        $factura_num++;
+
 
         // obtencion de la sucursal
         $sucursal=auth()->user()->almacen->codigo_sunat;
@@ -94,6 +88,15 @@ class FacturacionController extends Controller
             $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
+
+            // GENERACION DE NUMERO DE FACTURA
+            $ultima_factura=Facturacion::latest()->first();
+            $factura_num=$ultima_factura->codigo_fac;
+            $factura_num_string_porcion= explode("-", $factura_num);
+            $factura_num_string=$factura_num_string_porcion[1];
+            $factura_num=(int)$factura_num_string;
+            $factura_num++;
+
             $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
             $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
         }
