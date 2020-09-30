@@ -58,6 +58,9 @@ class AlmacenController extends Controller
         $almacen->cod_guia=$request->get('cod_guia');
         $almacen->codigo_sunat=$request->get('codigo_sunat');
         $almacen->estado='0';
+        $almacen->cod_fac=$request->get('cod_fac');
+        $almacen->cod_bol=$request->get('cod_bol');
+        $almacen->cod_guia=$request->get('cod_guia');
         $almacen->save();
 
         return redirect()->route('almacen.index');
@@ -105,6 +108,9 @@ class AlmacenController extends Controller
       $almacen->descripcion=$request->get('descripcion');
       $almacen->codigo_sunat=$request->get('codigo_sunat');
       $almacen->estado=$estado_numero;
+      $almacen->cod_fac=$request->get('cod_fac');
+      $almacen->cod_bol=$request->get('cod_bol');
+      $almacen->cod_guia=$request->get('cod_guia');
       $almacen->save();
 
       return redirect()->route('almacen.index');

@@ -77,6 +77,29 @@
                             </div>
                         </div>
 
+<<<<<<< HEAD
+=======
+
+                            <div class="form-group  row">
+                                <label class="col-sm-2 col-form-label">NR Factura:</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="cod_fac" value="0">
+                                </div>
+
+                                <label class="col-sm-2 col-form-label">NR Boleta:</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="cod_bol" value="0">
+                                </div>
+
+                                <label class="col-sm-2 col-form-label">NR Guia:</label>
+                                <div class="col-sm-4">
+                                    <input type="number" class="form-control" name="cod_guia" value="0">
+                                </div>
+                            </div>
+
+
+                            <button class="btn btn-primary" type="submit" name="action">Guardar</button>
+>>>>>>> 4088f19749687ddbc6b05d69d5f53139b1bbb78f
 
                         <button class="btn btn-primary" type="submit" name="action">Guardar</button>
 
@@ -110,6 +133,7 @@
                             <i class="fa fa-times"></i>
                         </a>
                     </div>
+<<<<<<< HEAD
                 </div>
                 <div class="ibox-content">
                     <div class="table-responsive">
@@ -150,6 +174,54 @@
                                                     <div style="padding-left: 15px;padding-right: 15px;">
                                                         {{-- ccccccccccccccccc --}}
                                                         <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+=======
+                    <div class="ibox-content">
+                        <div class="table-responsive">
+                            <table class="table table-striped table-bordered table-hover dataTables-example" >
+                                <thead>
+                                    <tr>
+                                        <th>Id</th>
+                                        <th>Nombre</th>
+                                        <th>Abreviatura</th>
+                                        <th>Direccion</th>
+                                        <th>Responsable</th>
+                                        <th>Descripcion</th>
+                                        <th>Activo/Desactivo</th>
+                                        <th>Editar</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    @foreach($almacenes as $almacen)
+                                    <tr class="gradeX">
+                                        <td>{{$almacen->id}}</td>
+                                        <td>{{$almacen->nombre}}</td>
+                                        <td>{{$almacen->abreviatura}}</td>
+                                        <td>{{$almacen->direccion}}</td>
+                                        <td>{{$almacen->responsable}}</td>
+                                        <td>{{$almacen->descripcion}}</td>
+                                        <td>@if($almacen->estado==0)Activo @elseif($almacen->estado==1)Desactivo @endif</td>
+                                        <td>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$almacen->id}}">Editar</button>
+                                            <div class="modal fade" id="exampleModal{{$almacen->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                                <div class="modal-dialog" role="document"style="margin-left: 450px;">
+                                                    <div class="modal-content" style="width: 702px;">
+                                                        <div class="modal-header">
+                                                            <h5 class="modal-title" id="exampleModalLabel"> Edit Categoría</h5>
+                                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                <span aria-hidden="true">&times;</span>
+                                                            </button>
+                                                        </div>
+                                                        <div style="padding-left: 15px;padding-right: 15px;">
+                                                            {{-- ccccccccccccccccc --}}
+                                                            <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+
+                                                                <form action="{{route('almacen.update',$almacen->id)}}"  enctype="multipart/form-data" method="post">
+                                                                    @csrf
+                                                                    @method('PATCH')
+                                                                    <div class="form-group  row">
+                                                                        <label class="col-sm-2 col-form-label">Nombre:</label>
+                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="nombre" value="{{$almacen->nombre}}"></div>
+>>>>>>> 4088f19749687ddbc6b05d69d5f53139b1bbb78f
 
                                                             <form action="{{route('almacen.update',$almacen->id)}}"  enctype="multipart/form-data" method="post">
                                                                 @csrf
@@ -194,9 +266,26 @@
                                                                 <div class="col-sm-1">
                                                                     <input style="padding-right: 0;padding-left:  7px"  type="text" class="form-control" name="codigo_sunat" autocomplete="off" required="required" value="{{$almacen->codigo_sunat}}" placeholder="Numero de sucursal">
                                                                 </div>
+<<<<<<< HEAD
                                                             </div>
                                                             <button class="btn btn-primary" type="submit" name="action">Editar</button>
                                                         </form>
+=======
+
+                                                                <div class="form-group  row">
+                                                                        <label class="col-sm-2 col-form-label">cod_fac:</label>
+                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="cod_fac" value=""></div>
+
+                                                                       <label class="col-sm-2 col-form-label">cod_bol:</label>
+                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="cod_bol" value=""></div>
+
+                                                                       <label class="col-sm-2 col-form-label">Nr Guia:</label>
+                                                                       <div class="col-sm-4"><input type="text" class="form-control" name="cod_guia" value=""></div>
+                                                                </div>
+                                                                <button class="btn btn-primary" type="submit" name="action">Editar</button>
+                                                            </form>
+                                                        </div>
+>>>>>>> 4088f19749687ddbc6b05d69d5f53139b1bbb78f
                                                     </div>
                                                 </div>
                                             </div>

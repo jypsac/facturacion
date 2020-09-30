@@ -11,6 +11,7 @@ class AlmacenTableSeeder extends Seeder
      */
     public function run()
     {
+<<<<<<< HEAD
       DB::table('almacen')->insert([
        'id' => 1 ,
        'nombre' => 'Almacen 1',
@@ -41,6 +42,23 @@ class AlmacenTableSeeder extends Seeder
        'created_at' => date('2019-08-01 00:00:00'),
        'updated_at' => date('2019-08-01 00:00:00')
      ]);
+=======
+        DB::table('almacen')->insert([
+			'id' => 1 ,
+			'nombre' => 'Almacen 1',
+      'abreviatura' => 'ALM1',
+      'codigo_sunat' => '1',
+      'direccion' => 'Calle Cuzco nr1 Lima-Lima',
+      'responsable' => 'Humberto Garcia',
+      'descripcion' => 'Almacen de impresoras',
+			'estado' => '0',
+      'cod_fac' => '100',
+      'cod_bol' => '200',
+      'cod_guia' => '10',
+			'created_at' => date('2019-08-01 00:00:00'),
+      'updated_at' => date('2019-08-01 00:00:00')
+        ]);
+>>>>>>> 4088f19749687ddbc6b05d69d5f53139b1bbb78f
 
    //      DB::table('almacen')->insert([
 			// 'id' => 2 ,
