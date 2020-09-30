@@ -448,6 +448,9 @@
 <!-- Mainly scripts -->
 </br>
 <style>
+    #actualizar{
+        height: 33px; padding-top: 10px;
+    }
 /*#page-wrapper{height: 500px;}*/
 .note-toolbar-wrapper{
     height: 0% !important;
