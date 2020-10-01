@@ -109,6 +109,7 @@ class UsuarioController extends Controller
             $user=Personal::find($id);
             $user->usuario_registrado=1;
             $user->save();
+            $usuario_hora=User::where('id',$id)->first();
 
             $nombre_personal=Personal::where('id',$id)->first();
             $codigo_mensaje=$numero_validacion;
@@ -116,7 +117,10 @@ class UsuarioController extends Controller
             $codigo_2 = substr($codigo_mensaje, 3, 3);
             $codigo_3 = substr($codigo_mensaje, 6, 3);
             $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
-            $cuerpo_mensaje='<h3>Hola '.$nombre_personal->nombres.'!! <br> Este es tu Código de Confirmación del Sistema Facturación: <b>'.$codigo_unidos.'</b></h3>Por tu Seguridad y de la cuenta no comparta este código con nadie,para Dudas comuníquese al área de soporte.<br> Correo: desarrollo@jypsac.com ';
+            $cuerpo_mensaje=$codigo_unidos.' es tu código de Validación para confirmar el usuario al sistema. Esta clave es confidencial,<br> no la compartas con nadie. Solo ingrésala en el Sistema para continuar con tu confirmacion.<br><br>
+            Titular: '.$nombre_personal->nombres.'<br>
+            Fecha y hora:  '.$usuario_hora->updated_at.'<br><br>
+            Si no has realizado esta operación o tienes cualquier duda respecto al Código de Validación,<br> puedes comunicarte con nuestro correo de soporte desarrollo@jypsac.com. ';
             /* envio*/
             /* Confi*/
             $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
@@ -182,6 +186,9 @@ class UsuarioController extends Controller
     public function update(Request $request, $id)
     {
 
+        $numero_validacion=rand(600000000, 900000000) ;
+        $nombre_personal=Personal::where('id',$id)->first();
+        $usuario_id=User::where('id',$id)->first();
         $usuarios=User::all();
         $almacen=Almacen::all();
         $contrasena_confirmar=$request->get('contrasena_confirmar');
@@ -192,33 +199,73 @@ class UsuarioController extends Controller
         $estado=$request->get('estado');
         if ($estado=='on') { $estado_numero='1'; }
         else{ $estado_numero='0';}
+        if (isset($password_new)) { $password=bcrypt($password_new); }
+        else{ $password=$usuario_id->password;}
 
         if (password_verify($contrasena_confirmar, $contrasena_adm)){
-            if (isset($password_new)) {
+            if ($correo_new!=$usuario_id->email ) {
+                $this->validate($request,[
+                'correo' => ['required','email','unique:users,email'],
+            ],[
+                'correo.unique' => 'El Correo "'.$correo_new.'" ya esta Registrado, Use otro correo para registrar este usuario.',
+            ]);
+
+            $data = $request->all();
                 $user=User::find($id);
                 $user->email=$correo_new;
-                $user->almacen_id=$almacen_id;
-                $user->estado=$estado_numero;
-                $user->password=bcrypt($password_new);
+                $user->estado_validacion='0';
+                $user->estado='0';
+                $user->numero_validacion=$numero_validacion;
+                $user->password=$password;
                 $user->save();
+                $codigo_mensaje=$numero_validacion;
+                $codigo_1 = substr($codigo_mensaje, 0, 3);
+                $codigo_2 = substr($codigo_mensaje, 3, 3);
+                $codigo_3 = substr($codigo_mensaje, 6, 3);
+                $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
+                $cuerpo_mensaje=$codigo_unidos.' es tu código de Validación para confirmar el usuario al sistema. Esta clave es confidencial,<br> no la compartas con nadie. Solo ingrésala en el Sistema para continuar con tu confirmacion.<br><br>
+                Usuario: '.$nombre_personal->nombres.'<br>
+                Fecha y hora: '.$usuario_id->updated_at.'<br><br>
+                Si no has realizado esta operación o tienes cualquier duda respecto al Código de Validación,<br> puedes comunicarte con nuestro correo de soporte desarrollo@jypsac.com. ';
+
+            $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
+            $port = '25';
+            $encryption = '';
+            $yourEmail = 'desarrollo@jypsac.com';
+            $yourPassword = '=+WQyq73%cC"';
+            $sendto = $correo_new;
+            $titulo = 'Sistema-Codigo Confirmacion';
+            $mensaje = $cuerpo_mensaje;
+            // $bakcup=    $correo_busqueda->email_backup ;
+            /*Fin Confi*/
+            $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+            $mailer =new \Swift_Mailer($transport);
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto])->setBody($mensaje, 'text/html');
+            if($mailer->send($message)){
                 return redirect()->route('usuario.index');
             }
             else{
-                $user=User::find($id);
-                $user->email=$correo_new;
-                $user->almacen_id=$almacen_id;
-                $user->estado=$estado_numero;
-                $user->save();
-                return redirect()->route('usuario.index');
+                return "Something went wrong :(";
             }
+            /*fin envio*/
+            return redirect()->route('usuario.index');
         }
-        else {
-            $errores='Contraseña delAdministrador Erronea - Ningun Cambio Realizado';
-            return view('configuracion_general.usuario.index',compact('usuarios','errores','almacen'));
+        else{
+            $user=User::find($id);
+            $user->almacen_id=$almacen_id;
+            $user->estado=$estado_numero;
+            $user->password=$password;
+            $user->save();
+            return redirect()->route('usuario.index');
         }
-
-
     }
+    else {
+        $errores='Contraseña delAdministrador Erronea - Ningun Cambio Realizado';
+        return view('configuracion_general.usuario.index',compact('usuarios','errores','almacen'));
+    }
+
+
+}
 
     /**
      * Remove the specified resource from storage.
@@ -258,13 +305,17 @@ class UsuarioController extends Controller
         $user->email=$request->get('correo');
         $user->numero_validacion=$numero_validacions;
         $user->save();
+        $usuario_hora=User::where('id',$id)->first();
 
         $codigo_mensaje=$numero_validacions;
         $codigo_1 = substr($codigo_mensaje, 0, 3);
         $codigo_2 = substr($codigo_mensaje, 3, 3);
         $codigo_3 = substr($codigo_mensaje, 6, 3);
         $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
-        $cuerpo_mensaje='<h3>Hola '.$nombre_personal->nombres.'!! <br> Este es tu Código de Confirmación del Sistema Facturación: <b>'.$codigo_unidos.'</b></h3>Por tu Seguridad y de la cuenta no comparta este código con nadie,para Dudas comuníquese al área de soporte.<br> Correo: desarrollo@jypsac.com ';
+        $cuerpo_mensaje=$codigo_unidos.' es tu código de Validación para confirmar el usuario al sistema. Esta clave es confidencial,<br> no la compartas con nadie. Solo ingrésala en el Sistema para continuar con tu confirmacion.<br><br>
+        Usuario: '.$nombre_personal->nombres.'<br>
+        Fecha y hora: '.$usuario_hora->updated_at.'<br><br>
+        Si no has realizado esta operación o tienes cualquier duda respecto al Código de Validación,<br> puedes comunicarte con nuestro correo de soporte desarrollo@jypsac.com. ';
 
             $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
             $port = '25';
@@ -331,7 +382,12 @@ class UsuarioController extends Controller
             $codigo_2 = substr($codigo_mensaje, 3, 3);
             $codigo_3 = substr($codigo_mensaje, 6, 3);
             $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
-            $cuerpo_mensaje='<h3>Hola '.$nombre_personal->nombres.'!! <br> Este es tu Código de Confirmación del Sistema Facturación: <b>'.$codigo_unidos.'</b></h3>Por tu Seguridad y de la cuenta no comparta este código con nadie,para Dudas comuníquese al área de soporte.<br> Correo: desarrollo@jypsac.com ';
+            $usuario_hora=User::where('id',$id)->first();
+            $cuerpo_mensaje=$codigo_unidos.' es tu código de Validación para confirmar el usuario al sistema. Esta clave es confidencial,<br> no la compartas con nadie. Solo ingrésala en el Sistema para continuar con tu confirmacion.<br><br>
+            Usuario: '.$nombre_personal->nombres.'<br>
+            Fecha y hora: '.$usuario_hora->updated_at.'<br><br>
+            Si no has realizado esta operación o tienes cualquier duda respecto al Código de Validación,<br> puedes comunicarte con nuestro correo de soporte desarrollo@jypsac.com. ';
+
 
             $smtpAddress = 'mail.jypsac.com'; // = $request->smtp
             $port = '25';
