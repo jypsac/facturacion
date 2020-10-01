@@ -26,7 +26,17 @@
 @endif
 @section('content')
 
-
+@if($errors->any())
+<div style="padding-top: 10px">
+      <div class="alert alert-danger">
+            <a class="alert-link" href="#">
+              @foreach ($errors->all() as $error)
+              <li style="color: red">{{ $error }}</li>
+              @endforeach
+            </a>
+      </div>
+ </div>
+@endif
 {{-- Modal Configuracion --}}
 <div class="modal fade" id="configu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
