@@ -18,6 +18,7 @@ class MonedasSeeder extends Seeder
 			'codigo' => "PEN",
 			'pais' => "Peru",
 			'principal' => 1,
+      'tipo' => 'nacional',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -28,6 +29,7 @@ class MonedasSeeder extends Seeder
             'codigo' => "USD",
             'pais' => "Estados Unidos",
             'principal' => 0,
+            'tipo' => 'extranjera',
             'created_at' => date('2019-08-01 00:00:00'),
             'updated_at' => date('2019-08-01 00:00:00')
         ]);

@@ -16,7 +16,6 @@ use App\Categoria;
 use App\TipoCambio;
 use Carbon\Carbon;
 
-
 use Illuminate\Http\Request;
 
 class KardexEntradaController extends Controller
@@ -169,7 +168,7 @@ class KardexEntradaController extends Controller
 
 
         //convertido a moneda principal
-        $moneda_principal=Moneda::where('principal',1)->first();
+        $moneda_principal=Moneda::where('tipo','nacional')->first();
         $moneda_principal_id=$moneda_principal->id;
 
         $kardex_entrada_moneda_id=$kardex_entrada->moneda_id;

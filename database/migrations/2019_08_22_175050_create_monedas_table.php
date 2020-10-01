@@ -20,6 +20,7 @@ class CreateMonedasTable extends Migration
             $table->string('codigo');
             $table->string('pais');
             $table->boolean('principal')->nullable();
+            $table->string('tipo')->nullable();
             $table->timestamps();
         });
     }

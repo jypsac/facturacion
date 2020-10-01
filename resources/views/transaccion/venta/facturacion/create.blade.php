@@ -368,9 +368,9 @@
                             </table>
                         </div>
                             <input type="text" name="facturacion" value="servicio">
-                            <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
-                            <button type="button" class='addmores btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                            <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
+                            <button type="button" class='delete btn btn-danger'><i class="fa fa-trash" aria-hidden="true"></i></button>&nbsp;
+                            <button type="button" class='addmores btn btn-success'><i class="fa fa-plus-square" aria-hidden="true"></i></button>&nbsp;
+                            <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true">Guardar</i></button>&nbsp;
                         @elseif($categoria=='producto')
                         <div class="table-responsive">
                             <table cellspacing="0" class="table tables  " style="width: 1100px">
