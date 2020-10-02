@@ -75,9 +75,9 @@
      <div class="form-group  row"><label class="col-sm-2 col-form-label">Paralelo:</label>
        <div class="col-sm-10">
            @if(isset($paralelo_recomendado))
-           <input type="text" class="form-control" name="paralelo" value="{{$paralelo_recomendado}}" required="">
+           <input type="text" class="form-control" name="paralelo" id="paralelo" value="{{$paralelo_recomendado}}" required="">
            @else
-           <input type="text" class="form-control" name="paralelo" required="">
+           <input type="text" class="form-control" name="paralelo" id="paralelo" required="">
        @endif</div>
    </div>
 
@@ -102,27 +102,28 @@
 
 <script type="text/javascript">
   $('#myajax').click(function(){
-     $.ajax({
-        url:'/sunat_cambio',
-        data:{'name':"luis"},
-        type:'post',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (response) {
-          var datos = eval(response);
-              $('#compra').val(datos[0]);
-              $('#venta').val(datos[1]);
-        },
-        statusCode: {
-           404: function() {
-              alert('web not found');
-           }
-        },
-        error:function(x,xs,xt){
-            window.open(JSON.stringify(x));
-        }
-     });
+                                         $.ajax({
+                                            url:'/sunat_cambio',
+                                            data:{'name':"luis"},
+                                            type:'post',
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function (response) {
+                                              var datos = eval(response);
+                                                  $('#compra').val(datos[0]);
+                                                  $('#venta').val(datos[1]);
+                                                  $('#paralelo').val(datos[2]);
+                                            },
+                                            statusCode: {
+                                               404: function() {
+                                                  alert('web not found');
+                                               }
+                                            },
+                                            error:function(x,xs,xt){
+                                                window.open(JSON.stringify(x));
+                                            }
+                                         });
   });
 </script>
 @endsection

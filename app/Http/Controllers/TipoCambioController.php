@@ -82,18 +82,33 @@ class TipoCambioController extends Controller
        $cambio->save();
 
        return redirect()->route('tipo_cambio.index');
-
     }
 
     public function sunat_cambio(Request $request){
+        $moneda=Moneda::where('principal',1)->first()
         // https://www.deperu.com/api/rest/cotizaciondolar.json
         // https://www.youtube.com/watch?v=WTxYp9ECnPY
         $data = file_get_contents("https://www.deperu.com/api/rest/cotizaciondolar.json");
         $info = json_decode($data, true);
+        if($moneda->tipo=="nacional"){
+            $num=$info['Cotizacion'][0]['Venta']-0.05;
+        }else{
+            $num=$info['Cotizacion'][0]['Venta']+0.05;
+        }
+
+
+        $num=round($num, 3);
+
+
         $datos=array(
             0 => $info['Cotizacion'][0]['Compra'],
             1 => $info['Cotizacion'][0]['Venta'],
+            2 => $num,
+
         );
+
+
+
         echo json_encode($datos);
     }
 
