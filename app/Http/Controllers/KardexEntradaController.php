@@ -2,20 +2,20 @@
 
 namespace App\Http\Controllers;
 
-use DB;
 use App\Almacen;
-use App\Empresa;
-use App\Provedor;
-use App\Producto;
-use App\Kardex_entrada;
-use App\kardex_entrada_registro;
-use App\Motivo;
-use App\InventarioInicial;
-use App\Moneda;
 use App\Categoria;
+use App\Empresa;
+use App\InventarioInicial;
+use App\Kardex_entrada;
+use App\Moneda;
+use App\Motivo;
+use App\Producto;
+use App\Provedor;
 use App\TipoCambio;
+use App\User;
+use App\kardex_entrada_registro;
 use Carbon\Carbon;
-
+use DB;
 use Illuminate\Http\Request;
 
 class KardexEntradaController extends Controller
@@ -81,7 +81,9 @@ class KardexEntradaController extends Controller
         $motivos=Motivo::all();
         $categorias=Categoria::all();
         $moneda=Moneda::all();
-        return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos','categorias','moneda'));
+        $user_login =auth()->user()->id;
+        $usuario=User::where('id',$user_login)->first();
+        return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
     }
 
     /**

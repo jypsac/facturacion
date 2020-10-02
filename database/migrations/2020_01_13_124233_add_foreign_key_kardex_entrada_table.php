@@ -14,17 +14,17 @@ class AddForeignKeyKardexEntradaTable extends Migration
     public function up()
     {
         Schema::table('kardex_entrada', function (Blueprint $table) {
-            
+
 
             $table->unsignedBigInteger('motivo_id');
             $table->foreign('motivo_id')->references('id')->on('motivos')->onDelete('cascade');
 
             $table->unsignedBigInteger('provedor_id');
             $table->foreign('provedor_id')->references('id')->on('provedores')->onDelete('cascade');
-            
+
             $table->unsignedBigInteger('categoria_id');
             $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
-            
+
             $table->unsignedBigInteger('almacen_id');
             $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
 
@@ -34,6 +34,10 @@ class AddForeignKeyKardexEntradaTable extends Migration
             $table->string('guia_remision');
             $table->string('factura');
             $table->string('informacion');
+
+            $table->unsignedBigInteger('user_id');
+            $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
             $table->timestamps();
         });
     }
