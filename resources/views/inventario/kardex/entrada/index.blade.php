@@ -47,10 +47,13 @@
                                 <th>Anular</th>
                             </tr>
                         </thead>
-                    <tbody>
+                    <tbody><span hidden="hidden">{{$i=0}}</span>
                         @foreach($kardex_entradas as $value => $kardex_entrada)
                             <tr class="gradeX">
-                                <td>{{$kardex_entrada->id}}</td>
+                                <td>
+
+                                    {{$i=$i+1}}
+                               </td>
                                 <td>{{$kardex_entrada->motivo->nombre}}</td>
                                 <td>{{$kardex_entrada->provedor->empresa}}</td>
                                 <td>{{$kardex_entrada->almacen->nombre}}</td>

@@ -27,9 +27,13 @@ class KardexEntradaController extends Controller
      */
     public function index()
     {
+        $user_login =auth()->user();
         $almacenes=Almacen::all();
         $clasificaciones=Categoria::all();
-        $kardex_entradas=Kardex_entrada::all();
+        if ($user_login->name== 'Administrador') {
+          $kardex_entradas=Kardex_entrada::all();
+        }else{ $kardex_entradas=Kardex_entrada::where('almacen_id',$user_login->almacen_id)->get();}
+
         foreach ($kardex_entradas as $value => $kardex_entrada) {
           $kardex_entrada_registros=kardex_entrada_registro::where('kardex_entrada_id',$kardex_entrada->id)->get();
           foreach ($kardex_entrada_registros as $value2 => $kardex_entrada_registro) {
@@ -83,6 +87,8 @@ class KardexEntradaController extends Controller
         $moneda=Moneda::all();
         $user_login =auth()->user()->id;
         $usuario=User::where('id',$user_login)->first();
+
+
         return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
     }
 
@@ -157,6 +163,7 @@ class KardexEntradaController extends Controller
         $kardex_entrada->factura=$request->get('factura');
         $kardex_entrada->almacen_id=$request->get('almacen');
         $kardex_entrada->moneda_id=$request->get('moneda');
+        $kardex_entrada->user_id=auth()->user()->id;
         $kardex_entrada->informacion=$request->get('informacion');
         $kardex_entrada->save();
 
