@@ -102,28 +102,28 @@
 
 <script type="text/javascript">
   $('#myajax').click(function(){
-     $.ajax({
-        url:'/sunat_cambio',
-        data:{'name':"luis"},
-        type:'post',
-        headers: {
-            'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-        },
-        success: function (response) {
-          var datos = eval(response);
-              $('#compra').val(datos[0]);
-              $('#venta').val(datos[1]);
-              $('#paralelo').val(datos[2]);
-        },
-        statusCode: {
-           404: function() {
-              alert('web not found');
-           }
-        },
-        error:function(x,xs,xt){
-            window.open(JSON.stringify(x));
-        }
-     });
+                                         $.ajax({
+                                            url:'/sunat_cambio',
+                                            data:{'name':"luis"},
+                                            type:'post',
+                                            headers: {
+                                                'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                                            },
+                                            success: function (response) {
+                                              var datos = eval(response);
+                                                  $('#compra').val(datos[0]);
+                                                  $('#venta').val(datos[1]);
+                                                  $('#paralelo').val(datos[2]);
+                                            },
+                                            statusCode: {
+                                               404: function() {
+                                                  alert('web not found');
+                                               }
+                                            },
+                                            error:function(x,xs,xt){
+                                                window.open(JSON.stringify(x));
+                                            }
+                                         });
   });
 </script>
 @endsection
