@@ -62,10 +62,10 @@
                         </a>
                     </div>
                 </div>
-                <button type="button" id='myajax'>click me</button>
+               {{--  <button type="button" id='myajax'>click me</button>
                 <div id='msg'>
                         mensaje
-                </div>
+                </div> --}}
                 <div class="ibox-content">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example" >
