@@ -28,12 +28,12 @@ class DatabaseSeeder extends Seeder
         $this->call(GarantiaTableSeeder::class);
         $this->call(ProductosTableSeeder::class);
         $this->call(MotivoTableSeeder::class);
-        $this->call(KardexEntradaSeeder::class);
-        $this->call(KardexEntradaRegistroSeeder::class);
         $this->call(FormaPagoSeeder::class);
         $this->call(ConfiTableSeeder::class);
         $this->call(FacturacionTableSeeder::class);
         $this->call(UsersTableSeeder::class);
+        $this->call(KardexEntradaSeeder::class);
+        $this->call(KardexEntradaRegistroSeeder::class);
         $this->call(PersonalVentasTableSeeder::class);
         $this->call(VentasRegistroTableSeeder::class);
         $this->call(BancoTableSeeder::class);

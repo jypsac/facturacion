@@ -11,19 +11,19 @@ class KardexEntradaRegistroSeeder extends Seeder
      */
     public function run()
     {
-        // DB::table('kardex_entrada_registro')->insert([
-        //     'id' => 1 ,
-        //     'kardex_entrada_id' => 1,
-        //     'producto_id' => 1,
-        //     'cantidad_inicial' => 200,
-        //     'precio_nacional' => 11,
-        //     'precio_extranjero' => 39.09,
-        //     'cantidad' => 200,
-        //     'estado' => 1,
-        //     'cambio' => 3.55,
-        //     'created_at' => date('2019-08-01 00:00:00'),
-        //    	'updated_at' => date('2019-08-01 00:00:00')
-        // ]);
+        DB::table('kardex_entrada_registro')->insert([
+            'id' => 1 ,
+            'kardex_entrada_id' => 1,
+            'producto_id' => 1,
+            'cantidad_inicial' => 200,
+            'precio_nacional' => 11,
+            'precio_extranjero' => 39.09,
+            'cantidad' => 200,
+            'estado' => 1,
+            'cambio' => 3.55,
+            'created_at' => date('2019-08-01 00:00:00'),
+           	'updated_at' => date('2019-08-01 00:00:00')
+        ]);
         // DB::table('kardex_entrada_registro')->insert([
         //     'id' => 2 ,
         //     'kardex_entrada_id' => 1,

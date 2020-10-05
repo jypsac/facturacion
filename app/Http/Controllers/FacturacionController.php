@@ -351,15 +351,31 @@ class FacturacionController extends Controller
                 $facturacion_registro->promedio_original=$array2;
                 //precio --------------------------------------------------------
                 if($moneda->id == $moneda_registrada){
-                    // respectividad de la moneda deacurdo al id
-                    $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-                    $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
-                    $facturacion_registro->precio=$array;
-                }else{
+                    if ($moneda->tipo == 'nacional') {
+                        // respectividad de la moneda deacurdo al id
+                        $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                        $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
+                        $facturacion_registro->precio=$array;
+                    }else {
+                        // validacion para la otra moneda con igv paralelo
+                        $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                        $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
+                        $facturacion_registro->precio=$array;
+                    }
 
-                    $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-                    $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
-                    $facturacion_registro->precio=$array*$cambio->paralelo;
+                }else{
+                    if ($moneda->tipo == 'extranjero') {
+                        // respectividad de la moneda deacurdo al id
+                        $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                        $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
+                        $facturacion_registro->precio=$array*$cambio->paralelo;
+                    }else{
+                        // validacion para la otra moneda con igv paralelo
+                        $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                        $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
+                        $facturacion_registro->precio=$array*$cambio->paralelo;
+                    }
+                   
                 }
                 $facturacion_registro->cantidad=$request->get('cantidad')[$i];
                 $facturacion_registro->descuento=$request->get('check_descuento')[$i];
