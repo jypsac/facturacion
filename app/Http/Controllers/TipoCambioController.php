@@ -85,7 +85,7 @@ class TipoCambioController extends Controller
     }
 
     public function sunat_cambio(Request $request){
-        $moneda=Moneda::where('principal',1)->first()
+        $moneda=Moneda::where('principal',1)->first();
         // https://www.deperu.com/api/rest/cotizaciondolar.json
         // https://www.youtube.com/watch?v=WTxYp9ECnPY
         $data = file_get_contents("https://www.deperu.com/api/rest/cotizaciondolar.json");
