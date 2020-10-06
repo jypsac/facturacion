@@ -54,7 +54,12 @@ class FacturacionController extends Controller
 // creacion para productos
     public function create(){
 
-         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        // $kardex_prod=kardex_entrada_registro::join("productos","kardex_entrada_registro.producto_id","productos.id")
+        // ->where('estado',1)->get();
+
+        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+
+        // return $kardex_prod;
 
          //aplicamiento de logica para llamar un producto hacia kardex
          $moneda=Moneda::where('principal','1')->first();
