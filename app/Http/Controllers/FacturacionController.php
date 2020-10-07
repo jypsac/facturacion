@@ -64,7 +64,7 @@ class FacturacionController extends Controller
          //aplicamiento de logica para llamar un producto hacia kardex
          $moneda=Moneda::where('principal','1')->first();
 
-         $igv=Igv::first();
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
          if ($moneda->tipo == 'nacional') {
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
@@ -81,11 +81,13 @@ class FacturacionController extends Controller
             }
         }
 
+        
+
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
-
+        $igv=Igv::first();
         $empresa=Empresa::first();
         $personal_contador= Facturacion::all()->count();
         $suma=$personal_contador+1;
@@ -123,29 +125,32 @@ class FacturacionController extends Controller
     public function create_ms(){
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         $moneda=Moneda::where('principal','0')->first();
-        $igv=Igv::first();
+
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
+        
         if ($moneda->tipo == 'extranjero'){
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-                $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$igv->paralelo;
+                $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo;
                 $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
                 $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
             }
         }else{
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-                $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*$igv->paralelo;
+                $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo;
                 $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
                 $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
             }
         }
+
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
 
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
-
+        $igv=Igv::first();
         $empresa=Empresa::first();
         $personal_contador= Facturacion::all()->count();
         $suma=$personal_contador+1;

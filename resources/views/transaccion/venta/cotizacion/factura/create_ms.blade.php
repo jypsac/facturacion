@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title', 'Cotizacion - Factura M.principal')
-@section('breadcrumb', 'Cotizacion - Factura M.principal')
-@section('breadcrumb2', 'Cotizacion - Factura M.principal')
+@section('title', 'Cotizacion - Factura M.secundaria')
+@section('breadcrumb', 'Cotizacion - Factura M.secundaria')
+@section('breadcrumb2', 'Cotizacion - Factura M.secundaria')
 @section('href_accion', route('cotizacion.index') )
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>

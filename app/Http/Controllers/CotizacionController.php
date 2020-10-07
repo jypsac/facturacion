@@ -63,12 +63,37 @@ class CotizacionController extends Controller
         return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
     }
 
+    //create factura modensa secundaruia
+
+    // public function create_factura_ms()
+    // {
+    //     $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+
+    //     foreach ($productos as $index => $producto) {
+    //         $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
+    //         $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index];
+    //         $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+    //         $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio');
+    //     }
+
+    //     $forma_pagos=Forma_pago::all();
+    //     $clientes=Cliente::where('documento_identificacion','ruc')->get();
+    //     $moneda=Moneda::all();
+    //     $personales=Personal::all();
+    //     $p_venta=Personal_venta::where('estado','0')->get();
+    //     $igv=Igv::first();
+
+    //     return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
+    // }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+     ///agregamiento de un parametro extra
     public function store_factura(Request $request)
     {
 
@@ -265,6 +290,7 @@ class CotizacionController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
+
     public function create_boleta()
     {
         $productos=Producto::where('estado_id',1)->where('estado_anular',1)->get();
@@ -291,12 +317,41 @@ class CotizacionController extends Controller
         return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
     }
 
+    //agregamiento de una nueva funcion create_boleta a monde secundaria comnetado
+    // public function create_boleta_ms()
+    // {
+    //     $productos=Producto::where('estado_id',1)->where('estado_anular',1)->get();
+    //     $igv_proceso=Igv::first();
+    //     $igv_total=$igv_proceso->igv_total;
+
+    //     foreach ($productos as $index => $producto) {
+
+    //         $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
+    //         $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index])+(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index])*$igv_total/100;
+    //         $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index];
+
+    //         $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+    //     }
+
+    //     $forma_pagos=Forma_pago::all();
+    //     $clientes=Cliente::all();
+    //     // $clientes=Cliente::where('documento_identificacion', '=','DNI'  )->get();
+    //     $moneda=Moneda::all();
+    //     $personales=Personal::all();
+    //     $p_venta=Personal_venta::all();
+    //     $igv=Igv::first();
+
+    //     return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
+    // }
+
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+
+    //  agregar una nueva parametro para recibirtipo de moneda
     public function store_boleta(Request $request)
     {
         //El input esta activo
@@ -581,12 +636,11 @@ class CotizacionController extends Controller
        return view('transaccion.venta.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv',"array","sub_total","moneda",'banco'));
    }
 
-
-   public function facturar($id)
-
-   {
+//envio hacia facturar cambiar en caso ingluya algo
+   public function facturar($id){
     $moneda=Moneda::where('principal',1)->first();
     $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+
     foreach ($cotizacion_registro as $cotizacion_registros) {
        $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
    }
@@ -614,7 +668,7 @@ class CotizacionController extends Controller
 public function facturar_store(Request $request)
 {
 
-            // cambio de Estado Cotizador
+    // cambio de Estado Cotizador
     $id_cotizador=$request->get('id_cotizador');
     $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
     $cotizacion->estado=1;

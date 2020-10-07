@@ -293,11 +293,13 @@
                                             <tr>
                                                 <td>Moneda</td>
                                                 <td>:</td>
-                                                <td><select class="form-control" name="moneda" required="required">
+                                                <td>
+                                                    <select class="form-control" name="moneda" required="required">
                                                     @foreach($moneda as $monedas)
                                                     <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
                                                     @endforeach
                                                     <select>
+                                                    <a href="{{route('facturacion.create_ms')}}"><button type="button" class='addmores btn btn-success'>Cambiar</button></a>
                                             </td>
 
                                                         <td>Fecha</td>

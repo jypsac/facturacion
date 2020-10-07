@@ -45,7 +45,7 @@ class BoletaController extends Controller
     public function create()
     {
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
         foreach ($productos as $index => $producto) {
             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
             $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
@@ -71,8 +71,10 @@ class BoletaController extends Controller
 
     public function create_ms()
     {
+
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
         foreach ($productos as $index => $producto) {
             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
             $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
