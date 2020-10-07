@@ -37,6 +37,7 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
+                                <th>Codigo</th>
                                 <th>Motivo</th>
                                 <th>Provedor</th>
                                 <th>Almacen</th>
@@ -50,11 +51,9 @@
                     <tbody><span hidden="hidden">{{$i=0}}</span>
                         @foreach($kardex_entradas as $value => $kardex_entrada)
                             <tr class="gradeX">
-                                <td>
-
-                                    {{$i=$i+1}}
-                               </td>
+                                <td> {{$i=$i+1}}</td>
                                 <td>{{$kardex_entrada->motivo->nombre}}</td>
+                                <td>{{$kardex_entrada->codigo_guia}}</td>
                                 <td>{{$kardex_entrada->provedor->empresa}}</td>
                                 <td>{{$kardex_entrada->almacen->nombre}}</td>
                                 <td>{{$kardex_entrada->guia_remision}}</td>

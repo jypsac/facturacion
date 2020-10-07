@@ -14,6 +14,7 @@
             <div class="ibox-content p-xl">
                 <div class="row">
                     <div class="col-sm-6">
+                       <div style="height:  140px"></div>
                         <address class="col-sm-6">
                             <h5>De:</h5>
                             <i class=" fa fa-user">:</i><strong > {{$kardex_entradas->provedor->empresa}}</strong><br>
@@ -25,12 +26,16 @@
                     </div>
 
                     <div class="col-sm-3 text-right">
-                        <h4>Guia Entrada</h4>
-                        <h4 class="text-navy">GE-000{{$kardex_entradas->id}}</h4>
-                        <span>Para:</span>
+                        <div class="form-control ruc" >
+                            <center>
+                                <h3 style="padding-top:10px ">RUC : {{$mi_empresa->ruc}}</h3>
+                                <h2>GUIA DE ENTRADA </h2>
+                                <h4 class="text-navy">{{$kardex_entradas->codigo_guia}}</h4>
+                            </center>
+                        </div><br>
                         <address>
-                            <i class=" fa fa-user">:</i><strong> {{$mi_empresa->nombre}}</strong><br>
-                            <i class=" fa fa-building">:</i>{{$mi_empresa->calle}}<br>
+                            <img src="https://www.flaticon.es/svg/static/icons/svg/2897/2897818.svg" width="13px" alt="">:<strong>{{$kardex_entradas->almacen->nombre}} - {{$kardex_entradas->almacen->abreviatura}}</strong><br>
+                            <i class=" fa fa-building">:</i>{{$kardex_entradas->almacen->direccion}}<br>
                             <i class="fa fa-phone">:</i> {{$mi_empresa->telefono}} / {{$mi_empresa->movil}}
                         </address>
                         <p>
@@ -52,15 +57,15 @@
                             </tr>
                         </thead>
                         <tbody>
-                           @foreach($kardex_entradas_registros as $kardex_entradas_registro)
-                           <tr>
+                         @foreach($kardex_entradas_registros as $kardex_entradas_registro)
+                         <tr>
                             <td>
                                 <strong>{{$kardex_entradas_registro->producto->nombre}}/{{$kardex_entradas_registro->producto->codigo_original}}</strong><br>
                                 <small>{{$kardex_entradas_registro->producto->descripcion}}</small>
                             </td>
                             <td>{{$kardex_entradas_registro->cantidad_inicial}}</td>
                             <td>{{$moneda_nacional->simbolo}} {{$kardex_entradas_registro->precio_nacional}}</td>
-                             <td style="background: #f3f3f4">{{$moneda_nacional->simbolo}}.{{$kardex_entradas_registro->precio_nacional * $kardex_entradas_registro->cantidad_inicial}}</td>
+                            <td style="background: #f3f3f4">{{$moneda_nacional->simbolo}}.{{$kardex_entradas_registro->precio_nacional * $kardex_entradas_registro->cantidad_inicial}}</td>
 
                             <td>{{$moneda_extranjera->simbolo}} {{$kardex_entradas_registro->precio_extranjero}}</td>
                             <td style="background: #f3f3f4">{{$moneda_extranjera->simbolo}}{{$moneda_nacional->precio_extranjero}}{{$kardex_entradas_registro->precio_extranjero * $kardex_entradas_registro->cantidad_inicial}}</td>
