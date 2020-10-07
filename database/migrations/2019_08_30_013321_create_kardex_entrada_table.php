@@ -16,7 +16,8 @@ class CreateKardexEntradaTable extends Migration
     {
         Schema::create('kardex_entrada', function (Blueprint $table) {
             $table->bigIncrements('id');
-            
+            $table->string('codigo_guia');
+
         });
     }
 

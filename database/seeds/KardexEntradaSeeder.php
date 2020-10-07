@@ -13,6 +13,7 @@ class KardexEntradaSeeder extends Seeder
     {
         DB::table('kardex_entrada')->insert([
             'id' => 1 ,
+            'codigo_guia' => '1',
             'motivo_id' => 1,
             'provedor_id' => 1,
             'categoria_id' => 1,
@@ -28,6 +29,7 @@ class KardexEntradaSeeder extends Seeder
 
         DB::table('kardex_entrada')->insert([
             'id' => 2 ,
+            'codigo_guia' => '1',
             'motivo_id' => 1,
             'provedor_id' => 1,
             'categoria_id' => 1,
@@ -40,9 +42,10 @@ class KardexEntradaSeeder extends Seeder
             'created_at' => date('2020-08-01 00:00:00'),
            	'updated_at' => date('2020-08-01 00:00:00')
         ]);
-        
+
         DB::table('kardex_entrada')->insert([
             'id' => 3 ,
+            'codigo_guia' => '1',
             'motivo_id' => 1,
             'provedor_id' => 1,
             'categoria_id' => 1,
@@ -55,8 +58,8 @@ class KardexEntradaSeeder extends Seeder
             'created_at' => date('2020-08-01 00:00:00'),
            	'updated_at' => date('2020-08-01 00:00:00')
         ]);
-        
-        
-        
+
+
+
     }
 }
