@@ -35,7 +35,7 @@ class CreateBoletaTable extends Migration
 
             $table->string('fecha_emision')->nullable();
             $table->string('fecha_vencimiento')->nullable();
-
+            $table->double('cambio',17,2);
             $table->string('observacion')->nullable();
             $table->string('comisionista')->nullable();
             $table->string('user_id');

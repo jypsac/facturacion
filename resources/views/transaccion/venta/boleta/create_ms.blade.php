@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Boleta Agregar')
+@section('title', 'Boleta Agregar M.Secundaria')
 @section('breadcrumb', 'Boleta M.Secundaria')
 @section('breadcrumb2', 'Boleta M.Secundaria')
 @section('href_accion', route('boleta.index'))
@@ -226,7 +226,7 @@
                                     <center>
                                         <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
                                         <h2>BOLETA ELECTRONICA</h2>
-                                        <h5>BO-000{{$suma}}</h5>
+                                        <h5>{{$factura_numero}}</h5>
                                     </center>
 
                                 </div>
@@ -293,13 +293,11 @@
                                             <tr>
                                                 <td>Moneda</td>
                                                 <td>:</td>
-                                                <td><select class="form-control" name="moneda" required="required">
-                                                    @foreach($moneda as $monedas)
-                                                    <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
-                                                    @endforeach
-                                                    <select>
-                                                    <a href="{{route('facturacion.create_ms')}}"><button type="button" class='addmores btn btn-success'>Cambiar</button></a>
-                                            </td>
+                                                <td>
+                                                    <input type="text" name="moneda" class="form-control" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">
+                                                    <br>
+                                                    <a href="{{route('boleta.create')}}"><button type="button" class='addmores btn btn-success'>Cambiar</button></a>
+                                                </td>
 
                                                         <td>Fecha</td>
                                                         <td>:</td>

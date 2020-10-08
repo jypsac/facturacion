@@ -22,6 +22,9 @@ use App\Unidad_medida;
 use App\User;
 use App\Ventas_registro;
 use App\kardex_entrada_registro;
+use App\TipoCambio;
+use Carbon\Carbon;
+use App\Almacen;
 use Illuminate\Http\Request;
 
 class BoletaController extends Controller
@@ -45,13 +48,25 @@ class BoletaController extends Controller
     public function create()
     {
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+
+        $moneda=Moneda::where('principal','1')->first();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
-        foreach ($productos as $index => $producto) {
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
-            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+        if ($moneda->tipo == 'nacional') {
+            foreach ($productos as $index => $producto) {
+                $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
+                $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+                $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+            }
+        }else{
+            foreach ($productos as $index => $producto) {
+                $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
+                $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+                $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
+            }
         }
+        
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
@@ -63,9 +78,34 @@ class BoletaController extends Controller
         $empresa=Empresa::first();
         $boleta_contador= Boleta::all()->count();
         $suma=$boleta_contador+1;
-        $boleta_codigo='BO-0000'.$suma;
 
-        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','boleta_codigo'));
+        // obtencion de la sucursal
+        $sucursal=auth()->user()->almacen->codigo_sunat;
+        //obtencion del almacen
+        $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
+        $factura_cod_fac=$factura_primera->cod_fac;
+        if (is_numeric($factura_cod_fac)) {
+            // exprecion del numero de fatura
+            $factura_cod_fac++;
+            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+        }else{
+            // exprecion del numero de fatura
+            // GENERACION DE NUMERO DE FACTURA
+            $ultima_factura=Facturacion::latest()->first();
+            $factura_num=$ultima_factura->codigo_fac;
+            $factura_num_string_porcion= explode("-", $factura_num);
+            $factura_num_string=$factura_num_string_porcion[1];
+            $factura_num=(int)$factura_num_string;
+            $factura_num++;
+
+            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+        }
+
+        $factura_numero="F".$sucursal_nr."-".$factura_nr;
+
+        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','boleta_codigo','factura_numero'));
 
     }
 
@@ -94,7 +134,7 @@ class BoletaController extends Controller
         $suma=$boleta_contador+1;
         $boleta_codigo='BO-0000'.$suma;
 
-        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','boleta_codigo'));
+        return view('transaccion.venta.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','boleta_codigo'));
 
     }
 
@@ -104,7 +144,7 @@ class BoletaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(Request $request,$id_moneda)
     {
         $print=$request->get('print');
 
@@ -115,7 +155,7 @@ class BoletaController extends Controller
             $igv=Igv::first();
 
             $forma_pago_id=$request->get('forma_pago');
-            $moneda_id=$request->get('moneda');
+            $moneda_id=$id_moneda;
             $validez=$request->get('validez');
             $garantia=$request->get('garantia');
             $user_id =auth()->user()->id;
@@ -218,16 +258,22 @@ class BoletaController extends Controller
         $suma=$boleta_contador+1;
         $boleta_codigo='BO-0000'.$suma;
 
+        //buscador al cambio
+        $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+        if(!$cambio){
+            return "error por no hacer el cambio diario";
+        }
 
         $boleta=new Boleta;
         $boleta->codigo_boleta=$boleta_codigo;
         $boleta->orden_compra=$request->get('orden_compra');
         $boleta->guia_remision=$request->get('guia_r');
         $boleta->cliente_id=$cliente_buscador->id;
-        $boleta->moneda_id=$request->get('moneda');
+        $boleta->moneda_id=$id_moneda;
         $boleta->forma_pago_id=$request->get('forma_pago');
         $boleta->fecha_emision=$request->get('fecha_emision');
         $boleta->fecha_vencimiento=$nuevafechas;
+        $boleta->cambio=$cambio->paralelo;
         $boleta->observacion=$request->get('observacion');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $boleta->comisionista_id= $comisionista_buscador->id;
@@ -247,25 +293,57 @@ class BoletaController extends Controller
         $check = $request->input('check_descuento');
         $count_check=count($check);
 
+        $moneda=Moneda::where('principal',1)->first();
+        $moneda_registrada=$boleta->moneda_id;
+
         if($count_articulo = $count_cantidad  = $count_check){
             for($i=0;$i<$count_articulo;$i++){
                 $boleta_registro=new Boleta_registro;
                 $boleta_registro->boleta_id=$boleta->id;
                 $boleta_registro->producto_id=$producto_id[$i];
                 $boleta_registro->numero_serie=$request->get('numero_serie')[$i];
-
+                //producto
                 $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
-                $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
-                $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')+$utilidad;
-                $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio');
-                // $array_pu_desc=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio');
+                // $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
+                // $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio')+$utilidad;
+                // $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio');
+                // // $array_pu_desc=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio');
+                // $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
+                // $desc_comprobacion=$request->get('check_descuento')[$i];
+                // $boleta_registro->precio=$array;
+                // $boleta_registro->stock=$stock;
+                //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
-                $desc_comprobacion=$request->get('check_descuento')[$i];
-                $boleta_registro->precio=$array;
                 $boleta_registro->stock=$stock;
+                //promedio original --------------------------------------------------------
+                $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
+                $boleta_registro->promedio_original=$array2;
+                // precio
+                if($moneda->id == $moneda_registrada){
+                    if ($moneda->tipo == 'nacional'){
+                        $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                        $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
+                        $boleta_registro->precio=$array;
+                    }else{
+                        $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                        $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
+                        $boleta_registro->precio=$array;
+                    }
+                }else{
+                    if ($moneda->tipo == 'extranjero'){
+                        $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                        $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
+                        $boleta_registro->precio=$array*$cambio->paralelo;
+                    }else{
+                        $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                        $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
+                        $boleta_registro->precio=$array*$cambio->paralelo;
+                    }
+                }
+
                 $boleta_registro->cantidad=$request->get('cantidad')[$i];
                 $boleta_registro->descuento=$request->get('check_descuento')[$i];
-                $boleta_registro->promedio_original=$array2;
+                $desc_comprobacion=$request->get('check_descuento')[$i];
                 if($desc_comprobacion <> 0){
                     $boleta_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
                 }else{

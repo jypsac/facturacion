@@ -193,7 +193,7 @@ class FacturacionController extends Controller
     public function store(Request $request,$id_moneda)
     {
         $facturacion_input=$request->get('facturacion');
-        if ($facturacion_input=='producto') {
+        
           $print=$request->get('print');
 
           if($print==1){
@@ -309,9 +309,6 @@ class FacturacionController extends Controller
         $facturacion->codigo_fac=$cod_fac;
         $facturacion->orden_compra=$request->get('orden_compra');
         $facturacion->guia_remision=$request->get('guia_r');
-
-
-
         $facturacion->cliente_id=$cliente_buscador->id;
         $facturacion->moneda_id=$id_moneda;
         $facturacion->forma_pago_id=$request->get('forma_pago');
@@ -350,7 +347,6 @@ class FacturacionController extends Controller
                 $facturacion_registro=new Facturacion_registro();
                 $facturacion_registro->facturacion_id=$facturacion->id;
                 $facturacion_registro->producto_id=$producto_id[$i];
-                //$facturacion_registro->servicio_id = no esta porque esto es registro para productos
                 $facturacion_registro->numero_serie=$request->get('numero_serie')[$i];
                 $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
                 //stock --------------------------------------------------------
@@ -410,13 +406,7 @@ class FacturacionController extends Controller
             return redirect()->route('facturacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
         return redirect()->route('facturacion.show',$facturacion->id);
-    }
-    /*Producto fin*/
-    /*Servicio inicio*/
-    elseif ($facturacion_input=='servicio') {
-                $hola='en curso';
-                return $hola;
-    }
+    
 
 }
 
