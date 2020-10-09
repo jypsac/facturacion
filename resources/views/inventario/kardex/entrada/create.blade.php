@@ -149,7 +149,7 @@
 							<label class="col-sm-2 col-form-label" >Almacen:</label>
 							<div class="col-sm-4">
 								@if($usuario->name=='Colaborador')
-								<input type="almacen" value="{{$usuario->almacen->id}}" hidden="hidden">
+								<input name="almacen" value="{{$usuario->almacen->id}}" hidden="hidden">
 								<input  class="form-control" disabled="" value="{{$usuario->almacen->abreviatura}} - {{$usuario->almacen->descripcion}}">
 								@elseif($usuario->name=='Administrador')
 								<select class="form-control" name="almacen">
