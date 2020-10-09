@@ -105,7 +105,7 @@ class KardexEntradaRegistroSeeder extends Seeder
         DB::table('kardex_entrada_registro')->insert([
             'id' => 8 ,
             'kardex_entrada_id' => 3,
-            'producto_id' => 2,
+            'producto_id' => 4,
             'cantidad_inicial' => 50,
             'precio_nacional' => 288.80,
             'precio_extranjero' => 80.00,

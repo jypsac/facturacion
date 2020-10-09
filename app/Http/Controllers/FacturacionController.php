@@ -81,7 +81,7 @@ class FacturacionController extends Controller
             }
         }
 
-        
+
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
@@ -127,8 +127,8 @@ class FacturacionController extends Controller
         $moneda=Moneda::where('principal','0')->first();
 
         $tipo_cambio=TipoCambio::latest('created_at')->first();
-        
-        if ($moneda->tipo == 'extranjero'){
+
+        if ($moneda->tipo == 'extranjera'){
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                 $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo;
@@ -193,7 +193,7 @@ class FacturacionController extends Controller
     public function store(Request $request,$id_moneda)
     {
         $facturacion_input=$request->get('facturacion');
-        
+
           $print=$request->get('print');
 
           if($print==1){
@@ -381,7 +381,7 @@ class FacturacionController extends Controller
                         $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
                         $facturacion_registro->precio=$array*$cambio->paralelo;
                     }
-                   
+
                 }
                 $facturacion_registro->cantidad=$request->get('cantidad')[$i];
                 $facturacion_registro->descuento=$request->get('check_descuento')[$i];
@@ -406,7 +406,7 @@ class FacturacionController extends Controller
             return redirect()->route('facturacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
         return redirect()->route('facturacion.show',$facturacion->id);
-    
+
 
 }
 
