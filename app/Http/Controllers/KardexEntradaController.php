@@ -158,7 +158,7 @@ class KardexEntradaController extends Controller
 
       $cantidad_sucursal=str_pad($almacen_codigo_sunat, 3, "0", STR_PAD_LEFT);
       $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
-      $codigo_guia='GI'.$cantidad_sucursal.'-'.$cantidad_registro;
+      $codigo_guia='GE'.$cantidad_sucursal.'-'.$cantidad_registro;
 
        //Kardex Entrada Guardado
       $kardex_entrada=new Kardex_entrada();

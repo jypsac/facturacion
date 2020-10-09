@@ -13,7 +13,7 @@ class KardexEntradaSeeder extends Seeder
     {
         DB::table('kardex_entrada')->insert([
             'id' => 1 ,
-            'codigo_guia' => '1',
+            'codigo_guia' => 'GE001-00000001',
             'motivo_id' => 1,
             'provedor_id' => 1,
             'categoria_id' => 1,
@@ -29,7 +29,7 @@ class KardexEntradaSeeder extends Seeder
 
         DB::table('kardex_entrada')->insert([
             'id' => 2 ,
-            'codigo_guia' => '1',
+            'codigo_guia' => 'GE002-00000001',
             'motivo_id' => 1,
             'provedor_id' => 1,
             'categoria_id' => 1,
@@ -45,7 +45,7 @@ class KardexEntradaSeeder extends Seeder
 
         DB::table('kardex_entrada')->insert([
             'id' => 3 ,
-            'codigo_guia' => '1',
+            'codigo_guia' => 'GE002-00000002',
             'motivo_id' => 1,
             'provedor_id' => 1,
             'categoria_id' => 1,
