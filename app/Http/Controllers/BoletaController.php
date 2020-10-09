@@ -3,7 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Banco;
-use App\Boleta;
+
 use App\Boleta_registro;
 use App\Cliente;
 use App\Cotizacion;
