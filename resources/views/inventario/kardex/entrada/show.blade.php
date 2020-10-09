@@ -36,11 +36,9 @@
                         <address>
                             <img src="https://www.flaticon.es/svg/static/icons/svg/2897/2897818.svg" width="13px" alt="">:<strong>{{$kardex_entradas->almacen->nombre}} - {{$kardex_entradas->almacen->abreviatura}}</strong><br>
                             <i class=" fa fa-building">:</i>{{$kardex_entradas->almacen->direccion}}<br>
-                            <i class="fa fa-phone">:</i> {{$mi_empresa->telefono}} / {{$mi_empresa->movil}}
+                            <i class="fa fa-phone">:</i> {{$mi_empresa->telefono}} / {{$mi_empresa->movil}} <br>
+                            <strong><i class="fa fa-clock-o" aria-hidden="true"></i></strong> {{$kardex_entradas->provedor->created_at}}</span>
                         </address>
-                        <p>
-                            <span><strong>Fecha de la factura:</strong> {{$kardex_entradas->provedor->created_at}}</span><br/>
-                        </p>
                     </div>
                 </div>
 
