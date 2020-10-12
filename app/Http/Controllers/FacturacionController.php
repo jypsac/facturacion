@@ -370,16 +370,19 @@ class FacturacionController extends Controller
                     }
 
                 }else{
-                    if ($moneda->tipo == 'extranjero') {
-                        // respectividad de la moneda deacurdo al id
-                        $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-                        $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
-                        $facturacion_registro->precio=$array*$cambio->paralelo;
-                    }else{
-                        // validacion para la otra moneda con igv paralelo
+                    if ($moneda->tipo == 'extranjera') {
+                        
+                        // respectividad de la moneda deacuerdo al id
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-                        $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
-                        $facturacion_registro->precio=$array*$cambio->paralelo;
+                        $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad)*$cambio->paralelo;
+                        $facturacion_registro->precio=$array;
+                    }else{
+                        
+                        // validacion para la otra moneda con igv paralelo
+                        $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                        $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad)/$cambio->paralelo;
+                        
+                        $facturacion_registro->precio=$array;
                     }
 
                 }
