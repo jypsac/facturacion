@@ -170,6 +170,7 @@ class KardexEntradaController extends Controller
       $kardex_entrada->factura=$request->get('factura');
       $kardex_entrada->almacen_id=$request->get('almacen');
       $kardex_entrada->moneda_id=$request->get('moneda');
+      $kardex_entrada->estado=1;
       $kardex_entrada->user_id=auth()->user()->id;
       $kardex_entrada->informacion=$request->get('informacion');
       $kardex_entrada->save();
@@ -280,12 +281,19 @@ class KardexEntradaController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($id)
+    public function destroy(Request $request, $id)
     {
-      $estado=Kardex_entrada::findOrFail($id);
-      $estado->delete();
+      $bucador_registro_kardex=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
+      foreach ($bucador_registro_kardex as $registro => $ids) {
+        kardex_entrada_registro::whereIn('id', [$ids->id])->update(['estado' => 'ANULADO']);
+      }
+      $Kardex_entrada=Kardex_entrada::find($id);
+      $Kardex_entrada->estado='ANULADO';
+      $Kardex_entrada->save();
+
 
       return redirect()->route('kardex-entrada.index');
+
     }
 
     function fetch(Request $request)

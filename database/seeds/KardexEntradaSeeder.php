@@ -22,6 +22,7 @@ class KardexEntradaSeeder extends Seeder
             'guia_remision' => "00001",
             'factura' => "F001-0000001",
             'informacion' => "informacion de prueba 1",
+            'estado' => 1,
             'user_id' => 1,
             'created_at' => date('2020-08-01 00:00:00'),
            	'updated_at' => date('2020-08-01 00:00:00')
@@ -38,6 +39,7 @@ class KardexEntradaSeeder extends Seeder
             'guia_remision' => "00002",
             'factura' => "F001-0000002",
             'informacion' => "informacion de prueba 2",
+            'estado' => 1,
             'user_id' => 1,
             'created_at' => date('2020-08-01 00:00:00'),
            	'updated_at' => date('2020-08-01 00:00:00')
@@ -54,11 +56,11 @@ class KardexEntradaSeeder extends Seeder
             'guia_remision' => "00003",
             'factura' => "F001-0000003",
             'informacion' => "informacion de prueba 3",
+            'estado' => 1,
             'user_id' => 1,
             'created_at' => date('2020-08-01 00:00:00'),
            	'updated_at' => date('2020-08-01 00:00:00')
         ]);
-
 
 
     }

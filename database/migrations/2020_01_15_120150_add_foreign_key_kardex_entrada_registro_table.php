@@ -26,7 +26,7 @@ class AddForeignKeyKardexEntradaRegistroTable extends Migration
             $table->double('precio_extranjero',10,2);
             $table->integer('cantidad');
             $table->double('cambio',10,2);
-            $table->boolean('estado');
+            $table->string('estado');
 
             $table->timestamps();
         });
