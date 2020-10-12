@@ -160,7 +160,7 @@
 								<div class="modal-dialog modal-lg">
 								  <div class="modal-content" style="width: 100%">
 
-									<form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:20px">
+									<form action="{{ route('agregado_rapido.personal_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:20px">
 
 										@csrf
 										<h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
@@ -179,9 +179,6 @@
 												<div class="col-sm-4">
 														<input type="text" class="form-control" name="apellidos" required>
 							                    </div>
-						                </div>
-
-						                <div class="form-group row xd">
 						                	<label class="col-sm-2 col-form-label">Fecha Nacimiento:</label>
 												<div class="col-sm-4">
 													<input type="date" class="form-control" name="fecha_nacimiento" required>
@@ -194,7 +191,15 @@
 													<option value="femenino">femenino</option>
 													</select>
 							                    </div>
-
+							                 <label class="col-sm-2 col-form-label">Estado Civil:</label>
+												<div class="col-sm-4">
+													<select class="form-control m-b" name="estado_civil">
+												<option value="Soltero">Soltero</option>
+												<option value="Casado">Casado</option>
+												<option value="Viudo con hijos">Viudo con hijos</option>
+												<option value="Viudo sin hijos">Viudo sin hijos</option>
+												</select>
+							                    </div>
 						                </div>
 						                <h1><i class="fa fa-address-card-o" aria-hidden="true"></i></h1>
 
@@ -204,7 +209,7 @@
 							                    <div class="col-sm-4"><select class="form-control m-b" name="documento_identificacion">
 												<option value="dni">DNI</option>
 												<option value="pasaporte">Pasaporte</option>
-												<option value="pasaporte">RUC</option>
+												<option value="ruc">RUC</option>
 												</select>
 												</div>
 
@@ -224,12 +229,12 @@
 
 							                    <label class="col-sm-2 col-form-label">Pais:</label>
 												<div class="col-sm-4">
-														<select class="form-control m-b" name="nacionalidad" required>
-										  <option>Seleccione</option>
-										 {{--  @foreach($paises as $pais)
-										<option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
-										@endforeach --}}
-										</select>
+													<select class="form-control m-b" name="nacionalidad" required>
+													  <option>Seleccione</option>
+													   @foreach($paises as $pais)
+														<option value="{{ $pais->nombre }}" >{{ $pais->nombre }}</option>
+													@endforeach 
+													</select>
 							                    </div>
 
 						                </div>

@@ -11,6 +11,7 @@ use App\Personal_datos_laborales;
 use App\Personal;
 use App\CreateMail;
 use App\Mailbox;
+use App\Pais;
 use Barryvdh\DomPDF\Facade as PDF;
 use DB;
 use Carbon\Carbon;
@@ -58,6 +59,7 @@ class GarantiaGuiaIngresoController extends Controller
       $marca_cantidad=(string)$marca_cantidad;
       $marca_cantidad=substr($marca_cantidad,1);
       $orden_servicio=$marca.$guion.$marca_cantidad;
+      $paises = Pais::all();
 
       $clientes=Cliente::all();
         // $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
@@ -66,7 +68,7 @@ class GarantiaGuiaIngresoController extends Controller
         // $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
 
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
-      return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales'));
+      return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales','paises'));
     }
 
     /**
