@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Marca;
 use App\Cliente;
 use App\Contacto;
+use App\Personal;
 
 class AgregadoRapidoController extends Controller
 {
@@ -134,6 +135,9 @@ class AgregadoRapidoController extends Controller
         $personal->nivel_educativo=$request->get('nivel_educativo');
         $personal->profesion=$request->get('profesion');
         $personal->direccion=$request->get('direccion');
+        $personal->estado_trabajador_laboral = 'Activo';
+        $personal->usuario_registrado = 0;
+        $personal->estado = 0;
         $personal->save();
         return back();
     }
