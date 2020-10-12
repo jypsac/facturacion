@@ -204,38 +204,82 @@
 	                        </div>
 						</div>
 
-						<div class="col-lg-6">
+						<div class="col-lg-12">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
 	                                Fotos
 	                            </div>
-	                            <div class="panel-body">
-						                <div class="form-group  row">
-												<div class="col-sm-12">
-													<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto 1 :</label>
-														<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="image1"></div>
-													</div>
+	                            <div class="panel-body" align="center">
+                             @if($garantia_informe_tecnico->image1<>"sin_foto")
+		                         <div class="col-sm-3">
+		                          	<input class="archivoInput" type="file" id="archivoInput{{$garantia_informe_tecnico->image1}}" name="image1" onchange="return validarExt{{$garantia_informe_tecnico->id}}()" style="position:absolute;top:27px;left:35px;right:-100px;bottom:0px;width:250px;height:65%;opacity:0;"  />
+										<span id="visorArchivo{{$garantia_informe_tecnico->image1}}">
+											<!--Aqui se desplegará el fichero-->
+											<center> <img name="image1" src="{{ asset('/imagenes')}}/{{$garantia_informe_tecnico->image1}}" style="width: 250px;"></center>
+                      					</span>
+                              	</div>
+                              	<script type="text/javascript">
+											{{-- Fotooos --}}
+								function validarExt{{$garantia_informe_tecnico->id}}()
+								{
+									var archivoInput{{$garantia_informe_tecnico->id}} = document.getElementById('archivoInput{{$garantia_informe_tecnico->id}}');
+									var archivoRuta = archivoInput{{$garantia_informe_tecnico->id}}.value;
+									var extPermitidas = /(.jpg|.png|.jfif)$/i;
+									if(!extPermitidas.exec(archivoRuta)){
+										alert('Asegurese de haber seleccionado una Imagen');
+										archivoInput{{$garantia_informe_tecnico->id}}.value = '';
+										return false;
+									}
 
-													<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto 2 :</label>
-														<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="image2"></div>
-													</div>
+									else
+									{
+//PRevio del PDF
+								        if (archivoInput{{$garantia_informe_tecnico->id}}.files && archivoInput{{$garantia_informe_tecnico->id}}.files[0]){
+									        	var visor = new FileReader();
+									        	visor.onload = function(e)
+									        	{
+									        		document.getElementById('visorArchivo{{$garantia_informe_tecnico->id}}').innerHTML =
+									        		'<img name="image1" src="'+e.target.result+'"width="250px"   />';
+									        	};
+									        	visor.readAsDataURL(archivoInput{{$garantia_informe_tecnico->id}}.files[0]);
+									        }
+									    }
+									}
+								</script>
+                            @endif
 
-													<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto 3 :</label>
-														<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="image3"></div>
-													</div>
+                            @if($garantia_informe_tecnico->image2<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantia_informe_tecnico->image2}}" style="width: 250px;">
+                            @endif
 
-													<div class="form-group  row"><label class="col-sm-2 col-form-label">Foto 4 :</label>
-														<div class="col-sm-10"><input type="file" class="btn btn-success  dim" name="image4"></div>
-													</div>
+                            @if($garantia_informe_tecnico->image3<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantia_informe_tecnico->image3}}" style="width: 250px;">
+                            @endif
 
+                            @if($garantia_informe_tecnico->image4<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantia_informe_tecnico->image4}}" style="width: 250px;">
+                            @endif
 
-												</div>
-						                </div>
-	                            </div>
+                            @if($garantia_informe_tecnico->image5<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantia_informe_tecnico->image5}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantia_informe_tecnico->image6<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantia_informe_tecnico->image6}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantia_informe_tecnico->image7<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantia_informe_tecnico->image7}}" style="width: 250px;">
+                            @endif
+
+                            @if($garantia_informe_tecnico->image8<>"sin_foto")
+                                <img src="{{ asset('/imagenes')}}/{{$garantia_informe_tecnico->image8}}" style="width: 250px;">
+                            @endif
+                    </div>
 	                        </div>
 						</div>
 
-						<div class="col-lg-6">
+						{{-- <div class="col-lg-6">
 	                        <div class="panel panel-primary">
 	                            <div class="panel-heading">
 	                                Fotos
@@ -263,7 +307,7 @@
 						                </div>
 	                            </div>
 	                        </div>
-						</div>
+						</div> --}}
 
 	                    <div class="col-lg-12">
 	                        <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Enviar</strong></button>
@@ -277,6 +321,19 @@
 
 	</div>
 </div>
+<style type="text/css">
+input#archivoInput{
+		position:absolute;
+		top:27px;
+		left:35px;
+		right:-100px;
+		bottom:0px;
+		width:73%;
+		height:65%;
+		opacity: 0	;
+	}
+
+</style>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>

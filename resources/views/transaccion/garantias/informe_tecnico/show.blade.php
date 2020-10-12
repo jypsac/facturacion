@@ -21,16 +21,16 @@
                     <div class="title-action" style="padding-top: 0;" >
                         <form class="btn" style="text-align: none;padding-right: 0" action="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}">
                         <input type="text" name="archivo" maxlength="50" value="{{$garantias_informe_tecnico->orden_servicio}}">
-                         <button type="submit" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </button></form>  
+                         <button type="submit" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </button></form>
 
-                        <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a><!-- 
+                        <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a><!--
                         <a href="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a> -->
                          <form action="{{route('email.save')}}" method="post">
                             @csrf
                             <input type="text" hidden="hidden" name="tipo" value="App\GarantiaInformeTecnico"/>
                             <input type="text" hidden="hidden" name="id" value="{{$garantias_informe_tecnico->id}}"/>
                             <input type="text" hidden="hidden" name="redict" value="garantias_informe_tecnico">
-                            <input type="text" hidden="hidden" name="cliente" value="{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}"> 
+                            <input type="text" hidden="hidden" name="cliente" value="{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}">
                             <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
                         </form>
 
@@ -285,9 +285,9 @@
         <div class="border">
             <div class="ibox-content text-left h-50">
                 <span id="sparkline8">
-                    <div class="panel-body">
-                                 @if($garantias_informe_tecnico->image1<>"sin_foto")
-                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image1}}" style="width: 250px;">
+                    <div class="panel-body" align="center">
+                             @if($garantias_informe_tecnico->image1<>"sin_foto")
+                            <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image1}}" style="width: 250px;">
                             @endif
 
                             @if($garantias_informe_tecnico->image2<>"sin_foto")
@@ -321,6 +321,11 @@
                 </span>
 
             </div>
+{{--             <form action="#" class="dropzone" id="dropzoneForm">
+                <div class="fallback">
+                    <input name="file" type="file" multiple />
+                </div>
+            </form> --}}
         </div>
     </div>
 </div>
@@ -348,7 +353,18 @@
     td{background: white;}
 
 </style>
+{{-- <script type="text/javascript">
+    Dropzone.options.myAwesomeDropzone = {
+  paramName: "file", // The name that will be used to transfer the file
+  maxFilesize: 3, // MB
+};
+Dropzone.options.myAwesomeDropzone = false;
+// This is useful when you want to create the
+// Dropzone programmatically later
 
+// Disable auto discover for all elements:
+Dropzone.autoDiscover = false;
+</script> --}}
 
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -356,6 +372,9 @@
 <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
 <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
+{{-- <link href="{{asset('css/plugins/dropzone/dropzone.css')}}" rel="stylesheet">
+<script src="{{ asset('js/plugins/dropzone/dropzone.js') }}"></script>
+<script src="{{ asset('js/dropzone.js') }}"></script> --}}
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>

@@ -123,8 +123,6 @@ class GarantiaInformeTecnicoController extends Controller
         $orden_servicio_egreso=$request->get('orden_servicio');
         $orden_servicio_egreso=(string)$orden_servicio_egreso;
 
-       
-
         //consulta
         $egreso=GarantiaGuiaEgreso::where('orden_servicio',$orden_servicio_egreso)->first();
         $id_garantia_egreso=$egreso->id;
@@ -135,9 +133,6 @@ class GarantiaInformeTecnicoController extends Controller
         $garantia_informe_tecnico->estado=1;
         $garantia_informe_tecnico->egresado=1;
         $garantia_informe_tecnico->informe_tecnico=1;
-
-
-
 
         //$garantia_informe_tecnico->descripcion_problema=$request->get('descripcion_problema');
         $garantia_informe_tecnico->fecha=$request->get('fecha_uno');

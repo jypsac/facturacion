@@ -1,7 +1,7 @@
 @extends('layout')
 
-@section('title', 'Crear - Guia de Ingreso')
-@section('breadcrumb', 'Crear Guia de Ingreso')
+@section('title', 'Editar - Guia de Ingreso')
+@section('breadcrumb', 'Editar Guia de Ingreso')
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_guia_ingreso.index') )
 @section('value_accion', 'Atras')
@@ -11,15 +11,15 @@
 <form action="{{ route('garantia_guia_ingreso.actualizar',$garantia_guia_ingreso->id) }}"  enctype="multipart/form-data" method="post">
     @csrf
     @method('put')
-	            		
+
 <div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
-	
+
     <div class="row">
-            
-        <fieldset class="col-sm-6">    	
+
+        <fieldset class="col-sm-6">
 					<legend>Datos<br>Generales</legend>
-			
-					
+
+
 				<div class="panel panel-default">
 					<div class="panel-body" align="left">
 						<div class="row">
@@ -54,12 +54,14 @@
 
 
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Ing. Asignado:</label>
                         		 <div class="col-sm-10">
                          		<select class="form-control m-b" name="personal_lab_id">
-													@foreach($personales as $personal)
-												<option value="{{$personal->id}}">{{$personal->nombres}} {{$personal->apellidos}} </option>
+												<option value="{{$garantia_guia_ingreso->personal_laborales->personal_l->id}}">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}}</option>
+												<option disabled="">--------------</option>
+												@foreach($personales as $personal)
+												<option value="{{$personal->id}}">{{$personal->nombres}}   </option>
 													@endforeach
 												</select>
                 				</div>
@@ -67,10 +69,12 @@
 						</div>
 
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Cliente:</label>
                         		 <div class="col-sm-10">
                          		<select class="form-control m-b" name="cliente_id">
+                         							<option value="{{$garantia_guia_ingreso->clientes_i->id}}">{{$garantia_guia_ingreso->clientes_i->nombre}}</option>
+                         							<option disabled="">--------------</option>
 												   @foreach($clientes as $cliente)
 												   <option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
 												   @endforeach
@@ -79,7 +83,7 @@
 
 						</div>
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Asunto:</label>
                         		 <div class="col-sm-10">
                          		<input type="text" class="form-control" name="asunto" value="{{$garantia_guia_ingreso->asunto}}" required>
@@ -88,15 +92,15 @@
 						</div>
 
 
-						
+
 						<br>
 				</div>
-					
-		</fieldset>		
 
-		<fieldset class="col-sm-6">    	
+		</fieldset>
+
+		<fieldset class="col-sm-6">
 					<legend> Datos del <br> Equipoo </legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -111,12 +115,12 @@
 								<label class="col-sm-2 col-form-label">Codigo Interno:</label>
                               <div class="col-sm-10">
                      					<input type="text" class="form-control" name="codigo_interno" value="{{$garantia_guia_ingreso->codigo_interno}}" required>
-                              	
+
                               </div>
 
                     			<label class="col-sm-2 col-form-label">Fecha de Compra:</label>
                               <div class="col-sm-10">
-                              	
+
                    				<input type="date" class="form-control" name="fecha_compra" max="{{$garantia_guia_ingreso->fecha_compra}}" value="{{$garantia_guia_ingreso->fecha_compra}}" required>
                               </div>
 							</div>
@@ -124,12 +128,12 @@
 
 						</div>
 					</div>
-					
-		</fieldset>		
 
-		<fieldset class="col-sm-12">    	
+		</fieldset>
+
+		<fieldset class="col-sm-12">
 					<legend> Informe del <br>Problema</legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -140,7 +144,7 @@
                 				</div>
                    			 </div>
 
-                   			
+
 							</div>
 						</div>
 
@@ -156,7 +160,7 @@
                 				</div>
                    			 </div>
 
-                   			
+
 							</div>
 						</div>
 
@@ -171,31 +175,31 @@
                 				</div>
                    			 </div>
 
-                   			
+
 							</div>
 						</div>
 
 					</div>
 
-						
-					
-		</fieldset>	
+
+
+		</fieldset>
 		 <center><button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button></center>
-	                       
+
 
 
     </div>
 
 </div>
- </form>	
-                
+ </form>
+
 <style>
 	.form-control{    margin-bottom: 15px;
 }
-   fieldset 
+   fieldset
   {
     /*border: 1px solid #ddd !important;*/
-    padding: 10px;       
+    padding: 10px;
     /*border-radius:4px ;*/
     background-color:#f5f5f5;
     padding-left:10px!important;
@@ -203,19 +207,19 @@
     margin-bottom: 10px;
     border-left: 1px solid #ddd !important;
 
-  } 
-  
+  }
+
     legend
     {
       font-size:14px;
       font-weight:bold;
-      margin-bottom: 0px; 
-      width: 35%; 
+      margin-bottom: 0px;
+      width: 35%;
       border: 1px solid #ddd;
-      border-radius: 4px; 
-      padding: 5px 5px 5px 10px; 
+      border-radius: 4px;
+      padding: 5px 5px 5px 10px;
       background-color: #ffffff;
-    } 
+    }
 </style>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>

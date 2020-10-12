@@ -31,7 +31,7 @@
                             <input type="text" hidden="hidden" name="tipo" value="App\GarantiaGuiaIngreso"/>
                             <input type="text" hidden="hidden" name="id" value="{{$garantia_guia_ingreso->id}}"/>
                             <input type="text" hidden="hidden" name="redict" value="garantia_guia_ingreso">
-                            <input type="text" hidden="hidden" name="cliente" value="{{$garantia_guia_ingreso->clientes_i->email}}"> 
+                            <input type="text" hidden="hidden" name="cliente" value="{{$garantia_guia_ingreso->clientes_i->email}}">
                             <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
                         </form>
 

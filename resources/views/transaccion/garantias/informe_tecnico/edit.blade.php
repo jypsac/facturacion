@@ -8,17 +8,17 @@
 
 @section('content')
 
-	            		
+
  <form action="{{route('garantia_informe_tecnico.store')}}"  enctype="multipart/form-data" method="post">
 									 	@csrf
 									 	<div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
-	
+
     <div class="row">
-            
-        <fieldset class="col-sm-6">    	
+
+        <fieldset class="col-sm-6">
 					<legend>Datos<br>Generales</legend>
-			
-					
+
+
 				<div class="panel panel-default">
 					<div class="panel-body" align="left">
 						<div class="row">
@@ -47,7 +47,7 @@
 
 
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Ing. Asignado:</label>
                         		 <div class="col-sm-10">
                          		<input type="text" class="form-control" name="ing_asignado" value="{{$garantia_guia_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}" readonly>
@@ -56,7 +56,7 @@
 						</div>
 
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Asunto:</label>
                         		 <div class="col-sm-10">
                          		<input type="text" class="form-control" name="asunto" value="{{$garantia_guia_egreso->garantia_ingreso_i->asunto}}" readonly>
@@ -65,14 +65,14 @@
 						</div>
 
 
-						
+
 						<br>
 				</div>
-					
-		</fieldset>		
-		<fieldset class="col-sm-6">    	
+
+		</fieldset>
+		<fieldset class="col-sm-6">
 					<legend> Datos del <br>  Cliente </legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -87,7 +87,7 @@
 								<label class="col-sm-2 col-form-label">Telefono:</label>
                               <div class="col-sm-10">
                      			<input type="text" class="form-control" name="telefono" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->telefono}}" readonly>
-                              	
+
                               </div>
 
                     			<label class="col-sm-2 col-form-label">Correo:</label>
@@ -103,13 +103,13 @@
 
 						</div>
 					</div>
-					
-		</fieldset>		
+
+		</fieldset>
 
 
-		<fieldset class="col-sm-12">    	
+		<fieldset class="col-sm-12">
 					<legend> Datos del <br> Equipoo </legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -124,7 +124,7 @@
 								<label class="col-sm-2 col-form-label">Codigo Interno:</label>
                               <div class="col-sm-4">
                      					<input type="text" class="form-control" name="codigo_interno" value="{{$garantia_guia_egreso->garantia_ingreso_i->codigo_interno}}" readonly>
-                              	
+
                               </div>
 
                     			<label class="col-sm-2 col-form-label">Fecha de Compra:</label>
@@ -136,12 +136,12 @@
 
 						</div>
 					</div>
-					
-		</fieldset>		
 
-		<fieldset class="col-sm-12">    	
+		</fieldset>
+
+		<fieldset class="col-sm-12">
 					<legend> Informe del <br>Problema</legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -158,13 +158,13 @@
                 				</div>
                    			 </div>
 
-                   			
+
 							</div>
 						</div>
 
 					</div>
 
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -226,24 +226,68 @@
 
 						</div>
 
-						
-					
-		</fieldset>	
+
+		</fieldset>
 		 <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
-	                       
+
 
 
     </div>
 
 </div>
- </form>	
-                
-<style>	
+ </form>
+            <div>
+              <form action=" " class="dropzone" id="dropzoneForm" enctype="multipart/form-data">
+                @csrf
+                <div class="fallback">
+                    <input name="file" type="file" multiple />
+                </div>
+              </form>
+            </div>
+<script type="text/javascript">
+        Dropzone.options.dropzoneForm = {
+            paramName: "file", // The name that will be used to transfer the file
+            maxFilesize: 2, // MB
+            dictDefaultMessage: "<strong>Drop files here or click to upload. </strong></br> (This is just a demo dropzone. Selected files are not actually uploaded.)"
+        };
+
+        $(document).ready(function(){
+
+            var editor_one = CodeMirror.fromTextArea(document.getElementById("code1"), {
+                lineNumbers: true,
+                matchBrackets: true
+            });
+
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code2"), {
+                lineNumbers: true,
+                matchBrackets: true
+            });
+
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code3"), {
+                lineNumbers: true,
+                matchBrackets: true
+            });
+
+            var editor_two = CodeMirror.fromTextArea(document.getElementById("code4"), {
+                lineNumbers: true,
+                matchBrackets: true
+            });
+
+
+            $('.custom-file-input').on('change', function() {
+                let fileName = $(this).val().split('\\').pop();
+                $(this).next('.custom-file-label').addClass("selected").html(fileName);
+            });
+
+       });
+</script>
+
+<style>
 	p#texto{
 				text-align: center;
 				color:black;
 			}
-			
+
 			input.archivoInput{
 				position:absolute;
 				top:0px;
@@ -256,10 +300,10 @@
 			}
 	.form-control{    margin-bottom: 15px;
 }
-   fieldset 
+   fieldset
   {
     /*border: 1px solid #ddd !important;*/
-    padding: 10px;       
+    padding: 10px;
     /*border-radius:4px ;*/
     background-color:#f5f5f5;
     padding-left:10px!important;
@@ -267,21 +311,24 @@
     margin-bottom: 10px;
     border-left: 1px solid #ddd !important;
 
-  } 
-  
+  }
+
     legend
     {
       font-size:14px;
       font-weight:bold;
-      margin-bottom: 0px; 
-      width: 35%; 
+      margin-bottom: 0px;
+      width: 35%;
       border: 1px solid #ddd;
-      border-radius: 4px; 
-      padding: 5px 5px 5px 10px; 
+      border-radius: 4px;
+      padding: 5px 5px 5px 10px;
       background-color: #ffffff;
-    } 
+    }
 </style>
 
+   <link href="{{asset('css/plugins/dropzone/dropzone.css')}}" rel="stylesheet">
+  <script src="{{ asset('js/plugins/dropzone/dropzone.js') }}"></script>
+  <script src="{{ asset('js/dropzone.js') }}"></script>
 
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -307,12 +354,12 @@
     else
     {
         //PRevio del PDF
-        if (archivoInput.files && archivoInput.files[0]) 
+        if (archivoInput.files && archivoInput.files[0])
         {
             var visor = new FileReader();
-            visor.onload = function(e) 
+            visor.onload = function(e)
             {
-                document.getElementById('visorArchivo').innerHTML = 
+                document.getElementById('visorArchivo').innerHTML =
                 '<center><img name="image1" src="'+e.target.result+'"width="150px" height="100px" /></center>';
             };
             visor.readAsDataURL(archivoInput.files[0]);
@@ -334,12 +381,12 @@ function validarExt2()
     else
     {
         //PRevio del PDF
-        if (archivoInput2.files && archivoInput2.files[0]) 
+        if (archivoInput2.files && archivoInput2.files[0])
         {
             var visor = new FileReader();
-            visor.onload = function(i) 
+            visor.onload = function(i)
             {
-                document.getElementById('visorArchivo2').innerHTML = 
+                document.getElementById('visorArchivo2').innerHTML =
                 '<center><img name="image2" src="'+i.target.result+'"width="150px" height="100px" /></center>';
             };
             visor.readAsDataURL(archivoInput2.files[0]);
@@ -360,12 +407,12 @@ function validarExt3()
     else
     {
         //PRevio del PDF
-        if (archivoInput3.files && archivoInput3.files[0]) 
+        if (archivoInput3.files && archivoInput3.files[0])
         {
             var visor = new FileReader();
-            visor.onload = function(i) 
+            visor.onload = function(i)
             {
-                document.getElementById('visorArchivo3').innerHTML = 
+                document.getElementById('visorArchivo3').innerHTML =
                 '<center><img name="image3" src="'+i.target.result+'"width="150px" height="100px" /></center>';
             };
             visor.readAsDataURL(archivoInput3.files[0]);
@@ -386,12 +433,12 @@ function validarExt4()
     else
     {
         //PRevio del PDF
-        if (archivoInput4.files && archivoInput4.files[0]) 
+        if (archivoInput4.files && archivoInput4.files[0])
         {
             var visor = new FileReader();
-            visor.onload = function(i) 
+            visor.onload = function(i)
             {
-                document.getElementById('visorArchivo4').innerHTML = 
+                document.getElementById('visorArchivo4').innerHTML =
                 '<center><img name="image4" src="'+i.target.result+'"width="150px" height="100px" /></center>';
             };
             visor.readAsDataURL(archivoInput4.files[0]);
