@@ -147,7 +147,7 @@
           <div class="panel-body" align="left">
             <div class="field" align="left">
               <h3>Imagenes</h3>
-               <input  type="file" name="files[]" id="files"  multiple="" />
+               <input  type="file" name="files[]" id="files"  multiple=""  accept="image/jpeg/svg/png/jpg" />
             </div>
 
           </div>

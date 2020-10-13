@@ -286,37 +286,11 @@
             <div class="ibox-content text-left h-50">
                 <span id="sparkline8">
                     <div class="panel-body" align="center">
-                             @if($garantias_informe_tecnico->image1<>"sin_foto")
-                            <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image1}}" style="width: 250px;">
-                            @endif
-
-                            @if($garantias_informe_tecnico->image2<>"sin_foto")
-                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image2}}" style="width: 250px;">
-                            @endif
-
-                            @if($garantias_informe_tecnico->image3<>"sin_foto")
-                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image3}}" style="width: 250px;">
-                            @endif
-
-                            @if($garantias_informe_tecnico->image4<>"sin_foto")
-                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image4}}" style="width: 250px;">
-                            @endif
-
-                            @if($garantias_informe_tecnico->image5<>"sin_foto")
-                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image5}}" style="width: 250px;">
-                            @endif
-
-                            @if($garantias_informe_tecnico->image6<>"sin_foto")
-                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image6}}" style="width: 250px;">
-                            @endif
-
-                            @if($garantias_informe_tecnico->image7<>"sin_foto")
-                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image7}}" style="width: 250px;">
-                            @endif
-
-                            @if($garantias_informe_tecnico->image8<>"sin_foto")
-                                <img src="{{ asset('/imagenes')}}/{{$garantias_informe_tecnico->image8}}" style="width: 250px;">
-                            @endif
+                        <div class="col-sm-8">
+                        @foreach($archivo_informe_tecnico as $archivo)
+                        <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 150px;padding: 15px ;">
+                        @endforeach
+                        </div>
                     </div>
                 </span>
 

@@ -43,17 +43,6 @@ class GarantiaInformeTecnicoController extends Controller
      */
     public function store(Request $request)
     {
-        /*new*/
-        $newfile = $request->file('files');
-        if($request->hasfile('files')){
-          foreach ($newfile as $file) {
-            $nombre =  $file->getClientOriginalName();
-            \Storage::disk('mailbox')->put($nombre,  \File::get($file));
-            $news[] = storage_path().'/app/public/'.$nombre;
-        }
-        /* /
-        new*/
-
         $nombre_cliente=$request->get('nombre_cliente');
         $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
         $numero_doc=$cliente->numero_documento;
@@ -86,36 +75,28 @@ class GarantiaInformeTecnicoController extends Controller
         // $garantia_guia_egreso->informe_tecnico=1;
         // $garantia_guia_egreso->save();
 
-        $archivo = $request->file('files');
-
+        /*new*/
+        $newfile = $request->file('files');
         if($request->hasfile('files')){
-            foreach ($archivo as $files) {
-                $carbon = Carbon::now;
+            $orden_servicio=$request->get('orden_servicio');
+            // $date = Carbon::now();
+            // $hora = $date->toTimeString();
+            foreach ($newfile as $file) {
+                $nombre =  $file->getClientOriginalName().'_'.$orden_servicio;
+                \Storage::disk('informe_tecnico_imagenes')->put($nombre,  \File::get($file));
+                // $news[] = public_path().'/app/public/'.$nombre;
+            }
+            foreach ($newfile as $files) {
                 $archivo_tecnico = new GarantiaInformeTecnicoArchivos;
-
                 $archivo_tecnico->id_informe_tecnico = $garantia_informe_tecnico->id;
-                // $orden_servicio=$request->get('orden_servicio');
-                $archivo_tecnico->archivos = $files->getClientOriginalName().'_'.$carbon;
+                $archivo_tecnico->archivos = $files->getClientOriginalName().'_'.$orden_servicio;
                 $archivo_tecnico->save();
             }
-            foreach($archivo as $data){
-                $carbon = Carbon::now;
-                $name = $data->getClientOriginalName().'_'.$carbon;
-                $orden_servicio=$request->get('orden_servicio');
-                $data->move(public_path().'/imagenes/'.$orden_servicio,$name);
-            }
-
         }
-        // foreach(){
-
-        // }
-
+        /* /
+        new*/
         return redirect()->route('garantia_informe_tecnico.index');
     }
-
-
-
-}
 
     /**
      * Display the specified resource.
@@ -127,7 +108,9 @@ class GarantiaInformeTecnicoController extends Controller
     {
         $empresa=Empresa::first();
         $garantias_informe_tecnico=GarantiaInformeTecnico::find($id);
-        return view('transaccion.garantias.informe_tecnico.show',compact('garantias_informe_tecnico','empresa'));
+        $archivo_informe_tecnico  = GarantiaInformeTecnicoArchivos::where('id_informe_tecnico',$id)->get();
+        return view('transaccion.garantias.informe_tecnico.show',compact('garantias_informe_tecnico','empresa','archivo_informe_tecnico'));
+        // return $archivo_informe_tecnico;
     }
 
     /**
