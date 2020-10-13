@@ -240,15 +240,19 @@
               <form action=" " class="dropzone" id="dropzoneForm" enctype="multipart/form-data">
                 @csrf
                 <div class="fallback">
-                    <input name="file" type="file" multiple />
+                    <input name="file" type="file[]" multiple />
                 </div>
               </form>
             </div>
-<script type="text/javascript">
+
+    <script>
         Dropzone.options.dropzoneForm = {
             paramName: "file", // The name that will be used to transfer the file
             maxFilesize: 2, // MB
+            dictRemoveFile: true,
+            addRemoveLinks: true,
             dictDefaultMessage: "<strong>Drop files here or click to upload. </strong></br> (This is just a demo dropzone. Selected files are not actually uploaded.)"
+
         };
 
         $(document).ready(function(){
@@ -263,12 +267,12 @@
                 matchBrackets: true
             });
 
-            var editor_two = CodeMirror.fromTextArea(document.getElementById("code3"), {
+            var editor_three = CodeMirror.fromTextArea(document.getElementById("code3"), {
                 lineNumbers: true,
                 matchBrackets: true
             });
 
-            var editor_two = CodeMirror.fromTextArea(document.getElementById("code4"), {
+            var editor_four = CodeMirror.fromTextArea(document.getElementById("code4"), {
                 lineNumbers: true,
                 matchBrackets: true
             });
@@ -280,7 +284,7 @@
             });
 
        });
-</script>
+    </script>
 
 <style>
 	p#texto{
@@ -325,12 +329,12 @@
       background-color: #ffffff;
     }
 </style>
+    
+    <link href="{{asset('css/plugins/dropzone/basic.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/dropzone/dropzone.css')}}" rel="stylesheet">
+    <script src="{{ asset('js/plugins/dropzone/dropzone.js') }}"></script>
 
-   <link href="{{asset('css/plugins/dropzone/dropzone.css')}}" rel="stylesheet">
-  <script src="{{ asset('js/plugins/dropzone/dropzone.js') }}"></script>
-  <script src="{{ asset('js/dropzone.js') }}"></script>
-
-	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+  	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
