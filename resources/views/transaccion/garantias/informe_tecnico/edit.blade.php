@@ -145,52 +145,9 @@
         </div>
         <div class="panel panel-default">
           <div class="panel-body" align="left">
-            {{-- <div class="row">
-              <div class="col-sm-3">
-                <input class="archivoInput" type="file" id="archivoInput" name="image1" onchange="return validarExt()"  />
-                <div id="visorArchivo">
-                  <!--Aqui se desplegará el fichero-->
-                  <center >
-                    <img name="image1"  src="" width="150px" height="100px" />
-                  </center>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <input class="archivoInput" type="file" id="archivoInput2" name="image2" onchange="return validarExt2()"  />
-                <div id="visorArchivo2">
-                <!--Aqui se desplegará el fichero-->
-                  <center >
-                    <img name="image2"  src="" width="150px" height="100px" />
-                  </center>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <input class="archivoInput" type="file" id="archivoInput3" name="image3" onchange="return validarExt3()"  />
-                <div id="visorArchivo3">
-                  <!--Aqui se desplegará el fichero-->
-                  <center >
-                    <img name="image3"  src="" width="150px" height="100px" />
-                  </center>
-                </div>
-              </div>
-              <div class="col-sm-3">
-                <input class="archivoInput" type="file" id="archivoInput4" name="image4" onchange="return validarExt4()"  />
-                <div id="visorArchivo4">
-                 <!--Aqui se desplegará el fichero-->
-                 <center >
-                    <img name="image4"  src="" width="150px" height="100px" />
-                  </center>
-                </div>
-              </div>
-              <input type="file" class="btn btn-success  dim" name="image5" hidden="hidden"/>
-              <input type="file" class="btn btn-success  dim" name="image6" hidden="hidden"/>
-              <input type="file" class="btn btn-success  dim" name="image7" hidden="hidden"/>
-              <input type="file" class="btn btn-success  dim" name="image8" hidden="hidden"/>
-            </div> --}}
-
             <div class="field" align="left">
               <h3>Imagenes</h3>
-              <input type="file" id="files" name="files" multiple  class="form-control" />
+               <input  type="file" name="files[]" id="files"  multiple="" />
             </div>
 
           </div>

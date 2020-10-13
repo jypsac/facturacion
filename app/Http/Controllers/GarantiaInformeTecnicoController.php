@@ -43,6 +43,16 @@ class GarantiaInformeTecnicoController extends Controller
      */
     public function store(Request $request)
     {
+        /*new*/
+        $newfile = $request->file('files');
+        if($request->hasfile('files')){
+          foreach ($newfile as $file) {
+            $nombre =  $file->getClientOriginalName();
+            \Storage::disk('mailbox')->put($nombre,  \File::get($file));
+            $news[] = storage_path().'/app/public/'.$nombre;
+        }
+        /* /
+        new*/
 
         $nombre_cliente=$request->get('nombre_cliente');
         $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
@@ -102,6 +112,10 @@ class GarantiaInformeTecnicoController extends Controller
 
         return redirect()->route('garantia_informe_tecnico.index');
     }
+
+
+
+}
 
     /**
      * Display the specified resource.
@@ -270,7 +284,7 @@ class GarantiaInformeTecnicoController extends Controller
     //     return $pdf->download();
         return $pdf->download('Guia Informe Tecnico - '.$archivo.' .pdf');
 
-}
+    }
 
 
 }
