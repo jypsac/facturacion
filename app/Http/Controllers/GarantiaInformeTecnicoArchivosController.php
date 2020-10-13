@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\garantia_informe_tecnico_archivos;
+use App\GarantiaInformeTecnicoArchivos;
 use Illuminate\Http\Request;
 
 class GarantiaInformeTecnicoArchivosController extends Controller

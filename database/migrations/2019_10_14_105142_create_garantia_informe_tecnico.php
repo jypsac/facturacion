@@ -11,7 +11,7 @@ class CreateGarantiaInformeTecnico extends Migration
      *
      * @return void
      */
-    public function            up()
+    public function up()
     {
         Schema::create('garantia_informe_tecnico', function (Blueprint $table) {
             $table->bigIncrements('id');
