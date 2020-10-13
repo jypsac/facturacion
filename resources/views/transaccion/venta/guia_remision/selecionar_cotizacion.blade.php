@@ -1,19 +1,19 @@
 @extends('layout')
 
-@section('title', 'Guia Remision/Cotizaciones Aprovadas')
-@section('breadcrumb', 'Guia Remision/Cotizaciones Aprovadas')
-@section('breadcrumb2', 'Guia Remision/Cotizaciones Aprovadas')
+@section('title', 'Guia Remision/Cotizaciones Aprobadas')
+@section('breadcrumb', 'Guia Remision/Cotizaciones Aprobadas')
+@section('breadcrumb2', 'Guia Remision/Cotizaciones Aprobadas')
 @section('href_accion', route('guia_remision.create'))
 @section('value_accion', 'Agregar Nuevo')
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">
-               
+
                 <div class="col-lg-12">
                     <div class="ibox ">
                         <div class="ibox-title">
-                            <h5>Lista de Boletas</h5> 
+                            <h5>Lista de Boletas</h5>
                             <div class="ibox-tools">
                                 <a class="collapse-link">
                                     <i class="fa fa-chevron-up"></i>
@@ -41,16 +41,16 @@
                                             <th>Codigo de Comision</th>
                                             <th>Cliente</th>
                                             <th>Ruc/DNI</th>
-                                            <th>Seleccionar</th> 
+                                            <th>Seleccionar</th>
                                         </tr>
                                     </thead>
                                     <tbody>
                                         @foreach($activos as $activo)
                                         <tr class="gradeX">
-                                            <td>{{$activo->id}}</td>    
-                                            <td>{{$activo->cod_comision}}</td>    
-                                            <td>{{$activo->cliente->nombre}}</td>    
-                                            <td>{{$activo->cliente->numero_documento}}</td>    
+                                            <td>{{$activo->id}}</td>
+                                            <td>{{$activo->cod_comision}}</td>
+                                            <td>{{$activo->cliente->nombre}}</td>
+                                            <td>{{$activo->cliente->numero_documento}}</td>
 
                                             <td><center>
                                                 @if($activo->estado_aprobado==0)

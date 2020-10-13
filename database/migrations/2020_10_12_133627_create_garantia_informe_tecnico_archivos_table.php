@@ -15,9 +15,9 @@ class CreateGarantiaInformeTecnicoArchivosTable extends Migration
     {
         Schema::create('garantia_informe_tecnico_archivos', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->unsignedBigInteger('id_informe_tecnico');
+            $table->unsignedBigInteger('id_informe_tecnico')->nullable();
             $table->foreign('id_informe_tecnico')->references('id')->on('garantia_informe_tecnico')->onDelete('cascade');
-            $table->string('archivos');
+            $table->string('archivos')->nullable();
             $table->timestamps();
         });
     }

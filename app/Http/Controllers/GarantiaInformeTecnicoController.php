@@ -8,6 +8,7 @@ use App\GarantiaGuiaEgreso;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Cliente;
 use App\Empresa;
+use App\GarantiaInformeTecnicoArchivos;
 use Carbon\Carbon;
 
 
@@ -42,78 +43,16 @@ class GarantiaInformeTecnicoController extends Controller
      */
     public function store(Request $request)
     {
-
-        if($request->hasfile('image1')){
-            $image1 =$request->file('image1');
-            $orden_servicio=$request->get('orden_servicio');
-            $name1 = $orden_servicio.'/'.time().$image1->getClientOriginalName();
-            $image1->move(public_path().'/imagenes/'.$orden_servicio,$name1);
-        }else{
-            $name1="sin_foto";
+        /*new*/
+        $newfile = $request->file('files');
+        if($request->hasfile('files')){
+          foreach ($newfile as $file) {
+            $nombre =  $file->getClientOriginalName();
+            \Storage::disk('mailbox')->put($nombre,  \File::get($file));
+            $news[] = storage_path().'/app/public/'.$nombre;
         }
-
-        if($request->hasfile('image2')){
-            $image2 =$request->file('image2');
-            $orden_servicio=$request->get('orden_servicio');
-            $name2 = $orden_servicio.'/'.time().$image2->getClientOriginalName();
-            $image2->move(public_path().'/imagenes/'.$orden_servicio,$name2);
-        }else{
-            $name2="sin_foto";
-        }
-
-        if($request->hasfile('image3')){
-            $image3 =$request->file('image3');
-            $orden_servicio=$request->get('orden_servicio');
-            $name3 = $orden_servicio.'/'.time().$image3->getClientOriginalName();
-            $image3->move(public_path().'/imagenes/'.$orden_servicio,$name3);
-        }else{
-            $name3="sin_foto";
-        }
-
-        if($request->hasfile('image4')){
-            $image4 =$request->file('image4');
-            $orden_servicio=$request->get('orden_servicio');
-            $name4 = $orden_servicio.'/'.time().$image4->getClientOriginalName();
-            $image4->move(public_path().'/imagenes/'.$orden_servicio,$name4);
-        }else{
-            $name4="sin_foto";
-        }
-
-        if($request->hasfile('image5')){
-            $image5 =$request->file('image5');
-            $orden_servicio=$request->get('orden_servicio');
-            $name5 = $orden_servicio.'/'.time().$image5->getClientOriginalName();
-            $image5->move(public_path().'/imagenes/'.$orden_servicio,$name5);
-        }else{
-            $name5="sin_foto";
-        }
-
-        if($request->hasfile('image6')){
-            $image6 =$request->file('image6');
-            $orden_servicio=$request->get('orden_servicio');
-            $name6 = $orden_servicio.'/'.time().$image6->getClientOriginalName();
-            $image6->move(public_path().'/imagenes/'.$orden_servicio,$name6);
-        }else{
-            $name6="sin_foto";
-        }
-
-        if($request->hasfile('image7')){
-            $image7 =$request->file('image7');
-            $orden_servicio=$request->get('orden_servicio');
-            $name7 = $orden_servicio.'/'.time().$image7->getClientOriginalName();
-            $image7->move(public_path().'/imagenes/'.$orden_servicio,$name7);
-        }else{
-            $name7="sin_foto";
-        }
-
-        if($request->hasfile('image8')){
-            $image8 =$request->file('image8');
-            $orden_servicio=$request->get('orden_servicio');
-            $name8 = $orden_servicio.'/'.time().$image8->getClientOriginalName();
-            $image8->move(public_path().'/imagenes/'.$orden_servicio,$name8);
-        }else{
-            $name8="sin_foto";
-        }
+        /* /
+        new*/
 
         $nombre_cliente=$request->get('nombre_cliente');
         $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
@@ -140,22 +79,43 @@ class GarantiaInformeTecnicoController extends Controller
         $garantia_informe_tecnico->revision_diagnostico=$request->get('revision_diagnostico');
         $garantia_informe_tecnico->causas_del_problema=$request->get('causas_del_problema');
         $garantia_informe_tecnico->solucion=$request->get('solucion');
-        $garantia_informe_tecnico->image1=$name1;
-        $garantia_informe_tecnico->image2=$name2;
-        $garantia_informe_tecnico->image3=$name3;
-        $garantia_informe_tecnico->image4=$name4;
-        $garantia_informe_tecnico->image5=$name5;
-        $garantia_informe_tecnico->image6=$name6;
-        $garantia_informe_tecnico->image7=$name7;
-        $garantia_informe_tecnico->image8=$name8;
         $garantia_informe_tecnico->save();
 
          // //GUIA EGRESO
-        $garantia_guia_egreso=GarantiaGuiaEgreso::where('orden_servicio',$orden_servicio_egreso)->first();
-        $garantia_guia_egreso->informe_tecnico=1;
-        $garantia_guia_egreso->save();
+        // $garantia_guia_egreso=GarantiaGuiaEgreso::where('orden_servicio',$orden_servicio_egreso)->first();
+        // $garantia_guia_egreso->informe_tecnico=1;
+        // $garantia_guia_egreso->save();
+
+        $archivo = $request->file('files');
+
+        if($request->hasfile('files')){
+            foreach ($archivo as $files) {
+                $carbon = Carbon::now;
+                $archivo_tecnico = new GarantiaInformeTecnicoArchivos;
+
+                $archivo_tecnico->id_informe_tecnico = $garantia_informe_tecnico->id;
+                // $orden_servicio=$request->get('orden_servicio');
+                $archivo_tecnico->archivos = $files->getClientOriginalName().'_'.$carbon;
+                $archivo_tecnico->save();
+            }
+            foreach($archivo as $data){
+                $carbon = Carbon::now;
+                $name = $data->getClientOriginalName().'_'.$carbon;
+                $orden_servicio=$request->get('orden_servicio');
+                $data->move(public_path().'/imagenes/'.$orden_servicio,$name);
+            }
+
+        }
+        // foreach(){
+
+        // }
+
         return redirect()->route('garantia_informe_tecnico.index');
     }
+
+
+
+}
 
     /**
      * Display the specified resource.
@@ -324,7 +284,7 @@ class GarantiaInformeTecnicoController extends Controller
     //     return $pdf->download();
         return $pdf->download('Guia Informe Tecnico - '.$archivo.' .pdf');
 
-}
+    }
 
 
 }
