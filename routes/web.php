@@ -93,12 +93,12 @@ Route::group(
 		Route::get('/facturacion/create_ms','FacturacionController@create_ms')->name('facturacion.create_ms');
 		// Route::post('/facturacion/store/{id}','FacturacionController@store')->name('facturacion.store');
 		Route::resource('/facturacion','FacturacionController')->except(['store']);
-		Route::put('/facturacion/store/{id_moneda}','FacturacionController@store')->name('facturacion.store');
+		Route::put('/facturacion/store/{id_moneda}/{num}','FacturacionController@store')->name('facturacion.store');
 
 		Route::get('/boleta/create_ms','BoletaController@create_ms')->name('boleta.create_ms');
 		Route::get('/boleta/print/{id}','BoletaController@print')->name('boleta.print');
 		Route::resource('/boleta','BoletaController')->except(['store']);
-		Route::put('/boleta/store/{id_moneda}','BoletaController@store')->name('boleta.store');
+		Route::put('/boleta/store/{id_moneda}/{num}','BoletaController@store')->name('boleta.store');
 
 		/*Guia Remision*/
 		//para guia agregar el store en create_moneda secundaria enviando este una acptacion de 2 variables put en store para la identificaion de la moneda principal o secundaria

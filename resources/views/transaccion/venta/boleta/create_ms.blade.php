@@ -206,7 +206,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('boleta.store',$moneda->id)}}" enctype="multipart/form-data" method="post">
+                    <form action="{{route('boleta.store',[$moneda->id,$boleta_numero])}}" enctype="multipart/form-data" method="post">
                         @csrf
                          @method('put')
 

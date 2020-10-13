@@ -190,7 +190,7 @@ class FacturacionController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id_moneda)
+    public function store(Request $request,$id_moneda,$num)
     {
         $facturacion_input=$request->get('facturacion');
 
@@ -295,9 +295,7 @@ class FacturacionController extends Controller
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        $fac= Facturacion::all()->count();
-        $suma=$fac+1;
-        $cod_fac='FC-000'.$suma;
+        
 
         //buscador al cambio
         $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
@@ -306,7 +304,7 @@ class FacturacionController extends Controller
         }
 
         $facturacion=new facturacion;
-        $facturacion->codigo_fac=$cod_fac;
+        $facturacion->codigo_fac=$num;
         $facturacion->orden_compra=$request->get('orden_compra');
         $facturacion->guia_remision=$request->get('guia_r');
         $facturacion->cliente_id=$cliente_buscador->id;
@@ -352,7 +350,7 @@ class FacturacionController extends Controller
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $facturacion_registro->stock=$stock;
-                //promedio original --------------------------------------------------------
+                //promedio original ojo revisar que es precio nacional --------------------------------------------------------
                 $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
                 $facturacion_registro->promedio_original=$array2;
                 //precio --------------------------------------------------------

@@ -184,7 +184,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('facturacion.store',$moneda->id)}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('facturacion.store',[$moneda->id,$factura_numero])}}"  enctype="multipart/form-data" method="post">
                         @csrf
                         @method('put')
                         {{-- Cabecera --}}
