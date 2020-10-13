@@ -226,7 +226,7 @@
                                     <center>
                                         <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
                                         <h2>BOLETA ELECTRONICA</h2>
-                                        <h5>{{$factura_numero}}</h5>
+                                        <h5>{{$boleta_numero}}</h5>
                                     </center>
 
                                 </div>

@@ -66,7 +66,8 @@ class BoletaController extends Controller
         }else{
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-                $igv_p[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*$igv->igv_total;
+                $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*($igv->igv_total/100);
+                
                 $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]+$igv_p[$index];
                 $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
                 $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
@@ -82,36 +83,35 @@ class BoletaController extends Controller
 
 
         $empresa=Empresa::first();
-        $boleta_contador= Boleta::all()->count();
-        $suma=$boleta_contador+1;
+        
 
         // obtencion de la sucursal
         $sucursal=auth()->user()->almacen->codigo_sunat;
         //obtencion del almacen
-        $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
-        $factura_cod_fac=$factura_primera->cod_fac;
-        if (is_numeric($factura_cod_fac)) {
+        $boleta_primera=Almacen::where('codigo_sunat', $sucursal)->first();
+        $boleta_cod_fac=$boleta_primera->cod_bol;
+        if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
-            $factura_cod_fac++;
+            $boleta_cod_fac++;
             $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
-            // exprecion del numero de fatura
-            // GENERACION DE NUMERO DE FACTURA
-            $ultima_factura=Facturacion::latest()->first();
-            $factura_num=$ultima_factura->codigo_fac;
-            $factura_num_string_porcion= explode("-", $factura_num);
-            $factura_num_string=$factura_num_string_porcion[1];
-            $factura_num=(int)$factura_num_string;
-            $factura_num++;
+            // exprecion del numero de boleta
+            // GENERACION DE NUMERO DE BOLETA
+            $ultima_boleta=Boleta::latest()->first();
+            $boleta_num=$ultima_boleta->codigo_boleta;
+            $boleta_num_string_porcion= explode("-", $boleta_num);
+            $boleta_num_string=$boleta_num_string_porcion[1];
+            $boleta_num=(int)$boleta_num_string;
+            $boleta_num++;
 
             $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
 
-        $factura_numero="F".$sucursal_nr."-".$factura_nr;
+        $boleta_numero="F".$sucursal_nr."-".$boleta_nr;
 
-        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','boleta_codigo','factura_numero'));
+        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_codigo','boleta_numero'));
 
     }
 
@@ -119,28 +119,64 @@ class BoletaController extends Controller
     {
 
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-
+        $moneda=Moneda::where('principal','0')->first();
+        $igv=Igv::first();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
-        foreach ($productos as $index => $producto) {
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
-            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
+        if ($moneda->tipo == 'extranjera') {
+            foreach ($productos as $index => $producto) {
+                $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])*($igv->igv_total/100);
+                
+                $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]+$igv_p[$index])/$tipo_cambio->paralelo;
+                $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+                $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+            }
+        }else{
+            foreach ($productos as $index => $producto) {
+                $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*($igv->igv_total/100);
+                
+                $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]+$igv_p[$index])*$tipo_cambio->paralelo;
+                $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+                $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
+            }
         }
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        $moneda=Moneda::where('principal','0')->first();
+        
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
-        $igv=Igv::first();
+        
 
         $empresa=Empresa::first();
-        $boleta_contador= Boleta::all()->count();
-        $suma=$boleta_contador+1;
-        $boleta_codigo='BO-0000'.$suma;
+        // obtencion de la sucursal
+        $sucursal=auth()->user()->almacen->codigo_sunat;
+        //obtencion del almacen
+        $boleta_primera=Almacen::where('codigo_sunat', $sucursal)->first();
+        $boleta_cod_fac=$boleta_primera->cod_bol;
+        if (is_numeric($boleta_cod_fac)) {
+            // exprecion del numero de fatura
+            $boleta_cod_fac++;
+            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
+        }else{
+            // exprecion del numero de boleta
+            // GENERACION DE NUMERO DE BOLETA
+            $ultima_boleta=Boleta::latest()->first();
+            $boleta_num=$ultima_boleta->codigo_boleta;
+            $boleta_num_string_porcion= explode("-", $boleta_num);
+            $boleta_num_string=$boleta_num_string_porcion[1];
+            $boleta_num=(int)$boleta_num_string;
+            $boleta_num++;
 
-        return view('transaccion.venta.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','boleta_codigo'));
+            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
+        }
+
+        $boleta_numero="F".$sucursal_nr."-".$boleta_nr;
+
+        return view('transaccion.venta.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_numero'));
 
     }
 
