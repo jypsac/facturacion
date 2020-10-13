@@ -41,7 +41,6 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsTableSeeder::class);
         $this->call(ServicioSeeder::class);
         $this->call(ConfigFacturacionElectronicaSeeder::class);
-
-
+        $this->call(MotivoTrasladoSeeder::class);
     }
 }
