@@ -49,7 +49,7 @@
                                 <center>
                                     <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
                                     <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>
-                                    <h5> </h5>
+                                    <h5>{{$codigo_guia}} </h5>
                                 </center>
 
                             </div>
@@ -96,7 +96,7 @@
                                </div>
                                <label class="col-sm-1">Conductor:</label>
                                <div class="col-sm-5">
-                                   <input type="conductor" name="conductor" class="form-control"  value="0" >
+                                   <input type="text" name="conductor" class="form-control"  value="0" >
                                </div>
                            </div>
                        </div>
@@ -104,16 +104,15 @@
                             <div class="row">
                                 <label class="col-sm-1">Motivo Traslado:</label>
                                 <div class="col-sm-5">
-                                   <input list="browsersc" class="form-control m-b" name="vehiculo" autocomplete="off">
-                                    <datalist id="browsersc" >
+                                    <select name="motivo_traslado"  class="form-control m-b">
                                         @foreach($motivo_traslado as $motivo_traslad)
                                         <option id="{{$motivo_traslad->id}}">{{$motivo_traslad->nombre}}</option>
                                         @endforeach
-                                    </datalist>
+                                    </select>
                                </div>
-                               <label class="col-sm-1">Conductor:</label>
+                               <label class="col-sm-1">Observaciones:</label>
                                <div class="col-sm-5">
-                                   <input type="conductor" name="conductor" class="form-control"  value="0" >
+                                   <textarea name="observaciones" class="form-control"   ></textarea>
                                </div>
                            </div>
                        </div>

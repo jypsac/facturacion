@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Almacen;
 use App\Banco;
 use App\Cliente;
 use App\Cotizacion;
@@ -27,7 +28,10 @@ class GuiaRemisionController extends Controller
     public function index()
     {
         $guia_remision=Guia_remision::all();
-        return view('transaccion.venta.guia_remision.index',compact('guia_remision'));
+        $almacen=Almacen::where('estado',0)->get();
+        $almacen_primero=Almacen::where('estado',0)->first();
+        $conteo_almacen=Almacen::where('estado',0)->count();
+        return view('transaccion.venta.guia_remision.index',compact('guia_remision','almacen','conteo_almacen','almacen_primero'));
 
     }
 
@@ -36,8 +40,27 @@ class GuiaRemisionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+        /*Codigo*/
+        //Guardado de almacen para inventario-inicial
+          $almacen=$request->get('almacen');
+        $id_almacen=Almacen::where('id',$almacen)->first();
+        $almacen_codigo_sunat=$id_almacen->codigo_sunat;/*Codigo que brinda sunat a cada sucursal*/
+        if ($id_almacen->cod_guia=='NN') {
+            $agrupar_almacen=Guia_remision::where('almacen_id',$almacen)->get()->last();
+            $numero = substr(strstr($agrupar_almacen->cod_guia, '-'), 1);
+            $numero++;
+        }
+        else{
+            $numero=$id_almacen->cod_guia+1;
+        }
+        $cantidad_sucursal=str_pad($almacen_codigo_sunat, 3, "0", STR_PAD_LEFT);
+        $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
+        $codigo_guia='GR'.$cantidad_sucursal.'-'.$cantidad_registro;
+
+        /* Fin de Codigo*/
+
 
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         foreach ($productos as $index => $producto) {
@@ -52,7 +75,7 @@ class GuiaRemisionController extends Controller
         $vehiculo=Vehiculo::where('estado_activo',0)->get();
         $empresa=Empresa::first();
         $igv=Igv::first();
-        return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo','motivo_traslado'));
+        return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo','motivo_traslado','codigo_guia'));
     }
 
 

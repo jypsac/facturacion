@@ -3,8 +3,8 @@
 @section('title', 'Guia Remision/Cotizaciones Aprobadas')
 @section('breadcrumb', 'Guia Remision/Cotizaciones Aprobadas')
 @section('breadcrumb2', 'Guia Remision/Cotizaciones Aprobadas')
-@section('href_accion', route('guia_remision.create'))
-@section('value_accion', 'Agregar Nuevo')
+@section('href_accion', route('guia_remision.index'))
+@section('value_accion', 'Atras')
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">

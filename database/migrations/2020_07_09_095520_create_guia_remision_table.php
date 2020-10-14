@@ -21,7 +21,7 @@ class CreateGuiaRemisionTable extends Migration
             $table->foreign('cotizador_id')->references('id')->on('cotizacion')->onDelete('cascade');
 
             $table->unsignedBigInteger('almacen_id');
-            $table->foreign('almacen_id')->references('id')->on('facturacion')->onDelete('cascade');
+            $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
 
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');

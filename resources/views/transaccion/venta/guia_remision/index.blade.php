@@ -3,13 +3,60 @@
 @section('title', 'Guia Remision')
 @section('breadcrumb', 'Guia Remision')
 @section('breadcrumb2', 'Guia Remision')
-@section('href_accion', route('guia_remision.seleccionar'))
+@section('data-toggle', 'modal')
+@section('href_accion', '#modal-form')
 @section('value_accion', 'Agregar')
 
 @section('content')
+<!-- modal -->
+<div class="row">
+    <div class="col-lg-12">
+        <div id="modal-form" class="modal fade" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row" align="center">
+                            <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Crear Guia Remision</h3>
+                            </div>
+                            <div class="col-sm-6">
+                                <a href="{{route('guia_remision.seleccionar') }}"><button class="btn btn-sm btn-info" type="submit"><strong>Ver Aprobadas</strong></button></a>
+                            </div>
+                            <div class="col-sm-6">
+                                @if($conteo_almacen==1)
+                                <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
+                                    @csrf
+                                    <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
+                                    <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
+                                </form>
+                                @else
+                                <div class="dropdown">
+                                  <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                     Crear una Nueva Guia
+                                 </button>
+                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <form action="{{ route('guia_remision.create')}}"enctype="multipart/form-data" >
+
+                                        @csrf
+                                        @foreach($almacen as $almacens)
+
+                                        <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
+                                        @endforeach
+                                    </form>
+                                </div>
+                            </div>
+                            @endif
+                            {{--  <a href="{{ route('guia_remision.create')}}"><button class="btn btn-sm btn-info" type="submit"><strong>Crear una nueva Guia</strong></button></a> --}}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+{{-- fimodal --}}
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
-
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">
