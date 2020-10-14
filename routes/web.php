@@ -39,6 +39,8 @@ Route::group(
 
 		// Route::get('cotizacion/fast_print', 'CotizacionController@fast_print')->name('cotizacion.fast_print');
 		Route::get('/cotizacion/create_factura' , 'CotizacionController@create_factura')->name('cotizacion.create_factura');
+		Route::get('/cotizacion/create_factura_ms' , 'CotizacionController@create_factura_ms')->name('cotizacion.create_factura_ms');
+
 		Route::post('/cotizacion/store_factura','CotizacionController@store_factura')->name('cotizacion.store_factura');
 		Route::get('/cotizacion/print_cotizacion/{id}' , 'CotizacionController@print')->name('cotizacion.print');
 		Route::get('/cotizacion/facturar/{id}' , 'CotizacionController@facturar')->name('cotizacion.facturar');
@@ -48,6 +50,7 @@ Route::group(
 		Route::get('/cotizacion/print_cotizacion_servicio/{id}' , 'CotizacionServiciosController@print')->name('cotizacion_servicio.print');
 
 		Route::resource('/cotizacion','CotizacionController');
+		// Route::put('/cotizacion/store/{id_moneda}','CotizacionController@store')->name('cotizacion.store');
 		Route::resource('/empresa/banco','BancoController'); //Banco
 
 //COTIZACIOBNES SERVICIO
@@ -63,8 +66,9 @@ Route::group(
 		Route::get('/cotizacion_servicio/boletear/{id}' , 'CotizacionServiciosController@boletear')->name('cotizacion_servicio.boletear');
 		Route::post('/cotizacion_servicio/boletear_store' , 'CotizacionServiciosController@boletear_store')->name('cotizacion_servicio.boletear_store');
 
-		Route::resource('/cotizacion_servicio','CotizacionServiciosController');
-
+		Route::resource('/cotizacion_servicio','CotizacionServiciosController')->except(['store']);
+		Route::put('/cotizacion_servicio/store/{id_moneda}','CotizacionServiciosController@store')->name('cotizacion.store');
+		
 //FACTURACION SERVICIOS
 		Route::resource('/facturacion_servicio','FacturacionServicioController');
 
