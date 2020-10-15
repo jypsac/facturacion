@@ -27,11 +27,12 @@ class GuiaRemisionController extends Controller
      */
     public function index()
     {
-        $guia_remision=Guia_remision::all();
-        $almacen=Almacen::where('estado',0)->get();
-        $almacen_primero=Almacen::where('estado',0)->first();
-        $conteo_almacen=Almacen::where('estado',0)->count();
-        return view('transaccion.venta.guia_remision.index',compact('guia_remision','almacen','conteo_almacen','almacen_primero'));
+      $user_login =auth()->user();
+      $guia_remision=Guia_remision::all();
+      $almacen=Almacen::where('estado',0)->get();
+      $almacen_primero=Almacen::where('estado',0)->first();
+      $conteo_almacen=Almacen::where('estado',0)->count();
+      return view('transaccion.venta.guia_remision.index',compact('guia_remision','almacen','conteo_almacen','almacen_primero','user_login'));
 
     }
 
@@ -42,40 +43,40 @@ class GuiaRemisionController extends Controller
      */
     public function create(Request $request)
     {
-        /*Codigo*/
+      /*Codigo*/
         //Guardado de almacen para inventario-inicial
-          $almacen=$request->get('almacen');
-        $id_almacen=Almacen::where('id',$almacen)->first();
-        $almacen_codigo_sunat=$id_almacen->codigo_sunat;/*Codigo que brinda sunat a cada sucursal*/
-        if ($id_almacen->cod_guia=='NN') {
-            $agrupar_almacen=Guia_remision::where('almacen_id',$almacen)->get()->last();
-            $numero = substr(strstr($agrupar_almacen->cod_guia, '-'), 1);
-            $numero++;
-        }
-        else{
-            $numero=$id_almacen->cod_guia+1;
-        }
-        $cantidad_sucursal=str_pad($almacen_codigo_sunat, 3, "0", STR_PAD_LEFT);
-        $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
-        $codigo_guia='GR'.$cantidad_sucursal.'-'.$cantidad_registro;
+      $almacen=$request->get('almacen');
+      $id_almacen=Almacen::where('id',$almacen)->first();
+      $almacen_codigo_sunat=$id_almacen->codigo_sunat;/*Codigo que brinda sunat a cada sucursal*/
+      if ($id_almacen->cod_guia=='NN') {
+        $agrupar_almacen=Guia_remision::where('almacen_id',$almacen)->get()->last();
+        $numero = substr(strstr($agrupar_almacen->cod_guia, '-'), 1);
+        $numero++;
+      }
+      else{
+        $numero=$id_almacen->cod_guia+1;
+      }
+      $cantidad_sucursal=str_pad($almacen_codigo_sunat, 3, "0", STR_PAD_LEFT);
+      $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
+      $codigo_guia='GR'.$cantidad_sucursal.'-'.$cantidad_registro;
 
-        /* Fin de Codigo*/
+      /* Fin de Codigo*/
 
 
-        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-        foreach ($productos as $index => $producto) {
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
-            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
-        }
+      $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+      foreach ($productos as $index => $producto) {
+        $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+        $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
+        $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+        $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+      }
 
-        $clientes=Cliente::all();
-        $motivo_traslado=MotivoTraslado::all();
-        $vehiculo=Vehiculo::where('estado_activo',0)->get();
-        $empresa=Empresa::first();
-        $igv=Igv::first();
-        return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo','motivo_traslado','codigo_guia'));
+      $clientes=Cliente::all();
+      $motivo_traslado=MotivoTraslado::all();
+      $vehiculo=Vehiculo::where('estado_activo',0)->get();
+      $empresa=Empresa::first();
+      $igv=Igv::first();
+      return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo','motivo_traslado','codigo_guia'));
     }
 
 
@@ -88,18 +89,37 @@ class GuiaRemisionController extends Controller
      */
     public function store(Request $request)
     {
+      /*Codigo*/
+        //Guardado de almacen para inventario-inicial
+      $almacen=$request->get('almacen');
+      $id_almacen=Almacen::where('id',$almacen)->first();
+      $almacen_codigo_sunat=$id_almacen->codigo_sunat;/*Codigo que brinda sunat a cada sucursal*/
+      if ($id_almacen->cod_guia=='NN') {
+        $agrupar_almacen=Guia_remision::where('almacen_id',$almacen)->get()->last();
+        $numero = substr(strstr($agrupar_almacen->cod_guia, '-'), 1);
+        $numero++;
+      }
+      else{
+        $numero=$id_almacen->cod_guia+1;
+      }
+      $cantidad_sucursal=str_pad($almacen_codigo_sunat, 3, "0", STR_PAD_LEFT);
+      $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
+      $codigo_guia='GR'.$cantidad_sucursal.'-'.$cantidad_registro;
+
+      /* Fin de Codigo*/
+
              //id del cliente de create_2
-        $id_cliente=$request->get('cliente_id');
-        $id_cotizacion=$request->get('id');
+      $id_cliente=$request->get('cliente_id');
+      $id_cotizacion=$request->get('id');
             //Buscador Cliente
-        if (isset($id_cliente)) {
-           $cliente_id=$request->get('cliente_id');
-       }
-       else{
-        $cliente_nombre=$request->get('cliente');
-        $nombre = strstr($cliente_nombre, '-',true);
-        $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
-        $cliente_id=$cliente_buscador->id;
+      if (isset($id_cliente)) {
+       $cliente_id=$request->get('cliente_id');
+     }
+     else{
+      $cliente_nombre=$request->get('cliente');
+      $nombre = strstr($cliente_nombre, '-',true);
+      $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
+      $cliente_id=$cliente_buscador->id;
     }
             //buscador Vehiculo
     $vehiculo_nombre=$request->get('vehiculo');
@@ -108,7 +128,7 @@ class GuiaRemisionController extends Controller
     $vehiculo_id=$vehiculo_buscador->id;
 
     $guia_remision=new Guia_remision;
-    $guia_remision->cod_guia='001';
+    $guia_remision->cod_guia=$codigo_guia;
     $guia_remision->cliente_id=$cliente_id;
     $guia_remision->fecha_emision=$request->get('fecha_emision');
     $guia_remision->fecha_entrega=$request->get('fecha_entrega');
@@ -120,9 +140,9 @@ class GuiaRemisionController extends Controller
     $guia_remision->save();
 
     if (isset($id_cliente)) {
-        $cotizacion_estado_aprobado=Cotizacion::find($id_cotizacion);
-        $cotizacion_estado_aprobado->estado_aprobado='1';
-        $cotizacion_estado_aprobado->save();
+      $cotizacion_estado_aprobado=Cotizacion::find($id_cotizacion);
+      $cotizacion_estado_aprobado->estado_aprobado='1';
+      $cotizacion_estado_aprobado->save();
     }
 
     //registro de productos de la tabla guia de remision
@@ -142,29 +162,29 @@ class GuiaRemisionController extends Controller
     $count_peso=count($peso);
 
     for($i=0 ; $i<$count_articulo;$i++){
-        $articulos[$i]= $request->input('articulo')[$i];
-        $producto_id[$i]=strstr($articulos[$i], ' ', true);
+      $articulos[$i]= $request->input('articulo')[$i];
+      $producto_id[$i]=strstr($articulos[$i], ' ', true);
     }
 
     if($count_articulo = $count_stock  = $count_cantidad = $count_series = $count_peso){
-        for($i=0;$i<$count_articulo;$i++){
-            $guia_remision_registro=new g_remision_registro;
-            $guia_remision_registro->producto_id=$producto_id[$i];
-            $guia_remision_registro->cantidad=$request->get('cantidad')[$i];
-            $guia_remision_registro->numero_serie=$request->get('series')[$i];
-            $guia_remision_registro->guia_remision_id=$guia_remision->id;
-            $guia_remision_registro->estado=1;
-            $guia_remision_registro->peso=$request->get('peso')[$i];
-            $guia_remision_registro->save();
-        }
+      for($i=0;$i<$count_articulo;$i++){
+        $guia_remision_registro=new g_remision_registro;
+        $guia_remision_registro->producto_id=$producto_id[$i];
+        $guia_remision_registro->cantidad=$request->get('cantidad')[$i];
+        $guia_remision_registro->numero_serie=$request->get('series')[$i];
+        $guia_remision_registro->guia_remision_id=$guia_remision->id;
+        $guia_remision_registro->estado=1;
+        $guia_remision_registro->peso=$request->get('peso')[$i];
+        $guia_remision_registro->save();
+      }
     }else{
-        return "campos no completados";
+      return "campos no completados";
     }
 
 
     return redirect()->route('guia_remision.show',$guia_remision->id);
 
-}
+  }
 
     /**
      * Display the specified resource.
@@ -173,22 +193,22 @@ class GuiaRemisionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function print($id){
-        $guia_remision=Guia_remision::find($id);
-        $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
-        $banco=Banco::where('estado','0')->get();
-        $empresa=Empresa::first();
+      $guia_remision=Guia_remision::find($id);
+      $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
+      $banco=Banco::where('estado','0')->get();
+      $empresa=Empresa::first();
 
-        return view('transaccion.venta.guia_remision.print',compact('empresa','banco','guia_remision','guia_registro'));
+      return view('transaccion.venta.guia_remision.print',compact('empresa','banco','guia_remision','guia_registro'));
     }
 
     public function show($id)
     {
-        $guia_remision=Guia_remision::find($id);
-        $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
-        $banco=Banco::where('estado','0')->get();
-        $empresa=Empresa::first();
+      $guia_remision=Guia_remision::find($id);
+      $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
+      $banco=Banco::where('estado','0')->get();
+      $empresa=Empresa::first();
 
-        return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision','guia_registro'));
+      return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision','guia_registro'));
     }
 
     /**
@@ -200,7 +220,7 @@ class GuiaRemisionController extends Controller
     public function edit($id)
     {
       return view('transaccion.venta.guia_remision.edit');
-  }
+    }
 
     /**
      * Update the specified resource in storage.
@@ -225,36 +245,36 @@ class GuiaRemisionController extends Controller
       $guia_remision->estado_anulado='1';
       $guia_remision->save();
       return redirect()->route('guia_remision.index');
-  }
+    }
 
-  public function seleccionar()
-  {
-    $activos=Cotizacion::where('estado_aprovar','1')->get();
+    public function seleccionar()
+    {
+      $activos=Cotizacion::where('estado_aprovar','1')->get();
 
-    return view('transaccion.venta.guia_remision.selecionar_cotizacion',compact('activos'));
+      return view('transaccion.venta.guia_remision.selecionar_cotizacion',compact('activos'));
 
-}
-public function cotizacion($id)
-{
+    }
+    public function cotizacion($id)
+    {
 
-    $cotizacion=Cotizacion::find($id);
-    $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
-    $cotizacion_registro_boleta=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+      $cotizacion=Cotizacion::find($id);
+      $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+      $cotizacion_registro_boleta=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
 
-    $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-    foreach ($productos as $index => $producto) {
+      $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+      foreach ($productos as $index => $producto) {
         $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
         $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index];
         $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
         $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio');
+      }
+
+      $clientes=Cliente::all();
+      $vehiculo=Vehiculo::where('estado_activo',0)->get();
+      $empresa=Empresa::first();
+      $igv=Igv::first();
+      return view('transaccion.venta.guia_remision.create_2',compact('cotizacion','productos','clientes','array','array_cantidad','igv','array_promedio','empresa','cotizacion_registro','vehiculo','cotizacion_registro_boleta'));
     }
 
-    $clientes=Cliente::all();
-    $vehiculo=Vehiculo::where('estado_activo',0)->get();
-    $empresa=Empresa::first();
-    $igv=Igv::first();
-    return view('transaccion.venta.guia_remision.create_2',compact('cotizacion','productos','clientes','array','array_cantidad','igv','array_promedio','empresa','cotizacion_registro','vehiculo','cotizacion_registro_boleta'));
-}
 
-
-}
+  }

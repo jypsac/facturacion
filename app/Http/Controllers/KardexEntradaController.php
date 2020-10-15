@@ -120,11 +120,9 @@ class KardexEntradaController extends Controller
         $articulos[$i]= $request->input('articulo')[$i];
         $producto_id[$i]=strstr($articulos[$i], ' ', true);
       }
-
         //contador de valores de articulos
       $articulo = $request->input('articulo');
       $count_articulo=count($articulo);
-
         //validacion para la no incersion de dobles articulos
       for ($e=0; $e < $count_articulo; $e++){
         $articulo_comparacion_inicial=$request->get('articulo')[$e];
@@ -140,7 +138,6 @@ class KardexEntradaController extends Controller
 
         }
       }
-
         //buscador al cambio
       $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
       if(!$cambio){
@@ -153,12 +150,19 @@ class KardexEntradaController extends Controller
       $almacen_codigo_sunat=$almacen_id_buscador->codigo_sunat;/*Codigo que brinda sunat a cada sucursal*/
 
       $agrupar_almacen=Kardex_entrada::where('almacen_id',$almacen)->get()->last();
-      $numero = substr(strstr($agrupar_almacen->codigo_guia, '-'), 1);
-      $numero++;
+      if (isset($agrupar_almacen)) {
+        $numero = substr(strstr($agrupar_almacen->codigo_guia, '-'), 1);
+        $numero++;
 
-      $cantidad_sucursal=str_pad($almacen_codigo_sunat, 3, "0", STR_PAD_LEFT);
-      $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
-      $codigo_guia='GE'.$cantidad_sucursal.'-'.$cantidad_registro;
+        $cantidad_sucursal=str_pad($almacen_codigo_sunat, 3, "0", STR_PAD_LEFT);
+        $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
+        $codigo_guia='GE'.$cantidad_sucursal.'-'.$cantidad_registro;
+      }
+      else{
+        $cantidad_sucursal=str_pad($almacen_codigo_sunat, 3, "0", STR_PAD_LEFT);
+        $cantidad_registro=str_pad('1', 8, "0", STR_PAD_LEFT);
+        $codigo_guia='GE'.$cantidad_sucursal.'-'.$cantidad_registro;
+      }
 
        //Kardex Entrada Guardado
       $kardex_entrada=new Kardex_entrada();
