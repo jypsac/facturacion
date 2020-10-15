@@ -76,7 +76,7 @@ class GuiaRemisionController extends Controller
       $vehiculo=Vehiculo::where('estado_activo',0)->get();
       $empresa=Empresa::first();
       $igv=Igv::first();
-      return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo','motivo_traslado','codigo_guia'));
+      return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo','motivo_traslado','codigo_guia','almacen'));
     }
 
 
@@ -130,14 +130,21 @@ class GuiaRemisionController extends Controller
     $guia_remision=new Guia_remision;
     $guia_remision->cod_guia=$codigo_guia;
     $guia_remision->cliente_id=$cliente_id;
+    $guia_remision->almacen_id=$id_almacen->id;
     $guia_remision->fecha_emision=$request->get('fecha_emision');
     $guia_remision->fecha_entrega=$request->get('fecha_entrega');
     $guia_remision->vehiculo_id=$vehiculo_id;
     $guia_remision->conductor_id=$request->get('conductor');
+    $guia_remision->motivo_traslado=$request->get('motivo_traslado');
+    $guia_remision->observacion=$request->get('observacion');
     $guia_remision->estado_anulado='0';
     $guia_remision->estado_registrado='0';
     $guia_remision->user_id=auth()->user()->id;
     $guia_remision->save();
+
+    $almacen=Almacen::find($id_almacen->id);
+    $almacen->cod_guia='NN';
+    $almacen->save();
 
     if (isset($id_cliente)) {
       $cotizacion_estado_aprobado=Cotizacion::find($id_cotizacion);

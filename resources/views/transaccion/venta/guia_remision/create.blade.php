@@ -49,7 +49,7 @@
                                 <center>
                                     <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
                                     <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>
-                                    <h5>{{$codigo_guia}} </h5>
+                                    <h5>{{$codigo_guia}} <input type="text" name="almacen" value="{{$almacen}}" hidden="hidden"> </h5>
                                 </center>
 
                             </div>
@@ -106,13 +106,14 @@
                                 <div class="col-sm-5">
                                     <select name="motivo_traslado"  class="form-control m-b">
                                         @foreach($motivo_traslado as $motivo_traslad)
+
                                         <option id="{{$motivo_traslad->id}}">{{$motivo_traslad->nombre}}</option>
                                         @endforeach
                                     </select>
                                </div>
                                <label class="col-sm-1">Observaciones:</label>
                                <div class="col-sm-5">
-                                   <textarea name="observaciones" class="form-control"   ></textarea>
+                                   <textarea name="observacion" class="form-control"   ></textarea>
                                </div>
                            </div>
                        </div>
