@@ -185,7 +185,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('cotizacion.store',$moneda->id)}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('cotizacion.store_factura',$moneda->id)}}"  enctype="multipart/form-data" method="post">
                         @csrf
                         @method('put')
                         {{-- Cabecera --}}
@@ -220,6 +220,7 @@
                                                 @endforeach
                                             </datalist>
                                     </td>
+                                    <input type="hidden" value="0" name="print" id="prints">
                                     <td>Comisionista</td>
                                     <td>:</td>
                                     <td>
@@ -233,11 +234,6 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Orden de compra</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" class="form-control m-b" name="orden_compra" required  autocomplete="off" value="0">
-                                    </td>
                                     <td>Forma de pago</td>
                                     <td>:</td>
                                     <td>
@@ -247,6 +243,15 @@
                                             @endforeach
                                         <select>
                                     </td>
+                                    <td>Validez</td>
+                                    <td>:</td>
+                                    <td><select  class="form-control" name="validez" required="required">
+                                        <option value="5 Días">5 Días</option>
+                                        <option value="4 Días">4 Días</option>
+                                        <option value="3 Días">3 Días</option>
+                                        <option value="2 Días">2 Días</option>
+                                        <option value="1 Día">1 Día</option>
+                                    </select></td>
                                 </tr>
                                 <tr>
                                     <td>Vendedor</td>
@@ -254,10 +259,16 @@
                                     <td>
                                         <input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}">
                                     </td>
-                                    <td>Guia remision</td>
+                                    <td>Garantia</td>
                                     <td>:</td>
-                                    <td><input type="text" class="form-control" value="0" name="guia_r"></td>
+                                    <td><select class="form-control" name="garantia">
+                                        <option value="1 año">1 Año</option>
+                                        <option value="2 años">2 Años</option>
+                                        <option value="3 años">3 Años</option>
+                                        <option value="6 meses">6 Meses</option>
+                                    </select></td>
                                 </tr>
+
                                 <tr>
                                     <td>Moneda</td>
                                     <td>:</td>
@@ -268,7 +279,7 @@
 
 
                                     </td>
-                                    <td>Fecha</td>
+                                    <td>Fecha de cotizacion</td>
                                     <td>:</td>
                                     <td>
                                         <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
