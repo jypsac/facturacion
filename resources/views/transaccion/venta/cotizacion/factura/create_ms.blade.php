@@ -46,10 +46,10 @@
     @endif
 
 <div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1">
-        <i class="fa fa-user-o" aria-hidden="true"></i>
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i>
         <span>cliente</span>
     </a>
+    <a href="{{route('cotizacion.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Boleta</span></a>
 </div>
 
 
@@ -201,7 +201,7 @@
                                     <center>
                                         <h3 style="padding-top:10px">{{$empresa->ruc}}</h3>
                                         <h2>Cotizacion Factura</h2>
-                                        <h5>{{$factura_numero}}</h5>
+                                        <h5>{{$cotizacion_numero}}</h5>
                                     </center>
                                 </div>
                             </div>
