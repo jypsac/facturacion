@@ -150,46 +150,47 @@
               <h3>Imagenes</h3>
                {{-- <input  type="file" name="files[]" id="files"  multiple="" value=" "  accept="image/jpeg/svg/png/jpg" /> --}}
                <div class="row">
-               	@foreach($garantia_informe_tecnico_archivos as $archivo)
-               	
-               	<div class="col-sm-{{$numero = $archivo->count()}}">
-               		<div class="input-group m-b">
-		               <input type="file" style="position: absolute ;top:0px;left:0px;right:0px;bottom:0px;opacity:0;width: 150px;padding: 15px ;" id="archivoInput{{$archivo->id}}" name="archivos" onchange="return validarExt{{$archivo->id}}()"  />
-			            <span id="visorArchivo{{$archivo->id}}">
+               	@foreach($archivo_informe_tecnico as $archivo)
+                 	<div class="col-sm-2">
+                 		<div class="input-group m-b">
+                      <input type="text" name="original" hidden="hidden" value="{{$archivo->archivos}}"/>
+                      <input type="text" name="id" hidden="hidden" value="{{$archivo->id}}">
 			                <!--Aqui se desplegará el fichero-->
-			                <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 150px;padding: 15px ;">
-			                <input type="text" name="archivos" hidden="hidden" value="{{$archivo->archivos}}">
-			            </span>
-		               	<script type="text/javascript">
-		                function validarExt{{$archivo->id}}()
-		                {
-		                var archivoInput{{$archivo->id}} = document.getElementById('archivoInput{{$archivo->id}}');
-		                var archivoRuta = archivoInput{{$archivo->id}}.value;
-		                var extPermitidas = /(.jpg|.png|.jfif)$/i;
-		                if(!extPermitidas.exec(archivoRuta)){
-		                    alert('Asegurese de haber seleccionado una Imagen');
-		                    archivoInput{{$archivo->id}}.value = '';
-		                    return false;
-		                }
+                       <input type="file" name="nombre{{$archivo->id}}" style="position: absolute ;top:0px;left:0px;right:0px;bottom:0px;opacity:0;width: 200px;padding: 15px ;" id="archivoInput{{$archivo->id}}" onchange="return validarExt{{$archivo->id}}()"/>
+                       <span id="visorArchivo{{$archivo->id}}">
+			                   <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 200px;padding: 15px ;"/> 
+                      </span>
+                     
+			                
+		               	 <script type="text/javascript">
+                      function validarExt{{$archivo->id}}(){
+                        var archivoInput{{$archivo->id}} = document.getElementById('archivoInput{{$archivo->id}}');
+                        var archivoRuta = archivoInput{{$archivo->id}}.value;
+                        var extPermitidas = /(.jpg|.png|.jfif)$/i;
+                        if(!extPermitidas.exec(archivoRuta)){
+                            alert('Asegurese de haber seleccionado una Imagen');
+                            archivoInput{{$archivo->id}}.value = '';
+                            return false;
+                        }
 
-		                else
-		                {
-		                //PRevio del PDF
-		                if (archivoInput{{$archivo->id}}.files && archivoInput{{$archivo->id}}.files[0])
-		                {
-		                    var visor = new FileReader();
-		                    visor.onload = function(e)
-		                    {
-		                        document.getElementById('visorArchivo{{$archivo->id}}').innerHTML =
-		                        '<img name="archivos" src="'+e.target.result+'"width="150px"   />';
-		                    }; 
-		                    visor.readAsDataURL(archivoInput{{$archivo->id}}.files[0]);
-		                }
-		                }
-		                }
-		                </script>
-	                </div>
-                </div>
+                        else
+                        {
+                        //PRevio del PDF
+                          if (archivoInput{{$archivo->id}}.files && archivoInput{{$archivo->id}}.files[0])
+                          {
+                              var visor = new FileReader();
+                              visor.onload = function(e)
+                                {
+                                    document.getElementById('visorArchivo{{$archivo->id}}').innerHTML =
+                                    '<img name="file" src="'+e.target.result+'"  style="width: 200px;padding: 15px ;"  />';
+                                }; 
+                              visor.readAsDataURL(archivoInput{{$archivo->id}}.files[0]);
+                          }
+                        }
+                      }
+                    </script>
+  	                </div>
+                  </div>
                @endforeach
                </div>
                
@@ -233,39 +234,12 @@
      color: black;
 }
 </style>
-<script type="text/javascript">
-$(document).ready(function() {
-     if (window.File && window.FileList && window.FileReader) {
-       $("#files").on("change", function(e) {
-         var files = e.target.files,
-           filesLength = files.length;
-         for (var i = 0; i < filesLength; i++) {
-           var f = files[i]
-           var fileReader = new FileReader();
-           fileReader.onload = (function(e) {
-             var file = e.target;
-             $("<span class=\"pip\">" +
-               "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
-               "<br/><span class=\"remove\">Remove image</span>" +
-               "</span>").insertAfter("#files");
-             $(".remove").click(function(){
-               $(this).parent(".pip").remove();
-             });
-           });
-           fileReader.readAsDataURL(f);
-         }
-       });
-     } else {
-       alert("Your browser doesn't support to File API")
-     }
-});
-</script>
 <style>
 p#texto{
 	text-align: center;
 	color:black;
 }
-input.archivoInput{
+/*input.archivoInput{
 	position:absolute;
 	top:0px;
 	left:60px;
@@ -273,7 +247,7 @@ input.archivoInput{
 	bottom:0px;
  		
 	opacity: 0	;
-}
+}*/
 .form-control{
   margin-bottom: 15px;
 }
