@@ -14,6 +14,9 @@ class AddForeignKeyCotizacionTable extends Migration
     public function up()
     {
         Schema::table('cotizacion', function (Blueprint $table) {
+            $table->unsignedBigInteger('almacen_id');
+            $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
+            
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
 
