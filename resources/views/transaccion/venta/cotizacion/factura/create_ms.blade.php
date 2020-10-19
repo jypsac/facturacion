@@ -158,7 +158,11 @@
         </div>
     </div>
 </div>
-
+<form action="{{ route('cotizacion.create_factura')}}" enctype="multipart/form-data" id="almacen-form" method="POST">>
+    @csrf
+    <input type="text" value="{{$sucursal->id}}" hidden="hidden" name="almacen">
+    <input class="btn btn-sm btn-info" hidden="hidden" type="submit" value="cambiar" >
+</form>
 <!-- Fin Modal Cliente -->
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -275,7 +279,10 @@
                                     <td>
                                         <input type="text" name="moneda" class="form-control" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">
                                         <br>
-                                        <a href="{{route('cotizacion.create_factura')}}"><button type="button" class='addmores btn btn-success'>Cambiar</button></a>
+                                        <a  onclick="event.preventDefault();
+                                            document.getElementById('almacen-form').submit();">
+                                            <button type="button" class='addmores btn btn-success'>Cambiar</button>
+                                        </a>
 
 
                                     </td>
