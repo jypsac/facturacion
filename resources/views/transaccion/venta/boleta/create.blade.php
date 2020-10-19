@@ -167,15 +167,9 @@
                     <input type="email" class="form-control" name="email" class="form-control" required
                     value="{{ old('email')}}" autocomplete="off">
                 </div>
-
-
             </div>
-
-
             <input type="submit" class="btn btn-primary" value="Grabar">
-
         </form>
-
     </div>
 </div>
 </div>

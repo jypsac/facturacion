@@ -75,11 +75,14 @@
     </div>
 </div>
 <style type="text/css">
-    
-/*@import url('https://fonts.googleapis.com/css?family=Numans');*/
+
+/*@import url('https://fonts.googleapis.com/css?family=Numans');
+https://images2.alphacoders.com/361/thumb-1920-36170.jpg
+*/
 
 html,body{
-background-image: url('http://getwallpapers.com/wallpaper/full/a/5/d/544750.jpg');
+background-image: url('https://images2.alphacoders.com/361/thumb-1920-36170.jpg');
+
 background-size: cover;
 background-repeat: no-repeat;
 height: 100%;

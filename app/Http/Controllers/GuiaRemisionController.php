@@ -48,7 +48,7 @@ class GuiaRemisionController extends Controller
       $almacen=$request->get('almacen');
       $id_almacen=Almacen::where('id',$almacen)->first();
       $almacen_codigo_sunat=$id_almacen->codigo_sunat;/*Codigo que brinda sunat a cada sucursal*/
-      if ($id_almacen->cod_guia=='NN') {
+      if ($id_almacen->cod_guia=='NN'){
         $agrupar_almacen=Guia_remision::where('almacen_id',$almacen)->get()->last();
         $numero = substr(strstr($agrupar_almacen->cod_guia, '-'), 1);
         $numero++;

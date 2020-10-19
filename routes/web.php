@@ -39,8 +39,8 @@ Route::group(
 		//factura
 
 		// Route::get('cotizacion/fast_print', 'CotizacionController@fast_print')->name('cotizacion.fast_print');
-		Route::get('/cotizacion/create_factura' , 'CotizacionController@create_factura')->name('cotizacion.create_factura');
-		Route::get('/cotizacion/create_factura_ms' , 'CotizacionController@create_factura_ms')->name('cotizacion.create_factura_ms');
+		Route::post('/cotizacion/create_factura' , 'CotizacionController@create_factura')->name('cotizacion.create_factura');
+		Route::post('/cotizacion/create_factura_ms' , 'CotizacionController@create_factura_ms')->name('cotizacion.create_factura_ms');
 
 		Route::put('/cotizacion/store_factura/{id}','CotizacionController@store_factura')->name('cotizacion.store_factura');
 		Route::get('/cotizacion/print_cotizacion/{id}' , 'CotizacionController@print')->name('cotizacion.print');
