@@ -9,11 +9,10 @@
 @section('content')
 
 	<div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
-    <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> personal</span></a>
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span style="font-size:15px;padding-left:4px"> cliente</span></a>
+    <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span style="font-size:15px;padding-left:4px">personal</span></a>
 
 	</div>
-<style type="text/css">span{font-size:15px;padding-left:4px}</style>
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
@@ -233,7 +232,7 @@
 													  <option>Seleccione</option>
 													   @foreach($paises as $pais)
 														<option value="{{ $pais->nombre }}" >{{ $pais->nombre }}</option>
-													@endforeach 
+													@endforeach
 													</select>
 							                    </div>
 
@@ -353,11 +352,24 @@
 
                       			<label class="col-sm-2 col-form-label">Cliente:</label>
                         		 <div class="col-sm-10">
-                         		<input list="browsersc1" class="form-control m-b" name="cliente_id" required autocomplete="off">
+                         		<input list="browsersc1" class="form-control m-b" name="cliente_id" required autocomplete="off" onkeyup="contacto(this,0)">
 										<datalist id="browsersc1" >
 											@foreach($clientes as $cliente)
-												<option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
+												<option id="{{$cliente->id}}">{{$cliente->numero_documento}}- {{$cliente->nombre}}</option>
 											@endforeach
+										 </datalist>
+                				</div>
+
+						</div>
+						<div class="row">
+
+                      			<label class="col-sm-2 col-form-label">Contacto:</label>
+                        		 <div class="col-sm-10">
+                        		 	<input list="browserscontac" class="form-control m-b" name="contacto_cliente" required   autocomplete="off" id="contacto" >
+                         			<datalist id="browserscontac" >
+											{{-- @foreach($clientes as $cliente) --}}
+												<option id=""></option>
+											{{-- @endforeach --}}
 										 </datalist>
                 				</div>
 
@@ -379,16 +391,25 @@
 		</fieldset>
 
 		<fieldset class="col-sm-6">
-					<legend> Datos del <br> Equipoo </legend>
+					<legend> Datos del <br> Equipo </legend>
 
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
 								<label class="col-sm-2 col-form-label">Modelo:</label>
-                              <div class="col-sm-10"><input type="text" class="form-control" name="nombre_equipo" required></div>
-
+                              <div class="col-sm-10">
+                              	{{-- <input type="text" class="form-control" name="nombre_equipo" required> --}}
+                              	<input name="nombre_equipos" list="browserprod"   class="form-control" autocomplete="off" />
+	                              	<datalist id="browserprod">
+		                              	@foreach($productos as $producto)
+		                              	<option  id="a">{{$producto->id}} - {{$producto->nombre}}</option>
+		                              	@endforeach
+	                              	</datalist>
+                              </div>
                     			<label class="col-sm-2 col-form-label">Nr Serie:</label>
-                              <div class="col-sm-10"><input type="text" class="form-control" name="numero_serie" required></div>
+                              <div class="col-sm-10">
+                              	<input type="text" class="form-control" name="numero_serie" required>
+                              </div>
 							</div>
 
 							<div class="row">
@@ -423,8 +444,6 @@
                   					<textarea class="form-control" rows="5" id="comment" name="descripcion_problema"  maxlength="1230" required></textarea>
                 				</div>
                    			 </div>
-
-
 							</div>
 						</div>
 

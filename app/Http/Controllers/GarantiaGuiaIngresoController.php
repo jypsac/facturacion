@@ -12,6 +12,7 @@ use App\Personal;
 use App\CreateMail;
 use App\Mailbox;
 use App\Pais;
+use App\Producto;
 use Barryvdh\DomPDF\Facade as PDF;
 use DB;
 use Carbon\Carbon;
@@ -61,6 +62,8 @@ class GarantiaGuiaIngresoController extends Controller
       $orden_servicio=$marca.$guion.$marca_cantidad;
       $paises = Pais::all();
 
+      $productos = Producto::all();
+
       $clientes=Cliente::all();
         // $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
       $personales=Personal_datos_laborales::all();
@@ -68,7 +71,7 @@ class GarantiaGuiaIngresoController extends Controller
         // $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
 
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
-      return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales','paises'));
+      return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales','paises','productos'));
     }
 
     /**
@@ -95,6 +98,8 @@ class GarantiaGuiaIngresoController extends Controller
         // $nombre_cliente=$request->get('nombre_cliente');
         // $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
         // $numero_doc=$cliente->numero_documento;
+      $equipo = $request->get('nombre_equipos');
+      $nombre_equipo = substr(strstr($equipo, '-'),1);
 
         //TRAANSFORMNADO CON VALUE DE MARCA A UN ID
       $marca_nombre=$request->get('marca_id');
@@ -108,7 +113,9 @@ class GarantiaGuiaIngresoController extends Controller
       $garantia_guia_ingreso->estado=1;
       $garantia_guia_ingreso->egresado=0;
       $garantia_guia_ingreso->asunto=$request->get('asunto');
-      $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipo');
+
+      $garantia_guia_ingreso->nombre_equipo=$nombre_equipo;
+
       $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
       $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
       $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
