@@ -46,10 +46,10 @@
     @endif
 
 <div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1">
-        <i class="fa fa-user-o" aria-hidden="true"></i>
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i>
         <span>cliente</span>
     </a>
+    <a href="{{route('cotizacion.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Boleta</span></a>
 </div>
 
 
@@ -185,7 +185,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('cotizacion.store',$moneda->id)}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('cotizacion.store_factura',$moneda->id)}}"  enctype="multipart/form-data" method="post">
                         @csrf
                         @method('put')
                         {{-- Cabecera --}}
@@ -201,7 +201,7 @@
                                     <center>
                                         <h3 style="padding-top:10px">{{$empresa->ruc}}</h3>
                                         <h2>Cotizacion Factura</h2>
-                                        <h5>{{$factura_numero}}</h5>
+                                        <h5>{{$cotizacion_numero}}</h5>
                                     </center>
                                 </div>
                             </div>
@@ -220,6 +220,7 @@
                                                 @endforeach
                                             </datalist>
                                     </td>
+                                    <input type="hidden" value="0" name="print" id="prints">
                                     <td>Comisionista</td>
                                     <td>:</td>
                                     <td>
@@ -233,11 +234,6 @@
                                     </td>
                                 </tr>
                                 <tr>
-                                    <td>Orden de compra</td>
-                                    <td>:</td>
-                                    <td>
-                                        <input type="text" class="form-control m-b" name="orden_compra" required  autocomplete="off" value="0">
-                                    </td>
                                     <td>Forma de pago</td>
                                     <td>:</td>
                                     <td>
@@ -247,6 +243,15 @@
                                             @endforeach
                                         <select>
                                     </td>
+                                    <td>Validez</td>
+                                    <td>:</td>
+                                    <td><select  class="form-control" name="validez" required="required">
+                                        <option value="5 Días">5 Días</option>
+                                        <option value="4 Días">4 Días</option>
+                                        <option value="3 Días">3 Días</option>
+                                        <option value="2 Días">2 Días</option>
+                                        <option value="1 Día">1 Día</option>
+                                    </select></td>
                                 </tr>
                                 <tr>
                                     <td>Vendedor</td>
@@ -254,22 +259,27 @@
                                     <td>
                                         <input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}">
                                     </td>
-                                    <td>Guia remision</td>
+                                    <td>Garantia</td>
                                     <td>:</td>
-                                    <td><input type="text" class="form-control" value="0" name="guia_r"></td>
+                                    <td><select class="form-control" name="garantia">
+                                        <option value="1 año">1 Año</option>
+                                        <option value="2 años">2 Años</option>
+                                        <option value="3 años">3 Años</option>
+                                        <option value="6 meses">6 Meses</option>
+                                    </select></td>
                                 </tr>
+
                                 <tr>
                                     <td>Moneda</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" name="moneda" class="form-control" value="Moneda Secundaria {{$moneda->nombre}}" readonly="readonly">
-
+                                        <input type="text" name="moneda" class="form-control" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">
                                         <br>
                                         <a href="{{route('cotizacion.create_factura')}}"><button type="button" class='addmores btn btn-success'>Cambiar</button></a>
 
 
                                     </td>
-                                    <td>Fecha</td>
+                                    <td>Fecha de cotizacion</td>
                                     <td>:</td>
                                     <td>
                                         <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
@@ -288,92 +298,7 @@
                         <div id="resultado_moneda"></div>
 
                         {{--FIn Cabecera --}}
-                        @if($categoria=='servicio')
-                        <div class="table-responsive">
-                            <table cellspacing="0" class="table tablese  ">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-                                        <th style="width: 400px;font-size: 13px">Articulo</th>
-                                        <th style="width: 100px;font-size: 13px">Precio</th>
-                                        <th style="width: 100px;font-size: 13px">Descuento</th>
-                                        <th style="width: 100px;font-size: 13px">Precio U desc</th>
-                                        <th style="width: 100px;font-size: 13px">PU. Com.</th>
-                                        <th style="width: 100px;font-size: 13px">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type='checkbox' class="case"></td>
-                                        <td>
-                                            <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)" onclick="Clear(this);" autocomplete="off">
-                                                <datalist id="browsers2" >
-                                                    @foreach($servicios as $index => $servicio)
-                                                        <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 0 0 {{$servicio->descuento}} {{$array[$index]}}">
-                                                    @endforeach
-                                                </datalist>
-                                        </td>
-                                        <td>
-                                            <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
-                                        </td>
-                                        <td>
-                                            {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
-                                            <div style="position: relative; ">
-                                                <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
-                                            </div>
-                                            <div class="div_check" >
-                                                <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input type='text' id='descuento_unitario0' name='descuento_unitario[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
-                                        </td>
-                                        <td>
-                                            <input type='text' id='comision0' name='comision[]' readonly="readonly" class="form-control" required  autocomplete="off" />
-                                        </td>
-                                        <td>
-                                            <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
-                                        </td>
-                                        <span id="spTotal"></span>
-                                    </tr>
-                                </tbody>
-                                <br>
-                                <tbody>
-                                    <tr style="background-color: #f5f5f500;" align="center">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Subtotal :</td>
-                                        <td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
-                                    </tr>
-                                    <tr style="background-color: #f5f5f500;" align="center">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IGV :</td>
-                                        <td><input id='igv'  disabled="disabled" class="form-control" required /></td>
-                                    </tr>
-                                    <tr align="center">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Total :</td>
-                                        <td><input id='total_final'  disabled="disabled" class="form-control" required /></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                            <input type="text" name="facturacion" value="servicio">
-                            <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
-                            <button type="button" class='addmores btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                            <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
-                        @elseif($categoria=='producto')
+                        
                         <div class="table-responsive">
                             <table cellspacing="0" class="table tables  " style="width: 1100px">
                                 <thead>
@@ -480,7 +405,7 @@
                                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
                                                 <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
-                                                @endif
+                                                
                                             </form>
 
                                         </div>
@@ -504,7 +429,7 @@
                         <!-- Custom and plugin javascript -->
                         <script src="{{ asset('js/inspinia.js') }}"></script>
                         <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-                        @if($categoria=='producto')
+                        
                         <script>
                             var i = 2;
                             $(".addmore").on('click', function () {
@@ -808,6 +733,6 @@
 
 
 
-    @endif
+
 
     @stop

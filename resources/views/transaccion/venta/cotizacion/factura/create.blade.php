@@ -50,6 +50,7 @@
         <i class="fa fa-user-o" aria-hidden="true"></i>
         <span>cliente</span>
     </a>
+    <a href="{{route('cotizacion.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Boleta</span></a>
 </div>
 
 
@@ -201,7 +202,7 @@
                                     <center>
                                         <h3 style="padding-top:10px">{{$empresa->ruc}}</h3>
                                         <h2>Cotizacion Producto</h2>
-                                        <h5>{{$factura_numero}}</h5>
+                                        <h5>{{$cotizacion_numero}}</h5>
                                     </center>
                                 </div>
                             </div>
@@ -297,93 +298,6 @@
 
                         <div id="resultado_moneda"></div>
 
-                        {{--FIn Cabecera --}}
-                        @if($categoria=='servicio')
-                        <div class="table-responsive">
-                            <table cellspacing="0" class="table tablese  ">
-                                <thead>
-                                    <tr>
-                                        <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-                                        <th style="width: 400px;font-size: 13px">Articulo</th>
-                                        <th style="width: 100px;font-size: 13px">Precio</th>
-                                        <th style="width: 100px;font-size: 13px">Descuento</th>
-                                        <th style="width: 100px;font-size: 13px">Precio U desc</th>
-                                        <th style="width: 100px;font-size: 13px">PU. Com.</th>
-                                        <th style="width: 100px;font-size: 13px">Total</th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    <tr>
-                                        <td><input type='checkbox' class="case"></td>
-                                        <td>
-                                            <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)" onclick="Clear(this);" autocomplete="off">
-                                                <datalist id="browsers2" >
-                                                    @foreach($servicios as $index => $servicio)
-                                                        <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 0 0 {{$servicio->descuento}} {{$array[$index]}}">
-                                                    @endforeach
-                                                </datalist>
-                                        </td>
-                                        <td>
-                                            <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
-                                        </td>
-                                        <td>
-                                            {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
-                                            <div style="position: relative; ">
-                                                <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
-                                            </div>
-                                            <div class="div_check" >
-                                                <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
-                                            </div>
-                                        </td>
-                                        <td>
-                                            <input type='text' id='descuento_unitario0' name='descuento_unitario[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
-                                        </td>
-                                        <td>
-                                            <input type='text' id='comision0' name='comision[]' readonly="readonly" class="form-control" required  autocomplete="off" />
-                                        </td>
-                                        <td>
-                                            <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
-                                        </td>
-                                        <span id="spTotal"></span>
-                                    </tr>
-                                </tbody>
-                                <br>
-                                <tbody>
-                                    <tr style="background-color: #f5f5f500;" align="center">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Subtotal :</td>
-                                        <td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
-                                    </tr>
-                                    <tr style="background-color: #f5f5f500;" align="center">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>IGV :</td>
-                                        <td><input id='igv'  disabled="disabled" class="form-control" required /></td>
-                                    </tr>
-                                    <tr align="center">
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td></td>
-                                        <td>Total :</td>
-                                        <td><input id='total_final'  disabled="disabled" class="form-control" required /></td>
-                                    </tr>
-                                </tbody>
-                            </table>
-                        </div>
-                            <input type="text" name="facturacion" value="servicio">
-                            <button type="button" class='delete btn btn-danger'><i class="fa fa-trash" aria-hidden="true"></i></button>&nbsp;
-                            <button type="button" class='addmores btn btn-success'><i class="fa fa-plus-square" aria-hidden="true"></i></button>&nbsp;
-                            <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true">Guardar</i></button>&nbsp;
-                        @elseif($categoria=='producto')
                         <div class="table-responsive">
                             <table cellspacing="0" class="table tables  " style="width: 1100px">
                                 <thead>
@@ -490,7 +404,7 @@
                                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
                                                 <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
-                                                @endif
+                                                
                                             </form>
 
                                         </div>
@@ -514,7 +428,7 @@
                         <!-- Custom and plugin javascript -->
                         <script src="{{ asset('js/inspinia.js') }}"></script>
                         <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-                        @if($categoria=='producto')
+                        
                         <script>
                             var i = 2;
                             $(".addmore").on('click', function () {
@@ -818,6 +732,6 @@
 
 
 
-    @endif
+
 
     @stop
