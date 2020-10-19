@@ -21,29 +21,23 @@
                     e.preventDefault();
                 }
             });
-
-
         });
     </script>
 </head>
 <form action="{{route('guia_remision.store')}}"  enctype="multipart/form-data" method="post">
     @csrf
     <div class="wrapper wrapper-content animated fadeInRight">
-
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
                     <div class="row">
                         <div class="col-sm-4 text-left" align="left">
-
                             <address class="col-sm-4" align="left">
-
                                 <img src="{{asset('img/logos/')}}//{{$empresa->foto}}" alt="" width="300px">
                             </address>
                         </div>
                         <div class="col-sm-4">
                         </div>
-
                         <div class="col-sm-4 ">
                             <div class="form-control ruc" style="height: 125px">
                                 <center>
@@ -51,7 +45,6 @@
                                     <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>
                                     <h5>{{$codigo_guia}} <input type="text" name="almacen" value="{{$almacen}}" hidden="hidden"> </h5>
                                 </center>
-
                             </div>
                         </div>
                     </div><br>
