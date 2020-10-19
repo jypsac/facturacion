@@ -420,7 +420,7 @@
 								 <label class="col-sm-2 col-form-label">Descripcion del Problema:</label>
                               <div class="col-sm-10">
                               	<div class="input-group m-b">
-                  					<textarea class="form-control" rows="5" id="comment" name="descripcion_problema"  maxlength="630" required></textarea>
+                  					<textarea class="form-control" rows="5" id="comment" name="descripcion_problema"  maxlength="1230" required></textarea>
                 				</div>
                    			 </div>
 
@@ -436,7 +436,7 @@
 								 <label class="col-sm-2 col-form-label">Revisión y diagnóstico:</label>
                               <div class="col-sm-10">
                               	<div class="input-group m-b">
-                  				<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" maxlength="630" required></textarea>
+                  				<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" maxlength="1230" required></textarea>
                 				</div>
                    			 </div>
 
@@ -451,7 +451,7 @@
 								 <label class="col-sm-2 col-form-label">Estetica:</label>
                               <div class="col-sm-10">
                               	<div class="input-group m-b">
-                  				<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="650" required></textarea>
+                  				<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="1230" required></textarea>
                 				</div>
                    			 </div>
 
