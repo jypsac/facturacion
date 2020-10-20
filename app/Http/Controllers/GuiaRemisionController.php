@@ -12,6 +12,7 @@ use App\Empresa;
 use App\Guia_remision;
 use App\Igv;
 use App\MotivoTraslado;
+use App\Personal;
 use App\Producto;
 use App\Vehiculo;
 use App\g_remision_registro;
@@ -64,21 +65,20 @@ class GuiaRemisionController extends Controller
 
 
       $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-      $kardex=kardex_entrada::where('kardex_entrada_id',$productos->id)->get();
-      return $kardex ;
-      // foreach ($productos as $index => $producto) {
-      //   $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-      //   $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
-      //   $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-      //   $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
-      // }
+      foreach ($productos as $index => $producto) {
+        $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+        $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
+        $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+        $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+      }
 
-      // $clientes=Cliente::all();
-      // $motivo_traslado=MotivoTraslado::all();
-      // $vehiculo=Vehiculo::where('estado_activo',0)->get();
-      // $empresa=Empresa::first();
-      // $igv=Igv::first();
-      // return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo','motivo_traslado','codigo_guia','almacen'));
+      $clientes=Cliente::all();
+      $personal=Personal::all();
+      $motivo_traslado=MotivoTraslado::all();
+      $vehiculo=Vehiculo::where('estado_activo',0)->get();
+      $empresa=Empresa::first();
+      $igv=Igv::first();
+      return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo','motivo_traslado','codigo_guia','almacen','personal'));
     }
 
 
@@ -125,9 +125,12 @@ class GuiaRemisionController extends Controller
     }
             //buscador Vehiculo
     $vehiculo_nombre=$request->get('vehiculo');
-    $placa = strstr($vehiculo_nombre, '/',true);
-    $vehiculo_buscador=Vehiculo::where('placa',$placa)->first();
-    $vehiculo_id=$vehiculo_buscador->id;
+    if ($vehiculo_nombre==" ") {
+      $vehiculo_id="";
+    }else{
+      $vehiculo_id=$vehiculo_nombre;
+    }
+
 
     $guia_remision=new Guia_remision;
     $guia_remision->cod_guia=$codigo_guia;

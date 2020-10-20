@@ -19,4 +19,7 @@ class Guia_remision extends Model
     public function vehiculo(){
         return $this->belongsTo(Vehiculo::class,'vehiculo_id');
     }
+     public function personal(){
+        return $this->belongsTo(Personal::class,'conductor_id');
+    }
 }
