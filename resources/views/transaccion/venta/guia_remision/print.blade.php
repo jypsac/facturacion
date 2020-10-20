@@ -44,9 +44,9 @@
 
                     <div class="col-sm-4 ">
                         <div class="form-control" align="center" style="height: auto;">
-                            <h2>R.U.C. {{$empresa->ruc}} </h2>
-                            <h3>Guia De Remision</h3>
-                            <h4 class="text-navy"> N°: {{$guia_remision->id}}</h4>
+                            <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
+                            <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>
+                            <h5>{{$guia_remision->cod_guia}} </h5>
                         </div>
                     </div>
                 </div><br>
@@ -79,11 +79,29 @@
                     <div class="col-sm-6" align="center">
                         <div class="form-control" ><h3>Unidad de Transporte/Conductor</h3>
                             <div align="left" style="font-size: 13px">
-                            <p>
-                                <b>Placa del Vehiculo : </b> {{$guia_remision->vehiculo->placa}} <br>
-                                <b>Marca del Vehiculo : </b> {{$guia_remision->vehiculo->marca}} <br>
-                                <b>Conductor : </b> {{$guia_remision->conductor_id}}
-                             </p>
+                                @if(isset($guia_remision->vehiculo_id))
+                                <p>
+                                    <b>Placa del Vehiculo : </b>{{$guia_remision->vehiculo->placa}}<br>
+                                    <b>Marca del Vehiculo : </b>{{$guia_remision->vehiculo->marca}}<br>
+                                    <b>Conductor : </b>
+                                    @if(isset($guia_remision->conductor_id))
+                                    <b>Conductor : </b>{{$guia_remision->personal->nombres}}
+                                    @else
+                                    <b>Conductor : </b> No Hay Conductor
+                                    @endif
+                                </p>
+                                @else
+                                <p>
+                                    <b>Placa del Vehiculo : </b>No Hay Vehiculo<br>
+                                    <b>Marca del Vehiculo : </b>No Hay Vehiculo<br>
+                                    @if(isset($guia_remision->conductor_id))
+                                    <b>Conductor : </b>{{$guia_remision->personal->nombres}}
+                                    @else
+                                    <b>Conductor : </b> No Hay Conductor
+                                    @endif
+                                </p>
+
+                                @endif
                             </div>
                         </div>
                     </div>
@@ -117,28 +135,25 @@
                         </div><!-- /table-responsive -->
 
 
-                        <footer style="padding-top: 100px">
+                       <footer style="padding-top: 120px">
+                   <div class="row" align="center" style="padding-bottom: 5px">
+                    <div class="col-sm-6" align="center">
+                        <div class="form-control"><h3>Observacion:</h3>
+                            <div align="left" style="font-size: 13px">
+                                <p>{{$guia_remision->observacion}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" align="center">
+                        <div class="form-control" ><h3>Motivo de Traslado</h3>
+                            <div align="left" style="font-size: 13px">
+                                <p>{{$guia_remision->motivo_traslado}}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </footer>
 
-                        </footer>
-
-                        {{-- <div class="row">
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> Sub Total</p>
-                                <p class="form-control a"> S/.0</p>
-                            </div>
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> Op. Agravada</p>
-                                <p class="form-control a"> S/.00</p>
-                            </div>
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> IGV</p>
-                                <p class="form-control a"> S/.</p>
-                            </div>
-                            <div class="col-sm-3 ">
-                                <p class="form-control a"> Importe Total</p>
-                                <p class="form-control a"> S/.</p>
-                            </div>
-                        </div> --}}
 
 
                         <br>
@@ -159,22 +174,22 @@
 
                       </div>
                       <br>
-                      <div class="row">
-                        <div class="col-sm-3">
-                            <p><u>centro de Atencion : </u></p>
-                            Telefono : {{$guia_remision->user_personal->personal->telefono }}<br>
-                            Celular : {{$guia_remision->user_personal->personal->celular }}<br>
-                            Email : {{$guia_remision->user_personal->personal->email }}<br>
-                            Web : <br>
-                        </div>
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-3"></div>
-                        <div class="col-sm-3"><br><br>
-                            <hr>
-                            <center>{{$guia_remision->user_personal->personal->nombres }}</center>
-                        </div>
+                        <div class="row">
+            <div class="col-sm-3">
+                <p><u>centro de Atencion : </u></p>
+                Telefono : {{$guia_remision->user_personal->personal->telefono }}<br>
+                Celular : {{$guia_remision->user_personal->personal->celular }}<br>
+                Email : {{$guia_remision->user_personal->personal->email }}<br>
+                Web : {{$empresa->pagina_web}}<br>
+            </div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"><br><br>
+                <hr>
+                <center>{{$guia_remision->user_personal->personal->nombres }}</center>
+            </div>
 
-                    </div>
+        </div>
 
                 </div>
             </div>

@@ -17,6 +17,10 @@ class CreateBoletaTable extends Migration
             $table->bigIncrements('id');
 
             $table->string('codigo_boleta');
+            
+            $table->unsignedBigInteger('almacen_id');
+            $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
+
             $table->string('orden_compra')->nullable();
             $table->string('guia_remision')->nullable();
 

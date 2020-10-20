@@ -297,7 +297,7 @@ class CotizacionController extends Controller
 
         $cotizacion=new Cotizacion;
         $cotizacion->cod_cotizacion=$cotizacion_numero;
-        $cotizacion->almacen_id=$almacen->id;
+        $cotizacion->almacen_id=$request->get('almacen');
         $cotizacion->cliente_id=$cliente_buscador->id;
         $cotizacion->moneda_id=$id_moneda;
         $cotizacion->forma_pago_id=$request->get('forma_pago');
@@ -441,34 +441,29 @@ class CotizacionController extends Controller
 
         $empresa=Empresa::first();
 
-        // obtencion de la sucursal
-        $sucursal=auth()->user()->almacen->codigo_sunat;
-        //obtencion del almacen
-        $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
-        $factura_cod_fac=$factura_primera->cod_bol;
-        if (is_numeric($factura_cod_fac)) {
-            // exprecion del numero de fatura
-            $factura_cod_fac++;
-            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+        //CODIGO COTIZACION
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        $ultima_factura=Cotizacion::latest()->first();
+        if($ultima_factura){
+            $code=$ultima_factura->id;
+            $code++;
         }else{
-            // exprecion del numero de fatura
-            // GENERACION DE NUMERO DE FACTURA
-            $ultima_factura=Boleta::latest()->first();
-            $factura_num=$ultima_factura->codigo_boleta;
-            $factura_num_string_porcion= explode("-", $factura_num);
-            $factura_num_string=$factura_num_string_porcion[1];
-            $factura_num=(int)$factura_num_string;
-            $factura_num++;
-
-            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+            $code=1;
         }
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="COTPF ".$sucursal_nr."-".$cotizacion_nr;
 
+<<<<<<< HEAD
         $cotizacion_numero="F".$sucursal_nr."-".$factura_nr;
 
         return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_codigo','cotizacion_numero'));
 
+=======
+        return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_codigo','cotizacion_numero','sucursal'));
+        
+>>>>>>> 90410e291e3a35b69d3aea7b3562dd66a0a24671
         //return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
     }
 
@@ -506,33 +501,21 @@ class CotizacionController extends Controller
 
 
         $empresa=Empresa::first();
-        // obtencion de la sucursal
-        $sucursal=auth()->user()->almacen->codigo_sunat;
-        //obtencion del almacen
-        $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
-        $factura_cod_fac=$factura_primera->cod_bol;
-        if (is_numeric($factura_cod_fac)) {
-            // exprecion del numero de fatura
-            $factura_cod_fac++;
-            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+        //CODIGO COTIZACION
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        $ultima_factura=Cotizacion::latest()->first();
+        if($ultima_factura){
+            $code=$ultima_factura->id;
+            $code++;
         }else{
-            // exprecion del numero de fatura
-            // GENERACION DE NUMERO DE FACTURA
-            $ultima_factura=Boleta::latest()->first();
-            $factura_num=$ultima_factura->codigo_boleta;
-            $factura_num_string_porcion= explode("-", $factura_num);
-            $factura_num_string=$factura_num_string_porcion[1];
-            $factura_num=(int)$factura_num_string;
-            $factura_num++;
-
-            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+            $code=1;
         }
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="COTPF ".$sucursal_nr."-".$cotizacion_nr;
 
-        $cotizacion_numero="F".$sucursal_nr."-".$factura_nr;
-
-        return view('transaccion.venta.cotizacion.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','cotizacion_numero'));
+        return view('transaccion.venta.cotizacion.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','cotizacion_numero','sucursal'));
     }
 
     /**
@@ -678,16 +661,25 @@ class CotizacionController extends Controller
         }
 
         //PARA SELECCIONAR EL ALMACEN CODIGO PARA AÑADIR
+<<<<<<< HEAD
         if(auth()->user()->name == "Administrador"){
             $almacen=$request->get('almacen');
         }else{
             $almacen=Almacen::where('id',auth()->user()->almacen_id)->first();
         }
 
+=======
+        // if(auth()->user()->name == "Administrador"){
+        //     $almacen=$request->get('almacen');
+        // }else{
+        //     $almacen=Almacen::where('id',auth()->user()->almacen_id)->first();
+        // }
+        
+>>>>>>> 90410e291e3a35b69d3aea7b3562dd66a0a24671
 
         $cotizacion=new Cotizacion;
         $cotizacion->cod_cotizacion=$cotizacion_numero;
-        $cotizacion->almacen_id=$almacen->id;
+        $cotizacion->almacen_id=$request->get('almacen');
         $cotizacion->cliente_id=$cliente_buscador->id;
         $cotizacion->moneda_id=$id_moneda;
         $cotizacion->forma_pago_id=$request->get('forma_pago');
