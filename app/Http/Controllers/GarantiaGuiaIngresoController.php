@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\GarantiaGuiaIngreso;
 use App\Marca;
 use App\Cliente;
+use App\Contacto;
 use App\Empresa;
 use App\Personal_datos_laborales;
 use App\Personal;
@@ -80,13 +81,33 @@ class GarantiaGuiaIngresoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
-    {
+    public function contacto_cliente(Request $request){
+      $output="";
+      if($request->ajax()){
+
+        $cliente=$request->get('cliente_id');
+        $nombre = strstr($cliente, '-',true);
+        $cliente_id_nombre = Cliente::where("numero_documento","=",$nombre)->pluck('id');
+        $contacto = Contacto::where('clientes_id','=',$cliente_id_nombre)->get();
+
+        if($contacto){
+          foreach ($contacto as $key => $contactos) {
+            $output.='<option>'.$contactos->nombre.'</option>';
+          }
+        return Response($output);
+           }
+      }
+    }
+
+    public function store(Request $request){
          // Obtner ID
       $cliente=$request->get('cliente_id');
       $nombre = strstr($cliente, '-',true);
       $cliente_id_nombre=Cliente::where("numero_documento","=",$nombre)->first();
-
+      //Contacto
+      $contacto = $request->get('contacto_cliente');
+      $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
+      $contacto_id = $contacto_nombre->id;
         // $cliente=$request->get('cliente_id');
         // $cliente_id_nombre=Cliente::where("nombre","=",$cliente)->first();
       $cliente_id=$cliente_id_nombre->id;
@@ -129,6 +150,7 @@ class GarantiaGuiaIngresoController extends Controller
       $garantia_guia_ingreso->cliente_id=$cliente_id;
       $garantia_guia_ingreso->personal_lab_id=$personal_lab_id;
         // $garantia_guia_ingreso->contacto_id=$request->get('cliente_id');
+      $garantia_guia_ingreso->contacto_cliente_id = $contacto_id;
 
       $garantia_guia_ingreso->save();
         // $contar=GarantiaGuiaIngreso::all()->count();
@@ -181,12 +203,32 @@ class GarantiaGuiaIngresoController extends Controller
 
       return redirect()->route('garantia_guia_ingreso.index');
     }
+    public function contacto_cliente_actualizar(Request $request){
+      $output="";
+      if($request->ajax()){
 
+        $cliente=$request->get('cliente_id');
+        // $nombre = strstr($cliente, '-',true);
+        $cliente_id_nombre = Cliente::where("nombre","=",$cliente)->pluck('id');
+        $contacto = Contacto::where('clientes_id','=',$cliente_id_nombre)->get();
+
+        if($contacto){
+          foreach ($contacto as $key => $contactos) {
+            $output.='<option>'.$contactos->nombre.'</option>';
+          }
+        return Response($output);
+           }
+      }
+    }
     public function actualizar(Request $request, $id)
     {
-        // $nombre_cliente=$request->get('nombre_cliente');
-        // $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
-        // $numero_doc=$cliente->numero_documento;
+      $cliente=$request->get('cliente_id');
+      $cliente_nombre=Cliente::where("nombre","=",$cliente)->first();
+      $cliente_id = $cliente_nombre->id;
+      //Contacto
+      $contacto = $request->get('contacto_cliente');
+      $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
+      $contacto_id = $contacto_nombre->id;
 
         // ACTUALIZACION DE GUIA DE INGRESO
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
@@ -203,7 +245,8 @@ class GarantiaGuiaIngresoController extends Controller
       $garantia_guia_ingreso->estetica=$request->get('estetica');
 
       $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
-      $garantia_guia_ingreso->cliente_id=$request->get('cliente_id');
+      $garantia_guia_ingreso->cliente_id=$cliente_id;
+      $garantia_guia_ingreso->contacto_cliente_id = $contacto_id;
 
       $garantia_guia_ingreso->save();
 

@@ -7,7 +7,6 @@
 @section('value_accion', 'Atras')
 @section('vue_js',  asset('js/app.js') )
 @section('content')
-
 	<div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span style="font-size:15px;padding-left:4px"> cliente</span></a>
     <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span style="font-size:15px;padding-left:4px">personal</span></a>
@@ -352,7 +351,7 @@
 
                       			<label class="col-sm-2 col-form-label">Cliente:</label>
                         		 <div class="col-sm-10">
-                         		<input list="browsersc1" class="form-control m-b" name="cliente_id" required autocomplete="off" onkeyup="contacto(this,0)">
+                         		<input list="browsersc1" class="form-control m-b" name="cliente_id" id="cliente_id" required autocomplete="off" >
 										<datalist id="browsersc1" >
 											@foreach($clientes as $cliente)
 												<option id="{{$cliente->id}}">{{$cliente->numero_documento}}- {{$cliente->nombre}}</option>
@@ -365,12 +364,10 @@
 
                       			<label class="col-sm-2 col-form-label">Contacto:</label>
                         		 <div class="col-sm-10">
-                        		 	<input list="browserscontac" class="form-control m-b" name="contacto_cliente" required   autocomplete="off" id="contacto" >
-                         			<datalist id="browserscontac" >
-											{{-- @foreach($clientes as $cliente) --}}
-												<option id=""></option>
-											{{-- @endforeach --}}
-										 </datalist>
+                        		 	<input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"   id="" required   autocomplete="off"  >
+                         			<datalist id="contacto_cliente" >
+                         				{{-- <option id="contacto_cliente">a</option> --}}
+									</datalist>
                 				</div>
 
 						</div>
@@ -484,14 +481,27 @@
 
 		</fieldset>
 		 <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
-
-
-
     </div>
 
 </div>
  </form>
-
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+	$('#cliente_id').on('keyup',function(){
+		$value = $(this).val();
+	$.ajax({
+		type: 'get',
+		url: '{{URL::to('contacto_cliente')}}',
+		data: {'cliente_id':$value},
+		success:function(data){
+			$('#contacto_cliente').html(data);
+		}
+	})
+	})
+</script>
+{{-- <script type="text/javascript">
+	$.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
+</script> --}}
 <style>
 	.form-control{    margin-bottom: 15px;
 }
@@ -520,6 +530,7 @@
       background-color: #ffffff;
     }
 </style>
+
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>

@@ -158,10 +158,10 @@
 			                <!--Aqui se desplegará el fichero-->
                        <input type="file" name="nombre{{$archivo->id}}" style="position: absolute ;top:0px;left:0px;right:0px;bottom:0px;opacity:0;width: 200px;padding: 15px ;" id="archivoInput{{$archivo->id}}" onchange="return validarExt{{$archivo->id}}()"/>
                        <span id="visorArchivo{{$archivo->id}}">
-			                   <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 200px;padding: 15px ;"/> 
+			                   <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 200px;padding: 15px ;"/>
                       </span>
-                     
-			                
+
+
 		               	 <script type="text/javascript">
                       function validarExt{{$archivo->id}}(){
                         var archivoInput{{$archivo->id}} = document.getElementById('archivoInput{{$archivo->id}}');
@@ -183,7 +183,7 @@
                                 {
                                     document.getElementById('visorArchivo{{$archivo->id}}').innerHTML =
                                     '<img name="file" src="'+e.target.result+'"  style="width: 200px;padding: 15px ;"  />';
-                                }; 
+                                };
                               visor.readAsDataURL(archivoInput{{$archivo->id}}.files[0]);
                           }
                         }
@@ -193,8 +193,8 @@
                   </div>
                @endforeach
                </div>
-               
-               
+
+
             </div>
 
           </div>
@@ -245,7 +245,7 @@ p#texto{
 	left:60px;
 	right:0px;
 	bottom:0px;
- 		
+
 	opacity: 0	;
 }*/
 .form-control{
@@ -286,6 +286,6 @@ legend{
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
- 
+
 
 @stop

@@ -71,17 +71,29 @@
 						<div class="row">
 
                       			<label class="col-sm-2 col-form-label">Cliente:</label>
-                        		 <div class="col-sm-10">
-                         		<select class="form-control m-b" name="cliente_id">
-                         							<option value="{{$garantia_guia_ingreso->clientes_i->id}}">{{$garantia_guia_ingreso->clientes_i->nombre}}</option>
-                         							<option disabled="">--------------</option>
-												   @foreach($clientes as $cliente)
-												   <option value="{{$cliente->id}}">{{$cliente->nombre}}</option>
-												   @endforeach
-											   </select>
-                				</div>
+                        		  <div class="col-sm-10">
+                            <input list="browserscli" class="form-control m-b" name="cliente_id" id="cliente_id" required autocomplete="off" value="{{$garantia_guia_ingreso->clientes_i->nombre}}" >
+                            <datalist id="browserscli" >
+                             {{-- <option id="{{$garantia_guia_ingreso->clientes_i->id}}"></option> --}}
+                             <option disabled="">--------------</option>
+                              @foreach($clientes as $cliente)
+                                <option id="{{$cliente->id}}">{{$cliente->nombre}}</option>
+                              @endforeach
+                            </datalist>
+                        </div>
 
 						</div>
+            <div class="row">
+
+                            <label class="col-sm-2 col-form-label">Contacto:</label>
+                             <div class="col-sm-10">
+                              <input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"   value="{{$garantia_guia_ingreso->contactos->nombre}}" required   autocomplete="off"  >
+                              <datalist id="contacto_cliente" >
+                                {{-- <option id="contacto_cliente">a</option> --}}
+                             </datalist>
+                        </div>
+
+            </div>
 						<div class="row">
 
                       			<label class="col-sm-2 col-form-label">Asunto:</label>
@@ -221,6 +233,20 @@
       background-color: #ffffff;
     }
 </style>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
+<script type="text/javascript">
+  $('#cliente_id').on('keyup',function(){
+    $value = $(this).val();
+  $.ajax({
+    type: 'get',
+    url: '{{URL::to('contacto_cliente_actualizar')}}',
+    data: {'cliente_id':$value},
+    success:function(data){
+      $('#contacto_cliente').html(data);
+    }
+  })
+  })
+</script>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
