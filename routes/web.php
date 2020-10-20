@@ -31,8 +31,8 @@ Route::group(
 // COTIZACIONES BOLETA - FACTURA
 		//boleta
 
-		Route::get('/cotizacion/create_boleta' , 'CotizacionController@create_boleta')->name('cotizacion.create_boleta');
-		Route::get('/cotizacion/create_boleta_ms' , 'CotizacionController@create_boleta_ms')->name('cotizacion.create_boleta_ms');
+		Route::post('/cotizacion/create_boleta' , 'CotizacionController@create_boleta')->name('cotizacion.create_boleta');
+		Route::post('/cotizacion/create_boleta_ms' , 'CotizacionController@create_boleta_ms')->name('cotizacion.create_boleta_ms');
 		Route::put('/cotizacion/store_boleta/{id}','CotizacionController@store_boleta')->name('cotizacion.store_boleta');
 
 

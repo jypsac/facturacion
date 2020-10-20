@@ -49,7 +49,7 @@
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i>
         <span>cliente</span>
     </a>
-    <a href="{{route('cotizacion.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Boleta</span></a>
+    {{-- <a href="{{route('cotizacion.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Boleta</span></a> --}}
 </div>
 
 
@@ -279,7 +279,8 @@
                                     <td>
                                         <input type="text" name="moneda" class="form-control" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">
                                         <br>
-                                        <a  onclick="event.preventDefault();
+                                        <input type="hidden" name="almacen" class="form-control" value="{{$sucursal->id}}" readonly="readonly">
+                                        <a onclick="event.preventDefault();
                                             document.getElementById('almacen-form').submit();">
                                             <button type="button" class='addmores btn btn-success'>Cambiar</button>
                                         </a>

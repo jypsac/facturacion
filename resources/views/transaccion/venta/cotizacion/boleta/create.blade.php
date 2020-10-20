@@ -53,7 +53,7 @@
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1">
         <i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span>
     </a>
-    <a href="{{route('cotizacion.create_factura')}}" class="icon icon-twitter"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a>
+    {{-- <a href="{{route('cotizacion.create_factura')}}" class="icon icon-twitter"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a> --}}
 </div>
 
 <!-- Modal CLiente -->
@@ -181,6 +181,11 @@
     </div>
 </div>
 </div>
+<form action="{{ route('cotizacion.create_boleta_ms')}}" enctype="multipart/form-data" id="almacen-form" method="POST">>
+    @csrf
+    <input type="text" value="{{$sucursal->id}}" hidden="hidden" name="almacen">
+    <input class="btn btn-sm btn-info" hidden="hidden" type="submit" value="cambiar" >
+</form>
 <!-- Fin Modal Clieb¿nte -->
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -299,7 +304,11 @@
                                     <td>
                                         <input type="text" name="moneda" class="form-control" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">
                                         <br>
-                                        <a href="{{route('cotizacion.create_boleta_ms')}}"><button type="button" class='addmores btn btn-success'>Cambiar</button></a>
+                                        <input type="hidden" name="almacen" class="form-control" value="{{$sucursal->id}}" readonly="readonly">
+                                        <a onclick="event.preventDefault();
+                                            document.getElementById('almacen-form').submit();">
+                                            <button type="button" class='addmores btn btn-success'>Cambiar</button>
+                                        </a>
 
 
                                     </td>
