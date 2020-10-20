@@ -15,6 +15,9 @@ class AddForeignKeyFacturacionTable extends Migration
     {
          Schema::table('facturacion', function (Blueprint $table) {
 
+            $table->unsignedBigInteger('almacen_id');
+            $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
+            
             $table->string('orden_compra')->nullable();
             $table->string('guia_remision')->nullable();
 

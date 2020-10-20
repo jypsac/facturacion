@@ -35,7 +35,6 @@ Route::group(
 		Route::post('/cotizacion/create_boleta_ms' , 'CotizacionController@create_boleta_ms')->name('cotizacion.create_boleta_ms');
 		Route::put('/cotizacion/store_boleta/{id}','CotizacionController@store_boleta')->name('cotizacion.store_boleta');
 
-
 		//factura
 
 		// Route::get('cotizacion/fast_print', 'CotizacionController@fast_print')->name('cotizacion.fast_print');
@@ -95,10 +94,11 @@ Route::group(
 		// Route::post('/facturacion/create/sss','FacturacionController@ajax')->name('facturacion.ajax');
 		Route::post('/facturacion/create_ajax','FacturacionController@create_ajax')->name('facturacion.create_ajax');
 
-		Route::get('/facturacion/create_ms','FacturacionController@create_ms')->name('facturacion.create_ms');
+		Route::post('/facturacion/create_ms','FacturacionController@create_ms')->name('facturacion.create_ms');
 		// Route::post('/facturacion/store/{id}','FacturacionController@store')->name('facturacion.store');
-		Route::resource('/facturacion','FacturacionController')->except(['store']);
-		Route::put('/facturacion/store/{id_moneda}/{num}','FacturacionController@store')->name('facturacion.store');
+		Route::resource('/facturacion','FacturacionController')->except(['store','create']);
+		Route::post('/facturacion/create','FacturacionController@create')->name('facturacion.create');
+		Route::put('/facturacion/store/{id_moneda}','FacturacionController@store')->name('facturacion.store');
 
 		Route::get('/boleta/create_ms','BoletaController@create_ms')->name('boleta.create_ms');
 		Route::get('/boleta/print/{id}','BoletaController@print')->name('boleta.print');
