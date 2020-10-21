@@ -121,7 +121,6 @@
                                 <td>{{$guia_registros->cantidad}}</td>
                                 <td>{{$guia_registros->producto->peso}}</td>
                             </tr>
-
                             @endforeach
                         </tbody>
                     </table>

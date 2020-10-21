@@ -156,6 +156,8 @@
                                 @can('planilla-vendedores.index')
                                 <li><a href="{{route('vendedores.index')}}">Vendedores</a></li>
                                 @endcan
+                                <li><a href="{{route('vehiculo.index')}}">Vehiculos</a></li>
+
                             </ul>
                         </li>
                         @endcan
