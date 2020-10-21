@@ -174,6 +174,11 @@
 </div>
 </div>
 <!-- Fin Modal Clieb¿nte -->
+<form action="{{ route('boleta.create_ms')}}" enctype="multipart/form-data" id="almacen-form" method="POST">
+    @csrf
+    <input type="text" value="{{$sucursal->id}}" hidden="hidden" name="almacen">
+    <input class="btn btn-sm btn-info" hidden="hidden" type="submit" value="cambiar" >
+</form>
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -200,7 +205,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('boleta.store',[$moneda->id,$boleta_numero])}}" enctype="multipart/form-data" method="post">
+                    <form action="{{route('boleta.store',$moneda->id)}}" enctype="multipart/form-data" method="post">
                         @csrf
                          @method('put')
 
@@ -290,7 +295,11 @@
                                                 <td>
                                                     <input type="text" name="moneda" class="form-control" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">
                                                     <br>
-                                                    <a href="{{route('boleta.create_ms')}}"><button type="button" class='addmores btn btn-success'>Cambiar</button></a>
+                                                    <input type="hidden" name="almacen" class="form-control" value="{{$sucursal->id}}" readonly="readonly">
+                                                    <a onclick="event.preventDefault();
+                                                        document.getElementById('almacen-form').submit();">
+                                                        <button type="button" class='addmores btn btn-success'>Cambiar</button>
+                                                    </a>
                                                 </td>
 
                                                         <td>Fecha</td>

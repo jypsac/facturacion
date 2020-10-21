@@ -37,7 +37,11 @@ class BoletaController extends Controller
     public function index()
     {
         $boletas=Boleta::all();
-        return view('transaccion.venta.boleta.index', compact('boletas'));
+        $user_login =auth()->user();
+        $conteo_almacen=Almacen::where('estado',0)->count();
+        $almacen=Almacen::where('estado',0)->get();
+        $almacen_primero=Almacen::where('estado',0)->first();
+        return view('transaccion.venta.boleta.index', compact('boletas','user_login','conteo_almacen','almacen','almacen_primero'));
     }
 
     /**
@@ -45,7 +49,7 @@ class BoletaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
@@ -67,13 +71,11 @@ class BoletaController extends Controller
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                 $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*($igv->igv_total/100);
-                
                 $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]+$igv_p[$index];
                 $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
                 $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
             }
         }
-
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
@@ -81,41 +83,37 @@ class BoletaController extends Controller
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
 
-
         $empresa=Empresa::first();
         
-
         // obtencion de la sucursal
-        $sucursal=auth()->user()->almacen->codigo_sunat;
+        $almacen=$request->get('almacen');
         //obtencion del almacen
-        $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
-        $factura_cod_fac=$factura_primera->cod_bol;
-        if (is_numeric($factura_cod_fac)) {
+        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
+        $boleta_cod_fac=$sucursal->cod_fac;
+        if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
-            $factura_cod_fac++;
-            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+            $boleta_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
             // GENERACION DE NUMERO DE FACTURA
-            $ultima_factura=Boleta::latest()->first();
-            $factura_num=$ultima_factura->codigo_boleta;
-            $factura_num_string_porcion= explode("-", $factura_num);
-            $factura_num_string=$factura_num_string_porcion[1];
-            $factura_num=(int)$factura_num_string;
-            $factura_num++;
-
+            $ultima_factura=Facturacion::latest()->first();
+            $boleta_num=$ultima_factura->codigo_fac;
+            $boleta_num_string_porcion= explode("-", $boleta_num);
+            $boleta_num_string=$boleta_num_string_porcion[1];
+            $boleta_num=(int)$boleta_num_string;
+            $boleta_num++;
             $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
+        $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
 
-        $boleta_numero="F".$sucursal_nr."-".$factura_nr;
-
-        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_codigo','boleta_numero'));
+        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','sucursal','boleta_numero'));
 
     }
 
-    public function create_ms()
+    public function create_ms(Request $request)
     {
 
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
@@ -149,33 +147,32 @@ class BoletaController extends Controller
         
 
         $empresa=Empresa::first();
+
         // obtencion de la sucursal
-        $sucursal=auth()->user()->almacen->codigo_sunat;
+        $almacen=$request->get('almacen');
         //obtencion del almacen
-        $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
-        $factura_cod_fac=$factura_primera->cod_bol;
-        if (is_numeric($factura_cod_fac)) {
+        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
+        $boleta_cod_fac=$sucursal->cod_fac;
+        if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
-            $factura_cod_fac++;
-            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+            $boleta_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
             // GENERACION DE NUMERO DE FACTURA
-            $ultima_factura=Boleta::latest()->first();
-            $factura_num=$ultima_factura->codigo_boleta;
-            $factura_num_string_porcion= explode("-", $factura_num);
-            $factura_num_string=$factura_num_string_porcion[1];
-            $factura_num=(int)$factura_num_string;
-            $factura_num++;
-
+            $ultima_factura=Facturacion::latest()->first();
+            $boleta_num=$ultima_factura->codigo_fac;
+            $boleta_num_string_porcion= explode("-", $boleta_num);
+            $boleta_num_string=$boleta_num_string_porcion[1];
+            $boleta_num=(int)$boleta_num_string;
+            $boleta_num++;
             $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
-            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
+        $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
 
-        $boleta_numero="F".$sucursal_nr."-".$factura_nr;
-
-        return view('transaccion.venta.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_numero'));
+        return view('transaccion.venta.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_numero','sucursal'));
 
     }
 
@@ -185,7 +182,7 @@ class BoletaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request,$id_moneda,$num)
+    public function store(Request $request,$id_moneda)
     {
         $print=$request->get('print');
 
@@ -303,8 +300,33 @@ class BoletaController extends Controller
             return "error por no hacer el cambio diario";
         }
 
+        // obtencion de la sucursal
+        $almacen=$request->get('almacen');
+        //obtencion del almacen
+        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
+        $boleta_cod_fac=$sucursal->cod_fac;
+        if (is_numeric($boleta_cod_fac)) {
+            // exprecion del numero de fatura
+            $boleta_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
+        }else{
+            // exprecion del numero de fatura
+            // GENERACION DE NUMERO DE FACTURA
+            $ultima_factura=Facturacion::latest()->first();
+            $boleta_num=$ultima_factura->codigo_fac;
+            $boleta_num_string_porcion= explode("-", $boleta_num);
+            $boleta_num_string=$boleta_num_string_porcion[1];
+            $boleta_num=(int)$boleta_num_string;
+            $boleta_num++;
+            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
+        }
+        $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
+
         $boleta=new Boleta;
-        $boleta->codigo_boleta=$num;
+        $boleta->codigo_boleta=$boleta_numero;
+        $boleta->almacen_id =$request->get('almacen');
         $boleta->orden_compra=$request->get('orden_compra');
         $boleta->guia_remision=$request->get('guia_r');
         $boleta->cliente_id=$cliente_buscador->id;
