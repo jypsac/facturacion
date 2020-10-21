@@ -387,17 +387,21 @@ class FacturacionController extends Controller
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $facturacion_registro->stock=$stock;
-                //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
-                $facturacion_registro->promedio_original=$array2;
+                
                 //precio --------------------------------------------------------
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional') {
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
+                        $facturacion_registro->promedio_original=$array2;
                         // respectividad de la moneda deacurdo al id
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                         $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
                         $facturacion_registro->precio=$array;
                     }else {
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero');
+                        $facturacion_registro->promedio_original=$array2;
                         // validacion para la otra moneda con igv paralelo
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                         $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
@@ -406,13 +410,17 @@ class FacturacionController extends Controller
 
                 }else{
                     if ($moneda->tipo == 'extranjera') {
-                        
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero');
+                        $facturacion_registro->promedio_original=$array2;
                         // respectividad de la moneda deacuerdo al id
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                         $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad)*$cambio->paralelo;
                         $facturacion_registro->precio=$array;
                     }else{
-                        
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
+                        $facturacion_registro->promedio_original=$array2;
                         // validacion para la otra moneda con igv paralelo
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                         $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad)/$cambio->paralelo;

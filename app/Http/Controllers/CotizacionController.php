@@ -340,17 +340,23 @@ class CotizacionController extends Controller
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $cotizacion_registro->stock=$stock;
-                //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
-                $cotizacion_registro->promedio_original=$array2;
+                
                 //precio --------------------------------------------------------
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional') {
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
+                        $cotizacion_registro->promedio_original=$array2;
+
                         // respectividad de la moneda deacurdo al id
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                         $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad;
                         $cotizacion_registro->precio=$array;
                     }else {
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero');
+                        $cotizacion_registro->promedio_original=$array2;
+                        
                         // validacion para la otra moneda con igv paralelo
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                         $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
@@ -358,11 +364,19 @@ class CotizacionController extends Controller
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera') {
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero');
+                        $cotizacion_registro->promedio_original=$array2;
+
                         // respectividad de la moneda deacuerdo al id
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                         $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad)*$cambio->paralelo;
                         $cotizacion_registro->precio=$array;
                     }else{
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
+                        $cotizacion_registro->promedio_original=$array2;
+
                         // validacion para la otra moneda con igv paralelo
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                         $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad)/$cambio->paralelo;
@@ -711,17 +725,23 @@ class CotizacionController extends Controller
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $cotizacion_registro->stock=$stock;
-                //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
-                $cotizacion_registro->promedio_original=$array2;
+                
                 //precio --------------------------------------------------------
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional'){
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
+                        $cotizacion_registro->promedio_original=$array2;
+
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                         $igv_p=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad)*($igv->igv_total/100);
                         $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad+$igv_p);
                         $cotizacion_registro->precio=$array;
                     }else{
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero');
+                        $cotizacion_registro->promedio_original=$array2;
+
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                         $igv_p=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad)*($igv->igv_total/100);
                         $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad+$igv_p);
@@ -729,11 +749,19 @@ class CotizacionController extends Controller
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera'){
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero');
+                        $cotizacion_registro->promedio_original=$array2;
+
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                         $igv_p=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad)*($igv->igv_total/100);
                         $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad+$igv_p);
                         $cotizacion_registro->precio=$array*$cambio->paralelo;
                     }else{
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                        $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
+                        $cotizacion_registro->promedio_original=$array2;
+
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                         $igv_p=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad)*($igv->igv_total/100);
                         $array=((kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad)+$igv_p);
