@@ -274,14 +274,18 @@ class CotizacionController extends Controller
 
 
         //PARA GENERAR EL CODIGO DE LA COTIZACION   
-        $ultima_cotizacion=Cotizacion::latest()->first();
-        if($ultima_cotizacion){
-            $cotizacion_num=$ultima_cotizacion->id;
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        $ultima_factura=Cotizacion::latest()->first();
+        if($ultima_factura){
+            $code=$ultima_factura->id;
+            $code++;
         }else{
-            $cotizacion_num=0;
+            $code=1;
         }
-        $cotizacion_num++;
-        $cotizacion_numero="cotizacion -".$cotizacion_num;
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="COTPF ".$sucursal_nr."-".$cotizacion_nr;
 
         $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
         if(!$cambio){
@@ -467,7 +471,7 @@ class CotizacionController extends Controller
         }
         $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
         $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
-        $cotizacion_numero="COTPF ".$sucursal_nr."-".$cotizacion_nr;
+        $cotizacion_numero="COTPB ".$sucursal_nr."-".$cotizacion_nr;
 
         return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_codigo','cotizacion_numero','sucursal'));
         
@@ -508,6 +512,7 @@ class CotizacionController extends Controller
         
 
         $empresa=Empresa::first();
+
         //CODIGO COTIZACION
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
@@ -520,7 +525,7 @@ class CotizacionController extends Controller
         }
         $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
         $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
-        $cotizacion_numero="COTPF ".$sucursal_nr."-".$cotizacion_nr;
+        $cotizacion_numero="COTPB ".$sucursal_nr."-".$cotizacion_nr;
 
         return view('transaccion.venta.cotizacion.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','cotizacion_numero','sucursal'));
     }
@@ -653,14 +658,19 @@ class CotizacionController extends Controller
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
         //PARA GENERAR EL CODIGO DE LA COTIZACION   
-        $ultima_cotizacion=Cotizacion::latest()->first();
-        if($ultima_cotizacion){
-            $cotizacion_num=$ultima_cotizacion->id;
+        //CODIGO COTIZACION
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        $ultima_factura=Cotizacion::latest()->first();
+        if($ultima_factura){
+            $code=$ultima_factura->id;
+            $code++;
         }else{
-            $cotizacion_num=0;
+            $code=1;
         }
-        $cotizacion_num++;
-        $cotizacion_numero="cotizacion -".$cotizacion_num;
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="COTPB ".$sucursal_nr."-".$cotizacion_nr;
 
         $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
         if(!$cambio){

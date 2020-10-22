@@ -24,7 +24,7 @@
                                     <form action="{{ route('cotizacion.create_factura')}}" enctype="multipart/form-data" method="post">
                                         @csrf
                                         <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
-                                        <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
+                                        <input class="btn btn-sm btn-info"  type="submit" value="Crear una cotizacion factura" >
                                     </form>
                                 @else
                                         @if($user_login->name=='Administrador')
@@ -43,7 +43,7 @@
                                             <form action="{{ route('cotizacion.create_factura')}}"enctype="multipart/form-data" method="post">
                                             @csrf
                                              <input type="text"  hidden="hidden" name="almacen"  value="{{$user_login->almacen_id}}">
-                                             <input type="submit" class="btn btn-sm btn-info"  value="Crear una Nueva Guia">
+                                             <input type="submit" class="btn btn-sm btn-info"  value="Crear una cotizacion factura">
                                             </form>
                                         @endif
                                 @endif
@@ -54,7 +54,7 @@
                                     <form action="{{ route('cotizacion.create_boleta')}}" enctype="multipart/form-data"  method="post">
                                         @csrf
                                         <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
-                                        <input class="btn btn-sm btn-info"  type="submit" value="Crear cotizacion" >
+                                        <input class="btn btn-sm btn-info"  type="submit" value="Crear cotizacion boleta" >
                                     </form>
                                 @else
                                         @if($user_login->name=='Administrador')
@@ -73,7 +73,7 @@
                                             <form action="{{ route('cotizacion.create_boleta')}}"enctype="multipart/form-data" method="post">
                                             @csrf
                                              <input type="text"  hidden="hidden" name="almacen"  value="{{$user_login->almacen_id}}">
-                                             <input type="submit" class="btn btn-sm btn-info"  value="Crear cotizacion">
+                                             <input type="submit" class="btn btn-sm btn-info"  value="Crear cotizacion boleta">
                                             </form>
                                         @endif
                                 @endif
