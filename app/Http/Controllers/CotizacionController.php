@@ -951,9 +951,7 @@ public function facturar_store(Request $request)
         $facturacion_registro->save();
     }
 
-
-
-            // Creacion de Ventas Registros del Comisinista
+    // Creacion de Ventas Registros del Comisinista
     $cotizador=$request->get('id_cotizador');
     $id_comisionista=$request->get('id_comisionista');
     $comisionista=Cotizacion::where('id',$cotizador)->first();

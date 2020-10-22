@@ -104,7 +104,7 @@ class BoletaController extends Controller
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
             $boleta_num++;
-            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
@@ -167,7 +167,7 @@ class BoletaController extends Controller
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
             $boleta_num++;
-            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
@@ -319,7 +319,7 @@ class BoletaController extends Controller
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
             $boleta_num++;
-            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
@@ -437,6 +437,31 @@ class BoletaController extends Controller
                 }
 
                 $boleta_registro->save();
+
+                $comparacion=Kardex_entrada_registro::where('producto_id',$boleta_registro->producto_id)->get();
+                $cantidad=kardex_entrada_registro::where('producto_id',$boleta_registro->producto_id)->sum('cantidad');
+                    if(isset($comparacion)){
+                        $var_cantidad_entrada=$boleta_registro->cantidad;
+                        $contador=0;
+                        foreach ($comparacion as $p) {
+                            if($p->cantidad>=$var_cantidad_entrada){
+                                $cantidad_mayor=$p->cantidad;
+                                $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                                $p->cantidad=$cantidad_final;
+                                if($cantidad_final==0){
+                                    $p->estado=0;
+                                    $p->save();
+                                }else{
+                                    $p->save();
+                                }
+                            }else{
+                                $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+                                $p->cantidad=0;
+                                $p->estado=0;
+                                $p->save();
+                            }
+                        }
+                    }
             }
         }else {
             return redirect()->route('boleta.create')->with('campo', 'Falto introducir un campo de la tabla productos');

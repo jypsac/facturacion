@@ -119,7 +119,7 @@ class FacturacionController extends Controller
             $factura_num_string=$factura_num_string_porcion[1];
             $factura_num=(int)$factura_num_string;
             $factura_num++;
-            $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
             $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
         }
 
@@ -183,7 +183,7 @@ class FacturacionController extends Controller
            $factura_num_string=$factura_num_string_porcion[1];
            $factura_num=(int)$factura_num_string;
            $factura_num++;
-           $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+           $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
        }
 
@@ -333,7 +333,7 @@ class FacturacionController extends Controller
            $factura_num_string=$factura_num_string_porcion[1];
            $factura_num=(int)$factura_num_string;
            $factura_num++;
-           $sucursal_nr = str_pad($sucursal, 3, "0", STR_PAD_LEFT);
+           $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
        }
 
@@ -447,13 +447,35 @@ class FacturacionController extends Controller
                 }
                 $facturacion_registro->save();
 
+                $comparacion=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->get();
+                $cantidad=kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->sum('cantidad');
+                    if(isset($comparacion)){
+                        $var_cantidad_entrada=$facturacion_registro->cantidad;
+                        $contador=0;
+                        foreach ($comparacion as $p) {
+                            if($p->cantidad>=$var_cantidad_entrada){
+                                $cantidad_mayor=$p->cantidad;
+                                $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                                $p->cantidad=$cantidad_final;
+                                if($cantidad_final==0){
+                                    $p->estado=0;
+                                    $p->save();
+                                }else{
+                                    $p->save();
+                                }
+                            }else{
+                                $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+                                $p->cantidad=0;
+                                $p->estado=0;
+                                $p->save();
+                            }
+                        }
+                    }
             }
         }else {
             return redirect()->route('facturacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
         return redirect()->route('facturacion.show',$facturacion->id);
-
-
 }
 
     /**
