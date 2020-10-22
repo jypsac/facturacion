@@ -68,7 +68,7 @@ Route::group(
 
 		Route::resource('/cotizacion_servicio','CotizacionServiciosController')->except(['store']);
 		Route::put('/cotizacion_servicio/store/{id_moneda}','CotizacionServiciosController@store')->name('cotizacion.store');
-		
+
 //FACTURACION SERVICIOS
 		Route::resource('/facturacion_servicio','FacturacionServicioController');
 
