@@ -19,7 +19,7 @@
                     content: "Ver";
                 }
                 .bot{
-                background-color: #1c84c6; border: none; color: white; cursor: pointer;font-size: 13px;
+                    background-color: #1c84c6; border: none; color: white; cursor: pointer;font-size: 13px;
                 }
 
                 form.btn.btn-success:hover{
@@ -27,12 +27,12 @@
                 }
             </style>
             @if($cotizacion->estado == '1')
-                @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
-                <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$facturacion->id)}}" ></a>
-                @else
-                <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta.show',$boleta->id)}}" ></a>
+            @if($cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc')
+            <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$facturacion->id)}}" ></a>
+            @else
+            <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta.show',$boleta->id)}}" ></a>
 
-                @endif
+            @endif
 
             @elseif($cotizacion->estado == '0' && $cotizacion->cliente->documento_identificacion == 'Ruc' ||$cotizacion->cliente->documento_identificacion == 'RUC' ||$cotizacion->cliente->documento_identificacion == 'ruc' )
             <a class="btn btn-info" href="{{route('cotizacion.facturar' , $cotizacion->id)}}">Facturar</a>
@@ -43,14 +43,14 @@
             @endif
             <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" >Imprimir</a>
 
-        &nbsp<form action="{{route('email.save')}}" method="post" class="btn btn-success" style="height: 33px">
+            &nbsp<form action="{{route('email.save')}}" method="post" class="btn btn-success" style="height: 33px">
                 @csrf
                 <input type="text" hidden="hidden" name="tipo" value="App\Cotizacion"/>
                 <input type="text" hidden="hidden" name="id" value="{{$cotizacion->id}}"/>
                 <input type="text" hidden="hidden" name="redict" value="ventas_cotizacion"/>
                 <input type="text" hidden="hidden" name="cliente" value="{{$cotizacion->cliente->email}}"/>
                 <button type="submit" class="bot"  >Enviar</button>
-             </form>
+            </form>
         </div>
     </div>
     <div class="row">
@@ -69,14 +69,15 @@
                                 </div>
                                 <div class="col-sm-4">
                                 </div>
-
-                                <div class="col-sm-3 ">
-                                    <h4>{{$empresa->nombre}}</h4>
-                                    <h4>{{$empresa->ruc}}</h4>
-                                    <h4>{{$empresa->calle}}</h4>
-                                    <h4 class="text-navy">Cotizacion N°: {{$cotizacion->cod_comision}}</h4>
-
+                                <div class="col-sm-4">
+                                    <div class="form-control" align="center" style="height: auto;">
+                                        <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
+                                        <h2 style="font-size: 19px">COTIZACION ELECTRONICA</h2>
+                                        <h5>{{$cotizacion->cod_cotizacion}} </h5>
+                                    </div>
                                 </div>
+
+
                             </div><br>
                             <div class="row">
                                 <div class="col-sm-7" align="center">
@@ -152,7 +153,7 @@
 
                                     </tr>
                                     <span hidden="hidden">{{$i++}}</span>
-                                   @endforeach
+                                    @endforeach
 
                                     @else <span hidden="hidden">{{$i=1}} </span>
                                     @foreach($cotizacion_registro2 as $cotizacion_registros)
@@ -169,13 +170,13 @@
                                         <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}} </td>
                                         <td style="display: none"> {{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
                                             @if ($regla=="factura")
-                                           {{$simbologia=$cotizacion->moneda->simbolo}}.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                            {{$simbologia=$cotizacion->moneda->simbolo}}.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                             @endif
                                         </td>
 
                                     </tr>
-                                     <span hidden="hidden">{{$i++}}</span>
+                                    <span hidden="hidden">{{$i++}}</span>
 
                                     @endforeach
 

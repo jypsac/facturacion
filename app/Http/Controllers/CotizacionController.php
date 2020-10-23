@@ -51,7 +51,7 @@ class CotizacionController extends Controller
      */
     public function create_factura(Request $request)
     {
-        
+
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
         // return $kardex_prod;
@@ -85,7 +85,7 @@ class CotizacionController extends Controller
         $personal_contador= Facturacion::all()->count();
         $suma=$personal_contador+1;
         $categoria='producto';
-        
+
         //CODIGO COTIZACION
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
@@ -99,7 +99,7 @@ class CotizacionController extends Controller
         $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
         $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
         $cotizacion_numero="COTPF ".$sucursal_nr."-".$cotizacion_nr;
-        
+
         return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','cotizacion_numero','sucursal'));
     }
 
@@ -107,7 +107,7 @@ class CotizacionController extends Controller
 
     public function create_factura_ms(Request $request)
     {
-        
+
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         $moneda=Moneda::where('principal','0')->first();
 
@@ -273,7 +273,7 @@ class CotizacionController extends Controller
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
 
-        //PARA GENERAR EL CODIGO DE LA COTIZACION   
+        //PARA GENERAR EL CODIGO DE LA COTIZACION
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
         $ultima_factura=Cotizacion::latest()->first();
@@ -298,7 +298,7 @@ class CotizacionController extends Controller
         //}else{
           //  $almacen=Almacen::where('id',auth()->user()->almacen_id)->first();
         //}
-        
+
         $cotizacion=new Cotizacion;
         $cotizacion->cod_cotizacion=$cotizacion_numero;
         $cotizacion->almacen_id=$request->get('almacen');
@@ -313,7 +313,7 @@ class CotizacionController extends Controller
         $cotizacion->fecha_emision=$request->get('fecha_emision');
         $cotizacion->fecha_vencimiento=$nuevafechas;
         $cotizacion->cambio=$cambio->paralelo;
-        $cotizacion->observacion=$request->get('observacion');  
+        $cotizacion->observacion=$request->get('observacion');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $cotizacion->comisionista_id= $comisionista_buscador->id;
         }
@@ -344,7 +344,7 @@ class CotizacionController extends Controller
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $cotizacion_registro->stock=$stock;
-                
+
                 //precio --------------------------------------------------------
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional') {
@@ -360,7 +360,7 @@ class CotizacionController extends Controller
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
                         $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero');
                         $cotizacion_registro->promedio_original=$array2;
-                        
+
                         // validacion para la otra moneda con igv paralelo
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                         $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
@@ -433,7 +433,7 @@ class CotizacionController extends Controller
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                 $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])*($igv->igv_total/100);
-                
+
                 $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]+$igv_p[$index];
                 $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
                 $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
@@ -442,7 +442,7 @@ class CotizacionController extends Controller
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                 $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*($igv->igv_total/100);
-                
+
                 $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]+$igv_p[$index];
                 $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
                 $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
@@ -474,7 +474,7 @@ class CotizacionController extends Controller
         $cotizacion_numero="COTPB ".$sucursal_nr."-".$cotizacion_nr;
 
         return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_codigo','cotizacion_numero','sucursal'));
-        
+
         //return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
     }
 
@@ -497,7 +497,7 @@ class CotizacionController extends Controller
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                 $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*($igv->igv_total/100);
-                
+
                 $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]+$igv_p[$index])*$tipo_cambio->paralelo;
                 $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
                 $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
@@ -506,10 +506,10 @@ class CotizacionController extends Controller
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        
+
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
-        
+
 
         $empresa=Empresa::first();
 
@@ -657,7 +657,7 @@ class CotizacionController extends Controller
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        //PARA GENERAR EL CODIGO DE LA COTIZACION   
+        //PARA GENERAR EL CODIGO DE LA COTIZACION
         //CODIGO COTIZACION
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
@@ -683,7 +683,7 @@ class CotizacionController extends Controller
         // }else{
         //     $almacen=Almacen::where('id',auth()->user()->almacen_id)->first();
         // }
-        
+
 
         $cotizacion=new Cotizacion;
         $cotizacion->cod_cotizacion=$cotizacion_numero;
@@ -699,7 +699,7 @@ class CotizacionController extends Controller
         $cotizacion->fecha_emision=$request->get('fecha_emision');
         $cotizacion->fecha_vencimiento=$nuevafechas;
         $cotizacion->cambio=$cambio->paralelo;
-        $cotizacion->observacion=$request->get('observacion');  
+        $cotizacion->observacion=$request->get('observacion');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $cotizacion->comisionista_id= $comisionista_buscador->id;
         }
@@ -735,7 +735,7 @@ class CotizacionController extends Controller
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $cotizacion_registro->stock=$stock;
-                
+
                 //precio --------------------------------------------------------
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional'){
@@ -811,8 +811,10 @@ class CotizacionController extends Controller
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
         $cotizacion_registro2=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+
+        $precio='precio_nacional';
         foreach ($cotizacion_registro as $cotizacion_registros) {
-           $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+           $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg($precio);
        }
 
         // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
