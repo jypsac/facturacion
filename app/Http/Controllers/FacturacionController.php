@@ -23,6 +23,7 @@ use App\TipoCambio;
 use App\Unidad_medida;
 use App\User;
 use App\Ventas_registro;
+use App\Kardex_entrada;
 use App\kardex_entrada_registro;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
@@ -447,7 +448,19 @@ class FacturacionController extends Controller
                 }
                 $facturacion_registro->save();
 
-                $comparacion=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->get();
+                $almacen=$facturacion->almacen_id;
+                $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
+                $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
+
+                foreach($kardex_entrada as $kardex_entradas){
+                    $kadex_entrada_id[]=$kardex_entradas->id;
+                }
+                
+                //ponerlos todos en un first
+
+                $comparacion=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id)->get();
+
+                return $comparacion;
                 $cantidad=kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->sum('cantidad');
                     if(isset($comparacion)){
                         $var_cantidad_entrada=$facturacion_registro->cantidad;
@@ -468,6 +481,30 @@ class FacturacionController extends Controller
                                 $p->cantidad=0;
                                 $p->estado=0;
                                 $p->save();
+                                $cantidad=kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->sum('cantidad');
+                    if(isset($comparacion)){
+                        $var_cantidad_entrada=$facturacion_registro->cantidad;
+                        $contador=0;
+                        foreach ($comparacion as $p) {
+                            if($p->cantidad>=$var_cantidad_entrada){
+                                $cantidad_mayor=$p->cantidad;
+                                $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                                $p->cantidad=$cantidad_final;
+                                if($cantidad_final==0){
+                                    $p->estado=0;
+                                    $p->save();
+                                }else{
+                                    $p->save();
+                                }
+                            }else{
+                                $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+                                $p->cantidad=0;
+                                $p->estado=0;
+                                $p->save();
+                            }
+                        }
+                    }
+                    
                             }
                         }
                     }
