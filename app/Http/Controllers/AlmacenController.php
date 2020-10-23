@@ -25,8 +25,9 @@ class AlmacenController extends Controller
     public function index()
     {
         $almacenes=Almacen::all();
+        $conteo_almacen=Almacen::where('estado',0)->count();
         $personal=Personal::where('estado',1)->get();
-        return view('configuracion_general.almacen.index',compact('almacenes','personal'));
+        return view('configuracion_general.almacen.index',compact('almacenes','personal','conteo_almacen'));
     }
 
     /**
@@ -112,7 +113,6 @@ class AlmacenController extends Controller
             'responsable' => ['required'],
             'direccion' => ['required'],
             'descripcion' => ['required'],
-            'codigo_sunat' => ['required'],
         ]);
 
         $estado=$request->get('estado');
@@ -135,7 +135,6 @@ class AlmacenController extends Controller
         $almacen->responsable=$request->get('responsable');
         $almacen->direccion=$request->get('direccion');
         $almacen->descripcion=$request->get('descripcion');
-        $almacen->codigo_sunat=$request->get('codigo_sunat');
         $almacen->estado=$estado_numero;
         if(is_numeric($almacen->cod_fac) and is_numeric($nr_fac)){
             $almacen->cod_fac=$request->get('cod_fac');

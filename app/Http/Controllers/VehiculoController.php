@@ -14,7 +14,7 @@ class VehiculoController extends Controller
     public function index()
     {
         $vehiculo=Vehiculo::all();
-         return view('planilla.vehiculo.index',compact('vehiculo'));
+        return view('planilla.vehiculo.index',compact('vehiculo'));
     }
 
     /**
@@ -24,7 +24,7 @@ class VehiculoController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
@@ -35,8 +35,15 @@ class VehiculoController extends Controller
      */
     public function store(Request $request)
     {
-        return'aqui toy';
-    }
+       $vehiculo=new Vehiculo;
+       $vehiculo->placa=$request->get('placa');
+       $vehiculo->marca=$request->get('marca');
+       $vehiculo->modelo=$request->get('modelo');
+       $vehiculo->año=$request->get('año');
+       $vehiculo->estado_activo='0';
+       $vehiculo->save();
+       return redirect()->route('vehiculo.index');
+   }
 
     /**
      * Display the specified resource.
@@ -69,8 +76,22 @@ class VehiculoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
-    }
+         $estado=$request->get('estado_activo');
+        if($estado=='on'){
+            $estado_numero='0';
+        }
+        else{
+            $estado_numero='1';
+        }
+       $vehiculo=Vehiculo::find($id);
+       $vehiculo->placa=$request->get('placa');
+       $vehiculo->marca=$request->get('marca');
+       $vehiculo->modelo=$request->get('modelo');
+       $vehiculo->año=$request->get('año');
+       $vehiculo->estado_activo=$estado_numero;
+       $vehiculo->save();
+       return redirect()->route('vehiculo.index');
+   }
 
     /**
      * Remove the specified resource from storage.
