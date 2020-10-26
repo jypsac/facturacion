@@ -87,8 +87,6 @@ class FacturacionController extends Controller
             }
         }
 
-
-
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
         $personales=Personal::all();
@@ -195,6 +193,7 @@ class FacturacionController extends Controller
 
     /**
      * Store a newly created resource in storage.
+     * 
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -340,6 +339,63 @@ class FacturacionController extends Controller
 
        $factura_numero="F".$sucursal_nr."-".$factura_nr;
 
+       //calculo para el stock del producto
+        $almacen_producto_validacion=$request->get('almacen');
+        for($i=0;$i<$count_articulo;$i++){
+            $producto_id[$i];
+            $kardex_entrada_v=Kardex_entrada::where('almacen_id',$almacen_producto_validacion)->get();
+            $kardex_entrada_count_v=Kardex_entrada::where('almacen_id',$almacen_producto_validacion)->count();
+
+            //return $kardex_entrada;
+            foreach($kardex_entrada_v as $kardex_entradas_v){
+                $kadex_entrada_id_v[]=$kardex_entradas_v->id;
+            }
+            // return $kardex_entrada;
+            for($x=0;$x<$kardex_entrada_count_v;$x++){
+                if(Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first()){
+                    $nueva_v[]=Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first();
+                }   
+            }
+            $comparacion_v=$nueva_v;
+            //buble para la cantidad
+            $cantidad_v=0;
+            foreach($comparacion_v as $comparaciones_v){
+                $cantidad_v=$comparaciones_v->cantidad+$cantidad_v;
+            }
+
+            if(isset($comparacion_v)){
+                $var_cantidad_entrada=$facturacion_registro->cantidad;
+                $contador=0;
+                foreach ($comparacion as $p) {
+                    if($p->cantidad>$var_cantidad_entrada){
+                        $cantidad_mayor=$p->cantidad;
+                        $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                        $p->cantidad=$cantidad_final;
+                        if($cantidad_final==0){
+                            $p->estado=0;
+                            $p->save();
+                            break;
+                        }else{
+                            $p->save();
+                            break;
+                        }
+                    }elseif($p->cantidad==$var_cantidad_entrada){
+                        $p->cantidad=0;
+                        $p->estado=0;
+                        $p->save();
+                        break;
+                    }
+                    else{
+                        $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+                        $p->cantidad=0;
+                        $p->estado=0;
+                        $p->save();
+                    }
+                }
+            }
+
+        }
+
         $facturacion=new facturacion;
         $facturacion->codigo_fac=$factura_numero;
         $facturacion->almacen_id =$request->get('almacen');
@@ -378,9 +434,9 @@ class FacturacionController extends Controller
         $moneda=Moneda::where('principal',1)->first();
         $moneda_registrada=$facturacion->moneda_id;
 
-        if($count_articulo = $count_cantidad  = $count_check){
+        if($count_articulo = $count_cantidad = $count_check){
             for($i=0;$i<$count_articulo;$i++){
-                $facturacion_registro=new Facturacion_registro();
+                $facturacion_registro= new Facturacion_registro();
                 $facturacion_registro->facturacion_id=$facturacion->id;
                 $facturacion_registro->producto_id=$producto_id[$i];
                 $facturacion_registro->numero_serie=$request->get('numero_serie')[$i];
@@ -408,7 +464,6 @@ class FacturacionController extends Controller
                         $array=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad;
                         $facturacion_registro->precio=$array;
                     }
-
                 }else{
                     if ($moneda->tipo == 'extranjera') {
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
@@ -425,10 +480,8 @@ class FacturacionController extends Controller
                         // validacion para la otra moneda con igv paralelo
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                         $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad)/$cambio->paralelo;
-                        
                         $facturacion_registro->precio=$array;
                     }
-
                 }
                 $facturacion_registro->cantidad=$request->get('cantidad')[$i];
                 $facturacion_registro->descuento=$request->get('check_descuento')[$i];
@@ -460,44 +513,37 @@ class FacturacionController extends Controller
                 for($x=0;$x<$kardex_entrada_count;$x++){
                     if(Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first()){
                         $nueva[]=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
-                    }
-                    // $nueva[]=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
+                    }   
                 }
-                //eliminacion de los null
-                // $basura = ['null'];
-                // $nueva = array_filter($nueva, 'strlen');
-                // $nueva = array_diff($nueva,$basura);
-                //ponerlos todos en un first
-
                 $comparacion=$nueva;
-                // $comparacion=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id)->get();
-                
-                // $comparacion=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->get();
-
-                //obtener la cantidad en nueva
-
                 //buble para la cantidad
                 $cantidad=0;
                 foreach($comparacion as $comparaciones){
                     $cantidad=$comparaciones->cantidad+$cantidad;
                 }
-                
-                // $cantidad=kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->sum('cantidad');
                     if(isset($comparacion)){
                         $var_cantidad_entrada=$facturacion_registro->cantidad;
                         $contador=0;
                         foreach ($comparacion as $p) {
-                            if($p->cantidad>=$var_cantidad_entrada){
+                            if($p->cantidad>$var_cantidad_entrada){
                                 $cantidad_mayor=$p->cantidad;
                                 $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
                                 $p->cantidad=$cantidad_final;
                                 if($cantidad_final==0){
                                     $p->estado=0;
                                     $p->save();
+                                    break;
                                 }else{
                                     $p->save();
+                                    break;
                                 }
-                            }else{
+                            }elseif($p->cantidad==$var_cantidad_entrada){
+                                $p->cantidad=0;
+                                $p->estado=0;
+                                $p->save();
+                                break;
+                            }
+                            else{
                                 $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
                                 $p->cantidad=0;
                                 $p->estado=0;
