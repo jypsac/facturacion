@@ -3,7 +3,7 @@
 @section('title', 'Configuracion Sistema')
 @section('breadcrumb', 'Configuracion Sistema')
 @section('breadcrumb2', 'Configuracion Sistema')
-@section('href_accion', route('home') )
+@section('href_accion','/' )
 @section('value_accion', 'Inicio')
 
 @section('content')

@@ -134,6 +134,7 @@ Route::group(
 		//MailBox
 		Route::resource('/email','EmailBandejaEnviosController');
 		Route::resource('/configuracion_email','EmailConfiguracionesController');
+		Route::post('/email/config/pdf','EmailConfiguracionesController@store')->name('email.config');
 		Route::post('/email/save','EmailBandejaEnviosController@save')->name('email.save');
 		Route::post('email/send','EmailBandejaEnviosController@send')->name('email.send');
 		Route::post('email/delete','EmailBandejaEnviosController@delete')->name('email.delete');

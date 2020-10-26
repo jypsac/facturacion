@@ -43,7 +43,7 @@
                                 <br/>
                                 <small>{{ date('Y-m-d H:i:s') }} </small>
                             </div>
-                        </div>  
+                        </div>
                     </div>
                     <div class="col-lg-9">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
@@ -51,7 +51,7 @@
                                 <span class="fileinput-new">Seleccionar</span>
                                 <span class="fileinput-exists">Cambiar</span>
                                 <input  type="file" name="archivos[]" multiple="" />
-                                
+
                             </span>
                             <span class="fileinput-filename" style="padding-left: 30px"></span>
                             <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>

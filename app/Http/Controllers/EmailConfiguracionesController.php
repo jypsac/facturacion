@@ -76,7 +76,7 @@ class EmailConfiguracionesController extends Controller
         $user=User::find($id_usuario);
         $user->email_creado='1';
         $user->save();
-        return redirect()->route('configuracion_email.index');
+        return back();
     }
 
     /**

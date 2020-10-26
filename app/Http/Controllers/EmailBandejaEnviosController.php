@@ -99,7 +99,7 @@ class EmailBandejaEnviosController extends Controller
     table{
       width:100%;
     }
-      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>'; 
+      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
     }
 
 
@@ -271,6 +271,43 @@ class EmailBandejaEnviosController extends Controller
     $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
     $correo=$correo_busqueda->email;
 
+    $firma=$correo_busqueda->firma;
+    $mensaje_html = $request->get('mensaje');
+    if($firma == null){
+      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      $(document).ready(function(){
+          $("table").removeClass("table table-bordered").addClass("css");
+      });
+      </script>
+      <style>
+   .css,table,tr,td{
+      padding: 15px;
+      border: 1px solid black;
+      border-collapse: collapse;
+        }
+    table{
+      width:100%;
+    }
+      </style>'.$mensaje_html.'</body>';
+    }else{
+      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      $(document).ready(function(){
+          $("table").removeClass("table table-bordered").addClass("css");
+      });
+      </script>
+      <style>
+   .css,table,tr,td{
+      padding: 15px;
+      border: 1px solid black;
+      border-collapse: collapse;
+        }
+    table{
+      width:100%;
+    }
+      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
+    }
     /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
 
         $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
@@ -281,7 +318,7 @@ class EmailBandejaEnviosController extends Controller
         $yourPassword = $correo_busqueda->password;
         $sendto = $request->get('remitente')  ;
         $titulo = $request->get('asunto');
-        $mensaje = $request->get('mensaje');
+        $mensaje = $mensaje_con_firma;
         $bakcup=    $correo_busqueda->email_backup ;
 
         $file = $request->archivo;
@@ -318,9 +355,10 @@ class EmailBandejaEnviosController extends Controller
           $mail->destinatario =$correo;
           $mail->remitente =$request->get('remitente') ;
           $mail->asunto =$request->get('asunto') ;
-          $mail->mensaje =$request->get('mensaje') ;
+          $mail->mensaje =$mensaje_con_firma;
           $mail->mensaje_sin_html =$texto ;
-          $mail->fecha_hora =Carbon::now();
+          $mail->estado= $estado;
+          $mail->fecha_hora =Carbon::now() ;
           $mail-> save();
 
           $newfile2 = $request->file('archivos');
@@ -360,8 +398,8 @@ class EmailBandejaEnviosController extends Controller
       $mail->mensaje_sin_html=$mail->mensaje_sin_html;
       $mail->fecha_hora=$mail->fecha_hora;
       $mail->estado = '1';
-      $mail->save();  
-      return back();  
+      $mail->save();
+      return back();
     }
 
     public function trash()
@@ -420,7 +458,7 @@ class EmailBandejaEnviosController extends Controller
         // $archivos->delete();
         $email=EmailBandejaEnvios::findOrFail($id);
          $email->delete();
-       
+
 
         return back() ;
     }

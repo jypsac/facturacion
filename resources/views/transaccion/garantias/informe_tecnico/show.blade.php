@@ -23,9 +23,12 @@
                         <input type="text" name="archivo" maxlength="50" value="{{$garantias_informe_tecnico->orden_servicio}}">
                          <button type="submit" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </button></form>
 
-                        <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a><!--
+                       {{--  <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a> --}}<!--
                         <a href="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a> -->
-                         <form action="{{route('email.save')}}" method="post">
+                        @if(Auth::user()->email_creado == 0)
+                         <button type="button" class="btn btn-white" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope" ></i>  Email</button>
+                        @else
+                         <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn">
                             @csrf
                             <input type="text" hidden="hidden" name="tipo" value="App\GarantiaInformeTecnico"/>
                             <input type="text" hidden="hidden" name="id" value="{{$garantias_informe_tecnico->id}}"/>
@@ -33,7 +36,7 @@
                             <input type="text" hidden="hidden" name="cliente" value="{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}">
                             <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
                         </form>
-
+                        @endif
                         <a href="{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
                     </div>
                 </div>
@@ -327,18 +330,145 @@
     td{background: white;}
 
 </style>
-{{-- <script type="text/javascript">
-    Dropzone.options.myAwesomeDropzone = {
-  paramName: "file", // The name that will be used to transfer the file
-  maxFilesize: 3, // MB
-};
-Dropzone.options.myAwesomeDropzone = false;
-// This is useful when you want to create the
-// Dropzone programmatically later
+{{-- Modal Configuracion --}}
+<div class="modal fade" id="config" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
 
-// Disable auto discover for all elements:
-Dropzone.autoDiscover = false;
-</script> --}}
+            </div>
+            <div style="padding-left: 15px;padding-right: 15px;">
+                {{-- ccccccccccccccccc --}}
+                <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+
+                    <form action="{{route('email.config')}}"  enctype="multipart/form-data" method="post">
+                        @csrf
+                        <div class="row">
+                            <fieldset >
+                                <legend> Agregar Configuracion </legend>
+                                {{-- <div> --}}
+                                    <div class="panel-body" align="left">
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Email:</label>
+                                            <div class="col-sm-10"><input type="text" class="form-control" name="email">
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label">Contraseña:</label>
+                                            <div class="col-sm-10">
+                                                <div class="input-group m-b">
+                                                    <input type="password" class="form-control" name="password" id="txtPassword" required="">
+                                                    <div class="input-group-prepend">
+                                                        <span class="input-group-addon" style="height: 35.22222px;margin-top: 5px;">
+                                                            <i class="fa fa-eye-slash " id="ojo" onclick="mostrarPassword()"></i>
+                                                        </span>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">SMPT:</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="smtp" placeholder="smtp.gmail.com" required="">
+                                            </div>
+
+                                            <label class="col-sm-2 col-form-label">PORT:</label>
+                                            <div class="col-sm-4">
+                                                <input type="text" class="form-control" name="port" value="110 " >
+                                            </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Encryption:</label>
+                                            <div class="col-sm-4">
+                                                <select class="form-control" name="encryp" required="">
+                                                    <option value="">Ninguno</option>
+                                                    <option value="SSL">SSL</option>
+                                                    <option value="TLS">TLS</option>
+                                                </select>
+                                            </div>
+                                        </div><br>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Firma (opcional):</label>
+                                            <div class="col-sm-10">
+                                                <input type="file" id="archivoInput" name="firma" onchange="return validarExt()"  />
+                                                <span id="visorArchivo">
+                                                    <!--Aqui se desplegará el fichero-->
+                                                    <img name="firma"  src="" width="390px" height="200px" />
+                                                </span>
+                                            </div>
+                                        </div>
+                                        <br>
+                                    </div>
+                                </fieldset>
+                            </div>
+                            <button class="btn btn-primary" type="submit">Grabar</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+{{-- Fin de modal configuracion --}}
+<style>
+    .form-control{margin-top: 5px; border-radius: 5px}
+    p#texto{
+        text-align: center;
+        color:black;
+    }
+
+    input#archivoInput{
+        position:absolute;
+        top:0px;
+        left:0px;
+        right:0px;
+        bottom:0px;
+        width:100%;
+        height:100%;
+        opacity: 0  ;
+    }
+</style>
+<script type="text/javascript">
+    function mostrarPassword(){
+        var cambio = document.getElementById("txtPassword");
+        if(cambio.type == "password"){
+            cambio.type = "text";
+            $('#ojo').removeClass('fa fa-eye-slash').addClass('fa fa-eye');
+        }else{
+            cambio.type = "password";
+            $('#ojo').removeClass('fa fa-eye').addClass('fa fa-eye-slash');
+        }
+    }
+
+</script>
+<script type="text/javascript">
+    {{-- Fotooos --}}
+    function validarExt()
+    {
+        var archivoInput = document.getElementById('archivoInput');
+        var archivoRuta = archivoInput.value;
+        var extPermitidas = /(.jpg|.png|.jfif)$/i;
+        if(!extPermitidas.exec(archivoRuta)){
+            alert('Asegurese de haber seleccionado una Imagen');
+            archivoInput.value = '';
+            return false;
+        }
+
+        else
+                                        {
+        //PRevio del PDF
+        if (archivoInput.files && archivoInput.files[0])
+        {
+            var visor = new FileReader();
+            visor.onload = function(e)
+            {
+                document.getElementById('visorArchivo').innerHTML =
+                '<img name="firma" src="'+e.target.result+'"width="390px" height="200px" />';
+            };
+            visor.readAsDataURL(archivoInput.files[0]);
+        }
+    }
+}
+</script>
 
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
