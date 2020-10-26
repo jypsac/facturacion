@@ -71,9 +71,9 @@ class GarantiaInformeTecnicoController extends Controller
         $garantia_informe_tecnico->save();
 
          // //GUIA EGRESO
-        // $garantia_guia_egreso=GarantiaGuiaEgreso::where('orden_servicio',$orden_servicio_egreso)->first();
-        // $garantia_guia_egreso->informe_tecnico=1;
-        // $garantia_guia_egreso->save();
+        $garantia_guia_egreso=GarantiaGuiaEgreso::where('orden_servicio',$orden_servicio_egreso)->first();
+        $garantia_guia_egreso->informe_tecnico=1;
+        $garantia_guia_egreso->save();
 
         /*new*/
         $newfile = $request->file('files');
@@ -148,7 +148,7 @@ class GarantiaInformeTecnicoController extends Controller
             $nombre_archivo = GarantiaInformeTecnicoArchivos::where('id_informe_tecnico', $id)->pluck('archivos');
             $orden_servicio=$request->get('orden_servicio');
 
-            foreach ($id_archivo as $ids) { 
+            foreach ($id_archivo as $ids) {
                 $nombre_orig = $request->get('original');
                 if ($request->hasfile("nombre$ids")) {
                     $archivo_input = $request->file("nombre$ids");
@@ -163,10 +163,10 @@ class GarantiaInformeTecnicoController extends Controller
                     \Storage::disk('informe_tecnico_imagenes')->put($nombre,  \File::get($archivo_input));
                      // $archivo_storage = \Storage::disk('informe_tecnico_imagenes')->allFiles();
                      $archivo_base = GarantiaInformeTecnicoArchivos::pluck('archivos');
-                    //ELIMINAR ARCHIVO (?) 
+                    //ELIMINAR ARCHIVO (?)
                     // foreach ($archivo_base as $base) {
                     //     $original = $request->get('original');
-                        
+
                     //      // foreach ($archivo_storage as $storage) {
                     //         if( $base != $original  ){
                     //             // $delete = $storage;
@@ -177,14 +177,14 @@ class GarantiaInformeTecnicoController extends Controller
                     //              // return 'nohay';
                     //         }
                     //     // }
-                      
+
                     // }
                      //
-                 }          
-                
+                 }
+
             }
             return redirect()->route('garantia_informe_tecnico.index');
-           
+
     }
 
     /**

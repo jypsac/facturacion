@@ -143,7 +143,8 @@ Route::group(
 		Route::post('/email/config/{id}','EmailBandejaEnviosController@configupdate')->name('email.configupdate');
 
 		//Garantias
-
+		Route::get('contacto_cliente','GarantiaGuiaIngresoController@contacto_cliente');
+		Route::get('contacto_cliente_actualizar','GarantiaGuiaIngresoController@contacto_cliente_actualizar');
 		Route::POST('garantia_guia_ingreso/email/enviar','GarantiaGuiaIngresoController@enviar')->name('garantia_ingreso.enviar');
 		Route::get('garantia_guia_ingreso/email/{id}','GarantiaGuiaIngresoController@email')->name('guia_ingreso.email');
 		Route::get('garantia_guia_ingreso/pdf/{id}' , 'GarantiaGuiaIngresoController@pdf')->name('pdf_ingreso');
