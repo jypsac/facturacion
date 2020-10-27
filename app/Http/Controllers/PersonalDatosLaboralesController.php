@@ -77,7 +77,7 @@ class PersonalDatosLaboralesController extends Controller
         $personal->notas=$request->get('notas');
         $personal->save();
         // return redirect()->route('personal-datos-laborales.index');
-        return redirect()->route('personal-datos-laborales.show', $personal->personal_id); 
+        return redirect()->route('personal-datos-laborales.show', $personal->personal_id);
 
         // return $personal_id;
     }
@@ -89,7 +89,7 @@ class PersonalDatosLaboralesController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-    {     
+    {
 
         $personales=Personal::where('id',$id)->first();
         $persona=Personal_datos_laborales::where('personal_id',$id)->first();
@@ -122,7 +122,7 @@ class PersonalDatosLaboralesController extends Controller
     {
          // //Personal Estado
         $id_personal_estado=$request->get('id_personal');
-        
+
         $personal_estado=Personal::find($id_personal_estado);
         $personal_estado->estado_trabajador_laboral=$request->get('estado_trabajador');
         $personal_estado->save();
@@ -149,9 +149,9 @@ class PersonalDatosLaboralesController extends Controller
         $personal->save();
 
         // return redirect()->route('personal-datos-laborales.index');
-        return redirect()->route('personal-datos-laborales.show', $id_personal); 
+        return redirect()->route('personal-datos-laborales.show', $id_personal);
         // return $id_personal;
-        
+
 
     }
 

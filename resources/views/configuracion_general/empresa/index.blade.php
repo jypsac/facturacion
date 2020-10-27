@@ -1,4 +1,4 @@
-1@extends('layout')
+@extends('layout')
 
 @section('title', 'Configuracion de Empresa')
 @section('breadcrumb', 'Empresa')

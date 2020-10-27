@@ -11,7 +11,7 @@
 
 <div style="padding-top: 20px;padding-bottom: 50px">
 <div class="container" style=" padding-top: 30px; background: white;">
-      <div class="jumbotron" 
+      <div class="jumbotron"
       style="padding: 10px 40px ;
       background-image: url('https://www.iwantwallpaper.co.uk/images/muriva-bluff-embossed-brick-effect-wallpaper-j30309-p711-1303_image.jpg'); background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;"
        >
@@ -35,18 +35,18 @@
                             </div>
 
                  </th>
-                
+
              </tr>
              <td>
-                 <a class="btn btn-lg btn-success" href="{{ route('personal-datos-laborales.edit', $persona->id) }}" style="background-color: #1ab394; border-color: #1ab394"> <i class="fa fa-edit"></i></a>
+                 <a class="btn btn-lg btn-success" href="{{ route('personal-datos-laborales.edit', $personales->id) }}" style="background-color: #1ab394; border-color: #1ab394"> <i class="fa fa-edit"></i></a>
             {{--  <td>
                @if($personales->estado==0)
                   <a class="btn btn-lg btn-success" href="{{ route('create.laboral', $personales->id) }}" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-plus"></i></a>
 
                @else
                   <a class="btn btn-lg btn-success" href="{{ route('personal-datos-laborales.show', $personales->id) }}" style="background-color: #2ab524; border-color: #1ab394"> <i class="fa fa-eye"></i></a>
-              
-               
+
+
                @endif
              </td> --}}
 
@@ -56,92 +56,92 @@
       <div class="row marketing">
         <div class="col-lg-6">
           <h4>Fecha Viculacion</h4>
-          <p>{{$persona->fecha_vinculacion}} </p><hr>
+          <p>{{$personales->fecha_vinculacion}} </p><hr>
 
           <h4>Fecha Retiro</h4>
-          <p>{{$persona->fecha_retiro}} </p><hr>
+          <p>{{$personales->fecha_retiro}} </p><hr>
 
 
           <h4>Forma Pago</h4>
-          <p>{{$persona->forma_pago}} </p><hr>
+          <p>{{$personales->forma_pago}} </p><hr>
         </div>
 
         <div class="col-lg-6">
           <h4>Salario</h4>
-          <p>{{$persona->salario}} </p><hr>
+          <p>{{$personales->salario}} </p><hr>
 
             <h4>Categoria Ocupacional</h4>
-          <p>{{$persona->categoria_ocupacional}} </p><hr>
+          <p>{{$personales->categoria_ocupacional}} </p><hr>
 
             <h4>Estado Del Trbajador</h4>
-          <p>{{$persona->estado_trabajador}} </p><hr>
+          <p>{{$personales->estado_trabajador}} </p><hr>
 
-           
+
         </div>
         <div class="col-lg-6">
-         
+
 
           <h4>Sede</h4>
-          <p>{{$persona->sede}} </p><hr>
+          <p>{{$personales->sede}} </p><hr>
 
           <h4>Turno</h4>
-          <p>{{$persona->turno}} </p><hr>
+          <p>{{$personales->turno}} </p><hr>
 
-        
+
         </div>
         <div class="col-lg-6">
          <h4>Departamento Area</h4>
-          <p>{{$persona->departamento_area}} </p><hr>
-          
+          <p>{{$personales->departamento_area}} </p><hr>
+
 
           <h4>Cargo</h4>
-          <p>{{$persona->cargo}} </p><hr>
+          <p>{{$personales->cargo}} </p><hr>
 
-          
+
         </div>
 
         <div class="col-lg-6">
-         
+
 
           <h4>Tipo Trbajador</h4>
-          <p>{{$persona->tipo_trabajador}} </p><hr>
+          <p>{{$personales->tipo_trabajador}} </p><hr>
 
           <h4>Regimen Pensionario</h4>
-          <p>{{$persona->regimen_pensionario}} </p><hr>
+          <p>{{$personales->regimen_pensionario}} </p><hr>
 
-        
+
         </div>
         <div class="col-lg-6">
          <h4>Seguro de Salud</h4>
-          <p>{{$persona->afiliacion_salud}} </p><hr>
-          
+          <p>{{$personales->afiliacion_salud}} </p><hr>
+
 
           <h4>Banco Abonado</h4>
-          <p>{{$persona->banco_renumeracion}} </p><hr>
+          <p>{{$personales->banco_renumeracion}} </p><hr>
 
-          
+
         </div>
         <div class="col-lg-6">
          <h4>Numero Cuenta</h4>
-          <p>{{$persona->numero_cuenta}} </p><hr>
-          
+          <p>{{$personales->numero_cuenta}} </p><hr>
+
         </div>
         <div class="col-lg-6">
 
           <h4>Notas</h4>
-          <p>{{$persona->notas}} </p><hr>
+          <p>{{$personales->notas}} </p><hr>
 
            <h4>Tipo Contrato</h4>
-          <p>{{$persona->tipo_contrato}}</p><hr>
+          <p>{{$personales->tipo_contrato}}</p><hr>
         </div>
 
       </div>
 
 
 
-    </div> 
-    </div> 
-            
+    </div>
+    </div>
+
             <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -156,5 +156,5 @@
 
     <!-- blueimp gallery -->
     <script src="{{ asset('js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
-  
+
 @endsection

@@ -337,12 +337,13 @@
 
                       			<label class="col-sm-2 col-form-label">Ing. Asignado:</label>
                         		 <div class="col-sm-10">
-                         		 <input list="browsers1" class="form-control m-b" name="personal_lab_id" required autocomplete="off">
+                        		 	<input type="text" class="form-control m-b" value="{{Auth::user()->personal->nombres}}"  name="personal_lab_id" id="" readonly="">
+{{--                          		 	<input list="browsers1" class="form-control m-b" name="personal_lab_id" required autocomplete="off">
 												<datalist id="browsers1"  >
 														@foreach($personales as $personal)
 															<option value="{{$personal->personal_l->nombres}}"></option>
 														@endforeach
-												</datalist>
+												</datalist> --}}
                 				</div>
 
 						</div>
