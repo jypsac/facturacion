@@ -63,7 +63,34 @@ class FacturacionController extends Controller
         // $kardex_prod=kardex_entrada_registro::join("productos","kardex_entrada_registro.producto_id","productos.id")
         // ->where('estado',1)->get();
 
-        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        $almacen_p=$request->get('almacen');
+        $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
+        $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
+
+        //return $kardex_entrada;
+        foreach($kardex_entrada as $kardex_entradas){
+            $kadex_entrada_id[]=$kardex_entradas->id;
+        }
+        
+        for($x=0;$x<$kardex_entrada_count;$x++){
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
+                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
+                foreach( $nueva as $nuevas){
+                    $prod[]=$nuevas->producto_id;
+                }
+            }   
+        }
+        // return $nueva;
+        $lista=array_values(array_unique($prod));
+        $lista_count=count($lista);
+        // return $lista_count;
+
+        for($x=0;$x<$lista_count;$x++){
+            $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+        }
+        
+        // return $productos;
+        // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
         // return $kardex_prod;
 
@@ -342,7 +369,6 @@ class FacturacionController extends Controller
        //calculo para el stock del producto
         $almacen_producto_validacion=$request->get('almacen');
         for($i=0;$i<$count_articulo;$i++){
-            $producto_id[$i];
             $kardex_entrada_v=Kardex_entrada::where('almacen_id',$almacen_producto_validacion)->get();
             $kardex_entrada_count_v=Kardex_entrada::where('almacen_id',$almacen_producto_validacion)->count();
 
@@ -362,36 +388,9 @@ class FacturacionController extends Controller
             foreach($comparacion_v as $comparaciones_v){
                 $cantidad_v=$comparaciones_v->cantidad+$cantidad_v;
             }
-
-            if(isset($comparacion_v)){
-                $var_cantidad_entrada=$facturacion_registro->cantidad;
-                $contador=0;
-                foreach ($comparacion as $p) {
-                    if($p->cantidad>$var_cantidad_entrada){
-                        $cantidad_mayor=$p->cantidad;
-                        $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
-                        $p->cantidad=$cantidad_final;
-                        if($cantidad_final==0){
-                            $p->estado=0;
-                            $p->save();
-                            break;
-                        }else{
-                            $p->save();
-                            break;
-                        }
-                    }elseif($p->cantidad==$var_cantidad_entrada){
-                        $p->cantidad=0;
-                        $p->estado=0;
-                        $p->save();
-                        break;
-                    }
-                    else{
-                        $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
-                        $p->cantidad=0;
-                        $p->estado=0;
-                        $p->save();
-                    }
-                }
+            $cantidad_entrada=$request->get('cantidad')[$i];
+            if($cantidad_v<$cantidad_entrada){
+               return "cantidad mayor al stock";
             }
 
         }
