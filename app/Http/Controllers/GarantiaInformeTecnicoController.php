@@ -183,6 +183,23 @@ class GarantiaInformeTecnicoController extends Controller
                  }
 
             }
+            $newfile = $request->file('files');
+            if($request->hasfile('files')){
+                $orden_servicio=$request->get('orden_servicio');
+                // $date = Carbon::now();
+                // $hora = $date->toTimeString();
+                foreach ($newfile as $file) {
+                    $nombre =  $orden_servicio.'_'.$file->getClientOriginalName();
+                    \Storage::disk('informe_tecnico_imagenes')->put($nombre,  \File::get($file));
+                    // $news[] = public_path().'/app/public/'.$nombre;
+                }
+                foreach ($newfile as $files) {
+                    $archivo_tecnico = new GarantiaInformeTecnicoArchivos;
+                    $archivo_tecnico->id_informe_tecnico = $id;
+                    $archivo_tecnico->archivos = $orden_servicio.'_'.$files->getClientOriginalName();
+                    $archivo_tecnico->save();
+                }
+            }
             return redirect()->route('garantia_informe_tecnico.index');
 
     }

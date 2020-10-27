@@ -147,7 +147,7 @@
         <div class="panel panel-default">
           <div class="panel-body" align="left">
             <div class="field" align="left">
-              <h3>Imagenes</h3>
+              <h3>Imagenes<h5>(Click a la imagen para editar)</h5></h3>
                {{-- <input  type="file" name="files[]" id="files"  multiple="" value=" "  accept="image/jpeg/svg/png/jpg" /> --}}
                <div class="row">
                	@foreach($archivo_informe_tecnico as $archivo)
@@ -160,8 +160,6 @@
                        <span id="visorArchivo{{$archivo->id}}">
 			                   <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 200px;padding: 15px ;"/>
                       </span>
-
-
 		               	 <script type="text/javascript">
                       function validarExt{{$archivo->id}}(){
                         var archivoInput{{$archivo->id}} = document.getElementById('archivoInput{{$archivo->id}}');
@@ -172,7 +170,6 @@
                             archivoInput{{$archivo->id}}.value = '';
                             return false;
                         }
-
                         else
                         {
                         //PRevio del PDF
@@ -193,10 +190,10 @@
                   </div>
                @endforeach
                </div>
-
-
+               <br/>
+               <h3>Agregar Nuevas Imagenes</h3>
+               <input  type="file" name="files[]" id="files"  multiple=""  accept="image/jpeg/svg/png/jpg" />
             </div>
-
           </div>
         </div>
       </fieldset>
@@ -272,7 +269,33 @@ legend{
   background-color: #ffffff;
 }
 </style>
-
+<script type="text/javascript">
+$(document).ready(function() {
+     if (window.File && window.FileList && window.FileReader) {
+       $("#files").on("change", function(e) {
+         var files = e.target.files,
+           filesLength = files.length;
+         for (var i = 0; i < filesLength; i++) {
+           var f = files[i]
+           var fileReader = new FileReader();
+           fileReader.onload = (function(e) {
+             var file = e.target;
+             $("<span class=\"pip\">" +
+               "<img class=\"imageThumb\" src=\"" + e.target.result + "\" title=\"" + file.name + "\"/>" +
+               "<br/><span class=\"remove\">Remove image</span>" +
+               "</span>").insertAfter("#files");
+             $(".remove").click(function(){
+               $(this).parent(".pip").remove();
+             });
+           });
+           fileReader.readAsDataURL(f);
+         }
+       });
+     } else {
+       alert("Your browser doesn't support to File API")
+     }
+});
+</script>
 <link href="{{asset('css/plugins/dropzone/basic.css')}}" rel="stylesheet">
 <link href="{{asset('css/plugins/dropzone/dropzone.css')}}" rel="stylesheet">
 <script src="{{ asset('js/plugins/dropzone/dropzone.js') }}"></script>
