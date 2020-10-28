@@ -278,7 +278,7 @@
                                     <td>Moneda</td>
                                     <td>:</td>
                                     <td>
-                                        <input type="text" name="moneda" class="form-control" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">
+                                        <input type="text" name="moneda" class="form-control" value=" {{$moneda->nombre}}" readonly="readonly">
                                         <br>
                                         <input type="hidden" name="almacen" class="form-control" value="{{$sucursal->id}}" readonly="readonly">
                                         <a onclick="event.preventDefault();
@@ -411,7 +411,7 @@
                                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
                                                 <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
-                                                
+
                                             </form>
 
                                         </div>
@@ -435,7 +435,7 @@
                         <!-- Custom and plugin javascript -->
                         <script src="{{ asset('js/inspinia.js') }}"></script>
                         <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-                        
+
                         <script>
                             var i = 2;
                             $(".addmore").on('click', function () {
