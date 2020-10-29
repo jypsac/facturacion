@@ -70,6 +70,10 @@ class BoletaController extends Controller
                 }
             }   
         }
+        //validar almacen con prodcutos vacios
+        if(!isset($prod)){
+            return "no hay prodcutos en el almacen seleccionado";
+        }
 
         $lista=array_values(array_unique($prod));
         $lista_count=count($lista);
