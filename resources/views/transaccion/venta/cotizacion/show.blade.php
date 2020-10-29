@@ -10,7 +10,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <div class="ibox-tools">
-            <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" >Imprimir</a>
+            <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
         </div>
     </div>
     <div class="row">

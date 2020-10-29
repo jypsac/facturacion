@@ -206,13 +206,11 @@
                             </div>
                             <div class="col-sm-4"></div>
                             <div class="col-sm-4">
-                                <div class="form-control ruc" style="height:125px">
-                                    <center>
-                                        <h3 style="padding-top:10px">{{$empresa->ruc}}</h3>
-                                        <h2>Cotizacion Producto</h2>
-                                        <h5>{{$cotizacion_numero}}</h5>
-                                    </center>
-                                </div>
+                               <div class="form-control" align="center" style="height: auto;">
+                                <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
+                                <h2 style="font-size: 19px">COTIZACION ELECTRONICA</h2>
+                                <h5>{{$cotizacion_numero}}</h5>
+                            </div>
                             </div>
                         </div>
                         <br>
@@ -305,7 +303,7 @@
                                                 <td>Observacion</td>
                                                 <td>:</td>
                                                 <td colspan="4">
-                                                    <textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
+                                                    <textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Boleta a vuestra solicitud</textarea>
                                                 </td>
                                             </tr>
                                         </tbody>
@@ -383,17 +381,16 @@
                                                 <tbody>
 
                                                     <tr align="center">
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td></td>
-                                                        <td>Total :</td>
-                                                        <td><input id='total_final' style="width: 76px" disabled="disabled" class="form-control" required/>
-                                                        </td>
-                                                    </tr>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td>Total :</td>
+                                                <td colspan="2"><input id='total_final' disabled="disabled" class="form-control" required/>
+                                                </td>
+                                            </tr>
                                                 </tbody>
                                             </table>
                                         </div>
