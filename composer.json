@@ -16,6 +16,7 @@
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.0",
+        "luecano/numero-a-letras": "^2.2",
         "spatie/laravel-permission": "^3.13"
     },
     "require-dev": {

@@ -10,7 +10,7 @@
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <div class="ibox-tools">
-            <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" >Imprimir</a>
+            <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
         </div>
     </div>
     <div class="row">
@@ -49,9 +49,9 @@
                         </div>
                     </div>
                     <div class="col-sm-6" align="center">
-                     <div class="form-control" >
-                         <h3>Condiciones Generales</h3>
-                         <div align="left">
+                       <div class="form-control" >
+                           <h3>Condiciones Generales</h3>
+                           <div align="left">
                             <strong>Forma De Pago:</strong> &nbsp;{{$cotizacion->forma_pago->nombre }}<br>
                             <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
                             <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
@@ -59,95 +59,112 @@
                         </div>
                     </div>
                 </div>
-                <div class="col-sm-6" align="center">
-                     <div class="form-control" style="border: none;height: auto" >
-                         <div align="left">
-                            <strong>observaciones:</strong> &nbsp;{{$cotizacion->observacion }}<br>
-                        </div>
+                <div class="col-sm-12" align="center">
+                   <div class="form-control" style="border: none;height: auto" >
+                       <div align="left">
+                        <strong>observaciones:</strong> &nbsp;{{$cotizacion->observacion }}<br>
                     </div>
                 </div>
+            </div>
 
-            </div><br>
-            <div class="table-responsive">
-                <table class="table " >
-                    <thead>
-                        <tr >
-                            <th>Codigo Producto </th>
-                            <th>Marca / Descripcion</th>
-                            <th>N/S</th>
-                            <th>Unid.Medida</th>
-                            <th>Cantidad</th>
-                            <th>Peso</th>
-                        </thead>
-                        <tbody>
+        </div><br>
+        <div class="table-responsive">
+            <table class="table " >
+                <thead>
+                   <tr >
+                    <th>ITEM </th>
+                    <th>Codigo </th>
+                    <th>Unidad</th>
+                    <th>Descripcion</th>
+                    <th>Cantidad</th>
+                    <th>P.Unitario</th>
+                    <th>Total <span hidden="hidden">{{$simbologia=$cotizacion->moneda->simbolo}}</span></th>
+                </tr>
+            </thead>
+            <tbody>
+               @foreach($cotizacion_registro as $cotizacion_registros)
+               <tr>
+                <td>{{$i}} </td>
+                <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
+                <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
+                <td>{{$cotizacion_registros->producto->nombre}}  <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span></td>
+                <td>{{$cotizacion_registros->cantidad}}</td>
+                <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
+                <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
+            </tr>
+            @endforeach
+        </tbody>
+    </table>
+</div><!-- /table-responsive -->
 
-                        </tbody>
-                    </table>
-                </div><!-- /table-responsive -->
+<footer style="padding-top: 120px">
+ <h3 align="left">
+    <?php $v=new CifrasEnLetras() ;
+    $letra=($v->convertirEurosEnLetras($end));
+    $letra_final = strstr($letra, 'soles',true);
+    $end_final=strstr($end, '.');
+    ?>
+    Son : {{$letra_final}} {{$end_final}}/100 {{$cotizacion->moneda->nombre }}
+</h3>
 
+<div class="row">
+    <div class="col-sm-3 ">
+        <p class="form-control a"> Sub Total</p>
+        <p class="form-control a">{{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}</p>
+    </div>
+    <div class="col-sm-3 ">
+        <p class="form-control a"> Op. Agravada</p>
+        <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
+    </div>
+    <div class="col-sm-3 ">
+        <p class="form-control a"> IGV</p>
+        <p class="form-control a"> @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}} @else  {{$cotizacion->moneda->simbolo}}.00 @endif</p>
+    </div>
+    <div class="col-sm-3 ">
+        <p class="form-control a"> Importe Total</p>
+        <p class="form-control a"> @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif</p>
+    </div>
+</div>
+</footer>
 
-                <footer style="padding-top: 120px">
-                   <div class="row" align="center" style="padding-bottom: 5px">
-                    <div class="col-sm-6" align="center">
-                        <div class="form-control"><h3>Observacion:</h3>
-                            <div align="left" style="font-size: 13px">
-                                <p></p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6" align="center">
-                        <div class="form-control" ><h3>Motivo de Traslado</h3>
-                            <div align="left" style="font-size: 13px">
-                                <p></p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </footer>
-
-            <br>
-            <!-- Fin Totales de Productos -->
-            <div class="row">
-                @foreach($banco as $bancos)
-                <div class="col-sm-3 " align="center">
-                    <p class="form-control" style="height: 100px">
-                      <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
-                      <br>
-                      N° S/. : {{$bancos->numero_soles}}
-                      <br>
-                      N° $ : {{$bancos->numero_dolares}}<br>
-
-                  </p>
-              </div>
-              @endforeach
-
-          </div>
+<br>
+<!-- Fin Totales de Productos -->
+<div class="row">
+    @foreach($banco as $bancos)
+    <div class="col-sm-3 " align="center">
+        <p class="form-control" style="height: 100px">
+          <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
           <br>
-          <div class="row">
-            <div class="col-sm-3">
-                <p><u>centro de Atencion : </u></p>
-                Telefono : <br>
-                Celular : <br>
-                Email : <br>
-                Web : <br>
-            </div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3"><br><br>
-                <hr>
-                <center>adm</center>
-            </div>
+          N° S/. : {{$bancos->numero_soles}}
+          <br>
+          N° $ : {{$bancos->numero_dolares}}<br>
 
-        </div>
+      </p>
+  </div>
+  @endforeach
 
+</div>
+<br>
+<div class="row">
+    <div class="col-sm-3">
+        <p><u>centro de Atencion : </u></p>
+        Telefono : {{$cotizacion->user_personal->personal->telefono }}<br>
+        Celular : {{$cotizacion->user_personal->personal->celular }}<br>
+        Email : {{$cotizacion->user_personal->personal->email }}<br>
+        Web : {{$empresa->pagina_web}} <br>
+    </div>
+    <div class="col-sm-3"></div>
+    <div class="col-sm-3"></div>
+    <div class="col-sm-3"><br><br>
+        <hr>
+        <center>{{$cotizacion->user_personal->personal->nombres }}</center>
     </div>
 </div>
 </div>
-
 </div>
-
+</div>
+</div>
 {{--  --}}
-
 
 <style type="text/css">
     .form-control{border-radius: 10px; height: 150px;}
