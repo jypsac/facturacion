@@ -80,6 +80,11 @@ class FacturacionController extends Controller
                 }
             }   
         }
+        //validacion si hay prductos en el almacen
+        if(!isset($prod)){
+            return "no hay prodcutos en el almacen seleccionado";
+        }
+        
         // return $nueva;
         $lista=array_values(array_unique($prod));
         $lista_count=count($lista);
