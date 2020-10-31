@@ -33,9 +33,9 @@
 	            <div class="ibox-content">
 	            	<div class="row">
 						<div class="col-lg-12">
-                    <div class="ibox ">
+                   {{--  <div class="ibox ">
                         <div class="ibox-content" style="border-top-width: 0px;padding: 0;height: 20px">
-                            <!-- MODAL CLIENTE -->
+                            <!-- MODAL CLIENTE --> --}}
 							<div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
 								<div class="modal-dialog modal-lg">
 								  <div class="modal-content" style="width: 100%">
@@ -288,8 +288,8 @@
 							</div>
 
 
-                    </div>
-                </div>
+                   {{--  </div>
+                </div> --}}
  <form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" method="post">
 	@csrf
 

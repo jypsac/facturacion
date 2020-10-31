@@ -27,8 +27,8 @@
                                                     <p>Selecciona marca a agregar</p>
 
                                                     <form action="{{ route('garantia_guia_ingreso.create') }}"  enctype="multipart/form-data" method="get">
-                                                        <div class="form-group"><label>Marca</label>
-                                                            <div class="form-group row"><label class="col-sm-2 col-form-label">Familia:</label>
+                                                        <div class="form-group">{{-- <label>Marca</label> --}}
+                                                            <div class="form-group row"><label class="col-sm-2 col-form-label">Marca:</label>
                                                                 <div class="col-sm-10">
                                                                     <select class="form-control m-b" name="familia">
                                                                     @foreach($marcas as $marca)

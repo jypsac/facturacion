@@ -18,17 +18,18 @@
             </form>
                      {{-- </a> --}}
             @if(Auth::user()->email_creado == 0)
-                         <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope" ></i>  Email</button>
-                        @else
-                        <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
-                            @csrf
-                            <input type="text" hidden="hidden" name="tipo" value="App\GarantiaGuiaIngreso"/>
-                            <input type="text" hidden="hidden" name="id" value="{{$garantia_guia_ingreso->id}}"/>
-                            <input type="text" hidden="hidden" name="redict" value="garantia_guia_ingreso">
-                            <input type="text" hidden="hidden" name="cliente" value="{{$garantia_guia_ingreso->clientes_i->email}}">
-                            <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
-                        </form>
-                        @endif
+                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope" ></i>  Email</button>
+            @else
+                <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
+                    @csrf
+                    <input type="text" hidden="hidden" name="tipo" value="App\GarantiaGuiaIngreso"/>
+                    <input type="text" hidden="hidden" name="id" value="{{$garantia_guia_ingreso->id}}"/>
+                    <input type="text" hidden="hidden" name="redict" value="garantia_guia_ingreso">
+                    <input type="text" hidden="hidden" name="cliente" value="{{$garantia_guia_ingreso->clientes_i->email}}">
+                    <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
+                </form>
+            @endif
+            <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
         </div>
     </div>
     <div class="row">
@@ -66,9 +67,9 @@
                                 <strong>Señor(es):</strong> &nbsp;{{$garantia_guia_ingreso->clientes_i->nombre}}<br>
                                 <strong>{{$garantia_guia_ingreso->clientes_i->documento_identificacion}} :</strong> &nbsp;{{$garantia_guia_ingreso->clientes_i->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <strong>Fecha:</strong> &nbsp;{{$garantia_guia_ingreso->fecha}}<br>
-                                <strong>Direccion:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->direccion}}<br>
-                                <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
+                                <strong>Direccion:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->direccion}}<br>
                                 <strong>Cliente:&nbsp;</strong>{{$garantia_guia_ingreso->contactos->nombre}} &nbsp;
                                 <br>
                             </div>
@@ -163,8 +164,8 @@
             <div class="col-sm-2"></div>
             <div class="col-sm-3"></div>
             <div class="col-sm-3"><br><br>
-                <hr>
-                <center>adm</center>
+                {{-- <hr>
+                <center>adm</center> --}}
             </div>
 
         </div>

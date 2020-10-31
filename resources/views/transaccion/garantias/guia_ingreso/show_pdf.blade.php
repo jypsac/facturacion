@@ -14,19 +14,102 @@
 
 <div class="ibox" style=" margin-bottom:0px; width: 100%">
     <div class="table-responsive" >
-        <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:100px;height: 50px ;margin-top: 5px">
+        <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:200px;height: 50px ;margin-top: 5px">
         <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 100px;height: 50px;margin-top: 5px">
     </div>
     <div class="table-responsive" ><br><br><br><br><br>
         <p align="left">{{$mi_empresa->calle}}<br>{{$mi_empresa->correo}} / {{$mi_empresa->telefono}} - {{$mi_empresa->movil}}</p>
     </div>
 </div>
+    <table style="width: 100%;border-collapse:separate">
+    <tr>
+        <th style="width: 70%;border-color: white"></th>
+        <th style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto" align="center">
+                <p style="margin: 5px;font-weight: 200;"> R.U.C {{$mi_empresa->ruc}}</p>
+                <p style="margin: 5px;font-size: 15px">GUIA DE INGRESO</p>
+                <p style="margin: 5px">{{$garantia_guia_ingreso->orden_servicio}}</p>
+        </th>
+    </tr>
+    </table>
 
-<h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2><br><br>
 
 <div class="wrapper wrapper-content animated fadeIn">
+<table style="width: 100%;border-collapse:separate">
+    <tr>
+        <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto" >  
+            <center><strong style="align-content: center;margin: 5px">Contacto Cliente </strong></center><br>
+            <strong>Nombre o Empresa:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->nombre}}<br>
+            <strong>{{$garantia_guia_ingreso->clientes_i->documento_identificacion}}:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<strong>Fecha:</strong>&nbsp;{{$garantia_guia_ingreso->fecha}}<br>
+            <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
+            <strong>Direccion:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->direccion}}<br>
+            <strong>Contacto:</strong>&nbsp;{{$garantia_guia_ingreso->contactos->nombre}}<br>
+        </td>
+        <th style="width: 10%;border-color: white"></th>
+        <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto">
+            <center><strong style="align-content: center;margin: 5px">Condiciones Generales </strong></center><br>
+            <strong>Ing. Asignado:</strong>&nbsp;{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}<br>
+            <strong>Motivo:</strong>&nbsp;{{$garantia_guia_ingreso->motivo}}<br>
+            <strong>Marca:</strong>&nbsp;{{$garantia_guia_ingreso->marcas_i->nombre}}<br>
+            <strong>Asunto:</strong>&nbsp;{{$garantia_guia_ingreso->asunto}}<br>
+        </td>
+    </tr>
+</table>
+<br>
+<table style="width: 100%;border-collapse:separate">
+    <tr>
+        <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto">
+            <center><strong style="align-content: center;margin: 5px">Datos del Equipo</strong></center><br>
 
-<div class="table-responsive">
+            <span style="float:left;position:relative;width: 59%">
+                <strong>Modelo:</strong>&nbsp;{{$garantia_guia_ingreso->nombre_equipo}}
+           </span>
+            <span style="float:left;position:relative">
+                 <strong>Codigo Interno:</strong>&nbsp;{{$garantia_guia_ingreso->codigo_interno}}
+            </span>
+            <br>
+            <span style="float:left;position:relative;width: 59%">
+                <strong>Número de Serie:</strong>&nbsp;{{$garantia_guia_ingreso->numero_serie}}
+            </span>
+            <span style="float:left;position:relative">
+                <strong>Fecha de Compra:</strong>&nbsp;{{$garantia_guia_ingreso->fecha_compra}}
+            </span>
+            <br>
+        </td>
+    </tr>
+</table>
+<table style="width: 100%;border-collapse:separate">
+    <tr>
+        <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto">
+            <center><strong style="align-content: center;margin: 5px">Descripcion del Problema</strong></center><br>
+            <span> {!! nl2br($garantia_guia_ingreso->descripcion_problema)!!}</span>
+            <br>
+        </td>
+    </tr>
+</table >
+<br>
+<table style="width: 100%;border-collapse:separate">
+    <tr>
+        <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto">
+            <center><strong style="align-content: center;margin: 5px">Revision y Diagnostico</strong></center><br>
+            <span> {!! nl2br($garantia_guia_ingreso->revision_diagnostico)!!}</span>
+            <br>
+        </td>
+    </tr>
+</table>
+<br>
+<table style="width: 100%;border-collapse:separate">
+    <tr>
+        <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto">
+            <center><strong style="align-content: center;margin: 5px">Estetica</strong></center><br>
+            <span>  {!! nl2br($garantia_guia_ingreso->estetica)!!}</span>
+            <br>
+        </td>
+    </tr>
+</table>
+<br>
+<br>
+{{-- <div class="table-responsive">
     <table class="table table-bordered white-bg">
         <thead>
             <tr >
@@ -49,16 +132,16 @@
         </thead>
     </table>
     
-</div>
+</div> --}}
 
-
+{{-- 
 <div class="row">
     <div class="col-lg-12">
-        <div class="ibox ">
+        <div class="ibox "> --}}
             {{-- <div class="ibox-title"> --}}
-            <h4>Datos del Ciente</h4>
+            {{-- <h4>Datos del Ciente</h4> --}}
             {{-- </div> --}}
-            <div>
+      {{--       <div>
                 <table class="table table-bordered white-bg">
                     <tbody>
             <tr>
@@ -89,19 +172,19 @@
             </div>
         </div>
     </div>
+ --}}
+{{-- </div>
+ --}}
 
-</div>
-
-
-<div class="row">
+{{-- <div class="row">
     <div class="col-lg-12" style="
     height: 105px;
-">
-        <div class="ibox ">
+"> --}}
+       {{--  <div class="ibox "> --}}
             {{-- <div class="ibox-title"> --}}
-            <h4>Datos del Equipo</h4>
+{{--             <h4>Datos del Equipo</h4> --}}
             {{-- </div> --}}
-            <div>
+            {{-- <div>
                 <table class="table table-bordered white-bg">
                     <tbody>
             <tr>
@@ -123,15 +206,15 @@
     </div>
 
 </div>
+ --}}
 
-
-
+{{-- 
 <div class="col-lg-13">
-    <div class="ibox cero">
+    <div class="ibox cero"> --}}
         {{-- <div class="ibox-title"> --}}
-        <h4>Descripcion Del Problema</h4>
+{{--         <h4>Descripcion Del Problema</h4> --}}
         {{-- </div> --}}
-        <div class="border">
+{{--         <div class="border">
             <div class="ibox-content text-left h-10" style="padding: 0px;">
                 <span id="sparkline8">
                     <div class="panel-body" style="padding:10px;">
@@ -141,16 +224,16 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
-
+{{-- 
 
 <div class="col-lg-13">
-    <div class="ibox cero ">
+    <div class="ibox cero "> --}}
         {{-- <div class="ibox-title"> --}}
-        <h4>Revisión y diagnóstico</h4>
+        {{-- <h4>Revisión y diagnóstico</h4> --}}
         {{-- </div> --}}
-        <div class="border"> <div class="ibox-content text-left h-10" style="padding: 0px;">
+{{--         <div class="border"> <div class="ibox-content text-left h-10" style="padding: 0px;">
                 <span id="sparkline8">
                     <div class="panel-body" style="padding: 10px;">
                     {!! nl2br($garantia_guia_ingreso->revision_diagnostico)!!}
@@ -162,13 +245,13 @@
 </div>
 
 
-<div class="col-lg-13">
-    <div class="ibox cero">
+<div class="col-lg-13"> --}}
+    {{-- <div class="ibox cero"> --}}
 
         {{-- <div class="ibox-title"> --}}
-        <h4>Estetica</h4>
+        {{-- <h4>Estetica</h4> --}}
         {{-- </div> --}}
-        <div class="border">
+{{--         <div class="border">
             <div class="ibox-content text-left h-70" style="padding: 0px;">
                 <span id="sparkline8">
                     <div class="panel-body" style="padding: 10px;">
@@ -179,10 +262,10 @@
             </div>
         </div>
     </div>
-</div>
+</div> --}}
 
 <div style="height: 100px"></div>
-
+<br><br><br><br>
 
 <div class="">
     <table class="table  white-bg ">

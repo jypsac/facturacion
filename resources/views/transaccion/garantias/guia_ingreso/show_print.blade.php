@@ -31,177 +31,149 @@
 {{-- LLAMADO AL BODY EN FUNCION CERRAR CON UNA DURACION DE 10 SEGUNDOS --}}
 <body class="white-bg" onLoad="setTimeout('cerrar()',1*1000)">
 
-<div class="ibox" style="margin-bottom:0px;">
-    <div class="table-responsive" >
-        <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:200px;height: 70px ;margin-top: 20px">
-        <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 200px;height: 70px;margin-top: 20px">
-    </div>
-    <div class="table-responsive" >
-        <p>{{$mi_empresa->calle}}<br>{{$mi_empresa->correo}} / {{$mi_empresa->telefono}} - {{$mi_empresa->movil}}</p>
-    </div>
-</div>
-
-<h2 style="text-align: center;margin-top:0px;"> <strong>Guía de Ingreso</strong></h2>
-
-<div class="wrapper wrapper-content animated fadeIn">
- 
-<div class="table-responsive">
-    <table class="table table-bordered table-striped cero">
-        <thead>
-            <tr>
-                <td style="width: 100px;">Motivo</td>
-                <th style="width: 100px;">{{$garantia_guia_ingreso->motivo}}</th>
-                <td style="width: 70px;">Marca</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->marcas_i->nombre}}</th>
-                <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha}}</th>
-                <td style="width: 70px;">Orden de Servicio</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->orden_servicio}}</th>
-                
-            </tr>
-        </thead>
-    </table>
-    <table class="table table-bordered table-striped cero">
-        <thead>
-            <tr>
-                <td style="width: 70px;">Ing. Asigando</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</th>
-                <td style="width: 70px;">Asunto</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->asunto}}</th>
-            </tr>
-        </thead>
-    </table>
-</div>
-
-
 <div class="row">
-    <div class="col-lg-12">
-        <div class="ibox ">
-            {{-- <div class="ibox-title"> --}}
-            <h4>Datos del Ciente</h4>
-            {{-- </div> --}}
-            <div>
-                <table class="table table-bordered white-bg">
-                    <tbody>
-            <tr>
-                <td style="width: 70px;">Nombre o Empresa</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
-                <td style="width: 70px;">Direccion</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->clientes_i->direccion}}</th>
-            </tr>           
-             <tr>
-                <td style="width: 70px;">Telefono</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->clientes_i->telefono}}</th>
-                <td style="width: 70px;">Correo</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->clientes_i->email}}</th>
-            </tr>
-            <tr>
-                <td style="width: 70px;">Contacto</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->contactos->nombre}}</th>
-                <td style="width: 70px;">Numero de documento</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->clientes_i->numero_documento}}</th>
-            </tr>            <tr>
-                <td style="width: 70px;">Telefono del Contacto</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->contactos->telefono}}</th>
-                <td style="width: 70px;">Correo del contacto</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->contactos->email}}</th>
-            </tr>        
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-<div class="row">
-    <div class="col-lg-12" style="
-    height: 105px;
-">
-        <div class="ibox ">
-            {{-- <div class="ibox-title"> --}}
-            <h4>Datos del Equipo</h4>
-            {{-- </div> --}}
-            <div>
-                <table class="table table-bordered white-bg">
-                    <tbody>
-            <tr>
-                <td style="width: 70px;">Modelo</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->nombre_equipo}}</th>
-                <td style="width: 70px;">Numero de Serie </td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->numero_serie}}</th>
-            </tr>            <tr>
-                <td style="width: 70px;">Codigo Interno</td>
-                <th style="width: 200px;">{{$garantia_guia_ingreso->codigo_interno}}</th>
-                <td style="width: 70px;">Fecha de Compra</td>
-                <th style="width: 70px;">{{$garantia_guia_ingreso->fecha_compra}}</th>
-            </tr>      
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-
-<div class="col-lg-13">
-    <div class="ibox cero">
-        {{-- <div class="ibox-title"> --}}
-        <h4>Descripcion Del Problema</h4>
-        {{-- </div> --}}
-        <div class="border">
-            <div class="ibox-content text-left h-10" style="padding: 0px;">
-                <span id="sparkline8">
-                    <div class="panel-body" style="padding:10px;">
-                        {!! nl2br($garantia_guia_ingreso->descripcion_problema)!!}
+        <div class="col-lg-12">
+            <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
+                <div class="row">
+                    <div class="col-sm-6 text-left" align="left">
+                        <address class="col-sm-4" align="left">
+                            <img src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" alt="" width="300px">
+                        </address>
                     </div>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-
-<div class="col-lg-13">
-    <div class="ibox cero ">
-        {{-- <div class="ibox-title"> --}}
-        <h4>Revisión y diagnóstico</h4>
-        {{-- </div> --}}
-        <div class="border"> <div class="ibox-content text-left h-10" style="padding: 0px;">
-                <span id="sparkline8">
-                    <div class="panel-body" style="padding: 10px;">
-                    {!! nl2br($garantia_guia_ingreso->revision_diagnostico)!!}
+                    <div class="col-sm-6" align="right">
+                        <address class="col-sm-4" align="right">
+                            <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="right">
+                        </address>
                     </div>
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="col-lg-13">
-    <div class="ibox cero">
-
-        {{-- <div class="ibox-title"> --}}
-        <h4>Estetica</h4>
-        {{-- </div> --}}
-        <div class="border">
-            <div class="ibox-content text-left h-70" style="padding: 0px;">
-                <span id="sparkline8">
-                    <div class="panel-body" style="padding: 10px;">
-                        {!! nl2br($garantia_guia_ingreso->estetica)!!}
+                </div>
+                <div class="row">
+                    <div align="right" style="width: 100%" >
+                        <div class="col-sm-4" align="right">
+                            <div class="form-control" align="center" style="height: auto;" align="right">
+                                <h3 style="padding-top:10px ">R.U.C {{$mi_empresa->ruc}}</h3>
+                                <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
+                                <h5>{{$garantia_guia_ingreso->orden_servicio}}</h5>
+                            </div>
+                        </div>
                     </div>
-                </span>
+                </div>
+                <br>
+                <div class="row" align="center" style="padding-bottom: 5px">
+                    <div class="col-sm-6" align="center">
+                        <div class="form-control">
+                            <h3>Contacto Cliente</h3>
+                            <div align="left">
+                                <strong>Señor(es):</strong> &nbsp;{{$garantia_guia_ingreso->clientes_i->nombre}}<br>
+                                <strong>{{$garantia_guia_ingreso->clientes_i->documento_identificacion}} :</strong> &nbsp;{{$garantia_guia_ingreso->clientes_i->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>Fecha:</strong> &nbsp;{{$garantia_guia_ingreso->fecha}}<br>
+                                <strong>Direccion:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->direccion}}<br>
+                                <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
+                                <strong>Cliente:&nbsp;</strong>{{$garantia_guia_ingreso->contactos->nombre}} &nbsp;
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" align="center">
+                         <div class="form-control" >
+                             <h3>Condiciones Generales</h3>
+                             <div align="left">
+                                <strong>Ing. Asignado:</strong>&nbsp;{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                <strong>Motivo:</strong>&nbsp;{{$garantia_guia_ingreso->motivo}}<br>
+                                <strong>Marca :</strong>&nbsp;{{$garantia_guia_ingreso->marcas_i->nombre}} &nbsp;<br>
 
+                                <strong>Asunto:</strong>&nbsp;{{$garantia_guia_ingreso->asunto}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                <br>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                   <div class="col-sm-12" align="center" style="padding-top: 15px;">
+                        <div class="form-control" style="height: 100%">
+                             <h3>Datos del Equipo</h3>
+                             <div class="row" style="padding-bottom: 1px">
+                                 <div align="left" class="col-sm-6">
+                                    <strong>Modelo:</strong> &nbsp;{{$garantia_guia_ingreso->nombre_equipo}}<br>
+                                    <strong>Número de serie:</strong> &nbsp;{{$garantia_guia_ingreso->numero_serie}}<br>
+                                </div>
+                                <div align="left" class="col-sm-6">
+                                    <strong>Codigo Interno:</strong>&nbsp; {{$garantia_guia_ingreso->codigo_interno}}<br>
+                                    <strong>Fecha de Compra:</strong> &nbsp;{{$garantia_guia_ingreso->fecha_compra}}<br>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+            </div><br>
+                <footer style="padding-top: 10px">
+                   <div class="row" align="center" style="padding-bottom: 5px">
+                    <div class="col-sm-4" align="center">
+                        <div class="form-control"><h3>Descripcion del Problema:</h3>
+                            <div align="left" style="font-size: 13px">
+                                <p>{!! nl2br($garantia_guia_ingreso->descripcion_problema)!!}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" align="center">
+                        <div class="form-control" ><h3>Revisión y diagnóstico</h3>
+                            <div align="left" style="font-size: 13px">
+                                <p>  {!! nl2br($garantia_guia_ingreso->revision_diagnostico)!!}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-4" align="center">
+                        <div class="form-control" ><h3>Estética</h3>
+                            <div align="left" style="font-size: 13px">
+                                <p> {!! nl2br($garantia_guia_ingreso->estetica)!!}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                </div>
+            </footer>
+
+            <br>
+            <!-- Fin Totales de Productos -->
+            {{-- <div class="row">
+                @foreach($banco as $bancos)
+                <div class="col-sm-3 " align="center">
+                    <p class="form-control" style="height: 100px">
+                      <img  src="" style="width: 100px;height: 30px;">
+                      <br>
+                      N° S/. :
+                      <br>
+                      N° $ : <br>
+
+                  </p>
+              </div>
+              @endforeach
+
+          </div> --}}
+          <br>
+          <div class="row">
+            <div class="col-sm-4">
+                <strong><p><u>Centro de Atencion : </strong></u></p>
+                <strong>Direccion:</strong> {{$mi_empresa->calle}}<br>
+                <strong>Telefono:</strong> {{$mi_empresa->telefono}}<br>
+                <strong>Celular:</strong> {{$mi_empresa->movil}}<br>
+                <strong>Email:</strong> {{$mi_empresa->correo}}<br>
+                <strong>Web:</strong> {{$mi_empresa->pagina_web}}<br>
             </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"><br><br>
+               
+            </div>
+
         </div>
+
     </div>
 </div>
+</div>
 
+</div>
 
 <div class="container">
     <div class="child1"><br>
