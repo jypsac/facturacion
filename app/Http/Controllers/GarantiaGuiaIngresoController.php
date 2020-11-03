@@ -278,8 +278,10 @@ class GarantiaGuiaIngresoController extends Controller
         // $pdf=loadView('welcome').;
       $archivo=$request->get('archivo');
       $pdf=PDF::loadView('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','mi_empresa'));
-        //     return $pdf->download();
+            // return $pdf->download();
       return $pdf->download('Guia Ingreso - '.$archivo.' .pdf');
+
+      // return view('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','mi_empresa'));
 
     }
 

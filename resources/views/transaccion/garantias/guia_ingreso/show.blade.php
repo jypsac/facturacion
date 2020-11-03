@@ -9,10 +9,10 @@
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="ibox-title">
-        <div class="ibox-tools">
+    <div class="ibox-title" align="right" style="padding-right: 3.1%">
+        {{-- <div class="ibox-tools"> --}}
             {{-- <a class="btn btn-success"  href="" >Imprimir --}}
-            <form class="btn" style="text-align: none;padding-right: 0" action="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}">
+            <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}">
                 <input type="text" name="archivo" maxlength="50" value="{{$garantia_guia_ingreso->orden_servicio}}">
                 <button type="submit" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> PDF </button>
             </form>
@@ -30,7 +30,7 @@
                 </form>
             @endif
             <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
-        </div>
+        {{-- </div> --}}
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -38,25 +38,30 @@
                 <div class="row">
                     <div class="col-sm-6 text-left" align="left">
                         <address class="col-sm-4" align="left">
-                            <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
+
+                            <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="left">
+                            {{-- <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px" align="left"> --}}
+
                         </address>
                     </div>
-                    <div class="col-sm-6" align="right">
+                    {{-- <div class="col-sm-6" align="right">
                         <address class="col-sm-4" align="right">
                             <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="right">
                         </address>
-                    </div>
-                </div>
-                <div class="row">
-                    <div align="right" style="width: 100%" >
-                        <div class="col-sm-4" align="right">
+                    </div> --}}
+                {{-- </div> --}}
+                {{-- <div class="row"> --}}
+                    {{-- <div align="right"> --}}
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-4" align="right" style="width: 100%">
                             <div class="form-control" align="center" style="height: auto;" align="right">
                                 <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
                                 <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
                                 <h5>{{$garantia_guia_ingreso->orden_servicio}}</h5>
                             </div>
                         </div>
-                    </div>
+                    {{-- </div> --}}
                 </div>
                 <br>
                 <div class="row" align="center" style="padding-bottom: 5px">
@@ -105,24 +110,23 @@
                     </div>
 
             </div><br>
-                <footer style="padding-top: 10px">
                    <div class="row" align="center" style="padding-bottom: 5px">
                     <div class="col-sm-4" align="center">
-                        <div class="form-control"><h3>Descripcion del Problema:</h3>
-                            <div align="left" style="font-size: 13px">
-                                <p>{!! nl2br($garantia_guia_ingreso->descripcion_problema)!!}</p>
-                            </div>
+                        <div class="form-control" style="height: 100%"><h3>Descripcion del Problema:</h3>
+                            <div align="left" style="font-size: 13px;" >
+                                <p>{{$garantia_guia_ingreso->descripcion_problema}}</p>
+                           </div>
                         </div>
                     </div>
                     <div class="col-sm-4" align="center">
-                        <div class="form-control" ><h3>Revisión y diagnóstico</h3>
-                            <div align="left" style="font-size: 13px">
+                        <div class="form-control" style="height: 100%" ><h3>Revisión y diagnóstico</h3>
+                            <div align="left" style="font-size: 13px;">
                                 <p>  {!! nl2br($garantia_guia_ingreso->revision_diagnostico)!!}</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4" align="center">
-                        <div class="form-control" ><h3>Estética</h3>
+                        <div class="form-control" style="height: 100%" ><h3>Estética</h3>
                             <div align="left" style="font-size: 13px">
                                 <p> {!! nl2br($garantia_guia_ingreso->estetica)!!}</p>
                             </div>
@@ -132,7 +136,7 @@
                 <div>
 
                 </div>
-            </footer>
+
 
             <br>
             <!-- Fin Totales de Productos -->
@@ -151,6 +155,8 @@
               @endforeach
 
           </div> --}}
+
+          <footer style="padding-top: 10px">
           <br>
           <div class="row">
             <div class="col-sm-4">
@@ -169,7 +175,7 @@
             </div>
 
         </div>
-
+         </footer>
     </div>
 </div>
 </div>
