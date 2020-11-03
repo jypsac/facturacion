@@ -149,7 +149,8 @@ class ProvedorController extends Controller
             5 => $info['contribuyente_estado'],
             6 => date("d/m/Y", strtotime($info['fecha_inscripcion'])),
             7 => $info['domicilio_fiscal'],
-            8 => date("d/m/Y", strtotime($info['emision_electronica']))
+            8 => date("d/m/Y", strtotime($info['emision_electronica'])),
+            9 => $info['ruc']."@correo.com"
         );
             echo json_encode($datos);
         }

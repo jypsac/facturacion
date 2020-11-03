@@ -15,7 +15,7 @@ class AgregadoRapidoController extends Controller
 
 //FUNCION PARA CREAR CLIENTES Y CONTACTOS
     public function cliente_store(Request $request){
-        return "hola";
+        return "1";
         $this->validate($request,[
             'nombre' => ['required','unique:clientes,nombre'],
             'numero_documento' => ['required','unique:clientes,numero_documento'],
@@ -64,18 +64,19 @@ class AgregadoRapidoController extends Controller
 
 //FUNCION PARA CREAR CLIENTE Y CONTACTO CON PARAMETROS POR DEFECTO
     public function cliente_cotizado(Request $request){
-
+        // return "hola";
         $this->validate($request,[
             'nombre' => ['required','unique:clientes,nombre'],
             'numero_documento' => ['required','unique:clientes,numero_documento'],
-            'email' => ['required','email','unique:clientes,email'],
+            // 'email' => ['required','email','unique:clientes,email'],
         ],[
             'nombre.unique' => 'El Cliente ya ha sido registrado',
             'nombre.numero_documento' => 'El numero de documentacion ya ha sido registrado',
-            'nombre.email' => 'El correo ya existe'
+            // 'nombre.email' => 'El correo ya existe'
         ]);
 
         $data = $request->all();
+        // documento_identificacion:documento_identificacion,numero_documento:numero_documento,nombre:nombre,direccion:direccion,email:email,_token:token};
 
         $cliente= new Cliente;
         $cliente->nombre=$request->get('nombre');
@@ -100,7 +101,7 @@ class AgregadoRapidoController extends Controller
         $contacto->clientes_id=$idCliente;
         $contacto->save();
 
-        return back();
+        
         
     }
 
