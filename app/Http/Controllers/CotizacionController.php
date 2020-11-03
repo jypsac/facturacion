@@ -143,8 +143,35 @@ class CotizacionController extends Controller
 
     public function create_factura_ms(Request $request)
     {
+        $almacen_p=$request->get('almacen');
+        $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
+        $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
 
-        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        foreach($kardex_entrada as $kardex_entradas){
+            $kadex_entrada_id[]=$kardex_entradas->id;
+        }
+
+        for($x=0;$x<$kardex_entrada_count;$x++){
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
+                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
+                foreach( $nueva as $nuevas){
+                    $prod[]=$nuevas->producto_id;
+                }
+            }
+        }
+        //validacion si hay prductos en el almacen
+        if(!isset($prod)){
+            return "no hay prodcutos en el almacen seleccionado";
+        }
+
+        $lista=array_values(array_unique($prod));
+        $lista_count=count($lista);
+        
+        for($x=0;$x<$lista_count;$x++){
+            $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+        }
+
+        // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         $moneda=Moneda::where('principal','0')->first();
 
         $tipo_cambio=TipoCambio::latest('created_at')->first();
@@ -486,7 +513,34 @@ class CotizacionController extends Controller
 
     public function create_boleta(Request $request)
     {
-        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        $almacen_p=$request->get('almacen');
+        $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
+        $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
+
+        foreach($kardex_entrada as $kardex_entradas){
+            $kadex_entrada_id[]=$kardex_entradas->id;
+        }
+
+        for($x=0;$x<$kardex_entrada_count;$x++){
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
+                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
+                foreach( $nueva as $nuevas){
+                    $prod[]=$nuevas->producto_id;
+                }
+            }
+        }
+        //validacion si hay prductos en el almacen
+        if(!isset($prod)){
+            return "no hay prodcutos en el almacen seleccionado";
+        }
+
+        $lista=array_values(array_unique($prod));
+        $lista_count=count($lista);
+        
+        for($x=0;$x<$lista_count;$x++){
+            $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+        }
+        // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
         $moneda=Moneda::where('principal','1')->first();
 
@@ -545,7 +599,34 @@ class CotizacionController extends Controller
     //agregamiento de una nueva funcion create_boleta a monde secundaria comnetado
     public function create_boleta_ms(Request $request)
     {
-        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        $almacen_p=$request->get('almacen');
+        $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
+        $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
+
+        foreach($kardex_entrada as $kardex_entradas){
+            $kadex_entrada_id[]=$kardex_entradas->id;
+        }
+
+        for($x=0;$x<$kardex_entrada_count;$x++){
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
+                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
+                foreach( $nueva as $nuevas){
+                    $prod[]=$nuevas->producto_id;
+                }
+            }
+        }
+        //validacion si hay prductos en el almacen
+        if(!isset($prod)){
+            return "no hay prodcutos en el almacen seleccionado";
+        }
+
+        $lista=array_values(array_unique($prod));
+        $lista_count=count($lista);
+        
+        for($x=0;$x<$lista_count;$x++){
+            $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+        }
+        // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         $moneda=Moneda::where('principal','0')->first();
         $igv=Igv::first();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
@@ -747,6 +828,33 @@ class CotizacionController extends Controller
         // }else{
         //     $almacen=Almacen::where('id',auth()->user()->almacen_id)->first();
         // }
+        $almacen_producto_validacion=$request->get('almacen');
+        for($i=0;$i<$count_articulo;$i++){
+            $kardex_entrada_v=Kardex_entrada::where('almacen_id',$almacen_producto_validacion)->get();
+            $kardex_entrada_count_v=Kardex_entrada::where('almacen_id',$almacen_producto_validacion)->count();
+
+            //return $kardex_entrada;
+            foreach($kardex_entrada_v as $kardex_entradas_v){
+                $kadex_entrada_id_v[]=$kardex_entradas_v->id;
+            }
+            // return $kardex_entrada;
+            for($x=0;$x<$kardex_entrada_count_v;$x++){
+                if(Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first()){
+                    $nueva_v[]=Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first();
+                }
+            }
+            $comparacion_v=$nueva_v;
+            //buble para la cantidad
+            $cantidad_v=0;
+            foreach($comparacion_v as $comparaciones_v){
+                $cantidad_v=$comparaciones_v->cantidad+$cantidad_v;
+            }
+            $cantidad_entrada=$request->get('cantidad')[$i];
+            if($cantidad_v<$cantidad_entrada){
+               return "cantidad mayor al stock";
+            }
+
+        }
 
 
         $cotizacion=new Cotizacion;

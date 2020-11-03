@@ -15,7 +15,7 @@ class AgregadoRapidoController extends Controller
 
 //FUNCION PARA CREAR CLIENTES Y CONTACTOS
     public function cliente_store(Request $request){
-
+        return "hola";
         $this->validate($request,[
             'nombre' => ['required','unique:clientes,nombre'],
             'numero_documento' => ['required','unique:clientes,numero_documento'],

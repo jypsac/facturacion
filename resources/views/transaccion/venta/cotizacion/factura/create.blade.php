@@ -104,7 +104,7 @@
                 });
             </script>
             <!-- Fin Consulta API -->
-            <form action="{{ route('agregado_rapido.cliente_cotizado') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
+            <form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
                 @csrf
                 <h1>
                     <i class="fa fa-user-o" aria-hidden="true"></i>
