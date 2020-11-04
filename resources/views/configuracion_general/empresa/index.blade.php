@@ -164,127 +164,127 @@
           @endif
           <br>
           <br>
-                                        <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$bancos->id}}"><i class="fa fa-edit"></i></button>
-                                        <div class="modal fade" id="exampleModal{{$bancos->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                            <div class="modal-dialog" role="document">
-                                                <div class="modal-content">
+          <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$bancos->id}}"><i class="fa fa-edit"></i></button>
+          <div class="modal fade" id="exampleModal{{$bancos->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+              <div class="modal-content">
 
-                                                    <div style="padding-left: 15px;padding-right: 15px;">
-                                                        {{-- ccccccccccccccccc --}}
-                                                        <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+                <div style="padding-left: 15px;padding-right: 15px;">
+                  {{-- ccccccccccccccccc --}}
+                  <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
 
-                                                            <form action="{{ route('banco.update',$bancos->id) }}"  enctype="multipart/form-data" method="post">
-                                                                @csrf
-                                                                @method('PATCH')
-                                                                <fieldset >
-                                                                    <div>
-                                                                        <div class="panel-body" >
-                                                                            <div class="row">
-                                                                              <div class="col-sm-12" style="padding-bottom: 10px">
-                                                                                <img src="{{asset('img/logos/'.$bancos->foto)}}"  alt="banco" style="width: 200;height: 60px;">
-                                                                              </div>
-                                                                                <label class="col-sm-3 col-form-label">N° Soles:</label>
-                                                                                <div class="col-sm-9" style="padding-bottom: 10px">
-                                                                                    <input type="text" class="form-control" name="numero_soles" value="{{$bancos->numero_dolares}}">
-                                                                                </div>
-                                                                                <label class="col-sm-3 col-form-label">N° Dolares:</label>
-                                                                                <div class="col-sm-9" style="padding-bottom: 10px">
-                                                                                    <input type="text" class="form-control" name="numero_dolares" value="{{$bancos->numero_dolares}}">
-                                                                                </div>
+                    <form action="{{ route('banco.update',$bancos->id) }}"  enctype="multipart/form-data" method="post">
+                      @csrf
+                      @method('PATCH')
+                      <fieldset >
+                        <div>
+                          <div class="panel-body" >
+                            <div class="row">
+                              <div class="col-sm-12" style="padding-bottom: 10px">
+                                <img src="{{asset('img/logos/'.$bancos->foto)}}"  alt="banco" style="width: 200;height: 60px;">
+                              </div>
+                              <label class="col-sm-3 col-form-label">N° Soles:</label>
+                              <div class="col-sm-9" style="padding-bottom: 10px">
+                                <input type="text" class="form-control" name="numero_soles" value="{{$bancos->numero_soles}}">
+                              </div>
+                              <label class="col-sm-3 col-form-label">N° Dolares:</label>
+                              <div class="col-sm-9" style="padding-bottom: 10px">
+                                <input type="text" class="form-control" name="numero_dolares" value="{{$bancos->numero_dolares}}">
+                              </div>
 
-                                                                                <label class="col-sm-3 col-form-label">Activo/Desactivo:</label>
-                                                                            <div class="col-sm-3">
-                                                                                @if($bancos->estado == 0)
-                                                                                <div class="switch-button">
-                                                                                    <input type="checkbox" name="estado" id="switch-label{{$bancos->id}}" class="switch-button__checkbox" checked="">
-                                                                                    <label for="switch-label{{$bancos->id}}" class="switch-button__label"></label>
-                                                                                </div>
-                                                                                @else
-                                                                                <div class="switch-button">
-                                                                                    <input type="checkbox" name="estado" id="aswitch-label{{$bancos->id}}" class="switch-button__checkbox" >
-                                                                                    <label for="aswitch-label{{$bancos->id}}" class="switch-button__label"></label>
-                                                                                </div>
-                                                                                @endif
-                                                                            </div>
-                                                                            <div class="col-sm-2">
-                                                                             <button class="btn btn-primary" type="submit">Grabar</button>
-                                                                            </div>
-                                                                            <div class="col-sm-2">
-                                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                                                                            </div>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
+                              <label class="col-sm-3 col-form-label">Activo/Desactivo:</label>
+                              <div class="col-sm-3">
+                                @if($bancos->estado == 0)
+                                <div class="switch-button">
+                                  <input type="checkbox" name="estado" id="switch-label{{$bancos->id}}" class="switch-button__checkbox" checked="">
+                                  <label for="switch-label{{$bancos->id}}" class="switch-button__label"></label>
+                                </div>
+                                @else
+                                <div class="switch-button">
+                                  <input type="checkbox" name="estado" id="aswitch-label{{$bancos->id}}" class="switch-button__checkbox" >
+                                  <label for="aswitch-label{{$bancos->id}}" class="switch-button__label"></label>
+                                </div>
+                                @endif
+                              </div>
+                              <div class="col-sm-2">
+                               <button class="btn btn-primary" type="submit">Grabar</button>
+                             </div>
+                             <div class="col-sm-2">
+                               <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                             </div>
+                           </div>
+                         </div>
+                       </div>
 
-                                                                </fieldset>
-
-
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <!-- / Modal Create  -->
-        </p>
-      </div>
-      @endforeach
-
-    </div>
+                     </fieldset>
 
 
-  </div>
-  <style type="text/css" media="screen">
-    :root {
-        --color-button: #fdffff;
-    }
-    .switch-button {
-        display: inline-block;
-        padding-top: 9px;
-        padding-right: 30px;
-    }
-    .switch-button .switch-button__checkbox {
-        display: none;
-    }
-    .switch-button .switch-button__label {
-        background-color:#1f1f1f66;
-        width: 2rem;
-        height: 1rem;
-        border-radius: 3rem;
-        display: inline-block;
-        position: relative;
-    }
-    .switch-button .switch-button__label:before {
-        transition: .6s;
-        display: block;
-        position: absolute;
-        width: 1rem;
-        height: 1rem;
-        background-color: var(--color-button);
-        content: '';
-        border-radius: 50%;
-        box-shadow: inset 0px 0px 0px 1px black;
-    }
-    .switch-button .switch-button__checkbox:checked + .switch-button__label {
-        background-color: #1c84c6;
-    }
-    .switch-button .switch-button__checkbox:checked + .switch-button__label:before {
-        transform: translateX(1rem);
-    }
+                   </form>
+                 </div>
+               </div>
+             </div>
+           </div>
+         </div>
+         <!-- / Modal Create  -->
+       </p>
+     </div>
+     @endforeach
+
+   </div>
+
+
+ </div>
+ <style type="text/css" media="screen">
+  :root {
+    --color-button: #fdffff;
+  }
+  .switch-button {
+    display: inline-block;
+    padding-top: 9px;
+    padding-right: 30px;
+  }
+  .switch-button .switch-button__checkbox {
+    display: none;
+  }
+  .switch-button .switch-button__label {
+    background-color:#1f1f1f66;
+    width: 2rem;
+    height: 1rem;
+    border-radius: 3rem;
+    display: inline-block;
+    position: relative;
+  }
+  .switch-button .switch-button__label:before {
+    transition: .6s;
+    display: block;
+    position: absolute;
+    width: 1rem;
+    height: 1rem;
+    background-color: var(--color-button);
+    content: '';
+    border-radius: 50%;
+    box-shadow: inset 0px 0px 0px 1px black;
+  }
+  .switch-button .switch-button__checkbox:checked + .switch-button__label {
+    background-color: #1c84c6;
+  }
+  .switch-button .switch-button__checkbox:checked + .switch-button__label:before {
+    transform: translateX(1rem);
+  }
 </style>
-  <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-  <script src="{{ asset('js/popper.min.js') }}"></script>
-  <script src="{{ asset('js/bootstrap.js') }}"></script>
-  <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-  <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-  <!-- Custom and plugin javascript -->
-  <script src="{{ asset('js/inspinia.js') }}"></script>
-  <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+<!-- Custom and plugin javascript -->
+<script src="{{ asset('js/inspinia.js') }}"></script>
+<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-  <script>
+<script>
 
-    $(document).ready(function () {
+  $(document).ready(function () {
 
         // Add slimscroll to element
         $('.scroll_content').slimscroll({
