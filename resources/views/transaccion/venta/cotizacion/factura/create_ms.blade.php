@@ -275,18 +275,15 @@
                                             <td>Moneda</td>
                                             <td>:</td>
                                             <td>
-                                                <div class="row">
-                                                    <div class="col-sm-9">
-                                                        <input type="text" name="moneda" class="form-control" value="{{$moneda->nombre}}" readonly="readonly">
-                                                        <br>
-                                                        <input type="hidden" name="almacen" class="form-control" value="{{$sucursal->id}}" readonly="readonly">
-                                                    </div>
+                                               <div class="row">
+                                                <input type="hidden" name="almacen" class="form-control " value="{{$sucursal->id}}" readonly="readonly">
+                                                <div class=" col-sm-5">
+                                                    <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
+                                                </div>
 
-                                                    <div class="col-sm-1">
-                                                        <a onclick="event.preventDefault();document.getElementById('almacen-form').submit();">
-                                                            <button style="height: 35px;width: auto" type="button" class='addmores btn btn-info'>@if($moneda->tipo=='nacional')Dolares @elseif($moneda->tipo=='extranjera') Soles @endif</button></a>
-                                                        </div>
-                                                    </div>
+                                                <a class="col-sm-5" onclick="event.preventDefault();document.getElementById('almacen-form').submit();">
+                                                    <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>@if($moneda->tipo=='nacional')Dolares @elseif($moneda->tipo=='extranjera') Soles @endif</button></a>
+                                                </div>
 
                                                 </td>
                                                 <td>Fecha de cotizacion</td>
