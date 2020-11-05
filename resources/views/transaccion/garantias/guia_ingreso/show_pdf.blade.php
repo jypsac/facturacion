@@ -270,48 +270,44 @@
         </div>
     </div>
 </div> --}}
-<footer style="position:absolute;bottom:0;width:100%;height:180px;">
+<footer style="position:fixed;bottom:0;width:100%;height:250px;">
     <div class="">
-        <table class="table  white-bg ">
+        <table class=" white-bg ">
             <tbody>
                 <tr>
+                    <td class="blanco"></td>
                     <td class="blanco" style="width: 70px;border-top: none;" ><hr style="width:200px;border-top-width:0.1px"  /> </td>
                     <td class="blanco" style="border-top: none;"></td>
                     <td class="blanco" style="width: 70px; border-top: none;"><hr style="width:200px;border-top-width:0.1px"  /> </td>
                 </tr>
                 <tr>
+                    <td class="blanco"></td>
                     <th class="blanco" style="width: 200px;border-top: none;"><center>    Departamento de Servicio Tecnico <br>Ing. {{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</center></th>
                     <th class="blanco" style="border-top: none;"></th>
                     <th class="blanco" style="width: 200px; border-top: none;"><center>{{$garantia_guia_ingreso->clientes_i->nombre}}<br> ({{$garantia_guia_ingreso->clientes_i->documento_identificacion}}: {{$garantia_guia_ingreso->clientes_i->numero_documento}})  </center></th>
                 </tr>
                 <tr>
-                    <p><b>IMPORTANTE:</b> El plazo para el recojo del equipo es de 15 días calendario. en caso de no recoger el equipo dentro de los plazos, este será trasladado al almacén. debiendo pagar S/.20.00 por cada semana que transcurra por gastos administrativos, seguros y almacenaje. Así mismo pasado los 90 días el cliente pierde el derecho total sobre el equipo. </p>
+                    <td colspan="6" class="blanco"><p><b>IMPORTANTE:</b> El plazo para el recojo del equipo es de 15 días calendario. en caso de no recoger el equipo dentro de los plazos, este será trasladado al almacén. debiendo pagar S/.20.00 por cada semana que transcurra por gastos administrativos, seguros y almacenaje. Así mismo pasado los 90 días el cliente pierde el derecho total sobre el equipo. </p></td>
                 </tr>
             </tbody>
-            <tfoot>
-                <tr>
-<td></td>
-                </tr>
-            </tfoot>
         </table>
-
-    </div>
-    <div class="">
-        <table class=" table-bordered">
-        <tbody >
-            <tr>
-                <th >{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
-                <th>{{$garantia_guia_ingreso->orden_servicio}}</th>
-                <th>{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
-                <th>{{$garantia_guia_ingreso->orden_servicio}}</th>
-                <th >{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
-                <th >{{$garantia_guia_ingreso->orden_servicio}}</th>
-            </tr>
-        </tbody>
-</table>
+        <table style="border: 1px solid #EBEBEB;">
+            <tbody>
+                <tr align="center" style="box-sizing: border-box;border: 1px solid #EBEBEB;">
+                    <th style="width:17%;border: 1px solid #EBEBEB;">{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
+                    <th style="width:16%">{{$garantia_guia_ingreso->orden_servicio}}</th>
+                    <th style="width:17%;border: 1px solid #EBEBEB;">{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
+                    <th style="width:16%">{{$garantia_guia_ingreso->orden_servicio}}</th>
+                    <th style="width:17%;border: 1px solid #EBEBEB;">{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
+                    <th style="width: 16%">{{$garantia_guia_ingreso->orden_servicio}}</th>        
+                </tr>
+            </tbody>
+        </table>
     </div>
 </footer>
+
 <style>
+
     *{font-size: 8px}
     .cero{
     margin-bottom: 0px;
@@ -327,10 +323,6 @@
         border-color: #aaaaaa;
         border-width: 1px;
         border-style: solid;
-    }
-    .bordes{
-        border: 1px solid black;
-
     }
 
 </style>
