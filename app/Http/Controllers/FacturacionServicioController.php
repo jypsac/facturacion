@@ -35,6 +35,54 @@ class FacturacionServicioController extends Controller
      */
     public function create()
     {
+
+        $servicios=Servicios::where('estado_anular',0)->get();
+        $moneda=Moneda::where('principal','1')->first();
+
+        foreach ($servicios as $index => $servicio) {
+            $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+            $array[]=$servicio->precio+$utilidad[$index];
+        }
+
+        $forma_pagos=Forma_pago::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
+        $moneda=Moneda::all();
+        $personales=Personal::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
+        $igv=Igv::first();
+
+        // obtencion de la sucursal
+        $almacen=auth()->user()->almacen_id;
+
+        //obtencion del almacen
+        $sucursal=Almacen::where('id', $almacen)->first();
+        
+        $factura_cod_fac=$sucursal->cod_fac;
+        if (is_numeric($factura_cod_fac)) {
+            // exprecion del numero de fatura
+            $factura_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+        }else{
+            // exprecion del numero de fatura
+            // GENERACION DE NUMERO DE FACTURA
+            $ultima_factura=Facturacion::latest()->first();
+            $factura_num=$ultima_factura->codigo_fac;
+            $factura_num_string_porcion= explode("-", $factura_num);
+            $factura_num_string=$factura_num_string_porcion[1];
+            $factura_num=(int)$factura_num_string;
+            $factura_num++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+        }
+
+        $factura_numero="F".$sucursal_nr."-".$factura_nr;
+
+        return view('transaccion.venta.servicios.facturacion.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
+    }
+
+    public function create_ms()
+    {
     $servicios=Servicios::where('estado_anular',0)->get();
 
         foreach ($servicios as $index => $servicio) {
@@ -48,6 +96,33 @@ class FacturacionServicioController extends Controller
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
+
+        // obtencion de la sucursal
+        $almacen=auth()->user()->almacen_id;
+        
+        //obtencion del almacen
+        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
+        
+        $factura_cod_fac=$sucursal->cod_fac;
+        if (is_numeric($factura_cod_fac)) {
+            // exprecion del numero de fatura
+            $factura_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+        }else{
+            // exprecion del numero de fatura
+            // GENERACION DE NUMERO DE FACTURA
+            $ultima_factura=Facturacion::latest()->first();
+            $factura_num=$ultima_factura->codigo_fac;
+            $factura_num_string_porcion= explode("-", $factura_num);
+            $factura_num_string=$factura_num_string_porcion[1];
+            $factura_num=(int)$factura_num_string;
+            $factura_num++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+        }
+
+        $factura_numero="F".$sucursal_nr."-".$factura_nr;
 
         return view('transaccion.venta.servicios.facturacion.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
     }
@@ -114,17 +189,44 @@ class FacturacionServicioController extends Controller
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
         //revisar que numero de factura a servicio es
-        $personal_contador= Facturacion::all()->count();
-        $suma=$personal_contador+1;
-        $codigo='COFAC-0000'.$suma;
+        // $personal_contador= Facturacion::all()->count();
+        // $suma=$personal_contador+1;
+        // $codigo='COFAC-0000'.$suma;
+
+        // CODIGO FACTURACION
+        // obtencion de la sucursal
+       $almacen=auth()->user()->almacen_id;
+        
+       //obtencion del almacen
+       $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
+       
+       $factura_cod_fac=$sucursal->cod_fac;
+       if (is_numeric($factura_cod_fac)) {
+           // exprecion del numero de fatura
+           $factura_cod_fac++;
+           $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+           $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+       }else{
+           // exprecion del numero de fatura
+           // GENERACION DE NUMERO DE FACTURA
+           $ultima_factura=Facturacion::latest()->first();
+           $factura_num=$ultima_factura->codigo_fac;
+           $factura_num_string_porcion= explode("-", $factura_num);
+           $factura_num_string=$factura_num_string_porcion[1];
+           $factura_num=(int)$factura_num_string;
+           $factura_num++;
+           $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+           $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+       }
+
+       $factura_numero="F".$sucursal_nr."-".$factura_nr;
+
 
         $facturacion=new Facturacion;
         $facturacion->codigo_fac=$codigo;
         $facturacion->cliente_id=$cliente_buscador->id;
         $facturacion->forma_pago_id=$request->get('forma_pago');
-
         $facturacion->moneda_id=$request->get('moneda');
-
         $facturacion->user_id =auth()->user()->id;
         $facturacion->observacion=$request->get('observacion');
         $facturacion->fecha_emision=$request->get('fecha_emision');

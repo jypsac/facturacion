@@ -70,6 +70,7 @@ Route::group(
 		Route::put('/cotizacion_servicio/store/{id_moneda}','CotizacionServiciosController@store')->name('cotizacion.store');
 
 //FACTURACION SERVICIOS
+		Route::get('/facturacion_servicio/create_ms','FacturacionServicioController@create_ms')->name('facturacion_servicio.create_ms');
 		Route::resource('/facturacion_servicio','FacturacionServicioController');
 
 //BOLETA SERVICIOS
