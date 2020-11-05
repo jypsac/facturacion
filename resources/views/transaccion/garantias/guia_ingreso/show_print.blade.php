@@ -6,7 +6,7 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Guia Ingreso</title>
+    <title>Guia de Ingreso</title>
 
     <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
     <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
@@ -69,7 +69,7 @@
                                 <strong>Direccion:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->direccion}}<br>
                                 <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
-                                <strong>Cliente:&nbsp;</strong>{{$garantia_guia_ingreso->contactos->nombre}} &nbsp;
+                                <strong>Contacto:&nbsp;</strong>{{$garantia_guia_ingreso->contactos->nombre}} &nbsp;
                                 <br>
                             </div>
                         </div>
@@ -108,21 +108,21 @@
                 <footer style="padding-top: 10px">
                    <div class="row" align="center" style="padding-bottom: 5px">
                     <div class="col-sm-4" align="center">
-                        <div class="form-control"><h3>Descripcion del Problema:</h3>
-                            <div align="left" style="font-size: 13px">
-                                <p>{!! nl2br($garantia_guia_ingreso->descripcion_problema)!!}</p>
-                            </div>
+                        <div class="form-control" style="height: 100%"><h3>Descripcion del Problema:</h3>
+                            <div align="left" style="font-size: 13px;" >
+                                <p>{{$garantia_guia_ingreso->descripcion_problema}} </p>
+                           </div>
                         </div>
                     </div>
                     <div class="col-sm-4" align="center">
-                        <div class="form-control" ><h3>Revisión y diagnóstico</h3>
-                            <div align="left" style="font-size: 13px">
+                        <div class="form-control" style="height: 100%" ><h3>Revisión y diagnóstico</h3>
+                            <div align="left" style="font-size: 13px;">
                                 <p>  {!! nl2br($garantia_guia_ingreso->revision_diagnostico)!!}</p>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-4" align="center">
-                        <div class="form-control" ><h3>Estética</h3>
+                        <div class="form-control" style="height: 100%" ><h3>Estética</h3>
                             <div align="left" style="font-size: 13px">
                                 <p> {!! nl2br($garantia_guia_ingreso->estetica)!!}</p>
                             </div>

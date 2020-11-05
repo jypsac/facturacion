@@ -213,9 +213,9 @@
                                             </div>
 
                                             <label class="col-sm-2 col-form-label">Contraseña:</label>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-10" style="flex-wrap: none">
                                                 <div class="input-group m-b">
-                                                    <input type="password" class="form-control" name="password" id="txtPassword" required="" style="width: 100%;height: 90%;margin-top: 5px; border-radius: 5px">
+                                                    <input type="password" class="form-control" name="password" id="txtPassword" required="" style="height: 90%;margin-top: 5px; border-radius: 5px">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-addon" style="height: 35.22222px;margin-top: 5px;">
                                                             <i class="fa fa-eye-slash " id="ojo" onclick="mostrarPassword()"></i>
@@ -269,6 +269,12 @@
     </div>
 {{-- Fin de modal configuracion --}}
 <style>
+    .form-control{margin-top: 5px; border-radius: 5px}
+    p#texto{
+        text-align: center;
+        color:black;
+    }
+
     input#archivoInput{
         position:absolute;
         top:0px;
