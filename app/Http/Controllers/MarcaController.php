@@ -42,19 +42,20 @@ class MarcaController extends Controller
             $nombre_imagen = time().$imagen->getClientOriginalName();
             $imagen =$request->file('imagen')->storeAs('marcas',$nombre_imagen);
         }else{
-            $nombre_imagen="defecto.png";
+            $nombre_imagen=$request->get('imagen');
         }
         $suma=Marca::all()->count();
         $suma ++;
         $cien=100000+$suma;
         $contador=substr($cien,1);
-
+        $descripcion=$request->get('descripcion');
+        if (!isset($descripcion)) {$descripcion='Sin descripcion'; }
         $marca=new Marca;
         $marca->nombre=strtoupper($request->get('nombre'));
         $marca->codigo=$contador;
         $marca->abreviatura=strtoupper($request->get('abreviatura'));
         $marca->nombre_empresa=strtoupper($request->get('nombre_empresa'));
-        $marca->descripcion=$request->get('descripcion');
+        $marca->descripcion=$descripcion;
         $marca->imagen=$nombre_imagen;
         $marca->save();
 

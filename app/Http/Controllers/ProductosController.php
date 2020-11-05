@@ -39,7 +39,7 @@ class ProductosController extends Controller
         $familias=Familia::all();
         $marcas=Marca::all();
         $estados=Estado::all();
-        $categorias=Categoria::all();
+        $categorias=Categoria::where('descripcion','PRODUCTOS')->first();
         $unidad_medidas=Unidad_medida::all();
         return view('maestro.catalogo.productos.create',compact('unidad_medidas','categorias','marcas','estados','familias','monedas'));
     }
@@ -53,10 +53,11 @@ class ProductosController extends Controller
     public function store(Request $request )
     {
 
-        $this->validate($request,[
-            'codigo_original' => ['required','unique:productos,codigo_original'],
-        ]
-        );
+        // $this->validate($request,[
+        //     'codigo_original' => ['required','unique:productos,codigo_original'],
+        // ]
+        // );
+
 
 
         $id_producto=$request->get('marca_id');
@@ -70,53 +71,51 @@ class ProductosController extends Controller
         $marca_cantidad=substr($marca_cantidad,1);
         $codigo=$abreviatura.'-'.$marca_cantidad;
 
-        // categoria Abreviatura
-        $categoria=$request->get('categoria_id');
-        $id_igual=Categoria::where('id','=',$categoria)->first();
-        // return$id_igual;
-
-        $nombre_cate=$id_igual->descripcion;
-        $cate = substr($nombre_cate, 0, 1);
-
         if($request->hasfile('foto')){
             $image1 =$request->file('foto');
             $name =time().$image1->getClientOriginalName();
             $destinationPath = public_path('/archivos/imagenes/productos/');
             $image1->move($destinationPath,$name);
         }else{
-            $name="sin_foto.jpg";
+            $name=$request->get('foto');
         }
 
         $peso=$request->get('peso');
         $simbolo=$request->get('simbolo');
 
-        $producto=new Producto;
-        $producto->codigo_producto=$codigo;
-        $producto->codigo_original=$request->get('codigo_original');
-        $producto->categoria_id=$request->get('categoria_id');
-        $producto->familia_id=$request->get('familia_id');
-        $producto->marca_id=$request->get('marca_id');
-        $producto->nombre=$request->get('nombre');
-        $producto->descripcion=$request->get('descripcion');
-        $producto->estado_id=$request->get('estado_id');
-        $producto->origen=$request->get('origen');
-        $producto->descuento1=$request->get('descuento1');
-        $producto->descuento2=$request->get('descuento2');
-        $producto->descuento_maximo=$request->get('descuento_maximo');
-        $producto->utilidad=$request->get('utilidad');
-        $producto->unidad_medida_id=$request->get('unidad_medida_id');
-        $producto->garantia=$request->get('garantia');
-        $producto->peso=$peso.' '.$simbolo;
-        $producto->stock_minimo=$request->get('stock_minimo');
-        $producto->stock_maximo=$request->get('stock_maximo');
-        $producto->foto=$name;
-        $producto->estado_anular='1';
-        $producto->save();
-        return redirect()->route('productos.index');
-
-
-
+        $codigo_original=$request->get('codigo_original');
+        if (isset($codigo_original)) {
+         $codigo_original=$request->get('codigo_original');
+     }else{
+        $codigo_original=$codigo;
     }
+    $categorias=Categoria::where('descripcion','PRODUCTOS')->first();
+    $producto=new Producto;
+    $producto->codigo_producto=$codigo;
+    $producto->codigo_original=$codigo_original;
+    $producto->categoria_id=$categorias->id;
+    $producto->familia_id=$request->get('familia_id');
+    $producto->marca_id=$request->get('marca_id');
+    $producto->nombre=$request->get('nombre');
+    $producto->descripcion=$request->get('descripcion');
+    $producto->estado_id=$request->get('estado_id');
+    $producto->origen=$request->get('origen');
+    $producto->descuento1=$request->get('descuento1');
+    $producto->descuento2=$request->get('descuento2');
+    $producto->descuento_maximo=$request->get('descuento_maximo');
+    $producto->utilidad=$request->get('utilidad');
+    $producto->unidad_medida_id=$request->get('unidad_medida_id');
+    $producto->garantia=$request->get('garantia');
+    $producto->peso=$peso.' '.$simbolo;
+    $producto->stock_minimo=$request->get('stock_minimo');
+    $producto->stock_maximo=$request->get('stock_maximo');
+    $producto->foto=$name;
+    $producto->estado_anular='1';
+    $producto->save();
+    return redirect()->route('productos.show',$producto->id);
+
+
+}
 
     /**
      * Display the specified resource.
@@ -162,37 +161,44 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
-         if($request->hasfile('foto')){
-            $image1 =$request->file('foto');
-            $name =time().$image1->getClientOriginalName();
-            $destinationPath = public_path('/archivos/imagenes/productos/');
-            $image1->move($destinationPath,$name);
-        }else{
-            $name=$request->get('foto_original');
-        }
-
-        $peso=$request->get('peso');
-        $simbolo=$request->get('simbolo');
-
-        $producto=Producto::find($id);
-        $producto->nombre=$request->get('nombre');
-        $producto->codigo_original=$request->get('codigo_original');
-        $producto->descripcion=$request->get('descripcion');
-        $producto->estado_id=$request->get('estado_id');
-        $producto->origen=$request->get('origen');
-        $producto->descuento1=$request->get('descuento1');
-        $producto->descuento2=$request->get('descuento2');
-        $producto->descuento_maximo=$request->get('descuento_maximo');
-        $producto->utilidad=$request->get('utilidad');
-        $producto->unidad_medida_id=$request->get('unidad_medida_id');
-        $producto->garantia=$request->get('garantia');
-        $producto->peso=$peso.' '.$simbolo;
-        $producto->stock_minimo=$request->get('stock_minimo');
-        $producto->stock_maximo=$request->get('stock_maximo');
-        $producto->foto=$name;
-        $producto->save();
-        return redirect()->route('productos.show',$id);
+     if($request->hasfile('foto')){
+        $image1 =$request->file('foto');
+        $name =time().$image1->getClientOriginalName();
+        $destinationPath = public_path('/archivos/imagenes/productos/');
+        $image1->move($destinationPath,$name);
+    }else{
+        $name=$request->get('foto_original');
     }
+
+    $peso=$request->get('peso');
+    $simbolo=$request->get('simbolo');
+
+    $codigo_original=$request->get('codigo_original');
+    if (isset($codigo_original)) {
+         $codigo_original=$request->get('codigo_original');
+     }else{
+        $codigo_original=$request->get('codigo');
+    }
+
+    $producto=Producto::find($id);
+    $producto->nombre=$request->get('nombre');
+    $producto->codigo_original=$codigo_original;
+    $producto->descripcion=$request->get('descripcion');
+    $producto->estado_id=$request->get('estado_id');
+    $producto->origen=$request->get('origen');
+    $producto->descuento1=$request->get('descuento1');
+    $producto->descuento2=$request->get('descuento2');
+    $producto->descuento_maximo=$request->get('descuento_maximo');
+    $producto->utilidad=$request->get('utilidad');
+    $producto->unidad_medida_id=$request->get('unidad_medida_id');
+    $producto->garantia=$request->get('garantia');
+    $producto->peso=$peso.' '.$simbolo;
+    $producto->stock_minimo=$request->get('stock_minimo');
+    $producto->stock_maximo=$request->get('stock_maximo');
+    $producto->foto=$name;
+    $producto->save();
+    return redirect()->route('productos.show',$id);
+}
     /**
      * Remove the specified resource from storage.
      *

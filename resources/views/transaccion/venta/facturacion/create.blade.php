@@ -21,17 +21,6 @@
     </script>
 </head>
 @section('content')
-
-@if (session('repite'))
-<div class="alert alert-success">
-    {{ session('repite') }}
-</div>
-@endif
-@if (session('campo'))
-<div class="alert alert-success">
-    {{ session('campo') }}
-</div>
-@endif
 @if($errors->any())
 <div style="padding-top: 20px;">
     <div class="alert alert-danger">

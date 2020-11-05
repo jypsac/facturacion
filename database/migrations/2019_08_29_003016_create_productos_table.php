@@ -22,13 +22,13 @@ class CreateProductosTable extends Migration
             $table->integer('descuento1');
             $table->integer('descuento2');
             $table->integer('descuento_maximo');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
             $table->text('origen');
             $table->text('garantia');
             $table->string('peso');
             $table->integer('stock_minimo');
             $table->integer('stock_maximo');
-            $table->string('foto');
+            $table->string('foto')->nullable();
             $table->string('estado_anular');
         });
     }

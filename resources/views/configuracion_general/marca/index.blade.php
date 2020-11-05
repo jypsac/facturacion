@@ -14,12 +14,7 @@
  <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document">
         <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel"> Marca</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
+
             <div style="padding-left: 15px;padding-right: 15px;">
                 {{-- ccccccccccccccccc --}}
                 <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
@@ -27,30 +22,31 @@
                     <form action="{{ route('marca.store') }}"  enctype="multipart/form-data" method="post">
                         @csrf
                         <fieldset >
-                            <legend> Agregar Marca </legend>
                             <div>
                                 <div class="panel-body" >
                                     <div class="row">
+                                        <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/marca.svg')}}" width="100px"></div>
+
                                         <label class="col-sm-2 col-form-label">Nombre:</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="nombre">
+                                            <input type="text" class="form-control" name="nombre" required="required">
                                         </div>
                                         <label class="col-sm-2 col-form-label">Abreviatura:</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="abreviatura">
+                                            <input type="text" class="form-control" name="abreviatura" required="required">
                                         </div><label class="col-sm-2 col-form-label">Empresa:</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="nombre_empresa">
+                                            <input type="text" class="form-control" name="nombre_empresa" required="required">
                                         </div><label class="col-sm-2 col-form-label">Descripcion:</label>
                                         <div class="col-sm-10">
-                                            <textarea type="text" class="form-control" name="descripcion"></textarea>
+                                            <textarea type="text" class="form-control" name="descripcion" placeholder="opcional"></textarea>
                                         </div>
                                         <label class="col-sm-2 col-form-label">Foto:</label>
                                         <div class="col-sm-10">
                                             <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0  ;" id="archivoInput" name="imagen" onchange="return validarExt()"  />
                                             <span id="visorArchivo">
                                                 <!--Aqui se desplegará el fichero-->
-                                                <img name="imagen" src="" width="300px" height="200px" />
+                                                <img name="imagen" src="{{asset('img/logos/marca_ejemplo.svg')}}"  width="300px" height="200px" />
                                             </span>
                                         </span>
                                     </div><script type="text/javascript">
@@ -75,7 +71,7 @@
             visor.onload = function(e)
             {
                 document.getElementById('visorArchivo').innerHTML =
-                '<img name="imagen" src="'+e.target.result+'"width="300px" height="200px" />';
+                '<img name="imagen" src="'+e.target.result+'"width="300px" height="200px"" />';
             };
             visor.readAsDataURL(archivoInput.files[0]);
         }
@@ -145,19 +141,17 @@
                                     <td>{{$marca->nombre_empresa}}</td>
                                     <td>{{$marca->codigo}}</td>
                                     <td>{{$marca->descripcion}}</td>
-                                    <td><img src="{{asset('storage/marcas/'.$marca->imagen)}}" style="width: 150px;height:50px">
+                                    <td> @if(isset($marca->imagen))
+                                        <img src="{{asset('storage/marcas/'.$marca->imagen)}}" style="width: 150px;height:50px">
+                                        @else
+                                        <img src="{{asset('img/logos/marca_ejemplo.svg')}}" style="width: 150px;height:50px">
+                                        @endif
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$marca->id}}">Editar</button>
                                         <div class="modal fade" id="exampleModal{{$marca->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                             <div class="modal-dialog" role="document">
                                                 <div class="modal-content">
-                                                    <div class="modal-header">
-                                                        <h5 class="modal-title" id="exampleModalLabel"> Edit Marca</h5>
-                                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                            <span aria-hidden="true">&times;</span>
-                                                        </button>
-                                                    </div>
                                                     <div style="padding-left: 15px;padding-right: 15px;">
                                                         {{-- ccccccccccccccccc --}}
                                                         <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
@@ -166,30 +160,36 @@
                                                                 @csrf
                                                                 @method('PATCH')
                                                                 <fieldset >
-                                                                    <legend> Editar Marca </legend>
                                                                     <div>
                                                                         <div class="panel-body" >
                                                                             <div class="row">
+                                                                               <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/marca.svg')}}" width="100px"></div>
                                                                                <label class="col-sm-2 col-form-label">Nombre:</label>
                                                                                <div class="col-sm-10">
-                                                                                <input type="text" class="form-control" value="{{$marca->nombre}}" name="nombre">
+                                                                                <input required="required" type="text" class="form-control" value="{{$marca->nombre}}" name="nombre">
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Abreviatura:</label>
                                                                             <div class="col-sm-10">
-                                                                                <input type="text" class="form-control" value="{{$marca->abreviatura}}" name="abreviatura">
+                                                                                <input required="required" type="text" class="form-control" value="{{$marca->abreviatura}}" name="abreviatura">
                                                                             </div><label class="col-sm-2 col-form-label">Empresa:</label>
                                                                             <div class="col-sm-10">
-                                                                                <input type="text" class="form-control" value="{{$marca->nombre_empresa}}" name="nombre_empresa">
+                                                                                <input required="required" type="text" class="form-control" value="{{$marca->nombre_empresa}}" name="nombre_empresa">
                                                                             </div><label class="col-sm-2 col-form-label">Descripcion:</label>
                                                                             <div class="col-sm-10">
-                                                                                <textarea type="text" class="form-control" name="descripcion"> {{$marca->descripcion}}</textarea>
+                                                                                <textarea type="text" class="form-control" placeholder="opcional" name="descripcion"> {{$marca->descripcion}}</textarea>
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Foto:</label>
                                                                             <div class="col-sm-10">
-                                                                             <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0  ;" id="archivoInput{{$marca->id}}" name="imagen" onchange="return validarExt{{$marca->id}}()"  />
-                                                                             <span id="visorArchivo{{$marca->id}}">
+                                                                               <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0  ;" id="archivoInput{{$marca->id}}" name="imagen" onchange="return validarExt{{$marca->id}}()"  />
+                                                                               <span id="visorArchivo{{$marca->id}}">
                                                                                 <!--Aqui se desplegará el fichero-->
-                                                                                <img name="imagen" src="{{asset('storage/marcas/'.$marca->imagen)}}" width="300px" height="200px" />
+
+                                                                                @if(isset($marca->imagen))
+                                                                                 <img name="imagen" src="{{asset('storage/marcas/'.$marca->imagen)}}" width="300px" height="200px" />
+                                                                                @else
+                                                                                <img src="{{asset('img/logos/marca_ejemplo.svg')}}" width="300px" height="200px">
+                                                                                @endif
+
                                                                                 <input type="text" name="imagenes" hidden="hidden" value="{{$marca->imagen}}">
                                                                             </span>
                                                                         </span>

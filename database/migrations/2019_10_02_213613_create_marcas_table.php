@@ -19,7 +19,7 @@ class CreateMarcasTable extends Migration
             $table->string('codigo');
             $table->string('abreviatura');
             $table->string('nombre_empresa');
-            $table->text('descripcion');
+            $table->text('descripcion')->nullable();
             $table->string('imagen')->nullable();
             $table->timestamps();
         });

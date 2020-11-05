@@ -71,20 +71,20 @@ class FacturacionController extends Controller
         foreach($kardex_entrada as $kardex_entradas){
             $kadex_entrada_id[]=$kardex_entradas->id;
         }
-        
+
         for($x=0;$x<$kardex_entrada_count;$x++){
             if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
                 $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
                 foreach( $nueva as $nuevas){
                     $prod[]=$nuevas->producto_id;
                 }
-            }   
+            }
         }
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
             return "no hay prodcutos en el almacen seleccionado";
         }
-        
+
         // return $nueva;
         $lista=array_values(array_unique($prod));
         $lista_count=count($lista);
@@ -93,7 +93,7 @@ class FacturacionController extends Controller
         for($x=0;$x<$lista_count;$x++){
             $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         }
-        
+
         // return $productos;
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
@@ -131,10 +131,10 @@ class FacturacionController extends Controller
 
         // obtencion de la sucursal
         $almacen=$request->get('almacen');
-        
+
         //obtencion del almacen
         $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-        
+
         $factura_cod_fac=$sucursal->cod_fac;
         if (is_numeric($factura_cod_fac)) {
             // exprecion del numero de fatura
@@ -155,7 +155,7 @@ class FacturacionController extends Controller
         }
 
         $factura_numero="F".$sucursal_nr."-".$factura_nr;
-        
+
         return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','factura_numero','sucursal'));
 }
 
@@ -195,10 +195,10 @@ class FacturacionController extends Controller
 
        // obtencion de la sucursal
        $almacen=$request->get('almacen');
-        
+
        //obtencion del almacen
        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-       
+
        $factura_cod_fac=$sucursal->cod_fac;
        if (is_numeric($factura_cod_fac)) {
            // exprecion del numero de fatura
@@ -225,7 +225,7 @@ class FacturacionController extends Controller
 
     /**
      * Store a newly created resource in storage.
-     * 
+     *
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
@@ -299,7 +299,7 @@ class FacturacionController extends Controller
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
                     if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return redirect()->route('facturacion.create')->with('repite', 'Datos repetidos - No permitidos!');
+                        return redirect()->route('facturacion.index')->with('repite', 'Asegurese que los productos no se deben repetir !');
                     }
                 }
 
@@ -335,7 +335,7 @@ class FacturacionController extends Controller
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        
+
 
         //buscador al cambio
         $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
@@ -346,10 +346,10 @@ class FacturacionController extends Controller
         // CODIGO FACTURACION
         // obtencion de la sucursal
        $almacen=$request->get('almacen');
-        
+
        //obtencion del almacen
        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-       
+
        $factura_cod_fac=$sucursal->cod_fac;
        if (is_numeric($factura_cod_fac)) {
            // exprecion del numero de fatura
@@ -385,7 +385,7 @@ class FacturacionController extends Controller
             for($x=0;$x<$kardex_entrada_count_v;$x++){
                 if(Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first()){
                     $nueva_v[]=Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first();
-                }   
+                }
             }
             $comparacion_v=$nueva_v;
             //buble para la cantidad
@@ -448,7 +448,7 @@ class FacturacionController extends Controller
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $facturacion_registro->stock=$stock;
-                
+
                 //precio --------------------------------------------------------
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional') {
@@ -517,7 +517,7 @@ class FacturacionController extends Controller
                 for($x=0;$x<$kardex_entrada_count;$x++){
                     if(Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first()){
                         $nueva[]=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
-                    }   
+                    }
                 }
                 $comparacion=$nueva;
                 //buble para la cantidad
@@ -555,11 +555,11 @@ class FacturacionController extends Controller
                             }
                         }
                     }
-                
-                    
-                            
-                        
-                    
+
+
+
+
+
             }
         }else {
             return redirect()->route('facturacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
