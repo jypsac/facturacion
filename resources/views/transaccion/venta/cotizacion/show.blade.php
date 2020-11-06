@@ -4,13 +4,21 @@
 @section('breadcrumb2', 'Cotizacion')
 @section('href_accion', route('cotizacion.index'))
 @section('value_accion', 'Atras')
+@section('nombre', 'nueva cotizacion')
+@section('onclick',"event.preventDefault();document.getElementById('nueva_cot').submit();")
 
 @section('content')
-{{--  --}}
+
+<form action="{{ route($nueva_cot)}}"enctype="multipart/form-data" method="post" id="nueva_cot">
+    @csrf
+    <input type="text"  hidden="hidden" name="almacen"  value="{{$almacen}}">
+    <input  hidden="hidden" type="submit"  >
+</form>
+
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title">
         <div class="ibox-tools">
-            <a class="btn btn-success"  href="{{route('cotizacion.print' , $cotizacion->id)}}" target="_blank">Imprimir</a>
+            <a class="btn btn-success" href="{{route('cotizacion.print',$cotizacion->id)}}" target="_blank">Imprimir</a>
         </div>
     </div>
     <div class="row">

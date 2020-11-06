@@ -828,6 +828,7 @@ class CotizacionController extends Controller
         // }else{
         //     $almacen=Almacen::where('id',auth()->user()->almacen_id)->first();
         // }
+
         $almacen_producto_validacion=$request->get('almacen');
         for($i=0;$i<$count_articulo;$i++){
             $kardex_entrada_v=Kardex_entrada::where('almacen_id',$almacen_producto_validacion)->get();
@@ -977,6 +978,7 @@ class CotizacionController extends Controller
 
     public function show($id)
     {
+        
         $banco=Banco::where('estado','0')->get();
         $cotizacion=Cotizacion::find($id);
         $regla=$cotizacion->tipo;
@@ -985,8 +987,10 @@ class CotizacionController extends Controller
         /*registros boleta y factura*/
         if ($regla=='factura') {
             $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+            
         }elseif ($regla=='boleta') {
             $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+
         }
         /* FIN registros boleta y factura*/
 
@@ -1004,7 +1008,11 @@ class CotizacionController extends Controller
         $i=0;
         $i++;
 
-        return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','i','end','igv_p'));
+        //para mandar una nueva cotizacion en la vista .show como un boton
+        $almacen=auth()->user()->almacen_id;
+        $nueva_cot='cotizacion.create_'.$regla;
+        
+        return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','i','end','igv_p','almacen','nueva_cot'));
     }
 
     /**
