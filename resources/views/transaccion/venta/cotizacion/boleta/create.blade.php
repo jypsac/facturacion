@@ -89,8 +89,8 @@
 
             <!-- Fin Consulta API -->
 
-            <form action="{{ route('agregado_rapido.cliente_cotizado') }}" enctype="multipart/form-data" id="form"
-            class="wizard-big" method="post" style="margin:0 20px 20px 20px">
+            <form  enctype="multipart/form-data" id="form"
+            class="wizard-big"  style="margin:0 20px 20px 20px">
 
             @csrf
             <h1><i class="fa fa-user-o" aria-hidden="true"></i></h1>
@@ -152,9 +152,37 @@
             </div>
 
 
-            <input type="submit" class="btn btn-primary" value="Grabar">
+            <input type="submit"class="btn btn-primary" value="Grabar" id="enviar">
 
         </form>
+        <script>
+            $("#enviar").click(function (e) {
+                e.preventDefault();
+                var documento_identificacion = $('[name="documento_identificacion"]').val();
+                var numero_documento = $('[name="numero_documento"]').val();
+                var nombre = $('input:text[name=nombre]').val();
+                var direccion = $('input:text[name=direccion]').val();
+                var email = $('input:text[name=email]').val();
+                var token = '{{csrf_token()}}';// ó $("#token").val() si lo tienes en una etiqueta html.
+
+                var data={documento_identificacion:documento_identificacion,numero_documento:numero_documento,nombre:nombre,direccion:direccion,email:email,_token:token};
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('agregado_rapido.cliente_cotizado') }}",
+                    data: data,
+                    success: function (msg) {
+                        var mensaje;
+                        var opcion = confirm("Se ha registrado con exito el cliente, desea cargar la pagina para ver los cambios");
+                        if (opcion == true) {
+                            location.reload();
+                        }else{
+                            mensaje = "Has clickado Cancelar";
+                        }
+                        document.getElementById("ejemplo").innerHTML = mensaje;
+                    }
+                });
+            });
+        </script>
 
     </div>
 </div>
