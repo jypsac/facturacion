@@ -26,10 +26,10 @@
                     <form action="{{ route('familia.store') }}"  enctype="multipart/form-data" method="post">
                         @csrf
                         <fieldset >
-                            <legend> Agregar Familia </legend>
                             <div>
                                 <div class="panel-body" >
                                     <div class="row">
+                                        <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/familia.svg')}}" width="100px"></div>
                                         <label class="col-sm-2 col-form-label">Descripcion:</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" name="descripcion">
@@ -108,10 +108,10 @@
                                                                 @csrf
                                                                 @method('PATCH')
                                                                 <fieldset >
-                                                                    <legend> Editar Familia </legend>
                                                                     <div>
                                                                         <div class="panel-body" >
                                                                             <div class="row">
+                                                                                 <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/familia.svg')}}" width="100px"></div>
                                                                                 <label class="col-sm-2 col-form-label">Descripcion:</label>
                                                                                 <div class="col-sm-10">
                                                                                     <input type="text" class="form-control" name="descripcion" value="{{$familia->descripcion}}">

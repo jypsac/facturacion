@@ -15,6 +15,7 @@ class CategoriasTableSeeder extends Seeder
 			'id' => 1 ,
 			'codigo' => '001',
 			'descripcion' => 'GARANTIAS',
+			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -23,6 +24,7 @@ class CategoriasTableSeeder extends Seeder
 			'id' => 2 ,
 			'codigo' => '002',
 			'descripcion' => 'PRODUCTOS',
+			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);
@@ -31,6 +33,7 @@ class CategoriasTableSeeder extends Seeder
 			'id' => 3 ,
 			'codigo' => '003',
 			'descripcion' => 'SERVICIOS',
+			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);

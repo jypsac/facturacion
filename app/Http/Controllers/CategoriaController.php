@@ -16,7 +16,9 @@ class CategoriaController extends Controller
     public function index()
     {
         $categorias=Categoria::all();
-        return view('configuracion_general.categoria.index',compact('categorias'));
+        $conteo=Categoria::where('estado','0')->count();
+        // return $conteo;
+        return view('configuracion_general.categoria.index',compact('categorias','conteo'));
     }
 
     /**
@@ -49,6 +51,7 @@ class CategoriaController extends Controller
         $categoria=new Categoria;
         $categoria->codigo=$contador;
         $categoria->descripcion=$nombre;
+        $categoria->estado='0';
         $categoria->save();
 
         return redirect()->route('categoria.index');
@@ -86,10 +89,15 @@ class CategoriaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $estado=$request->get('estado');
+        if($estado=='on'){$estado_numero='0';}
+        else{$estado_numero='1';}
+
         $nombre=$request->get('descripcion');
         $nombre=strtoupper($nombre);
         $categoria=Categoria::find($id);
-        $categoria->descripcion=$nombre;
+        // $categoria->descripcion=$nombre;
+        $categoria->estado=$estado_numero;
         $categoria->save();
 
         return redirect()->route('categoria.index');
