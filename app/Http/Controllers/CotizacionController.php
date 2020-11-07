@@ -50,6 +50,15 @@ class CotizacionController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function descripcion_ajax(Request $request){
+        $articulo=$request->get('articulo');
+        $id=explode(" ",$articulo);
+        $producto=Producto::where('id',$id[0])->first();
+        $descripcion= $producto->descripcion;
+        return $descripcion;
+    }
+    
     public function create_factura(Request $request)
     {
 
@@ -1125,7 +1134,6 @@ public function facturar_store(Request $request)
     $fac= Facturacion::all()->count();
     $suma=$fac+1;
     $cod_fac='FC-000'.$suma;
-
 
             // Creacion de Facturacion
     $facturar=new Facturacion;

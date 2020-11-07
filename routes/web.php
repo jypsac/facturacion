@@ -112,7 +112,7 @@ Route::group(
 		Route::get('/guia_remision/print/{id}' , 'GuiaRemisionController@print')->name('guia_remision.print');
 		Route::resource('/guia_remision','GuiaRemisionController');
 
-
+		Route::post('descripcion_ajax', 'CotizacionController@descripcion_ajax')->name('descripcion_ajax');
 
 		Route::get('guias_remision/seleccionar', 'GuiaRemisionController@seleccionar')->name('guia_remision.seleccionar');
 		Route::put('cotizacion/aprobar/{id}', 'CotizacionController@aprobar')->name('cotizacion.aprobar');
