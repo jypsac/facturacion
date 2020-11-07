@@ -46,7 +46,8 @@
                     <table class="table invoice-table" >
                         <thead>
                             <tr>
-                                <th>Producto</th>
+                                <th>Codigo</th>
+                                <th style="text-align: left;">Nombre/Descripcion</th>
                                 <th>Cantidad</th>
                                 <th>Precio {{$moneda_nacional->nombre}}</th>
                                 <th style="background: #f3f3f4">Precio Total {{$moneda_nacional->nombre}}</th>
@@ -57,9 +58,9 @@
                         <tbody>
                          @foreach($kardex_entradas_registros as $kardex_entradas_registro)
                          <tr>
-                            <td>
-                                <strong>{{$kardex_entradas_registro->producto->nombre}}/{{$kardex_entradas_registro->producto->codigo_original}}</strong><br>
-                                <small>{{$kardex_entradas_registro->producto->descripcion}}</small>
+                            <td>  {{$kardex_entradas_registro->producto->codigo_producto}}</td>
+                            <td style="text-align: left;">
+                              {{$kardex_entradas_registro->producto->nombre}}/{{$kardex_entradas_registro->producto->codigo_original}}<br>{{$kardex_entradas_registro->producto->descripcion}}
                             </td>
                             <td>{{$kardex_entradas_registro->cantidad_inicial}}</td>
                             <td>{{$moneda_nacional->simbolo}} {{$kardex_entradas_registro->precio_nacional}}</td>
