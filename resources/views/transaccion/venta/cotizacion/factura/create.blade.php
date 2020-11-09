@@ -480,13 +480,14 @@
                         <input type='checkbox' class='case'/>
                         </td>";
                         <td>
-                        <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i})" autocomplete="off">
+                        <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i});ajax(${i})" autocomplete="off">
                         <datalist id="browsers" >
                         @foreach($productos as $index => $producto)
                         <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}" >
                         @endforeach
                         </datalist>
-                        <textarea type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
+                        <input type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;">
+
                         </td>
                         <td>
                         <input type='text' style="width: 76px"  id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
@@ -522,11 +523,66 @@
                         <input type='text' id='total${i}'  style="width: 76px"  name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
                         </td>
 
-                        </tr>`;
+                        </tr>
+                        
+
+                        `;
+                        // $(`.monto${a}`).each(function(){
+                            
+                        
+
                         $('.tables').append(data);
                         i++;
                     });
                 </script>
+
+                
+
+                <script>
+                    $('#articulo').change(function(e){
+                        e.preventDefault();
+                    
+                        var articulo = $('[id="articulo"]').val();
+                        // var data={articulo:articulo,_token:token};
+                                $.ajax({
+                                    type: "post",
+                                    url: "{{ route('descripcion_ajax') }}",
+                                    data: {
+                                        '_token': $('input[name=_token]').val(),
+                                        'articulo': articulo
+                                        },
+                                    success: function (msg) {
+                                        // console.log(msg);
+                                        
+                                        $('#descripcion0').val(msg);
+                                    }
+                                });
+                            });       
+
+                            
+                    function ajax (a){
+                        var articulo2 = $(`[id='articulo${a}']`).val();
+                        $.ajax({
+                                    type: "post",
+                                    url: "{{ route('descripcion_ajax') }}",
+                                    data: {
+                                        '_token': $('input[name=_token]').val(),
+                                        'articulo': articulo2
+                                        },
+                                    success: function (msg) {
+                                        // console.log(msg);
+                                        
+                                        $(`#descripcion${a}`).val(msg);
+                                    }
+                                });
+                    }
+                        
+               
+                    
+          
+                                
+                </script>
+
                 <script>
                     function comision(){
             //comision
@@ -723,28 +779,7 @@
         }
     </script>
 
-    <script>
-        $('#articulo').change(function(e){
-            e.preventDefault();
-           
-            var articulo = $('[id="articulo"]').val();
-            // var data={articulo:articulo,_token:token};
-                    $.ajax({
-                        type: "post",
-                        url: "{{ route('descripcion_ajax') }}",
-                        data: {
-                            '_token': $('input[name=_token]').val(),
-                            'articulo': articulo
-                            },
-                        success: function (msg) {
-                            // console.log(msg);
-                            
-                            $('#descripcion0').val(msg);
-                        }
-                    });
-                });       
-                    
-    </script>
+    
 
 
 

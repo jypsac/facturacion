@@ -81,7 +81,7 @@ https://images2.alphacoders.com/361/thumb-1920-36170.jpg
 */
 
 html,body{
-background-image: url('https://images2.alphacoders.com/361/thumb-1920-36170.jpg');
+background-image: url('{{$url}}');
 
 background-size: cover;
 background-repeat: no-repeat;

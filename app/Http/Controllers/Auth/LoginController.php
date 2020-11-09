@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers\Auth;
-
+use App\Empresa;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 use Illuminate\Http\Request;
@@ -43,7 +43,15 @@ class LoginController extends Controller
      protected function credentials(Request $request)
     {
        $request['estado'] = 1;
+       
        return $request->only($this->username(), 'password', 'estado');
+    }
+
+    public function showLoginForm()
+    {
+        $mi_empresa=Empresa::first();
+        $url=$mi_empresa->background;
+        return view('auth.login',compact('url'));
     }
 
 }

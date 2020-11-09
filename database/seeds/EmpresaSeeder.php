@@ -29,6 +29,7 @@ class EmpresaSeeder extends Seeder
 			'descripcion' => 'Nos especializamos ela comercialización de bombas y motores óleo hidráulicos de calidad nueva y de las mejores marca líder en el mercado. Por ese motivo ofrecemos y contamos en stock productos de calidad de marcas internacionales como: Rexroth, Parker, Vickers, Eaton, Denison Hydraulics',
 			'pagina_web' => 'https://hidromaxsac.com/',
 			'foto' => 'logo.png',
+			'background' => 'https://images2.alphacoders.com/361/thumb-1920-36170.jpg',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);

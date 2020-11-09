@@ -31,6 +31,7 @@ class CreateEmpresaTable extends Migration
             $table->text('descripcion');
             $table->text('pagina_web');
             $table->string('foto');
+            $table->text('background');
             $table->timestamps();
         });
     }
