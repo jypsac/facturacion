@@ -58,7 +58,7 @@ class CotizacionController extends Controller
         $descripcion= $producto->descripcion;
         return $descripcion;
     }
-    
+
     public function create_factura(Request $request)
     {
 
@@ -175,7 +175,7 @@ class CotizacionController extends Controller
 
         $lista=array_values(array_unique($prod));
         $lista_count=count($lista);
-        
+
         for($x=0;$x<$lista_count;$x++){
             $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         }
@@ -545,7 +545,7 @@ class CotizacionController extends Controller
 
         $lista=array_values(array_unique($prod));
         $lista_count=count($lista);
-        
+
         for($x=0;$x<$lista_count;$x++){
             $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         }
@@ -631,7 +631,7 @@ class CotizacionController extends Controller
 
         $lista=array_values(array_unique($prod));
         $lista_count=count($lista);
-        
+
         for($x=0;$x<$lista_count;$x++){
             $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         }
@@ -987,8 +987,9 @@ class CotizacionController extends Controller
 
     public function show($id)
     {
-        
+
         $banco=Banco::where('estado','0')->get();
+        $banco_count=Banco::where('estado','0')->count();
         $cotizacion=Cotizacion::find($id);
         $regla=$cotizacion->tipo;
         $sub_total=0;
@@ -996,7 +997,7 @@ class CotizacionController extends Controller
         /*registros boleta y factura*/
         if ($regla=='factura') {
             $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
-            
+
         }elseif ($regla=='boleta') {
             $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
 
@@ -1014,14 +1015,13 @@ class CotizacionController extends Controller
         // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
         $empresa=Empresa::first();
         $sum=0;
-        $i=0;
-        $i++;
+        $i=1;
 
         //para mandar una nueva cotizacion en la vista .show como un boton
         $almacen=auth()->user()->almacen_id;
         $nueva_cot='cotizacion.create_'.$regla;
-        
-        return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','i','end','igv_p','almacen','nueva_cot'));
+
+        return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','end','igv_p','almacen','nueva_cot','banco_count','i'));
     }
 
     /**
@@ -1065,6 +1065,7 @@ class CotizacionController extends Controller
 
     public function print($id){
        $banco=Banco::where('estado','0')->get();
+       $banco_count=Banco::where('estado','0')->count();
        $cotizacion=Cotizacion::find($id);
        $regla=$cotizacion->tipo;
        $sub_total=0;
@@ -1088,10 +1089,9 @@ class CotizacionController extends Controller
         // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
     $empresa=Empresa::first();
     $sum=0;
-    $i=0;
-    $i++;
+    $i=1;
 
-    return view('transaccion.venta.cotizacion.print', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','i','end','igv_p'));
+    return view('transaccion.venta.cotizacion.print', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','i','end','igv_p','banco_count'));
 }
 
 //envio hacia facturar cambiar en caso ingluya algo

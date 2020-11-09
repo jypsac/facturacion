@@ -34,18 +34,18 @@
                             <div>
                                 <div class="panel-body" >
                                     <div class="form-group  row"><label class="col-sm-2 col-form-label">Nombres:</label>
-                                     <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
-                                 </div>
+                                       <div class="col-sm-10"><input type="text" class="form-control" name="nombre"></div>
+                                   </div>
 
-                                 <div class="form-group  row"><label class="col-sm-2 col-form-label">Simbolo:</label>
-                                     <div class="col-sm-10"><input type="text" class="form-control" name="simbolo"></div>
-                                 </div>
+                                   <div class="form-group  row"><label class="col-sm-2 col-form-label">Simbolo:</label>
+                                       <div class="col-sm-10"><input type="text" class="form-control" name="simbolo"></div>
+                                   </div>
 
-                                 <div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo:</label>
-                                     <div class="col-sm-10"><input type="text" class="form-control" name="codigo"></div>
-                                 </div>
+                                   <div class="form-group  row"><label class="col-sm-2 col-form-label">Codigo:</label>
+                                       <div class="col-sm-10"><input type="text" class="form-control" name="codigo"></div>
+                                   </div>
 
-                                 <div class="form-group row"><label class="col-sm-2 col-form-label">Seleccionar Pais:</label>
+                                   <div class="form-group row"><label class="col-sm-2 col-form-label">Seleccionar Pais:</label>
                                     <div class="col-sm-10">
                                         <select class="form-control m-b" name="pais">
                                             <option>Seleccione</option>
@@ -102,6 +102,7 @@
                                     <th>Nombre</th>
                                     <th>Simbolo</th>
                                     <th>Codigo</th>
+                                    <th>Moneda Nacional/Extanjera</th>
                                     <th>Moneda Principal</th>
                                     <th>EDITAR</th>
                                 </tr>
@@ -113,6 +114,7 @@
                                     <td>{{$monedas->nombre}}</td>
                                     <td>{{$monedas->simbolo}}</td>
                                     <td>{{$monedas->codigo}}</td>
+                                    <td>Moneda {{$monedas->tipo}}</td>
                                     <td>@if($monedas->principal == 1)
                                       Si
                                       @else
@@ -138,26 +140,27 @@
                                                             @csrf
                                                             @method('PATCH')
                                                             <fieldset >
-                                                                <legend> Editar Categoría </legend>
                                                                 <div>
                                                                     <div class="panel-body" >
+                                                                        <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/moneda.svg')}}" width="100px"> <br><h3> Moneda {{$monedas->tipo}}</h3></div>
+
                                                                         <div class="form-group  row">
                                                                             <label class="col-sm-2 col-form-label">Nombres:</label>
                                                                             <div class="col-sm-4">
-                                                                                <input type="text" class="form-control" name="nombre" value="{{$monedas->nombre}}">
+                                                                                <input type="text" class="form-control" name="nombre" value="{{$monedas->nombre}}" readonly="">
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Simbolo:</label>
                                                                             <div class="col-sm-4">
-                                                                                <input type="text" class="form-control" name="simbolo" value="{{$monedas->simbolo}}">
+                                                                                <input type="text" class="form-control" name="simbolo" value="{{$monedas->simbolo}}" readonly="">
                                                                             </div>
                                                                         </div>
                                                                         <div class="form-group  row">
                                                                             <label class="col-sm-2 col-form-label">Codigo:</label>
                                                                             <div class="col-sm-4">
-                                                                                <input type="text" class="form-control" name="codigo" value="{{$monedas->codigo}}">
+                                                                                <input type="text" class="form-control" name="codigo" value="{{$monedas->codigo}}" readonly="" >
                                                                             </div>
 
-                                                                            <label class="col-sm-2 col-form-label">Activo/Desactivo:</label>
+                                                                            <label class="col-sm-2 col-form-label">Moneda Principal:</label>
                                                                             <div class="col-sm-4">
                                                                                 @if($monedas->principal == 0)
                                                                                 <div class="switch-button">
@@ -176,12 +179,7 @@
 
                                                                         <div class="form-group row"><label class="col-sm-2 col-form-label">Seleccionar Pais:</label>
                                                                             <div class="col-sm-10">
-                                                                                <select class="form-control m-b" name="pais">
-                                                                                    <option value="{{$monedas->pais}}">{{$monedas->pais}}</option>
-                                                                                    @foreach($paises as $pais)
-                                                                                    <option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
-                                                                                    @endforeach
-                                                                                </select>
+                                                                                <input class="form-control" readonly="" value="{{$monedas->pais}}">
                                                                             </div>
                                                                         </div>
                                                                     </div>

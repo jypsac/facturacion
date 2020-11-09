@@ -103,7 +103,7 @@
             <tbody>
                @foreach($cotizacion_registro as $cotizacion_registros)
                <tr>
-                <td>{{$i}} </td>
+                <td>{{$i++}} </td>
                 <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                 <td>{{$cotizacion_registros->producto->nombre}} <br>{{$cotizacion_registros->producto->descripcion}}</span></td>
                 <td>{{$cotizacion_registros->cantidad}}</td>
@@ -148,18 +148,35 @@
 <br>
 <!-- Fin Totales de Productos -->
 <div class="row">
-    @foreach($banco as $bancos)
-    <div class="col-sm-3 " align="center">
-        <p class="form-control" style="height: 100px">
-          <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
-          <br>
-          N° S/. : {{$bancos->numero_soles}}
-          <br>
-          N° $ : {{$bancos->numero_dolares}}<br>
+     @foreach($banco as $bancos)
 
-      </p>
-  </div>
-  @endforeach
+    @if($banco_count==3)
+    <div class="col-sm-4 " align="center">
+    <p class="form-control" style="height: 100px">
+
+    @elseif($banco_count==2)
+    <div class="col-sm-6" align="center">
+    <p class="form-control" style="height: 100px">
+
+    @elseif($banco_count==1)
+    <div class="col-sm-12" align="center" style="width: 100px">
+    <p class="form-control" style="height: 100px;width: 426px;">
+
+    @else
+    <div class="col-sm-3 " align="center">
+    <p class="form-control" style="height: 100px">
+    @endif
+
+      <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="height: 30px;">
+      <br>
+      <span style="font-size: 12px">
+      S/: {{$bancos->numero_soles}}
+      <br>
+      $: {{$bancos->numero_dolares}}<br>
+      </span>
+     </p>
+     </div>
+      @endforeach
 
 </div>
 <br>

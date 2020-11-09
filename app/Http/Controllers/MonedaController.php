@@ -99,12 +99,13 @@ class MonedaController extends Controller
     else{ $principal='0';}
 
     $moneda=Moneda::find($id);
-    $moneda->nombre=$request->get('nombre');
-    $moneda->simbolo=$request->get('simbolo');
-    $moneda->codigo=strtoupper($request->get('codigo'));
+    // $moneda->nombre=$request->get('nombre');
+    // $moneda->simbolo=$request->get('simbolo');
+    // $moneda->codigo=strtoupper($request->get('codigo'));
     $moneda->principal=$principal;
-    $moneda->pais=$request->get('pais');
+    // $moneda->pais=$request->get('pais');
     $moneda->save();
+
     /*Buscador de moneda Principal*/
     $principal_mone=Moneda::where('principal',1)->first();
     $id_prin_mone=$principal_mone->id;

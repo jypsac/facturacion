@@ -27,26 +27,26 @@
                     <form action="{{ route('motivo.store') }}"  enctype="multipart/form-data" method="post">
                         @csrf
                         <fieldset >
-                            <legend> Agregar Motivo </legend>
                             <div>
                                 <div class="panel-body" >
                                     <div class="row">
-                                        <label class="col-sm-2 col-form-label">Nombre:</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="nombre">
-                                        </div>
+                                       <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/motivo.svg')}}" width="100px"></div>
+                                       <label class="col-sm-2 col-form-label">Nombre:</label>
+                                       <div class="col-sm-10">
+                                        <input type="text" class="form-control" name="nombre">
                                     </div>
                                 </div>
                             </div>
+                        </div>
 
-                        </fieldset>
-                        <button class="btn btn-primary" type="submit">Grabar</button>
-                        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                    </form>
-                </div>
+                    </fieldset>
+                    <button class="btn btn-primary" type="submit">Grabar</button>
+                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                </form>
             </div>
         </div>
     </div>
+</div>
 </div>
 <!-- / Modal Create  -->
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -86,8 +86,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                               @foreach($motivos as $motivo)
-                               <tr class="gradeX">
+                             @foreach($motivos as $motivo)
+                             <tr class="gradeX">
                                 <td>{{$motivo->id}}</td>
                                 <td>{{$motivo->nombre}}</td>
                                 <td>{{$motivo->created_at}}</td>
@@ -110,15 +110,18 @@
                                                             @csrf
                                                             @method('PATCH')
                                                             <fieldset >
-                                                                <legend> Editar Motivo </legend>
                                                                 <div>
                                                                     <div class="panel-body" >
                                                                         <div class="row">
-                                                                         <label class="col-sm-2 col-form-label">Nombre:</label>
-                                                                         <div class="col-sm-10">
+                                                                           <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/motivo.svg')}}" width="100px"></div>
+                                                                           <label class="col-sm-2 col-form-label">Nombre:</label>
+                                                                           <div class="col-sm-10">
+                                                                            @if($motivo->created_at==$motivo->updated_at)
                                                                             <input type="text" class="form-control" value="{{$motivo->nombre}}" name="nombre">
+                                                                            @else
+                                                                            <input type="text" class="form-control" value="{{$motivo->nombre}}" name="nombre" readonly="readonly">
+                                                                            @endif
                                                                         </div>
-
                                                                     </div>
                                                                 </div>
                                                             </div>
