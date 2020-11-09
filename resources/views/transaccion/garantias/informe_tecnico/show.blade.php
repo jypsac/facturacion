@@ -8,326 +8,214 @@
 
 @section('content')
 
-<div class="ibox" style="margin-bottom:0px;">
-    <div class="table-responsive" >
-        <img align="left" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="width:200px;height: 70px ;margin-top: 20px">
-        <img align="right" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 200px;height: 70px;margin-top: 20px">
-    </div>
-    <div class="table-responsive" >
-        <p>{{$empresa->calle}}<br>{{$empresa->correo}} / {{$empresa->telefono}} - {{$empresa->movil}}</p>
-    </div>
-</div>
-<div class="table-responsive" align="right">
-                    <div class="title-action" style="padding-top: 0;" >
-                        <form class="btn" style="text-align: none;padding-right: 0" action="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}">
-                        <input type="text" name="archivo" maxlength="50" value="{{$garantias_informe_tecnico->orden_servicio}}">
-                         <button type="submit" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </button></form>
-
-                       {{--  <a href="mailto:user@gmail.com?subject=Envio de Garantia&body=Envio%20el%20link%20de%20garantia%20%20%20{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" class="btn btn-white"><i class="fa fa-envelope" ></i> Email </a> --}}<!--
-                        <a href="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}" class="btn btn-white"><i class="fa fa-file-pdf-o"></i> PDF </a> -->
-                        @if(Auth::user()->email_creado == 0)
-                         <button type="button" class="btn btn-white" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope" ></i>  Email</button>
-                        @else
-                         <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn">
-                            @csrf
-                            <input type="text" hidden="hidden" name="tipo" value="App\GarantiaInformeTecnico"/>
-                            <input type="text" hidden="hidden" name="id" value="{{$garantias_informe_tecnico->id}}"/>
-                            <input type="text" hidden="hidden" name="redict" value="garantias_informe_tecnico">
-                            <input type="text" hidden="hidden" name="cliente" value="{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}">
-                            <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
-                        </form>
-                        @endif
-                        <a href="{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
-                    </div>
-                </div>
-
-<h2 style="text-align: center;margin-top:0px;"> <strong>Guía Informe Tecnico</strong></h2>
-
-<div class="wrapper wrapper-content animated fadeIn">
-
-<div class="table-responsive">
-    <table class="table table-bordered table-striped">
-        <thead>
-            <tr>
-                <td style="width: 70px;">Motivo</td>
-                <th style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}</th>
-                <td style="width: 70px;">Marca</td>
-                <th style="width: 70px;"> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre}}</th>
-                <td style="width: 70px;">Fecha</td>
-                <th style="width: 70px;">{{$garantias_informe_tecnico->fecha}}</th>
-                <td style="width: 70px;">Orden de Servicio</td>
-                <th style="width: 70px;"> {{$garantias_informe_tecnico->orden_servicio}}</th>
-            </tr>
-            <tr>
-
-                <td colspan="2" style="width: 70px;">Ing. Asigando</td>
-                <th colspan="2" style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</th>
-                <td colspan="2" style="width: 70px;">Asunto</td>
-                <th colspan="2" style="width: 70px;">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</th>
-
-            </tr>
-        </thead>
-    </table>
-
-</div>
-
-
-<div class="row">
-    <div class="col-lg-12">
-        <div class="ibox ">
-            {{-- <div class="ibox-title"> --}}
-            <h4>Datos del Ciente</h4>
-            {{-- </div> --}}
-            <div>
-                <table class="table table-bordered white-bg" >
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span data-diameter="40" class="updating-chart">Nombre o Empresa </span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->nombre}}<strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Direccion</span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->direccion}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Telefono</span>
-                            </td>
-                            <td>
-                                <strong> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->telefono}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Correo</span>
-                            </td>
-                            <td>
-                                <strong> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="bar">Contacto</span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->contactos->nombre}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="bar">Numero de Documento</span>
-                            </td>
-                            <td>
-                                <strong> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->numero_documento}}</strong>
-                            </td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-<div class="row">
-    <div class="col-lg-12">
-        <div class="ibox ">
-            {{-- <div class="ibox-title"> --}}
-            <h4>Datos del Equipo</h4>
-            {{-- </div> --}}
-            <div>
-                <table class="table table-bordered white-bg">
-                    <tbody>
-                        <tr>
-                            <td>
-                                <span data-diameter="40" class="updating-chart">Modelo</span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->nombre_equipo}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Numero de Serie </span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->numero_serie}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Codigo Interno</span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->codigo_interno}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Fecha de Compra</span>
-                            </td>
-                            <td>
-                                <strong>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha_compra}}</strong>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Descripcion Del Problema</span>
-                            </td>
-                            <td>
-                                <p>{!! nl2br($garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->descripcion_problema)!!}</p>
-                            </td>
-                        </tr>
-                        <tr>
-                            <td>
-                                <span class="line">Revision y diagnostico</span>
-                            </td>
-                            <td>
-                                <p style="font-size: 10px">{!! nl2br($garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->revision_diagnostico)!!}</p>
-                            </td>
-                        </tr>
-
-                    </tbody>
-                </table>
-            </div>
-        </div>
-    </div>
-
-</div>
-
-
-
-<div class="col-lg-13">
-    <div class="ibox">
-        {{-- <div class="ibox-title"> --}}
-        <h4>Estetica</h4>
+<div class="wrapper wrapper-content animated fadeInRight">
+    <div class="ibox-title" align="right" style="padding-right: 3.1%">
+        {{-- <div class="ibox-tools"> --}}
+            {{-- <a class="btn btn-success"  href="" >Imprimir --}}
+            <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}">
+                <input type="text" name="archivo" maxlength="50" value="{{$garantias_informe_tecnico->orden_servicio}}">
+                <button type="submit" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> PDF </button>
+            </form>
+                     {{-- </a> --}}
+            @if(Auth::user()->email_creado == 0)
+                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope" ></i>  Email</button>
+            @else
+                <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn">
+                    @csrf
+                    <input type="text" hidden="hidden" name="tipo" value="App\GarantiaInformeTecnico"/>
+                    <input type="text" hidden="hidden" name="id" value="{{$garantias_informe_tecnico->id}}"/>
+                    <input type="text" hidden="hidden" name="redict" value="garantias_informe_tecnico">
+                    <input type="text" hidden="hidden" name="cliente" value="{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}">
+                    <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
+                </form>
+            @endif
+            <a href="{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
         {{-- </div> --}}
-        <div class="border">
-            <div class="ibox-content text-left h-10">
-                <span id="sparkline8">
-                    <div class="panel-body">
-                        {!! nl2br($garantias_informe_tecnico->estetica)!!}
-                    </div>
-                </span>
-            </div>
-        </div>
     </div>
-</div>
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
+                <div class="row">
+                    <div class="col-sm-6 text-left" align="left">
+                        <address class="col-sm-4" align="left">
+                            <img align="right" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 100px;height: 50px;margin-top: 5px">
+                            {{-- <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="left" /> --}}
+                            {{-- <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px" align="left"> --}}
 
-
-
-<div class="col-lg-13">
-    <div class="ibox ">
-        {{-- <div class="ibox-title"> --}}
-        <h4>Revisión y diagnóstico</h4>
-        {{-- </div> --}}
-        <div class="border">
-            <div class="ibox-content text-left h-10">
-                <span id="sparkline8">
-                    {{-- <div class="panel-body"> --}}
-                   {!! nl2br($garantias_informe_tecnico->revision_diagnostico)!!}
+                        </address>
+                    </div>
+                    {{-- <div class="col-sm-6" align="right">
+                        <address class="col-sm-4" align="right">
+                            <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="right">
+                        </address>
+                    </div> --}}
+                {{-- </div> --}}
+                {{-- <div class="row"> --}}
+                    {{-- <div align="right"> --}}
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-4" align="right" style="width: 100%">
+                            <div class="form-control" align="center" style="height: auto;" align="right">
+                                <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
+                                <h2 style="font-size: 19px">GUIA DE INFORME TECNICO</h2>
+                                <h5>{{$garantias_informe_tecnico->orden_servicio}}</h5>
+                            </div>
+                        </div>
                     {{-- </div> --}}
-                </span>
-            </div>
-        </div>
-    </div>
-</div>
-
-
-<div class="col-lg-13">
-    <div class="ibox">
-
-        {{-- <div class="ibox-title"> --}}
-        <h4>Causas Del Problema</h4>
-        {{-- </div> --}}
-        <div class="border">
-            <div class="ibox-content text-left h-50">
-                <span id="sparkline8">
-                    <div class="panel-body">
-                                {!! nl2br($garantias_informe_tecnico->causas_del_problema)!!}
-                    </div>
-                </span>
-
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-lg-13">
-    <div class="ibox">
-
-        {{-- <div class="ibox-title"> --}}
-        <h4>Solucion</h4>
-        {{-- </div> --}}
-        <div class="border">
-            <div class="ibox-content text-left h-50">
-                <span id="sparkline8">
-                    <div class="panel-body">
-                                {!! nl2br($garantias_informe_tecnico->solucion)!!}
-                    </div>
-                </span>
-
-            </div>
-        </div>
-    </div>
-</div>
-<div class="col-lg-13">
-    <div class="ibox">
-
-        {{-- <div class="ibox-title"> --}}
-        <h4>Fotos</h4>
-        {{-- </div> --}}
-        <div class="border">
-            <div class="ibox-content text-left h-50">
-                <span id="sparkline8">
-                    <div class="panel-body" align="center">
-                        <div class="col-sm-8">
-                        @foreach($archivo_informe_tecnico as $archivo)
-                        <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 150px;padding: 15px ;">
-                        @endforeach
+                </div>
+                <br>
+                <div class="row" align="center" style="padding-bottom: 5px">
+                    <div class="col-sm-6" align="center">
+                        <div class="form-control">
+                            <h3>Contacto Cliente</h3>
+                            <div align="left">
+                                <strong>Señor(es):</strong> &nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->nombre}}<br>
+                                <strong>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->documento_identificacion}} :</strong> &nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>Fecha:</strong> &nbsp;{{$garantias_informe_tecnico->fecha}}<br>
+                                <strong>Telefono:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                <strong>Correo:</strong>&nbsp; {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}<br>
+                                <strong>Direccion:</strong>&nbsp; {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->direccion}}<br>
+                                <strong>Contacto:&nbsp;</strong>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->contactos->nombre}} &nbsp;
+                                <br>
+                            </div>
                         </div>
                     </div>
-                </span>
+                    <div class="col-sm-6" align="center">
+                         <div class="form-control" >
+                             <h3>Condiciones Generales</h3>
+                             <div align="left">
+                                <strong>Ing. Asignado:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                <strong>Motivo:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}<br>
+                                <strong>Marca :</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre}} &nbsp;<br>
+
+                                <strong>Asunto:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                   <div class="col-sm-12" align="center" style="padding-top: 15px;">
+                        <div class="form-control" style="height: 100%">
+                             <h3>Datos del Equipo</h3>
+                             <div class="row" style="padding-bottom: 1px">
+                                 <div align="left" class="col-sm-6">
+                                    <strong>Modelo:</strong> &nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->nombre_equipo}}<br>
+                                    <strong>Número de serie:</strong> &nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->numero_serie}}<br>
+                                    <strong>Descripcion del Problema:&nbsp;</strong><br>
+                                    {!! nl2br($garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->descripcion_problema)!!}
+                                </div>
+                                <div align="left" class="col-sm-6">
+                                    <strong>Codigo Interno:</strong>&nbsp; {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->codigo_interno}}<br>
+                                    <strong>Fecha de Compra:</strong> &nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha_compra}}<br>
+                                    <strong>Revision y Diagnóstico:&nbsp;</strong>{!! nl2br($garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->revision_diagnostico)!!}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
 
             </div>
-{{--             <form action="#" class="dropzone" id="dropzoneForm">
-                <div class="fallback">
-                    <input name="file" type="file" multiple />
+                <br>
+                <div class="row" align="center" style="padding-bottom: 5px">
+                    <div class="col-sm-6" align="center">
+                        <div class="form-control" style="height: 100%" ><h3>Estética</h3>
+                            <div align="left" style="font-size: 13px">
+                                <p>{!! nl2br($garantias_informe_tecnico->estetica)!!}</p>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="col-sm-6" align="center">
+                        <div class="form-control" style="height: 100%"><h3>Revision y diagnóstico:</h3>
+                                <div align="left" style="font-size: 13px;" >
+                                    <p>{!! nl2br($garantias_informe_tecnico->revision_diagnostico)!!}</p>
+                               </div>
+                            </div>
+                        </div>
+
                 </div>
-            </form> --}}
+                <br>
+                <div class="row" align="center" style="padding-bottom: 5px">
+                    <div class="col-sm-6" align="center">
+                        <div class="form-control" style="height: 100%" ><h3>Causas del Problema</h3>
+                            <div align="left" style="font-size: 13px;">
+                                <p> {!! nl2br($garantias_informe_tecnico->causas_del_problema)!!}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" align="center">
+                        <div class="form-control" style="height: 100%" ><h3>Solución</h3>
+                            <div align="left" style="font-size: 13px">
+                                <p>{!! nl2br($garantias_informe_tecnico->solucion)!!}</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <div class="row" align="center" style="padding-bottom: 5px">
+                    <div class="col-sm-12" align="center">
+                        <div class="form-control" style="height: 100%"><h3>Imagenes</h3>
+                            <div align="left" style="font-size: 13px">
+                                <p>
+                                    @foreach($archivo_informe_tecnico as $archivo)
+                                        <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 150px;padding: 15px ;">
+                                    @endforeach
+                                </p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div>
+
+                </div>
+
+
+            <br>
+            <!-- Fin Totales de Productos -->
+            {{-- <div class="row">
+                @foreach($banco as $bancos)
+                <div class="col-sm-3 " align="center">
+                    <p class="form-control" style="height: 100px">
+                      <img  src="" style="width: 100px;height: 30px;">
+                      <br>
+                      N° S/. :
+                      <br>
+                      N° $ : <br>
+
+                  </p>
+              </div>
+              @endforeach
+
+          </div> --}}
+
+          <footer style="padding-top: 10px">
+          <br>
+          <div class="row">
+            <div class="col-sm-4">
+                <strong><p><u>Centro de Atencion : </strong></u></p>
+                <strong>Direccion:</strong> {{$empresa->calle}}<br>
+                <strong>Telefono:</strong> {{$empresa->telefono}}<br>
+                <strong>Celular:</strong> {{$empresa->movil}}<br>
+                <strong>Email:</strong> {{$empresa->correo}}<br>
+                <strong>Web:</strong> {{$empresa->pagina_web}}<br>
+            </div>
+            <div class="col-sm-2"></div>
+            <div class="col-sm-3"></div>
+            <div class="col-sm-3"><br><br>
+                {{-- <hr>
+                <center>adm</center> --}}
+            </div>
+
         </div>
+         </footer>
     </div>
 </div>
-
-
-
 </div>
 
-
-<style>
-    .container {
-        /* background: #e0e0e0; */
-        margin: 1 1 1rem;
-        height: 7rem;
-        display: flex;
-        align-items: start;
-    }
-
-
-    .border {
-        border-color: #aaaaaa;
-        border-width: 1px;
-        border-style: solid;
-    }
-    td{background: white;}
+</div>
+<style type="text/css">
+    .form-control{border-radius: 10px; height: 150px;}
+    .ibox-tools a{color: white !important}
+    .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
+    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {border-top-width: 0px;}
 
 </style>
 {{-- Modal Configuracion --}}
@@ -350,13 +238,14 @@
                                     <div class="panel-body" align="left">
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Email:</label>
-                                            <div class="col-sm-10"><input type="text" class="form-control" name="email">
+                                            <div class="col-sm-10">
+                                                <input type="text" class="form-control" style="width: 100%;height: 90%;margin-top: 5px; border-radius: 5px" name="email"/>
                                             </div>
 
                                             <label class="col-sm-2 col-form-label">Contraseña:</label>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-10" style="flex-wrap: none">
                                                 <div class="input-group m-b">
-                                                    <input type="password" class="form-control" name="password" id="txtPassword" required="">
+                                                    <input type="password" class="form-control" name="password" id="txtPassword" required="" style="height: 90%;margin-top: 5px; border-radius: 5px">
                                                     <div class="input-group-prepend">
                                                         <span class="input-group-addon" style="height: 35.22222px;margin-top: 5px;">
                                                             <i class="fa fa-eye-slash " id="ojo" onclick="mostrarPassword()"></i>
@@ -368,12 +257,12 @@
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">SMPT:</label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" name="smtp" placeholder="smtp.gmail.com" required="">
+                                                <input type="text" class="form-control" name="smtp" placeholder="smtp.gmail.com" required="" style="width: 100%;height: 90%;margin-top: 5px; border-radius: 5px">
                                             </div>
 
                                             <label class="col-sm-2 col-form-label">PORT:</label>
                                             <div class="col-sm-4">
-                                                <input type="text" class="form-control" name="port" value="110 " >
+                                                <input type="text" class="form-control" name="port" value="110 " style="height: 90%;margin-top: 5px; border-radius: 5px" >
                                             </div>
                                         </div>
                                         <div class="row">
@@ -469,19 +358,24 @@
     }
 }
 </script>
-
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.js') }}"></script>
 <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
 <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-{{-- <link href="{{asset('css/plugins/dropzone/dropzone.css')}}" rel="stylesheet">
-<script src="{{ asset('js/plugins/dropzone/dropzone.js') }}"></script>
-<script src="{{ asset('js/dropzone.js') }}"></script> --}}
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
+{{-- <script>
+function printExternal(url) {
+    var printWindow = window.open( url, 'Print', 'left=200, top=200, width=950, height=500, toolbar=0, resizable=0');
+    printWindow.addEventListener('load', function(){
+        printWindow.print();
+        printWindow.close();
+    }, true);
+}
+</script> --}}
 
 @endsection

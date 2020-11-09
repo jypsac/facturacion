@@ -230,7 +230,8 @@ class GarantiaInformeTecnicoController extends Controller
     public function print($id){
         $mi_empresa=Empresa::first();
         $garantias_informe_tecnico=GarantiaInformeTecnico::find($id);
-        return view('transaccion.garantias.informe_tecnico.show_print',compact('garantias_informe_tecnico','mi_empresa'));
+        $archivo_informe_tecnico  = GarantiaInformeTecnicoArchivos::where('id_informe_tecnico',$id)->get();
+        return view('transaccion.garantias.informe_tecnico.show_print',compact('garantias_informe_tecnico','mi_empresa','archivo_informe_tecnico'));
     }
 
     public function pdf(Request $request,$id){
