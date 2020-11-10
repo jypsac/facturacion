@@ -47,17 +47,17 @@
                                                                 @csrf
                                                                 @method('PATCH')
                                                                 <fieldset >
-                                                                    <legend> Editar IGV </legend>
                                                                     <div>
                                                                         <div class="panel-body" >
                                                                             <div class="row">
+                                                                                <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/igv.svg')}}" width="100px"></div>
                                                                                 <label class="col-sm-2 col-form-label">IGV:</label>
                                                                                 <div class="col-sm-4">
-                                                                                    <input type="text" class="form-control" name="igv_total" value="{{$igv->igv_total}}">
+                                                                                    <input type="text" class="form-control" name="igv_total" value="{{$igv->igv_total}}" readonly="">
                                                                                 </div>
                                                                                 <label class="col-sm-2 col-form-label">Renta:</label>
                                                                                 <div class="col-sm-4">
-                                                                                    <input type="text" name="renta" class="form-control" value="{{$igv->renta}}">
+                                                                                    <input type="text" readonly="" name="renta" class="form-control" value="{{$igv->renta}}">
                                                                                 </div>
                                                                             </div>
                                                                         </div>

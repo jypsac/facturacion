@@ -26,10 +26,10 @@
                     <form action="{{ route('unidad-medida.store') }}"  enctype="multipart/form-data" method="post">
                         @csrf
                         <fieldset >
-                            <legend> Agregar Unidad de Medida </legend>
                             <div>
                                 <div class="panel-body" >
                                     <div class="row">
+                                          <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/unidad_medida.svg')}}" width="100px"></div>
                                         <label class="col-sm-2 col-form-label">Simbolo:</label>
                                         <div class="col-sm-4">
                                             <input type="text" class="form-control" name="simbolo">
@@ -128,10 +128,10 @@
                                                                 @csrf
                                                                 @method('PATCH')
                                                                 <fieldset >
-                                                                    <legend> Editar Categoría </legend>
                                                                     <div>
                                                                        <div class="panel-body" >
                                                                         <div class="row">
+                                                                             <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/unidad_medida.svg')}}" width="100px"></div>
                                                                             <label class="col-sm-2 col-form-label">Simbolo:</label>
                                                                             <div class="col-sm-4">
                                                                                 <input type="text" class="form-control" name="simbolo" value="{{$u_medida->simbolo}}">
