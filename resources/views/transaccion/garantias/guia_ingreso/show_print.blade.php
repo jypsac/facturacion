@@ -37,25 +37,30 @@
                 <div class="row">
                     <div class="col-sm-6 text-left" align="left">
                         <address class="col-sm-4" align="left">
-                            <img src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" alt="" width="300px">
+                            <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 100px;height: 50px;margin-top: 5px">
+                            {{-- <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="left" /> --}}
+                            {{-- <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px" align="left"> --}}
+
                         </address>
                     </div>
-                    <div class="col-sm-6" align="right">
+                    {{-- <div class="col-sm-6" align="right">
                         <address class="col-sm-4" align="right">
                             <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="right">
                         </address>
-                    </div>
-                </div>
-                <div class="row">
-                    <div align="right" style="width: 100%" >
-                        <div class="col-sm-4" align="right">
+                    </div> --}}
+                {{-- </div> --}}
+                {{-- <div class="row"> --}}
+                    {{-- <div align="right"> --}}
+                        <div class="col-sm-2">
+                        </div>
+                        <div class="col-sm-4" align="right" style="width: 100%">
                             <div class="form-control" align="center" style="height: auto;" align="right">
                                 <h3 style="padding-top:10px ">R.U.C {{$mi_empresa->ruc}}</h3>
                                 <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
                                 <h5>{{$garantia_guia_ingreso->orden_servicio}}</h5>
                             </div>
                         </div>
-                    </div>
+                    {{-- </div> --}}
                 </div>
                 <br>
                 <div class="row" align="center" style="padding-bottom: 5px">
@@ -164,7 +169,7 @@
             <div class="col-sm-2"></div>
             <div class="col-sm-3"></div>
             <div class="col-sm-3"><br><br>
-               
+
             </div>
 
         </div>
@@ -190,7 +195,7 @@
 <div class="footer">
         <div >
             <p><b>IMPORTANTE:</b> El plazo para el recojo del equipo es de 15 días calendario. en caso de no recoger el equipo dentro de los plazos, este será trasladado al almacén. debiendo pagar S/.20.00 por cada semana que transcurra por gastos administrativos, seguros y almacenaje. Así mismo pasado los 90 días el cliente pierde el derecho total sobre el equipo. </p>
-         </div> 
+         </div>
          <div>
               <table class="table table-bordered white-bg">
                     <tbody>
@@ -201,7 +206,7 @@
                 <th>{{$garantia_guia_ingreso->orden_servicio}}</th>
                 <th >{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
                 <th >{{$garantia_guia_ingreso->orden_servicio}}</th>
-            </tr>      
+            </tr>
                     </tbody>
                 </table>
          </div>

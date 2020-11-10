@@ -238,11 +238,12 @@ class GarantiaInformeTecnicoController extends Controller
 
         $mi_empresa=Empresa::first();
         $garantias_informe_tecnico=GarantiaInformeTecnico::find($id);
+        $archivo_informe_tecnico  = GarantiaInformeTecnicoArchivos::where('id_informe_tecnico',$id)->get();
         $archivo=$request->get('archivo');
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome');
-        $pdf=PDF::loadView('transaccion.garantias.informe_tecnico.show_pdf',compact('garantias_informe_tecnico','mi_empresa'));
+        $pdf=PDF::loadView('transaccion.garantias.informe_tecnico.show_pdf',compact('garantias_informe_tecnico','mi_empresa','archivo_informe_tecnico'));
     //     return $pdf->download();
         return $pdf->download('Guia Informe Tecnico - '.$archivo.' .pdf');
 
