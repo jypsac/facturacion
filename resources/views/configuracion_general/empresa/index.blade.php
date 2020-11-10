@@ -152,8 +152,10 @@
       @foreach($banco as $bancos)
       <div class="col-lg-3 " align="center">
         <p class="form-control">
-          <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
-          <br> <span style="font-size: 11px">
+          <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 120px;height: 40px;"><br>
+          <span style="font-size: 11px"><strong> {{$bancos->tipo_cuenta}}</strong></span>
+          <br>
+          <span style="font-size: 11px">
             S/: {{$bancos->numero_soles}}
             <br>
             $: {{$bancos->numero_dolares}}<br></span>
@@ -186,12 +188,23 @@
                                  <div id="visorArchivo{{$bancos->id}}">
                                    <!--Aqui se desplegará el fichero-->
                                    <center >
-                                    <img src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 200;height: 60px;"></center>
+                                    <img src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 300px;height: 120px;margin-bottom: 15px;border-radius: 10px"></center>
                                   </div>
                                   <input type="text" value="{{$bancos->foto}}" class="form-control" name="ori_foto" hidden="hidden">
                                 </div>
 
                                 {{--/ foto --}}
+                                <label class="col-sm-3 col-form-label">Tipo de Cuenta:</label>
+                                <div class="col-sm-9" style="padding-bottom: 10px">
+                                  <select class="form-control" name="tipo_cuenta">
+                                    <option value="{{$bancos->tipo_cuenta}}">{{$bancos->tipo_cuenta}}</option>
+                                    @if($bancos->tipo_cuenta=='Cuenta Corriente')
+                                    <option value="Cuenta Ahorros" >Cuenta Ahorros</option>
+                                    @elseif($bancos->tipo_cuenta=='Cuenta Ahorros')
+                                    <option value="Cuenta Corriente" >Cuenta Corriente</option>
+                                    @endif
+                                  </select>
+                                </div>
                                 <label class="col-sm-3 col-form-label">N° Soles:</label>
                                 <div class="col-sm-9" style="padding-bottom: 10px">
                                   <input type="text" class="form-control" name="numero_soles" value="{{$bancos->numero_soles}}">
@@ -262,7 +275,7 @@
           visor.onload = function(e)
           {
             document.getElementById('visorArchivo{{$bancos->id}}').innerHTML =
-            '<img name="firma" src="'+e.target.result+'"width="390px" height="200px" />';
+            '<img name="firma" src="'+e.target.result+'" style="width: 300px;height: 120px;margin-bottom: 15px;border-radius: 10px" />';
           };
           visor.readAsDataURL(archivoInput.files[0]);
         }

@@ -152,22 +152,23 @@
 
     @if($banco_count==3)
     <div class="col-sm-4 " align="center">
-    <p class="form-control" style="height: 100px">
+    <p class="form-control">
 
     @elseif($banco_count==2)
     <div class="col-sm-6" align="center">
-    <p class="form-control" style="height: 100px">
+    <p class="form-control">
 
     @elseif($banco_count==1)
     <div class="col-sm-12" align="center" style="width: 100px">
-    <p class="form-control" style="height: 100px;width: 426px;">
+    <p class="form-control" style="width: 426px;">
 
     @else
     <div class="col-sm-3 " align="center">
     <p class="form-control" style="height: 100px">
     @endif
 
-      <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="height: 30px;">
+      <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="height: 30px;"><br>
+      <span style="font-size: 11px"><strong> {{$bancos->tipo_cuenta}}</strong></span>
       <br>
       <span style="font-size: 12px">
       S/: {{$bancos->numero_soles}}
@@ -201,7 +202,7 @@
 </div>
 {{--  --}}
 <style type="text/css">
-    .form-control{border-radius: 10px; height: 150px;}
+     .form-control{border-radius: 10px; padding: 10px }
     .ibox-tools a{color: white !important}
     .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
     .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {border-top-width: 0px;}

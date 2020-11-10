@@ -15,7 +15,7 @@ class CreateBancoTable extends Migration
     {
         Schema::create('banco', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombre');
+            $table->string('tipo_cuenta');
             $table->string('numero_dolares')->nullable();
             $table->string('numero_soles')->nullable();
             $table->string('foto');

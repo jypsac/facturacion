@@ -57,9 +57,9 @@ class BancoController extends Controller
      */
     public function edit($id)
     {
-     $banco=Banco::find($id);
-     return view('configuracion_general.empresa.banco_edit',compact('banco'));
- }
+       $banco=Banco::find($id);
+       return view('configuracion_general.empresa.banco_edit',compact('banco'));
+   }
 
     /**
      * Update the specified resource in storage.
@@ -70,13 +70,24 @@ class BancoController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        if($request->hasfile('foto')){
+            $image1 =$request->file('foto');
+            $name =time().$image1->getClientOriginalName();
+            $destinationPath = public_path('/img/logos/');
+            $image1->move($destinationPath,$name);
+        }else{
+            $name=$request->get('ori_foto');
+        }
         $estado=$request->get('estado');
         if ($estado=='on') { $estado_numero='0'; }
         else{ $estado_numero='1';}
 
         $banco=Banco::find($id);
+        $banco->tipo_cuenta=$request->get('tipo_cuenta');
         $banco->numero_soles=$request->get('numero_soles');
         $banco->numero_dolares=$request->get('numero_dolares');
+        $banco->foto=$name;
         $banco->estado=$estado_numero;
         $banco->save();
 

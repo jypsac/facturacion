@@ -13,7 +13,7 @@ class BancoTableSeeder extends Seeder
     {
         DB::table('banco')->insert([
 			'id' => 1 ,
-			'nombre' => 'BCP',
+			'tipo_cuenta' => 'Cuenta Corriente',
 			'numero_dolares' =>"000000000000" ,
 			'numero_soles' => '000000000000',
 			'foto' => "bcp.png" ,
@@ -23,7 +23,7 @@ class BancoTableSeeder extends Seeder
 		]);
 		DB::table('banco')->insert([
 			'id' => 2 ,
-			'nombre' => 'Interbank',
+			'tipo_cuenta' => 'Cuenta Ahorros',
 			'numero_dolares' =>"000000000000" ,
 			'numero_soles' => '000000000000',
 			'foto' => "interbank.jpg" ,
@@ -33,7 +33,7 @@ class BancoTableSeeder extends Seeder
 		]);
 		DB::table('banco')->insert([
 			'id' => 3 ,
-			'nombre' => 'Scotiabank',
+			'tipo_cuenta' => 'Cuenta Corriente',
 			'numero_dolares' =>"000000000000" ,
 			'numero_soles' => '000000000000',
 			'foto' => "scotiabank.jpg" ,
@@ -43,7 +43,7 @@ class BancoTableSeeder extends Seeder
 		]);
 		DB::table('banco')->insert([
 			'id' => 4 ,
-			'nombre' => 'BBVA',
+			'tipo_cuenta' => 'Cuenta Ahorros',
 			'numero_dolares' =>"000000000000" ,
 			'numero_soles' => '000000000000',
 			'foto' => "bbva.png" ,
