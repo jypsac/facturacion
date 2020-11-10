@@ -28,36 +28,7 @@
 </head>
 {{-- LLAMADO AL BODY EN FUNCION CERRAR CON UNA DURACION DE 10 SEGUNDOS --}}
 <body class="white-bg" style="height:50%" onLoad="setTimeout('cerrar()',1*1000)">
-<!DOCTYPE html>
-<html>
 
-<head>
-
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <title>Guia Informe Tecnico</title>
-
-    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
-    <link href="{{ asset('font-awesome/css/font-awesome.css') }}" rel="stylesheet">
-
-    <link href="{{ asset('css/animate.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/style.css') }}" rel="stylesheet">
-
-    <script src="@yield('vue_js', '#')" defer></script>
-
-    <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
-    <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
- {{-- FUNCION CERRAR AUTOMATICAMENTE --}}
-    <SCRIPT LANGUAGE="JavaScript">
-        function cerrar() {
-        window.close();
-        }
-    </SCRIPT>
-
-</head>
-{{-- LLAMADO AL BODY EN FUNCION CERRAR CON UNA DURACION DE 10 SEGUNDOS --}}
-<body class="white-bg" style="height:50%" onLoad="setTimeout('cerrar()',1*1000)">
 <div class="row">
         <div class="col-lg-12">
             <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
@@ -138,8 +109,7 @@
                             </div>
                         </div>
                     </div>
-
-            </div>
+                </div>
                 <br>
                 <div class="row" align="center" style="padding-bottom: 5px">
                     <div class="col-sm-6" align="center">
@@ -177,43 +147,62 @@
                     </div>
                 </div>
                 <br>
-                <div class="row" align="center" style="padding-bottom: 5px">
-                    <div class="col-sm-12" align="center">
-                        <div class="form-control" style="height: 100%"><h3>Imagenes</h3>
-                            <div align="left" style="font-size: 13px">
-                                <p>
-                                    @foreach($archivo_informe_tecnico as $archivo)
-                                        <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 150px;padding: 15px ;">
-                                    @endforeach
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div>
-
-                </div>
-
-
-            <br>
-            <!-- Fin Totales de Productos -->
-            {{-- <div class="row">
-                @foreach($banco as $bancos)
-                <div class="col-sm-3 " align="center">
-                    <p class="form-control" style="height: 100px">
-                      <img  src="" style="width: 100px;height: 30px;">
-                      <br>
-                      N° S/. :
-                      <br>
-                      N° $ : <br>
-
-                  </p>
-              </div>
-              @endforeach
-
-          </div> --}}
+            </div>
+        </div>
+</div>
 </body>
+<footer style="position:relative;bottom:0;width:100%;height:200%;">
+    <div class="container">
+        <div class="child1"><br>
+            <hr />
+            <p style="width:250px;" align="center">Departamento de Servicio Tecnico <br>
+            Ing. {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</p>
+        </div>
+        <div class="child2"><br>
+            <hr />
+            <p style="width:200px;" align="center">{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->nombre}}<br>
+                                    ({{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->documento_identificacion}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->numero_documento}})</p>
+        </div>
+    </div>
+    <div class="saltopagina">
+<div class="row" align="center" style="padding-bottom: 5px;">
+
+    <div class="col-sm-12" align="center">
+        <div class="form-control" style="height: 100%"><h3>Imagenes</h3>
+            <div align="left" style="font-size: 13px">
+                <div class="row" align="center" >
+                    @foreach($archivo_informe_tecnico as $archivo)
+                    <div class="col-sm-4" style="padding: 50px;padding-left:  70px ;margin: -15px" align="center">
+                        <img  src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width:270px;height: 270px;border-radius: 10px">
+                        <br>
+                    </div>
+                    @endforeach
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</footer>
+{{-- <div style=""> --}}
+
+{{-- </div> --}}
+{{-- </footer> --}}
 <style>
+    @media all {
+   div.saltopagina{
+      display: none;
+   }
+}
+
+@media print{
+   div.saltopagina{
+      display:block;
+      page-break-before:always;
+   }
+}
+
+
     .cero{
     margin-bottom: 0px;
 
@@ -233,7 +222,30 @@
         border-width: 1px;
         border-style: solid;
     }
+    .container {
+        /* background: #e0e0e0; */
+        margin: 1 1 1rem;
+        height: 7rem;
+        display: flex;
+        align-items: start;
+    margin-top:8rem;
 
+    }
+
+    .child1 {
+        /* background: #60e0b0; */
+        height: 7rem;
+        padding: .2rem;
+    margin-left: 120px;
+
+    }
+
+    .child2 {
+        /* background: #60e0b0; */
+        padding: .2rem;
+        height: 7rem;
+        margin-left: 30%;
+    }
 </style>
 
 
@@ -253,7 +265,7 @@
 
 
 
-</body>
+
 <style>
     .cero{
     margin-bottom: 0px;

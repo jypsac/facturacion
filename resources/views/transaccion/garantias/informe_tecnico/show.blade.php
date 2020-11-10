@@ -154,11 +154,14 @@
                     <div class="col-sm-12" align="center">
                         <div class="form-control" style="height: 100%"><h3>Imagenes</h3>
                             <div align="left" style="font-size: 13px">
-                                <p>
+                                <div class="row">
                                     @foreach($archivo_informe_tecnico as $archivo)
-                                        <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 150px;padding: 15px ;">
+                                    <div class="col-sm-4">
+                                        <img  src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 250px;padding: 5px ;height: 250px;border-radius: 10px">
+
+                                    </div>
                                     @endforeach
-                                </p>
+                                </div>
                             </div>
                         </div>
                     </div>
