@@ -152,6 +152,7 @@ class CotizacionController extends Controller
 
     public function create_factura_ms(Request $request)
     {
+        
         $almacen_p=$request->get('almacen');
         $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
         $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
@@ -240,7 +241,7 @@ class CotizacionController extends Controller
      ///agregamiento de un parametro extra
     public function store_factura(Request $request,$id_moneda)
     {
-
+        
         $print=$request->get('print');
 
         if($print==1){
@@ -307,10 +308,9 @@ class CotizacionController extends Controller
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
                     if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return redirect()->route('cotizacion.create_factura')->with('repite', 'Datos repetidos - No permitidos!');
+                        return "uno de los articulo son repetidos";
                     }
                 }
-
             }
         }
 
@@ -696,6 +696,7 @@ class CotizacionController extends Controller
     {
         //El input esta activo
 
+
         // return $request;
         $print=$request->get('print');
 
@@ -788,8 +789,6 @@ class CotizacionController extends Controller
         }else{
             $comi=0;
         }
-
-
 
         //Convertir nombre del cliente a id
         $cliente_nombre=$request->get('cliente');
