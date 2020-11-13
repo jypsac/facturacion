@@ -16,11 +16,18 @@
 </form>
 
 <div class="wrapper wrapper-content animated fadeInRight">
+    
     <div class="ibox-title">
         <div class="ibox-tools">
             <a class="btn btn-success" href="{{route('cotizacion.print',$cotizacion->id)}}" target="_blank">Imprimir</a>
+        @if ($regla=='factura')
+            <a class="btn btn-success" href="{{route('cotizacion.facturar',$cotizacion->id)}}" target="_blank">Facturar</a>
+        @elseif(($regla=='boleta'))    
+            <a class="btn btn-success" href="{{route('cotizacion.boletear',$cotizacion->id)}}" target="_blank">Boletear</a>
+        @endif
         </div>
     </div>
+
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">

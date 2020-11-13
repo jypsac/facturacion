@@ -985,8 +985,7 @@ class CotizacionController extends Controller
     }
 
     public function show($id)
-    {
-
+    {   
         $banco=Banco::where('estado','0')->get();
         $banco_count=Banco::where('estado','0')->count();
         $cotizacion=Cotizacion::find($id);
@@ -996,10 +995,8 @@ class CotizacionController extends Controller
         /*registros boleta y factura*/
         if ($regla=='factura') {
             $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
-
         }elseif ($regla=='boleta') {
             $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
-
         }
         /* FIN registros boleta y factura*/
 
@@ -1057,40 +1054,35 @@ class CotizacionController extends Controller
         //
     }
 
-    // public function fast_print(Request $request){
-    //     $atencion=$request->get('atencion');
-    //     return view('transaccion.venta.cotizacion.fast_print',compact('atencion'));
-    // }
-
     public function print($id){
-       $banco=Banco::where('estado','0')->get();
-       $banco_count=Banco::where('estado','0')->count();
-       $cotizacion=Cotizacion::find($id);
-       $regla=$cotizacion->tipo;
-       $sub_total=0;
-       $igv=Igv::first();
-       /*registros boleta y factura*/
-       if ($regla=='factura') {
-        $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
-    }elseif ($regla=='boleta') {
-        $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
-    }
-    /* FIN registros boleta y factura*/
+        $banco=Banco::where('estado','0')->get();
+        $banco_count=Banco::where('estado','0')->count();
+        $cotizacion=Cotizacion::find($id);
+        $regla=$cotizacion->tipo;
+        $sub_total=0;
+        $igv=Igv::first();
 
-    /*de numeros a Letras*/
-    foreach ($cotizacion_registro as $cotizacion_registros) {
-        $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
-        $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
-        if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
-    }
-    /* Finde numeros a Letras*/
+        /*registros boleta y factura*/
+        if($regla=='factura'){
+            $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+        }elseif($regla=='boleta'){
+            $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+        }
+        /* FIN registros boleta y factura*/
+        /*de numeros a Letras*/
 
-        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
-    $empresa=Empresa::first();
-    $sum=0;
-    $i=1;
+        foreach($cotizacion_registro as $cotizacion_registros){
+            $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
+            $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+            if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
+        }
 
-    return view('transaccion.venta.cotizacion.print', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','i','end','igv_p','banco_count'));
+        /* Finde numeros a Letras*/
+        $empresa=Empresa::first();
+        $sum=0;
+        $i=1;
+
+        return view('transaccion.venta.cotizacion.print', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','i','end','igv_p','banco_count'));
 }
 
 //envio hacia facturar cambiar en caso ingluya algo
