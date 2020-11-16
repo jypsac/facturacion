@@ -30,6 +30,13 @@
                 </form>
             @endif
             <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
+            {{-- <a href="" target="_blank" class="btn btn-success"><i class="fa fa-print"></i>Whatsapp</a> --}}
+            <form action="{{route('agregado.whatsapp_send')}}" method="post">
+                @csrf
+                <input type="tel" name="numero">
+                <input type="text" name="mensaje">
+                <button type="submit" class="btn btn-white" formtarget="_blank">Whats</button>
+            </form>
         {{-- </div> --}}
     </div>
     <div class="row">

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Marca;
 use App\Cliente;
 use App\Contacto;
+use Illuminate\Support\Facades\Redirect;
 use App\Personal;
 
 class AgregadoRapidoController extends Controller
@@ -15,7 +16,7 @@ class AgregadoRapidoController extends Controller
 
 //FUNCION PARA CREAR CLIENTES Y CONTACTOS
     public function cliente_store(Request $request){
-        return "1";
+        //return "1";
         $this->validate($request,[
             'nombre' => ['required','unique:clientes,nombre'],
             'numero_documento' => ['required','unique:clientes,numero_documento'],
@@ -38,7 +39,7 @@ class AgregadoRapidoController extends Controller
         $cliente->documento_identificacion=$request->get('documento_identificacion');
         $cliente->numero_documento=$request->get('numero_documento');
         $cliente->save();
-        
+
         $idCliente=$cliente->id;
 
         $this->contactos_store($data,$idCliente);
@@ -88,7 +89,7 @@ class AgregadoRapidoController extends Controller
         $cliente->documento_identificacion=$request->get('documento_identificacion');
         $cliente->numero_documento=$request->get('numero_documento');
         $cliente->save();
-        
+
         $idCliente=$cliente->id;
 
         $contacto=new Contacto;
@@ -101,8 +102,8 @@ class AgregadoRapidoController extends Controller
         $contacto->clientes_id=$idCliente;
         $contacto->save();
 
-        
-        
+
+
     }
 
 //FUNCION PARA CREAR MARCAS
@@ -142,5 +143,17 @@ class AgregadoRapidoController extends Controller
         $personal->save();
         return back();
     }
+    public function send_whatsapp(Request $request){
+        $numero = $request->get('numero');
+        $mensaje = $request->get('mensaje');
 
+        //$numero_send =  strtr($numero, "    ", " ");
+        $num1 = substr($numero, -3);
+        $num2 = substr($numero, -7,3);
+        $num3 = substr($numero, -11,3);
+        $mensajes_send = str_replace (" ","%20",$mensaje);
+        $send = "https://api.whatsapp.com/send?phone=+51%20".$num3."%20".$num2."%20".$num1."&text=".$mensajes_send;
+        return  Redirect::to($send);
+        // return $mensajes_send;
+    }
 }
