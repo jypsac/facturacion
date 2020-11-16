@@ -1059,22 +1059,23 @@ class CotizacionController extends Controller
 
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda1=Moneda::where('principal',1)->first();
-        $moneda2=Moneda::where('principal','0')->first();
+        $moneda2=Moneda::where('principal',0)->first();
 
         $productos=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+        $produc=Producto::find($id)->get();
 
         if($cotizacion_moneda==$moneda1->id){
             
             if ($moneda1->tipo == 'nacional') {
                 foreach ($productos as $index => $producto) {
-                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
                     $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
                 }
             }else{
                 foreach ($productos as $index => $producto) {
-                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
                     $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
@@ -1084,14 +1085,14 @@ class CotizacionController extends Controller
             
             if ($moneda2->tipo == 'extranjera'){
                 foreach ($productos as $index => $producto) {
-                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
                     $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo;
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
                 }
             }else{
                 foreach ($productos as $index => $producto) {
-                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
                     $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo;
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
@@ -1099,7 +1100,7 @@ class CotizacionController extends Controller
             }
         }
         
-
+        
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
         $personales=Personal::all();
@@ -1120,7 +1121,7 @@ class CotizacionController extends Controller
         
         $cod_fac='- - -';
 
-        return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','sum','igv',"array","sub_total","moneda",'cod_fac','productos'));
+        return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','sum','igv',"array","sub_total","moneda",'cod_fac','productos','array_cantidad'));
     }
 
 

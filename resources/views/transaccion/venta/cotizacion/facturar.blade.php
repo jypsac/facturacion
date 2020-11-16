@@ -101,6 +101,7 @@
                                     <th>Codigo Producto</th>
                                     <th>Cantidad</th>
                                     <th>Descripción</th>
+                                    <th>Stock</th>
                                     <th>Valor Unitario</th>
                                     <th>Valor Venta </th>
                                 </tr>
@@ -115,15 +116,17 @@
                                         <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span>
                                         <input type="text" class="form-control col-sm-4" name="numero_serie[{{$index}}]" placeholder="N° Serie">
                                     </td>
+                                <td>{{$array_cantidad[$index]}}</td>
                                     {{-- MODIFICAR ESTA PARTE CON LOGICA DE REPROGRAMACION PARA UN NUEVO PRODUCTO DIRECTAMENTE DESDE KARDEX --}}
                                     <td>S/.{{$array[$index]}}</td>
                                     <td>{{$array[$index]*$cotizacion_registros->cantidad}}</td>
 
                                     
-                                    <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}
+                                    <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$array[$index])-($cotizacion_registros->cantidad*$array[$index]*$cotizacion_registros->descuento/100)+$sub_total}}
                                         S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                         {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                     </td>
+
                                 </tr>
                                 @endforeach
                                 <tr>
