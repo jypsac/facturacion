@@ -1020,40 +1020,6 @@ class CotizacionController extends Controller
         return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','end','igv_p','almacen','nueva_cot','banco_count','i'));
     }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function update(Request $request, $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
-    }
-
     public function print($id){
         $banco=Banco::where('estado','0')->get();
         $banco_count=Banco::where('estado','0')->count();
@@ -1085,33 +1051,77 @@ class CotizacionController extends Controller
         return view('transaccion.venta.cotizacion.print', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','i','end','igv_p','banco_count'));
 }
 
-//envio hacia facturar cambiar en caso ingluya algo
-public function facturar($id){
-    $moneda=Moneda::where('principal',1)->first();
-    $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+    //envio hacia facturar cambiar en caso ingluya algo
+    public function facturar($id){
 
-    foreach ($cotizacion_registro as $cotizacion_registros) {
-       $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
-   }
+        $cotizacion=Cotizacion::where('id',$id)->first();
+        $cotizacion_moneda=$cotizacion->moneda_id;
 
-   $cotizacion=Cotizacion::find($id);
-   /*Fecha vencimiento*/
-         // $cotizacion_dias_pago= $cotizacion->forma_pago->dias;
-         // $fecha =date("d-m-Y");
-         // $nuevafecha = strtotime ( '+'.$cotizacion_dias_pago.' day' , strtotime ( $fecha ) ) ;
-         // $nuevafechas = date("d-m-Y", $nuevafecha );
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
+        $moneda1=Moneda::where('principal',1)->first();
+        $moneda2=Moneda::where('principal','0')->first();
 
-   $empresa=Empresa::first();
-   $sum=0;
-   $igv=Igv::first();
-   $sub_total=0;
+        $productos=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
 
-   $fac= Facturacion::all()->count();
-   $suma=$fac+1;
-   $cod_fac='FC-000'.$suma;
+        if($cotizacion_moneda==$moneda1->id){
+            
+            if ($moneda1->tipo == 'nacional') {
+                foreach ($productos as $index => $producto) {
+                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                    $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
+                    $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
+                    $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
+                }
+            }else{
+                foreach ($productos as $index => $producto) {
+                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                    $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
+                    $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
+                    $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
+                }
+            }
+        }elseif($cotizacion_moneda==$moneda2->id){
+            
+            if ($moneda2->tipo == 'extranjera'){
+                foreach ($productos as $index => $producto) {
+                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                    $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo;
+                    $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
+                    $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
+                }
+            }else{
+                foreach ($productos as $index => $producto) {
+                    $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                    $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo;
+                    $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
+                    $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
+                }
+            }
+        }
+        
 
-   return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda",'cod_fac'));
-}
+        $forma_pagos=Forma_pago::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
+        $personales=Personal::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
+        $igv=Igv::first();
+        $empresa=Empresa::first();
+        $personal_contador= Facturacion::all()->count();
+        $suma=$personal_contador+1;
+        $categoria='producto';
+        
+        $cotizacion=Cotizacion::find($id);
+
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+
+        
+        $cod_fac='- - -';
+
+        return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','sum','igv',"array","sub_total","moneda",'cod_fac','productos'));
+    }
 
 
 public function facturar_store(Request $request)
@@ -1122,6 +1132,8 @@ public function facturar_store(Request $request)
     $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
     $cotizacion->estado=1;
     $cotizacion->save();
+
+    // generador de numero de factura
     $fac= Facturacion::all()->count();
     $suma=$fac+1;
     $cod_fac='FC-000'.$suma;
@@ -1187,11 +1199,6 @@ public function boletear($id)
    }
 
    $cotizacion=Cotizacion::find($id);
-   /*Fecha vencimiento*/
-         // $cotizacion_dias_pago= $cotizacion->forma_pago->dias;
-         // $fecha =date("d-m-Y");
-         // $nuevafecha = strtotime ( '+'.$cotizacion_dias_pago.' day' , strtotime ( $fecha ) ) ;
-         // $nuevafechas = date("d-m-Y", $nuevafecha );
 
    $empresa=Empresa::first();
    $sum=0;
@@ -1277,23 +1284,23 @@ public function boletear_store(Request $request)
 
 }
 
-public function aprobar(Request $request, $id)
-{
+    public function aprobar(Request $request, $id)
+    {
 
-    $cotizacion=Cotizacion::find($id);
-        // $usuario=$cotizacion->user_id;
+        $cotizacion=Cotizacion::find($id);
+            // $usuario=$cotizacion->user_id;
 
-    $cotizacion->estado_aprovar='1';
-    if (!isset($cotizacion->aprobado_por)) {
-     $cotizacion->aprobado_por=auth()->user()->id;
- }
+        $cotizacion->estado_aprovar='1';
+        if (!isset($cotizacion->aprobado_por)) {
+        $cotizacion->aprobado_por=auth()->user()->id;
+        }
 
- $cotizacion->save();
+        $cotizacion->save();
 
- return redirect()->route('cotizacion.index');
-        // return redirect()->route('productos.index');
+        return redirect()->route('cotizacion.index');
+        
 
-}
+    }
 
 
 }

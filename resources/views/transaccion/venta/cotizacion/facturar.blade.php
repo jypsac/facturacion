@@ -98,15 +98,15 @@
                         <table class="table ">
                             <thead>
                                 <tr>
-                                    <th >Codigo Producto</th>
-                                    <th >Cantidad</th>
-                                    <th >Descripción</th>
-                                    <th >Valor Unitario</th>
+                                    <th>Codigo Producto</th>
+                                    <th>Cantidad</th>
+                                    <th>Descripción</th>
+                                    <th>Valor Unitario</th>
                                     <th>Valor Venta </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($cotizacion_registro as $index => $cotizacion_registros)
+                                @foreach($productos as $index => $cotizacion_registros)
                                 <tr>
                                     <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                     <td>{{$cotizacion_registros->cantidad}}</td>
@@ -115,8 +115,11 @@
                                         <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span>
                                         <input type="text" class="form-control col-sm-4" name="numero_serie[{{$index}}]" placeholder="N° Serie">
                                     </td>
-                                    <td>S/.{{$cotizacion_registros->precio}}</td>
-                                    <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
+                                    {{-- MODIFICAR ESTA PARTE CON LOGICA DE REPROGRAMACION PARA UN NUEVO PRODUCTO DIRECTAMENTE DESDE KARDEX --}}
+                                    <td>S/.{{$array[$index]}}</td>
+                                    <td>{{$array[$index]*$cotizacion_registros->cantidad}}</td>
+
+                                    
                                     <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}
                                         S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                         {{$end=round($sub_total, 2)+round($igv_p, 2)}}
