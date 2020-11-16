@@ -6,7 +6,17 @@
  @section('href_accion', route('facturacion.index'))
  @section('value_accion', 'Atras')
 
- @section('content')
+@section('nombre', 'nueva Facturacion')
+@section('onclick',"event.preventDefault();document.getElementById('nueva_cot').submit();")
+
+@section('content')
+
+<form action="{{ route('facturacion.create')}}"enctype="multipart/form-data" method="post" id="nueva_cot">
+    @csrf
+    <input type="text"  hidden="hidden" name="almacen"  value="{{$facturacion->almacen_id}}">
+    <input  hidden="hidden" type="submit"  >
+</form>
+
  <div class="wrapper wrapper-content animated fadeInRight">
         <div class="ibox-title">
             <div class="ibox-tools">
