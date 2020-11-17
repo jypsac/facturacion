@@ -201,7 +201,9 @@
       page-break-before:always;
    }
 }
-
+    .form-control{
+        border-radius: 7px;
+    }
 
     .cero{
     margin-bottom: 0px;

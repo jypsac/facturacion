@@ -250,6 +250,9 @@
         border-width: 1px;
         border-style: solid;
     }
+    .form-control{
+        border-radius: 7px;
+    }
 
 </style>
 

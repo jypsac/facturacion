@@ -32,7 +32,7 @@
     <table style="width: 100%;border-collapse:separate">
         <tr>
             <td style="width: auto;border-color: white" >
-                <img align="" src="{{asset('storage/marcas/'.$garantias_guias_egreso->garantia_ingreso_i->marcas_i->imagen)}}" height="55px" />
+                <img align="" src="{{asset('storage/marcas/'.$garantias_guias_egreso->garantia_ingreso_i->marcas_i->imagen)}}"style="width: 100px;height: 50px;margin-top: 5px" />
             </td>
             <td style="width: 30%; ;border: 1px #e5e6e7 solid;border-radius: 4px;" align="right">
                 <center>
@@ -299,7 +299,7 @@
                     <th style="width:17%;border: 1px solid #EBEBEB;">{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
                     <th style="width:16%">{{$garantia_guia_ingreso->orden_servicio}}</th>
                     <th style="width:17%;border: 1px solid #EBEBEB;">{{$garantia_guia_ingreso->clientes_i->nombre}}</th>
-                    <th style="width: 16%">{{$garantia_guia_ingreso->orden_servicio}}</th>        
+                    <th style="width: 16%">{{$garantia_guia_ingreso->orden_servicio}}</th>
                 </tr>
             </tbody>
         </table> --}}

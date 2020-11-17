@@ -32,7 +32,7 @@
     <table style="width: 100%;border-collapse:separate">
         <tr>
             <td style="width: auto;border-color: white" >
-                <img align="" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" height="55px" />
+                <img align="" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 100px;height: 50px;margin-top: 5px" />
             </td>
             <td style="width: 30%; ;border: 1px #e5e6e7 solid;border-radius: 4px;" align="right">
                 <center>

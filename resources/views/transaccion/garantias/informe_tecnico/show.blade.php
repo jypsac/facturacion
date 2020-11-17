@@ -12,9 +12,10 @@
     <div class="ibox-title" align="right" style="padding-right: 3.1%">
         {{-- <div class="ibox-tools"> --}}
             {{-- <a class="btn btn-success"  href="" >Imprimir --}}
+            <div class="tooltip-demo">
             <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}">
                 <input type="text" name="archivo" maxlength="50" value="{{$garantias_informe_tecnico->orden_servicio}}" oninput="actualizatext()" id="texto2">
-                <button type="submit" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> PDF </button>
+                <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
             </form>
             <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
                 @csrf
@@ -22,11 +23,11 @@
                  <input type="text" name="mensaje" id="texto_orden" hidden="" />
                  <input type="text" hidden="" name="url" value="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}?archivo=">
                  <input type="text" name="name_sin_cambio" hidden="" value="{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->orden_servicio}}" />
-                <button type="submit" class="btn btn-success" style="background: green;border-color: green;" formtarget="_blank"><i class="fa fa-whatsapp"></i> Whatsapp </button>
+                <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-whatsapp fa-lg"></i>  </button>
             </form>
                      {{-- </a> --}}
             @if(Auth::user()->email_creado == 0)
-                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope" ></i>  Email</button>
+                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
             @else
                 <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn">
                     @csrf
@@ -34,11 +35,11 @@
                     <input type="text" hidden="hidden" name="id" value="{{$garantias_informe_tecnico->id}}"/>
                     <input type="text" hidden="hidden" name="redict" value="garantias_informe_tecnico">
                     <input type="text" hidden="hidden" name="cliente" value="{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}">
-                    <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
+                    <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por correo"><i class="fa fa-envelope fa-lg"  ></i> </button>
                 </form>
             @endif
-            <a href="{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
-        {{-- </div> --}}
+            <a href="{{route('impresiones_informe' ,$garantias_informe_tecnico->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i>   </a>
+        </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
@@ -165,8 +166,8 @@
                                 <div class="row">
                                     @foreach($archivo_informe_tecnico as $archivo)
                                     <div class="col-sm-4">
-                                        <img  src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 250px;padding: 5px ;height: 250px;border-radius: 10px">
-
+                                        <img  src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width:270px;height: 270px;border-radius: 10px">
+                                        <p></p>
                                     </div>
                                     @endforeach
                                 </div>

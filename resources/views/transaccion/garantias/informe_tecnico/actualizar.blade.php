@@ -156,9 +156,9 @@
                       <input type="text" name="original" hidden="hidden" value="{{$archivo->archivos}}"/>
                       <input type="text" name="id" hidden="hidden" value="{{$archivo->id}}">
 			                <!--Aqui se desplegará el fichero-->
-                       <input type="file" name="nombre{{$archivo->id}}" style="position: absolute ;top:0px;left:0px;right:0px;bottom:0px;opacity:0;width: 200px;padding: 15px ;" id="archivoInput{{$archivo->id}}" onchange="return validarExt{{$archivo->id}}()"/>
+                       <input type="file" name="nombre{{$archivo->id}}" style="position: absolute ;top:0px;left:0px;right:0px;bottom:0px;opacity:0;width: 200px;padding: 15px ;height: 200px" id="archivoInput{{$archivo->id}}" onchange="return validarExt{{$archivo->id}}()"/>
                        <span id="visorArchivo{{$archivo->id}}">
-			                   <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 200px;padding: 15px ;"/>
+			                   <img src="{{asset('archivos/imagenes/informe_tecnico')}}/{{$archivo->archivos}}" style="width: 200px;height:200px;padding: 15px ;"/>
                       </span>
 		               	 <script type="text/javascript">
                       function validarExt{{$archivo->id}}(){
@@ -179,7 +179,7 @@
                               visor.onload = function(e)
                                 {
                                     document.getElementById('visorArchivo{{$archivo->id}}').innerHTML =
-                                    '<img name="file" src="'+e.target.result+'"  style="width: 200px;padding: 15px ;"  />';
+                                    '<img name="file" src="'+e.target.result+'"  style="width: 200px;padding: 15px ;height: 200px"  />';
                                 };
                               visor.readAsDataURL(archivoInput{{$archivo->id}}.files[0]);
                           }
