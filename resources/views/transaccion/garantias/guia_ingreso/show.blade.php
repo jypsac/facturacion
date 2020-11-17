@@ -12,9 +12,10 @@
     <div class="ibox-title" align="right" style="padding-right: 3.1%">
         {{-- <div class="ibox-tools"> --}}
             {{-- <a class="btn btn-success"  href="" >Imprimir --}}
+            <div class="tooltip-demo">
             <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}">
                 <input type="text" name="archivo" id="texto2"  maxlength="50" value="{{$garantia_guia_ingreso->orden_servicio}}" oninput="actualizatext()" />
-                <button type="submit" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> PDF </button>
+                <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
             </form>
             <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
                 @csrf
@@ -22,11 +23,11 @@
                  <input type="text" name="mensaje" id="texto_orden" hidden="" />
                  <input type="text" hidden="" name="url" value="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}?archivo=">
                  <input type="text" name="name_sin_cambio" hidden="" value="{{$garantia_guia_ingreso->orden_servicio}}" />
-                <button type="submit" class="btn btn-success" style="background: green;border-color: green;" formtarget="_blank"><i class="fa fa-whatsapp"></i> Whatsapp </button>
+                <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-whatsapp fa-lg"></i>  </button>
             </form>
                      {{-- </a> --}}
             @if(Auth::user()->email_creado == 0)
-                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope" ></i>  Email</button>
+                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
             @else
                 <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
                     @csrf
@@ -34,14 +35,13 @@
                     <input type="text" hidden="hidden" name="id" value="{{$garantia_guia_ingreso->id}}"/>
                     <input type="text" hidden="hidden" name="redict" value="garantia_guia_ingreso">
                     <input type="text" hidden="hidden" name="cliente" value="{{$garantia_guia_ingreso->clientes_i->email}}">
-                    <button type="submit" class="btn btn-white"><i class="fa fa-envelope" ></i> Email</button>
+                    <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por correo"><i class="fa fa-envelope fa-lg"  ></i> </button>
                 </form>
             @endif
-            <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
+            <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i>   </a>
             {{-- <a href="" target="_blank" class="btn btn-success"><i class="fa fa-print"></i>Whatsapp</a> --}}
-
-
         {{-- </div> --}}
+            </div>
     </div>
     <div class="row">
         <div class="col-lg-12">
