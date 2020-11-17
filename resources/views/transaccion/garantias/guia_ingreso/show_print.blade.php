@@ -37,7 +37,7 @@
                 <div class="row">
                     <div class="col-sm-6 text-left" align="left">
                         <address class="col-sm-4" align="left">
-                            <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 100px;height: 50px;margin-top: 5px">
+                            <img align="right" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 300px;height: 100px;margin-top: 5px">
                             {{-- <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="left" /> --}}
                             {{-- <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px" align="left"> --}}
 
