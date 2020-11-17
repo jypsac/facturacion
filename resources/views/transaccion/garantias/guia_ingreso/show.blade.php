@@ -13,8 +13,16 @@
         {{-- <div class="ibox-tools"> --}}
             {{-- <a class="btn btn-success"  href="" >Imprimir --}}
             <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}">
-                <input type="text" name="archivo" maxlength="50" value="{{$garantia_guia_ingreso->orden_servicio}}">
+                <input type="text" name="archivo" id="texto2"  maxlength="50" value="{{$garantia_guia_ingreso->orden_servicio}}" oninput="actualizatext()" />
                 <button type="submit" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> PDF </button>
+            </form>
+            <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
+                @csrf
+                 <input type="tel" name="numero"  value="{{$garantia_guia_ingreso->clientes_i->celular}}" hidden="" />
+                 <input type="text" name="mensaje" id="texto_orden" hidden="" />
+                 <input type="text" hidden="" name="url" value="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}?archivo=">
+                 <input type="text" name="name_sin_cambio" hidden="" value="{{$garantia_guia_ingreso->orden_servicio}}" />
+                <button type="submit" class="btn btn-success" style="background: green;border-color: green;" formtarget="_blank"><i class="fa fa-whatsapp"></i> Whatsapp </button>
             </form>
                      {{-- </a> --}}
             @if(Auth::user()->email_creado == 0)
@@ -31,12 +39,8 @@
             @endif
             <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary"><i class="fa fa-print"></i> Print Invoice </a>
             {{-- <a href="" target="_blank" class="btn btn-success"><i class="fa fa-print"></i>Whatsapp</a> --}}
-            <form action="{{route('agregado.whatsapp_send')}}" method="post">
-                @csrf
-                <input type="tel" name="numero">
-                <input type="text" name="mensaje">
-                <button type="submit" class="btn btn-white" formtarget="_blank">Whats</button>
-            </form>
+
+
         {{-- </div> --}}
     </div>
     <div class="row">
@@ -275,6 +279,7 @@
         </div>
     </div>
 {{-- Fin de modal configuracion --}}
+
 <style>
     .form-control{margin-top: 5px; border-radius: 5px}
     p#texto{
@@ -354,5 +359,10 @@ function printExternal(url) {
     }, true);
 }
 </script> --}}
-
+<script  type="text/javascript">
+    function actualizatext() {
+            let action = document.getElementById("texto2").value;
+            document.getElementById("texto_orden").value = action;
+        }
+</script>
 @endsection

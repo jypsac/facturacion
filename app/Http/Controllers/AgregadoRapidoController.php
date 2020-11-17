@@ -144,16 +144,22 @@ class AgregadoRapidoController extends Controller
         return back();
     }
     public function send_whatsapp(Request $request){
-        $numero = $request->get('numero');
-        $mensaje = $request->get('mensaje');
+        $url1 = $request->get('url');
+        //$url2 = $request->get('mensaje');
 
+        $numero = $request->get('numero');
+        if($request->get('mensaje') == ""){
+            $url2 = $request->get('name_sin_cambio');
+        }else{
+            $url2 = $request->get('mensaje');
+        }
         //$numero_send =  strtr($numero, "    ", " ");
         $num1 = substr($numero, -3);
-        $num2 = substr($numero, -7,3);
+        $num2 = substr($numero, -6,3);
         $num3 = substr($numero, -11,3);
-        $mensajes_send = str_replace (" ","%20",$mensaje);
-        $send = "https://api.whatsapp.com/send?phone=+51%20".$num3."%20".$num2."%20".$num1."&text=".$mensajes_send;
+        //$mensajes_send = str_replace (" ","%20",$mensaje);
+        $send = "https://api.whatsapp.com/send?phone=+51%20".$num3."%20".$num2."%20".$num1."&text=".$url1.$url2;
         return  Redirect::to($send);
-        // return $mensajes_send;
+        //return $mensaje;
     }
 }

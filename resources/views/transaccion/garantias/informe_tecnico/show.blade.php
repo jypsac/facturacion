@@ -13,8 +13,16 @@
         {{-- <div class="ibox-tools"> --}}
             {{-- <a class="btn btn-success"  href="" >Imprimir --}}
             <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}">
-                <input type="text" name="archivo" maxlength="50" value="{{$garantias_informe_tecnico->orden_servicio}}">
+                <input type="text" name="archivo" maxlength="50" value="{{$garantias_informe_tecnico->orden_servicio}}" oninput="actualizatext()" id="texto2">
                 <button type="submit" class="btn btn-success"><i class="fa fa-file-pdf-o"></i> PDF </button>
+            </form>
+            <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
+                @csrf
+                 <input type="tel" name="numero"  value="{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->celular}}" hidden="" />
+                 <input type="text" name="mensaje" id="texto_orden" hidden="" />
+                 <input type="text" hidden="" name="url" value="{{route('pdf_informe' ,$garantias_informe_tecnico->id)}}?archivo=">
+                 <input type="text" name="name_sin_cambio" hidden="" value="{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->orden_servicio}}" />
+                <button type="submit" class="btn btn-success" style="background: green;border-color: green;" formtarget="_blank"><i class="fa fa-whatsapp"></i> Whatsapp </button>
             </form>
                      {{-- </a> --}}
             @if(Auth::user()->email_creado == 0)
@@ -370,7 +378,12 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-
+<script  type="text/javascript">
+    function actualizatext() {
+            let action = document.getElementById("texto2").value;
+            document.getElementById("texto_orden").value = action;
+        }
+</script>
 {{-- <script>
 function printExternal(url) {
     var printWindow = window.open( url, 'Print', 'left=200, top=200, width=950, height=500, toolbar=0, resizable=0');

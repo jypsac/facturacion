@@ -149,7 +149,7 @@ Route::group(
 		Route::get('contacto_cliente_actualizar','GarantiaGuiaIngresoController@contacto_cliente_actualizar');
 		Route::POST('garantia_guia_ingreso/email/enviar','GarantiaGuiaIngresoController@enviar')->name('garantia_ingreso.enviar');
 		Route::get('garantia_guia_ingreso/email/{id}','GarantiaGuiaIngresoController@email')->name('guia_ingreso.email');
-		Route::get('garantia_guia_ingreso/pdf/{id}' , 'GarantiaGuiaIngresoController@pdf')->name('pdf_ingreso');
+
 		Route::get('garantia_guia_ingreso/impresionIngreso/{id}' , 'GarantiaGuiaIngresoController@print')->name('impresiones_ingreso');
 		Route::put('garantia_guia_ingreso/{guia}', 'GarantiaGuiaIngresoController@actualizar')->name('garantia_guia_ingreso.actualizar');
 		Route::resource('/garantia_guia_ingreso','GarantiaGuiaIngresoController');
@@ -239,4 +239,5 @@ Route::group(
 	Auth::routes();
 	Route::post('/sunat_cambio','TipoCambioController@sunat_cambio');
 	Route::resource('/tipo_cambio','TipoCambioController')->middleware('auth');
+	Route::get('garantia_guia_ingreso/pdf/{id}' , 'GarantiaGuiaIngresoController@pdf')->name('pdf_ingreso');
 	Route::get('/home', 'HomeController@index')->name('home');
