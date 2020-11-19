@@ -108,6 +108,7 @@
                             </thead>
                             <tbody>
                                 @foreach($productos as $index => $cotizacion_registros)
+                                @if($validor[$index]==1)
                                 <tr>
                                     <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                     <td>{{$cotizacion_registros->cantidad}}</td>
@@ -116,7 +117,7 @@
                                         <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span>
                                         <input type="text" class="form-control col-sm-4" name="numero_serie[{{$index}}]" placeholder="N° Serie">
                                     </td>
-                                <td>{{$array_cantidad[$index]}}</td>
+                                    <td>{{$array_cantidad[$index]}}</td>
                                     {{-- MODIFICAR ESTA PARTE CON LOGICA DE REPROGRAMACION PARA UN NUEVO PRODUCTO DIRECTAMENTE DESDE KARDEX --}}
                                     <td>S/.{{$array[$index]}}</td>
                                     <td>{{$array[$index]*$cotizacion_registros->cantidad}}</td>
@@ -126,8 +127,8 @@
                                         S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                         {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                     </td>
-
                                 </tr>
+                                @endif
                                 @endforeach
                                 <tr>
                                     <td colspan="3" rowspan="4">
@@ -148,16 +149,19 @@
                                             </div>
                                         </div>
                                     </td>
+                                    <td></td>
                                     <td>Sub Total</td>
                                     <td>
                                         S/.{{round($sub_total, 2)}}
                                     </td>
                                 </tr>
                                 <tr>
+                                    <td></td>
                                     <td>IGV</td>
                                     <td>S/.{{round($igv_p, 2)}}</td>
                                 </tr>
                                 <tr>
+                                    <td></td>
                                     <td>Importe Total</td>
                                     <td>S/.{{$end}}</td>
                                 </tr>
