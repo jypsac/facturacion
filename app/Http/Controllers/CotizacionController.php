@@ -1725,6 +1725,7 @@ public function boletear_store(Request $request)
                 $boleta_registro->precio_unitario_comi=$array+($array*$comi/100);
             }
             $boleta_registro->save();
+
             
         }
         
@@ -1744,6 +1745,7 @@ public function boletear_store(Request $request)
        $comisionista->estado_fac='0';
        $comisionista->observacion='Viene del Cotizador';
        $comisionista->save();
+       
    }
 
 
