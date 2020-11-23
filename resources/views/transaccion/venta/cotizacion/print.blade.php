@@ -164,7 +164,7 @@
 
     @else
     <div class="col-sm-3 " align="center">
-    <p class="form-control" style="height: 100px">
+    <p class="form-control" style="height: 110px">
     @endif
 
       <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="height: 30px;"><br>

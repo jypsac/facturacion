@@ -170,99 +170,99 @@ class EmailBandejaEnviosController extends Controller
       }
 
       function save(Request $request){
-
         $tipo = $request->get('tipo');
         $id =$request->get('id');
         $redic=$request->get('redict');
         $clientes=$request->get('cliente');
 
-        if($tipo == 'App\Cotizacion'){
-          $rutapdf = 'transaccion.venta.cotizacion.print';
-          $name = 'Cotizacion_Producto_';
-
-          $empresa=Empresa::first();
-
-          $banco=Banco::where('estado','0')->get();
-          $moneda=Moneda::where('principal',1)->first();
-          $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
-          $cotizacion_registro2=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
-          foreach ($cotizacion_registro as $cotizacion_registros) {
-           $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
-         }
-
-        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
-         $cotizacion=Cotizacion::find($id);
-         $empresa=Empresa::first();
-         $sum=0;
-         $igv=Igv::first();
-         $sub_total=0;
-
-         $regla=$cotizacion->tipo;
+          if($tipo == 'App\Cotizacion'){
+              $rutapdf = 'transaccion.venta.cotizacion.pdf';
+              $name = 'Cotizacion_Producto_';
+              $banco=Banco::where('estado','0')->get();
+              $banco_count=Banco::where('estado','0')->count();
+              $cotizacion=Cotizacion::find($id);
+              $regla=$cotizacion->tipo;
+              $sub_total=0;
+              $igv=Igv::first();
+              /*registros boleta y factura*/
+              if($regla=='factura'){
+                  $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+              }elseif($regla=='boleta'){
+                  $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+              }
+              /* FIN registros boleta y factura*/
+              /*de numeros a Letras*/
+              foreach($cotizacion_registro as $cotizacion_registros){
+                  $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
+                  $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+                  if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
+              }
+              /* Finde numeros a Letras*/
+              $empresa=Empresa::first();
+              $sum=0;
+              $i=1;
+              $regla=$cotizacion->tipo;
+           // return $cotizacion;
          $archivo=$name.$regla.$id.".pdf";
-         $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco'));
+         $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco','i','end','igv_p','banco_count'));
 
          $contenido=$pdf->download();
          Storage::disk($redic)->put($archivo,$contenido);
 
          return view('mailbox.create',compact('archivo','clientes','redic'));
 
-       }elseif ($tipo=='App\Cotizacion_Servicios') {
+        }
+     //    else if ($tipo=='App\Cotizacion_Servicios') {
 
-        $rutapdf = 'transaccion.venta.servicios.cotizacion.print';
-        $name = 'Cotizacion_Servicio_';
+     //    $rutapdf = 'transaccion.venta.servicios.cotizacion.print';
+     //    $name = 'Cotizacion_Servicio_';
 
-        $banco=Banco::where('estado','0')->get();
-        $moneda=Moneda::where('principal',1)->first();
-        $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
-        $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
-        foreach ($cotizacion_registro as $cotizacion_registros) {
-         $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
-       }
+     //    $banco=Banco::where('estado','0')->get();
+     //    $moneda=Moneda::where('principal',1)->first();
+     //    $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
+     //    $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+     //    foreach ($cotizacion_registro as $cotizacion_registros) {
+     //     $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+     //   }
 
-        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
-       $cotizacion=Cotizacion_Servicios::find($id);
-       $empresa=Empresa::first();
-       $sum=0;
-       $igv=Igv::first();
-       $sub_total=0;
-       $end=0;
-       $regla=$cotizacion->tipo;
+     //    $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
+     //   $cotizacion=Cotizacion_Servicios::find($id);
+     //   $empresa=Empresa::first();
+     //   $sum=0;
+     //   $igv=Igv::first();
+     //   $sub_total=0;
+     //   $end=0;
+     //   $regla=$cotizacion->tipo;
 
-       $archivo=$name.$regla.$id.".pdf";
-       $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco'));
+     //   $archivo=$name.$regla.$id.".pdf";
+     //   $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco'));
 
-       $contenido=$pdf->download();
-       Storage::disk($redic)->put($archivo,$contenido);
-       return view('mailbox.create',compact('archivo','clientes','redic'));
-
-     }
-
+     //   $contenido=$pdf->download();
+     //   Storage::disk($redic)->put($archivo,$contenido);
+     //   return view('mailbox.create',compact('archivo','clientes','redic'));
+     // }
      else{
-      $mi_empresa=Empresa::first();
-      if($tipo == 'App\GarantiaGuiaIngreso'){
-        $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
-        $garantia_guia_ingreso = $tipo::find($id);
-        $name = 'Guia_Ingreso_';
+        $mi_empresa=Empresa::first();
+          if($tipo == 'App\GarantiaGuiaIngreso'){
+            $rutapdf= 'transaccion.garantias.guia_ingreso.show_pdf';
+            $garantia_guia_ingreso = $tipo::find($id);
+            $name = 'Guia_Ingreso_';
+          }
+          elseif($tipo == 'App\GarantiaGuiaEgreso'){
+            $rutapdf= 'transaccion.garantias.guia_egreso.show_pdf';
+            $garantias_guias_egreso = $tipo::find($id);
+            $name = 'Guia_Egreso_';
+          }elseif($tipo == 'App\GarantiaInformeTecnico'){
+            $rutapdf= 'transaccion.garantias.informe_tecnico.show_pdf';
+            $garantias_informe_tecnico = $tipo::find($id);
+            $name = 'Informe_Tecnico_';
+          }
+        $archivo=$name.$id.".pdf";
+        $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa'));
+        $content=$pdf->download();
+        Storage::disk($redic)->put($archivo,$content);
+        return view('mailbox.create',compact('archivo','clientes','redic'));
       }
-      elseif($tipo == 'App\GarantiaGuiaEgreso'){
-        $rutapdf= 'transaccion.garantias.guia_egreso.show_pdf';
-        $garantias_guias_egreso = $tipo::find($id);
-        $name = 'Guia_Egreso_';
-      }elseif($tipo == 'App\GarantiaInformeTecnico'){
-        $rutapdf= 'transaccion.garantias.informe_tecnico.show_pdf';
-        $garantias_informe_tecnico = $tipo::find($id);
-        $name = 'Informe_Tecnico_';
-      }
-      $archivo=$name.$id.".pdf";
-      $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa'));
-      $content=$pdf->download();
-      Storage::disk($redic)->put($archivo,$content);
-      return view('mailbox.create',compact('archivo','clientes','redic'));
-    }
-        // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
-        // $pdf=App::make('dompdf.wrapper');
-        // $pdf=loadView('welcome').;
-
   }
 
   public function send(Request $request){

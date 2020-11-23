@@ -69,7 +69,10 @@ return [
             'driver' => 'local',
             'root' => storage_path('app/public/ventas_cotizacion/'),
         ],
-
+        'cotizacion_factura' => [
+            'driver' => 'local',
+            'root' => storage_path('app/public/cotizacion_factura/'),
+        ],
         'mailbox' => [
             'driver' => 'local',
             'root' => storage_path('app/public/'),
