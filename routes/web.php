@@ -56,6 +56,7 @@ Route::group(
 //COTIZACIOBNES SERVICIO
 		//FACTURA
 		Route::get('/cotizacion_servicio/create_factura' , 'CotizacionServiciosController@create_factura')->name('cotizacion_servicio.create_factura');
+		Route::get('/cotizacion_servicio/create_factura_ms' , 'CotizacionServiciosController@create_factura_ms')->name('cotizacion_servicio.create_factura_ms');
 		Route::post('/cotizacion_servicio/store_factura','CotizacionServiciosController@store_factura')->name('cotizacion_servicio.store_factura');
 		Route::get('/cotizacion_servicio/facturar/{id}' , 'CotizacionServiciosController@facturar')->name('cotizacion_servicio.facturar');
 		Route::post('/cotizacion_servicio/facturar_store' , 'CotizacionServiciosController@facturar_store')->name('cotizacion_servicio.facturar_store');

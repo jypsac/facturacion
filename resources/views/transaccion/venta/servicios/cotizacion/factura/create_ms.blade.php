@@ -232,9 +232,9 @@
                                             <label class="col-sm-2 col-form-label">Moneda:</label>
                                             <div class="col-sm-10">
                                                 <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
-                                            <a class="col-sm-5" href="{{route('cotizacion_servicio.create_factura_ms')}}">
+                                                <a class="col-sm-5" href="{{route('cotizacion_servicio.create_factura')}}">
                                                     <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>@if($moneda->tipo=='nacional')Dolares @elseif($moneda->tipo=='extranjera') Soles @endif</button></a>
-                                                        </div>
+                                            </div>
                                                     
                                                 </div><br>
                                                 <div class="row">
