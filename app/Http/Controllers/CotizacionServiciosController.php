@@ -62,6 +62,25 @@ class CotizacionServiciosController extends Controller
         return view('transaccion.venta.servicios.cotizacion.factura.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
     }
 
+    public function create_factura_ms()
+    {
+        $servicios=Servicios::where('estado_anular',0)->get();
+
+        foreach ($servicios as $index => $servicio) {
+            $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+            $array[]=$servicio->precio+$utilidad[$index];
+        }
+
+        $forma_pagos=Forma_pago::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
+        $moneda=Moneda::all();
+        $personales=Personal::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
+        $igv=Igv::first();
+
+        return view('transaccion.venta.servicios.cotizacion.factura.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
