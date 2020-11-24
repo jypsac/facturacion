@@ -157,12 +157,12 @@ Route::group(
 
 		Route::POST('garantia_guia_egreso/email/enviar','GarantiaGuiaEgresoController@enviar')->name('garantia_egreso.enviar');
 		Route::get('garantia_guia_egreso/email/{id}','GarantiaGuiaEgresoController@email')->name('guia_egreso.email');
-		Route::get('garantia_guia_egreso/pdf/{id}' , 'GarantiaGuiaEgresoController@pdf')->name('pdf_egreso');
+
 		Route::get('garantia_guia_egreso/impresionEgreso/{id}' , 'GarantiaGuiaEgresoController@print')->name('impresiones_egreso');
 		Route::get('garantia_guia_egreso/guias', 'GarantiaGuiaEgresoController@guias')->name('garantia_guia_egreso.guias');
 		Route::resource('/garantia_guia_egreso','GarantiaGuiaEgresoController');
 
-		Route::get('garantia_informe_tecnico/pdf/{id}' , 'GarantiaInformeTecnicoController@pdf')->name('pdf_informe');
+
 		Route::get('garantia_informe_tecnico/impresionInformeTecnico/{id}' , 'GarantiaInformeTecnicoController@print')->name('impresiones_informe');
 		Route::get('garantia_informe_tecnico/{id}/actualizar', 'GarantiaInformeTecnicoController@actualizar')->name('garantia_informe_tecnico.actualizar');
 		Route::get('garantia_informe_tecnico/guias', 'GarantiaInformeTecnicoController@guias')->name('garantia_informe_tecnico.guias');
@@ -241,4 +241,7 @@ Route::group(
 	Route::post('/sunat_cambio','TipoCambioController@sunat_cambio');
 	Route::resource('/tipo_cambio','TipoCambioController')->middleware('auth');
 	Route::get('garantia_guia_ingreso/pdf/{id}' , 'GarantiaGuiaIngresoController@pdf')->name('pdf_ingreso');
+	Route::get('garantia_guia_egreso/pdf/{id}' , 'GarantiaGuiaEgresoController@pdf')->name('pdf_egreso');
+	Route::get('garantia_informe_tecnico/pdf/{id}' , 'GarantiaInformeTecnicoController@pdf')->name('pdf_informe');
+	Route::get('cotizacion/pdf/{id}' , 'CotizacionController@pdf')->name('pdf_cotizacion');
 	Route::get('/home', 'HomeController@index')->name('home');

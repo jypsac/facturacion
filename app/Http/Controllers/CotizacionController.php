@@ -26,6 +26,7 @@ use App\User;
 use App\Ventas_registro;
 use App\kardex_entrada_registro;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 
 class CotizacionController extends Controller
@@ -1050,7 +1051,36 @@ class CotizacionController extends Controller
 
         return view('transaccion.venta.cotizacion.print', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','i','end','igv_p','banco_count'));
 }
-
+    public function pdf(Request $request,$id){
+            $name = $request->get('name');
+            $banco=Banco::where('estado','0')->get();
+          $banco_count=Banco::where('estado','0')->count();
+          $cotizacion=Cotizacion::find($id);
+          $regla=$cotizacion->tipo;
+          $sub_total=0;
+          $igv=Igv::first();
+          /*registros boleta y factura*/
+          if($regla=='factura'){
+              $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+          }elseif($regla=='boleta'){
+              $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+          }
+          /* FIN registros boleta y factura*/
+          /*de numeros a Letras*/
+          foreach($cotizacion_registro as $cotizacion_registros){
+              $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
+              $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+              if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
+          }
+          /* Finde numeros a Letras*/
+          $empresa=Empresa::first();
+          $sum=0;
+          $i=1;
+          $regla=$cotizacion->tipo;
+             $archivo=$name.$regla.$id.".pdf";
+             $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco','i','end','igv_p','banco_count'));
+            return $pdf->download('Cotizacion - '.$archivo.'.pdf');
+}
     //envio hacia facturar cambiar en caso incluya algo
     public function facturar($id){
 
@@ -1309,7 +1339,7 @@ public function facturar_store(Request $request)
         }
     }
 
-    
+
 
 
     foreach ($productos as $index => $cotizacion_facturacion) {
@@ -1478,7 +1508,7 @@ public function boletear($id)
             }
         }
     }
-    
+
     $empresa=Empresa::first();
     $sum=0;
     $igv=Igv::first();
@@ -1571,7 +1601,7 @@ public function boletear_store(Request $request)
     $factura_primera->save();
 
     $buscador_id=Cotizacion::where('id',$boletear->id_cotizador)->first();
-    
+
     $productos=Cotizacion_boleta_registro::where('cotizacion_id',$buscador_id->id)->get();
         foreach($productos as $lista){
             $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
@@ -1726,9 +1756,9 @@ public function boletear_store(Request $request)
             }
             $boleta_registro->save();
 
-            
+
         }
-        
+
     }
 
     // Creacion de Ventas Registros del Comisinista
@@ -1745,7 +1775,7 @@ public function boletear_store(Request $request)
        $comisionista->estado_fac='0';
        $comisionista->observacion='Viene del Cotizador';
        $comisionista->save();
-       
+
    }
 
 

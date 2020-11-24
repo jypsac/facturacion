@@ -26,13 +26,17 @@
                 @endif
             </div>
              <div class="col-sm-6" align="right">
+                <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_cotizacion' ,$cotizacion->id)}}">
+                <input type="text" name="name" maxlength="50" hidden="" value="Cotizacion_{{$cotizacion->tipo}}"  >
+                <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
+                </form>
                 <a class="btn btn-success" href="{{route('cotizacion.print',$cotizacion->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i></a>
                 <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
                     @csrf
-                     <input type="tel" name="numero"  value="" hidden="" />
-                     <input type="text" name="mensaje" id="texto_orden" hidden="" />
-                     <input type="text" hidden="" name="url" value="">
-                     <input type="text" name="name_sin_cambio" hidden="" value="" />
+                     <input type="tel" name="numero"  value="{{$cotizacion->cliente->celular}}" hidden="" />
+                     <input type="text" name="mensaje"  hidden="" value="" />
+                     <input type="text" hidden="" name="url" value="{{route('pdf_cotizacion' ,$cotizacion->id)}}?archivo=">
+                     <input type="text" name="name_sin_cambio" hidden="" value="Cotizacion_{{$cotizacion->tipo}}" />
                     <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-whatsapp fa-lg"></i>  </button>
                 </form>
                          {{-- </a> --}}

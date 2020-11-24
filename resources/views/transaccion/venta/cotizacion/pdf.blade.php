@@ -33,14 +33,14 @@
     <table style="width: 100%;border-collapse:separate;margin-bottom: -10px">
         <tr>
             <td style="width: auto;border-color: white" rowspan="2" valign="top">
-                <img align="" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="height: 75px;margin-top: 0px;"  />
+                <img align="" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="margin-top: 0px;" width="300px" />
                 <br>
             </td>
             <td style="width: 30%; ;border: 1px #e5e6e7 solid;border-radius: 8px;margin-top: 0px" align="right">
                 <center>
-                    <span style="margin: 8px;text-align: center;font-size: 16px;"> R.U.C {{$empresa->ruc}}</span><br>
-                    <span style="margin: 8px;font-size: 12px;text-align: center;" >COTIZACION ELECTRONICA</span><br>
-                    <span style="margin: 8px;text-align: center;" >{{$cotizacion->cod_cotizacion}}</span>
+                    <h3 style="text-align: center;padding-top:10px;margin-bottom: -28px;margin-top: -10px"> R.U.C {{$empresa->ruc}}</h3><br>
+                    <h2 style="font-size: 19px;text-align: center;margin-bottom: -28px" >COTIZACION ELECTRONICA</h2><br>
+                    <h5 style="text-align: center;margin-bottom: -5px" >{{$cotizacion->cod_cotizacion}}</h5>
                 </center>
             </td>
         </tr>
@@ -75,26 +75,26 @@
 <br>
 
 <div class="table-responsive">
-    <table class="table " >
-        <thead>
-           <tr style="text-align: left;font-weight: bold;">
+    <table class="table " style="border-top: 0px" >
+        <thead style="">
+           <tr style="text-align: left;font-weight: bold;border-top-width:  0px ">
                 <td width="30px">ITEM </td>
-                <td width="80px" >Codigo </td>
-                <td width="300px">Descripcion</td>
-                <td>Cantidad</td>
-                <td>P.Unitario</td>
-                <td width="50px">Total <span hidden="hidden">{{$simbologia=$cotizacion->moneda->simbolo}}</span></td>
+                <td width="120px" >Codigo </td>
+                <td width="400px">Descripcion</td>
+                <td width="auto">Cantidad</td>
+                <td width="auto">P.Unitario</td>
+                <td width="80px">Total <span hidden="hidden">{{$simbologia=$cotizacion->moneda->simbolo}}</span></td>
             </tr>
         </thead>
         <tbody>
            @foreach($cotizacion_registro as $cotizacion_registros)
-           <tr>
-                <td width="30px" >{{$i++}} </td>
-                <td width="80px">{{$cotizacion_registros->producto->codigo_producto}}</td>
-                <td width="300px">{{$cotizacion_registros->producto->nombre}} <br>{{$cotizacion_registros->producto->descripcion}}</span></td>
-                <td>{{$cotizacion_registros->cantidad}}</td>
-                <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
-                <td width="50px">{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
+           <tr style="border-bottom-width:   0px white ">
+                <td width="30px" style="">{{$i++}} </td>
+                <td width="120px" style="">{{$cotizacion_registros->producto->codigo_producto}}</td>
+                <td width="400px" style="">{{$cotizacion_registros->producto->nombre}} <br>{{$cotizacion_registros->producto->descripcion}}</span></td>
+                <td width="auto" style="">{{$cotizacion_registros->cantidad}}</td>
+                <td width="auto" style="">{{$cotizacion_registros->precio_unitario_comi}}</td>
+                <td width="80px" style="" >{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
             </tr>
             @endforeach
         </tbody>
@@ -112,33 +112,38 @@
 
 <table style="border: white 0px solid;text-align: center;" >
     <tr style="border: white 0px solid" >
-        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
-            Subtotal <br style="height: 2px;">
-        </td>
-        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
-             Op. Agravada <br style="height: 2px;">
-         </td>
-        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
-            IGV  <br style="height: 2px;">
-        </td>
-        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
-            Importe Total <br style="height: 2px;">
-        </td>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
+                Subtotal <br style="height: 2px;">
+            </td>
+        <th style="width: 2%;border-color: white"></th>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
+                 Op. Agravada <br style="height: 2px;">
+             </td>
+         <th style="width: 2%;border-color: white"></th>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
+                IGV  <br style="height: 2px;">
+            </td>
+        <th style="width: 2%;border-color: white"></th>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
+                Importe Total <br style="height: 2px;">
+            </td>
     </tr>
     <tr style="border: white 0px solid" >
-
-        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
-            {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
-        </td>
-        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
-            {{$simbologia=$cotizacion->moneda->simbolo}}.00
-        </td>
-        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
-            @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}} @else  {{$cotizacion->moneda->simbolo}}.00 @endif
-        </td>
-        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
-            @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif
-        </td>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
+                {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
+            </td>
+        <th style="width: 2%;border-color: white"></th>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
+                {{$simbologia=$cotizacion->moneda->simbolo}}.00
+            </td>
+        <th style="width: 2%;border-color: white"></th>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
+                @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}} @else  {{$cotizacion->moneda->simbolo}}.00 @endif
+            </td>
+        <th style="width: 2%;border-color: white"></th>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
+                @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif
+            </td>
     </tr>
 </table>
 </center>
@@ -148,17 +153,18 @@
 
 <!-- Fin Totales de Productos -->
 <br>
-<table>
+<table style="border-collapse: separate;">
     <tr>
+         <th style="width: 2%;border-color: white"></th>
         @foreach($banco as $bancos)
         @if($banco_count==3)
-        <th width="33%" style="border: 1px #e5e6e7 solid;border-radius: 4px;">
+        <th width="33%" style="border: 1px #e5e6e7 solid;border-radius: 8px;">
         @elseif($banco_count==2)
-        <th width="50%"style="border: 1px #e5e6e7 solid;border-radius: 4px;">
+        <th width="50%"style="border: 1px #e5e6e7 solid;border-radius: 8px;">
         @elseif($banco_count==1)
-        <th width="100%"style="border: 1px #e5e6e7 solid;border-radius: 4px;">
+        <th width="100%"style="border: 1px #e5e6e7 solid;border-radius: 8px;">
         @else
-        <th width="20%"style="border: 1px #e5e6e7 solid;border-radius: 4px;">
+        <th width="20%"style="border: 1px #e5e6e7 solid;border-radius: 8px;">
         @endif
         <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="height: 30px;"><br>
           <span style="font-size: 11px"><strong> {{$bancos->tipo_cuenta}}</strong></span>
@@ -170,6 +176,7 @@
           </span>
          </p>
         </th>
+         <th style="width: 2%;border-color: white"></th>
         @endforeach
     </tr>
 </table>
