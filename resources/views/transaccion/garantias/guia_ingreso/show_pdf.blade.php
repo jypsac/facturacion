@@ -31,7 +31,7 @@
 </div> --}}
     <table style="width: 100%;border-collapse:separate">
         <tr>
-            <td style="width: auto;border-color: white" >
+            <td style="width: auto;border-color: white" rowspan="2">
                 <img align="" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="height: 75px;margin-top: 5px" />
             </td>
             <td style="width: 30%; ;border: 1px #e5e6e7 solid;border-radius: 4px;" align="right">

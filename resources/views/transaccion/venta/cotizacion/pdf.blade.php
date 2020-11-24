@@ -21,6 +21,7 @@
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     width: 100%;
 }
+@page { size: 420mm 297mm landscape; }
 </style>
 <body class="white-bg">
 {{-- <div class="ibox" style=" margin-bottom:0px; width: 100%">
@@ -31,15 +32,15 @@
 </div> --}}
     <table style="width: 100%;border-collapse:separate;margin-bottom: -10px">
         <tr>
-            <td style="width: auto;border-color: white" rowspan="2">
-                <img align="" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="height: 75px;margin-top: 5px" />
+            <td style="width: auto;border-color: white" rowspan="2" valign="top">
+                <img align="" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="height: 75px;margin-top: 0px;"  />
+                <br>
             </td>
             <td style="width: 30%; ;border: 1px #e5e6e7 solid;border-radius: 8px;margin-top: 0px" align="right">
                 <center>
-
-                    <span style="margin: 5px;font-weight: 200;text-align: center;"> R.U.C {{$empresa->ruc}}</span><br>
-                    <span style="margin: 5px;font-size: 15px;text-align: center;" >COTIZACION ELECTRONICA</span><br>
-                    <span style="margin: 5px;text-align: center;" >{{$cotizacion->cod_cotizacion}}</span>
+                    <span style="margin: 8px;text-align: center;font-size: 16px;"> R.U.C {{$empresa->ruc}}</span><br>
+                    <span style="margin: 8px;font-size: 12px;text-align: center;" >COTIZACION ELECTRONICA</span><br>
+                    <span style="margin: 8px;text-align: center;" >{{$cotizacion->cod_cotizacion}}</span>
                 </center>
             </td>
         </tr>
@@ -65,11 +66,10 @@
         </td>
     </tr>
 </table>
-<div class="col-sm-12" align="center">
-       <div class="form-control" style="border: none;height: auto" >
-           <div align="left">
-            <strong>observaciones:</strong> &nbsp;{{$cotizacion->observacion }}<br>
-        </div>
+
+<div class="form-control" style="border: none;height: auto" >
+    <div align="left">
+        <strong>observaciones:</strong> &nbsp;{{$cotizacion->observacion }}<br>
     </div>
 </div>
 <br>
@@ -77,24 +77,24 @@
 <div class="table-responsive">
     <table class="table " >
         <thead>
-           <tr >
-                <th>ITEM </th>
-                <th>Codigo </th>
-                <th>Descripcion</th>
-                <th>Cantidad</th>
-                <th>P.Unitario</th>
-                <th>Total <span hidden="hidden">{{$simbologia=$cotizacion->moneda->simbolo}}</span></th>
+           <tr style="text-align: left;font-weight: bold;">
+                <td width="30px">ITEM </td>
+                <td width="80px" >Codigo </td>
+                <td width="300px">Descripcion</td>
+                <td>Cantidad</td>
+                <td>P.Unitario</td>
+                <td width="50px">Total <span hidden="hidden">{{$simbologia=$cotizacion->moneda->simbolo}}</span></td>
             </tr>
         </thead>
         <tbody>
            @foreach($cotizacion_registro as $cotizacion_registros)
            <tr>
-                <td>{{$i++}} </td>
-                <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
-                <td>{{$cotizacion_registros->producto->nombre}} <br>{{$cotizacion_registros->producto->descripcion}}</span></td>
+                <td width="30px" >{{$i++}} </td>
+                <td width="80px">{{$cotizacion_registros->producto->codigo_producto}}</td>
+                <td width="300px">{{$cotizacion_registros->producto->nombre}} <br>{{$cotizacion_registros->producto->descripcion}}</span></td>
                 <td>{{$cotizacion_registros->cantidad}}</td>
                 <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
-                <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
+                <td width="50px">{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
             </tr>
             @endforeach
         </tbody>
@@ -113,35 +113,31 @@
 <table style="border: white 0px solid;text-align: center;" >
     <tr style="border: white 0px solid" >
         <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
-            {{-- <p style="height: 5px;"> Sub Total</p> --}}
             Subtotal <br style="height: 2px;">
-            <hr >
-            {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
-            {{-- <p style="height: 5px">{{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}</p> --}}
         </td>
-        <td style="border: 0px #e5e6e7 solid;border-radius: 4px;"> </td>
         <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
              Op. Agravada <br style="height: 2px;">
-            <hr >
-             {{$simbologia=$cotizacion->moneda->simbolo}}.00
-            {{-- <p style="height: 5px"> Op. Agravada</p>
-            <p style="height: 5px"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p> --}}
-        </td>
-        <td style="border: 0px #e5e6e7 solid;border-radius: 4px;">  </td>
+         </td>
         <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
             IGV  <br style="height: 2px;">
-            <hr >
-            @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}} @else  {{$cotizacion->moneda->simbolo}}.00 @endif
-            {{-- <p style="height: 5px"> IGV</p>
-            <p style="height: 5px"> @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}} @else  {{$cotizacion->moneda->simbolo}}.00 @endif</p> --}}
         </td>
-        <td style="border: 0px #e5e6e7 solid;border-radius: 4px;"> </td>
         <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
             Importe Total <br style="height: 2px;">
-            <hr >
+        </td>
+    </tr>
+    <tr style="border: white 0px solid" >
+
+        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
+            {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
+        </td>
+        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
+            {{$simbologia=$cotizacion->moneda->simbolo}}.00
+        </td>
+        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
+            @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}} @else  {{$cotizacion->moneda->simbolo}}.00 @endif
+        </td>
+        <td style="border: 1px #e5e6e7 solid;border-radius: 4px;">
             @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif
-            {{-- <p style="height: 5px"> Importe Total</p>
-            <p style="height: 5px"> @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif</p> --}}
         </td>
     </tr>
 </table>
@@ -179,8 +175,8 @@
 </table>
 <div class="row">
 <br>
-<table>
-    <tr>
+<table style="border:  0px solid white">
+    <tr style="border:  0px solid white">
         <td>
             <p><u>centro de Atencion : </u></p>
             Telefono : {{$cotizacion->user_personal->personal->telefono }}<br>
@@ -188,9 +184,15 @@
             Email : {{$cotizacion->user_personal->personal->email }}<br>
             Web : {{$empresa->pagina_web}} <br>
         </td>
-        <td>
+        <td >
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
+            <br>
             <hr>
-        <center>{{$cotizacion->user_personal->personal->nombres }}</center>
+            <center>{{$cotizacion->user_personal->personal->nombres }}</center>
         </td>
     </tr>
 </table>
@@ -199,7 +201,7 @@
 {{--  --}}
 <style>
 
-    *{font-size: 10px}
+    *{font-size: 15px;color: #495057;font-family: apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
     .cero{
     margin-bottom: 0px;
 
@@ -215,5 +217,12 @@
         border-width: 1px;
         border-style: solid;
     }
+    .table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-top-width: 0px;
 
+}
 </style>
