@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title', 'Cotizacion Servicio - Factura')
-@section('breadcrumb', 'Cotizacion Servicio - Factura')
-@section('breadcrumb2', 'Cotizacion Servicio - Factura')
+@section('title', 'Cotizacion Servicio M.S - Boleta')
+@section('breadcrumb', 'Cotizacion Servicio M.S - Boleta')
+@section('breadcrumb2', 'Cotizacion Servicio M.S - Boleta')
 @section('href_accion', route('cotizacion_servicio.index') )
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -51,7 +51,7 @@
 
 <div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
-    <a href="{{route('cotizacion_servicio.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Boleta</span></a>
+    <a href="{{route('cotizacion_servicio.create_factura')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a>
 
 </div>
 <!-- Modal CLiente -->
@@ -201,7 +201,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('cotizacion_servicio.store_factura',$moneda->id)}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('cotizacion_servicio.store_boleta',$moneda->id)}}"  enctype="multipart/form-data" method="post">
                         @csrf
                         @method('put')
                         <div class="row">
@@ -233,10 +233,9 @@
                                             <label class="col-sm-2 col-form-label">Moneda:</label>
                                             <div class="col-sm-10">
                                                 <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
-                                            <a class="col-sm-5" href="{{route('cotizacion_servicio.create_factura_ms')}}">
+                                                    <a class="col-sm-5" href="{{route('cotizacion_servicio.create_factura')}}">
                                                     <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>@if($moneda->tipo=='nacional')Dolares @elseif($moneda->tipo=='extranjera') Soles @endif</button></a>
-                                                        </div>
-                                                    
+                                            </div>
                                                 </div><br>
                                                 <div class="row">
                                                     <label class="col-sm-2 col-form-label">Vendedor:</label>
@@ -340,13 +339,12 @@
                                                             </td>
                                                             <td>
                                                                 {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
-                                                                <div style="position: relative;">
-                                                                    <input class="text_des" type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
-                                                                </div>
-                                                                <div class="div_check" >
-                                                                    <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
-                                                                </div>
-                                                                <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
+                                                                <div style="position: relative; " > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
+                                                                 </div>
+                                                                 <div class="div_check" >
+                                                                     <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
+                                                                 </div>
+                                                                 <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
                                                             </td>
                                                             <td>
                                                                 <input type='text' id='descuento_unitario0' name='descuento_unitario[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
@@ -362,8 +360,7 @@
 
                                                     </tbody><br>
                                                     <tbody>
-                                                        <tr style="background-color: #f5f5f500;" align="center">
-                                                            <td></td>
+                                                        {{-- <tr style="background-color: #f5f5f500;" align="center">
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
@@ -378,10 +375,9 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td></td>
-                                                            <td></td>
                                                             <td>IGV :</td>
                                                             <td><input id='igv'  disabled="disabled" class="form-control" required /></td>
-                                                        </tr>
+                                                        </tr> --}}
                                                         <tr  align="center">
                                                             <td></td>
                                                             <td></td>
@@ -394,7 +390,6 @@
                                                         </tr>
                                                     </tbody>
                                                 </table>
-                                        </div>
 
                                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
@@ -442,26 +437,30 @@
                                 @endforeach
                                 </datalist>
                                 </td>
+
+
+
                                 <td>
-                                    <input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+                                <input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
                                 </td>
                                 <td>
                                     <input type='text' id='cantidad${i}' name='cantidad[]' class="monto0 form-control" onkeyup="multi(${i})" required  autocomplete="off" />
                                 </td>
+
                                 <td>
                                     {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
-                                    <div style="position: relative; ">
-                                        <input class="text_des"type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
-                                    </div>
-                                    <div class="div_check" >
-                                        <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
-                                    </div>
-                                    <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
+                                    <div style="position: relative; " > <input class="text_des"type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
+                                     </div>
+                                     <div class="div_check" >
+                                         <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
+                                     </div>
+                                     <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
                                 </td>
 
                                 <td>
                                 <input type='text' id='descuento_unitario${i}' name='descuento_unitario[]' readonly="readonly" class="descuento_unitario${i} form-control"  required  autocomplete="off" />
                                 </td>
+
 
 
                                 <td>
@@ -576,19 +575,19 @@
             var multiplier2 = 100;
             var total_tt = Math.round(total_t * multiplier2) / multiplier2;
 
-            $('#sub_total').val(total_tt);
+            $('#total_final').val(total_tt);
 
-            var igv_valor={{$igv->renta}};
-            var subtotal = document.querySelector(`#sub_total`).value;
-            var igv=subtotal*igv_valor/100;
+            // var igv_valor={{$igv->renta}};
+            // var subtotal = document.querySelector(`#sub_total`).value;
+            // var igv=subtotal*igv_valor/100;
 
-            var igv_decimal = Math.round(igv * multiplier2) / multiplier2;
-            var end=igv_decimal+parseFloat(subtotal);
+            // var igv_decimal = Math.round(igv * multiplier2) / multiplier2;
+            // var end=igv_decimal+parseFloat(subtotal);
 
-            var end2 = Math.round(end * multiplier2) / multiplier2;
+            // var end2 = Math.round(end * multiplier2) / multiplier2;
 
-            document.getElementById("igv").value = igv_decimal;
-            document.getElementById("total_final").value = end2;
+            // document.getElementById("igv").value = igv_decimal;
+            // document.getElementById("total_final").value = end2;
 
         }
     </script>

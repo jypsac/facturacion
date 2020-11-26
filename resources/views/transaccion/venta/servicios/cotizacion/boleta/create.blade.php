@@ -201,8 +201,9 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('cotizacion_servicio.store_boleta')}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('cotizacion_servicio.store_boleta',$moneda->id)}}"  enctype="multipart/form-data" method="post">
                         @csrf
+                        @method('put')
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="row">
@@ -231,12 +232,10 @@
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Moneda:</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" name="moneda" required="required">
-                                                    @foreach($moneda as $monedas)
-                                                    <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
-                                                    @endforeach
-                                                    <select>
-                                                    </div>
+                                                <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
+                                                    <a class="col-sm-5" href="{{route('cotizacion_servicio.create_boleta_ms')}}">
+                                                    <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>@if($moneda->tipo=='nacional')Dolares @elseif($moneda->tipo=='extranjera') Soles @endif</button></a>
+                                                        </div>
                                                 </div><br>
                                                 <div class="row">
                                                     <label class="col-sm-2 col-form-label">Vendedor:</label>

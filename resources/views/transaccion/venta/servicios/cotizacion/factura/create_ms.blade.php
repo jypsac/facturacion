@@ -108,8 +108,8 @@
             <!-- Fin Consulta API -->
 
             <form action="{{ route('agregado_rapido.cliente_cotizado') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
-
                 @csrf
+                
                 <h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
                 <div class="form-group row ">
                     <label class="col-sm-2 col-form-label" >Tipo Documento:</label>
@@ -201,8 +201,9 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('cotizacion_servicio.store_factura')}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('cotizacion_servicio.store_factura',$moneda->id)}}"  enctype="multipart/form-data" method="post">
                         @csrf
+                        @method('put')
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="row">

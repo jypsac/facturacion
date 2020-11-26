@@ -15,9 +15,8 @@ class CreateCotizacionServicioTable extends Migration
     {
         Schema::create('cotizacion_servicio', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('cod_comision');
-            $table->boolean('estado_aprovar');
-            $table->boolean('estado_aprobado');
+            $table->string('cod_cotizacion');
+            
         });
     }
 

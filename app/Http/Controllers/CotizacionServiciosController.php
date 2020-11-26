@@ -23,6 +23,7 @@ use App\Servicios;
 use App\Ventas_registro;
 use Illuminate\Http\Request;
 use App\TipoCambio;
+use Carbon\Carbon;
 use App\kardex_entrada_registro;
 
 class CotizacionServiciosController extends Controller
@@ -57,7 +58,7 @@ class CotizacionServiciosController extends Controller
         }else{
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $array[]=$servicio->precio+$utilidad[$index]*$cambio->paralelo;
+                $array[]=$servicio->precio+$utilidad[$index]*$tipo_cambio->paralelo;
             }
         }
 
@@ -77,12 +78,21 @@ class CotizacionServiciosController extends Controller
     public function create_factura_ms()
     {
         $servicios=Servicios::where('estado_anular',0)->get();
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
+        $moneda=Moneda::where('principal','0')->first();
 
-        foreach ($servicios as $index => $servicio) {
-            $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-            $array[]=$servicio->precio+$utilidad[$index];
+        if($moneda->tipo =='extranjera'){
+            foreach ($servicios as $index => $servicio) {
+                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $array[]=($servicio->precio+$utilidad[$index])/$tipo_cambio->paralelo;
+            }
+        }else{
+            foreach ($servicios as $index => $servicio) {
+                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $array[]=$servicio->precio+$utilidad[$index];
+            }
         }
-
+        
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
         $moneda=Moneda::where('principal','0')->first();
@@ -99,9 +109,8 @@ class CotizacionServiciosController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store_factura(Request $request)
+    public function store_factura(Request $request,$id_moneda)
     {
-
         $print=$request->get('print');
 
         if($print==1){
@@ -175,6 +184,11 @@ class CotizacionServiciosController extends Controller
             $comi=0;
         }
 
+        $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+        if(!$cambio){
+            return "error por no hacer el cambio diario";
+        }
+
         //Convertir nombre del cliente a id
         $cliente_nombre=$request->get('cliente');
         $nombre = strstr($cliente_nombre, '-',true);
@@ -190,35 +204,47 @@ class CotizacionServiciosController extends Controller
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        $personal_contador= Cotizacion_Servicios::all()->count();
-        $suma=$personal_contador+1;
-        $cod_comision='COFAC-0000'.$suma;
+        //PARA GENERAR EL CODIGO DE LA COTIZACION
+        
+        $ultima_factura=Cotizacion_Servicios::latest()->first();
+        if($ultima_factura){
+            $code=$ultima_factura->id;
+            $code++;
+        }else{
+            $code=1;
+        }
+        $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="COTSF "."-".$cotizacion_nr;
 
         $cotizacion=new Cotizacion_Servicios;
+        $cotizacion->cod_cotizacion=$cotizacion_numero;
         $cotizacion->cliente_id=$cliente_buscador->id;
-        // $cotizacion->atencion=$request->get('atencion');
+        $cotizacion->moneda_id=$id_moneda;
         $cotizacion->forma_pago_id=$request->get('forma_pago');
-        $cotizacion->validez=$request->get('validez');
-        $cotizacion->moneda_id=$request->get('moneda');
-        $cotizacion->cod_comision=$cod_comision;
+        $cotizacion->estado_aprobar='0';
+        $cotizacion->estado_aprobado='0';
+        // $cotizacion->aprobado_por='0';
         $cotizacion->garantia=$request->get('garantia');
-        $cotizacion->user_id =auth()->user()->id;
-        $cotizacion->observacion=$request->get('observacion');
+        $cotizacion->validez=$request->get('validez');
         $cotizacion->fecha_emision=$request->get('fecha_emision');
         $cotizacion->fecha_vencimiento=$nuevafechas;
+        $cotizacion->cambio=$cambio->paralelo;
+        $cotizacion->observacion=$request->get('observacion');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $cotizacion->comisionista_id= $comisionista_buscador->id;
         }
-        $cotizacion->tipo='factura';
+        $cotizacion->user_id =auth()->user()->id;
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
-        $cotizacion->estado_aprovar='0';
-        $cotizacion->estado_aprobado='0';
-        // $cotizacion->aprobado_por='0';
+        $cotizacion->tipo='factura';
         $cotizacion->save();
 
         $check = $request->input('descuento_unitario');
         $count_check=count($check);
+
+        //validacion dependiendo de la amoneda escogida
+        $moneda=Moneda::where('principal',1)->first();
+        $moneda_registrada=$cotizacion->moneda_id;
 
         if($count_servicio = $count_check){
             for($i=0;$i<$count_servicio;$i++){
@@ -226,13 +252,26 @@ class CotizacionServiciosController extends Controller
                 $cotizacion_registro->cotizacion_servicio_id=$cotizacion->id;
                 $cotizacion_registro->servicio_id=$servicio_id[$i];
 
-                    $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
-                    $utilidad=$servicio->precio*$servicio->utilidad/100;
-                    $array=$servicio->precio+$utilidad;
-
-
+                $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
+                $utilidad=$servicio->precio*$servicio->utilidad/100;
+                $array=$servicio->precio+$utilidad;
                 $cotizacion_registro->promedio_original=$servicio->precio;
-                $cotizacion_registro->precio=$array;
+
+                //logica para el precio dependiendo de la moneda
+                if($moneda->id == $moneda_registrada){
+                    if ($moneda->tipo == 'nacional') {
+                        $cotizacion_registro->precio=$array;
+                    }else{
+                        $cotizacion_registro->precio=$array;
+                    }
+                }else{
+                    if ($moneda->tipo == 'extranjera') {
+                        $cotizacion_registro->precio=$array;
+                    }else{
+                        $cotizacion_registro->precio=$array;
+                    }
+                }
+                
                 $cotizacion_registro->cantidad=$request->get('cantidad')[$i];
 
                 //descuento
@@ -244,7 +283,6 @@ class CotizacionServiciosController extends Controller
                     $cotizacion_registro->descuento=0;
                     $desc_comprobacion=0;
                 }
-
                 //precio unitario descuento
                 if($desc_comprobacion <> 0){
                     $cotizacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
@@ -274,24 +312,67 @@ class CotizacionServiciosController extends Controller
      */
     public function create_boleta()
     {
+        // return 1;
         $servicios=Servicios::where('estado_anular',0)->get();
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
+        $moneda=Moneda::where('principal','1')->first();
         $igv_proceso=Igv::first();
         $igv_total=$igv_proceso->igv_total;
 
-        foreach ($servicios as $index => $servicio) {
-            $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-            $igv[]=$servicio->precio*$igv_total/100;
-            $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+        if($moneda->tipo =='nacional'){
+            foreach ($servicios as $index => $servicio) {
+                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $igv[]=$servicio->precio*$igv_total/100;
+                $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+            }
+        }else{
+            foreach ($servicios as $index => $servicio) {
+                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $igv[]=$servicio->precio*$igv_total/100;
+                $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])*$tipo_cambio->paralelo;
+            }
         }
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        $moneda=Moneda::all();
+        
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
 
         return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
+    }
+
+    public function create_boleta_ms()
+    {
+        $servicios=Servicios::where('estado_anular',0)->get();
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
+        $moneda=Moneda::where('principal','0')->first();
+        $igv_proceso=Igv::first();
+        $igv_total=$igv_proceso->igv_total;
+
+        if($moneda->tipo =='extranjera'){
+            foreach ($servicios as $index => $servicio) {
+                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $igv[]=$servicio->precio*$igv_total/100;
+                $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])/$tipo_cambio->paralelo;
+            }
+        }else{
+            foreach ($servicios as $index => $servicio) {
+                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $igv[]=$servicio->precio*$igv_total/100;
+                $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+            }
+        }
+
+        $forma_pagos=Forma_pago::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
+        
+        $personales=Personal::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
+        $igv=Igv::first();
+
+        return view('transaccion.venta.servicios.cotizacion.boleta.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
     }
 
     /**
@@ -301,7 +382,7 @@ class CotizacionServiciosController extends Controller
      * @return \Illuminate\Http\Response
      */
 
-    public function store_boleta(Request $request)
+    public function store_boleta(Request $request,$id_moneda)
     {
         $print=$request->get('print');
 
@@ -377,6 +458,11 @@ class CotizacionServiciosController extends Controller
             $comi=0;
         }
 
+        $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+        if(!$cambio){
+            return "error por no hacer el cambio diario";
+        }
+
         //Convertir nombre del cliente a id
         $cliente_nombre=$request->get('cliente');
         $nombre = strstr($cliente_nombre, '-',true);
@@ -392,31 +478,39 @@ class CotizacionServiciosController extends Controller
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        $personal_contador= Cotizacion_Servicios::all()->count();
-        $suma=$personal_contador+1;
-        $cod_comision='COFAC-0000'.$suma;
+        //PARA GENERAR EL CODIGO DE LA COTIZACION
+        
+        $ultima_factura=Cotizacion_Servicios::latest()->first();
+        if($ultima_factura){
+            $code=$ultima_factura->id;
+            $code++;
+        }else{
+            $code=1;
+        }
+        $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="COTSB "."-".$cotizacion_nr;
 
         $cotizacion=new Cotizacion_Servicios;
+        $cotizacion->cod_cotizacion=$cotizacion_numero;
         $cotizacion->cliente_id=$cliente_buscador->id;
-        // $cotizacion->atencion=$request->get('atencion');
+        $cotizacion->moneda_id=$id_moneda;
         $cotizacion->forma_pago_id=$request->get('forma_pago');
-        $cotizacion->validez=$request->get('validez');
-        $cotizacion->moneda_id=$request->get('moneda');
-        $cotizacion->cod_comision=$cod_comision;
+        $cotizacion->estado_aprobar='0';
+        $cotizacion->estado_aprobado='0';
+        // $cotizacion->aprobado_por='0';
         $cotizacion->garantia=$request->get('garantia');
-        $cotizacion->user_id =auth()->user()->id;
-        $cotizacion->observacion=$request->get('observacion');
+        $cotizacion->validez=$request->get('validez');
         $cotizacion->fecha_emision=$request->get('fecha_emision');
         $cotizacion->fecha_vencimiento=$nuevafechas;
+        $cotizacion->cambio=$cambio->paralelo;
+        $cotizacion->observacion=$request->get('observacion');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $cotizacion->comisionista_id= $comisionista_buscador->id;
         }
-        $cotizacion->tipo='boleta';
+        $cotizacion->user_id =auth()->user()->id;
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
-        $cotizacion->estado_aprovar='0';
-        $cotizacion->estado_aprobado='0';
-        // $cotizacion->aprobado_por='0';
+        $cotizacion->tipo='factura';
         $cotizacion->save();
 
         $check = $request->input('descuento_unitario');
@@ -440,7 +534,22 @@ class CotizacionServiciosController extends Controller
 
 
                 $cotizacion_registro->promedio_original=$servicio->precio;
-                $cotizacion_registro->precio=$array;
+
+                //logica para el precio dependiendo de la moneda
+                if($moneda->id == $moneda_registrada){
+                    if ($moneda->tipo == 'nacional') {
+                        $cotizacion_registro->precio=$array;
+                    }else{
+                        $cotizacion_registro->precio=$array;
+                    }
+                }else{
+                    if ($moneda->tipo == 'extranjera') {
+                        $cotizacion_registro->precio=$array;
+                    }else{
+                        $cotizacion_registro->precio=$array;
+                    }
+                }
+
                 $cotizacion_registro->cantidad=$request->get('cantidad')[$i];
 
                 //descuento
