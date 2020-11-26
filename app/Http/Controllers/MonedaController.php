@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Empresa;
 use App\Moneda;
 use App\Pais;
+use App\TipoCambio;
 use Illuminate\Http\Request;
 
 class MonedaController extends Controller
@@ -93,6 +94,11 @@ class MonedaController extends Controller
         $moneda=Moneda::find($id_principal);
         $moneda->principal=0;
         $moneda->save();
+
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
+        $tipo_cambio_delete=TipoCambio::findOrFail($tipo_cambio->id);
+        $tipo_cambio_delete->delete();
+
 
 
     }
