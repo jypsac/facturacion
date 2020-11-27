@@ -103,7 +103,7 @@
 <script type="text/javascript">
   $('#myajax').click(function(){
                                          $.ajax({
-                                            url:'/sunat_cambio',
+                                            url:"{{ url('sunat_cambio') }}",
                                             data:{'name':"luis"},
                                             type:'post',
                                             headers: {

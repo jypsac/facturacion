@@ -239,7 +239,7 @@ Route::group(
 
 	});
 	Auth::routes();
-	Route::post('/sunat_cambio','TipoCambioController@sunat_cambio');
+	Route::post('sunat_cambio','TipoCambioController@sunat_cambio');
 	Route::resource('/tipo_cambio','TipoCambioController')->middleware('auth');
 	Route::get('garantia_guia_ingreso/pdf/{id}' , 'GarantiaGuiaIngresoController@pdf')->name('pdf_ingreso');
 	Route::get('garantia_guia_egreso/pdf/{id}' , 'GarantiaGuiaEgresoController@pdf')->name('pdf_egreso');
