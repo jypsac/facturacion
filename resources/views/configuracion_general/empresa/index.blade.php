@@ -74,6 +74,11 @@
                     <div class="col-sm-4">
                       <input  type="text" class="form-control" name="pagina_web" value="{{$mi_empresa->pagina_web}}">
                     </div>
+                    
+                    <label class="col-sm-2 col-form-label">background inicial:</label>
+                    <div class="col-sm-10" style="padding-bottom: 10px">
+                      <input type="text" name="background" class="form-control" value="{{$mi_empresa->background}}"/>
+                    </div>
                   </div>
                 </div>
               </div>

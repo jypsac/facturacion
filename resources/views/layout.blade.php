@@ -63,7 +63,7 @@
                             </a>
                         </div>
                         <div class="logo-element">
-                            IN+
+                            ---
                         </div>
                     </li>
                     <!-- MENU DESPELEGABLE -->
