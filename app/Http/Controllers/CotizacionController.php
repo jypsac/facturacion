@@ -1078,8 +1078,8 @@ class CotizacionController extends Controller
           $i=1;
           $regla=$cotizacion->tipo;
              $archivo=$name.$regla.$id.".pdf";
-             $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv','array','sub_total','moneda','banco','i','end','igv_p','banco_count'));
-            return $pdf->download('Cotizacion - '.$archivo.'.pdf');
+             $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','array','sub_total','moneda','banco','i','end','igv_p','banco_count'));
+            return $pdf->download('Cotizacion - '.$archivo.'.pdf'); 
 }
     //envio hacia facturar cambiar en caso incluya algo
     public function facturar($id){
