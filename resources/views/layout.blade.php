@@ -49,6 +49,7 @@
 }
 .rounded-circle{width: 120px; height: auto; border:@yield('2', auth()->user()->config->borde_foto) solid @yield('2', auth()->user()->config->color_borde_foto);}
 </style>
+
 <body class="">
     <div id="wrapper">
         <nav class="navbar-default navbar-static-side" role="navigation">
