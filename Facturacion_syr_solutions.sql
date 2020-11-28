@@ -1,0 +1,5125 @@
+-- phpMyAdmin SQL Dump
+-- version 4.8.5
+-- https://www.phpmyadmin.net/
+--
+-- Host: localhost:3306
+-- Generation Time: Nov 28, 2020 at 05:55 PM
+-- Server version: 5.7.24
+-- PHP Version: 7.2.19
+
+SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
+SET AUTOCOMMIT = 0;
+START TRANSACTION;
+SET time_zone = "+00:00";
+
+
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!40101 SET NAMES utf8mb4 */;
+
+--
+-- Database: `facturacion`
+--
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `almacen`
+--
+
+CREATE TABLE `almacen` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abreviatura` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_sunat` int(11) DEFAULT '1',
+  `direccion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cod_fac` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cod_bol` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cod_guia` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado` tinyint(1) DEFAULT '0',
+  `responsable` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `almacen`
+--
+
+INSERT INTO `almacen` (`id`, `nombre`, `abreviatura`, `codigo_sunat`, `direccion`, `descripcion`, `cod_fac`, `cod_bol`, `cod_guia`, `estado`, `responsable`, `created_at`, `updated_at`) VALUES
+(1, 'Almacen 1', 'ALM1', 1, 'Calle Cuzco nr1 Lima-Lima', 'Almacen de impresoras', '0', '0', '0', 0, 1, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(2, 'Almacen 2', 'ALM2', 2, 'Calle Cuzco nr2 Lima-Lima', 'Almacen de monitores', '0', '0', '0', 1, 1, '2019-08-01 12:00:00', '2020-11-28 17:39:19'),
+(3, 'Almacen 3', 'ALM3', 3, 'Calle Cuzco nr3 Lima-Lima', 'Almacen de equipos a usar', '0', '0', '0', 1, 1, '2019-08-01 12:00:00', '2020-11-28 17:39:23');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `banco`
+--
+
+CREATE TABLE `banco` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `tipo_cuenta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numero_dolares` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numero_soles` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `banco`
+--
+
+INSERT INTO `banco` (`id`, `tipo_cuenta`, `numero_dolares`, `numero_soles`, `foto`, `estado`, `created_at`, `updated_at`) VALUES
+(1, 'Cuenta Corriente', '000000000000', '000000000000', 'bcp.png', '0', '2019-10-30 16:36:57', '2019-10-30 16:36:57'),
+(2, 'Cuenta Ahorros', '000000000000', '000000000000', 'interbank.jpg', '0', '2019-10-30 16:36:57', '2019-10-30 16:36:57'),
+(3, 'Cuenta Corriente', '000000000000', '000000000000', 'scotiabank.jpg', '0', '2019-10-30 16:36:57', '2019-10-30 16:36:57'),
+(4, 'Cuenta Ahorros', '000000000000', '000000000000', 'bbva.png', '0', '2019-10-30 16:36:57', '2019-10-30 16:36:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `boleta`
+--
+
+CREATE TABLE `boleta` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `codigo_boleta` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `almacen_id` bigint(20) UNSIGNED NOT NULL,
+  `orden_compra` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `guia_remision` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_cotizador` bigint(20) UNSIGNED DEFAULT NULL,
+  `id_cotizador_servicio` bigint(20) UNSIGNED DEFAULT NULL,
+  `cliente_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `moneda_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `forma_pago_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `fecha_emision` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_vencimiento` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cambio` double(17,2) NOT NULL,
+  `observacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comisionista` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `boleta_registro`
+--
+
+CREATE TABLE `boleta_registro` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `boleta_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `servicio_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `numero_serie` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `producto_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `promedio_original` double(17,2) NOT NULL,
+  `precio` double(17,2) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `descuento` int(11) NOT NULL,
+  `precio_unitario_desc` double(17,2) NOT NULL,
+  `comision` int(11) NOT NULL,
+  `precio_unitario_comi` double(17,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `categorias`
+--
+
+CREATE TABLE `categorias` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `categorias`
+--
+
+INSERT INTO `categorias` (`id`, `codigo`, `descripcion`, `estado`, `created_at`, `updated_at`) VALUES
+(1, '001', 'GARANTIAS', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(2, '002', 'PRODUCTOS', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(3, '003', 'SERVICIOS', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `clientes`
+--
+
+CREATE TABLE `clientes` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `telefono` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `anexo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `celular` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `empresa` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `documento_identificacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numero_documento` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ciudad` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `departamento` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `pais` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tipo_cliente` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cod_postal` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `aniversario` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_registro` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `clientes`
+--
+
+INSERT INTO `clientes` (`id`, `nombre`, `direccion`, `email`, `telefono`, `anexo`, `celular`, `empresa`, `documento_identificacion`, `numero_documento`, `ciudad`, `departamento`, `pais`, `tipo_cliente`, `cod_postal`, `aniversario`, `fecha_registro`, `created_at`, `updated_at`) VALUES
+(12, 'sr soluciones sac', 'EMILIO FERNANDEZ 160 DPTO 1804', 'julioflores@srsc.com', '946201443', NULL, '946201443', NULL, 'ruc', '20545122551', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-01 08:30:43', '2020-01-01 08:30:43'),
+(13, 'Susana baca', 'piura', 'notiene@correo.com', '4236569', NULL, '987789985', NULL, 'DNI', '47878758', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-02 23:12:53', '2020-01-02 23:12:53'),
+(14, 'Kepler Ramirez', 'Av Chota 902 Dpto 702 LIMA', 'zona0protm@gmail.com', '994170533', NULL, '994170533', NULL, 'DNI', '00000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-03 03:19:39', '2020-01-03 03:19:39'),
+(15, 'Word Union Cord S.R.L', 'Jacinto Lara 450 Dpto. 204 San Isidro', 'bramdon@gmail.com', '.', NULL, '960995995', NULL, 'DNI', '00', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-04 03:44:40', '2020-01-04 03:44:40'),
+(16, 'JHON ÑUFLO HEREDIA', 'SURQUILLO', 'nuflo1733@gmail.com', '0', NULL, '955174461', NULL, 'DNI', '45706311', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-04 22:20:16', '2020-01-04 22:20:16'),
+(17, 'GUADALUPE BETZY ZAVALA LAURO', 'LIMA', 'guadalupe95_28@hotmail.com', '940213152', NULL, '940213152', NULL, 'DNI', '77020430', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-06 23:20:32', '2020-01-06 23:20:32'),
+(18, 'Cristian Ortiz', 'Av Gacilazo de la Vega Cercado de Lima Lima', 'coordinador.migracioneslima@cruzrojaorg.pe', '951714373', NULL, '951714373', NULL, 'DNI', '0', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-07 02:18:04', '2020-01-07 02:18:04'),
+(19, 'CARLOS BERROCAL SOTO', 'LIMA', 'carlosalberto.2175berrocal@gmail.com', '999949889', NULL, '999949889', NULL, 'DNI', '10255320', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-07 03:41:03', '2020-01-07 03:41:03'),
+(20, 'Texpima S.A.C.', 'Av. Marical Eloy Ureta 299 Urb. El pino San Luis', 'hamlet.gutierrez@texpima.com', '986560886', NULL, '986560886', NULL, 'DNI', '-', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-08 00:54:53', '2020-01-08 00:54:53'),
+(21, 'Milagros Almeyda Hurtado', 'Mz F Lot 20 Mateo Cumacahua Santiago de Surco', 'milagros_almeyda_h_26@hotmail.com', '923276503', NULL, '923276503', NULL, 'DNI', '42980363', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-08 06:02:12', '2020-01-08 06:02:12'),
+(22, 'VALENTINO GROUP SAC', 'JR. HUALLAGA NRO. 303 - LIMA', 'yasbaly@gmail.com', '989452864', NULL, '989452864', NULL, 'DNI', '20545382513', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-08 06:20:04', '2020-01-08 06:20:04'),
+(23, 'ASOCIACION CIVIL EDUCATIVA SACO OLIVEROS', 'JR. MANUEL GOMEZ NRO. 245 DPTO. 4 LINCE', 'gersontk20@gmail.com', '949243821', NULL, '949243821', NULL, 'DNI', '20432861539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-09 00:09:08', '2020-01-09 00:09:08'),
+(24, 'LINEA GRAFICA C&A EIRL', 'JR. HUARAZ NRO. 1712 - BREÑA', 'lineagrafica@contabilidad.com', '994456400', NULL, '994456400', NULL, 'DNI', '20551006833', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-09 04:12:49', '2020-01-09 04:12:49'),
+(25, 'Jose Adolfo Valenzuela', 'COOP. DE VIVIENDAS RAMIRO PRIALE MZ,. Q LOTE 5', 'jadolfovg@hotmail.com', '958790145', NULL, '958790145', NULL, 'DNI', '40898216', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-09 04:24:19', '2020-01-09 04:24:19'),
+(26, 'K&L DIGITAL VIDEO SAC', 'AV. JOSE GALVEZ NRO. 250 - LIMA', 'claudiodisck@hotmail.com', '959774530', NULL, '959774530', NULL, 'DNI', '20556311405', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-11 00:45:08', '2020-01-11 00:45:08'),
+(27, 'MIGUEL ANGEL PASION AVENDAÑO', 'LIMA', 'lineaebriel@hotmail.com', '994152582', NULL, '994152582', NULL, 'DNI', '09663460', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-12 01:07:28', '2020-01-12 01:07:28'),
+(28, 'LINEA HOME CENTER', 'LIMA', 'wilbert_wps@hotmail.com', '994170533', NULL, '994170533', NULL, 'DNI', '20604149518', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-14 02:35:11', '2020-01-14 02:35:11'),
+(29, 'ELINSON VALLEJOS HEREDIA', 'SAN JUAN DE LIURIGACHO', 'royyaguno495@gmail.com', '981043385', NULL, '981043385', NULL, 'DNI', '99906968', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-14 22:33:52', '2020-01-14 22:33:52'),
+(30, 'NANCY GAVELAO', 'LIMA', 'fernando_par@hotmail.com', '991402070', NULL, '991402070', NULL, 'DNI', '08557818', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-14 23:53:37', '2020-01-14 23:53:37'),
+(31, 'SERVICIOS GENERALES FAMTRU SAC', 'MZ. T-1 LT. 7 LA ALBORADA - COMAS', 'jperez@serviestiba.pe', '947284351', NULL, '947284351', NULL, 'DNI', '20537259451', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-15 23:34:12', '2020-01-15 23:34:12'),
+(32, 'Transervic Acsac', 'Urbanización Pradera de Pariachi Mz J Lote 18 3 E Ate', 'giselaalaniacontreras@gmail.com', '950450452', NULL, '950450452', NULL, 'DNI', '47024874', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-16 03:05:56', '2020-01-16 03:05:56'),
+(33, 'COUNTRY CLUB DE VILLA', 'AV. HERNANDO DE LAVALLE URB. COUNTRY CLUB DE VILLA - CHORRILLOS', 'soporte@eac.com.pe', '992331493', NULL, '992331493', NULL, 'DNI', '20148020028', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-16 06:16:56', '2020-01-16 06:16:56'),
+(34, 'PODER JUDICIAL', 'AV. NICOLAS DE PIEROLA NRO. 745 - LIMA', 'erodriguezre@pj.gob.pe', '989954138', NULL, '989954138', NULL, 'DNI', '20159981216', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-17 00:15:20', '2020-01-17 00:15:20'),
+(35, 'JOHN CONTRERAS MORI', 'MZ. G LT. 1 AA.HH EL NAZARENO - SAN JUAN DE MIRAFLORES', 'john_soporte@hotmail.com', '991233108', NULL, '991233108', NULL, 'DNI', '10436504638', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-17 03:18:03', '2020-01-17 03:18:03'),
+(36, 'CORPORACION BOTICAS PERU SAC', 'JR. BALTAZAR GRADOS NRO. 794 - LIMA', 'garantiaslima@supertec.com.pe', '998148707', NULL, '998148707', NULL, 'DNI', '20515346113', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-17 06:36:26', '2020-01-17 06:36:26'),
+(37, 'ANABEL ROCIO SUAREZ FERNANDEZ', 'LIMA', 'no.tiene@correo.com', '977833357', NULL, '977833357', NULL, 'DNI', '21132474', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-17 23:55:00', '2020-01-17 23:55:00'),
+(44, 'GRUPO RS PERU SAC', 'VIA PARCELA 10763 CP GLORIA ALCANFORES - ATE', 'gruposantiagosac@gmail.com', '916475150', NULL, '916475150', NULL, 'ruc', '20563197511', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-19 00:29:31', '2020-01-19 00:29:31'),
+(46, 'SILVIA OCHOA LADERA', 'CUSCO', 'abelluis-10@hotmail.com', '986996643', NULL, '986996643', NULL, 'DNI', '10200045438', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-20 22:57:57', '2020-01-20 22:57:57'),
+(47, 'JESUS VELEZ SARMIENTO', 'JR. PEDRO DONOFRIO NRO. 319 - BREÑA', 'tatovel@aolock.com', '949278789', NULL, '949278789', NULL, 'DNI', '42720767', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-21 04:24:51', '2020-01-21 04:24:51'),
+(48, 'INVERSIONES UCHASARA & COARITA SAC', 'LIMA', 'j.palomino@supertec.com.pe', '4233967', NULL, '4233967', NULL, 'DNI', '20600980646', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-21 23:26:40', '2020-01-21 23:26:40'),
+(49, 'MBC CONSULTORES EMPRESARIALES SAC', 'AV. TUPAC AMARU NRO. 3747 - COMAS', 'marlenychontay@gmail.com', '992001014', NULL, '992001014', NULL, 'DNI', '20518925009', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-22 04:27:19', '2020-01-22 04:27:19'),
+(50, 'BANCES MORENO RONAL', 'CALLE. RIMAC NRO. 895 URB. PERU - SMP', 'ronalbances@hotmail.com', '994133341', NULL, '994133341', NULL, 'DNI', '10425696802', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-22 04:45:39', '2020-01-22 04:45:39'),
+(51, 'Access Net System SAC', 'LIMA', 'jmvaram@gmail.com', '978216816', NULL, '978216816', NULL, 'DNI', '20556412261', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-23 02:36:40', '2020-01-23 02:36:40'),
+(52, 'SUPERREP SAC', 'LIMA', 'jfernandez@superrep.nl', '924374381', NULL, '924374381', NULL, 'DNI', '20602323219', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-23 03:56:16', '2020-01-23 03:56:16'),
+(53, 'MILAGRO NAVIO ROMAN', 'VENTANILLA', 'gladys_navio@hotmail.com', '977706223', NULL, '977706223', NULL, 'DNI', '09475700', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-23 05:34:59', '2020-01-23 05:34:59'),
+(54, 'Graciela Cabrera Serrano', 'Lurin', 'cabreraserranograciela@gmail.com', '953347652', NULL, '953347652', NULL, 'DNI', '09522862', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-25 02:33:24', '2020-01-25 02:33:24'),
+(55, 'NEWREST PERU SAC', 'CALLE. A MZ. B LT. 4-B URB. BOCANEGRA - CALLAO', 'achoquez@jphys.com', '997393654', NULL, '997393654', NULL, 'DNI', '20381235051', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-25 03:41:44', '2020-01-25 03:41:44'),
+(56, 'Orbes Agricolas SAC', 'Santa Anita', 'jhoselinegfl@gmail.com', '928076088', NULL, '928076088', NULL, 'DNI', '72260973', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-25 04:41:17', '2020-01-25 04:41:17'),
+(57, 'DISTRIBUIDORA MULTIPERNOS SAC', 'AV. NICOLAS DUEÑAS NRO. 534 - LIMA', 'mutipernosac@hotmail.com', '998214444', NULL, '998214444', NULL, 'DNI', '20551058124', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-27 22:54:17', '2020-01-27 22:54:17'),
+(58, 'YURI MANUEL MONTENEGRO BARRANTES', 'LIMA', 'yuripontenegro@hotmail.com', '980318980', NULL, '980318980', NULL, 'DNI', '16680911', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-28 00:02:06', '2020-01-28 00:02:06'),
+(59, 'PABLO BENEDICTO PEÑA FLORES', 'AV. BOLIVIA NRO. 148 INT. 2025 - LIMA', 'pablo15pe@hotmail.com', '994127538', NULL, '994127538', NULL, 'DNI', '07416848', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-28 02:27:35', '2020-01-28 02:27:35'),
+(60, 'GUIDO MARCOS VILLAFUERTE LEON', 'LIMA', 'guilla.leon@gmail.com', '997370378', NULL, '997370378', NULL, 'DNI', '46880550', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-28 03:03:34', '2020-01-28 03:03:34'),
+(61, 'Elmer Altamirano Coronado', 'Independencia', 'elmeraltcor_13@hotmail.com', '934593780', NULL, '934593780', NULL, 'DNI', '40964208', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-29 04:52:26', '2020-01-29 04:52:26'),
+(62, 'Joana Gastelo', 'Pasaje Domingo ayarza Mz A Lote 5 El Agustino', 'yovanita_1722@hotmail.com', '940706510', NULL, '940706510', NULL, 'DNI', '44634827', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-29 06:36:11', '2020-01-29 06:36:11'),
+(63, 'JESUS MARTIN ALVAREZ HURTADO', 'SAN BORJA', 'jesusmartinah18@gmail.com', '944981533', NULL, '944981533', NULL, 'DNI', '41458189', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-30 01:03:47', '2020-01-30 01:03:47'),
+(64, 'DANIEL JESUS VEGA AVENDAÑO', 'AV. PASEO DE LA REPUBLICA NRO. 291 - LIMA', 'djva1707@hotmail.com', '959969810', NULL, '959969810', NULL, 'DNI', '25857753', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-01-30 23:10:42', '2020-01-30 23:10:42'),
+(65, 'LUCIA OTILIA CHINO CCANSAYA', 'SAN JUAN DELURIGANCHO', 'lucia.o.chi.cc@gmail.com', '952914242', NULL, '952914242', NULL, 'DNI', '44102449', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-01 00:36:15', '2020-02-01 00:36:15'),
+(66, 'JOAQUIN GONZALEZ PEREZ', 'SURQUILLO', 'jgp@gmail.com', '998745612', NULL, '998745612', NULL, 'DNI', '12345678', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-02 00:01:46', '2020-02-02 00:01:46'),
+(67, 'JUAN JOSE JIMENEZ SANTOS', 'OLIVOS', 'Juanjose20@gmail.com', '978456123', NULL, '978456123', NULL, 'DNI', '12456783', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-02 00:12:07', '2020-02-02 00:12:07'),
+(68, 'Carlos Ismael Coello Chang', 'AV.JUAN PABLO FERNANDINI 846 -BREÑA', 'carloscoellochang@gmail.com', '993475602', NULL, '993475602', NULL, 'DNI', '06784360', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-04 00:27:58', '2020-02-04 00:27:58'),
+(69, 'LAVANDERIA INDUSTRIAL LANDEO S.A.C', 'AV. SAN JUAN MZ .A LT 16 URB SANTA MARTHA', 'sistemas@lavanderialandeo.com', '912262671', NULL, '912262671', NULL, 'ruc', '20348133889', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-04 05:47:40', '2020-02-04 05:47:40'),
+(70, 'SR.JUAN DIAZ', 'JR. HUARAZ N1841 URB.AZCONA -BREÑA -LIMA', 'logistica@fptecnologi.com', '955096626', NULL, '955096626', NULL, 'ruc', '20536630954', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-04 23:09:23', '2020-02-04 23:09:23'),
+(71, 'ALL PRINT SHOP SOCIEDAD ANONIMA CERRADA', 'CAL.X MZA. H2 LOTE. 28 URB. SANTO DOMINGO (', 'ventas.allprintshop@gmail.com', '939433948', NULL, '939433948', NULL, 'ruc', '20516999048', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-04 23:25:15', '2020-02-04 23:25:15'),
+(72, 'R & R QUIMICOS S.A.C', 'JR. SANTA MONICA NR.669', 'JACKJAMESU@GMAIL.COM', '989208050', NULL, '989208050', NULL, 'ruc', '20510439954', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-05 00:39:48', '2020-02-05 00:39:48'),
+(73, 'JESUS ALVARADO LEON', 'URB. PARAISO MZ A. LT. - CARABAYLLO', 'jial_ivan@hotmail.com.com', '953965617', NULL, '953965617', NULL, 'DNI', '73743744', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-05 01:01:00', '2020-02-05 01:01:00'),
+(74, 'PETRO REAL GAS E.I.R.L', 'SANTA EULALIA - SANTA EULALIA HUAROCHIRI', 'gchavez@corgassac.com', '937504719', NULL, '937504719', NULL, 'ruc', '20519139651', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-05 03:29:59', '2020-02-05 03:29:59'),
+(75, 'CARLOS VASQUEZ JURADO', 'AV. CARLOS IZAGUIRRE NRO. 1427 - SAN MARTIN DE PORRES', 'carlosfvasquezj@hotmail.com', '950693430', NULL, '950693430', NULL, 'DNI', '333333333', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-05 07:51:30', '2020-02-05 07:51:30'),
+(76, 'Policía Nacional De Peru', 'Ate', 'herlespizarro@hotmail.com', '993508579', NULL, '993508579', NULL, 'DNI', '000026', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-06 03:33:02', '2020-02-06 03:33:02'),
+(77, 'MECANO COLOR SAC', 'CALLE. LAS MIMOSAS MZ. G1 LT. 27 LURIGACHO', 'carlos.venegasc@hotmail.com', '979710854', NULL, '979710854', NULL, 'DNI', '20511759481', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-06 04:19:17', '2020-02-06 04:19:17'),
+(78, 'MAXLINER PERU E.I.R.L', 'Calle . los corales 142 La Victoria', 'jcalderon@maxlinerperu.com', '946431429', NULL, '946431429', NULL, 'DNI', '07457477', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-06 04:32:52', '2020-02-06 04:32:52'),
+(79, 'Store Moda Y Estilo SAC', 'Rodolfo de Campo 415 La victoria', 'diegocrespoadm@gmail.com', '917335459', NULL, '917335459', NULL, 'DNI', '777777777', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-06 06:47:32', '2020-02-06 06:47:32'),
+(80, 'GRUPO CONSTRUIR SAC', 'AV. 9 DE SETIEMBRE MZ. A LT. M8 - JUNIN', 'gerencia@grupo-construir.com', '952170318', NULL, '952170318', NULL, 'DNI', '20600287827', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-07 03:12:52', '2020-02-07 03:12:52'),
+(81, 'RAUL CAILLAHUA CASAFRANCA', 'LIMA', 'autofocus2000@gmail.com', '960162966', NULL, '960162966', NULL, 'DNI', '40308981', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-07 06:25:09', '2020-02-07 06:25:09'),
+(82, 'CONCESIONES  Y ENTRENAMIENTO MAGDALENA SAC', 'MAGDALENA DEL MAR', 'cyemagdalena@hotmail.com', '928380927', NULL, '928380927', NULL, 'DNI', '20268759515', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-08 05:26:09', '2020-02-08 05:26:09'),
+(83, 'AB TECHNOLOGY SAC', 'CALLE. MARCELA CASTRO NRO. 634 - SAN LUIS', 'Notiene@correo.com.pe', '913028618', NULL, '913028618', NULL, 'DNI', '20506491216', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-08 05:42:48', '2020-02-08 05:42:48'),
+(84, 'LM INVERSIONES', 'AV. INCA GARCILASO DE LA VEGA NRO. 1261 INT. 208 - LIMA', 'luismiguel-0812@hotmail.com', '941729389', NULL, '941729389', NULL, 'DNI', '10756804940', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-11 03:58:47', '2020-02-11 03:58:47'),
+(85, 'KEVIN JARA NOEL', 'CIRO ALEGRIA NRO. 450 - PUEBLO LIBRE', 'kevlin25@hotmail.com', '950804080', NULL, '950804080', NULL, 'DNI', '47532562', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-11 06:03:01', '2020-02-11 06:03:01'),
+(86, 'F.P TECNOLOGIC & SYSTEM  S.A.C', 'Jr Huaraz 1841 Breña', 'ventas4@fptecnologi.com', '910378937', NULL, '910378937', NULL, 'DNI', '........................', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-11 23:25:40', '2020-02-11 23:25:40'),
+(87, 'UNIVERSIDAD MARIA AUXILIADORA', 'AV. CANTO BELLO NRO. 431 - SJL', 'carranzave@gmail.com', '990695248', NULL, '990695248', NULL, 'DNI', '20550807123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-12 00:12:01', '2020-02-12 00:12:01'),
+(88, 'PATRICIA DOMINGA PINTO DAVILA', 'LINCE', 'paty2903@hotmail.com', '988757527', NULL, '988757527', NULL, 'DNI', '15857059', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-12 04:39:35', '2020-02-12 04:39:35'),
+(89, 'Consorcio el Norteño SAC', 'Km 31.7 Mz D Lote 4 y 5 Av Casas Huertas Las Casuarinas Puente De Piedra', 'consor.norteno17@gmail.com', '986821670', NULL, '986821670', NULL, 'DNI', '70286729', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-13 00:09:15', '2020-02-13 00:09:15'),
+(90, 'PEDRO CESAR LAZO MONTEJO', 'SANTIAGO DE SURCO', 'wilian.cabana@fuanmena.com', '991181512', NULL, '991181512', NULL, 'DNI', '1009172205', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-13 03:29:30', '2020-02-13 03:29:30'),
+(91, 'Edgar Lasteros Quezada', 'La Perla Callao', 'kalebb2013@gmail.com', '931981771', NULL, '931981771', NULL, 'DNI', '43672080', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-13 05:45:36', '2020-02-13 05:45:36'),
+(92, 'JORGE MENDOZA', 'SAN MIGUEL', 'jmendozamatos@gmail.com', '985776902', NULL, '985776902', NULL, 'DNI', '41656531', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-13 23:42:02', '2020-02-13 23:42:02'),
+(93, 'CERTIFICACIONES Y CALIDAD SAC', 'AV. SUCRE NRO. 1361 - PUEBLO LIBRE', 'wmilla@certifical.com.pe', '993475645', NULL, '993475645', NULL, 'DNI', '20516620324', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-13 23:46:20', '2020-02-13 23:46:20'),
+(94, 'Maura Leonor Suarez', 'Carabayllo', 'maura_suarez@live.com', '960634481', NULL, '960634481', NULL, 'DNI', '09171102', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-16 00:50:06', '2020-02-16 00:50:06'),
+(95, 'Continental S.A.C', 'Jr. Huanta 741 Cercado de lima', 'pgavilan@continentalperu.com', '940305993', NULL, '940305993', NULL, 'DNI', '20100038146', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-18 03:45:12', '2020-02-18 03:45:12'),
+(96, 'JLV COMPUTER EIRL', 'JR. CAMANA NRO. 1186 INT. 43 - LIMA', 'luispoljlv@gmail.com', '984305520', NULL, '984305520', NULL, 'DNI', '20601582130', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-18 03:56:39', '2020-02-18 03:56:39'),
+(97, 'VIKINGO BEER EIRL', 'JR. MIRABLES MZ. L LT. 20 - SAN JUAN DE LURIGANCHO', 'proyectos.vikingo@gmail.com', '989013780', NULL, '989013780', NULL, 'DNI', '20600070895', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-18 23:57:50', '2020-02-18 23:57:50'),
+(98, 'RODRIGO ENRIQUE OSIRIS GARCIA RENGIFO', 'OVALO ZEVALLOS S/N - SAN MARTIN DE PORRES', 'agongora86@gmail.com', '938457766', NULL, '938457766', NULL, 'DNI', '10715816526', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-19 01:03:28', '2020-02-19 01:03:28'),
+(99, 'MIRIAM MENDOZA SUAREZ', 'SURCO', 'miriam.mendoza24@outlook.com', '955994688', NULL, '955994688', NULL, 'DNI', '16428100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-19 22:49:38', '2020-02-19 22:49:38'),
+(100, 'TECOITA NOEMI IBARRA ROSARIO', 'ANCON', 'fleon@yobelsam.biz', '948579739', NULL, '948579739', NULL, 'DNI', '45579993', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-20 02:45:34', '2020-02-20 02:45:34'),
+(101, 'ERICK PONCE SANCHEZ', 'SAN MARTIN DE PORRES', 'epons@outlook.com', '927526326', NULL, '927526326', NULL, 'DNI', '09950902', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-20 05:32:43', '2020-02-20 05:32:43'),
+(102, 'IMPORT. DE SEGURIDAD FIRE EQUIPMENT EIRL', 'AV. BOLIVIA NRO. 734 - BREÑA', 'no-tiene@correo.com', '931182714', NULL, '931182714', NULL, 'DNI', '20566254531', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-20 23:54:33', '2020-02-20 23:54:33'),
+(103, 'Hospital de Emergencias de Villa El Salvador', 'Av. 200 Millas S/N Villa El Salvador', 'juan.contreras@heves.gob.pe', '933434808', NULL, '933434808', NULL, 'DNI', '__________', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-21 04:01:44', '2020-02-21 04:01:44'),
+(104, 'IMPORTACIONES IMPACTO SAC', 'AV. BOLIVIA NRO. 148 INT. 553 - LIMA', 'julitomendozamondragon@gmail.com', '924122141', NULL, '924122141', NULL, 'DNI', '20543886671', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-21 05:26:10', '2020-02-21 05:26:10'),
+(105, 'TERRA PLASTIC SAC', 'JR. ANDAHUAYLAS NRO. 1009 - LIMA', 'miguelyi@yahoo.com', '999048491', NULL, '999048491', NULL, 'DNI', '/', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-21 22:40:43', '2020-02-21 22:40:43'),
+(106, 'MARTIN BALAREZO YANGUA', 'SMP', 'mbalarezo363@gmail.com', '977473236', NULL, '977473236', NULL, 'DNI', '47517673', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-21 22:49:01', '2020-02-21 22:49:01'),
+(107, 'CALEB CACHAY ACUÑA', 'LOS OLIVOS.', 'calebcachay@teologia.edu.pe', '989233219', NULL, '989233219', NULL, 'DNI', '44635080', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-21 22:53:30', '2020-02-21 22:53:30'),
+(108, 'APSS SOLUCIONES TECNOLOGICAS SAC', 'BREÑA', 'upgradesoporte@hotmail.com', '998175030', NULL, '998175030', NULL, 'DNI', '20603466609', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-22 06:02:24', '2020-02-22 06:02:24'),
+(109, 'ECOFERTILIZING SAC', 'JR. ANGARAES NRO. 562 - LIMA', 'marketing@ecofertilizing.com', '913009056', NULL, '913009056', NULL, 'DNI', '20538358216', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-22 23:48:16', '2020-02-22 23:48:16'),
+(110, 'MARISOL FLORINDA PURIS MACHACUAY', 'ATE', 'p_13_07@hotmail.com', '952203842', NULL, '952203842', NULL, 'DNI', '10208941131', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-25 04:39:04', '2020-02-25 04:39:04'),
+(111, 'VP SOLUCIONES INFORMATICAS SAC', 'JR. CAMANA NRO. 1011 INT. 163 - LIMA', 'ventas@vpsi.com.pe', '987934084', NULL, '987934084', NULL, 'DNI', '20523547730', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-25 23:12:43', '2020-02-25 23:12:43'),
+(112, 'MARIA LUZ NAUTO DIAZ', 'CHINCHEROS - APURIMAC', 'aneltoledo26@gmail.com', '978949229', NULL, '978949229', NULL, 'DNI', '31475386', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-26 05:46:49', '2020-02-26 05:46:49'),
+(113, 'Perforaciones Horizontales', 'Ate', 'juan.palomino@redscoperu.com', '990417986', NULL, '990417986', NULL, 'DNI', '*', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-27 00:24:42', '2020-02-27 00:24:42'),
+(114, 'ARNALDO ENRIQUE FLORES SANCHEZ', 'LIMA', 'garantiaslima@supertec.com.p', '998148707', NULL, '998148707', NULL, 'DNI', '10074468531', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-27 03:31:18', '2020-02-27 03:31:18'),
+(115, 'Institución Educativa 1098 Jose Abelardo Quiñones', 'Nosiglia 147 Breña', 'naty_30402@hotmail.com', '992610694', NULL, '992610694', NULL, 'DNI', '**', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-27 04:06:11', '2020-02-27 04:06:11'),
+(116, 'MY PRINT EIRL', 'CALLE. EMILIO ALTHAUS NRO. 791 - LINCE', 'mgarcia@myprintperu.com', '982068496', NULL, '982068496982068496', NULL, 'DNI', '20517625681', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-27 05:51:23', '2020-02-27 05:51:23'),
+(117, 'JACKELINE VARGAS ARIAS', 'OXAPAMPA', 'no.tiene1@correo.com', '922467867', NULL, '922467867', NULL, 'DNI', '04303539', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-28 03:15:10', '2020-02-28 03:15:10'),
+(118, 'PENTATECH CONSTRUCCION SAC', 'MIRAFLORES', 'walter.mamani@pentatechsac.com', '987926083', NULL, '987926083', NULL, 'DNI', '20553327971', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-28 03:35:51', '2020-02-28 03:35:51'),
+(119, 'BRYAN AQUINO CONDE', 'SAN_JUAN DE LURIGANCHO', 'juanaquino.1297@gmail.com', '990104815', NULL, '990104815', NULL, 'DNI', '76411104', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-28 03:53:54', '2020-02-28 03:53:54'),
+(120, 'COLOR DIGITAL PACIFICO EIRL', 'CALLE. JORGE CHAVEZ NRO. 732 BREÑA', 'javier_18_2008@hotmail.com', '988357779', NULL, '988357779', NULL, 'DNI', '20536304569', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-28 22:41:31', '2020-02-28 22:41:31'),
+(121, 'SERVICIOS DE COPIAS BERMUDEZ EIRL', 'CALLE. PABLO BERMUDEZ NRO. 177 - LIMA', 'malih_26@gmail.com', '946552222', NULL, '946552222', NULL, 'DNI', '20553131724', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-28 23:09:09', '2020-02-28 23:09:09'),
+(122, 'ARACI ANTO POMA', 'JR. LUNA PIZARRO NRO. 499 - LA VICTORIA', 'no*tiene@correo.com', '960126109', NULL, '960126109', NULL, 'DNI', '46763133', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-02-29 00:49:34', '2020-02-29 00:49:34'),
+(123, 'MARIA INCA CALLUPE', 'MZ. L4 LT. 1+', 'mariainca120@gmail.com', '940925926', NULL, '940925926', NULL, 'DNI', '40726986', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-01 01:09:54', '2020-03-01 01:09:54'),
+(124, 'BERTHA BERMUDEZ MORI', 'JR. JOSE DIAZ NRO. 384 - SANTA BEATRIZ', 'ber_tha52@hotmail.com', '969604688', NULL, '969604688', NULL, 'DNI', '***', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-02 23:59:03', '2020-03-02 23:59:03'),
+(125, 'AGROPUNTO SAC', 'AV. INDUSTRIAL NRO. 491 - LIMA', 'wmendoza@aris.com.pe', '948168245', NULL, '948168245', NULL, 'DNI', '****', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-03 01:06:32', '2020-03-03 01:06:32'),
+(126, 'RONALD DAVID BERNA DOMINGUEZ', 'SAN JUAN D LURIGANCHO', 'jhobed_111@hotmail.com', '985157407', NULL, '985157407', NULL, 'DNI', '46795662', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-03 02:21:07', '2020-03-03 02:21:07'),
+(127, 'CLINICAL TECH EIRL', 'JR. RECUAY NRO. 502 - BREÑA', 'martinmunoz@yahoo.com', '948565793', NULL, '948565793', NULL, 'DNI', '20515256556', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-03 02:45:53', '2020-03-03 02:45:53'),
+(128, 'BRUVATC SRL', 'CALLE. PEDRO CIEZA DE LEON NRO. 482 - ATE', 'bruvatc@gmail.com', '975389696', NULL, '975389696', NULL, 'DNI', '20495956629', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-03 03:10:43', '2020-03-03 03:10:43'),
+(129, 'TRASPORTES JOELITO SAC', 'CALLE. RIO UCAYALI NRO. 381 - LA VICTORIA', 'vilmapg66@hotmail.com', '999186832', NULL, '999186832', NULL, 'DNI', '20602958788', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-04 03:39:39', '2020-03-04 03:39:39'),
+(130, 'Isabel Oliva Morales', 'Bella Vista Callao', 'pili101102@outlook.com', '953732892', NULL, '953732892', NULL, 'DNI', '25791814', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-04 03:57:41', '2020-03-04 03:57:41'),
+(131, 'GABRIEL JURUPE ALATA', 'AV.BUENOS AIRES DE VILLA MZ. 53 LT. 16 - CHORRILLOS', 'gjurupe@yahoo.es', '924948796', NULL, '924948796', NULL, 'DNI', '09870467', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-04 05:16:11', '2020-03-04 05:16:11'),
+(134, 'Roció Rodríguez Arias', 'Mala Cañete', 'tallerpcperu@hotmail.com', '991462548', NULL, '991462548', NULL, 'DNI', '40224920', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-06 06:32:20', '2020-03-06 06:32:20'),
+(135, 'JORGE ALBERTO VASQUEZ NUÑEZ', 'BLOCK 58 DPTO. 504 - SURCO', 'jorvasnu@gmail.com', '983458780', NULL, '983458780', NULL, 'DNI', '10405845836', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-06 23:04:32', '2020-03-06 23:04:32'),
+(136, 'ANALI PAMELA VALERIO MACURI', 'MZ. A LT. 6 SANTA MARIA - SJL', 'anelivaleri2018@gmail.com', '923555361', NULL, '923555361', NULL, 'DNI', '48445472', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-07 23:36:28', '2020-03-07 23:36:28'),
+(137, 'GRUPO METEL & A SAC', 'JR. HUAROCHIRI NRO. 550 - LIMA', 'ventas@metelperu.com.pe', '998243490', NULL, '998243490', NULL, 'DNI', '20604741085', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-07 23:40:23', '2020-03-07 23:40:23'),
+(138, 'MARCO CALDERON ORE', 'AV. JOSE MARIA ARGUEDAS NRO. 357 - VILLA MARIA DEL TRIUNFO', 'marcocalderonore@gmail.com', '949161438', NULL, '949161438', NULL, 'DNI', '10705835', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-09 22:24:34', '2020-03-09 22:24:34'),
+(139, 'jorge luna', 'SAN JUAN DE LURIGANCHO', 'byronmallma@hotmail.com.pe', '987456321', NULL, '987456321', NULL, 'DNI', '555558888', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-10 03:21:03', '2020-03-10 03:21:03'),
+(140, 'jose ore', 'SAN JUAN DE LURIGANCHO', 'byronmallma@hotmail.es', '74125896', NULL, '74125896', NULL, 'DNI', '88822254', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-10 03:22:44', '2020-03-10 03:22:44'),
+(141, 'MILLER MINAYA', 'SAN JUAN DE LURIGANCHO', 'zerosfdk990@gmail.com', '993467148', NULL, '993467148', NULL, 'DNI', '73024485', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-10 03:34:27', '2020-03-10 03:34:27'),
+(142, 'lady ramos', 'SAN JUAN DE LURIGANCHO', 'ladyr@gmail.com', '987321495', NULL, '987321495', NULL, 'DNI', '78785412', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-10 03:36:51', '2020-03-10 03:36:51'),
+(143, 'OMAR LOPEZ GUERRERO', 'AV. ABANCAY NRO. 989 - LIMA', 'lopezguerreroerickomar@gmail.com', '961373205', NULL, '961373205', NULL, 'DNI', '73498513', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-10 06:24:52', '2020-03-10 06:24:52'),
+(144, 'SAN CRISTOBAL LIBROS SAC', 'JR. CAMANA NRO. 1039 - LIMA', 'dreyna.o@outlook.es', '9130001732', NULL, '9130001732', NULL, 'DNI', '******', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 03:48:23', '2020-03-11 03:48:23'),
+(145, 'FRESOMAC EIRL', 'JR. JOSE DE LA MAR MZ. H LT. 3 - HUACHIPA', 'tic@fresomac.com', '948891050', NULL, '948891050', NULL, 'DNI', '20601149631', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-11 05:31:31', '2020-03-11 05:31:31'),
+(146, 'WALTER CASAVILCA DE LA CRUZ', 'HUAYCAN', 'walter_casavilca@hotmail.com', '953591956', NULL, '953591956', NULL, 'DNI', '45610589', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-12 04:26:17', '2020-03-12 04:26:17'),
+(147, 'VALOR AGREGADO SAC', 'CALLE. C MELLET MZ. G LT. 28 DPTO. 401 - SURCO', 'valoragregadosac@hotmail.com', '998713522', NULL, '998713522', NULL, 'DNI', '20517304299', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-12 06:35:30', '2020-03-12 06:35:30'),
+(148, 'CAPITAL HUMANO Y SOCIAL ALTERNATIVO', 'CALLE. ALFREDO SALAZAR NRO. 225 - MIRAFLORES', 'chsalternativo@chsalternativo.org', '991240577', NULL, '991240577', NULL, 'DNI', '20509528510', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-14 04:15:48', '2020-03-14 04:15:48'),
+(150, 'CORPORACION VEGA SAC', 'JR. BELAUNDE OESTE NRO. 198 URB. HUAQUILLAY - COMAS', 'j.andresanval@gmail.com', '944956466', NULL, '944956466', NULL, 'DNI', '20502257987', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-14 05:33:48', '2020-03-14 05:33:48'),
+(151, 'PC VAL EIRL', 'AV. CARLOS IZAGUIRRE NRO. 200 - INDEPENDENCIA', 'jgarantia@impacto.com.pe', '936879448', NULL, '936879448', NULL, 'DNI', '20554825789', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-03-14 23:52:32', '2020-03-14 23:52:32'),
+(152, 'CARLOS SAAVEDRA', 'AV. BOLIVIA NRO. 180 INT. 220 - LIMA', 'carlosbenito949@gmail.com', '963676939', NULL, '963676939', NULL, 'DNI', '41807074', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-06 23:00:54', '2020-07-06 23:00:54'),
+(153, 'REYES GONZALES LIDIA JUANA', 'Calle. 30 de Agosto Mz. C Lt. 18 - Ate', 'lidia_reyes24@hotmail.com', '975072488', NULL, '975072488', NULL, 'DNI', '10107027225', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-10 02:23:21', '2020-07-10 02:23:21'),
+(154, 'DISTRIBUIDORA VIPASA SA', 'Av. Garcilazo de la Vega Nro. 1261 - Lima', 'magno.pch@gmail.com', '948906395', NULL, '948906395', NULL, 'DNI', '20256928966', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-10 03:35:28', '2020-07-10 03:35:28'),
+(155, 'Lucy Margot Conde Torres', 'El Agustino', 'lucyfer.conde666@gmail.com', '987422311', NULL, '987422311', NULL, 'DNI', '000000000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-10 06:44:06', '2020-07-10 06:44:06'),
+(156, 'SOCIEDAD ANDEAN VALORES PERU SA', 'Calle. San Lorenzo Nro. 250 - Pueblo Libre', 'betoss.separ@gmail.com', '999255423', NULL, '999255423', NULL, 'DNI', '20603722851', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-10 06:54:29', '2020-07-10 06:54:29'),
+(157, 'Olinda Lazo Huerta', 'Cercado de lima', 'auroralopezblas@gmail.com', '928305248', NULL, '928305248', NULL, 'DNI', '15413123', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-14 00:18:30', '2020-07-14 00:18:30'),
+(158, 'VICTORIA MORVELI HUILLCA', 'PUENTE PIEDRA', 'vicky_vmh@hotmail.com', '959085429', NULL, '959085429', NULL, 'DNI', '23956763', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-14 23:11:40', '2020-07-14 23:11:40'),
+(159, 'FREDDY CRUZATE LUDEÑA', 'VILLA EL SALVADOR', 'fcruzate@cecosami.com', '981026152', NULL, '981026152', NULL, 'DNI', '40561194', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-14 23:53:06', '2020-07-14 23:53:06'),
+(160, 'ESTUDIO JURIDICO VILLAMIZAR REAÑO ASOCIADOS SRL', 'JR. LA VERBENA NRO. 166 URB. SANTA FELICIA - LA MOLINA', 'riceli_@hotmail.com', '948482720', NULL, '948482720', NULL, 'DNI', '20602893317', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-15 01:57:15', '2020-07-15 01:57:15'),
+(161, 'Vanessa Salcedo', 'Cercado Lima', 'salcedo.roca.vane@gmail.com', '924101602', NULL, '924101602', NULL, 'DNI', '44133118', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-15 02:29:26', '2020-07-15 02:29:26'),
+(162, 'JHONNY ESLAVA JORGE', 'RIMAC', 'jho-es63@hotmail.com', '998275551', NULL, '998275551', NULL, 'DNI', '08048810', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-15 02:39:08', '2020-07-15 02:39:08'),
+(163, 'DEISSY NIETO LOAYZA', 'SANTA ISABEL DE VILLA - SURCO', 'deyssi_1784@hotmail.com', '987569106', NULL, '987569106', NULL, 'DNI', '42354159', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-15 23:42:35', '2020-07-15 23:42:35'),
+(164, 'HANS EDUARDO REVOREDO. MAROZA', 'SANTA ANITA', 'hrevoredomaroza@gmail.com', '910928670', NULL, '910928670', NULL, 'DNI', ',', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-18 23:33:42', '2020-07-18 23:33:42'),
+(165, 'CELINDA. MILAGROS ESCUDERO RETO', 'Asoc. Los Cedros Mz. A Lt. 19. - Carabayllo', 'cescuderoreto@gmail.com', '967701325', NULL, '967701325', NULL, 'DNI', '+', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-18 23:37:06', '2020-07-18 23:37:06'),
+(166, 'DAVID. GUSTAVO SANCHEZ ALMEYDA', 'CHORRILLOS', 'gerencia@damisaperu.com', '977238687', NULL, '977238687', NULL, 'DNI', '`', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-18 23:47:36', '2020-07-18 23:47:36'),
+(167, 'Christian. Ramirez Huapaya', 'Cañete', 'chramirez@speedy.com.pe', '992779273', NULL, '992779273', NULL, 'DNI', '´', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-18 23:50:17', '2020-07-18 23:50:17'),
+(168, 'Marco Antonio Caceres Gonzales', 'San Juan Del Lurigancho', 'marcoantoniocaceres@gmail.com', '981872525', NULL, '981872525', NULL, 'DNI', '\'', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-19 00:00:46', '2020-07-19 00:00:46'),
+(169, 'NIL HENRRY RUIZ OYOLA', 'CALLAO', 'nil_15@hotmail.com', '960278665', NULL, '960278665', NULL, 'DNI', '42414342', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-20 22:51:04', '2020-07-20 22:51:04'),
+(170, 'GLADIS BARRIENTOS HERRERA', 'JR. NAPOLES NRO. 188 FIORI - SMP', 'gladis_1221@hotmail.com', '992463103', NULL, '992463103', NULL, 'DNI', '08160662', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-21 01:00:34', '2020-07-21 01:00:34'),
+(171, 'MARCO ANTONIO LAZO JIMENEZ', 'Independencia', 'marcoslazo32@homail.com', '996513181', NULL, '996513181', NULL, 'DNI', '10158581', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-21 03:03:47', '2020-07-21 03:03:47'),
+(172, 'MIRKO ROMAN LOBATO ESPINOZA', 'Prolongación La Mar Nro. 350 - La Victoria', 'romancargoexpress@gmail.com', '999453551', NULL, '999453551', NULL, 'DNI', 'º', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-21 23:02:37', '2020-07-21 23:02:37'),
+(173, 'EDGAR VILLANUEVA CORDOVA', 'JR. WASHINTON NRO. 1775 - LIMA', 'villanueva_6161@hotmail.com', '998383815', NULL, '998383815', NULL, 'DNI', '06031481', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-21 23:22:37', '2020-07-21 23:22:37'),
+(174, 'ANGIE DIAZ RODRIGUEZ', 'El Agustino', 'angiediazrodriguez_diaz@hotmail.com', '929060761', NULL, '929060761', NULL, 'DNI', '74093501', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-22 00:10:40', '2020-07-22 00:10:40'),
+(175, 'OMAR YAYA FERROA', 'SAN JUAN DE LURTIGANCHO', 'mariester80@hotmail.com', '971796814', NULL, '971796814', NULL, 'DNI', '40115625', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-22 00:37:59', '2020-07-22 00:37:59'),
+(176, 'TELECOMMUNICATIONS PARTNERS SAC', 'AV. ALBERTO DEL CAMPO NRO. 411 PISO 12 - MAGDALENA', 'carlos.rojas@telecommunicationspartnes.com', '944551928', NULL, '944551928', NULL, 'DNI', 'ç', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-23 04:06:48', '2020-07-23 04:06:48'),
+(177, 'FRANCISCO JAVIER CACIANO JARES', 'ATE', 'javiercj123@yahoo.es', '998349215', NULL, '998349215', NULL, 'DNI', '09372255', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-23 04:09:42', '2020-07-23 04:09:42'),
+(178, 'ZAMBRANO COMUN CARLOS', 'Calle. Los Brillantes Mz. B1 Lt. 11 - Chosica', 'karim_emsama@hotmail.com', '980839072', NULL, '980839072', NULL, 'DNI', '10097624203', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-23 04:20:14', '2020-07-23 04:20:14'),
+(179, 'ALEX RAUL SALTACHIN GARCIA', 'SAN JUAN DE LURIGANCHO', 'alex986xd@outlook.es', '900605692', NULL, '900605692', NULL, 'DNI', '77711617', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-23 04:38:42', '2020-07-23 04:38:42'),
+(180, 'CARLOS TINEO BENITES', 'RIMAC', 'cart20@hotmail.com', '966516359', NULL, '966516359', NULL, 'DNI', '43133766', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-23 23:55:00', '2020-07-23 23:55:00'),
+(181, 'MERCEDEZ WONG MENDOZA', 'CHORRILLOS', 'mechita.wong.m@gmail.com', '992599781', NULL, '992599781', NULL, 'DNI', '42868663', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-24 01:00:45', '2020-07-24 01:00:45'),
+(182, 'ERICK OMAR SANTIAGO SANTOS', 'LIMA', 'soportelima@infotec.com.pe', '982775825', NULL, '982775825', NULL, 'DNI', '001971751', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-24 04:10:43', '2020-07-24 04:10:43'),
+(183, 'JOSE ANTONIO LAIME FERRO', 'VILLA EL SALVADOR', 'antonio-laime@hotmail.com', '995538694', NULL, '995538694', NULL, 'DNI', '10242502', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-24 04:20:51', '2020-07-24 04:20:51'),
+(184, 'CAROLYN FABIANA PORTALES MEJIA', 'San Juan de lurigancho', 'zoemikela29@gmail.com', '950121990', NULL, '950121990', NULL, 'DNI', '43746951', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-25 03:28:44', '2020-07-25 03:28:44'),
+(185, 'VICTOR MANUEL SAAVEDRA RODRIGUEZ', 'Callao', 'victormanuel2099@hotmail.com', '991024241', NULL, '991024241', NULL, 'DNI', '25804166', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-25 04:25:12', '2020-07-25 04:25:12'),
+(186, 'HUGO ORE CALLE', 'Surco', 'hore@magtronperu.com', '998191334', NULL, '998191334', NULL, 'DNI', '44553235', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-25 06:07:29', '2020-07-25 06:07:29'),
+(187, 'DORIS VILLANUEVA DE LA CRUZ', 'Ate', 'dorisamanda68@gmail.com', '966367505', NULL, '966367505', NULL, 'DNI', '04065148', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-25 06:29:49', '2020-07-25 06:29:49'),
+(188, 'JORGE LUIS LOPEZ INCARROCA', 'SAN JUAN DE LURIGANCHO', 'jll_1825@hotmail.com', '927170087', NULL, '927170087', NULL, 'DNI', '45860608', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-25 22:25:22', '2020-07-25 22:25:22'),
+(189, 'EDGAR SANTIESTEBAN SANDOVAL', 'JESUS MARIA', 'fotografiaedgarjesusmaria@gmail.com', '942029896', NULL, '942029896', NULL, 'DNI', '42975769', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-25 22:57:06', '2020-07-25 22:57:06'),
+(190, 'CARMEN TEJEIRA ROCHA', 'San Juan de Amancaes Mz. 46 Lt. 14 - Rimac', 'carmentejeirarocha@gamil.com', '943419181 / 981309428', NULL, '943419181 / 981309428', NULL, 'DNI', '10760952', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-25 23:38:40', '2020-07-25 23:38:40'),
+(191, 'ROGER VILLANUEVA RUTTI', 'SAN JUAN DE LURIGANCHO', 'royer_27_07@hotmail.com', '994793346', NULL, '994793346', NULL, 'DNI', '43463680', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-26 00:12:24', '2020-07-26 00:12:24'),
+(192, 'PABLO MAICO VIVANCO', 'JR. CAMANA NRO. 1161 INT. 613 - LIMA', 'chaico78@hotmail.com', '998180307', NULL, '998180307', NULL, 'DNI', '09681085', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-28 02:06:56', '2020-07-28 02:06:56'),
+(193, 'CARMEN ROSA ZAPATA VALLADOLID', 'CALLAO', 'cr.zapta@gmail.com', '995298336', NULL, '995298336', NULL, 'DNI', '42620052', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-30 04:05:45', '2020-07-30 04:05:45'),
+(194, 'LUIS ALBERTO ESPINOZA PARIHUAMAN', 'LIMA', 'luchoespinoza8@hotmail.com', '994092649', NULL, '994092649', NULL, 'DNI', '09652593', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-30 23:22:47', '2020-07-30 23:22:47'),
+(195, 'Aurora Lopez Blas', 'LIMA', 'aurora.lopezblas@gmail.com', '928305248', NULL, '928305248', NULL, 'DNI', '80096469', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-31 02:18:15', '2020-07-31 02:18:15'),
+(196, 'JORGE YNCA HENRIQUEZ', 'Calle. Meteoro Nro. 580 Urb. Las Brisas - Lima', 'jynca@grafipapel.com.pe', '998119939', NULL, '998119939', NULL, 'DNI', '06750225', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-31 03:57:25', '2020-07-31 03:57:25'),
+(197, 'JHONNY MARIO FLORES MALCA', 'CARABAYLLO', 'jflores_soporte@hotmail.com', '956109874', NULL, '956109874', NULL, 'DNI', '45971917', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-07-31 05:05:50', '2020-07-31 05:05:50'),
+(198, 'JOSE LUIS ABAD CHIRCA', 'AV. GUARDIA CIVIL NRO. 595 - CHORRILLOS', 'joseluisabadc@gmail.com', '948041600', NULL, '948041600', NULL, 'DNI', '70444078', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-01 03:37:00', '2020-08-01 03:37:00'),
+(199, 'Tiendas Mas', 'Jr Crespo del Castillo 2087 Urb Mirones Bajo - Lima', 'contabilidad@sielex.com', '994328155', NULL, '994328155', NULL, 'DNI', '40645389', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-01 04:48:04', '2020-08-01 04:48:04'),
+(200, 'Evellyn  Millones', 'San Martin de Porres', 'esmillonesp@hotmail.com', '989164056', NULL, '989164056', NULL, 'DNI', '47652587', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-02 00:16:17', '2020-08-02 00:16:17'),
+(201, 'PEDRO ENRIQUEZ ALCA TOMARIO', 'La Molina', 'peatquena@gmail.com', '990859426', NULL, '990859426', NULL, 'DNI', '464338323', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-03 23:15:54', '2020-08-03 23:15:54'),
+(202, 'HUGO ORE CALLE - existente', 'SAN JUAN DE LURIGANCHO', 'hugo19_hoc@gmail.com', '998191334', NULL, '998191334', NULL, 'DNI', '44553235 - existente', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-04 02:05:15', '2020-08-04 02:05:15'),
+(203, 'ENERGY EQUIPMENT SERVICE S.A.C', 'Calle badajoz 255 -San luis', 'Alvaroreaguip@gmail.com', '974452071', NULL, '974452071', NULL, 'DNI', '72628293', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-04 03:08:54', '2020-08-04 03:08:54'),
+(204, 'PAULINO ALAYO ARAUJO', 'AV. ARENALES 2286 - LINCE', 'cambios_risso@hotmail.com', '998446011', NULL, '998446011', NULL, 'DNI', '4400780', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-05 04:14:59', '2020-08-05 04:14:59'),
+(205, 'MARCO ANTONIO ROMERO LORENZO', 'SAN JUAN DE LURIGANCHO', 'marcoromerol1@hotmail.com', '976624135', NULL, '976624135', NULL, 'DNI', '42804459', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-06 01:06:50', '2020-08-06 01:06:50'),
+(206, 'EDWIN VEGA ICHANG', 'SMP', 'edwin_com7@hotmail.com', '948565600', NULL, '948565600', NULL, 'DNI', '19868630', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-06 05:47:00', '2020-08-06 05:47:00'),
+(207, 'DOUGLAS ANTONIO TAFUR SALGADO', 'Av. Los Diamantes Mz. A Lt. 27 Urb. Los Alisos - SMP', 'dtafurs@gmail.com', '936518440', NULL, '936518440', NULL, 'DNI', '00368100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-07 03:05:20', '2020-08-07 03:05:20'),
+(208, 'GRECY ANABEL CORREA ESPINOZA', 'PUEBLO LIBRE', 'grecyanabel@gmail.com', '928302807', NULL, '928302807', NULL, 'DNI', '42533040', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-08 00:50:16', '2020-08-08 00:50:16'),
+(209, 'TULIO EDMUNDO INGA RIOS', 'VILLA MARIA DEL TRIUNFO', 'paty.inga.25@gmail.com', '986817405', NULL, '986817405', NULL, 'DNI', '08990563', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-08 00:57:37', '2020-08-08 00:57:37'),
+(210, 'GUISELLA AGUILAR BERMUDEZ', 'LA VICTORIA', 'grupodatacorporation01@hotmail.com', '981022016', NULL, '981022016', NULL, 'DNI', '41654348', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-08 04:54:20', '2020-08-08 04:54:20'),
+(211, 'kiara Carolina Yudichi', 'CERCADO DE LIMA', 'yudichijiaracarolina@gmail.com', '922453611', NULL, '922453611', NULL, 'DNI', '74231952', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-09 00:42:56', '2020-08-09 00:42:56'),
+(212, 'INSTITUTO NACIONAL DE SALUD DEL NIÑO', 'Breña', 'aleonm@insn.gob.pe.com', '961722296', NULL, '961722296', NULL, 'DNI', '09599789', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-10 23:05:53', '2020-08-10 23:05:53'),
+(213, 'TEONILA YOLANDA ALVARADO TATALEAN', 'SAN JUAN DE LURIGANCHO', 'yola.alvarado.1971@gmail.com', '933082897', NULL, '933082897', NULL, 'DNI', '10515392', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-10 23:18:44', '2020-08-10 23:18:44'),
+(214, 'Viviana Sanchez', 'Villa Maria del Triunfo', 'paolaarmey@gmail.com', '978812239', NULL, '978812239', NULL, 'DNI', '71267752', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-11 02:08:18', '2020-08-11 02:08:18'),
+(215, 'Yuri Piñas Esteban', 'San Juan de Lurigancho', 'notiene@notiene.com.pe', '989173762', NULL, '989173762', NULL, 'DNI', '40497134', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-11 02:32:14', '2020-08-11 02:32:14'),
+(216, 'PAUL MICHAEL ZUÑIGA CHACON', 'JULIO C. TELLO NRO. 1040 INT. 404 - LINCE', 'michael.zuniga@ghrdsoft.com', '977141999', NULL, '977141999', NULL, 'DNI', '46714266', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-11 04:06:18', '2020-08-11 04:06:18'),
+(217, 'FRANKLIN SERGIO ARANDA FLORES', 'PUENTE PIEDRA', 'notiene1@correo.com', '983289165', NULL, '983289165', NULL, 'DNI', '41002311', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-11 06:01:05', '2020-08-11 06:01:05'),
+(218, 'MAURO CESAR PRINCE LOPEZ', 'LIMA', 'princelopez06@yahoo.es', '976078600', NULL, '976078600', NULL, 'DNI', '09286719', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-11 22:29:02', '2020-08-11 22:29:02'),
+(219, 'BLADIMIR LOPEZ GUTIERREZ', 'SAN MIGUEL', 'bladimirlg@hotmail.com', '991691000', NULL, '991691000', NULL, 'DNI', '80549744', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-11 23:56:27', '2020-08-11 23:56:27'),
+(220, 'ENRIQUE SANCHEZ CAHUANA', 'VILLA MARIA DEL TRIUNFO', 'enri_que13@gmail.com', '922425724', NULL, '922425724', NULL, 'DNI', '47787450', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-12 02:05:49', '2020-08-12 02:05:49'),
+(221, 'GIOVANNA EDITH ESPINOZA QUISPE', 'VILLA EL SALVADOR', 'gio_espi0506@gmail.com', '989874972', NULL, '989874972', NULL, 'DNI', '41870155', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-13 00:11:04', '2020-08-13 00:11:04'),
+(222, 'Elena Sedano', 'Lima', 'elenasedano13@hotmail.com', '969927581', NULL, '969927581', NULL, 'DNI', '10122688', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-13 04:50:45', '2020-08-13 04:50:45'),
+(223, 'CAROL VASQUEZ ARRAMBIDE', 'LIMA', 'carolvasquez261097@gmail.com', '940985767', NULL, '940985767', NULL, 'DNI', '76267083', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-13 07:45:19', '2020-08-13 07:45:19'),
+(224, 'GIANCARLOS QUISPE ALVAREZ', 'CERCADO DE LIMA', 'gianajo_79@hotmail.com', '949842752', NULL, '949842752', NULL, 'DNI', '44743502', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-13 22:28:05', '2020-08-13 22:28:05'),
+(225, 'Johnny Cruz', 'lima', 'jcruzh03@gmail.com', '990589757', NULL, '990589757', NULL, 'DNI', '25619161', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-13 22:57:32', '2020-08-13 22:57:32'),
+(226, 'JBO INGENIEROS SAC', 'ATE', 'albertoqrivas@gmail.com', '920127282', NULL, '920127282', NULL, 'DNI', '08595947', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-14 03:32:23', '2020-08-14 03:32:23'),
+(227, 'SOLEDAD KATERIN ALVAREZ TRAVEZAÑO', 'Sector 3 Grupo 27 Mz. L Lt. 22 - VES', 'alvarezkaterin777@gmail.com', '926010712', NULL, '926010712', NULL, 'DNI', '45864468', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-14 22:51:11', '2020-08-14 22:51:11'),
+(228, 'ANA MARIA PUENTE ROJAS', 'ATE', 'annapuente@hotmail.com', '941478482', NULL, '941478482', NULL, 'DNI', '42300821', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-15 22:19:23', '2020-08-15 22:19:23'),
+(229, 'JOSE WILDER ZEVALLOS DIAZ', 'ATE', 'wizedi1@gmail.com', '969981171', NULL, '969981171', NULL, 'DNI', '08140743', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-16 00:22:50', '2020-08-16 00:22:50'),
+(230, 'RICARDO OBREGON SALAZAR', 'LIMA', 'ventas3d_computer@hotmail.com', '964225100', NULL, '964225100', NULL, 'DNI', '32299091', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-17 23:04:50', '2020-08-17 23:04:50'),
+(231, 'Miguel Oviedo', 'LIMA', 'moviedo19712019@gmail.com', '979639766', NULL, '979639766', NULL, 'DNI', '09790175', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-18 04:15:46', '2020-08-18 04:15:46'),
+(232, 'ALBARO GUERRA', 'LIMA', 'jguerra@gmail.com', '927689254', NULL, '927689254', NULL, 'DNI', '1495551423', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-18 04:38:32', '2020-08-18 04:38:32'),
+(233, 'Raul Salvatierra', 'Jr Ica 242 Int 711 Lima', 'rsoperu@gmail.com', '987508624', NULL, '987508624', NULL, 'DNI', '15349367', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-19 00:10:01', '2020-08-19 00:10:01'),
+(234, 'ROLANDO VELEZ SARMIENTO', 'BREÑA', 'jesusvelez23@hotmail.com', '949278789', NULL, '949278789', NULL, 'DNI', '41720767', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-19 03:55:52', '2020-08-19 03:55:52'),
+(235, 'CENTENO GOMEZ DANTE', 'SAN JUAN DE LURIGANCHO', 'dante_cg@hotmail.com', '997067279', NULL, '997067279', NULL, 'DNI', '10668430', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-19 04:12:47', '2020-08-19 04:12:47');
+INSERT INTO `clientes` (`id`, `nombre`, `direccion`, `email`, `telefono`, `anexo`, `celular`, `empresa`, `documento_identificacion`, `numero_documento`, `ciudad`, `departamento`, `pais`, `tipo_cliente`, `cod_postal`, `aniversario`, `fecha_registro`, `created_at`, `updated_at`) VALUES
+(236, 'Cooperativa de Ahorros Hosni', 'La Molina', 'rplata1@hotmail.es', '986206134', NULL, '986206134', NULL, 'DNI', '41044435', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-20 00:18:02', '2020-08-20 00:18:02'),
+(237, 'VLADIMIR VALENTIN', 'AV. PETIT TOUARS NRO. 5356 TDA. 3077 - MIRAFLORES', 'vladimirv37@gmail.com', '941403488', NULL, '941403488', NULL, 'DNI', '43577589', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-20 00:42:40', '2020-08-20 00:42:40'),
+(238, 'JOSE RIOS ESCOBEDO', 'SURCO', 'contabilidad@aquamed.com.pe', '987363202', NULL, '987363202', NULL, 'DNI', '75823560', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-21 00:04:53', '2020-08-21 00:04:53'),
+(239, 'LT GESTION INMOVILIARIA', 'MIRAFLORES', 'acevedom282@gmail.com', '934292872', NULL, '934292872', NULL, 'DNI', '20601387400', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-21 02:34:01', '2020-08-21 02:34:01'),
+(240, 'Alberto Gonzales', 'San Martin De Porres', 'angelfenix@protomail.com', '950575367', NULL, '950575367', NULL, 'DNI', '43367617', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-21 03:40:52', '2020-08-21 03:40:52'),
+(241, 'Janeth Huesa', 'Lima', 'valerimarreroshuesa@hotmail.com', '997131965', NULL, '997131965', NULL, 'DNI', '44260247', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-21 04:50:02', '2020-08-21 04:50:02'),
+(242, 'CESAR CASTILLO PALACIOS', 'Av. Manuel Olguin Nro. 209 - Surco', 'soporte@todotecperu.com', '996666101', NULL, '996666101', NULL, 'DNI', '43931575', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-21 06:02:10', '2020-08-21 06:02:10'),
+(243, 'GUIDO LOPEZ THACCA', 'LIMA', 'thaccalopez@gmail.com', '940302201', NULL, '940302201', NULL, 'DNI', '74574873', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-22 06:27:27', '2020-08-22 06:27:27'),
+(244, 'ELIAS DIAZ LOZANO', 'MALA - CAÑETE', 'ediazlozano@gmail.com', '910329331', NULL, '910329331', NULL, 'DNI', '03895508', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-22 23:04:22', '2020-08-22 23:04:22'),
+(245, 'JUAN CARLOS VELASQUEZ SULLCA', 'Puente Piedra', 'fox2_sull@hotmail.com', '987165060', NULL, '987165060', NULL, 'DNI', '41842573', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-25 05:02:55', '2020-08-25 05:02:55'),
+(246, 'MARIA ELENA RUVINA GUERRA', 'Calle. Alfa Mz. D2 Lt. 29 Bocanegra - Callao', 'mariaganadora@hotmail.com', '952626693', NULL, '952626693', NULL, 'DNI', '41781434', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-25 05:55:55', '2020-08-25 05:55:55'),
+(247, 'JUAN RICARDO CALDERON REYNOSO', 'SAN MARTIN DE PORRES', 'ricardocalrey@hotmail.com', '983154466', NULL, '983154466', NULL, 'DNI', '09617423', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-25 23:26:33', '2020-08-25 23:26:33'),
+(248, 'Magali  Alfaro Sanchez', 'LIMA', 'claudiacotrina27@gmail.com', '946454126', NULL, '946454126', NULL, 'DNI', 'ª', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-25 23:50:05', '2020-08-25 23:50:05'),
+(249, 'FRANCIA PAMELA CELIA MOSCOSO MANCILLA', 'EL AGUSTINO', 'franciapamelamoscoso@gmail.com', '952349175', NULL, '952349175', NULL, 'DNI', '76627439', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-26 02:24:13', '2020-08-26 02:24:13'),
+(250, 'HAZEL VIVIANA PERALTA SIRA', 'Urb. Renovacion Palomino Mz. E Lt. 6 - Callao', 'peraltahazel7@gmail.com', '912890960', NULL, '912890960', NULL, 'DNI', '003073158', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-26 02:52:09', '2020-08-26 02:52:09'),
+(251, 'Sara Cari', 'LIMA', 'naimacari@gmail.com', '932704249', NULL, '932704249', NULL, 'DNI', '48537053', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-26 03:08:05', '2020-08-26 03:08:05'),
+(252, 'GLORIA VALENZUELA FELIX', 'LIMA', 'gloriajireh@hotmail.com', '945590337', NULL, '945590337', NULL, 'DNI', '25568013', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-26 03:15:46', '2020-08-26 03:15:46'),
+(253, 'MAGNO PALOMINO CHAMBI', 'LIMA', 'ventanlt@gmail.com', '948906395', NULL, '948906395', NULL, 'DNI', '46269395', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-26 03:27:50', '2020-08-26 03:27:50'),
+(254, 'Felix Alfredo Ángulo', 'Jr. Manuel Pardo 200 Lima', 'michajyn0690@gmail.com', '940148576', NULL, '940148576', NULL, 'DNI', '06769313', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-26 04:42:06', '2020-08-26 04:42:06'),
+(255, 'CARMEN HERNANDEZ GODOY', 'Ate', 'pamechina@outlook.com', '945495500', NULL, '945495500', NULL, 'DNI', '41287287', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-27 02:20:08', '2020-08-27 02:20:08'),
+(256, 'FERMIN HANCO REYES', 'VENTANILLA', 'jllallerco@hotmail.com', '994817104', NULL, '994817104', NULL, 'DNI', '41514242', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-27 04:06:35', '2020-08-27 04:06:35'),
+(257, 'JOSE SOAÑA LAZARO', 'LIMA', 'soana.jose@gmail.com', '981401863', NULL, '981401863', NULL, 'DNI', '41176033', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-27 05:22:54', '2020-08-27 05:22:54'),
+(258, 'JOSE RONALD BENITO CORDOVA', 'LIMA', 'joselo_3001@hotmail.com', '997685897', NULL, '997685897', NULL, 'DNI', '41248530', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-28 04:50:34', '2020-08-28 04:50:34'),
+(259, 'NELLY ILDEFONSO CASTILLO', 'LIMA', 'nildefonsocastillo@gmail.com', '934246024', NULL, '934246024', NULL, 'DNI', '41138727', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-28 22:52:07', '2020-08-28 22:52:07'),
+(260, 'PAULINA GALVEZ SABALU', 'ventanilla', 'mayobanex_8@hotmail.com', '994089899', NULL, '994089899', NULL, 'DNI', '4312493', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-08-29 23:49:03', '2020-08-29 23:49:03'),
+(261, 'MONICA HERRERA NUÑEZ', 'EL AGUSTINO', 'monica_teccomsac@hotmail.com', '998151042', NULL, '998151042', NULL, 'DNI', '09614139', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-01 00:12:35', '2020-09-01 00:12:35'),
+(262, 'ALEXANDER VELASQUEZ ZAPATA', 'COMAS', 'velasquezzapatalexander@gmail.com', '924039470', NULL, '924039470', NULL, 'DNI', '70098481', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-01 02:47:06', '2020-09-01 02:47:06'),
+(263, 'Franck Palomino', 'San Juan de Miraflores', 'franck_bussines@outlook.com', '937150292', NULL, '937150292', NULL, 'DNI', '73116301', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-01 03:11:00', '2020-09-01 03:11:00'),
+(264, 'JESUS MARIA APOLAYA CURAHUA', 'SAN JUAN DE LURIGANCHO', 'anamapolaya@gmail.com', '945251440', NULL, '945251440', NULL, 'DNI', '10092154071', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-01 04:13:12', '2020-09-01 04:13:12'),
+(265, 'HERMELINDA MOLLO CRUZ', 'LA VICTORIA', 'fray74svp@gmail.com', '902239509', NULL, '902239509', NULL, 'DNI', '40681876', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-01 04:18:55', '2020-09-01 04:18:55'),
+(266, 'Dayana . Montalvo', 'Lima', 'diegol-84@hotmail.com', '933738640', NULL, '933738640', NULL, 'DNI', '42539994', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-02 02:38:37', '2020-09-02 02:38:37'),
+(267, 'LUIS ALFREDO SUAREZ ROMAN', 'PUENTE PIEDRA', 'luisalfredosua@gmail.com', '910435181', NULL, '910435181', NULL, 'DNI', '25272868', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-02 04:49:14', '2020-09-02 04:49:14'),
+(268, 'OLGA LUZ VILLANUEVA MINAYA', 'San Juan de Lurigancho', 'administracion@indutriafia.com', '941479497', NULL, '941479497', NULL, 'DNI', '42500034', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-02 22:29:11', '2020-09-02 22:29:11'),
+(269, 'WALTER INGA FERNANDEZ', 'CARABAYLLO', 'davidguti17@hotmail.com', '949149834', NULL, '949149834', NULL, 'DNI', '40544307', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-02 23:34:36', '2020-09-02 23:34:36'),
+(270, 'PEDRO TORREALBA SOTA', 'SAN JUAN DE LURIGANCHO', 'notiene-correo@hotmail.com', '994756180', NULL, '994756180', NULL, 'DNI', '10113233', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-03 03:25:49', '2020-09-03 03:25:49'),
+(271, 'REYNA CHACÑAMA SULCA', 'CHORRILLOS', 'cr19183@gmail.com', '986292741', NULL, '986292741', NULL, 'DNI', '76466548', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-03 04:09:29', '2020-09-03 04:09:29'),
+(272, 'ALONSO CONDOR SALVATIERRA', 'Av. 24 de Octubre Mz. E5 Lt. 19 - Chorrillos', 'alonsosalvatierra@hotmail.com', '996306144', NULL, '996306144', NULL, 'DNI', '10635328', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-03 05:55:32', '2020-09-03 05:55:32'),
+(273, 'Javier Dominguez', 'San Martín de Porres', 'javierdk46@gmail.com', '962420946', NULL, '962420946', NULL, 'DNI', '10155690', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-03 22:28:28', '2020-09-03 22:28:28'),
+(274, 'Rosa Sanchez', 'San Luis', 'roxitaz123@gmail.com', '924154440', NULL, '924154440', NULL, 'DNI', '47593836', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-05 03:11:03', '2020-09-05 03:11:03'),
+(275, 'NEGOCIACION MARIA ALENADRA SAC', 'LOS OLIVOS', 'soporte@fiorellarepre.com.pe', '946126131', NULL, '946126131', NULL, 'DNI', '10451779', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-05 04:44:14', '2020-09-05 04:44:14'),
+(276, 'JORGE CARLOS AZAÑA ESTRADA', 'CARABAYLLO', 'jycascensores@gmail.com', '989742987', NULL, '989742987', NULL, 'DNI', '42557271', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-05 04:53:26', '2020-09-05 04:53:26'),
+(277, 'GRICELDA MOLLO PALOMINO', 'BREÑA', 'ventas_starlingsac@hotmail.com', '945890613', NULL, '945890613', NULL, 'DNI', '42357046', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-05 05:17:31', '2020-09-05 05:17:31'),
+(278, 'Proweld Sac', 'Cercado DE LIMA', 'metalworkersperu@gmail.com', '989295681', NULL, '989295681', NULL, 'DNI', '77660249', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-05 22:23:35', '2020-09-05 22:23:35'),
+(279, 'Veronica Esther Cano Vasquez', 'El agustino', 'esthercano07@hotmail.com', '996595185', NULL, '996595185', NULL, 'DNI', '09266490', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-06 00:19:39', '2020-09-06 00:19:39'),
+(280, 'VICTOR SERGIO BUSTINZA MARQUEZ', 'AA.HH Francisco Bolognesi Mz. J Lt. 26 - Callao', 'v_bustinza@hotmail.com', '981342586', NULL, '981342586', NULL, 'DNI', '25768453', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-08 00:22:02', '2020-09-08 00:22:02'),
+(281, 'JULISSA REYNOSO HUIERTAS', 'EL AGUSTINO', 'akemysalet513@gmail.com', '980483027', NULL, '980483027', NULL, 'DNI', '41874850', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-08 03:37:06', '2020-09-08 03:37:06'),
+(282, 'JESUS MARIO QUISPE CHAMBI', 'INDEPENDENCIA', 'marioquispechambi008@gmail.com', '945812626', NULL, '945812626', NULL, 'DNI', '40489828', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-08 04:21:46', '2020-09-08 04:21:46'),
+(283, 'MYRELLA CULE MORIANO', 'LIMA', 'jgarantia@impaccto.com.pe', '946533464', NULL, '946533464', NULL, 'DNI', '$', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-08 06:24:33', '2020-09-08 06:24:33'),
+(284, 'Pedro Tito Toledo', 'San Juan de Miraflores', 'jupitersuperstar@hotmail.com', '994950454', NULL, '994950454', NULL, 'DNI', '09588677', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-09 00:32:57', '2020-09-09 00:32:57'),
+(285, 'ROBERTO CARLOS RIVERA URTIAGA', 'CARABAYLLO', 'rocaclear32@gmail.com', '955987726', NULL, '955987726', NULL, 'DNI', '42372628', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-09 01:08:09', '2020-09-09 01:08:09'),
+(286, 'Julia Flores Ticlla', 'LIMA', 'gisselart_1979@hotmail.com', '934235181', NULL, '934235181', NULL, 'DNI', '40071363', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-09 04:13:05', '2020-09-09 04:13:05'),
+(287, 'RICHARD TORRES AIQUIPA', 'SAN JUAN DE LURIGANCHO', 'kevim.soluciones@gmail.com', '993318025', NULL, '993318025', NULL, 'DNI', '41517330', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-09 04:29:55', '2020-09-09 04:29:55'),
+(288, 'Juan Ignacio Lopez', 'CHOSICA', 'ivaleivicvalsanchezcolqui@gmail.com', '951693100', NULL, '951693100', NULL, 'DNI', '47604852', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-09 23:02:38', '2020-09-09 23:02:38'),
+(289, 'EUCEBIO MAYHUA ECHEBAUTIS', 'LIMA', 'mayhuaeucebio@gmail.com', '912880929', NULL, '912880929', NULL, 'DNI', '23562237', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-10 02:29:29', '2020-09-10 02:29:29'),
+(290, 'INVERSIONES PECUARIAS SA', 'SANTIAGO DE SURCO', 'serviciotecnico@mesajilhnos.com', '994079109', NULL, '994079109', NULL, 'DNI', '20159475191', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-11 00:10:23', '2020-09-11 00:10:23'),
+(291, 'INVERSION LIV SAC', 'ATE', 'obed_zebedeo@hotmail.com', '990997587', NULL, '990997587', NULL, 'DNI', '20602089593', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-11 04:06:19', '2020-09-11 04:06:19'),
+(292, 'GAVI SIMBRON LOPEZ', 'SAN JUAN DE LURIGANCHO', 'gavisilop@gmail.com', '951455886', NULL, '951455886', NULL, 'DNI', '40520392', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-12 00:05:05', '2020-09-12 00:05:05'),
+(293, 'LUIS FLAVIO ZUÑIGA ANAYA', 'SURCO', 'flaviozuniga@hotmail.com', '923263365', NULL, '923263365', NULL, 'DNI', '09782787', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-12 00:51:23', '2020-09-12 00:51:23'),
+(294, 'ALEJANDRO JESUS YANAC FLORES', 'COMAS', 'jesus1006.1992@gmail.com', '989556136', NULL, '989556136', NULL, 'DNI', '47045352', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-12 03:58:19', '2020-09-12 03:58:19'),
+(295, 'Helber Antonio Alvarado Tuanama', 'CERCADO DE LIMA', 'altheun_9@hotmail.com', '947604535', NULL, '947604535', NULL, 'DNI', '947604535', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-12 06:24:19', '2020-09-12 06:24:19'),
+(296, 'CLEMENCIA CAMPOS MEDINA', 'CALLAO', 'clemencia.campos288@gmail.com', '985694162', NULL, '985694162', NULL, 'DNI', '42962668', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-13 00:30:47', '2020-09-13 00:30:47'),
+(297, 'ROMELIA LISSET VELASQUEZ AQUINO', 'PUEBLO LIBRE', 'lisset_14va@hotmail.com', '959204331', NULL, '959204331', NULL, 'DNI', '43563815', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-14 23:05:26', '2020-09-14 23:05:26'),
+(298, 'DANIEL CABANILLAS CELIS', 'BREÑA', 'danielcabanillasc@hotmail.com', '980756924', NULL, '980756924', NULL, 'DNI', '10409970', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-15 03:34:53', '2020-09-15 03:34:53'),
+(299, 'MICROPOWER SAC', 'LIMA', 'ventasmicropower@hotmail.com', '998166436', NULL, '998166436', NULL, 'DNI', '07601327', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-15 06:34:42', '2020-09-15 06:34:42'),
+(300, 'SOLUCIONES INFORMATICAS DIGITALES SAC', 'VILLA EL SALVADOR', 'gerencia@sidsac.net', '998349747', NULL, '998349747', NULL, 'DNI', '20516312182', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-16 05:16:56', '2020-09-16 05:16:56'),
+(301, 'Carmen Rosa Condori Jeri', 'San Juan De Lurigancho', 'carmenrosacondori2019@gmail.com', '979494845', NULL, '979494845', NULL, 'DNI', '10676029', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-16 23:46:41', '2020-09-16 23:46:41'),
+(302, 'GRAFICA Y TECNOLOGIA SAC', 'LA VICTORIA', 'cramon@gradytec.com', '962298922', NULL, '962298922', NULL, 'DNI', '20600215630', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-17 00:29:31', '2020-09-17 00:29:31'),
+(303, 'PLEXIACRIL SAC', 'Prolg. Andahuaylas Nro. 1580 Pje. Matute - La Victoria', 'billykiama890@gmail.com', '955276995', NULL, '955276995', NULL, 'DNI', '20537795906', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-18 00:21:30', '2020-09-18 00:21:30'),
+(304, 'Luba Agafonova', 'Lima', 'luba0305.ru@gmail.com', '947323944', NULL, '947323944', NULL, 'DNI', '´´', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-18 03:41:21', '2020-09-18 03:41:21'),
+(305, 'Cesar Salamanca', 'Chorrillos', 'cesar_1415_12@hotmail.com', '981594349', NULL, '981594349', NULL, 'DNI', '42912650', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-19 00:10:31', '2020-09-19 00:10:31'),
+(306, 'SARA URETA REYES', 'SAN JUAN DE LURIGANCHO', 'sarauritarreyes@hotmai.com', '959612672', NULL, '959612672', NULL, 'DNI', '47000781', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-19 22:31:50', '2020-09-19 22:31:50'),
+(307, 'CRISTINA HUAMANI PALOMINO', 'CARABAYLLO', 'cristina_iq_1@yahoo.es', '938511052', NULL, '938511052', NULL, 'DNI', '42945100', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-19 22:54:11', '2020-09-19 22:54:11'),
+(308, 'Pedro Bernardo Vidarte Enriquez', 'Lima', 'vidartepb@yahoo.com', '984925869', NULL, '984925869', NULL, 'DNI', '09619089', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-21 23:16:57', '2020-09-21 23:16:57'),
+(309, 'Richard Gutierrez Contreras', 'Lima', 'edwin1275@hotmail.com', '984188881', NULL, '984188881', NULL, 'DNI', '46282799', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-21 23:50:27', '2020-09-21 23:50:27'),
+(310, 'Fredy Oscar Arellano Diaz', 'San Luis', 'nicolasarellano742@gmail.con', '994061314', NULL, '994061314', NULL, 'DNI', '09590336', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-22 00:15:36', '2020-09-22 00:15:36'),
+(311, 'Agricola Santa Azul SAC', 'San Isidro', 'luis.saldana@agsantaazul.com', '913404723', NULL, '913404723', NULL, 'DNI', '20555837659', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-22 03:01:42', '2020-09-22 03:01:42'),
+(312, 'CHRISTIAM MARQUINA VERA', 'SAN MARTIN DE PORRES', 'cristian_tlvu_19@hotmail.com', '992331104', NULL, '992331104', NULL, 'DNI', '72386478', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-22 03:10:33', '2020-09-22 03:10:33'),
+(313, 'Regina Osorio', 'Peblo Libre', 'maritzaosorio1730@gmail.com', '981459213', NULL, '981459213', NULL, 'DNI', '40965445', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-22 04:43:31', '2020-09-22 04:43:31'),
+(314, 'ROCIO ESPERANZA JORGE APONTE', 'LOS OLIVOS', 'rocio_01_1@hotmail.com', '930863074 / 986874864', NULL, '930863074 / 986874864', NULL, 'DNI', '42907854', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-22 23:52:38', '2020-09-22 23:52:38'),
+(315, 'JOSE ALVARADO PEREZ', 'CAMPOY - SAN JUAN DE LURIGANCHO', 'josealvaradoperez2017@gmail.com', '947359952', NULL, '947359952', NULL, 'DNI', '42941795', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-23 05:03:49', '2020-09-23 05:03:49'),
+(316, 'CARLOS GONZALES VALIENTE', 'LIMA', 'cgusmar22@gmail.com', '56400391 / 996410807', NULL, '56400391 / 996410807', NULL, 'DNI', '10585974', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-23 05:45:47', '2020-09-23 05:45:47'),
+(317, 'REBECA COROMOTO CAMERO MALDONADO', 'Prolongacion Tacna Int. 23 - Lima', 'rebecapaula47@gmail.com', '927127896', NULL, '927127896', NULL, 'DNI', '002495676', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-23 05:59:30', '2020-09-23 05:59:30'),
+(318, 'ROSA LUZ TERRONES RIVERA', 'SANTA ROSA', 'zundhair.21@gmail.com', '927606194', NULL, '927606194', NULL, 'DNI', '4452776', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-23 22:16:37', '2020-09-23 22:16:37'),
+(319, 'BRICKGLER JOSUE MARTINEZ GONZALES', 'Av. Bolivia Nro. 148 Int. 542-55 - Lima', 'jgarantia@impacto.com', '946318132', NULL, '946318132', NULL, 'DNI', '002753703', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-24 04:08:42', '2020-09-24 04:08:42'),
+(320, 'SEGUNDO RENE CABALLERO BARDALES', 'INDEPENDENCIA', 'no_tiene@correo.com', '985052490', NULL, '985052490', NULL, 'DNI', '10334103', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-24 23:58:31', '2020-09-24 23:58:31'),
+(321, 'TECDECO SAC', 'Av. Jose Leal Nro. 356 - Lince', 'roger@tecdecosac.com', '998965440', NULL, '998965440', NULL, 'DNI', '20509745456', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-26 00:33:53', '2020-09-26 00:33:53'),
+(322, 'LUIS JARA ALEMAN', 'Mariano Melgar Nro. 313 - Surco', 'LUISJARA2410@hotmail.com', '997394189', NULL, '997394189', NULL, 'DNI', '08766024', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-26 02:26:27', '2020-09-26 02:26:27'),
+(323, 'WALTER JESUS VALDIVIA MOSCOSO', 'Mz. C4 Lt. 3 Calle. 76 Sol del Pinar - Comas', 'wvaldiviam90@gmail.com', '951549307', NULL, '951549307', NULL, 'DNI', '70653250', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-26 02:33:21', '2020-09-26 02:33:21'),
+(324, 'ERICK MEDINA OLAGUIBEL', 'Av. San Martin Nro. 1294 - Pueblo Libre', 'erickillapa0@gmail.com', '972255607', NULL, '972255607', NULL, 'DNI', '9866814', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-26 03:24:32', '2020-09-26 03:24:32'),
+(325, 'Lizbeth Paola Morales Cualilo', 'Lima', 'c_ocampo_h@hotmail.com', '997764781', NULL, '997764781', NULL, 'DNI', '06786308', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-26 03:48:07', '2020-09-26 03:48:07'),
+(326, 'Shougang Hierro Peru', 'Lima', 'jcabanillas@computel.com.pe', '965434565', NULL, '965434565', NULL, 'DNI', '20100142989', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-26 03:54:05', '2020-09-26 03:54:05'),
+(327, 'Anita Diaz Aguilar', 'Lima', 'erick.lloccllacruz1991@gmail.com', '918989464', NULL, '918989464', NULL, 'DNI', 'çç', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-29 06:27:42', '2020-09-29 06:27:42'),
+(328, 'JULIO RIVERA OBLEA', 'SAN MARTIN DE PORRES', 'jaro0618@hotmail.com', '940489178', NULL, '940489178', NULL, 'DNI', '07575617', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-29 23:01:50', '2020-09-29 23:01:50'),
+(329, 'JORGE MONTALVO PALACIN', 'SAN JUAN DE LURIGANCHO', 'pablo_palacin1972@hotmail.com', '986584440', NULL, '986584440', NULL, 'DNI', '09656436', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-29 23:14:46', '2020-09-29 23:14:46'),
+(330, 'FOXSOFT SOLUCIONES INFORMATICAS SAC', 'Av. Inca Garcilazo de la Vega Nro. 1040 Int. 63 - Lima', 'garantias@supertec.com.pe', '998148707', NULL, '998148707', NULL, 'DNI', '20521555841', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-29 23:32:14', '2020-09-29 23:32:14'),
+(331, 'LILIANA VILLAGARAY HUAMANTOMA', 'ICA', 'lili_villagaray@hotmail.com', '969917771', NULL, '969917771', NULL, 'DNI', '21532714', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-09-30 02:32:57', '2020-09-30 02:32:57'),
+(332, 'SOLVING COURIER & FILE SAC', 'SAN JUAN DE LURIGANCHO', 'hemerotecaesup@gmail.com', '923260561', NULL, '923260561', NULL, 'DNI', '20601383439', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-01 02:06:31', '2020-10-01 02:06:31'),
+(333, 'ROSA ROCA TRUJILLO', 'LIMA', 'no/tiene@correo.com', '981379799', NULL, '981379799', NULL, 'DNI', '10749213', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-01 02:30:36', '2020-10-01 02:30:36'),
+(334, 'ELIDA MAGNOLIA VIVAS JACINTO', 'PIURA', 'hugo_guiton@hotmail.com', '967657309', NULL, '967657309', NULL, 'DNI', '10038847096', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-01 22:21:39', '2020-10-01 22:21:39'),
+(335, 'JACQUELINE MILAGROS VERASTEGUI CAMPOS', 'EL AGUSTINO', 'jacqueline_gourmet@hotmail.com', '986928669', NULL, '986928669', NULL, 'DNI', '10505005', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-02 00:51:28', '2020-10-02 00:51:28'),
+(336, 'ELENA MELGAREJO ALATA', 'SAN JUAN DE LURIGANCHO', 'elena09ma@gmail.com', '977828229', NULL, '977828229', NULL, 'DNI', '41876231', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-02 03:19:17', '2020-10-02 03:19:17'),
+(337, 'HANSSEL CHUCO GONZALES', 'SAN JUAN DE LURIGANCHO', 'hansselgilmer@gmail.com', '955834510', NULL, '955834510', NULL, 'DNI', '72652797', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-03 00:49:37', '2020-10-03 00:49:37'),
+(338, 'JESSICA LEYVA BARTUREN', 'SAN MIGUEL', 'jessicaleyvabarturen22@gmail.com', '949823138', NULL, '949823138', NULL, 'DNI', '09619139', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-03 00:55:32', '2020-10-03 00:55:32'),
+(339, 'Diego Cepeda Alcazar', 'Rimac', 'anita_ab_15@hotmail.com', '922950387', NULL, '922950387', NULL, 'DNI', '47062546', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-03 02:58:22', '2020-10-03 02:58:22'),
+(340, 'odelia quite', 'Lima', 'hariniza484@gmail.com', '996431750', NULL, '996431750', NULL, 'DNI', 'ªª', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-03 04:09:05', '2020-10-03 04:09:05'),
+(341, 'CORPORACION LOGISTICA SAN ADRES SAC', 'CALLAO', 'mheredia.glcmotors@gmail.com', '920566947', NULL, '920566947', NULL, 'DNI', '20605599312', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-03 04:41:16', '2020-10-03 04:41:16'),
+(342, 'CORPORACION LOGISTICA SAN JOSE SAC', 'CALLAO', 'mheredia.glcmotors@gmail.com.pe', '920566947', NULL, '920566947', NULL, 'DNI', '20605599312ª', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-03 04:43:08', '2020-10-03 04:43:08'),
+(343, 'JENNY NANCY FABIAN DURAN', 'PUENTE PIEDRA', 'jennynancyf@gmail.com', '939738286', NULL, '939738286', NULL, 'DNI', '42836177', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-04 01:07:37', '2020-10-04 01:07:37'),
+(344, 'Luis Sanchez', 'Lima', 'luis2028@gmail.com', '999939560', NULL, '999939560', NULL, 'DNI', '42303880', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-06 04:18:22', '2020-10-06 04:18:22'),
+(345, 'VICTOR TEODOSIO ROJAS LEON', 'SAN JUAN DE LURIGANCHO', 'vrojasl.308@hotmail.com', '990042349', NULL, '990042349', NULL, 'DNI', '04057087', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-06 22:24:02', '2020-10-06 22:24:02'),
+(346, 'ARNOLD FERNANDO OSCCO HUAUYA', 'Jr. Felipe Bargna Nro. 1120 - San Luis', 'a.oscco@consorciosyl.com.pe', '987733888', NULL, '987733888', NULL, 'DNI', '73258750', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-07 03:53:09', '2020-10-07 03:53:09'),
+(347, 'LYON FRUIT SAC', 'CALLAO', 'notiene@correo.es', '936080486', NULL, '936080486', NULL, 'DNI', '20601499658', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-07 05:30:38', '2020-10-07 05:30:38'),
+(348, 'D AJHELY ANGLES COTRINA', 'LIMA', 'dajhelyangles@gmail.com', '933110705', NULL, '933110705', NULL, 'DNI', '76183036', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-08 04:15:51', '2020-10-08 04:15:51'),
+(349, 'TERESA ARIAS ROJAS', 'Av. Bolivia Nro. 1006 - Breña', 'canalmuseal@gmail.com', '990281073', NULL, '990281073', NULL, 'DNI', '10352169', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-08 05:32:15', '2020-10-08 05:32:15'),
+(350, 'CESAR SALGADO SALAZAR', 'ATE', 'cass48781@gmail.com', '981123250', NULL, '981123250', NULL, 'DNI', '32138522', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-08 06:54:59', '2020-10-08 06:54:59'),
+(351, 'Suministros JLA', 'Lima', 'maxabadruiz86@gmail.com', '941152921', NULL, '941152921', NULL, 'DNI', '71314959', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-08 23:12:26', '2020-10-08 23:12:26'),
+(352, 'VERONICA MORENO VERA', 'Jr. Lampa Nro. 1012 Int. 164 - 165 - Lima', 'morenoveraveronica1990@gmail.com', '946231080', NULL, '946231080', NULL, 'DNI', '46781770', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-10 03:19:17', '2020-10-10 03:19:17'),
+(353, 'Eduardo Carvajal', 'Huaral', 'educarvajal@hotmail.com', '981511568', NULL, '981511568', NULL, 'DNI', 'ªªª', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-13 00:35:36', '2020-10-13 00:35:36'),
+(354, 'LITA ELIZABETH MUCHA SALINAS', 'VENTANILLA', 'litamucha16@gmail.com', '933503642', NULL, '933503642', NULL, 'DNI', '06777742', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-13 00:42:10', '2020-10-13 00:42:10'),
+(355, 'JOSE VIRGILIO CUMPA CUMPA', 'LOS OLIVOS', 'keikonapan86@gmail.com', '947303680', NULL, '947303680', NULL, 'DNI', 'ªªªª', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-13 23:56:52', '2020-10-13 23:56:52'),
+(356, 'JAMURY VILELA MORE', 'Jr.Camana Nro. 678 - Lima', 'serviciotecnico@mesajilhnos.com.pe', '994079109', NULL, '994079109', NULL, 'DNI', '75829532', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-14 01:07:54', '2020-10-14 01:07:54'),
+(357, 'JARUMY VILELA MORE', 'LIMA', 'servicio-tecnico@mesajilhnos.com.pe', '994079109', NULL, '994079109', NULL, 'DNI', '75829532.', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-14 01:09:54', '2020-10-14 01:09:54'),
+(358, 'Grace Silva Ochoa', 'Ate', 'elizabethjhudi@gmail.com', '945823157', NULL, '945823157', NULL, 'DNI', '43794639', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-14 02:49:04', '2020-10-14 02:49:04'),
+(359, 'Frank Hermoza', 'Lima', 'ronalhermoza69@gmail.com', '991817285', NULL, '991817285', NULL, 'DNI', '10299716', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-14 03:01:41', '2020-10-14 03:01:41'),
+(360, 'LOURDES PEREZ DIAZ', 'Mz. M1 Lt. 27 Mariscal Caceres - SJL', 'lourdes.designer.24@gmail.com', '943610083', NULL, '943610083', NULL, 'DNI', '46299076', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-14 03:44:29', '2020-10-14 03:44:29'),
+(361, 'ANA CECILIA ALTAMIRADO ESTACIO', 'Prolongacion Cahuide Mz. E Lt. 12 - Chorrillos', 'anaaltamirano1985@gmail.com', '925700420', NULL, '925700420', NULL, 'DNI', '43274694', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-15 00:02:08', '2020-10-15 00:02:08'),
+(362, 'BEST CABLE PERU SAC', 'SAN JUAN DE LURIGANCHO', 'garantias-lima@supertec.com.pe', '945512648', NULL, '945512648', NULL, 'DNI', '20601369231', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-15 00:11:13', '2020-10-15 00:11:13'),
+(363, 'Silvia Milagros  Espinoza', 'Villa Maria Del Triunfo', 'smespinozas@gmail.com', '935964360', NULL, '935964360', NULL, 'DNI', '42769133', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-15 00:31:21', '2020-10-15 00:31:21'),
+(364, 'Dirección ejecutiva de investigación Criminal', 'Lima', 'soporte@imerco.com.pe', '942885581', NULL, '942885581', NULL, 'DNI', '46731125', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-15 03:00:21', '2020-10-15 03:00:21'),
+(365, 'GERVY FLAVIO ZEVALLOS OCAMPO', 'Villa Militar Este Block Dpto. 201 - Chorrillos', 'gervy_zevallos@hotmail.com', '984832442', NULL, '984832442', NULL, 'DNI', '44099767', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-15 05:07:43', '2020-10-15 05:07:43'),
+(366, 'JAIME GUERRERO HUAMAN', 'Jr. San Fernando Nro. 197 - Los Olivos', 'jguerrero@sydney.pe', '976991046', NULL, '976991046', NULL, 'DNI', '10619833', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-15 05:36:56', '2020-10-15 05:36:56'),
+(367, 'Donato Alarco yuque', 'San juan de lurigancho', 'nO-tiene@correo.com.pe', '999367627', NULL, '999367627', NULL, 'DNI', '00088591', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-16 02:43:01', '2020-10-16 02:43:01'),
+(368, 'JOSE FRANCISCO MAGNONI JIMENEZ', 'CHORRILLOS', 'franciscomagnoni26@hotmail.com', '987112050', NULL, '987112050', NULL, 'DNI', '43086594', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-16 22:23:19', '2020-10-16 22:23:19'),
+(369, 'SEGURO SOCIAL DE SALUD', 'Av. Grau N° 351 - Lima', 'Luis.pequeno@essalud.gob.pe', '926737591', NULL, '926737591', NULL, 'DNI', 'ªªªªª', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-16 23:37:39', '2020-10-16 23:37:39'),
+(370, 'HUGO VERASTEGUI CASTILLO', 'LIMA', 'hugosoft2012@gmail.com', '981013980', NULL, '981013980', NULL, 'DNI', '33573600', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-17 01:07:56', '2020-10-17 01:07:56'),
+(371, 'Edith  Ramos Aponte', 'Lima', 'exhaps_25@hotmail.com', '936086884', NULL, '936086884', NULL, 'DNI', '43070870', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-17 04:54:26', '2020-10-17 04:54:26'),
+(372, 'JOE PAUL HENRIQUEZ VELA', 'SAN JUAN DE LURIGANCHO', 'notiene@gmail.com', '956245582', NULL, '956245582', NULL, 'DNI', '41919823', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-17 22:22:35', '2020-10-17 22:22:35'),
+(373, 'Sara  Chiroque', 'San Juan de lurigancho', 'No.tiene@ccorreo.com', '970440883', NULL, '970440883', NULL, 'DNI', '25852783', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-17 23:54:51', '2020-10-17 23:54:51'),
+(374, 'ROSENDO EDGAR CARILLO TORRES', 'Jr. Miguel Grau Nro. 167 - Carabayllo', 'edgarcarrillo851@gmail.com', '967275410', NULL, '967275410', NULL, 'DNI', '10215684', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-18 00:46:42', '2020-10-18 00:46:42'),
+(375, 'Emerson Eli Lazarte Druno', 'Villa Maria del Triunfo', 'lino_lw@hotmail.com', '933824209', NULL, '933824209', NULL, 'DNI', '45461830', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-20 03:12:09', '2020-10-20 03:12:09'),
+(376, 'FLOR CONDOR TRIVIÑOS', 'CHORRILLOS', 'florcontri@gmail.com', '960223926', NULL, '960223926', NULL, 'DNI', '48101652', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-20 04:50:48', '2020-10-20 04:50:48'),
+(377, 'IMPORTACIONES GENERALES HUACHIPA SAC', 'Las Torres Mz. K Lt. 6B - Lurigancho', 'importacioneshuachipa@hotmail.com', '987101293', NULL, '987101293', NULL, 'DNI', '20553187789', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-20 05:01:17', '2020-10-20 05:01:17'),
+(378, 'VICTOR CHACON MALENO', 'CARABAYLLO', 'vchacon873@gmail.com', '913001718', NULL, '913001718', NULL, 'DNI', '72902128', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-20 22:24:14', '2020-10-20 22:24:14'),
+(379, 'SAUL MARCELO CORREA VARGAS', 'Jr. Mullembreuck Nro. 559 Oxapampa - Pasco', 'cmarcelo688@gmail.com', '960186528', NULL, '960186528', NULL, 'DNI', '72152967', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-21 00:04:22', '2020-10-21 00:04:22'),
+(380, 'ISAAC URIOL PANDURO', 'Calle. Coroneo Nro. 235 - Villa Maria del Triunfo', 'isaacuriol92@gmail.com', '937301412', NULL, '937301412', NULL, 'DNI', '46927008', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-21 03:07:22', '2020-10-21 03:07:22'),
+(381, 'Maria  Soto', 'San Juan De Lurigancho', 'maria_14_4_4@hotmail.com', '984123235', NULL, '984123235', NULL, 'DNI', '46432876', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-22 02:17:27', '2020-10-22 02:17:27'),
+(382, 'MITMA VIÑA WENSESLAO MARCIAL', 'Jr. Granados Eumalia Mz. G Lt. 7 - San Juan de Lurigancho', 'damnemrod@gmail.com', '926727619', NULL, '926727619', NULL, 'DNI', '10707532373', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-22 05:09:12', '2020-10-22 05:09:12'),
+(383, 'Jose Luis Roque', 'Ate', 'joseluisenati@hotmail.com', '971358640', NULL, '971358640', NULL, 'DNI', '76018919', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-23 02:02:06', '2020-10-23 02:02:06'),
+(384, 'PEDRO COLLANTES MUÑOZ', 'Jr. Loreto Nro. 818 Urb. Collique - Comas', 'pedrock@outlook.com', '935084467', NULL, '935084467', NULL, 'DNI', '41814422', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-23 02:35:36', '2020-10-23 02:35:36'),
+(385, 'Richard Urbizagasstegui', 'Carabayllo', 'richarduf@hotmail.com', '945415693', NULL, '945415693', NULL, 'DNI', '39546707', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-23 02:40:14', '2020-10-23 02:40:14'),
+(386, 'EDDY GABRIEL ELIAS MOSCOSO', 'Calle. Suecia Nro. 1279 Dpto. 301 - Lima', 'eddyeliasmoscoso@gmail.com', '937437587', NULL, '937437587', NULL, 'DNI', '06780689', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-23 03:06:39', '2020-10-23 03:06:39'),
+(387, 'JANETH ISABEL SANCHEZ ESPINOZA', 'Mzx. LL Lt. 7 Sector 3 Villa Los Reyes - Ventanilla', 'isabelsanchez2706@gmail.com', '994181657', NULL, '994181657', NULL, 'DNI', '42870924', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-23 23:00:03', '2020-10-23 23:00:03'),
+(388, 'RENZO BOCANEGRA CASTROMONTE', 'LIMA', 'renzobocanegra@gmail.com', '982923924', NULL, '982923924', NULL, 'DNI', '72387699', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-24 00:01:21', '2020-10-24 00:01:21'),
+(389, 'OSCAR ALTAMIRANO ATAO', 'AA.HH Miguel Grau Mz. B Lt. 2 - SJL', 'altosa.2018@hotmail.com', '940305306', NULL, '940305306', NULL, 'DNI', '31186377', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-24 01:02:38', '2020-10-24 01:02:38'),
+(390, 'EMALY MAURICIO ORION', 'AV.san borja sur', 'emalym@hotmail.com', '996259559', NULL, '996259559', NULL, 'DNI', '42875716', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-24 23:16:17', '2020-10-24 23:16:17'),
+(391, 'GERARDO FRANCISCO TEJADA ROJAS', 'JESUS MARIA', 'gtejada170@gmail.com', '914743740', NULL, '914743740', NULL, 'DNI', '07254682', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-25 00:37:54', '2020-10-25 00:37:54'),
+(392, 'JOCHEBEB QUISPE TABOADA', 'SAN JUAN DE LURIGANCHO', 'jochebebquispetaboada@gmail.com', '949729806', NULL, '949729806', NULL, 'DNI', '46957344', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-27 00:05:54', '2020-10-27 00:05:54'),
+(393, 'CHRISTIAN BERROSPI MOLINA', 'VENTANILLA', 'el_xavi2005@hotmail.com', '960112105', NULL, '960112105', NULL, 'DNI', '41137891', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-28 00:13:50', '2020-10-28 00:13:50'),
+(394, 'CONSTRUYENDO CONSULTORA & CONSTRUCCION SAC', 'Calle. Maria Escobar Nro. 128 Int. 2 - San Miguel', 'e-montre@hotmail.com', '955966222', NULL, '955966222', NULL, 'DNI', '20486498821', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-28 00:41:01', '2020-10-28 00:41:01'),
+(395, 'GUILLERMO TRILLO RUIZ', 'SAN JUAN DE LURIGANCHO', 'quique_t_r@hotmail.com', '922920661', NULL, '922920661', NULL, 'DNI', '41411800', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-28 03:42:58', '2020-10-28 03:42:58'),
+(396, 'SMARGE IERL', 'ATE', 'smarge_jose@hotmail.com', '998029595', NULL, '998029595', NULL, 'DNI', '06262681', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-29 22:24:00', '2020-10-29 22:24:00'),
+(397, 'GEORGE HEBERT DOMINGUEZ GARCIA', 'Carabayllo', 'gdominguez_12xto@hotmail.com', '995079932', NULL, '995079932', NULL, 'DNI', '42722552', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-29 22:48:48', '2020-10-29 22:48:48'),
+(398, 'JOSE CARLOS SAAVEDRA VERDE', 'HUARAL', 'josec2082@gmail.com', '940786530', NULL, '940786530', NULL, 'DNI', '10420527247', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-30 00:48:11', '2020-10-30 00:48:11'),
+(399, 'ESTUDIO CONTABLE GUERRERO', 'santa anita', 'marco@estudiogeurrero.pe', '954701978', NULL, '954701978', NULL, 'DNI', '21289723', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-31 01:08:04', '2020-10-31 01:08:04'),
+(400, 'MD Maquinarias S.A.C', 'PASCO', 'paulavasquezespilco@gmail.com', '990990130', NULL, '990990130', NULL, 'DNI', '07449402', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-10-31 23:24:07', '2020-10-31 23:24:07'),
+(401, 'JESSICA MAGDALENA REGALADO ESPINOZA', 'Mz. M Lt. 1 Comite 3 Virgen del Carmen - El Agustino', 'jessi_x100pre_kd@hotmail.com', '932465965 - 992890501', NULL, '932465965 - 992890501', NULL, 'DNI', '47087456', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-02 23:26:13', '2020-11-02 23:26:13'),
+(402, 'JANET QUISPE', 'LIMA', 'mramirez@rashperu.com', '982097922', NULL, '982097922', NULL, 'DNI', '47062148', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-03 07:08:10', '2020-11-03 07:08:10'),
+(403, 'AZAL CONTRATISTAS GENERALES SAC', 'Jr. Pachacutec Nro. 130 Huarochiri - Lima', 'm.ramirez@rashperu.com', '982097922', NULL, '982097922', NULL, 'DNI', '20605838970', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-03 08:12:15', '2020-11-03 08:12:15'),
+(404, 'Linda  Vasquez Prado', 'Santa Anita', 'livapra2170@gmail.com', '984083802', NULL, '984083802', NULL, 'DNI', '&', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-03 08:17:11', '2020-11-03 08:17:11'),
+(405, 'VALLE GRANDE CONSTRUCTORES SAC', 'COMAS', 'laranitacorazon@hotmail.com', '921581774', NULL, '921581774', NULL, 'DNI', '20480750536', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-03 08:24:41', '2020-11-03 08:24:41'),
+(406, 'CHRISTIAN SEGURA DAMIAN', 'LA VICTORIA', 'soporte@promhil.com', '998176358', NULL, '998176358', NULL, 'DNI', '45505582', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-03 22:23:12', '2020-11-03 22:23:12'),
+(407, 'ASUNTA ALVAREZ ZEGARRA', 'Av. Bolivia Nro. 325 - Lima', 'asuntaalvarez@hotmail.com', '995548201', NULL, '995548201', NULL, 'DNI', '07653603', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-03 23:25:53', '2020-11-03 23:25:53'),
+(408, 'CHAVELY ISASI TUCTO', 'SAN JUAN DE LURIGANCHO', 'chavely.valeria.1996@gmail.com', '929573799', NULL, '929573799', NULL, 'DNI', '60652264', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-04 00:18:09', '2020-11-04 00:18:09'),
+(409, 'CARGA & LOGISTICA PERU SAC', 'SAN MIGUEL', 'ejecutivo.comercial2@cargalogistica.pe', '981083842', NULL, '981083842', NULL, 'DNI', '·', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-04 01:01:18', '2020-11-04 01:01:18'),
+(410, 'CONSORCIO NORTE', 'Jr. Santa Clara Nro. 983 - Lima', 'cr.ingenieros.consultores@gmail.com', '921661025', NULL, '921661025', NULL, 'DNI', '20606265744', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-04 02:22:17', '2020-11-04 02:22:17'),
+(411, 'DANNY BRAULIO RAMIREZ RISCO', 'CHANCAY', 'danny_bob7@hotmail.com', '982305725', NULL, '982305725', NULL, 'DNI', '43012163', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-04 03:13:31', '2020-11-04 03:13:31'),
+(412, 'JOAN MONTES GOMEZ', 'MAGDALENA', 'joanmontesg@gmail.com', '924044112', NULL, '924044112', NULL, 'DNI', '40991254', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-04 03:30:52', '2020-11-04 03:30:52'),
+(413, 'ANGEL SALAZAR QUIROZ', 'LOS OLIVOS', 'asqgraf@gmail.com', '982748318', NULL, '982748318', NULL, 'DNI', '45615205', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-04 04:36:25', '2020-11-04 04:36:25'),
+(414, 'William Edgar Tellez Telles', 'Cercado de Lima', 'centro_tecnologico@hotmail.com.pe', '947352788', NULL, '947352788', NULL, 'DNI', '41215653', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-04 05:39:12', '2020-11-04 05:39:12'),
+(415, 'LUIS OSWALDO PALOMINO NIETO', 'VILLA EL SALVADOR', 'OSWALDOPALOMINO98@GMAIL.COM', '987431482', NULL, '987431482', NULL, 'DNI', '77165213', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-04 22:11:44', '2020-11-04 22:11:44'),
+(416, 'Ruiz Enciso jacquelin Marcelo', 'Lurin', 'Jmrruiz29@hotmal.com', '935683723', NULL, '935683723', NULL, 'DNI', '43387754', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-06 00:39:41', '2020-11-06 00:39:41'),
+(417, 'HEIDI ZULEIMA HADI MOLINA', 'LIMA', 'ventas2@vpsi.com.pe', '967323586', NULL, '967323586', NULL, 'DNI', '003393902', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-06 22:32:08', '2020-11-06 22:32:08'),
+(418, 'MELISSA ARIAS ORTIZ', 'Av. Principal Mz. A Lt. 6 Campoy - SJL', 'melissa.ao88@gmail.com', '936627502', NULL, '936627502', NULL, 'DNI', '45335394', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-07 05:01:09', '2020-11-07 05:01:09'),
+(419, 'JOSE LUIS MEZARAIME HUAYCHA', 'RIMAC', 'joseluismezaraimehuaycha@gmail.com', '935578352', NULL, '935578352', NULL, 'DNI', '70807721', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-09 23:49:55', '2020-11-09 23:49:55'),
+(420, 'OMAR WALTER INFANTES VALENCIA', 'Jr. Enrique Arnaez Nro. 333 - SMP', 'omarinfantesv@gmail.com', '966343856', NULL, '966343856', NULL, 'DNI', '41154035', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-10 04:53:47', '2020-11-10 04:53:47'),
+(421, 'JYP Hatware y Software', 'LIMA', 'layllon@jphys.com', '01-3308769', NULL, '01-3308769', NULL, 'DNI', '20293126641', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-11 23:01:15', '2020-11-11 23:01:15'),
+(422, 'JOSE BERNILLA CARLOS', 'PUEBLO LIBRE', 'josecitobernillac07@gmail.com', '947452898', NULL, '947452898', NULL, 'DNI', '17452399', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-12 00:19:26', '2020-11-12 00:19:26'),
+(423, 'CREACIONES LAGUNA EIRL', 'Av. Los Naranjos Nro. 123 Canto Grande - SJL', 'jonatandavid18@gmail.com', '945813455', NULL, '945813455', NULL, 'DNI', '20250114657', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-12 02:31:44', '2020-11-12 02:31:44'),
+(424, 'JHONNY JOEL QUIROZ SANCHEZ', 'LIMA', 'jhonny_quiroz@outlook.com', '987373752', NULL, '987373752', NULL, 'DNI', '09944086', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-12 04:02:41', '2020-11-12 04:02:41'),
+(425, 'CESAR LLANOS CRUZ', 'LA VICTORIA', 'aquiestacesar@gmail.com', '990100969', NULL, '990100969', NULL, 'DNI', '40220282', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-14 05:06:24', '2020-11-14 05:06:24'),
+(426, 'Julio Cesar Huaman', 'Surco', 'juliohuamant@hotmail.com', '981887304', NULL, '981887304', NULL, 'DNI', '41022754', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-16 23:20:52', '2020-11-16 23:20:52'),
+(427, 'SONIA CCALLOCUNTO HUERTAS', 'JICAMARCA - HUAROCHIRI', 'augustogrone01@gmail.com', '902458426', NULL, '902458426', NULL, 'DNI', '10126970', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-17 04:57:20', '2020-11-17 04:57:20'),
+(428, 'PAREDESS CAPITAL EIRL', 'Calle. Jose Maria Quiroga Nro. 547 - Surco', 'smunoz@paredessgroup.com', '951696475', NULL, '951696475', NULL, 'ruc', '20604389705', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-18 00:53:30', '2020-11-18 00:53:30'),
+(429, 'TIENDAS AMSI DEL PERU SAC', 'Av. Venezuela Nro. 842 Int. 907 - Breña', 'dvergarasantos@hotmail.com', '946287742', NULL, '946287742', NULL, 'ruc', '20601282675', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-18 02:19:07', '2020-11-18 02:19:07'),
+(430, 'PROGRAMA SUBSECTORIAL DE IRRIGACIONES-PSI', 'Av. Republica de Chile Nro. 485 - Jesus Maria', 'mpuelles@psi.gob.pe', '958121159', NULL, '958121159', NULL, 'ruc', '20414868216', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-20 23:31:45', '2020-11-20 23:31:45'),
+(431, 'ROSARIO RAMOS COHAGUILA', 'Jr. Moquegua Nro. 157 Of. 307 - Lima', 'bielucy02@hotmail.com', '988085663', NULL, '988085663', NULL, 'DNI', '08727903', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-20 23:47:42', '2020-11-20 23:47:42'),
+(432, 'MULTISERVICIOS NIÑO ANGEL EIRL', 'Av. Principal Mz. P Lt. 20 - Surquillo', 'karolzela@gmail.com', '949155315', NULL, '949155315', NULL, 'DNI', '20549238301', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-21 03:56:33', '2020-11-21 03:56:33'),
+(433, 'ROSA VIOLETA BRACAMONTE RAMIREZ', 'Calle. El Pino Nro. 380 - El Agustino', 'rosabracamonte2002@yahoo.com', '991100489', NULL, '991100489', NULL, 'DNI', '07059700', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-21 04:57:30', '2020-11-21 04:57:30'),
+(434, 'SHEILA BERTHA DURAN SILVA', 'LIMA', 'sd.ranzoni@gmail.com', '940482186', NULL, '940482186', NULL, 'DNI', '10863453', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-21 05:04:49', '2020-11-21 05:04:49'),
+(435, 'ANTHONY BANCES RAMOS', 'SAN JUAN DE LURIGANCHO', 'bances_99@hotmail.com', '902509911', NULL, '902509911', NULL, 'DNI', '75544765', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-21 23:29:23', '2020-11-21 23:29:23'),
+(436, 'RICARDO DANIEL MONSALVE ARRIETA', 'CHACLACAYO', 'ricardo@moviracks.com', '902721408', NULL, '902721408', NULL, 'DNI', '46421037', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-22 00:56:05', '2020-11-22 00:56:05'),
+(437, 'OSCAR CASTAÑON MENDOZA', 'PUEBLO LIBRE', 'ocastanonm@gmail.com', '971232967', NULL, '971232967', NULL, 'DNI', '06017153', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-22 01:02:40', '2020-11-22 01:02:40'),
+(438, 'ROBERT PRADO PEREZ', 'EL AGUSTINO', 'no-tiene0@correo.com', '994641865', NULL, '994641865', NULL, 'DNI', '10460669', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-23 23:27:58', '2020-11-23 23:27:58'),
+(439, 'ENILDA LUCY SANCHEZ RODRIGUEZ', 'ANCON', 'sebi200048@gmail.com', '921964447', NULL, '921964447', NULL, 'DNI', '10629000', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-25 00:04:37', '2020-11-25 00:04:37'),
+(440, 'MANUEL GUSTAVO PINEDO CUBA', 'VILLA EL SALVADOR', 'manuel.pinedo2@unmsm.edu.pe', '971735570', NULL, '971735570', NULL, 'DNI', '73980056', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-25 05:19:40', '2020-11-25 05:19:40'),
+(441, 'Sheila Abigail Orihuela Calderon', 'Ate', 'abigail170415@gmail.com', '932117282', NULL, '932117282', NULL, 'DNI', '46887177', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-25 06:31:13', '2020-11-25 06:31:13'),
+(442, 'MINISTERIO PUBLICO', 'SAN MIGUEL', 'leslie_torres_13@hotmail.com', '942602482', NULL, '942602482', NULL, 'DNI', '05352465', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-25 22:46:42', '2020-11-25 22:46:42'),
+(443, 'ANGEL MANCO GONZALES', 'CAÑETE', 'angel-manco9@hotmail.com', '957238556', NULL, '957238556', NULL, 'DNI', '47823103', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-28 00:35:00', '2020-11-28 00:35:00'),
+(444, 'PERCY DEDIOS ANTON', 'JESUS MARIA', 'soporte@giatechpc.com', '991348234', NULL, '991348234', NULL, 'DNI', '41184954', NULL, NULL, NULL, NULL, NULL, NULL, NULL, '2020-11-28 00:46:37', '2020-11-28 00:46:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `configs`
+--
+
+CREATE TABLE `configs` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `fondo_perfil` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `borde_foto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `color_borde_foto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto_icono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto_perfil` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `letra` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tamano_letra` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tamano_letra_perfil` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color_sombra_nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `color_nombre` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `configs`
+--
+
+INSERT INTO `configs` (`id`, `fondo_perfil`, `borde_foto`, `color_borde_foto`, `foto_icono`, `foto_perfil`, `letra`, `tamano_letra`, `tamano_letra_perfil`, `color_sombra_nombre`, `color_nombre`, `created_at`, `updated_at`) VALUES
+(1, 'paisaje_noche.jpg', '3px', '#ffffff', 'defecto.png', '0', 'none', ' ', '12px ', '#000000 ', '#ffffff ', '2019-10-30 16:36:57', '2019-10-30 16:36:57'),
+(2, 'paisaje_noche.jpg', '3px', '#ffffff', 'defecto.png', '0', 'none', ' ', '12px ', '#000000 ', '#ffffff ', '2019-10-30 16:36:57', '2019-10-30 16:36:57'),
+(3, 'paisaje_noche.jpg', '3px', '#ffffff', 'defecto.png', '0', 'none', ' ', '12px ', '#000000 ', '#ffffff ', '2019-10-30 16:36:57', '2019-10-30 16:36:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `config_fe`
+--
+
+CREATE TABLE `config_fe` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `ruc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `usuario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `certificado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `config_fe`
+--
+
+INSERT INTO `config_fe` (`id`, `ruc`, `usuario`, `password`, `certificado`, `modo`, `created_at`, `updated_at`) VALUES
+(1, '20000000001', 'MODDATOS', 'moddatos', 'certificado/certificate.pem', 'FE_BETA', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `contactos`
+--
+
+CREATE TABLE `contactos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `primer_contacto` tinyint(1) NOT NULL DEFAULT '0',
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cargo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `celular` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `clientes_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `contactos`
+--
+
+INSERT INTO `contactos` (`id`, `primer_contacto`, `nombre`, `cargo`, `telefono`, `celular`, `email`, `clientes_id`, `created_at`, `updated_at`) VALUES
+(17, 1, 'manuel', 'gerente', '946201443', '946201443', 'manuel@re.com', 12, '2020-01-01 08:30:43', '2020-01-01 08:30:43'),
+(18, 1, 'Pablo quispe', '.', '0', '989898996', 'notiene@correo.com', 13, '2020-01-02 23:12:53', '2020-01-02 23:12:53'),
+(19, 1, 'WILBERT YUCRA TAIPE', 'CONTACTO', '0', '994170533', 'wilbert_wps@hotmail.com', 14, '2020-01-03 03:19:39', '2020-01-03 03:19:39'),
+(20, 1, 'Henry  Arteaga', 'TECNICO', '.', '960995995', 'bramdon@gmail.com', 15, '2020-01-04 03:44:40', '2020-01-04 03:44:40'),
+(21, 1, 'JHON ÑUFLO HEREDIA', 'usuario', '0', '955174461', 'nuflo1733@gmail.com', 16, '2020-01-04 22:20:16', '2020-01-04 22:20:16'),
+(22, 1, 'GUADALUPE BETZY ZAVALA LAURO', 'usuario', '940213152', '940213152', 'guadalupe95_28@hotmail.com', 17, '2020-01-06 23:20:32', '2020-01-06 23:20:32'),
+(23, 1, 'Ardulu  Guerra', 'usuario', '951714373', '951714373', 'coordinador.migracioneslima@cruzrojaorg.pe', 18, '2020-01-07 02:18:04', '2020-01-07 02:18:04'),
+(24, 1, 'CARLOS BERROCAL SOTO', 'usuario', '999949889', '999949889', 'carlosalberto.2175berrocal@gmail.com', 19, '2020-01-07 03:41:03', '2020-01-07 03:41:03'),
+(25, 1, 'Hamlet  Gutierrez', 'Usuario', '986560886', '986560886', 'hamlet.gutierrez@texpima.com', 20, '2020-01-08 00:54:53', '2020-01-08 00:54:53'),
+(26, 1, 'Milagros Almeyda Hurtado', 'Usuario', '923276503', '923276503', 'milagros_almeyda_h_26@hotmail.com', 21, '2020-01-08 06:02:13', '2020-01-08 06:02:13'),
+(27, 1, 'YASCHVALY CORAL', 'Usuario', '989452864', '989452864', 'yasbaly@gmail.com', 22, '2020-01-08 06:20:04', '2020-01-08 06:20:04'),
+(28, 1, 'GUSTAVO TORNERO', 'Usuario', '949243821', '949243821', 'gersontk20@gmail.com', 23, '2020-01-09 00:09:08', '2020-01-09 00:09:08'),
+(29, 1, 'WILMER YUPANQUI', 'Usuario', '994456400', '994456400', 'lineagrafica@contabilidad.com', 24, '2020-01-09 04:12:49', '2020-01-09 04:12:49'),
+(30, 1, 'Jose Adolfo Valenzuela', 'usuario', '958790145', '958790145', 'jadolfovg@hotmail.com', 25, '2020-01-09 04:24:19', '2020-01-09 04:24:19'),
+(31, 1, 'CLAUDIO SALINAS ESTRADA', 'USUARIO', '959774530', '959774530', 'claudiodisck@hotmail.com', 26, '2020-01-11 00:45:08', '2020-01-11 00:45:08'),
+(32, 1, 'MIGUEL ANGEL PASION AVENDAÑO', 'usuario', '994152582', '994152582', 'lineaebriel@hotmail.com', 27, '2020-01-12 01:07:28', '2020-01-12 01:07:28'),
+(33, 1, 'WILBERT YUCRA TAIPE', 'Usuario', '994170533', '994170533', 'wilbert_wps@hotmail.com', 28, '2020-01-14 02:35:11', '2020-01-14 02:35:11'),
+(34, 1, 'ROY YAGUNO LAYME', 'Usuario', '981043385', '981043385', 'royyaguno495@gmail.com', 29, '2020-01-14 22:33:52', '2020-01-14 22:33:52'),
+(35, 1, 'FERNANDO PACHAS ARIAS', 'Usuario', '991402070', '991402070', 'fernando_par@hotmail.com', 30, '2020-01-14 23:53:37', '2020-01-14 23:53:37'),
+(36, 1, 'JESUS PEREZ', 'Usuario', '947284351', '947284351', 'jperez@serviestiba.pe', 31, '2020-01-15 23:34:12', '2020-01-15 23:34:12'),
+(37, 1, 'Maria Gisela  Alania Contreras', 'Usuario', '950450452', '950450452', 'giselaalaniacontreras@gmail.com', 32, '2020-01-16 03:05:56', '2020-01-16 03:05:56'),
+(38, 1, 'ELMER BRANDON BACA QUISPE', 'Usuario', '992331493', '992331493', 'soporte@eac.com.pe', 33, '2020-01-16 06:16:56', '2020-01-16 06:16:56'),
+(39, 1, 'EDUARDO RODRIGUEZ', 'Usuario', '989954138', '989954138', 'erodriguezre@pj.gob.pe', 34, '2020-01-17 00:15:20', '2020-01-17 00:15:20'),
+(40, 1, 'JOHN CONTRERAS MORI', 'Usuario', '991233108', '991233108', 'john_soporte@hotmail.com', 35, '2020-01-17 03:18:03', '2020-01-17 03:18:03'),
+(41, 1, 'JOHAN ROSALES HILARIO', 'Usuario', '998148707', '998148707', 'garantiaslima@supertec.com.pe', 36, '2020-01-17 06:36:26', '2020-01-17 06:36:26'),
+(42, 1, 'ANABEL ROCIO SUAREZ FERNANDEZ', 'Usuario', '977833357', '977833357', 'no.tiene@correo.com', 37, '2020-01-17 23:55:00', '2020-01-17 23:55:00'),
+(49, 1, 'NERI MARILI SANTIAGO CAMONES', 'Usuario', '916475150', '916475150', 'gruposantiagosac@gmail.com', 44, '2020-01-19 00:29:31', '2020-01-19 00:29:31'),
+(51, 1, 'ABEL LUIS FLORES OCHOA', 'Usuario', '986996643', '986996643', 'abelluis-10@hotmail.com', 46, '2020-01-20 22:57:57', '2020-01-20 22:57:57'),
+(52, 1, 'JESUS VELEZ SARMIENTO', 'Usuario', '949278789', '949278789', 'tatovel@aolock.com', 47, '2020-01-21 04:24:51', '2020-01-21 04:24:51'),
+(53, 1, 'JOSE PALOMINO SOTO', 'Usuario', '4233967', '4233967', 'j.palomino@supertec.com.pe', 48, '2020-01-21 23:26:40', '2020-01-21 23:26:40'),
+(54, 1, 'MARLENY CHONTAY CRISTOBAL', 'Usuario', '992001014', '992001014', 'marlenychontay@gmail.com', 49, '2020-01-22 04:27:19', '2020-01-22 04:27:19'),
+(55, 1, 'BANCES MORENO RONAL', 'Usuario', '994133341', '994133341', 'ronalbances@hotmail.com', 50, '2020-01-22 04:45:39', '2020-01-22 04:45:39'),
+(56, 1, 'Juan Martin  Vara Marquez', 'Usuario', '978216816', '978216816', 'jmvaram@gmail.com', 51, '2020-01-23 02:36:40', '2020-01-23 02:36:40'),
+(57, 1, 'JEFF FERNANDEZ VARGAS', 'Usuario', '924374381', '924374381', 'jfernandez@superrep.nl', 52, '2020-01-23 03:56:16', '2020-01-23 03:56:16'),
+(58, 1, 'MILAGRO NAVIO ROMAN', 'Usuario', '977706223', '977706223', 'gladys_navio@hotmail.com', 53, '2020-01-23 05:34:59', '2020-01-23 05:34:59'),
+(59, 1, 'Graciela Cabrera Serrano', 'Usuario', '953347652', '953347652', 'cabreraserranograciela@gmail.com', 54, '2020-01-25 02:33:24', '2020-01-25 02:33:24'),
+(60, 1, 'ANGEL CHOQUEZ MUÑOZ', 'Usuario', '997393654', '997393654', 'achoquez@jphys.com', 55, '2020-01-25 03:41:44', '2020-01-25 03:41:44'),
+(61, 1, 'Jhoseline  Flores', 'Usuario', '928076088', '928076088', 'jhoselinegfl@gmail.com', 56, '2020-01-25 04:41:17', '2020-01-25 04:41:17'),
+(62, 1, 'CRAIG AITMAN', 'Usuario', '998214444', '998214444', 'mutipernosac@hotmail.com', 57, '2020-01-27 22:54:17', '2020-01-27 22:54:17'),
+(63, 1, 'YURI MANUEL MONTENEGRO BARRANTES', 'Usuario', '980318980', '980318980', 'yuripontenegro@hotmail.com', 58, '2020-01-28 00:02:06', '2020-01-28 00:02:06'),
+(64, 1, 'PABLO BENEDICTO PEÑA FLORES', 'Usuario', '994127538', '994127538', 'pablo15pe@hotmail.com', 59, '2020-01-28 02:27:35', '2020-01-28 02:27:35'),
+(65, 1, 'GUIDO MARCOS VILLAFUERTE LEON', 'Usuario', '997370378', '997370378', 'guilla.leon@gmail.com', 60, '2020-01-28 03:03:34', '2020-01-28 03:03:34'),
+(66, 1, 'Elmer Altamirano Coronado', 'Usuario', '934593780', '934593780', 'elmeraltcor_13@hotmail.com', 61, '2020-01-29 04:52:26', '2020-01-29 04:52:26'),
+(67, 1, 'Joana Gastelo', 'Usuario', '940706510', '940706510', 'yovanita_1722@hotmail.com', 62, '2020-01-29 06:36:11', '2020-01-29 06:36:11'),
+(68, 1, 'JESUS MARTIN ALVAREZ HURTADO', 'Usuario', '944981533', '944981533', 'jesusmartinah18@gmail.com', 63, '2020-01-30 01:03:47', '2020-01-30 01:03:47'),
+(69, 1, 'DANIEL JESUS VEGA AVENDAÑO', 'Usuario', '959969810', '959969810', 'djva1707@hotmail.com', 64, '2020-01-30 23:10:42', '2020-01-30 23:10:42'),
+(70, 1, 'LUCIA OTILIA CHINO CCANSAYA', 'Usuario', '952914242', '952914242', 'lucia.o.chi.cc@gmail.com', 65, '2020-02-01 00:36:15', '2020-02-01 00:36:15'),
+(71, 1, 'JOAQUIN GONZALEZ PEREZ', 'Usuario', '998745612', '998745612', 'jgp@gmail.com', 66, '2020-02-02 00:01:46', '2020-02-02 00:01:46'),
+(72, 1, 'JUAN JOSE JIMENEZ SANTOS', 'Usuario', '978456123', '978456123', 'Juanjose20@gmail.com', 67, '2020-02-02 00:12:07', '2020-02-02 00:12:07'),
+(73, 1, 'Carlos Ismael Coello Chang', 'Usuario', '993475602', '993475602', 'carloscoellochang@gmail.com', 68, '2020-02-04 00:27:58', '2020-02-04 00:27:58'),
+(74, 1, 'YVAN DURAN VARGAS', 'Usuario', '912262671', '912262671', 'sistemas@lavanderialandeo.com', 69, '2020-02-04 05:47:40', '2020-02-04 05:47:40'),
+(75, 1, 'F.P.TECNOLOGI & SYSTEM S.A.C', 'Usuario', '955096626', '955096626', 'logistica@fptecnologi.com', 70, '2020-02-04 23:09:23', '2020-02-04 23:09:23'),
+(76, 1, 'ALL PRINT SHOP SOCIEDAD ANONIMA CERRADA', 'Usuario', '939433948', '939433948', 'ventas.allprintshop@gmail.com', 71, '2020-02-04 23:25:15', '2020-02-04 23:25:15'),
+(77, 1, 'JACK AGUILAR', 'Usuario', '989208050', '989208050', 'SISTEMAS@RYRQUIMICOS .COM', 72, '2020-02-05 00:39:48', '2020-02-05 00:39:48'),
+(78, 1, 'JESUS ALVARADO LEON', 'Usuario', '953965617', '953965617', 'jial_ivan@hotmail.com.com', 73, '2020-02-05 01:01:00', '2020-02-05 01:01:00'),
+(79, 1, 'PETRO REAL GAS E.I.R.L', 'Usuario', '937504719', '937504719', 'gchavez@corgassac.com', 74, '2020-02-05 03:29:59', '2020-02-05 03:29:59'),
+(80, 1, 'CARLOS VASQUEZ JURADO', 'Usuario', '950693430', '950693430', 'carlosfvasquezj@hotmail.com', 75, '2020-02-05 07:51:30', '2020-02-05 07:51:30'),
+(81, 1, 'Herles  Pizarro', 'Usuario', '993508579', '993508579', 'herlespizarro@hotmail.com', 76, '2020-02-06 03:33:02', '2020-02-06 03:33:02'),
+(82, 1, 'CARLOS BRAYAN VENEGAS CONDE', 'Usuario', '979710854', '979710854', 'carlos.venegasc@hotmail.com', 77, '2020-02-06 04:19:17', '2020-02-06 04:19:17'),
+(83, 1, 'JENNY CALDERÓN KANO', '946431429', '946431429', '946431429', 'jcalderon@maxlinerperu.com', 78, '2020-02-06 04:32:52', '2020-02-06 04:32:52'),
+(84, 1, 'Orden de Servicio #C0007461 Nombre de Cliente:', 'Usuario', '917335459', '917335459', 'diegocrespoadm@gmail.com', 79, '2020-02-06 06:47:32', '2020-02-06 06:47:32'),
+(85, 1, 'POOL AQUINO GONZALES', 'Usuario', '952170318', '952170318', 'gerencia@grupo-construir.com', 80, '2020-02-07 03:12:52', '2020-02-07 03:12:52'),
+(86, 1, 'RAUL CAILLAHUA CASAFRANCA', 'Usuario', '960162966', '960162966', 'autofocus2000@gmail.com', 81, '2020-02-07 06:25:09', '2020-02-07 06:25:09'),
+(87, 1, 'GIANCARLOS PARCO DE LA CRUZ', 'Usuario', '928380927', '928380927', 'cyemagdalena@hotmail.com', 82, '2020-02-08 05:26:09', '2020-02-08 05:26:09'),
+(88, 1, 'GABRIEL RIMACHI', 'Usuario', '913028618', '913028618', 'Notiene@correo.com.pe', 83, '2020-02-08 05:42:48', '2020-02-08 05:42:48'),
+(89, 1, 'LUIS MIGUEL MAYHUA PALOMINO', 'Usuario', '941729389', '941729389', 'luismiguel-0812@hotmail.com', 84, '2020-02-11 03:58:47', '2020-02-11 03:58:47'),
+(90, 1, 'KEVIN JARA NOEL', 'Usuario', '950804080', '950804080', 'kevlin25@hotmail.com', 85, '2020-02-11 06:03:01', '2020-02-11 06:03:01'),
+(91, 1, 'Jeahn  Albornoz', 'Usuario', '910378937', '910378937', 'ventas4@fptecnologi.com', 86, '2020-02-11 23:25:40', '2020-02-11 23:25:40'),
+(92, 1, 'EDIBERTO CARRANZA VALLEJOS', 'Usuario', '990695248', '990695248', 'carranzave@gmail.com', 87, '2020-02-12 00:12:01', '2020-02-12 00:12:01'),
+(93, 1, 'PATRICIA DOMINGA PINTO DAVILA', 'Usuario', '988757527', '988757527', 'paty2903@hotmail.com', 88, '2020-02-12 04:39:35', '2020-02-12 04:39:35'),
+(94, 1, 'Yessica  Huaman Flores', 'Usuario', '986821670', '986821670', 'consor.norteno17@gmail.com', 89, '2020-02-13 00:09:15', '2020-02-13 00:09:15'),
+(95, 1, 'WILIAN DAVID CABANA PALOMINO', 'Usuario', '991181512', '991181512', 'wiliam.cabana@fuanmena.com', 90, '2020-02-13 03:29:30', '2020-02-13 03:29:30'),
+(96, 1, 'Edgar Lasteros Quezada', 'Usuario', '931981771', '931981771', 'kalebb2013@gmail.com', 91, '2020-02-13 05:45:36', '2020-02-13 05:45:36'),
+(97, 1, 'JORGE MENDOZA', 'Usuario', '985776902', '985776902', 'jmendozamatos@gmail.com', 92, '2020-02-13 23:42:02', '2020-02-13 23:42:02'),
+(98, 1, 'WILFREDO MILLA', 'Usuario', '993475645', '993475645', 'wmilla@certifical.com.pe', 93, '2020-02-13 23:46:20', '2020-02-13 23:46:20'),
+(99, 1, 'Maura Leonor Suarez', 'Usuario', '960634481', '960634481', 'maura_suarez@live.com', 94, '2020-02-16 00:50:06', '2020-02-16 00:50:06'),
+(100, 1, 'Percy  Gavilan', 'Usuario', '940305993', '940305993', 'pgavilan@continentalperu.com', 95, '2020-02-18 03:45:12', '2020-02-18 03:45:12'),
+(101, 1, 'LUIS ALBERTO IPANAQUE OLIVARES', 'Usuario', '984305520', '984305520', 'luispoljlv@gmail.com', 96, '2020-02-18 03:56:39', '2020-02-18 03:56:39'),
+(102, 1, 'JULIO MORALES IZAGUIRRE', 'Usuario', '989013780', '989013780', 'proyectos.vikingo@gmail.com', 97, '2020-02-18 23:57:50', '2020-02-18 23:57:50'),
+(103, 1, 'MIRIAM EDITH SANCHEZ LEIVA', 'Usuario', '938457766', '938457766', 'agongora86@gmail.com', 98, '2020-02-19 01:03:28', '2020-02-19 01:03:28'),
+(104, 1, 'MIRIAM MENDOZA SUAREZ', 'Usuario', '955994688', '955994688', 'miriam.mendoza24@outlook.com', 99, '2020-02-19 22:49:38', '2020-02-19 22:49:38'),
+(105, 1, 'FEDERICO LEON', 'Usuario', '948579739', '948579739', 'fleon@yobelsam.biz', 100, '2020-02-20 02:45:34', '2020-02-20 02:45:34'),
+(106, 1, 'ERICK PONCE SANCHEZ', 'Usuario', '927526326', '927526326', 'epons@outlook.com', 101, '2020-02-20 05:32:43', '2020-02-20 05:32:43'),
+(107, 1, 'WILMER HERIA', 'Usuario', '931182714', '931182714', 'no-tiene@correo.com', 102, '2020-02-20 23:54:33', '2020-02-20 23:54:33'),
+(108, 1, 'JUAN CARLOS  CONTRERAS MATIAS', 'Usuario', '933434808', '933434808', 'juan.contreras@heves.gob.pe', 103, '2020-02-21 04:01:44', '2020-02-21 04:01:44'),
+(109, 1, 'JULIO MENDOZA MONDRAGON', 'Usuario', '924122141', '924122141', 'julitomendozamondragon@gmail.com', 104, '2020-02-21 05:26:10', '2020-02-21 05:26:10'),
+(110, 1, 'MIGUEL YI CHOI', 'Usuario', '999048491', '999048491', 'miguelyi@yahoo.com', 105, '2020-02-21 22:40:43', '2020-02-21 22:40:43'),
+(111, 1, 'MARTIN BALAREZO YANGUA', 'Usuario', '977473236', '977473236', 'mbalarezo363@gmail.com', 106, '2020-02-21 22:49:01', '2020-02-21 22:49:01'),
+(112, 1, 'CALEB CACHAY ACUÑA', 'Usuario', '989233219', '989233219', 'calebcachay@teologia.edu.pe', 107, '2020-02-21 22:53:30', '2020-02-21 22:53:30'),
+(113, 1, 'GUILIANO ANICAMA', 'Usuario', '998175030', '998175030', 'upgradesoporte@hotmail.com', 108, '2020-02-22 06:02:24', '2020-02-22 06:02:24'),
+(114, 1, 'RAFAEL ROBLES CRESPO', 'Usuario', '913009056', '913009056', 'marketing@ecofertilizing.com', 109, '2020-02-22 23:48:16', '2020-02-22 23:48:16'),
+(115, 1, 'MARISOL FLORINDA PURIS MACHACUAY', 'Usuario', '952203842', '952203842', 'p_13_07@hotmail.com', 110, '2020-02-25 04:39:04', '2020-02-25 04:39:04'),
+(116, 1, 'JESSICA VIRQUEZ VILCA', 'Usuario', '987934084', '987934084', 'ventas@vpsi.com.pe', 111, '2020-02-25 23:12:43', '2020-02-25 23:12:43'),
+(117, 1, 'MARIA LUZ NAUTO DIAZ', 'Usuario', '978949229', '978949229', 'aneltoledo26@gmail.com', 112, '2020-02-26 05:46:49', '2020-02-26 05:46:49'),
+(118, 1, 'Juan Pablo  Palomino Cruzada', 'Usuario', '990417986', '990417986', 'juan.palomino@redscoperu.com', 113, '2020-02-27 00:24:42', '2020-02-27 00:24:42'),
+(119, 1, 'JOHAN  ROSALES HILARIO', 'Usuario', '998148707', '998148707', 'garantialima@supertec.com.pe', 114, '2020-02-27 03:31:18', '2020-02-27 03:31:18'),
+(120, 1, 'Nathaly  Chiara Yman', 'Usuario', '992610694', '992610694', 'naty_30402@hotmail.com', 115, '2020-02-27 04:06:11', '2020-02-27 04:06:11'),
+(121, 1, 'MARCO GARCIA MATOS', 'Usuario', '982068496', '982068496', 'mgarcia@myprintperu.com', 116, '2020-02-27 05:51:23', '2020-02-27 05:51:23'),
+(122, 1, 'JACKELINE VARGAS ARIAS', 'Usuario', '922467867', '922467867', 'no.tiene1@correo.com', 117, '2020-02-28 03:15:10', '2020-02-28 03:15:10'),
+(123, 1, 'WALTER MAMANI', 'Usuario', '987926083', '987926083', 'walter.mamani@pentatechsac.com', 118, '2020-02-28 03:35:51', '2020-02-28 03:35:51'),
+(124, 1, 'BRYAN AQUINO CONDE', 'Usuario', '990104815', '990104815', 'juanaquino.1297@gmail.com', 119, '2020-02-28 03:53:54', '2020-02-28 03:53:54'),
+(125, 1, 'JAVIER GUSTAVO REMUZGO', 'Usuario', '988357779', '988357779', 'javier_18_2008@hotmail.com', 120, '2020-02-28 22:41:31', '2020-02-28 22:41:31'),
+(126, 1, 'MARIO CHAVEZ BUSTAMANTE', 'Usuario', '946552222', '946552222', 'malih_26@gmail.com', 121, '2020-02-28 23:09:09', '2020-02-28 23:09:09'),
+(127, 1, 'ARACI ANTO POMA', 'Usuario', '960126109', '960126109', 'no*tiene@correo.com', 122, '2020-02-29 00:49:34', '2020-02-29 00:49:34'),
+(128, 1, 'MARIA INCA CALLUPE', 'Usuario', '940925926', '940925926', 'mariainca120@gmail.com', 123, '2020-03-01 01:09:54', '2020-03-01 01:09:54'),
+(129, 1, 'BERTHA BERMUDEZ MORI', 'Usuario', '969604688', '969604688', 'ber_tha52@hotmail.com', 124, '2020-03-02 23:59:03', '2020-03-02 23:59:03'),
+(130, 1, 'WILMER MENDOZA MONTALVO', 'Usuario', '948168245', '948168245', 'wmendoza@aris.com.pe', 125, '2020-03-03 01:06:32', '2020-03-03 01:06:32'),
+(131, 1, 'RONALD DAVID BERNA DOMINGUEZ', 'Usuario', '985157407', '985157407', 'jhobed_111@hotmail.com', 126, '2020-03-03 02:21:07', '2020-03-03 02:21:07'),
+(132, 1, 'MARTIN MUÑOZ JAUREGUI', 'Usuario', '948565793', '948565793', 'martinmunoz@yahoo.com', 127, '2020-03-03 02:45:53', '2020-03-03 02:45:53'),
+(133, 1, 'EDUARDO TAICO VENTURA', 'Usuario', '975389696', '975389696', 'bruvatc@gmail.com', 128, '2020-03-03 03:10:43', '2020-03-03 03:10:43'),
+(134, 1, 'VILMA PALOMINO GOMEZ', 'Usuario', '999186832', '999186832', 'vilmapg66@hotmail.com', 129, '2020-03-04 03:39:39', '2020-03-04 03:39:39'),
+(135, 1, 'Isabel Oliva Morales', 'Usuario', '953732892', '953732892', 'pili101102@outlook.com', 130, '2020-03-04 03:57:41', '2020-03-04 03:57:41'),
+(136, 1, 'GABRIEL JURUPE ALATA', 'Usuario', '924948796', '924948796', 'gjurupe@yahoo.es', 131, '2020-03-04 05:16:11', '2020-03-04 05:16:11'),
+(139, 1, 'Roció Rodríguez Arias', 'Usuario', '991462548', '991462548', 'tallerpcperu@hotmail.com', 134, '2020-03-06 06:32:20', '2020-03-06 06:32:20'),
+(140, 1, 'JORGE ALBERTO VASQUEZ NUÑEZ', 'Usuario', '983458780', '983458780', 'jorvasnu@gmail.com', 135, '2020-03-06 23:04:32', '2020-03-06 23:04:32'),
+(141, 1, 'ANALI PAMELA VALERIO MACURI', 'Usuario', '923555361', '923555361', 'anelivaleri2018@gmail.com', 136, '2020-03-07 23:36:28', '2020-03-07 23:36:28'),
+(142, 1, 'MAYBELLINE JHORBIANA GARCIA DEL AGUILA', 'Usuario', '998243490', '998243490', 'ventas@metelperu.com.pe', 137, '2020-03-07 23:40:23', '2020-03-07 23:40:23'),
+(143, 1, 'MARCO CALDERON ORE', 'Usuario', '949161438', '949161438', 'marcocalderonore@gmail.com', 138, '2020-03-09 22:24:34', '2020-03-09 22:24:34'),
+(144, 1, 'jorge luna', 'Usuario', '987456321', '987456321', 'byronmallma@hotmail.com.pe', 139, '2020-03-10 03:21:03', '2020-03-10 03:21:03'),
+(145, 1, 'jose ore', 'Usuario', '74125896', '74125896', 'byronmallma@hotmail.es', 140, '2020-03-10 03:22:44', '2020-03-10 03:22:44'),
+(146, 1, 'MILLER MINAYA', 'Usuario', '993467148', '993467148', 'zerosfdk990@gmail.com', 141, '2020-03-10 03:34:27', '2020-03-10 03:34:27'),
+(147, 1, 'lady ramos', 'Usuario', '987321495', '987321495', 'ladyr@gmail.com', 142, '2020-03-10 03:36:51', '2020-03-10 03:36:51'),
+(148, 1, 'OMAR LOPEZ GUERRERO', 'Usuario', '961373205', '961373205', 'lopezguerreroerickomar@gmail.com', 143, '2020-03-10 06:24:52', '2020-03-10 06:24:52'),
+(149, 1, 'DAVID REYNA OSORIO', 'Usuario', '9130001732', '9130001732', 'dreyna.o@outlook.es', 144, '2020-03-11 03:48:23', '2020-03-11 03:48:23'),
+(150, 1, 'CESAR FLORES MIRANDA', 'Usuario', '948891050', '948891050', 'tic@fresomac.com', 145, '2020-03-11 05:31:31', '2020-03-11 05:31:31'),
+(151, 1, 'WALTER CASAVILCA DE LA CRUZ', 'Usuario', '953591956', '953591956', 'walter_casavilca@hotmail.com', 146, '2020-03-12 04:26:17', '2020-03-12 04:26:17'),
+(152, 1, 'MIGUEL PALOMAR', 'Usuario', '998713522', '998713522', 'valoragregadosac@hotmail.com', 147, '2020-03-12 06:35:30', '2020-03-12 06:35:30'),
+(153, 1, 'VICTOR RAUL MONTERO MENA', 'Usuario', '991240577', '991240577', 'chsalternativo@chsalternativo.org', 148, '2020-03-14 04:15:48', '2020-03-14 04:15:48'),
+(154, 1, 'JHOSSEPH SAN MARTIN', 'Usuario', '944956466', '944956466', 'j.andresanval@gmail.com', 150, '2020-03-14 05:33:48', '2020-03-14 05:33:48'),
+(155, 1, 'ALEX PIZARRO QUISPE', 'Usuario', '936879448', '936879448', 'jgarantia@impacto.com.pe', 151, '2020-03-14 23:52:32', '2020-03-14 23:52:32'),
+(156, 1, 'CARLOS SAAVEDRA', 'Usuario', '963676939', '963676939', 'carlosbenito949@gmail.com', 152, '2020-07-06 23:00:54', '2020-07-06 23:00:54'),
+(157, 1, 'REYES GONZALES LIDIA JUANA', 'Usuario', '975072488', '975072488', 'lidia_reyes24@hotmail,com', 153, '2020-07-10 02:23:21', '2020-07-10 02:23:21'),
+(158, 1, 'MAGNO PALOMINO CHAMBI', 'Usuario', '948906395', '948906395', 'magno.pch@gmail.com', 154, '2020-07-10 03:35:28', '2020-07-10 03:35:28'),
+(159, 1, 'Lucy Margot Conde Torres', 'Usuario', '987422311', '987422311', 'lucyfer.conde666@gmail.com', 155, '2020-07-10 06:44:06', '2020-07-10 06:44:06'),
+(160, 1, 'ALBERTO CHAVEZ MAMANI', 'Usuario', '999255423', '999255423', 'betoss.separ@gmail.com', 156, '2020-07-10 06:54:29', '2020-07-10 06:54:29'),
+(161, 1, 'CESAR AUGUSTO RAMOS MEDRANO', 'Usuario', '928305248', '928305248', 'auroralopezblas@gmail.com', 157, '2020-07-14 00:18:30', '2020-07-14 00:18:30'),
+(162, 1, 'VICTORIA MORVELI HUILLCA', 'Usuario', '959085429', '959085429', 'vicky_vmh@hotmail.com', 158, '2020-07-14 23:11:40', '2020-07-14 23:11:40'),
+(163, 1, 'FREDDY CRUZATE LUDEÑA', 'Usuario', '981026152', '981026152', 'fcruzate@cecosami.com', 159, '2020-07-14 23:53:06', '2020-07-14 23:53:06'),
+(164, 1, 'RICARDO ELIAS', 'Usuario', '948482720', '948482720', 'riceli_@hotmail.com', 160, '2020-07-15 01:57:15', '2020-07-15 01:57:15'),
+(165, 1, 'Vanessa Salcedo', 'Usuario', '924101602', '924101602', 'salcedo.roca.vane@gmail.com', 161, '2020-07-15 02:29:26', '2020-07-15 02:29:26'),
+(166, 1, 'JHONNY ESLAVA JORGE', 'Usuario', '998275551', '998275551', 'jho-es63@hotmail.com', 162, '2020-07-15 02:39:08', '2020-07-15 02:39:08'),
+(167, 1, 'DEISSY NIETO LOAYZA', 'Usuario', '987569106', '987569106', 'deyssi_1784@hotmail.com', 163, '2020-07-15 23:42:35', '2020-07-15 23:42:35'),
+(168, 1, 'HANS EDUARDO REVOREDO. MAROZA', 'Usuario', '910928670', '910928670', 'hrevoredomaroza@gmail.com', 164, '2020-07-18 23:33:42', '2020-07-18 23:33:42'),
+(169, 1, 'CELINDA. MILAGROS ESCUDERO RETO', 'Usuario', '967701325', '967701325', 'cescuderoreto@gmail.com', 165, '2020-07-18 23:37:06', '2020-07-18 23:37:06'),
+(170, 1, 'DAVID. GUSTAVO SANCHEZ ALMEYDA', 'Usuario', '977238687', '977238687', 'gerencia@damisaperu.com', 166, '2020-07-18 23:47:36', '2020-07-18 23:47:36'),
+(171, 1, 'Christian. Ramirez Huapaya', 'Usuario', '992779273', '992779273', 'chramirez@speedy.com.pe', 167, '2020-07-18 23:50:17', '2020-07-18 23:50:17'),
+(172, 1, 'Marco Antonio Caceres Gonzales', 'Usuario', '981872525', '981872525', 'marcoantoniocaceres@gmail.com', 168, '2020-07-19 00:00:46', '2020-07-19 00:00:46'),
+(173, 1, 'NIL HENRRY RUIZ OYOLA', 'Usuario', '960278665', '960278665', 'nil_15@hotmail.com', 169, '2020-07-20 22:51:04', '2020-07-20 22:51:04'),
+(174, 1, 'GLADIS BARRIENTOS HERRERA', 'Usuario', '992463103', '992463103', 'gladis_1221@hotmail.com', 170, '2020-07-21 01:00:34', '2020-07-21 01:00:34'),
+(175, 1, 'MARCO ANTONIO LAZO JIMENEZ', 'Usuario', '996513181', '996513181', 'marcoslazo32@homail.com', 171, '2020-07-21 03:03:47', '2020-07-21 03:03:47'),
+(176, 1, 'MIRKO ROMAN LOBATO ESPINOZA', 'Usuario', '999453551', '999453551', 'romancargoexpress@gmail.com', 172, '2020-07-21 23:02:37', '2020-07-21 23:02:37'),
+(177, 1, 'EDGAR VILLANUEVA CORDOVA', 'Usuario', '998383815', '998383815', 'villanueva_6161@hotmail.com', 173, '2020-07-21 23:22:37', '2020-07-21 23:22:37'),
+(178, 1, 'ANGIE DIAZ RODRIGUEZ', 'Usuario', '929060761', '929060761', 'angiediazrodriguez_diaz@hotmail.com', 174, '2020-07-22 00:10:40', '2020-07-22 00:10:40'),
+(179, 1, 'OMAR YAYA FERROA', 'Usuario', '971796814', '971796814', 'mariester80@hotmail.com', 175, '2020-07-22 00:37:59', '2020-07-22 00:37:59'),
+(180, 1, 'CARLOS ROJAS', 'Usuario', '944551928', '944551928', 'carlos.rojas@telecommunicationspartnes.com', 176, '2020-07-23 04:06:48', '2020-07-23 04:06:48'),
+(181, 1, 'FRANCISCO JAVIER CACIANO JARES', 'Usuario', '998349215', '998349215', 'javiercj123@yahoo.es', 177, '2020-07-23 04:09:42', '2020-07-23 04:09:42'),
+(182, 1, 'ZAMBRANO COMUN CARLOS', 'Usuario', '980839072', '980839072', 'karim_emsama@hotmail.com', 178, '2020-07-23 04:20:14', '2020-07-23 04:20:14'),
+(183, 1, 'ALEX RAUL SALTACHIN GARCIA', 'Usuario', '900605692', '900605692', 'alex986xd@outlook.es', 179, '2020-07-23 04:38:42', '2020-07-23 04:38:42'),
+(184, 1, 'CARLOS TINEO BENITES', 'Usuario', '966516359', '966516359', 'cart20@hotmail.com', 180, '2020-07-23 23:55:00', '2020-07-23 23:55:00'),
+(185, 1, 'MERCEDEZ WONG MENDOZA', 'Usuario', '992599781', '992599781', 'mechita.wong.m@gmail.com', 181, '2020-07-24 01:00:45', '2020-07-24 01:00:45'),
+(186, 1, 'ERICK OMAR SANTIAGO SANTOS', 'Usuario', '982775825', '982775825', 'soportelima@infotec.com.pe', 182, '2020-07-24 04:10:43', '2020-07-24 04:10:43'),
+(187, 1, 'JOSE ANTONIO LAIME FERRO', 'Usuario', '995538694', '995538694', 'antonio-laime@hotmail.com', 183, '2020-07-24 04:20:51', '2020-07-24 04:20:51'),
+(188, 1, 'CAROLYN FABIANA PORTALES MEJIA', 'Usuario', '950121990', '950121990', 'zoemikela29@gmail.com', 184, '2020-07-25 03:28:44', '2020-07-25 03:28:44'),
+(189, 1, 'VICTOR MANUEL SAAVEDRA RODRIGUEZ', 'Usuario', '991024241', '991024241', 'victormanuel2099@hotmail.com', 185, '2020-07-25 04:25:12', '2020-07-25 04:25:12'),
+(190, 1, 'HUGO ORE CALLE', 'Usuario', '998191334', '998191334', 'hore@magtronperu.com', 186, '2020-07-25 06:07:29', '2020-07-25 06:07:29'),
+(191, 1, 'DORIS VILLANUEVA DE LA CRUZ', 'Usuario', '966367505', '966367505', 'dorisamanda68@gmail.com', 187, '2020-07-25 06:29:49', '2020-07-25 06:29:49'),
+(192, 1, 'JORGE LUIS LOPEZ INCARROCA', 'Usuario', '927170087', '927170087', 'jll_1825@hotmail.com', 188, '2020-07-25 22:25:22', '2020-07-25 22:25:22'),
+(193, 1, 'EDGAR SANTIESTEBAN SANDOVAL', 'Usuario', '942029896', '942029896', 'fotografiaedgarjesusmaria@gmail.com', 189, '2020-07-25 22:57:06', '2020-07-25 22:57:06'),
+(194, 1, 'CARMEN TEJEIRA ROCHA', 'Usuario', '943419181 / 981309428', '943419181 / 981309428', 'carmentejeirarocha@gamil.com', 190, '2020-07-25 23:38:40', '2020-07-25 23:38:40'),
+(195, 1, 'ROGER VILLANUEVA RUTTI', 'Usuario', '994793346', '994793346', 'royer_27_07@hotmail.com', 191, '2020-07-26 00:12:24', '2020-07-26 00:12:24'),
+(196, 1, 'PABLO MAICO VIVANCO', 'Usuario', '998180307', '998180307', 'chaico78@hotmail.com', 192, '2020-07-28 02:06:56', '2020-07-28 02:06:56'),
+(197, 1, 'CARMEN ROSA ZAPATA VALLADOLID', 'Usuario', '995298336', '995298336', 'cr.zapta@gmail.com', 193, '2020-07-30 04:05:45', '2020-07-30 04:05:45'),
+(198, 1, 'LUIS ALBERTO ESPINOZA PARIHUAMAN', 'Usuario', '994092649', '994092649', 'luchoespinoza8@hotmail.com', 194, '2020-07-30 23:22:47', '2020-07-30 23:22:47'),
+(199, 1, 'Aurora Lopez Blas', 'Usuario', '928305248', '928305248', 'aurora.lopezblas@gmail.com', 195, '2020-07-31 02:18:15', '2020-07-31 02:18:15'),
+(200, 1, 'JORGE YNCA HENRIQUEZ', 'Usuario', '998119939', '998119939', 'jynca@grafipapel.com.pe', 196, '2020-07-31 03:57:25', '2020-07-31 03:57:25'),
+(201, 1, 'JHONNY MARIO FLORES MALCA', 'Usuario', '956109874', '956109874', 'jflores_soporte@hotmail.com', 197, '2020-07-31 05:05:50', '2020-07-31 05:05:50'),
+(202, 1, 'JOSE LUIS ABAD CHIRCA', 'Usuario', '948041600', '948041600', 'joseluisabadc@gmail.com', 198, '2020-08-01 03:37:00', '2020-08-01 03:37:00'),
+(203, 1, 'DANTE LLONTOP HUAMANYAURI', 'Usuario', '994328155', '994328155', 'contabilidad@sielex.com', 199, '2020-08-01 04:48:04', '2020-08-01 04:48:04'),
+(204, 1, 'Evellyn  Millones', 'Usuario', '989164056', '989164056', 'esmillonesp@hotmail.com', 200, '2020-08-02 00:16:17', '2020-08-02 00:16:17'),
+(205, 1, 'PEDRO ENRIQUEZ ALCA TOMARIO', 'Usuario', '990859426', '990859426', 'peatquena@gmail.com', 201, '2020-08-03 23:15:54', '2020-08-03 23:15:54'),
+(206, 1, 'HUGO ORE CALLE', 'Usuario', '998191334', '998191334', 'hugo19_hoc@gmail.com', 202, '2020-08-04 02:05:15', '2020-08-04 02:05:15'),
+(207, 1, 'ALVARO REATEGUI PALACIOS', 'Usuario', '974452071', '974452071', 'Alvaroreaguip@gmail.com', 203, '2020-08-04 03:08:54', '2020-08-04 03:08:54'),
+(208, 1, 'SPAULINO ALAYO ARAUJO', 'Usuario', '998446011', '998446011', 'cambios_risso@hotmail.com', 204, '2020-08-05 04:14:59', '2020-08-05 04:14:59'),
+(209, 1, 'MARCO ANTONIO ROMERO LORENZO', 'Usuario', '976624135', '976624135', 'marcoromerol1@hotmail.com', 205, '2020-08-06 01:06:50', '2020-08-06 01:06:50'),
+(210, 1, 'EDWIN VEGA ICHANG', 'Usuario', '948565600', '948565600', 'edwin_com7@hotmail.com', 206, '2020-08-06 05:47:00', '2020-08-06 05:47:00'),
+(211, 1, 'DOUGLAS ANTONIO TAFUR SALGADO', 'Usuario', '936518440', '936518440', 'dtafurs@gmail.com', 207, '2020-08-07 03:05:20', '2020-08-07 03:05:20'),
+(212, 1, 'GRECY ANABEL CORREA ESPINOZA', 'Usuario', '928302807', '928302807', 'grecyanabel@gmail.com', 208, '2020-08-08 00:50:16', '2020-08-08 00:50:16'),
+(213, 1, 'TULIO EDMUNDO INGA RIOS', 'Usuario', '986817405', '986817405', 'paty.inga.25@gmail.com', 209, '2020-08-08 00:57:37', '2020-08-08 00:57:37'),
+(214, 1, 'GUISELLA AGUILAR BERMUDEZ', 'Usuario', '981022016', '981022016', 'grupodatacorporation01@hotmail.com', 210, '2020-08-08 04:54:20', '2020-08-08 04:54:20'),
+(215, 1, 'kiara Carolina Yudichi', 'Usuario', '922453611', '922453611', 'yudichijiaracarolina@gmail.com', 211, '2020-08-09 00:42:56', '2020-08-09 00:42:56'),
+(216, 1, 'ALAMIRO LEON MORENO', 'Usuario', '961722296', '961722296', 'aleonm@insn.gob.pe.com', 212, '2020-08-10 23:05:53', '2020-08-10 23:05:53'),
+(217, 1, 'TEONILA YOLANDA ALVARADO TATALEAN', 'Usuario', '933082897', '933082897', 'yola.alvarado.1971@gmail.com', 213, '2020-08-10 23:18:44', '2020-08-10 23:18:44'),
+(218, 1, 'Viviana Sanchez', 'Usuario', '978812239', '978812239', 'paolaarmey@gmail.com', 214, '2020-08-11 02:08:18', '2020-08-11 02:08:18'),
+(219, 1, 'Yuri Piñas Esteban', 'Usuario', '989173762', '989173762', 'notiene@notiene.com.pe', 215, '2020-08-11 02:32:14', '2020-08-11 02:32:14'),
+(220, 1, 'PAUL MICHAEL ZUÑIGA CHACON', 'Usuario', '977141999', '977141999', 'michael.zuniga@ghrdsoft.com', 216, '2020-08-11 04:06:18', '2020-08-11 04:06:18'),
+(221, 1, 'FRANKLIN SERGIO ARANDA FLORES', 'Usuario', '983289165', '983289165', 'no-tiene1@correo.com', 217, '2020-08-11 06:01:05', '2020-08-11 06:01:05'),
+(222, 1, 'MAURO CESAR PRINCE LOPEZ', 'Usuario', '976078600', '976078600', 'princelopez06@yahoo.es', 218, '2020-08-11 22:29:02', '2020-08-11 22:29:02'),
+(223, 1, 'BLADIMIR LOPEZ GUTIERREZ', 'Usuario', '991691000', '991691000', 'bladimirlg@hotmail.com', 219, '2020-08-11 23:56:27', '2020-08-11 23:56:27'),
+(224, 1, 'ENRIQUE SANCHEZ CAHUANA', 'Usuario', '922425724', '922425724', 'enri_que13@gmail.com', 220, '2020-08-12 02:05:49', '2020-08-12 02:05:49'),
+(225, 1, 'GIOVANNA EDITH ESPINOZA QUISPE', 'Usuario', '989874972', '989874972', 'gio_espi0506@gmail.com', 221, '2020-08-13 00:11:04', '2020-08-13 00:11:04'),
+(226, 1, 'FERNANDO MEZA DE LA CRUZ', 'Usuario', '969927581', '969927581', 'elenasedano13@hotmail.com', 222, '2020-08-13 04:50:45', '2020-08-13 04:50:45'),
+(227, 1, 'CAROL VASQUEZ ARRAMBIDE', 'Usuario', '940985767', '940985767', 'carolvasquez261097@gmail.com', 223, '2020-08-13 07:45:19', '2020-08-13 07:45:19'),
+(228, 1, 'GIANCARLOS QUISPE ALVAREZ', 'Usuario', '949842752', '949842752', 'gianajo_79@hotmail.com', 224, '2020-08-13 22:28:05', '2020-08-13 22:28:05'),
+(229, 1, 'Johnny Cruz', 'Usuario', '990589757', '990589757', 'jcruzh03@gmail.com', 225, '2020-08-13 22:57:32', '2020-08-13 22:57:32'),
+(230, 1, 'FELIX ALBERTO QUISPE RIVAS', 'Usuario', '920127282', '920127282', 'albertoqrivas@gmail.com', 226, '2020-08-14 03:32:23', '2020-08-14 03:32:23'),
+(231, 1, 'SOLEDAD KATERIN ALVAREZ TRAVEZAÑO', 'Usuario', '926010712', '926010712', 'alvarezkaterin777@gmail.com', 227, '2020-08-14 22:51:11', '2020-08-14 22:51:11'),
+(232, 1, 'ANA MARIA PUENTE ROJAS', 'Usuario', '941478482', '941478482', 'annapuente @hotmail.com', 228, '2020-08-15 22:19:23', '2020-08-15 22:19:23'),
+(233, 1, 'JOSE WILDER ZEVALLOS DIAZ', 'Usuario', '969981171', '969981171', 'wizedi1@gmail.com', 229, '2020-08-16 00:22:50', '2020-08-16 00:22:50'),
+(234, 1, 'RICARDO OBREGON SALAZAR', 'Usuario', '964225100', '964225100', 'ventas3d_computer@hotmail.com', 230, '2020-08-17 23:04:50', '2020-08-17 23:04:50'),
+(235, 1, 'Miguel Oviedo', 'Usuario', '979639766', '979639766', 'moviedo19712019@gmail.com', 231, '2020-08-18 04:15:46', '2020-08-18 04:15:46'),
+(236, 1, 'ALBARO GUERRA', 'Usuario', '927689254', '927689254', 'jguerra@gmail.com', 232, '2020-08-18 04:38:32', '2020-08-18 04:38:32'),
+(237, 1, 'Raul Salvatierra', 'Usuario', '987508624', '987508624', 'rsoperu@gmail.com', 233, '2020-08-19 00:10:01', '2020-08-19 00:10:01'),
+(238, 1, 'ROLANDO VELEZ SARMIENTO', 'Usuario', '949278789', '949278789', 'jesusvelez23@hotmail.com', 234, '2020-08-19 03:55:52', '2020-08-19 03:55:52'),
+(239, 1, 'CENTENO GOMEZ DANTE', 'Usuario', '997067279', '997067279', 'dante_cg@hotmail.com', 235, '2020-08-19 04:12:47', '2020-08-19 04:12:47'),
+(240, 1, 'RICARDO ALVAREZ', 'Usuario', '986206134', '986206134', 'rplata1@hotmail.es', 236, '2020-08-20 00:18:02', '2020-08-20 00:18:02'),
+(241, 1, 'VLADIMIR VALENTIN', 'Usuario', '941403488', '941403488', 'vladimirv37@gmail.com', 237, '2020-08-20 00:42:40', '2020-08-20 00:42:40'),
+(242, 1, 'JOSE RIOS ESCOBEDO', 'Usuario', '987363202', '987363202', 'contabilidad@aquamed.com.pe', 238, '2020-08-21 00:04:53', '2020-08-21 00:04:53'),
+(243, 1, 'MARITZA ACEVEDO DIAZ', 'Usuario', '934292872', '934292872', 'acevedom282@gmail.com', 239, '2020-08-21 02:34:01', '2020-08-21 02:34:01'),
+(244, 1, 'Alberto Gonzales', 'Usuario', '950575367', '950575367', 'angelfenix@protomail.com', 240, '2020-08-21 03:40:52', '2020-08-21 03:40:52'),
+(245, 1, 'Janeth Huesa', 'Usuario', '997131965', '997131965', 'valerimarreroshuesa@hotmail.com', 241, '2020-08-21 04:50:02', '2020-08-21 04:50:02'),
+(246, 1, 'CESAR CASTILLO PALACIOS', 'Usuario', '996666101', '996666101', 'soporte@todotecperu.com', 242, '2020-08-21 06:02:10', '2020-08-21 06:02:10'),
+(247, 1, 'GUIDO LOPEZ THACCA', 'Usuario', '940302201', '940302201', 'thaccalopez@gmail.com', 243, '2020-08-22 06:27:27', '2020-08-22 06:27:27'),
+(248, 1, 'ELIAS DIAZ LOZANO', 'Usuario', '910329331', '910329331', 'ediazlozano@gmail.com', 244, '2020-08-22 23:04:22', '2020-08-22 23:04:22'),
+(249, 1, 'JUAN CARLOS VELASQUEZ SULLCA', 'Usuario', '987165060', '987165060', 'fox2_sull@hotmail.com', 245, '2020-08-25 05:02:55', '2020-08-25 05:02:55'),
+(250, 1, 'MARIA ELENA RUVINA GUERRA', 'Usuario', '952626693', '952626693', 'mariaganadora@hotmail.com', 246, '2020-08-25 05:55:55', '2020-08-25 05:55:55'),
+(251, 1, 'JUAN RICARDO CALDERON REYNOSO', 'Usuario', '983154466', '983154466', 'ricardocalrey@hotmail.com', 247, '2020-08-25 23:26:33', '2020-08-25 23:26:33'),
+(252, 1, 'Magali  Alfaro Sanchez', 'Usuario', '946454126', '946454126', 'claudiacotrina27@gmail.com', 248, '2020-08-25 23:50:05', '2020-08-25 23:50:05'),
+(253, 1, 'FRANCIA PAMELA CELIA MOSCOSO MANCILLA', 'Usuario', '952349175', '952349175', 'franciapamelamoscoso@gmail.com', 249, '2020-08-26 02:24:13', '2020-08-26 02:24:13'),
+(254, 1, 'HAZEL VIVIANA PERALTA SIRA', 'Usuario', '912890960', '912890960', 'peraltahazel7@gmail.com', 250, '2020-08-26 02:52:09', '2020-08-26 02:52:09'),
+(255, 1, 'Sara Cari', 'Usuario', '932704249', '932704249', 'naimacari@gmail.com', 251, '2020-08-26 03:08:05', '2020-08-26 03:08:05'),
+(256, 1, 'GLORIA VALENZUELA FELIX', 'Usuario', '945590337', '945590337', 'gloriajireh@hotmail.com', 252, '2020-08-26 03:15:46', '2020-08-26 03:15:46'),
+(257, 1, 'MAGNO PALOMINO CHAMBI', 'Usuario', '948906395', '948906395', 'ventanlt@gmail.com', 253, '2020-08-26 03:27:50', '2020-08-26 03:27:50'),
+(258, 1, 'SONIA YARANGA MONTESINOS', 'Usuario', '940148576', '940148576', 'michajyn0690@gmail.com', 254, '2020-08-26 04:42:06', '2020-08-26 04:42:06'),
+(259, 1, 'Roger Morante Rivera', 'Usuario', '945495500', '945495500', 'pamechina@outlook.com', 255, '2020-08-27 02:20:08', '2020-08-27 02:20:08'),
+(260, 1, 'FERMIN HANCO REYES', 'Usuario', '994817104', '994817104', 'jllallerco@hotmail.com', 256, '2020-08-27 04:06:35', '2020-08-27 04:06:35'),
+(261, 1, 'JOSE SOAÑA LAZARO', 'Usuario', '981401863', '981401863', 'soana.jose@gmail.com', 257, '2020-08-27 05:22:54', '2020-08-27 05:22:54'),
+(262, 1, 'JOSE RONALD BENITO CORDOVA', 'Usuario', '997685897', '997685897', 'joselo_3001@hotmail.com', 258, '2020-08-28 04:50:34', '2020-08-28 04:50:34'),
+(263, 1, 'NELLY ILDEFONSO CASTILLO', 'Usuario', '934246024', '934246024', 'nildefonsocastillo@gmail.com', 259, '2020-08-28 22:52:07', '2020-08-28 22:52:07'),
+(264, 1, 'PAULINA GALVEZ SABALU', 'Usuario', '994089899', '994089899', 'mayobanex_8@hotmail.com', 260, '2020-08-29 23:49:03', '2020-08-29 23:49:03'),
+(265, 1, 'MONICA HERRERA NUÑEZ', 'Usuario', '998151042', '998151042', 'monica_teccomsac@hotmail.com', 261, '2020-09-01 00:12:35', '2020-09-01 00:12:35'),
+(266, 1, 'ALEXANDER VELASQUEZ ZAPATA', 'Usuario', '924039470', '924039470', 'velasquezzapatalexander@gmail.com', 262, '2020-09-01 02:47:06', '2020-09-01 02:47:06'),
+(267, 1, 'Franck Palomino', 'Usuario', '937150292', '937150292', 'franck_bussines@outlook.com', 263, '2020-09-01 03:11:00', '2020-09-01 03:11:00'),
+(268, 1, 'ANA MARIA APOLAYA PRADO', 'Usuario', '945251440', '945251440', 'anamapolaya@gmail.com', 264, '2020-09-01 04:13:12', '2020-09-01 04:13:12'),
+(269, 1, 'HERMELINDA MOLLO CRUZ', 'Usuario', '902239509', '902239509', 'fray74svp@gmail.com', 265, '2020-09-01 04:18:55', '2020-09-01 04:18:55'),
+(270, 1, 'DIEGO BERNARDINO LEON ALIAGA', 'Usuario', '933738640', '933738640', 'diegol-84@hotmail.com', 266, '2020-09-02 02:38:37', '2020-09-02 02:38:37'),
+(271, 1, 'LUIS ALFREDO SUAREZ ROMAN', 'Usuario', '910435181', '910435181', 'luisalfredosua@gmail.com', 267, '2020-09-02 04:49:14', '2020-09-02 04:49:14'),
+(272, 1, 'OLGA LUZ VILLANUEVA MINAYA', 'Usuario', '941479497', '941479497', 'administracion@indutriafia.com', 268, '2020-09-02 22:29:11', '2020-09-02 22:29:11'),
+(273, 1, 'WALTER INGA FERNANDEZ', 'Usuario', '949149834', '949149834', 'davidguti17@hotmail.com', 269, '2020-09-02 23:34:36', '2020-09-02 23:34:36'),
+(274, 1, 'PEDRO TORREALBA SOTA', 'Usuario', '994756180', '994756180', 'notiene-correo@hotmail.com', 270, '2020-09-03 03:25:49', '2020-09-03 03:25:49'),
+(275, 1, 'REYNA CHACÑAMA SULCA', 'Usuario', '986292741', '986292741', 'cr19183@gmail.com', 271, '2020-09-03 04:09:29', '2020-09-03 04:09:29'),
+(276, 1, 'ALONSO CONDOR SALVATIERRA', 'Usuario', '996306144', '996306144', 'alonsosalvatierra@hotmail.com', 272, '2020-09-03 05:55:32', '2020-09-03 05:55:32'),
+(277, 1, 'Javier Dominguez', 'Usuario', '962420946', '962420946', 'javierdk46@gmail.com', 273, '2020-09-03 22:28:28', '2020-09-03 22:28:28'),
+(278, 1, 'MARIO SANCHEZ GODOY', 'Usuario', '924154440', '924154440', 'roxitaz123@gmail.com', 274, '2020-09-05 03:11:03', '2020-09-05 03:11:03'),
+(279, 1, 'MARTIN SALAZAR GUILLEN', 'Usuario', '946126131', '946126131', 'soporte@fiorellarepre.com.pe', 275, '2020-09-05 04:44:14', '2020-09-05 04:44:14'),
+(280, 1, 'JORGE CARLOS AZAÑA ESTRADA', 'Usuario', '989742987', '989742987', 'jycascensores@gmail.com', 276, '2020-09-05 04:53:26', '2020-09-05 04:53:26'),
+(281, 1, 'GRICELDA MOLLO PALOMINO', 'Usuario', '945890613', '945890613', 'ventas_starlingsac@hotmail.com', 277, '2020-09-05 05:17:31', '2020-09-05 05:17:31'),
+(282, 1, 'Proweld Sac', 'Usuario', '989295681', '989295681', 'metalworkersperu@gmail.com', 278, '2020-09-05 22:23:35', '2020-09-05 22:23:35'),
+(283, 1, 'CARLOS ENRIQUE DE LOS SANTOS RIOS', 'Usuario', '996595185', '996595185', 'esthercano07@hotmail.com', 279, '2020-09-06 00:19:39', '2020-09-06 00:19:39'),
+(284, 1, 'VICTOR SERGIO BUSTINZA MARQUEZ', 'Usuario', '981342586', '981342586', 'v_bustinza@hotmail.com', 280, '2020-09-08 00:22:02', '2020-09-08 00:22:02'),
+(285, 1, 'JULISSA REYNOSO HUIERTAS', 'Usuario', '980483027', '980483027', 'akemysalet513@gmail.com', 281, '2020-09-08 03:37:06', '2020-09-08 03:37:06'),
+(286, 1, 'JESUS MARIO QUISPE CHAMBI', 'Usuario', '945812626', '945812626', 'marioquispechambi008@gmail.com', 282, '2020-09-08 04:21:46', '2020-09-08 04:21:46'),
+(287, 1, 'MYRELLA CULE MORIANO', 'Usuario', '946533464', '946533464', 'jgarantia@impaccto.com.pe', 283, '2020-09-08 06:24:33', '2020-09-08 06:24:33'),
+(288, 1, 'Pedro Tito Toledo', 'Usuario', '994950454', '994950454', 'jupitersuperstar@hotmail.com', 284, '2020-09-09 00:32:57', '2020-09-09 00:32:57'),
+(289, 1, 'ROBERTO CARLOS RIVERA URTIAGA', 'Usuario', '955987726', '955987726', 'rocaclear32@gmail.com', 285, '2020-09-09 01:08:09', '2020-09-09 01:08:09'),
+(290, 1, 'PILAR RAMIREZ TAIPE', 'Usuario', '934235181', '934235181', 'gisselart_1979@hotmail.com', 286, '2020-09-09 04:13:05', '2020-09-09 04:13:05'),
+(291, 1, 'RICHARD TORRES AIQUIPA', 'Usuario', '993318025', '993318025', 'kevim.soluciones@gmail.com', 287, '2020-09-09 04:29:55', '2020-09-09 04:29:55'),
+(292, 1, 'Kelly Sanchez', 'Usuario', '951693100', '951693100', 'ivaleivicvalsanchezcolqui@gmail.com', 288, '2020-09-09 23:02:38', '2020-09-09 23:02:38'),
+(293, 1, 'EUCEBIO MAYHUA ECHEBAUTIS', 'Usuario', '912880929', '912880929', 'mayhuaeucebio@gmail.com', 289, '2020-09-10 02:29:29', '2020-09-10 02:29:29'),
+(294, 1, 'IVAN MOSTACERO RODRIGUEZ', 'Usuario', '994079109', '994079109', 'serviciotecnico@mesajilhnos.com', 290, '2020-09-11 00:10:23', '2020-09-11 00:10:23'),
+(295, 1, 'ZEBEDEO OBED LAURO VASQUEZ', 'Usuario', '990997587', '990997587', 'obed_zebedeo@hotmail.com', 291, '2020-09-11 04:06:19', '2020-09-11 04:06:19'),
+(296, 1, 'GAVI SIMBRON LOPEZ', 'Usuario', '951455886', '951455886', 'gavisilop@gmail.com', 292, '2020-09-12 00:05:05', '2020-09-12 00:05:05'),
+(297, 1, 'LUIS FLAVIO ZUÑIGA ANAYA', 'Usuario', '923263365', '923263365', 'flaviozuniga@hotmail.com', 293, '2020-09-12 00:51:23', '2020-09-12 00:51:23'),
+(298, 1, 'ALEJANDRO JESUS YANAC FLORES', 'Usuario', '989556136', '989556136', 'jesus1006.1992@gmail.com', 294, '2020-09-12 03:58:19', '2020-09-12 03:58:19'),
+(299, 1, 'Helber Antonio Alvarado Tuanama', 'Usuario', '947604535', '947604535', 'altheun_9@hotmail.com', 295, '2020-09-12 06:24:19', '2020-09-12 06:24:19'),
+(300, 1, 'CLEMENCIA CAMPOS MEDINA', 'Usuario', '985694162', '985694162', 'clemencia.campos288@gmail.com', 296, '2020-09-13 00:30:47', '2020-09-13 00:30:47'),
+(301, 1, 'ROMELIA LIZET VELASQUEZ AQUINO', 'Usuario', '959204331', '959204331', 'lisset_14va@hotmail.com', 297, '2020-09-14 23:05:26', '2020-09-14 23:05:26'),
+(302, 1, 'DANIEL CABANILLAS CELIS', 'Usuario', '980756924', '980756924', 'danielcabanillasc@hotmail.com', 298, '2020-09-15 03:34:53', '2020-09-15 03:34:53'),
+(303, 1, 'JOSE LEZAMA GUTIERREZ', 'Usuario', '998166436', '998166436', 'ventasmicropower@hotmail.com', 299, '2020-09-15 06:34:42', '2020-09-15 06:34:42'),
+(304, 1, 'ALBERTO PEDREROS ZAMUDIO', 'Usuario', '998349747', '998349747', 'gerencia@sidsac.net', 300, '2020-09-16 05:16:56', '2020-09-16 05:16:56'),
+(305, 1, 'Carmen Rosa Condori Jeri', 'Usuario', '979494845', '979494845', 'carmenrosacondori2019@gmail.com', 301, '2020-09-16 23:46:41', '2020-09-16 23:46:41'),
+(306, 1, 'YONEL CHRISTIAN RAMON DEL AGUILA', 'Usuario', '962298922', '962298922', 'cramon@gradytec.com', 302, '2020-09-17 00:29:31', '2020-09-17 00:29:31'),
+(307, 1, 'WILMER CALDERON BARRIOS', 'Usuario', '955276995', '955276995', 'billykiama890@gmail.com', 303, '2020-09-18 00:21:30', '2020-09-18 00:21:30'),
+(308, 1, 'Luba Agafonova', 'Usuario', '947323944', '947323944', 'luba0305.ru@gmail.com', 304, '2020-09-18 03:41:21', '2020-09-18 03:41:21'),
+(309, 1, 'Cesar Salamanca', 'Usuario', '981594349', '981594349', 'cesar_1415_12@hotmail.com', 305, '2020-09-19 00:10:31', '2020-09-19 00:10:31'),
+(310, 1, 'SARA URETA REYES', 'Usuario', '959612672', '959612672', 'sarauritarreyes@hotmai.com', 306, '2020-09-19 22:31:50', '2020-09-19 22:31:50'),
+(311, 1, 'CRISTINA HUAMANI PALOMINO', 'Usuario', '938511052', '938511052', 'cristina_iq_1@yahoo.es', 307, '2020-09-19 22:54:11', '2020-09-19 22:54:11'),
+(312, 1, 'Pedro Bernardo Vidarte Enriquez', 'Usuario', '984925869', '984925869', 'vidartepb@yahoo.com', 308, '2020-09-21 23:16:57', '2020-09-21 23:16:57'),
+(313, 1, 'Richard Gutierrez Contreras', 'Usuario', '984188881', '984188881', 'edwin1275@hotmail.com', 309, '2020-09-21 23:50:27', '2020-09-21 23:50:27'),
+(314, 1, 'Fredy Óscar Arellano Diaz', 'Usuario', '994061314', '994061314', 'nicolasarellano742@gmail.com', 310, '2020-09-22 00:15:36', '2020-09-22 00:15:36'),
+(315, 1, 'Luis Miguel Saldaña Cabrera', 'Usuario', '913404723', '913404723', 'Luis.saldana@agsantaazul.com', 311, '2020-09-22 03:01:42', '2020-09-22 03:01:42'),
+(316, 1, 'CHRISTIAM MARQUINA VERA', 'Usuario', '992331104', '992331104', 'cristian_tlvu_19@hotmail.com', 312, '2020-09-22 03:10:33', '2020-09-22 03:10:33'),
+(317, 1, 'Regina Osorio', 'Usuario', '981459213', '981459213', 'maritzaosorio1730@gmail.com', 313, '2020-09-22 04:43:31', '2020-09-22 04:43:31'),
+(318, 1, 'ROCIO ESPERANZA JORGE APONTE', 'Usuario', '930863074 / 986874864', '930863074 / 986874864', 'rocio_01_1@hotmail.com', 314, '2020-09-22 23:52:38', '2020-09-22 23:52:38'),
+(319, 1, 'JOSE ALVARADO PEREZ', 'Usuario', '947359952', '947359952', 'josealvaradoperez2017@gmail.com', 315, '2020-09-23 05:03:49', '2020-09-23 05:03:49'),
+(320, 1, 'CARLOS GONZALES VALIENTE', 'Usuario', '56400391 / 996410807', '56400391 / 996410807', 'cgusmar22@gmail.com', 316, '2020-09-23 05:45:47', '2020-09-23 05:45:47'),
+(321, 1, 'REBECA COROMOTO CAMERO MALDONADO', 'Usuario', '927127896', '927127896', 'rebecapaula47@gmail.com', 317, '2020-09-23 05:59:30', '2020-09-23 05:59:30'),
+(322, 1, 'zundhair.21@gmail.com', 'Usuario', '927606194', '927606194', 'zundhair.21@gmail.com', 318, '2020-09-23 22:16:37', '2020-09-23 22:16:37'),
+(323, 1, 'BRICKGLER JOSUE MARTINEZ GONZALES', 'Usuario', '946318132', '946318132', 'jgarantia@impacto.com', 319, '2020-09-24 04:08:42', '2020-09-24 04:08:42'),
+(324, 1, 'SEGUNDO RENE CABALLERO BARDALES', 'Usuario', '985052490', '985052490', 'no_tiene@correo.com', 320, '2020-09-24 23:58:31', '2020-09-24 23:58:31'),
+(325, 1, 'ROGER CABALLERO', 'Usuario', '998965440', '998965440', 'roger@tecdecosac.com', 321, '2020-09-26 00:33:53', '2020-09-26 00:33:53'),
+(326, 1, 'LUIS JARA ALEMAN', 'Usuario', '997394189', '997394189', 'LUISJARA2410@hotmail.com', 322, '2020-09-26 02:26:27', '2020-09-26 02:26:27'),
+(327, 1, 'WALTER JESUS VALDIVIA MOSCOSO', 'Usuario', '951549307', '951549307', 'wvaldiviam90@gmail.com', 323, '2020-09-26 02:33:21', '2020-09-26 02:33:21'),
+(328, 1, 'ERICK MEDINA OLAGUIBEL', 'Usuario', '972255607', '972255607', 'erickillapa0@gmail.com', 324, '2020-09-26 03:24:32', '2020-09-26 03:24:32'),
+(329, 1, 'Carlos  Ocampo Hidalgo', 'Usuario', '997764781', '997764781', 'c_ocampo_h@hotmail.com', 325, '2020-09-26 03:48:07', '2020-09-26 03:48:07'),
+(330, 1, 'Jose  Cabanillas', 'Usuario', '965434565', '965434565', 'jcabanillas@computel.com.pe', 326, '2020-09-26 03:54:05', '2020-09-26 03:54:05'),
+(331, 1, 'Erick  Llocclla', 'Usuario', '918989464', '918989464', 'erick.lloccllacruz1991@gmail.com', 327, '2020-09-29 06:27:42', '2020-09-29 06:27:42'),
+(332, 1, 'JULIO RIVERA OBLEA', 'Usuario', '940489178', '940489178', 'jaro0618@hotmail.com', 328, '2020-09-29 23:01:50', '2020-09-29 23:01:50'),
+(333, 1, 'JORGE MONTALVO PALACIN', 'Usuario', '986584440', '986584440', 'pablo_palacin1972@hotmail.com', 329, '2020-09-29 23:14:46', '2020-09-29 23:14:46'),
+(334, 1, 'JOHAN ROSALES', 'Usuario', '998148707', '998148707', 'garantias@supertec.com.pe', 330, '2020-09-29 23:32:14', '2020-09-29 23:32:14'),
+(335, 1, 'LILIANA VILLAGARAY HUAMANTOMA', 'Usuario', '969917771', '969917771', 'lili_villagaray@hotmail.com', 331, '2020-09-30 02:32:57', '2020-09-30 02:32:57'),
+(336, 1, 'LIZ BELTRAN MANUEL', 'Usuario', '923260561', '923260561', 'hemerotecaesup@gmail.com', 332, '2020-10-01 02:06:31', '2020-10-01 02:06:31'),
+(337, 1, 'ROSA ROCA TRUJILLO', 'Usuario', '981379799', '981379799', 'no/tiene@correo.com', 333, '2020-10-01 02:30:36', '2020-10-01 02:30:36'),
+(338, 1, 'VICTOR HUGO GUITTON MENA', 'Contacto', '967657309', '967657309', 'hugo_guiton@hotmail.com', 334, '2020-10-01 22:21:39', '2020-10-01 22:21:39'),
+(339, 1, 'JACQUELINE MILAGROS VERASTEGUI CAMPOS', 'Usuario', '986928669', '986928669', 'jacqueline_gourmet@hotmail.com', 335, '2020-10-02 00:51:28', '2020-10-02 00:51:28'),
+(340, 1, 'ELENA MELGAREJO ALATA', 'Usuario', '977828229', '977828229', 'elena09ma@gmail.com', 336, '2020-10-02 03:19:17', '2020-10-02 03:19:17'),
+(341, 1, 'HANSSEL CHUCO GONZALES', 'Usuario', '955834510', '955834510', 'hansselgilmer@gmail.com', 337, '2020-10-03 00:49:37', '2020-10-03 00:49:37'),
+(342, 1, 'JESSICA LEYVA BARTUREN', 'Usuario', '949823138', '949823138', 'jessicaleyvabarturen22@gmail.com', 338, '2020-10-03 00:55:32', '2020-10-03 00:55:32'),
+(343, 1, 'Anita  Alcazar', 'Usuario', '922950387', '922950387', 'anita_ab_15@hotmail.com', 339, '2020-10-03 02:58:22', '2020-10-03 02:58:22'),
+(344, 1, 'Hugo  cama', 'Usuario', '996431750', '996431750', 'hariniza484@gmail.com', 340, '2020-10-03 04:09:05', '2020-10-03 04:09:05'),
+(345, 1, 'MARCO ANTONIO HEREDIA DE LA CRUZ', 'Usuario', '920566947', '920566947', 'mheredia.glcmotors@gmail.com', 341, '2020-10-03 04:41:16', '2020-10-03 04:41:16'),
+(346, 1, 'MARCO ANTONIO DELA CRUZ', 'Usuario', '920566947', '920566947', 'mheredia.glcmotors@gmail.com.pe', 342, '2020-10-03 04:43:09', '2020-10-03 04:43:09'),
+(347, 1, 'JENNY NANCY FABIAN DURAN', 'Usuario', '939738286', '939738286', 'jennynancyf@gmail.com', 343, '2020-10-04 01:07:37', '2020-10-04 01:07:37'),
+(348, 1, 'Luis Sanchez', 'Usuario', '999939560', '999939560', 'luis2028@gmail.com', 344, '2020-10-06 04:18:22', '2020-10-06 04:18:22'),
+(349, 1, 'VICTOR TEODOSIO ROJAS LEON', 'Usuario', '990042349', '990042349', 'vrojasl.308@hotmail.com', 345, '2020-10-06 22:24:02', '2020-10-06 22:24:02'),
+(350, 1, 'ARNOLD FERNANDO OSCCO HUAUYA', 'Usuario', '987733888', '987733888', 'a.oscco@consorciosyl.com.pe', 346, '2020-10-07 03:53:09', '2020-10-07 03:53:09'),
+(351, 1, 'LEONCIO JARA BLAS', 'Usuario', '936080486', '936080486', 'notiene@correo.es', 347, '2020-10-07 05:30:38', '2020-10-07 05:30:38'),
+(352, 1, 'D AJHELY ANGLES COTRINA', 'Usuario', '933110705', '933110705', 'dajhelyangles@gmail.com', 348, '2020-10-08 04:15:51', '2020-10-08 04:15:51'),
+(353, 1, 'TERESA ARIAS ROJAS', 'Usuario', '990281073', '990281073', 'canalmuseal@gmail.com', 349, '2020-10-08 05:32:15', '2020-10-08 05:32:15'),
+(354, 1, 'CESAR SALGADO SALAZAR', 'Usuario', '981123250', '981123250', 'cass48781@gmail.com', 350, '2020-10-08 06:54:59', '2020-10-08 06:54:59'),
+(355, 1, 'Max Antonio  Abad', 'Usuario', '941152921', '941152921', 'maxabadruiz86@gmail.com', 351, '2020-10-08 23:12:26', '2020-10-08 23:12:26'),
+(356, 1, 'VERONICA MORENO VERA', 'Usuario', '946231080', '946231080', 'morenoveraveronica1990@gmail.com', 352, '2020-10-10 03:19:17', '2020-10-10 03:19:17'),
+(357, 1, 'Eduardo Carvajal', 'Usuario', '981511568', '981511568', 'educarvajal@hotmail.com', 353, '2020-10-13 00:35:36', '2020-10-13 00:35:36'),
+(358, 1, 'LITA ELIZABETH MUCHA SALINAS', 'Usuario', '933503642', '933503642', 'litamucha16@gmail.com', 354, '2020-10-13 00:42:10', '2020-10-13 00:42:10'),
+(359, 1, 'KEIKO ROSARIO NAPAN YUYARIMA', 'Usuario', '947303680', '947303680', 'keikonapan86@gmail.com', 355, '2020-10-13 23:56:52', '2020-10-13 23:56:52');
+INSERT INTO `contactos` (`id`, `primer_contacto`, `nombre`, `cargo`, `telefono`, `celular`, `email`, `clientes_id`, `created_at`, `updated_at`) VALUES
+(360, 1, 'IVAN MOSTACERO RODRIGUEZ', 'Usuario', '994079109', '994079109', 'serviciotecnico@mesajilhnos.com.pe', 356, '2020-10-14 01:07:54', '2020-10-14 01:07:54'),
+(361, 1, 'JARUMY VILELA MORE', 'Usuario', '994079109', '994079109', 'servicio-tecnico@mesajilhnos.com.pe', 357, '2020-10-14 01:09:54', '2020-10-14 01:09:54'),
+(362, 1, 'Grace Silva Ochoa', 'Usuario', '945823157', '945823157', 'elizabethjhudi@gmail.com', 358, '2020-10-14 02:49:04', '2020-10-14 02:49:04'),
+(363, 1, 'Frank Hermoza', 'Usuario', '991817285', '991817285', 'ronalhermoza69@gmail.com', 359, '2020-10-14 03:01:41', '2020-10-14 03:01:41'),
+(364, 1, 'LOURDES PEREZ DIAZ', 'Usuario', '943610083', '943610083', 'lourdes.designer.24@gmail.com', 360, '2020-10-14 03:44:29', '2020-10-14 03:44:29'),
+(365, 1, 'ANA CECILIA ALTAMIRADO ESTACIO', 'Usuario', '925700420', '925700420', 'anaaltamirano1985@gmail.com', 361, '2020-10-15 00:02:08', '2020-10-15 00:02:08'),
+(366, 1, 'JOHAN ROSALES HILARIO', 'Usuario', '945512648', '945512648', 'garantias-lima@supertec.com.pe', 362, '2020-10-15 00:11:13', '2020-10-15 00:11:13'),
+(367, 1, 'Silvia Milagros  Espinoza', 'Usuario', '935964360', '935964360', 'smespinozas@gmail.com', 363, '2020-10-15 00:31:21', '2020-10-15 00:31:21'),
+(368, 1, 'Roberthd  Rojas Lopez', 'Usuario', '942885581', '942885581', 'soporte@imerco.com.pe', 364, '2020-10-15 03:00:21', '2020-10-15 03:00:21'),
+(369, 1, 'GERVY FLAVIO ZEVALLOS OCAMPO', 'Usuario', '984832442', '984832442', 'gervy_zevallos@hotmail.com', 365, '2020-10-15 05:07:43', '2020-10-15 05:07:43'),
+(370, 1, 'JAIME GUERRERO HUAMAN', 'Usuario', '976991046', '976991046', 'jguerrero@sydney.pe', 366, '2020-10-15 05:36:56', '2020-10-15 05:36:56'),
+(371, 1, 'Donato Alarco yuque', 'Usuario', '999367627', '999367627', 'nO-tiene@correo.com.pe', 367, '2020-10-16 02:43:01', '2020-10-16 02:43:01'),
+(372, 1, 'JOSE FRANCISCO MAGNONI JIMENEZ', 'Usuario', '987112050', '987112050', 'franciscomagnoni26@hotmail.com', 368, '2020-10-16 22:23:19', '2020-10-16 22:23:19'),
+(373, 1, 'LUIS  PEQUEÑO PURIZAGA', 'Usuario', '926737591', '926737591', 'Luis.pequeno@essalud.gob.pe', 369, '2020-10-16 23:37:39', '2020-10-16 23:37:39'),
+(374, 1, 'HUGO VERASTEGUI CASTILLO', 'Usuario', '981013980', '981013980', 'hugosoft2012@gmail.com', 370, '2020-10-17 01:07:56', '2020-10-17 01:07:56'),
+(375, 1, 'Edith  Ramos Aponte', 'Usuario', '936086884', '936086884', 'exhaps_25@hotmail.com', 371, '2020-10-17 04:54:26', '2020-10-17 04:54:26'),
+(376, 1, 'OE PAUL HENRIQUEZ VELA', 'Usuario', '956245582', '956245582', 'notiene@gmail.com', 372, '2020-10-17 22:22:35', '2020-10-17 22:22:35'),
+(377, 1, 'Sara  Chiroque', 'Usuario', '970440883', '970440883', 'No.tiene@ccorreo.com', 373, '2020-10-17 23:54:51', '2020-10-17 23:54:51'),
+(378, 1, 'ROSENDO EDGAR CARILLO TORRES', 'Usuario', '967275410', '967275410', 'edgarcarrillo851@gmail.com', 374, '2020-10-18 00:46:42', '2020-10-18 00:46:42'),
+(380, 1, 'Emerson Eli Lazarte Druno', 'Usuario', '933824209', '933824209', 'lino_lw@hotmail.com', 375, '2020-10-20 03:12:09', '2020-10-20 03:12:09'),
+(381, 1, 'FLOR CONDOR TRIVIÑOS', 'Usuario', '960223926', '960223926', 'florcontri@gmail.com', 376, '2020-10-20 04:50:48', '2020-10-20 04:50:48'),
+(382, 1, 'ALEXANDER JIMENEZ HOLGUIN', 'Usuario', '987101293', '987101293', 'importacioneshuachipa@hotmail.com', 377, '2020-10-20 05:01:17', '2020-10-20 05:01:17'),
+(383, 1, 'VICTOR CHACON MALENO', 'Usuario', '913001718', '913001718', 'vchacon873@gmail.com', 378, '2020-10-20 22:24:14', '2020-10-20 22:24:14'),
+(384, 1, 'SAUL MARCELO CORREA VARGAS', 'Usuario', '960186528', '960186528', 'cmarcelo688@gmail.com', 379, '2020-10-21 00:04:22', '2020-10-21 00:04:22'),
+(385, 1, 'ISAAC URIOL PANDURO', 'Usuario', '937301412', '937301412', 'isaacuriol92@gmail.com', 380, '2020-10-21 03:07:22', '2020-10-21 03:07:22'),
+(386, 1, 'Maria  Soto', 'Usuario', '984123235', '984123235', 'maria_14_4_4@hotmail.com', 381, '2020-10-22 02:17:27', '2020-10-22 02:17:27'),
+(387, 1, 'DAM MELENDEZ ZAPATA', 'Usuario', '926727619', '926727619', 'damnemrod@gmail.com', 382, '2020-10-22 05:09:12', '2020-10-22 05:09:12'),
+(388, 1, 'Jose Luis Roque', 'Usuario', '971358640', '971358640', 'joseluisenati@hotmail.com', 383, '2020-10-23 02:02:06', '2020-10-23 02:02:06'),
+(389, 1, 'PEDRO COLLANTES MUÑOZ', 'Usuario', '935084467', '935084467', 'pedrock@outlook.com', 384, '2020-10-23 02:35:36', '2020-10-23 02:35:36'),
+(390, 1, 'Richard Urbizagasstegui', 'Usuario', '945415693', '945415693', 'richarduf@hotmail.com', 385, '2020-10-23 02:40:14', '2020-10-23 02:40:14'),
+(391, 1, 'EDDY GABRIEL ELIAS MOSCOSO', 'Usuario', '937437587', '937437587', 'eddyeliasmoscoso@gmail.com', 386, '2020-10-23 03:06:39', '2020-10-23 03:06:39'),
+(392, 1, 'JANETH ISABEL SANCHEZ ESPINOZA', 'Usuario', '994181657', '994181657', 'isabelsanchez2706@gmail.com', 387, '2020-10-23 23:00:03', '2020-10-23 23:00:03'),
+(393, 1, 'RENZO BOCANEGRA CASTROMONTE', 'Usuario', '982923924', '982923924', 'renzobocanegra@gmail.com', 388, '2020-10-24 00:01:21', '2020-10-24 00:01:21'),
+(394, 1, 'OSCAR ALTAMIRANO ATAO', 'Usuario', '940305306', '940305306', 'altosa.2018@hotmail.com', 389, '2020-10-24 01:02:38', '2020-10-24 01:02:38'),
+(395, 1, 'EMALY MAURICIO ORION', 'Usuario', '996259559', '996259559', 'emalym@hotmail.com', 390, '2020-10-24 23:16:17', '2020-10-24 23:16:17'),
+(396, 1, 'GERARDO FRANCISCO TEJADA ROJAS', 'Usuario', '914743740', '914743740', 'gtejada170@gmail.com', 391, '2020-10-25 00:37:54', '2020-10-25 00:37:54'),
+(397, 1, 'JOCHEBEB QUISPE TABOADA', 'Usuario', '949729806', '949729806', 'jochebebquispetaboada@gmail.com', 392, '2020-10-27 00:05:54', '2020-10-27 00:05:54'),
+(398, 1, 'CHRISTIAN BERROSPI MOLINA', 'Usuario', '960112105', '960112105', 'el_xavi2005@hotmail.com', 393, '2020-10-28 00:13:50', '2020-10-28 00:13:50'),
+(399, 1, 'ENITH MONTREVIL GARCIA', 'Usuario', '955966222', '955966222', 'e-montre@hotmail.com', 394, '2020-10-28 00:41:01', '2020-10-28 00:41:01'),
+(400, 1, 'GUILLERMO TRILLO RUIZ', 'Usuario', '922920661', '922920661', 'quique_t_r@hotmail.com', 395, '2020-10-28 03:42:58', '2020-10-28 03:42:58'),
+(401, 1, 'JOSE LUIS TORRES', 'Usuario', '998029595', '998029595', 'smarge_jose@hotmail.com', 396, '2020-10-29 22:24:00', '2020-10-29 22:24:00'),
+(402, 1, 'George HEBERT Dominguez Garcia', 'Usuario', '995079932', '995079932', 'gdominguez_12xto@hotmail.com', 397, '2020-10-29 22:48:48', '2020-10-29 22:48:48'),
+(403, 1, 'JOSE CARLOS SAAVEDRA VERDE', 'Usuario', '940786530', '940786530', 'josec2082@gmail.com', 398, '2020-10-30 00:48:11', '2020-10-30 00:48:11'),
+(404, 1, 'MARCO ANTONIO GUERRERO', 'Usuario', '954701978', '954701978', 'marco@estudiogeurrero.pe', 399, '2020-10-31 01:08:04', '2020-10-31 01:08:04'),
+(405, 1, 'MANUEL ORTIZ', 'Usuario', '990990130', '990990130', 'paulavasquezespilco@gmail.com', 400, '2020-10-31 23:24:07', '2020-10-31 23:24:07'),
+(406, 1, 'JESSICA MAGDALENA REGALADO ESPINOZA', 'Usuario', '932465965 - 992890501', '932465965 - 992890501', 'jessi_x100pre_kd@hotmail.com', 401, '2020-11-02 23:26:13', '2020-11-02 23:26:13'),
+(407, 1, 'Mónica  Ramírez', 'CONTACTO', '982097922', '982097922', 'mramirez@rashperu.com', 402, '2020-11-03 07:08:10', '2020-11-03 07:08:10'),
+(408, 1, 'Mónica  Ramírez', 'CONTACTO', '982097922', '982097922', 'm.ramirez@rashperu.com', 403, '2020-11-03 08:12:15', '2020-11-03 08:12:15'),
+(409, 1, 'Linda  Vasquez Prado', 'Usuario', '984083802', '984083802', 'livapra2170@gmail.com', 404, '2020-11-03 08:17:11', '2020-11-03 08:17:11'),
+(410, 1, 'RENE ROBIN FAJARDO FAJARDO', 'Usuario', '921581774', '921581774', 'laranitacorazon@hotmail.com', 405, '2020-11-03 08:24:41', '2020-11-03 08:24:41'),
+(411, 1, 'CHRISTIAN SEGURA DAMIAN', 'Usuario', '998176358', '998176358', 'soporte@promhil.com', 406, '2020-11-03 22:23:12', '2020-11-03 22:23:12'),
+(412, 1, 'ASUNTA ALVAREZ ZEGARRA', 'Usuario', '995548201', '995548201', 'asuntaalvarez@hotmail.com', 407, '2020-11-03 23:25:53', '2020-11-03 23:25:53'),
+(413, 1, 'CHAVELY ISASI TUCTO', 'Usuario', '929573799', '929573799', '929573799', 408, '2020-11-04 00:18:09', '2020-11-04 00:18:09'),
+(414, 1, 'CHRISTIAN SALAZAR INCIO', 'Usuario', '981083842', '981083842', 'ejecutivo.comercial2@cargalogistica.pe', 409, '2020-11-04 01:01:18', '2020-11-04 01:01:18'),
+(415, 1, 'CARLOS ANTONIO RODRIGUEZ MAYURI', 'Usuario', '921661025', '921661025', 'cr.ingenieros.consultores@gmail.com', 410, '2020-11-04 02:22:17', '2020-11-04 02:22:17'),
+(416, 1, 'DANNY BRAULIO RAMIREZ RISCO', 'Usuario', '982305725', '982305725', 'danny_bob7@hotmail.com', 411, '2020-11-04 03:13:31', '2020-11-04 03:13:31'),
+(417, 1, 'JOAN MONTES GOMEZ', 'Usuario', '924044112', '924044112', 'joanmontesg@gmail.com', 412, '2020-11-04 03:30:52', '2020-11-04 03:30:52'),
+(418, 1, 'ANGEL SALAZAR QUIROZ', 'Usuario', '982748318', '982748318', 'asqgraf@gmail.com', 413, '2020-11-04 04:36:25', '2020-11-04 04:36:25'),
+(419, 1, 'William Edgar Tellez Telles', 'Usuario', '947352788', '947352788', 'centro_tecnologico@hotmail.com.pe', 414, '2020-11-04 05:39:12', '2020-11-04 05:39:12'),
+(420, 1, 'LUIS OSWALDO PALOMINO NIETO', 'Usuario', '987431482', '987431482', 'OSWALDOPALOMINO98@GMAIL.COM', 415, '2020-11-04 22:11:44', '2020-11-04 22:11:44'),
+(421, 1, 'Ruiz Enciso jacquelin Marcelo', 'Usuario', '935683723', '935683723', 'Jmrruiz29@hotmal.com', 416, '2020-11-06 00:39:41', '2020-11-06 00:39:41'),
+(422, 1, 'HEIDI ZULEIMA HADI MOLINA', 'Usuario', '967323586', '967323586', 'ventas2@vpsi.com.pe', 417, '2020-11-06 22:32:08', '2020-11-06 22:32:08'),
+(423, 1, 'MELISSA ARIAS ORTIZ', 'Usuario', '936627502', '936627502', 'melissa.ao88@gmail.com', 418, '2020-11-07 05:01:09', '2020-11-07 05:01:09'),
+(424, 1, 'JOSE LUIS MEZARAIME HUAYCHA', 'Usuario', '935578352', '935578352', 'joseluismezaraimehuaycha@gmail.com', 419, '2020-11-09 23:49:55', '2020-11-09 23:49:55'),
+(425, 1, 'OMAR WALTER INFANTES VALENCIA', 'Usuario', '966343856', '966343856', 'omarinfantesv@gmail.com', 420, '2020-11-10 04:53:47', '2020-11-10 04:53:47'),
+(426, 1, 'Luis  Ayllon', 'CONTACTO', '01-3308769', '01-3308769', 'layllon@jphys.com', 421, '2020-11-11 23:01:15', '2020-11-11 23:01:15'),
+(427, 1, 'JOSE BERNILLA CARLOS', 'Usuario', '947452898', '947452898', 'josecitobernillac07@gmail.com', 422, '2020-11-12 00:19:26', '2020-11-12 00:19:26'),
+(428, 1, 'JONATAN ALEGRE ESPINOZA', 'Usuario', '945813455', '945813455', 'jonatandavid18@gmail.com', 423, '2020-11-12 02:31:44', '2020-11-12 02:31:44'),
+(429, 1, 'JHONNY JOEL QUIROZ SANCHEZ', 'Usuario', '987373752', '987373752', 'jhonny_quiroz@outlook.com', 424, '2020-11-12 04:02:41', '2020-11-12 04:02:41'),
+(430, 1, 'CESAR LLANOS CRUZ', 'Usuario', '990100969', '990100969', 'aquiestacesar@gmail.com', 425, '2020-11-14 05:06:24', '2020-11-14 05:06:24'),
+(431, 1, 'Julio Cesar Huaman', 'Usuario', '981887304', '981887304', 'juliohuamant@hotmail.com', 426, '2020-11-16 23:20:52', '2020-11-16 23:20:52'),
+(432, 1, 'SONIA CCALLOCUNTO HUERTAS', 'Usuario', '902458426', '902458426', 'augustogrone01@gmail.com', 427, '2020-11-17 04:57:20', '2020-11-17 04:57:20'),
+(433, 1, 'SAUL MUÑOZ TORRES', 'Usuario', '951696475', '951696475', 'smunoz@paredessgroup.com', 428, '2020-11-18 00:53:30', '2020-11-18 00:53:30'),
+(434, 1, 'DIGNO VERGARA SANTOS', 'Usuario', '946287742', '946287742', 'dvergarasantos@hotmail.com', 429, '2020-11-18 02:19:07', '2020-11-18 02:19:07'),
+(435, 1, 'MIGUEL PUELLES MAZA', 'Usuario', '958121159', '958121159', 'mpuelles@psi.gob.pe', 430, '2020-11-20 23:31:45', '2020-11-20 23:31:45'),
+(436, 1, 'ROSARIO RAMOS COHAGUILA', 'Usuario', '988085663', '988085663', 'bielucy02@hotmail.com', 431, '2020-11-20 23:47:42', '2020-11-20 23:47:42'),
+(437, 1, 'KAROL ZELA APAZA', 'Usuario', '949155315', '949155315', 'karolzela@gmail.com', 432, '2020-11-21 03:56:33', '2020-11-21 03:56:33'),
+(438, 1, 'ROSA VIOLETA BRACAMONTE RAMIREZ', 'Usuario', '991100489', '991100489', 'rosabracamonte2002@yahoo.com', 433, '2020-11-21 04:57:30', '2020-11-21 04:57:30'),
+(439, 1, 'SHEILA BERTHA DURAN SILVA', 'Usuario', '940482186', '940482186', 'sd.ranzoni@gmail.com', 434, '2020-11-21 05:04:49', '2020-11-21 05:04:49'),
+(440, 1, 'ANTHONY BANCES RAMOS', 'Usuario', '902509911', '902509911', 'bances_99@hotmail.com', 435, '2020-11-21 23:29:23', '2020-11-21 23:29:23'),
+(441, 1, 'RICARDO DANIEL MONSALVE ARRIETA', 'Usuario', '902721408', '902721408', 'ricardo@moviracks.com', 436, '2020-11-22 00:56:05', '2020-11-22 00:56:05'),
+(442, 1, 'OSCAR CASTAÑON MENDOZA', 'Usuario', '971232967', '971232967', 'ocastanonm@gmail.com', 437, '2020-11-22 01:02:40', '2020-11-22 01:02:40'),
+(443, 1, 'ROBERT PRADO PEREZ', 'Usuario', '994641865', '994641865', 'no-tiene0@correo.com', 438, '2020-11-23 23:27:58', '2020-11-23 23:27:58'),
+(444, 1, 'ENILDA LUCY SANCHEZ RODRIGUEZ', 'Usuario', '921964447', '921964447', 'sebi200048@gmail.com', 439, '2020-11-25 00:04:37', '2020-11-25 00:04:37'),
+(445, 1, 'MANUEL GUSTAVO PINEDO CUBA', 'Usuario', '971735570', '971735570', 'manuel.pinedo2@unmsm.edu.pe', 440, '2020-11-25 05:19:40', '2020-11-25 05:19:40'),
+(446, 1, 'Sheila Abigail Orihuela Calderon', 'Usuario', '932117282', '932117282', 'abigail170415@gmail.com', 441, '2020-11-25 06:31:13', '2020-11-25 06:31:13'),
+(447, 1, 'LESLIE TORRES', 'Usuario', '942602482', '942602482', 'leslie_torres_13@hotmail.com', 442, '2020-11-25 22:46:42', '2020-11-25 22:46:42'),
+(448, 1, 'ANGEL MANCO GONZALES', 'Usuario', '957238556', '957238556', 'angel-manco9@hotmail.com', 443, '2020-11-28 00:35:00', '2020-11-28 00:35:00'),
+(449, 1, 'PERCY DEDIOS ANTON', 'Usuario', '991348234', '991348234', 'soporte@giatechpc.com', 444, '2020-11-28 00:46:37', '2020-11-28 00:46:37');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cotizacion`
+--
+
+CREATE TABLE `cotizacion` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cod_cotizacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `almacen_id` bigint(20) UNSIGNED NOT NULL,
+  `cliente_id` bigint(20) UNSIGNED NOT NULL,
+  `moneda_id` bigint(20) UNSIGNED NOT NULL,
+  `forma_pago_id` bigint(20) UNSIGNED NOT NULL,
+  `estado_aprovar` tinyint(1) NOT NULL,
+  `estado_aprobado` tinyint(1) NOT NULL,
+  `aprobado_por` bigint(20) UNSIGNED DEFAULT NULL,
+  `garantia` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `validez` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_emision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_vencimiento` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cambio` double(17,2) NOT NULL,
+  `observacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comisionista_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  `estado_vigente` tinyint(1) NOT NULL,
+  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cotizacion_boleta_registro`
+--
+
+CREATE TABLE `cotizacion_boleta_registro` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cotizacion_id` bigint(20) UNSIGNED NOT NULL,
+  `producto_id` bigint(20) UNSIGNED NOT NULL,
+  `stock` int(11) NOT NULL,
+  `promedio_original` double(17,2) NOT NULL,
+  `precio` double(17,2) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `descuento` int(11) NOT NULL,
+  `comision` int(11) NOT NULL,
+  `precio_unitario_desc` double(17,2) NOT NULL,
+  `precio_unitario_comi` double(17,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cotizacion_factura_registro`
+--
+
+CREATE TABLE `cotizacion_factura_registro` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cotizacion_id` bigint(20) UNSIGNED NOT NULL,
+  `producto_id` bigint(20) UNSIGNED NOT NULL,
+  `stock` int(11) NOT NULL,
+  `promedio_original` double(17,2) NOT NULL,
+  `precio` double(17,2) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `descuento` int(11) NOT NULL,
+  `comision` int(11) NOT NULL,
+  `precio_unitario_desc` double(17,2) NOT NULL,
+  `precio_unitario_comi` double(17,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cotizacion_servicio`
+--
+
+CREATE TABLE `cotizacion_servicio` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cod_cotizacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cliente_id` bigint(20) UNSIGNED NOT NULL,
+  `moneda_id` bigint(20) UNSIGNED NOT NULL,
+  `forma_pago_id` bigint(20) UNSIGNED NOT NULL,
+  `estado_aprobar` tinyint(1) NOT NULL,
+  `estado_aprobado` tinyint(1) NOT NULL,
+  `aprobado_por` bigint(20) UNSIGNED DEFAULT NULL,
+  `garantia` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `validez` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_emision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_vencimiento` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cambio` double(17,2) NOT NULL,
+  `observacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comisionista_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  `estado_vigente` tinyint(1) NOT NULL,
+  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cotizacion_servicio_boleta_r`
+--
+
+CREATE TABLE `cotizacion_servicio_boleta_r` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cotizacion_servicio_id` bigint(20) UNSIGNED NOT NULL,
+  `servicio_id` bigint(20) UNSIGNED NOT NULL,
+  `promedio_original` double(17,2) NOT NULL,
+  `precio` double(17,2) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `descuento` int(11) NOT NULL,
+  `precio_unitario_desc` double(17,2) NOT NULL,
+  `comision` int(11) NOT NULL,
+  `precio_unitario_comi` double(17,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `cotizacion_servicio_factura_r`
+--
+
+CREATE TABLE `cotizacion_servicio_factura_r` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cotizacion_servicio_id` bigint(20) UNSIGNED NOT NULL,
+  `servicio_id` bigint(20) UNSIGNED NOT NULL,
+  `promedio_original` double(17,2) NOT NULL,
+  `precio` double(17,2) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `descuento` int(11) NOT NULL,
+  `precio_unitario_desc` double(17,2) NOT NULL,
+  `comision` int(11) NOT NULL,
+  `precio_unitario_comi` double(17,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email_bandeja_envios`
+--
+
+CREATE TABLE `email_bandeja_envios` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_usuario` bigint(20) UNSIGNED DEFAULT NULL,
+  `destinatario` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `remitente` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `asunto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mensaje` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `mensaje_sin_html` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_hora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email_bandeja_envios_archivos`
+--
+
+CREATE TABLE `email_bandeja_envios_archivos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_bandeja_envios` bigint(20) UNSIGNED DEFAULT NULL,
+  `archivo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_hora` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `email_configuraciones`
+--
+
+CREATE TABLE `email_configuraciones` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_usuario` bigint(20) UNSIGNED DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email_backup` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `smtp` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `port` int(11) NOT NULL,
+  `encryption` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `firma` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `empresa`
+--
+
+CREATE TABLE `empresa` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `razon_social` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ruc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `movil` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `correo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pais` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `region_provincia` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `ciudad` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `calle` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_postal` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `rubro` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `moneda_principal` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pagina_web` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `background` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `empresa`
+--
+
+INSERT INTO `empresa` (`id`, `nombre`, `razon_social`, `ruc`, `telefono`, `movil`, `correo`, `pais`, `region_provincia`, `ciudad`, `calle`, `codigo_postal`, `rubro`, `moneda_principal`, `descripcion`, `pagina_web`, `foto`, `background`, `created_at`, `updated_at`) VALUES
+(1, 's&r solution service', 'S & R SOLUTION SERVICE S.A.C.', '20524840902', '4235390', '981145518', 'esolis@srsac.com', 'Peru', 'Lima', 'Lima', 'Av. Bolivia Nro. 180 Of-306 C.C Wilson Plaza', '15001', ' soluciones de problemas de operatividad informática', '1', 'S&R Solution Service S.A.C., es una empresa orientada a las soluciones de problemas de operatividad informática, principalmente de temas ligados a Hardware de impresión de distintas marca, siendo una de nuestras principales la marca EPSON..\r\n', 'http://www.srsac.com/', 'logo.png', 'https://images4.alphacoders.com/104/10414.jpg', '2019-08-01 05:00:00', '2020-11-28 17:17:35');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `estado`
+--
+
+CREATE TABLE `estado` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `estado`
+--
+
+INSERT INTO `estado` (`id`, `nombre`, `descripcion`, `created_at`, `updated_at`) VALUES
+(1, 'ACTIVO', 'Dicho Articulo se mantiene en actividad', '2019-10-30 16:36:57', '2019-10-30 16:36:57'),
+(2, 'DESACTIVO', 'Dicho Articulo se mantiene Desactivado', '2019-10-30 16:36:57', '2019-10-30 16:36:57'),
+(3, 'DESCONTINUADO', 'Dicho Articulo se mantiene en DESUSO', '2019-10-30 16:36:57', '2019-10-30 16:36:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `facturacion`
+--
+
+CREATE TABLE `facturacion` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `codigo_fac` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `almacen_id` bigint(20) UNSIGNED NOT NULL,
+  `orden_compra` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `guia_remision` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `id_cotizador` bigint(20) UNSIGNED DEFAULT NULL,
+  `id_cotizador_servicio` bigint(20) UNSIGNED DEFAULT NULL,
+  `cliente_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `moneda_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `forma_pago_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `fecha_emision` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fecha_vencimiento` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cambio` double(17,2) NOT NULL,
+  `observacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `comisionista` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `user_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `facturacion_registro`
+--
+
+CREATE TABLE `facturacion_registro` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `facturacion_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `producto_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `servicio_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `numero_serie` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `stock` int(11) DEFAULT NULL,
+  `promedio_original` double(17,2) NOT NULL,
+  `precio` double(17,2) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `descuento` int(11) NOT NULL,
+  `comision` int(11) NOT NULL,
+  `precio_unitario_desc` double(17,2) NOT NULL,
+  `precio_unitario_comi` double(17,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `familias`
+--
+
+CREATE TABLE `familias` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `familias`
+--
+
+INSERT INTO `familias` (`id`, `codigo`, `descripcion`, `estado`, `created_at`, `updated_at`) VALUES
+(1, '001', 'TABLETS', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(2, '002', 'SERVIDORES', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(3, '003', 'PERIFERICOS', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(4, '004', 'GPS - GESTION DE FLOTA', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(5, '005', 'PORTATILES', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(6, '006', 'SUMINISTRO', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(7, '007', 'DOMINIO HOSTING', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(8, '008', 'NOVEDADES TECNOLOGICAS', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(9, '009', 'COMPUTADORAS DE ESCRITORIO', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(10, '010', 'IMPRESORAS', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(11, '011', 'REDES Y COMUNICACIONES', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(12, '012', 'SEGURIDAD ELECTRONICA', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(13, '013', 'SEGURIDAD INFORMATICA', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(14, '014', 'EQUIPOS INALAMBRICOS', NULL, '2019-08-01 12:00:00', '2019-08-01 12:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `forma_pago`
+--
+
+CREATE TABLE `forma_pago` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `dias` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `forma_pago`
+--
+
+INSERT INTO `forma_pago` (`id`, `nombre`, `dias`, `created_at`, `updated_at`) VALUES
+(1, 'Contado ', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(2, 'Cheque dif 7 dias', '7', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(3, 'Cheque dif 15 dias', '15', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(4, '50 % adelanto,saldo contra entrega', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(5, 'Contado / contra entrega', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(6, 'Factura 7 dias', '7', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(7, 'Factura 15 dias', '15', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(8, 'Factura 20 dias', '20', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(9, 'Factura 30 dias', '30', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(10, 'Contado / Cheque al Día', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `garantia_guia_egreso`
+--
+
+CREATE TABLE `garantia_guia_egreso` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `fecha` date NOT NULL,
+  `orden_servicio` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  `egresado` tinyint(1) NOT NULL,
+  `informe_tecnico` tinyint(1) NOT NULL,
+  `descripcion_problema` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `diagnostico_solucion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `recomendaciones` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `garantia_ingreso_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `garantia_guia_egreso`
+--
+
+INSERT INTO `garantia_guia_egreso` (`id`, `fecha`, `orden_servicio`, `estado`, `egresado`, `informe_tecnico`, `descripcion_problema`, `diagnostico_solucion`, `recomendaciones`, `garantia_ingreso_id`, `created_at`, `updated_at`) VALUES
+(3, '2020-01-07', 'EP-000005', 1, 1, 0, 'No Avanza el Papel // Fecha de Compra: 04/09/2019.', 'Se realizo la revision y se detecta engranaje de rodillo trabado, el cual ocasionaba problemas de trabado de hoja al momento de la toma de papel. \r\nSe procede a corregir la sincronizacion y lubricacion de los engranajes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 7403.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco, también se recomienda verificar el estado de las hojas ya que podrían ocasionar atascos o trabados de las mismas.', 12, '2020-01-08 07:11:37', '2020-01-08 07:11:37'),
+(4, '2020-01-08', 'EP-000002', 1, 1, 0, 'Imprime con Líneas Horizontales y Manchas las Hojas // Fecha de Compra: 08/02/2019', 'Se realizo la revision y se detecta mecanismo de arrastre con problemas de ajustes, el cual ocasionaba fallas al momento de la impresión (fin dela hoja con rayas horizontales). \r\nSe realizan ajustes, lubricacion y calibraciones mediante el programa de ajustes obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo con la correcta configuración de acuerdo al papel obteniendo buenos resultados. Nro. de paginas impresas después de la solución 3022.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la configuración correcta al momento de la impresión de imágenes full color o texto normal, imagen calidad estándar. \r\nSe realizaron pruebas de impresión de imágenes y el usuario no esta conforme con las muestras realizadas.', 9, '2020-01-09 03:45:11', '2020-01-09 03:45:11'),
+(5, '2020-01-08', 'EP-000004', 1, 1, 0, 'Se traba la hoja (jala por un costado).', 'Se realizo la revision y se observa restos de liquido en el interior del mecanismo de arrastre (engranajes), el cual ocasionaba el trabado de los mismos. \r\nSe procede a efectuar la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2843.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario realizar el mantenimiento preventivo de producto para su optimo desempeño.', 11, '2020-01-09 06:28:16', '2020-01-09 06:28:16'),
+(6, '2020-01-09', 'EP-000009', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasionaba fallas al momento de la impresión (imágenes no legibles). \r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1773.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo en necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 16, '2020-01-10 06:18:36', '2020-01-10 06:18:36'),
+(7, '2020-01-10', 'EP-000007', 1, 1, 0, 'Atasco de papel.', 'Se realizo la revision y se detecta mecanismo de arrastre con problemas de calibraciones producto de un atasco de papel.\r\nSe procede a corregir la sincronizacion de los engranajes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 1377. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 14, '2020-01-11 01:18:02', '2020-01-11 01:18:02'),
+(8, '2020-01-10', 'EP-000006', 1, 1, 0, 'No enciende.', 'Se realizo la revision y se observa suciedad en el conector del panel de control, el cual ocasionaba un falso contacto que conllevaba a problemas de encendido.\r\nSe realizan ajustes, limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 2164.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por a garantía, así mismo es necesario realizar el mantenimiento preventivo para garantizar su optimo desempeño.', 13, '2020-01-11 03:53:53', '2020-01-11 03:53:53'),
+(9, '2020-01-11', 'EP-000012', 1, 1, 0, 'Impresiones en blanco.', 'Se realizo la revision y se detectan palanca del sensor de papel fuera de lugar, el cual ocasionaba fallas al momento de la toma de papel (pasan las hojas en blanco).\r\nSe procede a instalar correctamente la parte mencionada. luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 2638.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo realizar el mantenimiento general del producto para garantizar tu optimo desempeño.', 19, '2020-01-11 23:01:38', '2020-01-11 23:01:38'),
+(10, '2020-01-15', 'EP-000003', 1, 1, 0, 'Presenta error general al momento del encendido.', 'Se realizo el cambio del equipo. \r\nEPSON L3150 n/s: X5E9081504; Equipo sellado con accesorios completos.', 'Se recomienda realizar la correcta instalación según el manual para prevenir error de usuario.', 10, '2020-01-15 23:19:29', '2020-01-15 23:19:29'),
+(11, '2020-01-15', 'EP-000019', 1, 1, 0, 'Error de escaner (1077) /Fecha de Compra: 16-12-2019 /N° de Factura: FP95-24070 /Lugar de Compra: Riplay Sa', 'Se realizo la revision y se observa cable flat de la unidad de escaner desconectado, el cual ocasiona el error de escaner al momento del encendido. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones y copias las cuales no muestran desperfectos. Nro. de paginas impresas 170.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 26, '2020-01-16 03:10:07', '2020-01-16 03:10:07'),
+(12, '2020-01-17', 'EP-000020', 1, 1, 0, 'Defectos de impresión BK, usuario menciona que no toma el papel.', 'Se realizo la revision y se observa bandeja principal de papel fuera de posición, el cual ocasionaba problemas al momento de la toma de papel (no jalas las hojas). Se procede a corregir la posición, luego se ejecutan pruebas de impresiones las cuales presentan desperfectos (test de inyectores con puntos desviados). Se toma una muestra de tinta para realiza la prueba cromatografica obteniendo como resultado el uso de suministros no genuinos, así mismo este evento no califica como desperfecto de fabricación y se invalida la garantía por parte del fabricante.  Nro. de paginas impresas 6723.\r\nSe adjunta la prueba del cabezal.', 'Se recomienda el servicio de limpieza del tanque de tinta (BK) y la instalación de suministros originales para garantizar su optimo funcionamiento.', 27, '2020-01-18 00:16:17', '2020-01-18 00:16:17'),
+(13, '2020-01-17', 'EP-000013', 1, 1, 0, 'No enciende.', 'Se realizo la revision y se detecta tarjeta principal defectuosa, el cual ocasiona las fallas de encendido, se descarto la fuente de voltaje y la unidad ballast las cuales se encuentran en buenas condiciones. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan las calibraciones de color mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de proyección continuas en las cuales no presento desperfectos.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo verificar la toma de energía ya que una mala instalación podría ocasionar daños irreparables.', 20, '2020-01-18 00:38:51', '2020-01-18 00:38:51'),
+(14, '2020-01-17', 'EP-000018', 1, 1, 0, 'Se apaga, luego parpadean todos los leds.', 'Se realizo la revision y se detectan problema de software (firmware desactualizado), el cual ocasionaba problemas de error general al momento del encendido. \r\nSe actualiza la versión del firmware, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3501.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 25, '2020-01-18 02:25:07', '2020-01-18 02:25:07'),
+(15, '2020-01-20', 'EP-000014', 1, 1, 0, 'Se apaga y enciende automáticamente. Fecha de compra 12-02-2019.', 'Se realizo la revision y se detecta tarjeta principal defectuosa, el cual ocasiona las fallas de encendido (se apaga y el carruaje se queda a la mitad del recorrido). Se realizo el descarte de la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultados. Se efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes, así mismo se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 27. Se actualiza la versión del firmware para corregir errores a futuro.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario que es necesario efectuar el mantenimiento preventivo para garantizar el optimo desempeño del producto.', 21, '2020-01-21 03:52:41', '2020-01-21 03:52:41'),
+(16, '2020-01-20', 'EP-000024', 1, 1, 0, 'Presenta error de servicio, usuario menciona que imprime con rayas.', 'Se realizo la revision y se detectan contador de gota de tinta al 100%, el cual ocasiona el error de servicio (almohadillas al final de su vida útil). \r\nSe realiza el reset del contador, luego se ejecutan pruebas de impresión las cuales se observa desperfectos. Nro. de paginas impresas 37724.\r\nEl producto cuenta con la garantía vencida ya que excedió el limite de paginas impresas (garantía 24 meses o 30.000 paginas).', 'Se recomienda realizar el mantenimiento general del equipo ya que se observa suciedad en el interior del mecanismo de arrastre e impresión, así mismo es necesario el consumo de tintas originales y que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables al producto.', 31, '2020-01-21 04:09:23', '2020-01-21 04:09:23'),
+(17, '2020-01-20', 'EP-000008', 1, 1, 0, 'Imprime con lineas horizontales /Factura a nombre de: Milagros Almeyda Hurtado /Fecha de Compra: 15/03/2019', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (imágenes con rayas). Se realiza el proceso de recuperación de los inyectores obteniendo resultados no favorables. Se toma una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales. Se efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 15, '2020-01-21 05:24:47', '2020-01-21 05:24:47'),
+(18, '2020-01-21', 'EP-000010', 1, 1, 0, 'No jala el papel. Fecha de compra 02-04-2019.', 'Se realizo la revision y se detecta engranaje del mecanismo de arrastre dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasiona las fallas de toma de papel. Se realizo el cambio de la parte mencionada, lubricacion y calibración obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 7841. Se actualiza la versión del firmware para corregir errores a futuro (VC02JA).\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 17, '2020-01-22 02:18:38', '2020-01-22 02:18:38'),
+(19, '2020-01-21', 'EP-000022', 1, 1, 0, 'Usuario menciona que se ataca el papel después de 4  o 5 impresiones, defectos de impresión.', 'Se realizo la revision y se detecta rodillo principal de papel con signos de desgaste, el cual ocasiona las fallas al momento de la toma de papel, así mismo se realiza la revision del cabezal observando inyectores desviados. Se realiza la limpieza del cabezal obteniendo buenos resultados. \r\nSe realizara la cotización de la parte mencionada ya que no es cubierta por la garantía (garantía solo cubre defectos de fabrica, mas no desgaste de consumibles). Nro. de paginas impresas 24927.', 'Se recomienda el cambio de la parte mencionada y el servicio de mantenimiento general para garantizar su optimo funcionamiento.', 29, '2020-01-22 02:44:09', '2020-01-22 02:44:09'),
+(20, '2020-01-21', 'EP-000023', 1, 1, 0, 'No corta el papel correctamente.', 'Se realizo la revision y se detecta engranaje de la unidad de corte fuera de lugar, el cual ocasionaba fallas al momento del corte (no corta la hoja correctamente).\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta de retirar el papel al momento de presentar un atasco.', 30, '2020-01-22 06:32:39', '2020-01-22 06:32:39'),
+(21, '2020-01-22', 'EP-000016', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (texto no legible). Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas 32038.\r\nEl equipo cuenta con la garantía vencida ya que excedió el limite de paginas impresas (garantía 24 meses o 30.000 paginas).', 'Se recomienda realizar el mantenimiento preventivo del equipo para garantizar su optimo desempeño, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables.', 23, '2020-01-23 04:59:02', '2020-01-23 04:59:02'),
+(22, '2020-01-22', 'EP-000033', 1, 1, 0, 'Defectos de impresión (imágenes con rayas).', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona las fallas de impresión (imágenes con rayas). Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1374.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 52, '2020-01-23 05:40:05', '2020-01-23 05:40:05'),
+(23, '2020-01-24', 'EP-000029', 1, 1, 0, 'No toma el papel. Fecha de compra 10-12-2019.', 'Se realizo la revision y se detecta engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasiona las fallas de toma de papel. Se efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2202. El equipo cuenta con la versión del firmware actualizada. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 48, '2020-01-24 22:56:08', '2020-01-24 22:56:08'),
+(24, '2020-01-24', 'EP-000027', 1, 1, 0, 'Presenta defectos de impresión en el color BK.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona las fallas de impresiones (texto no legible). \r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, se toma una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros no genuinos. Nro. de paginas impresas 16564.', 'Se recomienda el lavado del tanque y la instalación de tintas originales para garantizar su optimo desempeño del producto.', 46, '2020-01-25 06:29:59', '2020-01-25 06:29:59'),
+(25, '2020-01-25', 'EP-000025', 1, 1, 0, 'Presenta error de atasco de papel. Fecha de compra 16-09-2019.', 'Se realizo la revision y se detecta tarjeta principal defectuosa, el cual ocasiona el error general al momento del encendido, se efectúa el descarte de la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultados. \r\nSe realiza el cambio de la parte afectada, luego se efectúan las calibraciones mediante el programa de ajustes, así mismo se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 27.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 42, '2020-01-25 22:59:20', '2020-01-25 22:59:20'),
+(26, '2020-01-28', 'EP-000030', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision y se detecta cabezal de impresión defectuoso, el cual ocasiona fallas de impresiones (texto no legible). \r\nSe realiza el descarte de la parte mencionada con un cabezal de laboratorio obteniendo buenos resultados. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo en necesario realizar el mantenimiento preventivo cada 6 meses.', 49, '2020-01-28 23:12:50', '2020-01-28 23:12:50'),
+(27, '2020-01-28', 'EP-000001', 1, 1, 0, 'No toma el papel /Factura a nombre de: Kepler Ramirez /Fecha de Compra: 06/04/2019', 'Se realizo la revision y se detecta problemas al momento de la toma de papel (no jala correctamente las hojas, falla aleatoria). Se realizan ajustes, lubricacion y calibraciones al mecanismo de arrastre (clutch, spur gear clutch), luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1077. \r\nEl producto cuenta con la versión del firmware actualizada. Se adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de las hojas al momento de presentar un trabado, también es necesario revisar el estado de las hojas para evitar posibles atascos de papel.', 8, '2020-01-28 23:56:14', '2020-01-28 23:56:14'),
+(28, '2020-01-28', 'EP-000015', 1, 1, 0, 'Usuario menciona que no toma el papel (falla aleatoria). Fecha de compra 20-12-2019.', 'Se realizo la revision y se detecta problemas al momento de la toma de papel (no jala las hojas, falla aleatoria). Se realiza la revision del mecanismo de arrastre (engranaje SPUR GEAR CLUTCH, rodillos, bandeja de papel, mecanismo de unidad duplex) las cuales se encuentran en buenas condiciones. Se efectúan ajustes, lubricacion (G-97) y calibración del mecanismo de arrastre, luego se ejecutan pruebas de impresiones continuas, copias, escaneo e impresiones en formato duplex las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 433. \r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco, también es importante verificar el estado de las hojas ya que podrían conllevar a atascos o trabados de las mismas.', 22, '2020-01-28 23:59:24', '2020-01-28 23:59:24'),
+(29, '2020-01-28', 'EP-000031', 1, 1, 0, 'No avanza el papel //Titular: Access Net System SAC// Fecha de Compra:26/09/2019', 'Se realizo la revision y se detecta engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasionaba fallas al momento de la toma de papel. \r\nSe efectúa el cambio de la parte mencionada, lubricacion y calibraciones obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1598.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 50, '2020-01-29 03:13:03', '2020-01-29 03:13:03'),
+(30, '2020-01-29', 'EP-000035', 1, 1, 0, 'Presenta error de atasco de papel, la hoja se queda a la mitad.', 'Se realizo la revision y se observa mancha en el encoder CR (G-97), el cual ocasionaba que el carruaje no se desplace correctamente para luego presentar el error de atasco. \r\nSe realiza la limpieza de la parte mencionada. luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro de paginas impresas después de la solución 4722.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el correcto procedimiento del retiro de la hoja al momento de presentar un atasco.', 54, '2020-01-29 22:49:09', '2020-01-29 22:49:09'),
+(31, '2020-01-29', 'EP-000038', 1, 1, 0, 'Presenta atasco de papel.', 'Se realizo la revision y se detecta objeto extraño (perno) en el interior de la bandeja de papel, el cual ocasionaba el trabado de las hoja al momento de la impresión. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. \r\nNro. de paginas impresas después de la solución 4934.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario realizar el mantenimiento general lo mas pronto posible para garantizar el optimo desempeño del producto.', 57, '2020-01-30 00:03:14', '2020-01-30 00:03:14'),
+(32, '2020-01-29', 'EP-000034', 1, 1, 0, 'Alimentación múltiple en bandeja 1 /// Fecha de compra 22-07-2019.', 'Se realizo la revision y se observa resorte de la bandeja principal fuera de lugar, el cual ocasionaba problemas al momento de la toma de papel (jala mas de dos hoja a la vez). Se procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos.  Nro. de paginas impresas después de la solución 874.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 53, '2020-01-30 02:52:31', '2020-01-30 02:52:31'),
+(33, '2020-01-29', 'EP-000036', 1, 1, 0, 'Ruido anormal y no avanza el papel//Factura a nombre de: Orbes Agricolas SAC//Fecha de Compra: 13/08/2019', 'Se realizo la revision y se observa encoder CR con suciedad, el cual ocasionaba el sonido extraño al momento de la impresión, así mismo se detecta resorte del mecanismo de arrastre (clutch, spur gear clutch) fuera de lugar, el cual ocasionaba fallas al momento de la toma de papel (no jala las hojas). Se procede a instalar correctamente la parte mencionada. luego se ejecutan pruebas de impresiones y copias las cuales no muestran desperfectos. Nro. de paginas impresas 17915.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario al forma correcta del retiro de la hoja al momento de presentar un atasco.', 55, '2020-01-30 04:15:44', '2020-01-30 04:15:44'),
+(34, '2020-01-29', 'EP-000017', 1, 1, 0, 'No toma el papel. Fecha 25-02-2019.', 'Se realizo la revision y se detecta engranaje del mecanismo de arrastre dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasiona fallas al momento de la toma de papel. Se realizo el cambio y lubricacion de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 277. El producto cuenta con la versión del firmware actualizada (VC02JA). \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el correcto retiro de la hoja al momento de presentar un atasco.', 24, '2020-01-30 05:14:04', '2020-01-30 05:14:04'),
+(35, '2020-01-30', 'EP-000032', 1, 1, 0, 'No toma las hojas. Fecha de compra 08-11-2019.', 'Se realizo la revision y se observa resorte del mecanismo de arrastre fuera de lugar, el cual ocasionaba problemas de toma de papel (no jala las hojas correctamente.\r\nSe procede a instalar la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 706.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 51, '2020-01-31 04:49:21', '2020-01-31 04:49:21'),
+(36, '2020-01-31', 'EP-000041', 1, 1, 0, 'Mancha las hojas y se traba el papel por la unidad ADF.', 'Se realizo la revision y se observa restos de tinta en el soporte de guía de avance de papel, el cual ocasionaba las manchas en las hojas al momento de la impresión, así mismo se realiza la limpieza y lubricacion del mecanismo ADF obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 6621.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el uso de las herramientas que brinda el driver.', 60, '2020-02-01 03:15:23', '2020-02-01 03:15:23'),
+(37, '2020-01-31', 'EP-000043', 1, 1, 0, 'Error de Scanner 100077 /Fecha de Compra: 07-01-2020', 'Se realizo la revision y se detecta cable flat de la unidad de escaner desconectado, el cual ocasionaba el error de escaner al momento del encendido. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 28.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el uso de las herramientas que brinda el producto.', 62, '2020-02-01 05:34:07', '2020-02-01 05:34:07'),
+(38, '2020-02-04', 'EP-000042', 1, 1, 0, 'No avanza la hoja //Factura a nombre de: Elmer Altamirano Coronado //Fecha de Compra: 22-03-2019', 'Se realizo la revision minuciosa y se observa objeto extraño (plástico) en el interior de la bandeja de papel, el cual ocasionaba que no avance las hojas. Se procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1304.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario tener precaución de no colocar objetos encima de la unidad de escaner ya que podría caer al interior de la bandeja de papel ocasionando atascos.', 61, '2020-02-05 05:05:10', '2020-02-05 05:05:10'),
+(39, '2020-02-05', 'EP-000045', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision y se observa cable flat de escaner doblado, el cual ocasiona el error de escaner y emite un sonido al momento del encendido. \r\nSe procede a conectar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestra desperfectos. Nro. de paginas impresas después de la solución 1603.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantida.', 64, '2020-02-05 22:19:31', '2020-02-05 22:19:31'),
+(40, '2020-02-05', 'EP-000039', 1, 1, 0, 'Presenta error general. Fecha de compra 28-03-2019.', 'Se realizo la revision y se observa engranaje del mecanismo trabado y engranaje dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasionaba el error general al momento del encendido.Se realiza el cambio de la parte mencionada, también se lubrica el sistema de arrastre de papel, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3396.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de las hojas al momento de presentar un atasco.', 58, '2020-02-06 05:02:40', '2020-02-06 05:02:40'),
+(41, '2020-02-06', 'EP-000026', 1, 1, 0, 'No enciende. Fecha de compra 09-03-2019.', 'Se realizo la revision y se detecta placa principal con los controladores cruzados y cabezal de impresión cruzado, el cual ocasiona las fallas de encendido (se utilizo el multimetro para la medición de los componentes). Se efectúa el cambio de las partes mencionadas, luego se realizan las calibraciones mediante el programa de ajustes. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 31.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario revisar la toma de voltaje ya que una mala conexión podría ocasionar daños irreparables al producto.', 45, '2020-02-06 22:49:42', '2020-02-06 22:49:42'),
+(42, '2020-02-06', 'EP-000047', 1, 1, 0, 'Presenta mensaje PRINTER MODE. Fecha de compra 07-01-2019.', 'Se realizo la revision y se detecta error PRINTER MODE, el cual ocasiona el bloqueo del equipo. \r\nSe realiza el reset de la tarjeta principal (INICIAL SETTING), luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 17.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el uso de las herramientas que brinda el driver.', 68, '2020-02-07 04:15:26', '2020-02-07 04:15:26'),
+(43, '2020-02-06', 'EP-000056', 1, 1, 0, 'Presenta error de servicio', 'Se realizo la revision y se detecta contador de gotas de tinta al 10%, el cual ocasiona el error de almohadillas al final de su vida útil.\r\nSe realiza el reset del contador mediante el programa de ajustes obteniendo buenos resultados. \r\nEl producto cuenta con la garantía vencida ya que excedió el limite de paginas impresas 39220. (garantía 24 mese so 30.000 paginas). \r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda realizar el mantenimiento preventivo del equipo para garantizar su optimo desempeño.', 77, '2020-02-07 05:23:49', '2020-02-07 05:23:49'),
+(44, '2020-02-07', 'EP-000050', 1, 1, 0, 'No toma papel //FC: 11-dic-2019 //LC:Memory Kings //NF: FB02-002564 //', 'Se realizo la revision y se observa mecanismo de arrastre con problemas de lubricacion, el cual ocasionaba problemas al momento de la toma de papel. \r\nSe realizan ajustes, lubricacion y calibración de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos.  Nro. de paginas impresas después de la solución 7064.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario realizar el mantenimiento preventivo cada 9 meses para garantizar su optimo desempeño.', 71, '2020-02-07 23:48:35', '2020-02-07 23:48:35'),
+(45, '2020-02-11', 'EP-000065', 1, 1, 0, 'Atasco de papel //Fecha de Compra: 04/09/2019', 'Se realizo la revision y se detecta cable flat del sensor CR dañado, el cual ocasiona el error general o error de atasco al momento del encendido. \r\nSe realiza el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2599.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 86, '2020-02-11 23:30:40', '2020-02-11 23:30:40'),
+(46, '2020-02-11', 'EP-000066', 1, 1, 0, 'Todas las luces parpadean //Fecha de Compra: 15/08/2019', 'Se realizo la revision y se observa encoder CR fuera de lugar, el cual ocasiona el sonido extraño y luego el error general al momento del encendido. Se procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 8436. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el correcto retiro de la hoja al momento de presentar un atasco.', 87, '2020-02-11 23:33:48', '2020-02-11 23:33:48'),
+(47, '2020-02-11', 'EP-000037', 1, 1, 0, 'Se observa engranaje de rodillo roto, usuario menciona que la cuchilla no finaliza su recorrido. Fecha de compra 06-01-2020.', 'Se realizo la revision y se observa engranaje del rodillo platen roto, el cual ocasionaba problemas de avance de papel.\r\nSe realizo el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el correcto retiro de la hoja al momento de presentar un atasco.', 56, '2020-02-12 04:11:22', '2020-02-12 04:11:22'),
+(48, '2020-02-11', 'EP-000061', 1, 1, 0, 'Presenta error de impresora.', 'Se realizo la revision y se detecta mecanismo de arrastre trabado, el cual ocasiona el error general al momento del encendido. \r\nSe procede a corregir la sincronizacion de los engranajes, lubricacion y calibraciones obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 24994.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario realizar el mantenimiento preventivo cada 9 meses para garantizar su optimo desempeño.', 82, '2020-02-12 05:42:49', '2020-02-12 05:42:49'),
+(49, '2020-02-11', 'EP-000046', 1, 1, 0, 'No toma el papel. Fecha de compra 06-06-2019.', 'Se realizo la revisión y se observa objeto extraño (delineador) en le interior del la bandeja de papel, el cual ocasiona fallas al momento de la toma de la hoja. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 414.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario tener cuidado de no colocar objeto encima de la unidad de escaner ya que puede caer al interior del equipo y ocasionar atascos.', 65, '2020-02-12 06:47:41', '2020-02-12 06:47:41'),
+(50, '2020-02-11', 'EP-000057', 1, 1, 0, 'Mensaje de error 000041Factura a nombre de: Store Moda Y Estilo SACFecha de Compra: 28/01/2019.', 'Se realizo la revision y se detecta mecanismo de arrastre trabado, el cual ocasiona el error general al momento del encendido. \r\nSe procede a corregir la sincronizacion de los engranajes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2943.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado el equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el correcto retiro de la hoja al momento de presentar un atasco.', 78, '2020-02-12 06:56:54', '2020-02-12 06:56:54'),
+(51, '2020-02-12', 'EP-000064', 1, 1, 0, 'No reconoce el papel ///Fecha de Compra: 06/09/2019', 'Se realizo la revision y se observa resorte del mecanismo de arrastre (CLUTCH) fuera de lugar, el cual ocasionaba problemas al momento de la toma de papel (no jala las hojas).\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 16708.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el retiro correcto de las hojas al momento de presentar un atasco.', 85, '2020-02-12 22:30:02', '2020-02-12 22:30:02'),
+(52, '2020-02-12', 'EP-000069', 1, 1, 0, 'Impresión en blanco//Factura a nombre de: Consorcio el Norteño SAC//Fecha de Compra: 23/11/2018', 'Se realizo la revision y se detecta cabezal defectuosa, el cual ocasiona la fallas al momento de la impresión (impresiones en blanco). Se realizo el descarte de la parte mencionada con un cabezal de laboratorio obteniendo buenos resultados.Se efectúa el cambio de la parte mencionada, luego se realizan pruebas de impresiones continuas las cuales no muestran desperfectos. Maintenance information: 30.014 km; Autocutter: 166351 cuts. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta de instalar el rollo de papel para evitar golpear el cabezal de impresión.', 90, '2020-02-13 00:11:18', '2020-02-13 00:11:18'),
+(53, '2020-02-12', 'EP-000059', 1, 1, 0, 'Defectos de impresión, imágenes con rayas, imagen no legible. Fecha de compra 10/04/2019.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores abiertos, es decir, al momento de realizar la limpieza con el liquido SHIPPING el mismo sale por el inyector que no corresponde. \r\nSe efectúa el cambio de la parte mencionada y se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas y en papel fotográfico obteniendo buenos resultados. Nro. de paginas impresas después de la solución 2847.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 80, '2020-02-13 03:53:13', '2020-02-13 03:53:13'),
+(54, '2020-02-13', 'EP-000062', 1, 1, 0, 'Enciende pero no emite imagen, se observa tapa de la unidad óptica rota, protector de chip de la MB hundida, frame de ventilador Ex Fan roto. Fecha de compra 21-12-2018.', 'Se realizo la revision y se observa UNIDAD ÓPTICA con el prisma roto, polarizador de la unidad óptica rota, soporte de tapa de unidad óptica roto.\r\nEste evento no califica como desperfectos de fabricación por lo cual se invalida la garantía por parte del fabricante. \r\nSe enviara la cotización por correo para su evaluación.', 'Se recomienda el cambio de la unidad óptica y para superior para su optimo funcionamiento.', 83, '2020-02-14 03:35:36', '2020-02-14 03:35:36'),
+(55, '2020-02-13', 'EP-000040', 1, 1, 0, 'Defectos de impresión (texto doble). Fecha de compra 15-06-2019.', 'Se realizo la revision y se observa restos de lubricante en el encoder CR, el cual ocasiona fallas al momento de la impresión (texto doble o con sombras).Se realiza la limpieza de la parte mencionada y luego las calibraciones mediante el programa de ajustes obteniendo buenos resultados.Se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 667.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 59, '2020-02-14 03:46:58', '2020-02-14 03:46:58'),
+(56, '2020-02-14', 'EP-000054', 1, 1, 0, 'No imprime/no enciende.', 'Se realizo la revisión y se detecta placa principal con los controladores cruzados y cabezal de impresion cruzado, el cual ocasiona las fallas de encendido.\r\nSe realiza el cambio de las partes mencionadas, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 24.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo verificar la toma de voltaje ya que una mala instalación podría ocasionar daños irreparables al producto.', 75, '2020-02-15 04:05:59', '2020-02-15 04:05:59'),
+(57, '2020-02-14', 'EP-000055', 1, 1, 0, 'No enciende.', 'Se realizo la revisión y se detecta tarjeta principal defectuosa, el cual ocasiona las fallas de encendido (se utilizo el multimetro para la medición).\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe realizan pruebas de proyección continua en las cuales no presentaron desperfectos. \r\nSe coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario revisar la conexión de voltaje ya que una mala instalación podría ocasionar daños irreparables.', 76, '2020-02-15 04:20:27', '2020-02-15 04:20:27'),
+(58, '2020-02-17', 'EP-000063', 1, 1, 0, 'Presenta error general (parpadean todos los leds).', 'Se realizo el cambio del equipo completo.\r\nEPSON L3150 n/s: X5E9101501; Equipo sellado con accesorios completos.', 'Se recomienda la correcta instalación del equipo según el manual de usuario.', 84, '2020-02-18 00:59:57', '2020-02-18 00:59:57'),
+(59, '2020-02-17', 'EP-000067', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision y se detecta unidad de cuchilla defectuosa, el cual ocasiona el error general al momento del encendido (no responde el panel de control).\r\nSe realiza el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos.\r\nSe adjuntan la pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 88, '2020-02-18 03:39:21', '2020-02-18 03:39:21'),
+(60, '2020-02-17', 'EP-000070', 1, 1, 0, 'No avanza el papel//Fecha de compra 04/02/2020.', 'Se realizo la revision y se detecta objeto extraño (alambre plastificado) en el interior de la bandeja de papel, el cual ocasionaba el atasco y problemas al momento del avance de la hoja. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 61.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 91, '2020-02-18 04:25:21', '2020-02-18 04:25:21'),
+(61, '2020-02-18', 'EP-000072', 1, 1, 0, 'No imprime color BK.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (no imprime color BK).\r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 5543.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 93, '2020-02-19 00:44:07', '2020-02-19 00:44:07'),
+(62, '2020-02-18', 'EP-000021', 1, 1, 0, 'No enciende.', 'Se realizo la revision y se detecta tarjeta principal de circuitos dañada, el cual ocasionaba las fallas de encendido (se utilizo el multimetro para la medición). \r\nSe efectúa el cambio de la parte defectuosa, luego se realizan las calibraciones mediante el programa de ajustes (CAT-V19) obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresión continua en las cuales no presento anomalías. \r\nSe coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario revisar el punto de energía ya que una mala conexión podría ocasionar daños irreparables.', 28, '2020-02-19 03:10:06', '2020-02-19 03:10:06');
+INSERT INTO `garantia_guia_egreso` (`id`, `fecha`, `orden_servicio`, `estado`, `egresado`, `informe_tecnico`, `descripcion_problema`, `diagnostico_solucion`, `recomendaciones`, `garantia_ingreso_id`, `created_at`, `updated_at`) VALUES
+(63, '2020-02-19', 'EP-000073', 1, 1, 0, 'No toma papel //FC: 31-01-2019', 'Se realizo la revision y se observa objeto extraño (tornillo que no pertenece al equipo) en el interior de la bandeja de papel, el cual ocasiona fallas al momento de la toma de papel. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 11399.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario tener precaución de no colocar objeto encima de la unidad de escaner.', 94, '2020-02-20 05:40:25', '2020-02-20 05:40:25'),
+(64, '2020-02-20', 'EP-000074', 1, 1, 0, 'Los colores al imprimir no son los correctos- Fecha de compra: 24 Diciembre 2018', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona las fallas de impresión.\r\nSe imprime el test de inyectores y se detecta que el equipo cuenta con la garantía vencida ya que excedió el limite de paginas impresas (38089).\r\nGarantía 24 meses o 30.000 paginas. \r\nSe realizara la entrega del equipo sin la solución brindada.', 'Se recomienda realizar el mantenimiento correctivo para garantizar su optimo funcionamiento.', 95, '2020-02-21 05:10:33', '2020-02-21 05:10:33'),
+(65, '2020-02-20', 'EP-000078', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision y se observa encoder del sensor CR fuera de lugar, el cual ocasionaba el error general y un sonido extraño al momento del encendido. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos.  Nro. de paginas impresas después de la solución 1374.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 99, '2020-02-21 06:20:23', '2020-02-21 06:20:23'),
+(66, '2020-02-21', 'EP-000071', 1, 1, 0, 'No imprime los colores correctamente.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos y tintas de color Magenta, Magenta light con problemas de combinación. \r\nSe procede a eliminar la tinta equivocada y la instalación correcta de las mismas, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 735.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 92, '2020-02-21 22:46:56', '2020-02-21 22:46:56'),
+(67, '2020-02-21', 'EP-000053', 1, 1, 0, 'Defectos de impresión, texto con rayas. Fecha de compra 22-02-2018.', 'Se realizo la revision y se detecta cabezal dañado, el cual ocasiona las falla al momento de la impresión (impresiones en blanco). Se realiza el descarte de la parte mencionada con un cabezal de laboratorio obteniendo buenos resultados.\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.\r\nTHERMAL PRINT HEAD,C ASS\'Y T - 2149636', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la correcta instalación del rollo de papel para evitar que se golpee con el cabezal de impresión que conlleven a daños irreparables.', 74, '2020-02-22 03:32:27', '2020-02-22 03:32:27'),
+(68, '2020-02-22', 'EP-000083', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (texto no legible). \r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1633.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 104, '2020-02-23 00:09:06', '2020-02-23 00:09:06'),
+(69, '2020-02-22', 'EP-000077', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (texto e imágenes no legibles). Se toma una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales.\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 452.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 98, '2020-02-23 00:54:14', '2020-02-23 00:54:14'),
+(70, '2020-02-24', 'EP-000084', 1, 1, 0, 'Presenta error de impresora.', 'Se realizo la revision y se detecta encoder del sensor PF fuera de lugar, el cual ocasionaba el error general al momento del encendido. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2697.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 105, '2020-02-24 23:52:36', '2020-02-24 23:52:36'),
+(71, '2020-02-25', 'EP-000068', 1, 1, 0, 'Presenta atasco de papel. Fecha de compra 26-03-2019.', 'Se realizo la revision y se observa palanca del sensor de papel fuera de lugar, asi mismo se detecta objeto extraño (pastilla) en el interior de la bandeja principal de papel, el cual ocasionaba problemas al momento de la toma de la hoja. \r\nSe procede a instalar correctamente la parte mencionada y a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1663.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario tener cuidado de no colocar objeto encima de la unidad de escaner ya que puede caer al interior del equipo y ocasionar problemas.', 89, '2020-02-26 02:21:28', '2020-02-26 02:21:28'),
+(72, '2020-02-25', 'EP-000079', 1, 1, 0, 'No enciende, se descarto cable de voltaje y la falla persiste. Fecha de compra 13-09-2018.', 'Se realizo la revision y se detecta tarjeta principal de circuitos defectuoso, el cual ocasiona las fallas de encendido (se utilizo el multimetro para la medición), así mismo se revisan las siguientes partes: fuente de voltaje, unidad de ballast, las cuales se encuentran en buenas condiciones. \r\nSe efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de proyección continua en las cuales no presento desperfectos. \r\nMA BOARD ASSY5;H854;PH;AS - 1754241', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario la revision de la toma de voltaje ya que una mala conexión podría ocasionar daños irreparables al producto.', 100, '2020-02-26 03:25:49', '2020-02-26 03:25:49'),
+(73, '2020-02-25', 'EP-000075', 1, 1, 0, 'No reconoce la impresora por cable USB //Fecha de Compra: 14/12/2017.', 'Se realizo la revision y se detecta mala configuración del interfaz del menú interno, el cual ocasionaba problemas de comunicación (no reconoce puerto USB). \r\nSe procede a corregir la configuración, luego se ejecutan pruebas de impresiones continuas con dos ordenadores obteniendo buenos resultados. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la correcta instalación del equipo.', 96, '2020-02-26 04:01:18', '2020-02-26 04:01:18'),
+(74, '2020-02-25', 'EP-000076', 1, 1, 0, 'No reconoce la impresora por cable USB //Fecha de Compra: 14/12/2017.', 'Se realizo la revision y se detecta tarjeta principal defectuosa, el cual ocasiona las fallas de comunicación (no reconoce puerto USB). Se realiza el descarte de la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultados. \r\nSe efectúa el cambio de la parte afectada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad. \r\nMAIN CIRCUIT BOARD UNIT, AAA T - 2128877', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario al forma correcta de la instalación del cable USB.', 97, '2020-02-26 04:03:06', '2020-02-26 04:03:06'),
+(75, '2020-02-25', 'EP-000082', 1, 1, 0, 'Error de comunicación USB//Factura a nombre de: Continental SAC//Fecha de Compra: 14/12/2017', 'Se realizo la revision y se detecta tarjeta principal defectuosa, el cual ocasiona las fallas de comunicación (no reconoce puerto USB). Se realiza el descarte de la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultados. \r\nSe efectúa el cambio de la parte afectada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad. \r\nMAIN CIRCUIT BOARD UNIT,EAA - 2184119', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario al forma correcta de la instalación del cable USB.', 103, '2020-02-26 04:05:53', '2020-02-26 04:05:53'),
+(76, '2020-02-25', 'EP-000089', 1, 1, 0, 'No toma el papel.', 'Se realizo la revision y se detecta resorte del mecanismo  de arrastre (CLUTCH) fuera de lugar, el cual ocasionaba problemas al momento de la toma de papel (no jalan las hojas). \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 5308.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 110, '2020-02-26 04:35:44', '2020-02-26 04:35:44'),
+(77, '2020-02-26', 'EP-000088', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revicion y se detecta cabezal de impresión con inyectores muy obstruidos, el cual ocasiona fallas al momento de realizar las impresiones en texto o imágenes (impresiones ilegibles).  Se toma una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINAL, el cual ocasiono el daño de la parte mencionada, este evento no califica como desperfecto de fabricación, por lo cual se invalida la garantía por parte del fabricante. Nro. de paginas impresas 25637.\r\nSe realizara la cotización de la parte. \r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el cambio de la parte afectada, el lavado de los tanques y la instalación de tintas originales para garantizar su optimo funcionamiento.', 109, '2020-02-26 22:56:27', '2020-02-26 22:56:27'),
+(78, '2020-02-26', 'EP-000091', 1, 1, 0, 'No toma el papel.', 'Se realizo la revision y se detecta rodillo principal de arrastre de papel con signos de desgaste, el cual ocasiona fallas al momento de la toma de papel. Se obtiene la prueba de impresión y se detecta que el equipo excedió el limite de paginas impresas (39190).\r\nGarantía 24 meses o 30.000 paginas.\r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda realizar el mantenimiento correctivo y el cambio de las partes desgastadas para garantizar su optimo funcionamiento.', 112, '2020-02-26 23:27:00', '2020-02-26 23:27:00'),
+(79, '2020-02-26', 'EP-000090', 1, 1, 0, 'No toma el papel, emite un sonido extraño.', 'Se realizo la revision y se detecta polea de la faja del carruaje con problemas de calibraciones, el cual ocasionaba el sonido extraño y a su vez tenia problemas al momento de la toma de papel. \r\nSe procede a corregir la posición de la faja, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1385.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 111, '2020-02-27 02:22:22', '2020-02-27 02:22:22'),
+(80, '2020-02-26', 'EP-000080', 1, 1, 0, 'panel de impresora no responde (no funcionan los botones ) //Fecha de Compra: 13/04/2018', 'Se realizo la revision y se detecta tarjeta principal defectuosa, el cual ocasiona fallas de funcionamiento del panel (no responde el panel de control).\r\nSe efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 27.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 101, '2020-02-27 05:18:52', '2020-02-27 05:18:52'),
+(81, '2020-02-27', 'EP-000081', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos y conductos de tinta con aire, el cual ocasiona fallas al momento de la impresión (impresiones no legibles). Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 119. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 102, '2020-02-28 05:32:22', '2020-02-28 05:32:22'),
+(82, '2020-02-28', 'EP-000094', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision y se detecta motor de carruaje trabado, el cual ocasionaba el error general (bloqueo del panel) al momento del encendido.\r\nSe procede a corregir la sincronizacion de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 115, '2020-02-28 23:51:33', '2020-02-28 23:51:33'),
+(83, '2020-02-28', 'EP-000100', 1, 1, 0, 'Presenta error general al momento del encendido.', 'Se realizo la revision y se detecta conector de la unidad de escaner fuera de lugar, el cual ocasionaba el error general al momento del encendido.\r\nSe procede a conectar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 81152.\r\nEl equipo cuenta con la garantía vencida ya que excedió el limite de paginas impresas (garantía 24 meses o 30.000 paginas). \r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda realizar el mantenimiento correctivo del equipo para garantizar su optimo funcionamiento.', 121, '2020-02-29 03:26:29', '2020-02-29 03:26:29'),
+(84, '2020-02-28', 'EP-000085', 1, 1, 0, 'Se enciende la luz de error y no realiza ninguna impresión.', 'Se realizo la revision y se detecta problemas de error general al momento del encendido (se bloquea el panel de control). \r\nSe efectúan ajustes y lubricacion del mecanismo de impresión y la limpieza de los sensores, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 106, '2020-02-29 03:31:12', '2020-02-29 03:31:12'),
+(85, '2020-02-28', 'EP-000086', 1, 1, 0, 'Se enciende la luz de error y no realiza ninguna impresión.', 'Se realizo la revision y se detecta problemas de error general al momento del encendido (se bloquea el panel de control). \r\nSe efectúan ajustes y lubricacion del mecanismo de impresión y la limpieza de los sensores, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 107, '2020-02-29 03:31:59', '2020-02-29 03:31:59'),
+(86, '2020-02-28', 'EP-000093', 1, 1, 0, 'No enciende. Fecha de compra 20-01-2020.', 'Se realizo la revision y se detecta placa principal con los controladores cruzados y cabezal de impresión cruzado, el cual ocasiona las fallas de encendido (se utilizo el multimetro para la medición de los componentes). Se efectúa el cambio de las partes mencionadas, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 37.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo verificar la toma de voltaje ya que una mala conexión podría ocasionara daños irreparables al producto.', 114, '2020-02-29 06:44:28', '2020-02-29 06:44:28'),
+(87, '2020-02-29', 'EP-000096', 1, 1, 0, 'No reconoce el papel ///Fecha de compra: 11/09/2019', 'Se realizo la revision y se observa unidad duplex con problemas de lubricacion y ajustes, el cual ocasionaba las fallas de toma de papel (no jalas las hojas). \r\nSe realiza la limpieza, lubricacion y calibración de la parte mencionada obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas , copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 17272.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario efectuar el mantenimiento correcto cada 9 meses.', 117, '2020-02-29 23:53:39', '2020-02-29 23:53:39'),
+(88, '2020-03-02', 'EP-000095', 1, 1, 0, 'Defectos de impresión, imágenes en blanco. Fecha de compra 07-02-2019.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores muy obstruidos, el cual ocasiona las fallas de impresión (impresiones en blanco). Se realiza el proceso de recuperación de los inyectores obteniendo resultados no favorables. Se toma una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales. \r\nSe efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 116, '2020-03-03 00:31:33', '2020-03-03 00:31:33'),
+(89, '2020-03-02', 'EP-000092', 1, 1, 0, 'Defectos de impresión | Fecha compra: 06/05/2019.', 'Se realizo la revision y se detecta cabezal de impresión con inyector obstruido, el cual ocasiona fallas al momento de la impresiones (imágenes con rayas).\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan las calibraciones mediante el programa de ajustes obteniendo buenos resultado. \r\nSe ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 5735.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 113, '2020-03-03 03:33:16', '2020-03-03 03:33:16'),
+(90, '2020-03-03', 'EP-000099', 1, 1, 0, 'Defectos de impresión, imágenes con rayas.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona las falla de impresión. \r\nSe efectúa el proceso de recuperación de los inyectores obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 5711.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 120, '2020-03-03 22:27:05', '2020-03-03 22:27:05'),
+(91, '2020-03-03', 'EP-000097', 1, 1, 0, 'No toma el papel. Fecha de compra 27-08-2019.', 'Se realizo la revision y se detecta engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasionaba problemas de avance de papel. Se efectúa el cambio de la parte mencionada, lubricacion y calibraciones obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 4545. Se actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.\r\n* SPUR GEAR,CLUTCH,45.6 - 1718065', 'Se recomienda el uso adecuado del equipo ara prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 118, '2020-03-04 02:57:43', '2020-03-04 02:57:43'),
+(92, '2020-03-03', 'EP-000113', 1, 1, 0, 'No reconoce, no avanza el papel//Titular: Isabel Oliva Morales //Fecha de Compra:18/09/2019', 'Se realizo la revision y se observa objeto extraño (lapicero) en el interior de la bandeja de papel, el cual ocasionaba problemas al momento de la toma de la hoja. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 454.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 135, '2020-03-04 04:02:33', '2020-03-04 04:02:33'),
+(93, '2020-03-04', 'EP-000105', 1, 1, 0, 'Usuario menciona que no toma el papel.', 'Se realizo la revisión y se observa tinta derramada en el interior del mecanismo, así mismo se observa tinta en los contactos del cabezal y el cable flat de cabezal. \r\nEste evento no califica como desperfectos de fabricación ya que el mal transporte ocasiono el derrame de las tintas. \r\nSe retira el equipo sin la solución.', 'Se recomienda el cambio de las partes mencionada y el servicio de limpieza general del equipo para su optimo funcionamiento.', 127, '2020-03-05 03:24:04', '2020-03-05 03:24:04'),
+(94, '2020-03-04', 'EP-000104', 1, 1, 0, 'Usuario menciona que se atasca el papel.', 'Se realizo la revision y se detecta rodillos del mecanismo de arrastre con signos de desgaste, el cual ocasiona problemas al momento de la toma de papel. \r\nEste evento no califica como desperfecto de fabricación por lo cual se realizara la cotización del cambio de las partes mencionadas. \r\nNro. de paginas impresas 22291.', 'Se recomienda el cambio de las partes mencionadas para garantizar su optimo funcionamiento.', 126, '2020-03-05 03:49:53', '2020-03-05 03:49:53'),
+(95, '2020-03-05', 'EP-000107', 1, 1, 0, 'Presenta error de servicio, defectos de impresión.', 'Se realizo la revision y se detecta contador de gotas de tinta al 100%, el cual ocasionaba el error de servicio, así mismo se observa cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión. Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados. Nro. de paginas impresas después de la solución 2359.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 129, '2020-03-06 00:14:21', '2020-03-06 00:14:21'),
+(96, '2020-03-05', 'EP-000102', 1, 1, 0, 'No toma el papel correctamente, falla aleatoria.', 'Se realizo la revision y se observa engranaje de la unidad duplex roto, el cual ocasiona fallas al momento de la toma de papel, se realiza el descarte de la parte mencionada con una bandeja de laboratorio obteniendo buenos resultados. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfecto. Nro. de paginas impresas después de la solución 1358.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 124, '2020-03-06 03:31:13', '2020-03-06 03:31:13'),
+(97, '2020-03-05', 'EP-000103', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision y se detecta unidad de escaner defectuoso, el cual ocasiona el error general al momento del encendido, se realizo el descarte de la parte mencionada con un escaner de laboratorio obteniendo buenos resultados. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 17093.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 125, '2020-03-06 03:39:21', '2020-03-06 03:39:21'),
+(98, '2020-03-05', 'EP-000110', 1, 1, 0, 'No enciende.', 'Se realizo la revision y  se detecta placa principal con los controladores cruzados y cabezal de impresión cruzado, el cual ocasiona la falla de encendido (se utilizo el multimetro para la medición de los componentes). \r\nSe efectúa el cambio de las partes mencionadas, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 17.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 132, '2020-03-06 04:42:03', '2020-03-06 04:42:03'),
+(99, '2020-03-05', 'EP-000114', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision y se detecta contador de gotas de tinta al 100%, el cual ocasionaba el error de servicio (parpadean todos los leds).\r\nSe realizo el reset del contador mediante el programa de ajustes obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1754.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 136, '2020-03-06 06:00:47', '2020-03-06 06:00:47'),
+(100, '2020-03-06', 'EP-000108', 1, 1, 0, 'Presenta error de atasco de papel.', 'Se realizo la revision y se observa palanca del sensor de papel fuera de lugar, el cual ocasionaba el error de atasco al momento del encendido.\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 81.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 130, '2020-03-06 22:39:57', '2020-03-06 22:39:57'),
+(101, '2020-03-06', 'EP-000087', 1, 1, 0, 'No toma el papel. Fecha de compra 04-09-2019.', 'Se realizo la revision y se observa suciedad (polvo) en el interior del mecanismo de arrastre, el cual ocasionaba problemas al momento de la toma de papel. Se realiza la limpieza, lubricacion y calibración de la parte mencionada obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 10489.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda realizar el servicio de mantenimiento preventivo para garantizar su optimo funcionamiento.', 108, '2020-03-07 00:02:41', '2020-03-07 00:02:41'),
+(102, '2020-03-06', 'EP-000101', 1, 1, 0, 'Defectos de impresión en color BK.', 'Se realizo la revision y se observa detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de las impresiones. \r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 1902.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir falla que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 123, '2020-03-07 04:18:03', '2020-03-07 04:18:03'),
+(103, '2020-03-10', 'EP-000116', 1, 1, 0, 'Presenta error de atasco de papel y la hoja de queda al medio del mecanismo.', 'Se realizo la revision y se observa suciedad en el sensor PF, el cual ocasionaba problemas de avance de papel al momento de la impresión. \r\nSe efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 7063.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario realizar el mantenimiento correctivo del equipo para garantizar su optimo desempeño.', 138, '2020-03-11 00:46:09', '2020-03-11 00:46:09'),
+(104, '2020-03-10', 'EP-000120', 1, 1, 0, 'Presenta problemas de toma de papel (jala mas de una hoja).', 'Se realizo la revision y se observa objeto extraño (terminal) en el interior de la bandeja de papel, el cual ocasionaba problemas al momento de la toma de papel (jala mas de una hoja). \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continua, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 9785.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 142, '2020-03-11 01:01:34', '2020-03-11 01:01:34'),
+(105, '2020-03-10', 'EP-000106', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (imágenes no legibles). Se realizo el proceso de recuperación obteniendo resultados no favorables. Se toma una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales.Se efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados.\r\n Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 128, '2020-03-11 04:42:16', '2020-03-11 04:42:16'),
+(106, '2020-03-11', 'EP-000119', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresiones (imágenes no legibles). Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 715.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 141, '2020-03-12 00:57:19', '2020-03-12 00:57:19'),
+(107, '2020-03-11', 'EP-000118', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (imágenes con rayas).\r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 548.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 140, '2020-03-12 05:45:52', '2020-03-12 05:45:52'),
+(108, '2020-03-11', 'EP-000115', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo el cambio del equipo por garantía.\r\nEPSON L3110 s/n: X645178040;  Equipo sellado con accesorios completos.', 'Se recomienda realizar la instalación adecuado mediante el manual de usuario.', 137, '2020-03-12 07:06:20', '2020-03-12 07:06:20'),
+(109, '2020-03-12', 'EP-000121', 1, 1, 0, 'No enciende.', 'Se realizo la revision y se detecta tarjeta principal con los controladores cruzados y cabezal de impresión cruzado, el cual ocasiona las fallas de encendido (se utilizo el multimetro para la medición).\r\nSe efectúa el cambio de las partes mencionadas, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 43.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo verificar la toma de voltaje ya que una mala conexión podría ocasionar daños irreparables al producto.', 143, '2020-03-12 23:06:20', '2020-03-12 23:06:20'),
+(110, '2020-03-12', 'EP-000124', 1, 1, 0, 'Presenta defectos de impresión el color CYAN.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos, y conductos de tinta con aire, el cual ocasiona fallas al momento de la impresión (colores ilegibles).\r\nSe realiza el proceso de recuperación de los inyectores y la eliminación de las burbujas de aire obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 22999.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 147, '2020-03-13 00:34:13', '2020-03-13 00:34:13'),
+(111, '2020-03-12', 'EP-000123', 1, 1, 0, 'Defectos de impresión (impresiones con rayas).', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores desviados, así mismo se toma una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINALES.\r\nEste evento no califica como desperfecto de fabricación por lo cual se invalida la garantía.', 'Se recomienda el cambio de la parte defectuosa y la instalación de tintas originales.', 146, '2020-03-13 06:26:34', '2020-03-13 06:26:34'),
+(112, '2020-03-13', 'EP-000117', 1, 1, 0, 'Presenta defectos de impresión (impresiones con rayas).', 'Se realizo la revision y se detecta cabezal térmico defectuoso, el cual ocasiona las fallas de impresión (impresiones con rayas).\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 139, '2020-03-14 00:01:00', '2020-03-14 00:01:00'),
+(113, '2020-03-13', 'EP-000126', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision y se detecta cabezal de impresión con inyectores obstruidos y conductos de tinta con aire, el cual ocasionaba problemas de impresiones (no imprime BK). Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas 13906.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 149, '2020-03-14 05:18:36', '2020-03-14 05:18:36'),
+(114, '2020-06-17', 'EP-000052', 1, 1, 0, 'Defecto de impresión, impresión en blanco. Fecha de compra 06-12-2019.', 'Se realizo la revision y se observa suciedad (polvo) en el cabezal térmico de impresión, el cual ocasiona fallas al momento de efectuar las impresiones. Se realiza la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Maintenance information: Thermal head: 5.333 km; Autocutter: 26207 cuts.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario efectuar el mantenimiento preventivo cada 8 meses para garantizar su optimo funcionamiento.', 73, '2020-06-18 00:37:29', '2020-06-18 00:37:29'),
+(115, '2020-06-18', 'EP-000129', 1, 1, 0, 'No toma el papel. Fecha de compra 07/11/2019.', 'Se realizo la revision minuciosa y se detecta problemas de lubricacion en el mecanismo de arrastre, el cual ocasiona problemas al momento de la toma de papel (las hojas pasan en blanco o no toma el papel correctamente). Se procede a lubricar la parte mencionada (SPUR GEAR CLUTCH , CLUTCH) , luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 7211. \r\nSe actualiza la versión del firmware para corregir errores a futuro. Se adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indicara el usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 152, '2020-06-19 02:53:20', '2020-06-19 02:53:20'),
+(116, '2020-07-06', 'EP-000058', 1, 1, 0, 'Presenta error de servicio (Caja de mantenimiento). Fecha de compra 11/01/2020.', 'Se realizo la revision y se detecta error de caja de mantenimiento, el cual ocasiona el bloqueo de las funciones del panel de control, así mismo se detecta que el producto no ha finalizado la carga inicial de tinta. Se efectúa el cambio de la caja de mantenimiento y la instalación de tintas para poder finalizar la carga inicial, una vez terminada el proceso de carga se efectúan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 37.Se adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario las precauciones y el correcto funcionamiento de las herramientas que brinda el driver a nivel de usuario.', 79, '2020-07-07 04:02:14', '2020-07-07 04:02:14'),
+(117, '2020-07-13', 'EP-000136', 1, 1, 0, 'Ruido anormal /Fecha de Compra: 11/07/2020 /N° de Factura: 000082 /Lugar de Compra: JA Technology', 'Se realizo la revision y se detecta un sonido anormal al momento del encendido, se procede a revisar la unidad DUPLEX y los engranajes que componen dicha parte observando en buen estado, luego se instala correctamente la unidad y se ejecutan pruebas de impresiones continuas, las cuales no presentan desperfectos. Nro. de paginas impresas 29.\r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 159, '2020-07-14 00:24:29', '2020-07-14 00:24:29'),
+(118, '2020-07-13', 'EP-000134', 1, 1, 0, 'Almohadillas de tinta llenas Factura a nombre de: Lucy Margot Conde Torres Fecha de Compra: 15-02-20N° de Factura: 000000 Lugar de Compra: Plaza Vea Código Postal: 51 Dirección: (El Agustino)', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasiona el error de servicio. Se realiza el reset del contador mediante el programa de ajustes obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 8387. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 157, '2020-07-14 04:26:38', '2020-07-14 04:26:38'),
+(119, '2020-07-13', 'EP-000132', 1, 1, 0, 'No toma el papel, presenta error de servicio. Fecha de compra 22/07/2019.', 'Se realizo la revision y se detecta contador de gotas de tinta al 100%, el cual ocasiona el error de servicio. Se realiza el reset del contador mediante el programa de ajustes obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1469.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 155, '2020-07-14 05:16:14', '2020-07-14 05:16:14'),
+(120, '2020-07-17', 'EP-000142', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision y se detecta contador de gotas de tinta al 100%, el cual ocasiona el error de servicio. \r\nSe realiza el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 75.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el uso correcto de las herramientas que brinda el driver.', 165, '2020-07-18 03:51:36', '2020-07-18 03:51:36'),
+(121, '2020-07-17', 'EP-000133', 1, 1, 0, 'Copia y escanea borroso, por lamina interna doblada /Factura a nombre de: Distribuidora Vipasa S.A /Fecha de Compra: 13/06/2020 /N° de Factura: FX01-150751 /Lugar de Compra: Falabella', 'Se realizo la revision y se observa lamina de la unidad ADF doblada, el cual ocasiona problemas de atasco, defectos al momento del escaneo o copia. \r\nSe realiza el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestra desperfectos. Nro. de paginas impresas 37.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 156, '2020-07-18 05:34:39', '2020-07-18 05:34:39'),
+(122, '2020-07-18', 'EP-000137', 1, 1, 0, 'No escanea ni copia factura a  nombre de Victoria Morveli fecha de compra :02-05-19 Nº de factura :002469 lugar de compra : Aj tintas código', 'Se realizo la revision minuciosa y se observa suciedad en el sensor de posición de la unidad de escaner, el cual ocasiona el error fatal al momento del encendido. Se realizo la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 6693. \r\nSe actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario efectuar el mantenimiento preventivo cada 9 meses.', 160, '2020-07-18 23:08:10', '2020-07-18 23:08:10'),
+(123, '2020-07-20', 'EP-000127', 1, 1, 0, 'Dobla La cinta Factura a nombre de: R&R quimicos Sac Fecha de Compra: 29/10/2019N° de Factura: E001-463Lugar de Compra: Coorporacion Haigo SAC', 'Se realizo la revision minuciosa y se observa que al momento de la impresión con el papel brindado por el usuario, el mismo ocasiona que la cinta se trabe. Se realizan pruebas con papel de laboratorio autocopiativa (1 original - 2 copias) las cuales no presentan desperfectos, así mismo se detecta que el tipo o gramaje del papel que el usuario esta utilizando es muy alta (papel grueso), el cual ocasiona que la cinta choque con el papel ocasionando un trabado. Se realizan pruebas de impresiones continuas con el gramaje adecuado obteniendo buenos resultados.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el gramaje adecuado del papel que no conlleven a un atasco.', 150, '2020-07-20 23:40:43', '2020-07-20 23:40:43');
+INSERT INTO `garantia_guia_egreso` (`id`, `fecha`, `orden_servicio`, `estado`, `egresado`, `informe_tecnico`, `descripcion_problema`, `diagnostico_solucion`, `recomendaciones`, `garantia_ingreso_id`, `created_at`, `updated_at`) VALUES
+(124, '2020-07-20', 'EP-000145', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision minuciosa y se observa mecanismo trabado, el cual ocasionaba el error general al momento del encendido o impresión. \r\nSe realizan ajustes, lubricacion y calibración de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 293.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 168, '2020-07-21 03:35:01', '2020-07-21 03:35:01'),
+(125, '2020-07-20', 'EP-000147', 1, 1, 0, 'Almohadilla llena// Factura a nombre de: Marco Antonio Caceres Gonzales//Fecha de Compra:09-05-2020//N° de Factura:002-0504//Lugar de Compra: Línea hogar electrones persona natural Claudina Peña Aranda', 'Se realizo la revision y se detecta contador de gotas de tinta al 100%, el cual ocasiona el error de servicio (almohadillas al final de su vida útil).\r\nSe realiza el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresión observando un tono tenue en el texto. Se toma una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros no originales.\r\nEste evento invalida la garantía por parte del fabricante. Nro. de paginas impresas 11409.', 'Se recomienda el lavado del tanque y la instalación de tintas originales para el correcto desempeño del equipo.', 170, '2020-07-21 06:31:51', '2020-07-21 06:31:51'),
+(126, '2020-07-21', 'EP-000153', 1, 1, 0, 'Presenta atasco de papel.', 'Se realizo la revision minuciosa y se observa objeto extraño (pulsera) en el interior de la bandeja de papel, el cual ocasiona el trabado de las hojas al momento de la impresión. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 43.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 176, '2020-07-22 00:15:23', '2020-07-22 00:15:23'),
+(127, '2020-07-21', 'EP-000139', 1, 1, 0, '* No reconoce USB. Factura a nombre de: Estudio Jurídico Villamizar SRL Fecha de Compra: 27-05-20N° de Factura: S00464 Lugar de Compra: Rois Computer SACCodigo Postal: 51 Dirección: (La Molina)\r\n* Usuario menciona que pierde comunicación de forma inalambrica.', 'Se realizo la revision del equipo y se detecta problemas de conexión inalambrica (WiFi). \r\nSe realizan ajustes (reiniciar configuración a valores de fabrica), luego se ejecutan pruebas de impresiones continuas de forma inalambrica y USB las cuales no muestran desperfectos. Se actualizo la versión del firmware para corregir errores a futuro.\r\nNro. de paginas impresas después de la solución 326.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario revisar el punto de RED, ya que una mala instalación podría ocasionar problemas de comunicación al momento de su operatividad.', 162, '2020-07-22 04:56:51', '2020-07-22 04:56:51'),
+(128, '2020-07-21', 'EP-000149', 1, 1, 0, 'Presenta error de atasco de papel.', 'Se realizo la revision minuciosa y se observa objeto extraño (corrospum) en el interior de la bandeja de papel, el cual ocasionaba la activación del sensor para luego emitir el error de atasco. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 373.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario tener precaución al momento de colocar las hojas ya que puede ingresar objeto extraños que ocasionen desperfectos.', 172, '2020-07-22 06:11:30', '2020-07-22 06:11:30'),
+(129, '2020-07-22', 'EP-000148', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (imágenes y texto con rayas). Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 191.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario le uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 171, '2020-07-23 02:19:31', '2020-07-23 02:19:31'),
+(130, '2020-07-23', 'EP-000111', 1, 1, 0, 'No avanza el papel. Fecha de compra 17-07-2019.', 'Se realizo la revision y se observa engranaje de la unidad duplex roto, el cual ocasiona fallas al momento de la toma de papel, se realiza el descarte de la parte mencionada con una bandeja de laboratorio obteniendo buenos resultados.\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfecto. Nro. de paginas impresas después de la solución 3593.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 133, '2020-07-23 23:19:25', '2020-07-23 23:19:25'),
+(131, '2020-07-23', 'EP-000154', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 18/07/2020.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas (texto con rayas).\r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 379.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 177, '2020-07-24 00:14:22', '2020-07-24 00:14:22'),
+(132, '2020-07-23', 'EP-000158', 1, 1, 0, 'Presenta derrame de tinta, defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasionaba fallas (imágenes con rayas).\r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 124.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 181, '2020-07-24 00:59:17', '2020-07-24 00:59:17'),
+(133, '2020-07-23', 'EP-000159', 1, 1, 0, 'No toma el papel.', 'Se realizo la revision minuciosa y se observa resorte del rodillo retard y rodillo retar fuera de lugar, el cual ocasionaba problemas al momento de la toma de papel. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1216.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 182, '2020-07-24 04:36:15', '2020-07-24 04:36:15'),
+(134, '2020-07-23', 'EP-000146', 1, 1, 0, 'No enciende ///Fecha de compra: 16/06/2020 ///Número de Factura: N/A ///Lugar de compra: Taller PC ///', 'Se realizo la revision minuciosa detectando tarjeta principal defectuosa (integrado cruzado), el cual ocasiona las fallas de encendido.\r\nSe procede al cambio de la tarjeta principal, luego se ejecutan las calibraciones mediante el programa de ajustes obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 17. Se actualiza la versión del firmware para corregir errores a futuro. (02.17.VJ31K1)\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario revisar la toma de voltaje ya que una mala conexión podría ocasionara daños irreparables.', 169, '2020-07-24 05:46:31', '2020-07-24 05:46:31'),
+(135, '2020-07-24', 'EP-000152', 1, 1, 0, 'Presenta error de atasco de papel al momento del encendido.', 'Se realizo la revision minuciosa y se observa objeto extraño (clavo) en el interior de la bandeja, el cual ocasionaba la activación del actuador del sensor de papel para luego mostrar el error de atasco. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2586.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario tener precaución de no colocar objetos encima del equipo ya que podría ingresar al interior de la bandeja y ocasionar daños irreparables.', 175, '2020-07-24 23:32:39', '2020-07-24 23:32:39'),
+(136, '2020-07-24', 'EP-000128', 1, 1, 0, 'Presenta error general al momento del encendido.', 'Se realizó la revisión y se detecta cabezal de impresión con inyectores muy obstruidos, el cual ocasiona fallas al momento de efectuar las pruebas de imágenes y texto (Texto con rayas).Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Se actualiza la versión del firmware para corregir errores a futuro. Nro. De páginas impresas después de la solución 12166.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionará daños irreparables y la anulación automática de la garantía.', 151, '2020-07-24 23:43:25', '2020-07-24 23:43:25'),
+(137, '2020-07-24', 'EP-000160', 1, 1, 0, 'No toma el papel.', 'Se realizó la revisión y se observa actuador del detector de papel fuera de lugar, el cual ocasionaba el error de ausencia de papel. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. De páginas impresas después de la solución 1219. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 183, '2020-07-25 00:59:09', '2020-07-25 00:59:09'),
+(138, '2020-07-25', 'EP-000156', 1, 1, 0, 'No escanea, usuario menciona que emite un sonido extraño al momento de la toma de papel.', 'Se realizo la revision minuciosa y se detecta problemas de al momento del escaneo por ADF (presenta error de escaner).\r\nSe restablecen todos los ajustes a valores de fabrica obteniendo buenos resultados, así mismo se realizan calibraciones y lubricacion del mecanismo de arrastre para evitar posibles fallas a futuro. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3129.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 179, '2020-07-25 22:36:03', '2020-07-25 22:36:03'),
+(139, '2020-07-27', 'EP-000162', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas de impresiones (texto o imagen no legible). \r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2535.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 185, '2020-07-28 06:39:28', '2020-07-28 06:39:28'),
+(140, '2020-07-29', 'EP-000166', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa observando cable flat de panel de control mal instalado, el cual ocasiona las fallas de encendido.\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 752. Se actualiza la versión del firmware para corregir errores a futuro.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 189, '2020-07-30 04:28:30', '2020-07-30 04:28:30'),
+(141, '2020-07-30', 'EP-000143', 1, 1, 0, 'Presenta error de escaner. Fecha de compra 01/07/2020.', 'Se realizo la revision minuciosa y se observa cable flat de escaner desconectado, el cual ocasiona el error al momento del encendido. Se procede a instalar correctamente la parte mencionada y se enciende el equipo obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 117. \r\nSe actualizo la versión del firmware para corregir errores a futuro. Se adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 166, '2020-07-30 23:11:22', '2020-07-30 23:11:22'),
+(142, '2020-07-30', 'EP-000169', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 18/05/2020.', 'Se realizo la revision minuciosa y se detecta conducto de tintas con burbujas y cabezal de impresión con aire, el cual ocasionaba problemas al momento de la impresión (imágenes no legibles). \r\nSe realiza la eliminación de burbujas y la limpieza del cabezal de impresión obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 632.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originale sya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 192, '2020-07-31 00:05:55', '2020-07-31 00:05:55'),
+(143, '2020-07-30', 'EP-000171', 1, 1, 0, 'Presenta error general al momento del encendido, defectos de impresión. Fecha de compra 11/06/2020.', 'Se realizo la revision minuciosa del equipo y presenta error general al momento del encendido (falla aleatoria), así mismo presenta defectos de impresión. \r\nSe efectúan las calibraciones mediante el programa de ajustes (INICIAL SETTING) obteniendo buenos resultados, a su vez se realiza la recuperación de los inyectores obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 15.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 194, '2020-07-31 02:11:23', '2020-07-31 02:11:23'),
+(144, '2020-07-30', 'EP-000122', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de efectuar las impresiones (imagen o texto no legible).\r\nSe realiza el proceso de recuperación del cabezal obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 251.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de titas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 145, '2020-07-31 03:35:55', '2020-07-31 03:35:55'),
+(145, '2020-07-30', 'EP-000157', 1, 1, 0, 'Presenta error general al momento de la toma de papel. Fecha de compra 24/04/2020.', 'Se realizo la revision minuciosa detectando tarjeta principal defectuosa, el cual ocasiona el error general al momento del encendido (golpea a ambos lados y emite un sonido fuerte).Se efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 37. \r\nSe actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 180, '2020-07-31 04:51:29', '2020-07-31 04:51:29'),
+(146, '2020-07-30', 'EP-000155', 1, 1, 0, 'Presenta error de atasco, las hojas se quedan a la mitad. Fecha de compra 01/08/2019.', 'Se realizo la revision minuciosa detectando tarjeta principal defectuosa (pasa el papel en blanco y se detiene a la mitad). Se realizo el descarte de la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultados. Se efectúa el cambio de la parte mencionada, luego se ejecutan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. Se realizan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 27. \r\nSe actualiza la versión del firmware para corregir errores a futuro. se adjuntan las pruebas.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 178, '2020-07-31 05:08:52', '2020-07-31 05:08:52'),
+(147, '2020-07-31', 'EP-000170', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta conductos de tinta con aire y cabezal de impresión con inyectores obstruidos, el cual ocasionaba problemas al momento de la impresión (impresiones en blanco).\r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 52.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 193, '2020-08-01 04:44:44', '2020-08-01 04:44:44'),
+(148, '2020-08-01', 'EP-000173', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de las impresiones (imágenes no legibles). \r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1152.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 196, '2020-08-01 23:57:24', '2020-08-01 23:57:24'),
+(149, '2020-08-01', 'EP-000163', 1, 1, 0, 'Atasco de papel. // Fecha de Compra: 11/04/2020 // N° de Factura: 13-54932638 // Lugar de Compra: Plaza Vea', 'e realizo la revision minuciosa y se observa palanca del sensor de papel fuera de lugar, el cual ocasiona el error de atasco al momento del encendido. Se procede a instalar correctamente la parte mencionada obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1577. \r\nSe actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 186, '2020-08-02 00:11:24', '2020-08-02 00:11:24'),
+(150, '2020-08-01', 'EP-000164', 1, 1, 0, 'No pasan las hojas correctamente.', 'Se realizo la revision minuciosa y se detecta problemas al momento de la toma de papel (no avanza las hojas), así mismo se observa mecanismo de arrastre con problemas de ajustes. \r\nSe efectúan calibraciones y lubricacion de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2243. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 187, '2020-08-02 00:28:17', '2020-08-02 00:28:17'),
+(151, '2020-08-04', 'EP-000161', 1, 1, 0, 'No toma el papel. Fecha de compra 15/05/2020.', 'Se realizo la revision minuciosa y se detecta problemas al momento de la toma de papel (no jala las hojas), así mismo se observa engranaje del mecanismo de arrastre fuera de lugar, el cual ocasiona el error mencionado. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 753.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 184, '2020-08-05 03:44:31', '2020-08-05 03:44:31'),
+(152, '2020-08-04', 'EP-000174', 1, 1, 0, 'Mensaje de error Scaner Factura a nombre de: Aurora Lopez Blas Fecha de Compra: 06-12-19N° de Factura: 00371 Lugar de Compra: J/A Tecnologic Codigo Postal: 51 Dirección: (Cercado)Provincia: Lima', 'Se realizo la revision minuciosa y se detecta unidad de escaner defectuosa, el cual ocasiona el error al momento del encendido, así mismo se observa signos de manipulacion (tornillos del escaner no pertenecen al equipo).\r\nEste evento no califica como desperfectos de fabricación por lo cual se invalida la garantía. \r\nNro. de paginas impresas obtenida mediante el driver 18957.', 'Se recomienda el cambio de la unidad de escaner para el correcto funcionamiento del producto.', 197, '2020-08-05 04:29:27', '2020-08-05 04:29:27'),
+(153, '2020-08-05', 'EP-000178', 1, 1, 0, 'Impresiones borrosas Fecha de compra: 22 Mayo 2020 Lugar de compra: Grupo Delcron Fac: F103-0000223746Titular de compra: Tiendas Mas', 'Se realizo la revision minuciosa y se observa objeto extraño (plástico) en el interior de la unidad de CAP, el cual ocasionaba problemas al momento del encapsulamiento del cabezal de impresión. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 595.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 201, '2020-08-06 02:09:47', '2020-08-06 02:09:47'),
+(154, '2020-08-05', 'EP-000180', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos y conductos de tinta con aire, el cual ocasiona la falla reportada. \r\nSe realiza el proceso de limpieza y recuperación de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 778.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 203, '2020-08-06 03:40:30', '2020-08-06 03:40:30'),
+(155, '2020-08-05', 'EP-000167', 1, 1, 0, 'Presenta error de impresora. Fecha de compra 02/06/2020.', 'Se realizo la revision minuciosa y se detecta placa principal defectuosa, el cual ocasiona el error general al momento del encendido. \r\nSe realizo el descarte de la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultados. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan las calibraciones mediante el programa de ajustes. \r\nSe realizan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 27.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 190, '2020-08-06 05:56:07', '2020-08-06 05:56:07'),
+(156, '2020-08-05', 'EP-000150', 1, 1, 0, 'No enciende. Fecha de compra 13/07/2020.', 'Se realizo la revision minuciosa y se detecta tarjeta principal con los controladores cruzados y cabezal de impresión cruzado, el cual ocasiona las fallas de encendido (se utilizo el multimetro para la medición de los componentes).\r\nSe efectúa el cambio de las partes mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 29.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario revisar las conexiones de voltaje ya que una mala instalación podría ocasionar daños irreparables al producto.', 173, '2020-08-06 06:38:56', '2020-08-06 06:38:56'),
+(157, '2020-08-05', 'EP-000168', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa (integrado dañado), el cual ocasiona las fallas de encendido.\r\nSe realizo el descarte de la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultados.\r\nSe efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 23.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario verificar la conexión de voltaje ya que una mala instalación podría ocasionar daños irreparables al producto.', 191, '2020-08-06 06:53:22', '2020-08-06 06:53:22'),
+(158, '2020-08-06', 'EP-000177', 1, 1, 0, 'No avanza la hoja// Factura a nombre de: Liseth Espinoza Miranda// Fecha de Compra:07-06-2020// N° de Factura:5911// Lugar de Compra:Ripley//', 'Se realizo la revision minuciosa y se observa objeto extraño (piedra pequeña) en el interior de la bandeja de papel, el cual ocasionaba problemas al momento de la toma de la hoja. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 27.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario tener mucho cuidado de no colocar objetos encima de la unidad de escaner ya que podría caer al interior y ocasionar daños irreparables.', 200, '2020-08-07 04:11:06', '2020-08-07 04:11:06'),
+(159, '2020-08-06', 'EP-000181', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos y conductos de tinta con aire, el cual ocasionaba fallas al momento de la impresión (impresiones con rayas).  \r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1742.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tinta originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 204, '2020-08-07 06:01:00', '2020-08-07 06:01:00'),
+(160, '2020-08-06', 'EP-000184', 1, 1, 0, 'Usuario menciona que se atasca el papel.', 'Se realizo la revision minuciosa y el equipo no presenta el error reportado por el usuario, así mismo se observa mala configuración de la palanca de cantidad de copias, también se detecta leve rastro de suciedad en el interior del mecanismo el cual ocasiona un sonido al momento del avance del papel.\r\nSe realiza la lubricacion del mecanismo, luego se ejecutan pruebas de impresiones continuas con el papel brindado por el usuario obteniendo buenos resultados. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el uso correcto del equipo.', 207, '2020-08-07 06:33:51', '2020-08-07 06:33:51'),
+(161, '2020-08-07', 'EP-000182', 1, 1, 0, 'Presenta error general al momento del encendido.', 'Se realizo el cambio del equipo por garantía. \r\n\r\nEPSON L5190 S/N: X5NQ077156; Equipo sella con accesorios completos.', 'Se recomienda seguir las instrucciones de la guía de instalación para evitar posibles desperfectos al momento de la activación.', 205, '2020-08-08 03:26:08', '2020-08-08 03:26:08'),
+(162, '2020-08-07', 'EP-000176', 1, 1, 0, 'No toma el papel correctamente (jala mas de una hoja). Fecha de compra 28/07/2020.', 'Se realizo la revision minuciosa y se observa resorte del Paper back lever y rodillo retard fuera de lugar, el cual ocasionaba problemas al momento de la toma de papel (jala mas de una hoja). \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 351.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 199, '2020-08-08 03:33:48', '2020-08-08 03:33:48'),
+(163, '2020-08-07', 'EP-000179', 1, 1, 0, 'No toma el papel//Fecha de Compra: 20/06/2020//N° de Factura: BM62-116605//Lugar de Compra: Tottus', 'Se realizo la revision minuciosa y se observa objeto extraño (accesorios de cabello) en el interior del mecanismo, el cual ocasionaba el atasco de las hojas al momento de la toma de papel.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. \r\nNro. de paginas impresas después de la solución 300.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario tener cuidado de no colocar objetos encima de la unidad de escaner ya que podría caer al interior del equipo y ocasionar daños irreparables.', 202, '2020-08-08 04:04:41', '2020-08-08 04:04:41'),
+(164, '2020-08-10', 'EP-000187', 1, 1, 0, 'Presenta error de escaner.', 'Se realizo la revision minuciosa y se observa cable flat de escaner desconectado, el cual ocasionaba el error reportado por el usuario,\r\nSe procede a instalar dicha parte, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1479.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 210, '2020-08-11 02:59:17', '2020-08-11 02:59:17'),
+(165, '2020-08-11', 'EP-000193', 1, 1, 0, 'Presenta un sonido extraño al momento del encendido.', 'Se realizo la revision minuciosa y se observa objeto extraño (tapa de plástico), el cual ocasionaba el trabado de los engranajes para luego emitir un sonido extraño. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 522.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario tener cuidado de no colocar objetos encima de la unidad ADF ya que podría ingresar al interior del equipo y ocasionar daños irreparables.', 216, '2020-08-11 23:07:52', '2020-08-11 23:07:52'),
+(166, '2020-08-11', 'EP-000188', 1, 1, 0, 'Presenta error de impresora.', 'Se realizo la revision minuciosa y se observa sensor de encoder CR manchado con lubricante G-96, el cual ocasiona problemas al momento de la impresión y luego presenta el error general (imágenes no legibles, no toma el papel). \r\nSe realizo la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 147.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se indica al usuario la forma correcta del retiro de la hoja al momento del presentar un atasco.', 211, '2020-08-12 02:21:30', '2020-08-12 02:21:30'),
+(167, '2020-08-11', 'EP-000189', 1, 1, 0, 'Presenta defectos de impresión, mancha las hojas.', 'Se realizo la revision minuciosa y se observa objeto extraño en el interior de la unidad de CAP, el cual ocasionaba problemas al momento de la impresión y posteriormente fallas de toma de papel. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 892.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario tener precaución de no colocar objetos extraños encima de la unidad de escaner ya que podría caer al interior del equipo y ocasionar daños irreparables.', 212, '2020-08-12 03:30:09', '2020-08-12 03:30:09'),
+(168, '2020-08-11', 'EP-000186', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores muy obstruidos, el cual ocasiona problemas al momento de las impresiones (no imprime BK). \r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2904.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 209, '2020-08-12 03:46:42', '2020-08-12 03:46:42'),
+(169, '2020-08-12', 'EP-000195', 1, 1, 0, 'Obstrucción de papel // Factura a nombre de: Yuri Piñas Esteban//Fecha de Compra: 09-08-2020//N° de Factura: EB01-27//Lugar de Compra: Compu Cegma', 'Se realizo la revision minuciosa y se detecta engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos, el cual ocasiona problemas al momento de la toma de papel.\r\nSe realiza el cambio y lubricacion de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1166.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 218, '2020-08-13 05:58:52', '2020-08-13 05:58:52'),
+(170, '2020-08-13', 'EP-000199', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos y conductos de tinta con aire, el cual ocasionaba las fallas de impresión (imágenes no legibles).\r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 410.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 222, '2020-08-14 00:15:26', '2020-08-14 00:15:26'),
+(171, '2020-08-13', 'EP-000197', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, le cual ocasiona problemas de impresiones (no imprime color BK).\r\nSe realizo el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones las cuales presentan un tono muy tenue en el color BK. Se realiza la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINALES.\r\nEste evento invalida la garantía por parte del fabricante. Nro. de paginas impresas 4094.', 'Se recomienda el cambio del consumible y el lavado del tanque contaminado para optimo funcionamiento.', 220, '2020-08-14 00:35:48', '2020-08-14 00:35:48'),
+(172, '2020-08-13', 'EP-000131', 1, 1, 0, 'Usuario menciona que no toma el papel.', 'Se realizo la revision minuciosa y se detecta mecanismo de impresión con problemas de lubricacion, el cual ocasionaba problemas al momento de la toma de papel (no jala las hojas correctamente).\r\nSe realizan ajustes, lubricacion y calibraciones al mecanismo de arrastre, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 840.\r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 154, '2020-08-14 04:13:31', '2020-08-14 04:13:31'),
+(173, '2020-08-13', 'EP-000191', 1, 1, 0, 'No jala el papel.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa, el cual ocasiona problemas al momento de la toma de papel.\r\nSe efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 22.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 214, '2020-08-14 06:37:09', '2020-08-14 06:37:09'),
+(174, '2020-08-14', 'EP-000202', 1, 1, 0, 'Luz de papel parpadeando //FC: 30-07-2020 //LC: Tiendas Metro', 'Se realizo la revision minuciosa y se observa palanca del sensor de papel fuera de lugar, el cual ocasiona el error de atasco de papel al momento del encendido.\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 115.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 225, '2020-08-15 04:12:56', '2020-08-15 04:12:56'),
+(175, '2020-08-14', 'EP-000204', 1, 1, 0, 'Problemas de conexión inalambrica (WiFi).', 'Se realizo la revision minuciosa y se detecta problemas al momento de la conexión vía inalambrica (error de Wifi).\r\nSe realizan ajustes (recuperación de configuración a valores de fabrica), luego se ejecutan pruebas de impresiones continuas por conexión WiFi, copias y escaneo las cuales no muestran desperfectos.  Nro. de paginas impresas después de la solución 17.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el uso correcto de las herramientas que brinda el driver.', 227, '2020-08-15 06:52:06', '2020-08-15 06:52:06'),
+(176, '2020-08-15', 'EP-000205', 1, 1, 0, 'No toma la hoja//Factura a nombre de: Johnny Cruz//Fecha de Compra: marzo//N° de Factura: No tiene la factura a la mano//Lugar de Compra: Metro//Codigo Postal: 51Direccion: Cercado//Provincia: Lima//Departamento: Lima//CSA: C024', 'Se realizo la revision minuciosa y se observa objeto extraño (tapa de plástico) en el interior de la bandeja de papel, el cual ocasionaba problemas al momento de la toma de papel.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 431.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, asi mismo se le indica al usuario tener precaución de no colocar objetos extraños encima de la unidad de escaner ya que podría caer al interior y ocasionar daños irreparables.', 228, '2020-08-15 23:17:53', '2020-08-15 23:17:53'),
+(177, '2020-08-15', 'EP-000205', 1, 1, 0, 'No toma la hoja//Factura a nombre de: Johnny Cruz//Fecha de Compra: marzo//N° de Factura: No tiene la factura a la mano//Lugar de Compra: Metro//Codigo Postal: 51Direccion: Cercado//Provincia: Lima//Departamento: Lima//CSA: C024', 'Se realizo la revision minuciosa y se observa objeto extraño (tapa de plástico) en el interior de la bandeja de papel, el cual ocasionaba problemas al momento de la toma de papel.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 431.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, asi mismo se le indica al usuario tener precaución de no colocar objetos extraños encima de la unidad de escaner ya que podría caer al interior y ocasionar daños irreparables.', 228, '2020-08-15 23:17:54', '2020-08-15 23:17:54'),
+(178, '2020-08-15', 'EP-000205', 1, 1, 0, 'No toma la hoja//Factura a nombre de: Johnny Cruz//Fecha de Compra: marzo//N° de Factura: No tiene la factura a la mano//Lugar de Compra: Metro//Codigo Postal: 51Direccion: Cercado//Provincia: Lima//Departamento: Lima//CSA: C024', 'Se realizo la revision minuciosa y se observa objeto extraño (tapa de plástico) en el interior de la bandeja de papel, el cual ocasionaba problemas al momento de la toma de papel.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 431.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, asi mismo se le indica al usuario tener precaución de no colocar objetos extraños encima de la unidad de escaner ya que podría caer al interior y ocasionar daños irreparables.', 228, '2020-08-15 23:17:54', '2020-08-15 23:17:54'),
+(179, '2020-08-18', 'EP-000210', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta fuente de voltaje defectuosa, el cual ocasiona las fallas de encendido. Se realizo el descarte con una fuente de laboratorio obteniendo buenos resultados. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 668.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario verificar la toma de voltaje ya que una mala conexión podría ocasionar daños irreparables al producto.', 233, '2020-08-19 00:44:30', '2020-08-19 00:44:30');
+INSERT INTO `garantia_guia_egreso` (`id`, `fecha`, `orden_servicio`, `estado`, `egresado`, `informe_tecnico`, `descripcion_problema`, `diagnostico_solucion`, `recomendaciones`, `garantia_ingreso_id`, `created_at`, `updated_at`) VALUES
+(180, '2020-08-18', 'EP-000196', 1, 1, 0, 'Presenta error de atasco de papel. Fecha de compra 13/05/2020.', 'Se realizo la revision minuciosa y se observa palanca del sensor de papel fuera de lugar, el cual ocasiona el error de atasco al momento del encendido. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1007.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 219, '2020-08-19 04:49:36', '2020-08-19 04:49:36'),
+(181, '2020-08-18', 'EP-000194', 1, 1, 0, 'Error E-01//Factura a nombre de: Viviana Sanchez//Fecha de Compra: 05-03-2020 //N° de Factura: BC12377290//Lugar de Compra: Hiraoka//', 'Se realizo la revision minuciosa detectando tarjeta principal defectuosa (no se mueve el carruaje), así mismo se observa cable flat de cabezal quemado y conector de cabezal. Se efectúa el cambio de las partes mencionadas, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 41.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 217, '2020-08-19 05:57:08', '2020-08-19 05:57:08'),
+(182, '2020-08-19', 'EP-000213', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasionaba el bloqueo del producto.\r\nSe realiza el reset del contador mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 31.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 236, '2020-08-19 23:54:58', '2020-08-19 23:54:58'),
+(183, '2020-08-19', 'EP-000214', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision minuciosa y se observa cable flat de escaner desconectado, el cual ocasiona el error general al momento del encendido.\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 25.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 237, '2020-08-19 23:58:06', '2020-08-19 23:58:06'),
+(184, '2020-08-19', 'EP-000125', 1, 1, 0, 'Presenta error general al momento del encendido. Fecha de compra 16-01-2020.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa, el cual ocasiona el error general al momento del encendido (emite un sonido extraño). Se realizo el descarte de la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultados. Se ejecuta el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes. Se realizan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 43. Se actualiza la versión del firmware para corregir errores a futuro. Se adjuntan las pruebas.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 148, '2020-08-20 02:41:56', '2020-08-20 02:41:56'),
+(185, '2020-08-19', 'EP-000201', 1, 1, 0, 'No toma el papel. Fecha de compra 10-01-2020.', 'Se realizo la revision minuciosa y se detecta cable flat del sensor CR dañado, el cual ocasionaba problemas al momento de la toma de papel (la hoja se queda a la mitad).\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 582.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 224, '2020-08-20 04:21:21', '2020-08-20 04:21:21'),
+(186, '2020-08-20', 'EP-000203', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa y cabezal de impresión cruzado, el cual ocasiona las fallas de encendido. Se realizo el cambio de las partes mencionadas, luego se efectúan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe realizan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 37.`\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 226, '2020-08-21 00:49:55', '2020-08-21 00:49:55'),
+(187, '2020-08-20', 'EP-000215', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision minuciosa y se observa cable flat dela unidad de escaner desconectado, el cual ocasionaba el error mencionado. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 703.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 238, '2020-08-21 04:57:37', '2020-08-21 04:57:37'),
+(188, '2020-08-20', 'EP-000190', 1, 1, 0, 'Presenta error general. Fecha de compra 02/07/2020.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa (no se mueve el carruaje), así mismo se observa cable flat de cabezal quemado y conector de cabezal quemado. Se efectúa el cambio de las partes mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados.Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 37.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el correcto funcionamiento de las herramientas que brinda el producto.', 213, '2020-08-21 05:04:28', '2020-08-21 05:04:28'),
+(189, '2020-08-20', 'EP-000217', 1, 1, 0, 'No toma el papel.', 'Se realizo la revision minuciosa y se observa suciedad (polvo) en el interior del mecanismo de arrastre y ausencia de lubricacion en los engranajes, el cual ocasionaba problemas al momento de la toma de papel (no jala el papel correctamente). \r\nSe realizan ajustes, limpieza y lubricacion de la parte mencionada obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3447.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 240, '2020-08-21 05:25:50', '2020-08-21 05:25:50'),
+(190, '2020-08-21', 'EP-000208', 1, 1, 0, 'Problemas con la WiFi, defectos de impresión.', 'Se realizo la revision minuciosa y se detecta fallas del configuración por modo inalambrico (WiFi).\r\nSe realiza el reset de todos los ajustes mediante el programa obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 27.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 231, '2020-08-21 22:24:07', '2020-08-21 22:24:07'),
+(191, '2020-08-21', 'EP-000198', 1, 1, 0, 'Defectos de impresión. Fecha de compra 21/05/2020.', 'Se realizo la revision minuciosa y se detecta cable flat del sensor CR dañado, el cual ocasiona fallas al momento de la impresión (texto e imágenes con sombras). \r\nSe realiza el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 573.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 221, '2020-08-22 02:21:16', '2020-08-22 02:21:16'),
+(192, '2020-08-24', 'EP-000223', 1, 1, 0, 'Usuario menciona que no enciende (falla aleatoria).', 'Se realizo la revision y se detecta problemas de funcionamiento en el panel de control (el botón de encendido no responde correctamente). \r\nSe efectúan ajustes y limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 320.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no con cubiertas por la garantía.', 246, '2020-08-25 05:11:24', '2020-08-25 05:11:24'),
+(193, '2020-08-25', 'EP-000219', 1, 1, 0, 'Usuario menciona que se apaga después de 2 hrs. de proyección y emite un sonido extraño.', 'Se realizo la revision minuciosa y se observa exceso de suciedad en el interior de los ventiladores y filtro de aire con suciedad. \r\nSe realiza la limpieza de las partes mencionada, luego se ejecutan pruebas de proyección continua en la cual no presento desperfectos. \r\nSe coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario realizar el mantenimiento preventivo cada 6 meses para garantizar su optimo funcionamiento.', 242, '2020-08-25 23:36:48', '2020-08-25 23:36:48'),
+(194, '2020-08-25', 'EP-000218', 1, 1, 0, 'Presenta error general al momento del encendido.', 'Se realizo la revision minuciosa y se detecta mecanismo de arrastre con problemas de calibraciones, el cual ocasionaba el error general al momento del encendido. \r\nSe realizan ajustes, lubricacion y calibración de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 13575.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 241, '2020-08-25 23:45:15', '2020-08-25 23:45:15'),
+(195, '2020-08-25', 'EP-000234', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasionaba la falla reportada.\r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 4263.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 257, '2020-08-26 03:20:48', '2020-08-26 03:20:48'),
+(196, '2020-08-25', 'EP-000221', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta conductos de tinta con aire y cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresiones (imágenes no legibles). \r\nSe realiza el proceso de recuperación del cabezal y la limpieza de los conducto obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1096.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 244, '2020-08-26 04:10:33', '2020-08-26 04:10:33'),
+(197, '2020-08-26', 'EP-000225', 1, 1, 0, 'Emite un sonido extraño, no jala el papel.', 'Se realizo la revision minuciosa y se observa encoder PF fuera de lugar, el cual ocasionaba un fuerte sonido al momento del encendido para luego presentar el error general.\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 909.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 248, '2020-08-26 23:42:39', '2020-08-26 23:42:39'),
+(198, '2020-08-26', 'EP-000192', 1, 1, 0, 'No proyecta //Fecha de Compra: 05/12/19 //N° de Factura: E001-1130 //Lugar de Compra: Grupo OPC SRL //', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa (no proyecta imagen), el cual ocasiona la falla mencionada. Se efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes de color obteniendo buenos resultados. \r\nSe ejecutan pruebas de proyección continuas en las que no presentaron desperfectos. \r\nSe coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario realizar el mantenimiento preventivo cada 8 meses.', 215, '2020-08-27 00:41:08', '2020-08-27 00:41:08'),
+(199, '2020-08-26', 'EP-000237', 1, 1, 0, 'Obstrucción de papel// Factura a nombre de: Roger Morante Rivera// Fecha de Compra:25-05-2020//N° de Factura:0003902//Lugar de Compra:Econolapcop//', 'Se realizo la revision minuciosa y se observa objeto extraño (trozo de papel) en el interior de la bandeja, el cual ocasionaba el atasco de las hojas al momento de la impresión. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones y copias las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 730.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 260, '2020-08-27 02:24:36', '2020-08-27 02:24:36'),
+(200, '2020-08-26', 'EP-000233', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona las fallas al momento de la impresiones (imagen o texto con rayas).\r\nSe realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 274.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad,', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara años irreparables y la anulación automática de la garantía.', 256, '2020-08-27 05:51:56', '2020-08-27 05:51:56'),
+(201, '2020-08-27', 'EP-000236', 1, 1, 0, 'No avanza PapelTitular: Felix Alfredo ÁnguloFecha de compra: 30-Abril-2020N. de factura: EB011368 Lugar de compra: Mi pc lista', 'Se realizo la revision minuciosa y se observa rodillo retard fuera de lugar, el cual ocasiona problemas al momento de la toma de papel (no jala las hojas).\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 145.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 259, '2020-08-28 01:05:23', '2020-08-28 01:05:23'),
+(202, '2020-08-27', 'EP-000220', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 15/10/2019.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona la falla reportada (texto e imágenes con rayas). Se toma una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINALES. este evento invalida la garantía por parte del fabricante. Nro. de paginas impresas 3992.\r\nSe realizara la cotización de la reparación y/o el cambio de las partes afectadas.', 'Se recomienda el mantenimiento preventivo, cambio del tanque de tinta y cambio del cabezal de impresión para el correcto funcionamiento.', 243, '2020-08-28 05:21:10', '2020-08-28 05:21:10'),
+(203, '2020-08-27', 'EP-000224', 1, 1, 0, 'Presenta error de servicio. Fecha de compra 09/10/2019.', 'Se realizo la revision minuciosa detectando contador de gotas de tinta al 100%, el cual ocasionaba el error de servicio (equipo bloqueado).Se realiza el reset del contador mediante el programa de ajustes obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 20150.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 247, '2020-08-28 06:11:34', '2020-08-28 06:11:34'),
+(204, '2020-08-28', 'EP-000239', 1, 1, 0, 'Presenta error general, se apaga automáticamente.', 'Se realizo la revision minuciosa y se observa cable flat del panel de control mal instalado, el cual ocasionaba un falso contacto para luego presentar el error reportado. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2397.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 262, '2020-08-29 04:07:08', '2020-08-29 04:07:08'),
+(205, '2020-08-28', 'EP-000228', 1, 1, 0, 'No toma el papel. Fecha de compra 02/06/2020.', 'Se realizo la revision minuciosa y se observa rodillo retard fuera de lugar, el cual ocasiona problemas al momento de la toma de papel. Se procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1842. \r\nSe actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 251, '2020-08-29 06:25:20', '2020-08-29 06:25:20'),
+(206, '2020-08-31', 'EP-000230', 1, 1, 0, 'Obstrucción de papel en bandeja 1//Fecha de Compra: 24-07-2020 //N° de Factura: EB01-538//Lugar de Compra: Edusistem SAC //', 'Se realizo la revision minuciosa y se observa objeto extraño (alfiler) en el interior de la bandeja de papel, el cual ocasionaba el atasco de las hojas al momento de la impresión.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 141.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 253, '2020-09-01 03:25:53', '2020-09-01 03:25:53'),
+(207, '2020-08-31', 'EP-000212', 1, 1, 0, 'Obstrucción de papel en bandeja 1//Fecha de Compra: 24-07-2020 //N° de Factura: EB01-538//Lugar de Compra: Edusistem SAC //', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasionaba fallas a momento de la impresión (imágenes con rayas). Se toma una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros ORIGINALES.Se efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. Nro. de paginas impresas después de la solución 1297. Se actualiza la versión del firmware para corregir errores a futuro. HEAD ID: 3948F7AQOS.\r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 235, '2020-09-01 05:31:07', '2020-09-01 05:31:07'),
+(208, '2020-09-01', 'EP-000216', 1, 1, 0, 'Presenta error general. Fecha de compra 10/03/2020.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa, el cual ocasiona el error general al momento del encendido.\r\nSe realiza el cambio de la parte mencionada, luego se efectúan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 37.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 239, '2020-09-02 01:08:44', '2020-09-02 01:08:44'),
+(209, '2020-09-02', 'EP-000241', 1, 1, 0, 'Presenta error general. Fecha de compra 03/07/2020.', 'Se realizo la revision minuciosa detectando contador de gotas de tinta al 100%, el cual ocasiona el error de servicio. Se realizo el reset del contador mediante el programa de ajustes obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 18. Se actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el uso correcta de las herramientas que brinda el driver.', 264, '2020-09-02 23:58:12', '2020-09-02 23:58:12'),
+(210, '2020-09-02', 'EP-000245', 1, 1, 0, 'Presenta error de escaner.', 'Se realizo la revision minuciosa y se observa cable flat de escaner desconectado, el cual ocasiona el error reportado. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 849.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 268, '2020-09-03 00:37:40', '2020-09-03 00:37:40'),
+(211, '2020-09-02', 'EP-000246', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta componente (diodo) de la tarjeta principal dañada, el cual ocasionaba fallas de encendido.\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica verificar la toma de voltaje ya que una mala conexión podría ocasionar daños irreparables.', 269, '2020-09-03 00:55:38', '2020-09-03 00:55:38'),
+(212, '2020-09-02', 'EP-000242', 1, 1, 0, 'Parpadean todas las luces y el usuario menciona que emite un sonido extraño.', 'Se realizo la revision minuciosa y se detecta engranajes del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos). \r\nSe efectúa el cambio de las partes mencionadas, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 475.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 265, '2020-09-03 04:48:51', '2020-09-03 04:48:51'),
+(213, '2020-09-03', 'EP-000235', 1, 1, 0, 'Problemas con la conexión WiFi. Fecha de compra 06/07/2020.', 'Se realizo la revision minuciosa y se detecta problemas de conexión inalambrica (WiFi), así mismo se detecta mala configuración de red. Se efectúa el reset de los ajustes a valores de fabrica mediante el programa de ajustes obteniendo buenos resultados (INICIAL SETTING).Se ejecutan pruebas de impresiones continuas mediante WiFi , copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 26.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el uso correcto de las herramientas que brinda el driver.', 258, '2020-09-04 04:15:23', '2020-09-04 04:15:23'),
+(214, '2020-09-03', 'EP-000255', 1, 1, 0, 'No toma bien la hoja//Factura a nombre de: No tiene la factura//Fecha de Compra: junio 2020//N° de Factura: No tiene la factura//Lugar de Compra: Taller PC//Codigo Postal: 51//Direccion: mala//Provincia: Cañete//Departamento: Lima//CSA: C024//', 'Se realizo la revision minuciosa y se observa engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasiona problemas al momento de la toma de papel.\r\nSe efectúa el cambio de la parte mencionada, luego se realiza la lubricacion, pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1474.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 278, '2020-09-04 04:39:34', '2020-09-04 04:39:34'),
+(215, '2020-09-04', 'EP-000252', 1, 1, 0, 'Se atasca el papel.', 'Se realizo la revision minuciosa y se detecta problemas al momento de la toma de papel (no toma el papel correctamente), así mismo se observa restos de suciedad (polvo) en el interior de la bandeja de papel. \r\nSe efectuar la limpieza, lubricacion y ajustes al mecanismo de arrastre obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1739. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 275, '2020-09-04 23:29:36', '2020-09-04 23:29:36'),
+(216, '2020-09-04', 'EP-000229', 1, 1, 0, 'Lamina del panel de control despegada, no se observa signos de manipulacion, no realizo la carga inicial de tinta. Fecha de compra 24/08/2020.', 'Se realizo el cambio del equipo completo.\r\nEPSON L3160 n/s: X67B026536; Equipo sellado con accesorios completos.', 'Se recomienda realizar la instalación siguiendo los pasos del manual para evitar posibles fallas a futuro.', 252, '2020-09-04 23:41:11', '2020-09-04 23:41:11'),
+(217, '2020-09-04', 'EP-000243', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 08/08/2019.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasionaba problemas de impresiones (imágenes no legibles). Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 663.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 266, '2020-09-04 23:44:24', '2020-09-04 23:44:24'),
+(218, '2020-09-04', 'EP-000251', 1, 1, 0, 'Presenta atasco de papel, parpadean todos los leds.', 'Se realizo la revision minuciosa y se observa restos de lubricante G-97 en el encoder CR, el cual ocasionaba problemas al momento de la impresión y luego emitía el error general. \r\nSe efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 9586.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 274, '2020-09-04 23:55:42', '2020-09-04 23:55:42'),
+(219, '2020-09-04', 'EP-000247', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta tarjeta principal con los controladores cruzados y cabezal cruzado, el cual ocasiona las fallas de encendido (se utilizo el multimetro para la medición de los componentes).\r\nSe efectúa el cambio de las partes mencionadas, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 32.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario verificar la toma de voltaje ya que una mala conexión podría ocasionar daños irreparables.', 270, '2020-09-05 05:53:01', '2020-09-05 05:53:01'),
+(220, '2020-09-07', 'EP-000248', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision minuciosa y se observa encoder PF con restos de lubricante G-97, el cual ocasionaba problemas de impresiones (bandas horizontales). Se efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3265. \r\nSe actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 271, '2020-09-07 23:13:52', '2020-09-07 23:13:52'),
+(221, '2020-09-07', 'EP-000244', 1, 1, 0, 'Toma varias hojas.', 'Se realizo la revision minuciosa y se observa engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos, el cual ocasionaba problemas al momento de la toma de papel.\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1621.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 267, '2020-09-08 00:31:28', '2020-09-08 00:31:28'),
+(222, '2020-09-07', 'EP-000253', 1, 1, 0, 'Presenta error de atasco de papel.', 'Se realizo la revision minuciosa y se observa objeto extraño (plástico pequeño) en el interior de la bandeja de papel, el cual ocasionaba problemas al momento de la toma de la hoja. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1575.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 276, '2020-09-08 04:03:37', '2020-09-08 04:03:37'),
+(223, '2020-09-07', 'EP-000258', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta componente de la tarjeta principal defectuosa (DIODO), el cual ocasionaba las fallas de encendido.\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario revisar la toma de voltaje ya que una mala conexión podría ocasionar daños irreparables al producto.', 281, '2020-09-08 05:34:23', '2020-09-08 05:34:23'),
+(224, '2020-09-07', 'EP-000130', 1, 1, 0, 'No toma el papel. Fecha de compra 28/11/2019.', 'Se realizo la revision minuciosa y se observa engranaje dañad (SPUR GEAR CLUTCH con dientes rotos), el cual ocasiona fallas al momento de la toma de papel (no jala las hojas). Se efectúa el cambio de las partes mencionadas, se lubrica el mecanismo de arrastre y se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1549. \r\nSe actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 153, '2020-09-08 06:16:10', '2020-09-08 06:16:10'),
+(225, '2020-09-08', 'EP-000259', 1, 1, 0, 'Emite un sonido extraño. Fecha de compra 30/01/2020.', 'Se realizo la revision minuciosa y se observa encoder PF fuera de lugar, el cual ocasionaba un sonido extraño al momento del encendido. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1412.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 282, '2020-09-09 04:38:39', '2020-09-09 04:38:39'),
+(226, '2020-09-08', 'EP-000262', 1, 1, 0, 'Todas las luces parpadean //Fecha de Compra: 18/07/2020 //N° de Factura: 001000345 //Lugar de Compra: Printer Suport Peru //', 'Se realizo la revision minuciosa y se observa objeto extraño (hilo nylon) en el interior del mecanismo de arrastre, el cual ocasionaba el trabado del rodillo para luego emitir el error general. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 553.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 285, '2020-09-09 07:11:54', '2020-09-09 07:11:54'),
+(227, '2020-09-09', 'EP-000260', 1, 1, 0, 'Usuario menciona que no imprime correctamente.', 'Se realizo la revision minuciosa y se observa exceso de suciedad (polvo), en el interior del mecanismo y el cabezal de impresión, el cual ocasionaba problemas al momento de la impresión. \r\nSe realizo la lubricacion del cabezal de impresión, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda efectuar el mantenimiento general del producto lo mas pronto posible ya que muestra exceso de suciedad en el mecanismo de arrastre.', 283, '2020-09-10 05:28:08', '2020-09-10 05:28:08'),
+(228, '2020-09-09', 'EP-000238', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta fuente de voltaje defectuoso, el cual ocasiona las fallas de encendido (se utilizo el multimetro para la medición de los componentes). Se efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1032. \r\nSe actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario verificar la toma de voltaje ya que una mala conexión podría ocasionar daños irreparables.', 261, '2020-09-10 06:04:59', '2020-09-10 06:04:59'),
+(229, '2020-09-09', 'EP-000263', 1, 1, 0, 'Defectos de impresion.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de las impresiones (imágenes y texto no legibles). Se tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 263.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 286, '2020-09-10 06:39:47', '2020-09-10 06:39:47'),
+(230, '2020-09-10', 'EP-000257', 1, 1, 0, 'Mancha de Tinta //Fecha de Compra: 13/05/20 //N° de Factura: BX01-05365506 //Lugar de Compra: Falabella', 'Se realizo la revision minuciosa y se observa objeto extraño (liga, papel pequeño), en el borde la unidad de CAP y dentro del mismo, el cual ocasionaba derrames de tinta en la hoja al momento de la impresión. \r\nSe realiza al limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 459.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 280, '2020-09-10 23:19:37', '2020-09-10 23:19:37'),
+(231, '2020-09-10', 'EP-000254', 1, 1, 0, 'No emite imagen el panel de control.', 'Se realizo la revision minuciosa y se observa restos de insectos e insectos (cucarachas) en el interior del mecanismo y la circuitos de la tarjeta principal, las mismas que se ocasionaron daños al panel de control (fondo blanco).Este evento no califica como desperfecto de fabricación por lo cual se invalida la garantía. \r\nSe realizara la cotización de la reparación y el servicio de mantenimiento. \r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda realizar el mantenimiento general y la reparación o cambio de las partes afectadas para el correcto funcionamiento del equipo.', 277, '2020-09-11 00:25:51', '2020-09-11 00:25:51'),
+(232, '2020-09-10', 'EP-000266', 1, 1, 0, 'Usuario menciona que no imprime, falla aleatoria.', 'Se realizo la revision minuciosa y no presenta el error reportado por el usuario, así mismo se realizo la revision de los sensores, motores y mecanismo de arrastre las cuales se encuentran en buen estado.\r\nSe actualiza la versión del firmware, luego se ejecutan pruebas de impresiones, copias y escaneo las cuales no presentan desperfectos.  Nro. de paginas impresas después de la solución 133.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 289, '2020-09-11 04:36:16', '2020-09-11 04:36:16'),
+(233, '2020-09-11', 'EP-000273', 1, 1, 0, 'Mancha las hojas.', 'Se realizo la revision minuciosa y se observa restos de tinta en los rodillos de avance de papel, el cual ocasionaba manchas al momento de la impresión. \r\nSe realiza la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 170.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 296, '2020-09-12 01:10:00', '2020-09-12 01:10:00'),
+(234, '2020-09-11', 'EP-000269', 1, 1, 0, 'Derrame de tinta//Factura a nombre de: Julia Flores Ticlla//Fecha de Compra: 21-04-2019//N° de Factura: No tiene la factura a la mano//Lugar de Compra: Toppus//Codigo Postal: 51//Direccion: cercado//Provincia: Lima//Departamento:Lima//CSA: C024', 'Se realizo la revision minuciosa y se observa unidad de escaner trabada, el cual ocasionaba problemas al momento de cerrar la unidad, asi mismo se observa restos de tinta en los rodillos de avance de papel.\r\nSe realiza la limpieza de los rodillos y la correcta instalación de la unidad de escaner, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 4031.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 292, '2020-09-12 01:20:39', '2020-09-12 01:20:39'),
+(235, '2020-09-11', 'EP-000240', 1, 1, 0, 'Usuario menciona que presenta error general de manera aleatoria. Fecha de compra 24/02/2020.', 'Se realizo la revision minuciosa y se observa sensores (PF, CR) con restos de suciedad y manchas de lubricante G97, el cual ocasionaba problemas de error general al momento de la impresión de manera aleatoria. Se efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 6445. Se actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario efectuar el mantenimiento preventivo para garantizar su optimo desempeño.', 263, '2020-09-12 03:47:35', '2020-09-12 03:47:35'),
+(236, '2020-09-11', 'EP-000249', 1, 1, 0, 'No toma la hoja. Fecha de compra 27/06/2020.', 'Se realizo la revision minuciosa y se detecta cable flat del sensor CR dañado, el cual ocasiona problemas al momento de la toma de papel (la hoja se queda a la mitad y parpadean los leds).Se efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 153. \r\nSe actualiza la versión del firmware para corregir errores a futuro.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario al forma correcta del retiro de la hoja al momento de presentar un atasco.', 272, '2020-09-12 03:50:50', '2020-09-12 03:50:50'),
+(237, '2020-09-11', 'EP-000226', 1, 1, 0, 'Usuario menciona que presenta rayas al momento de la impresión en fotografía. Fecha de compra 02/11/2019.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores desviados, el cual ocasiona fallas al momento de la impresión (imágenes con rayas). Se tomo una muestra de tinta y se realizo la prueba cromatografica obteniendo como resultado el uso de suministros originales. Se efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas en papel fotográfico las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 567.\r\nSe adjuntan las pruebas.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 249, '2020-09-12 04:54:17', '2020-09-12 04:54:17'),
+(238, '2020-09-14', 'EP-000268', 1, 1, 0, 'Usuario menciona que no hay comunicación por WiFi.', 'Se realizo la revision minuciosa y se detecta mala configuración de red WiFi, el cual ocasionaba problemas al momento de la instalación. \r\nSe procede a restablecer todos los ajustes a valores de fabrica, luego se efectúa la correcta instalación mediante conexión inalambrica obteniendo buenos resultados.  Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 788. Se actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 291, '2020-09-15 00:53:37', '2020-09-15 00:53:37'),
+(239, '2020-09-14', 'EP-000276', 1, 1, 0, 'Usuario menciona que parpadean todos los leds, defectos de impresión.', 'Se realizo la revision minuciosa y se observa suciedad en el interior de la unidad de escaner, el cual ocasionaba el error general al momento del encendido o impresión. \r\nSe realiza la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 926.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 299, '2020-09-15 01:01:07', '2020-09-15 01:01:07');
+INSERT INTO `garantia_guia_egreso` (`id`, `fecha`, `orden_servicio`, `estado`, `egresado`, `informe_tecnico`, `descripcion_problema`, `diagnostico_solucion`, `recomendaciones`, `garantia_ingreso_id`, `created_at`, `updated_at`) VALUES
+(240, '2020-09-14', 'EP-000256', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta placa principal con los controladores cruzados y cabezal de impresión cruzado, el cual ocasiona las fallas de encendido.\r\nSe efectúa el cambio de las partes mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 27.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario verificar la toma de voltaje ya que un amala conexión podría ocasionar daños irreparables.', 279, '2020-09-15 02:19:22', '2020-09-15 02:19:22'),
+(241, '2020-09-15', 'EP-000277', 1, 1, 0, 'Presenta error general. Fecha de compra 25/07/2020.', 'Se realizo la revision minuciosa y se observa encoder PF fuera de lugar, el cual ocasionada el error general al momento del encendido.\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 48.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 300, '2020-09-16 01:02:31', '2020-09-16 01:02:31'),
+(242, '2020-09-15', 'EP-000267', 1, 1, 0, 'Atasco de papel //Factura a nombre de: Pedro Tito Toledo// Fecha de Compra: 07-08-2020//N° de Factura: BB092-4605//Lugar de Compra: JBM Group//Codigo Postal: 51', 'Se realizo la revision minuciosa y se observa encoder CR con restos de lubricante G-97, el cual ocasiona que el carruaje no termine su recorrido con normalidad. Se efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 127.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 290, '2020-09-16 02:04:09', '2020-09-16 02:04:09'),
+(243, '2020-09-15', 'EP-000270', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 21/05/2020.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos y conductos de tinta con aire, el cual ocasionaba fallas al momento de la impresión.\r\nSe realiza el proceso de limpieza y recuperación de los inyectores obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 60.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 293, '2020-09-16 04:08:27', '2020-09-16 04:08:27'),
+(244, '2020-09-15', 'EP-000280', 1, 1, 0, 'El usuario menciona que no toma el papel al momento de imprimir.', 'Se realizo la revision minuciosa y se observa palanca del sensor de papel fuera de lugar, el cual ocasiona problemas al momento de la toma de la hoja. \r\nSe procede a instalar correctamente la parte mencionada, lubricacion y calibración al mecanismo de arrastre obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3638.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 303, '2020-09-16 06:23:59', '2020-09-16 06:23:59'),
+(245, '2020-09-15', 'EP-000280', 1, 1, 0, 'El usuario menciona que no toma el papel al momento de imprimir.', 'Se realizo la revision minuciosa y se observa palanca del sensor de papel fuera de lugar, el cual ocasiona problemas al momento de la toma de la hoja. \r\nSe procede a instalar correctamente la parte mencionada, lubricacion y calibración al mecanismo de arrastre obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3638.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 303, '2020-09-16 06:23:59', '2020-09-16 06:23:59'),
+(246, '2020-09-16', 'EP-000282', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision minuciosa y se observa encoder PF fuera de lugar, el cual ocasionaba el error general al momento del encendido. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 57.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario al forma correcta del retiro de la hoja al momento de presentar un atasco.', 305, '2020-09-17 03:15:35', '2020-09-17 03:15:35'),
+(247, '2020-09-16', 'EP-000265', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta tarjeta principal con los controladores cruzados y cabezal de impresión cruzado, el cual ocasiona las fallas de encendido (se utilizo el multimetro para la medición de los componentes).\r\nSe efectúa el cambio de las partes mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 38.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario verificar la toma de voltaje ya que una mala conexión podría ocasionar daños irreparables al producto.', 288, '2020-09-17 04:39:24', '2020-09-17 04:39:24'),
+(248, '2020-09-17', 'EP-000283', 1, 1, 0, 'Mensaje de error 000031 E-01 //Factura a nombre de: Cabanillas Celis Y Asociados //Fecha de Compra: 28/03/2020 //N° de Factura: F302-00070654// Lugar de Compra: Metro', 'Se realizo la revision minuciosa y se observa encoder CR con restos de lubricante G-97, el cual ocasionaba que el carruaje no termine su desplazamiento con normalidad para luego emitir el error general. \r\nSe efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1161. Se actualiza la versión del firmware para corregir errores a futuro. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 306, '2020-09-18 05:42:35', '2020-09-18 05:42:35'),
+(249, '2020-09-18', 'EP-000286', 1, 1, 0, 'No avanza el papel Factura a nombre de: Carmen Rosa Condori Jeri Fecha de Compra: 24-08-20N° de Factura: 00466582 Lugar de Compra: Oesle Código Postal: 51 dirección: (San Juan De Lurigancho Provincia: Lima', 'Se realizo la revision y se detecta contador de gotas de tinta al 100%, el cual ocasionaba el bloqueo total del producto.\r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 25.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el uso de las herramientas que brinda el driver.', 309, '2020-09-19 00:27:01', '2020-09-19 00:27:01'),
+(250, '2020-09-18', 'EP-000279', 1, 1, 0, 'Emite un sonido extraño, no jala el papel.', 'Se realizo la revision minuciosa y se observa rodillo retard fuera de lugar, el cual ocasionaba problemas al momento de la toma de papel y luego emitir un sonido extraño.\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1060.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario al forma correcta del retiro de la hoja al momento de presentar un atasco.', 302, '2020-09-19 00:33:10', '2020-09-19 00:33:10'),
+(251, '2020-09-18', 'EP-000271', 1, 1, 0, 'Usuario menciona que se atasca el papel continuo después de la tercera impresión. Fecha de compra 23/07/2020.', 'Se realizo la revision minuciosa y el equipo no presenta problemas al momento de la toma de papel, se realizan pruebas de impresiones con papel continuo en las cuales no muestran fallas. Se procede al desarmado del equipo observando motores, engranajes y sensores en buen estado. Se ejecutan pruebas de impresiones continuas y no muestran desperfectos. Se adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así se le indica al usuario el uso correcto de las herramientas de brinda el producto.', 294, '2020-09-19 06:22:48', '2020-09-19 06:22:48'),
+(252, '2020-09-18', 'EP-000281', 1, 1, 0, 'Emite un sonido extraño al momento de la toma de papel.', 'Se realizo la revision minuciosa y se detecta engranaje del mecanismo de arrastre dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasiona problemas al momento de la toma de papel.\r\nSe realiza el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 504.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 304, '2020-09-19 06:27:10', '2020-09-19 06:27:10'),
+(253, '2020-09-18', 'EP-000285', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (imágenes y texto no legible).\r\nSe efectúa el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 47.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 308, '2020-09-19 06:58:10', '2020-09-19 06:58:10'),
+(254, '2020-09-19', 'EP-000264', 1, 1, 0, 'No toma el papel.', 'Se realizo la revision minuciosa y se detecta engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasiona problemas al momento de la toma de papel.\r\nSe efectúa el cambio de la partes mencionada, luego se realiza la lubricacion y calibración del mecanismo de arrastre obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1244.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 287, '2020-09-20 00:56:37', '2020-09-20 00:56:37'),
+(255, '2020-09-21', 'EP-000291', 1, 1, 0, 'Defectos de impresión, no imprime color mangenta.', 'Se realizó la revisión minuciosa y se observa conducto de color magenta con agujeros y restos de insectos (cucarachas) en el interior del mecanismo y circuitos de la tarjeta, así mismo se observa cable flat de sensor CR mordido. \r\nEste evento no califica como desperfecto de fabricación por lo cual se invalida garantía.', 'Se recomienda el cambio de las partes afectadas y el servicio de limpieza general para su óptimo funcionamiento.', 314, '2020-09-22 00:42:29', '2020-09-22 00:42:29'),
+(256, '2020-09-21', 'EP-000288', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona la falla reportada. Se tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos.  Nro. de paginas impresas después de la solución 9283.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 311, '2020-09-22 04:07:52', '2020-09-22 04:07:52'),
+(257, '2020-09-21', 'EP-000289', 1, 1, 0, 'Todas las luces están parpadeando /// Factura a nombre de: Luba Agafonova /// Fecha de Compra: Diciembre 2019', 'Se realizo la revision minuciosa y se detecta suciedad en el interior de la unidad de escaner (sensor se posición), el cual ocasionaba el error de escaner al momento del encendido. \r\nSe efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 107.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 312, '2020-09-22 04:25:20', '2020-09-22 04:25:20'),
+(258, '2020-09-22', 'EP-000290', 1, 1, 0, 'Defectos de impresión, imágenes con rayas.', 'Se realizo la revision minuciosa y se observa restos de papel en el interior de la unidad de CAP, el cual ocasionaba problemas al momento del encapsulamiento del cabezal, para luego presentar defectos de impresión. \r\nSe realiza la limpieza y el retiro de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 990.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 313, '2020-09-22 22:49:20', '2020-09-22 22:49:20'),
+(259, '2020-09-22', 'EP-000284', 1, 1, 0, 'No imprime, las hojas pasan en blanco. Fecha de compra 25/06/2020.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa, el cual ocasiona fallas al momento de la impresión (impresiones en blanco). Se efectúa el descarte de la parte mencionada con un tarjeta de laboratorio obteniendo buenos resultados. Se ejecuta el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes las cuales no muestran desperfectos. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 43.\r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario el funcionamiento adecuado de las herramientas que brinda el driver.', 307, '2020-09-22 23:59:07', '2020-09-22 23:59:07'),
+(260, '2020-09-22', 'EP-000298', 1, 1, 0, 'Mensaje de error de atasco de papel, no avanza el papel // Fecha de Compra: 13/05/2020 //N° de Factura: 030B0900083985 //Lugar de Compra: La curacao, Conecta Retail SA', 'Se realizo la revision minuciosa  y se observa objeto extraño (gancho de cabello) en el interior de la bandeja de papel, el cual ocasionaba problemas al momento de la toma de la hoja.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2409.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantia.', 321, '2020-09-23 03:43:09', '2020-09-23 03:43:09'),
+(261, '2020-09-23', 'EP-000293', 1, 1, 0, 'Presenta error de atasco de papel.', 'Se realizo la revision minuciosa y se observa palanca del sensor de papel fuera de lugar, el cual ocasiona problemas al momento del encendido (error de atasco de hoja).\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2793.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 316, '2020-09-24 00:31:14', '2020-09-24 00:31:14'),
+(262, '2020-09-23', 'EP-000278', 1, 1, 0, 'Regresa la hoja al momento de imprimir en formato duplex.', 'Se realizo la revision minuciosa y se observa bandeja de unidad duplex con problemas de calibraciones, el cual ocasionaba problemas al momento de la toma de papel en formato duplex.\r\nSe efectúan ajustes, lubricacion y calibraciones, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 14109.\r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 301, '2020-09-24 06:13:33', '2020-09-24 06:13:33'),
+(263, '2020-09-24', 'EP-000275', 1, 1, 0, 'Parpadean todos los leds. Fecha de compra 30/05/2020.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa, el cual ocasiona el error general al momento del encendido (parpadean todos los leds).Se realizo el descarte de la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultados. Se efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 298, '2020-09-24 23:25:59', '2020-09-24 23:25:59'),
+(264, '2020-09-24', 'EP-000209', 1, 1, 0, 'Presenta error de atasco de papel al momento del encendido. Fecha de compra 29/01/2020.', 'Se realizo la revision minuciosa y se observa cable flat del sensor CR dañado, el cual ocasiona el error reportado (mensaje de atasco de papel, parpadean todos los leds).\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 352.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 232, '2020-09-24 23:33:32', '2020-09-24 23:33:32'),
+(265, '2020-09-24', 'EP-000206', 1, 1, 0, 'Presenta error general, parpadean todos los leds. Fecha de compra 10/02/2020.', 'Se realizo la revision minuciosa y se observa cable flat del sensor CR dañado, el cual ocasiona el error reportado (mensaje de atasco de papel, parpadean todos los leds).\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1191.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 229, '2020-09-25 00:07:43', '2020-09-25 00:07:43'),
+(266, '2020-09-24', 'EP-000297', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision minuciosa y se detecta contador de tintas de tinta al 100%, el cual ocasiona el error mencionado (bloqueo del producto).\r\nSe efectúa el reset del contador mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2218.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 320, '2020-09-25 03:22:16', '2020-09-25 03:22:16'),
+(267, '2020-09-24', 'EP-000292', 1, 1, 0, 'Presenta error general. Fecha de compra 08/07/2020.', 'Se realizo la revision minuciosa y se detecta cable flat del sensor CR defectuoso, el cual ocasiona el error general al momento del encendido (no se mueve el carruaje).Se efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1193.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco para evitar daños que conlleven a fallas que no sean cubiertas por la garantía.', 315, '2020-09-25 04:03:52', '2020-09-25 04:03:52'),
+(268, '2020-09-24', 'EP-000299', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos y conducto de tinta con aire, el cual ocasiona el problema reportado.\r\nSe efectúa el proceso de limpieza y recuperación de los inyectores obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1148.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 322, '2020-09-25 04:37:25', '2020-09-25 04:37:25'),
+(269, '2020-09-25', 'EP-000303', 1, 1, 0, 'El usuario menciona que toma muchas hojas al momento de imprimir, defectos de impresión.', 'Se realizo la revision minuciosa y se detecta configuración del menú interno erróneo, el cual ocasiona problemas al momento de realizar copias. \r\nSe efectúa el cambio de los ajustes a valores de fabrica, luego se ejecutan problemas de impresiones y copias las cuales no muestran desperfecto.\r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el uso adecuado del equipo para evitar fallas que no son cubiertas por la garantía.', 326, '2020-09-26 02:18:05', '2020-09-26 02:18:05'),
+(270, '2020-09-25', 'EP-000302', 1, 1, 0, 'Presenta defectos de impresión, derrame de tinta.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (texto e imágenes con rayas).\r\nSe efectúa la limpieza de la parte mencionada obteniendo buenos resultados, así mismo se verifica el estado de los tanques de tinta, conductos y adaptadores las cuales no presenta daños. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos.  Nro. de paginas impresas después de la solución 3130.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 325, '2020-09-26 03:44:05', '2020-09-26 03:44:05'),
+(271, '2020-09-28', 'EP-000287', 1, 1, 0, 'Presenta error general. Fecha de compra 13/08/2019.', 'Se realizo la revision minuciosa y se observa encoder PF y CR con exceso de suciedad y restos de lubricante G-97, el cual ocasiona que el carruaje no termine su desplazamiento para luego emitir el error general.Se efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 39680.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario realizar el mantenimiento preventivo lo mas pronto posible para garantizar su optimo desempeño.', 310, '2020-09-28 22:47:15', '2020-09-28 22:47:15'),
+(272, '2020-09-28', 'EP-000296', 1, 1, 0, 'Presenta error general. Fecha de compra 04/05/2019.', 'Se realizo la revision minuciosa y se observa cable flat del escaner desconectado, el cual ocasionaba el error reportado (parpadean todos los leds). \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 16714.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 319, '2020-09-29 03:53:00', '2020-09-29 03:53:00'),
+(273, '2020-09-28', 'EP-000312', 1, 1, 0, 'No avanza el papel p-Bandeja 1//Factura a nombre de: Anita Diaz Aguilar//Fecha de Compra: 19-09-2020--N° de Factura: 00070828', 'Se realizo la revision minuciosa y se observa sensor de presencia de papel mal posicionado, el cual ocasionaba problemas al momento de la toma de la hoja (no reconoce el papel).\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 140.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 335, '2020-09-29 06:35:41', '2020-09-29 06:35:41'),
+(274, '2020-09-29', 'EP-000308', 1, 1, 0, 'Impresión en blanco. Fecha de compra 10/09/2020.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión cruzado (no imprime ningún color), el cual ocasiona la falla reportada. Se tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales. Se efectúa el cambio de la parte mencionada y se realizan las calibraciones mediante el programa de ajustes. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 44.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 331, '2020-09-30 02:17:50', '2020-09-30 02:17:50'),
+(275, '2020-09-29', 'EP-000310', 1, 1, 0, 'Atasco de papel.', 'Se realizo la revision minuciosa y se observa polea fuera de lugar, el cual no permitía que el carruaje termine su recorrido habitual para luego presentar el error de atasco. \r\nSe procede a instala correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 762.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 333, '2020-09-30 04:02:41', '2020-09-30 04:02:41'),
+(276, '2020-09-29', 'EP-000306', 1, 1, 0, 'Defectos de impresión, mancha las hojas.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos y conducto de tinta con aire, el cual ocasionaba problemas al momento de la impresión. \r\nSe efectúa el proceso de recuperación de los inyectores y la eliminación de burbujas de los conductos, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 60.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad,', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 329, '2020-09-30 04:28:58', '2020-09-30 04:28:58'),
+(277, '2020-09-29', 'EP-000300', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa, el cual ocasiona las fallas de encendido. \r\nSe descarta la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultado.\r\nSe efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 34.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario revisar la toma de voltaje ya que una mala instalación podría ocasionar daños irreparables al producto.', 323, '2020-09-30 05:41:35', '2020-09-30 05:41:35'),
+(278, '2020-09-30', 'EP-000318', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona la falla reportada (texto e imagen con rayas). Se tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINAL. \r\nEste evento invalida la garantía por parte del fabricante. \r\nSe adjuntan las pruebas correspondientes. Nro. de paginas impresas 3883.', 'Se recomienda el cambio del cabezal de impresión, el lavado del tanque de color Bk y la instalación de la tinta original para garantizar su optimo funcionamiento.', 341, '2020-09-30 23:45:43', '2020-09-30 23:45:43'),
+(279, '2020-10-01', 'EP-000314', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasionaba el error reportado (bloqueo del panel).\r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 6824.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo. asi mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 337, '2020-10-01 23:54:49', '2020-10-01 23:54:49'),
+(280, '2020-10-02', 'EP-000325', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona la falla reportada. \r\nSe efectúa el proceso de recuperación del cabezal obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 269.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 348, '2020-10-03 01:02:32', '2020-10-03 01:02:32'),
+(281, '2020-10-02', 'EP-000327', 1, 1, 0, 'error de almohadilla //fecha de compra:12/septiembre://lugar de compra:centro de lima quirmin 769 //titular: odelia quite', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasiona el bloqueo general del panel.\r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas 1.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 350, '2020-10-03 04:22:24', '2020-10-03 04:22:24'),
+(282, '2020-10-02', 'EP-000011', 1, 1, 0, 'No toma las hojas correctamente, falla aleatoria. Fecha de compra 12-07-2019.', 'Se realizo la revision y se detecta mecanismo de arrastre con problemas de calibraciones, el cual ocasiona problemas al momento de la toma de papel. Se realizan ajustes, lubricacion y calibración de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 6037. \r\nEl equipo cuenta con la versión del firmware actualizado. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 18, '2020-10-03 05:14:54', '2020-10-03 05:14:54'),
+(283, '2020-10-03', 'EP-000328', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona el problema reportado. \r\nSe efectúa el procedo de recuperación de los inyectores obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 6108.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 351, '2020-10-04 01:22:55', '2020-10-04 01:22:55'),
+(284, '2020-10-05', 'EP-000326', 1, 1, 0, 'Error de almohadilla. Fecha de compra 26/09/2020.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasiona el error de servicio (bloqueo del panel de control).\r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 29.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 349, '2020-10-06 02:15:58', '2020-10-06 02:15:58'),
+(285, '2020-10-06', 'EP-000304', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasiona el problemas reportado.\r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3965.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 327, '2020-10-06 22:42:32', '2020-10-06 22:42:32'),
+(286, '2020-10-06', 'EP-000313', 1, 1, 0, 'Presenta error de atasco de papel, el usuario menciona que no responde el panel de control.', 'Se realizo la revision minuciosa y se detecta cable flat del sensor CR dañado, el cual ocasiona el error reportado. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 460.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 336, '2020-10-06 23:10:11', '2020-10-06 23:10:11'),
+(287, '2020-10-06', 'EP-000294', 1, 1, 0, 'No enciende. Fecha de compra 18/09/2020.', 'Se realizo la revision minuciosa y se detecta fuente de voltaje defectuoso, el cual ocasiona las fallas de encendido. Se descarto la parte mencionada con una fuente de laboratorio obteniendo buenos resultados.Se efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 23.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario revisar la conexión de voltaje ya que una mala instalación podría ocasionar daños irreparables al producto.', 317, '2020-10-06 23:20:54', '2020-10-06 23:20:54'),
+(288, '2020-10-06', 'EP-000322', 1, 1, 0, 'Presenta error de atasco de papel y error de escaner.', 'Se realizo la revision minuciosa y se observa palanca del sensor de papel fuera de lugar y cable flat del escaner desconectado, el cual ocasionaban los errores mencionados.\r\nSe procede a instalar correctamente las partes mencionadas, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3031.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario al forma correcta del retiro de la hoja al momento de presentar un atasco.', 345, '2020-10-06 23:40:17', '2020-10-06 23:40:17'),
+(289, '2020-10-06', 'EP-000329', 1, 1, 0, 'Presenta atasco de papel.', 'Se realizo la revision minuciosa y se observa restos de papel en el interior del mecanismo y del sensor, el cual ocasionaba el error de atasco al momento del encendido.\r\nSe procede a retirar y limpiar la parte del mecanismo, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1533.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 352, '2020-10-07 00:34:12', '2020-10-07 00:34:12'),
+(290, '2020-10-06', 'EP-000323', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos y conductos de tinta con aire, el cual ocasionaba fallas al momento de la impresiones. \r\nSe efectúa el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 547.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir falla que no son cubiertas por la garantía.', 346, '2020-10-07 04:24:22', '2020-10-07 04:24:22'),
+(291, '2020-10-06', 'EP-000309', 1, 1, 0, 'Presenta error de atasco. Fecha de compra 13/06/2020.', 'Se realizo la revision minuciosa y se detecta cable flat del sensor CR dañado, el cual ocasiona el error de atasco de papel al momento de la impresión (la hoja se queda a la mitad). Se efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 551.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 332, '2020-10-07 06:20:35', '2020-10-07 06:20:35'),
+(292, '2020-10-07', 'EP-000324', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasionaba la falla reportada.\r\nSe efectúa el proceso de recuperación de los inyectores, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 765.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir falla que no son cubiertas por la garantía.', 347, '2020-10-08 02:52:49', '2020-10-08 02:52:49'),
+(293, '2020-10-07', 'EP-000307', 1, 1, 0, 'Presenta error de escaner. Fecha de compra 02/10/2019.', 'Se realizo la revision minuciosa y se detecta unidad de escaner defectuosa, el cual ocasiona el error reportado (error de escaner). Se realizo el descarte de la parte mencionada con un escaner de laboratorio obteniendo buenos resultados. Se efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3371.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 330, '2020-10-08 05:08:09', '2020-10-08 05:08:09'),
+(294, '2020-10-07', 'EP-000305', 1, 1, 0, 'Mancha el papel, defectos de impresión. Fecha de compra 05/11/2019.', 'Se realizo la revision minuciosa y se observa objeto extraño (tarjeta de presentación) en el interior del mecanismo (soporte de guía de avance de papel), el cual ocasionaba un leve atasco de la hoja para luego manchar la misma de tinta. Se procede a retirar dicho objeto y la limpieza del mecanismo de avance, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3835.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario no colocar objetos extraño encima de la unidad de ADF ya que podría caer al interior del equipo y ocasionar daños irreparables.', 328, '2020-10-08 05:57:47', '2020-10-08 05:57:47'),
+(295, '2020-10-08', 'EP-000315', 1, 1, 0, 'Presenta atasco de papel. Fecha de compra 06/03/2020.', 'Se realizo la revision minuciosa y se observa objeto extraño (rama pequeña) en el interior de la bandeja principal, el cual ocasionaba el atasco de las hojas al momento de la toma. Se procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1649.Se adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario no colocar objetos encima de la unidad ADF ya que podría caer al interior del producto y ocasionar daños irreparables.', 338, '2020-10-09 04:00:42', '2020-10-09 04:00:42'),
+(296, '2020-10-08', 'EP-000316', 1, 1, 0, 'No toma el papel. Fecha de compra 05/06/2020.', 'Se realizo la revision minuciosa y se observa objeto extraño (pepa de fruta) en el interior de la bandeja principal, el cual ocasiona el atasco de las hojas.Se procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 234.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario no colocar objetos encima de la unidad ADF ya que podría caer al interior del producto y ocasionar daños irreparables.', 339, '2020-10-09 04:02:15', '2020-10-09 04:02:15'),
+(297, '2020-10-08', 'EP-000317', 1, 1, 0, 'Presenta atasco de papel. Fecha de compra 27/01/2020.', 'Se realizo la revision minuciosa y se detecta engranaje del mecanismo de arrastre dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasiona problemas al momento de la toma de papel.Se efectúa el cambio de las partes afectadas y lubricacion del mecanismo obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 4981.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 340, '2020-10-09 04:04:15', '2020-10-09 04:04:15'),
+(298, '2020-10-09', 'EP-000311', 1, 1, 0, 'Mensajes de error de la impresora E-01//Factura a nombre de: Shougang Hierro Peru//Fecha de Compra: 13-11-2019//N° de Factura: F001-0002939//Lugar de Compra: Computel SA//Codigo Postal: 51//Direccion: cercado//Provincia: Lima//Departamento: Lima/', 'Se realizo la revision minuciosa y se detecta cable flat del sensor CR dañado, el cual ocasiona el error general al momento del encendido. Se efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 152.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 334, '2020-10-10 00:13:02', '2020-10-10 00:13:02');
+INSERT INTO `garantia_guia_egreso` (`id`, `fecha`, `orden_servicio`, `estado`, `egresado`, `informe_tecnico`, `descripcion_problema`, `diagnostico_solucion`, `recomendaciones`, `garantia_ingreso_id`, `created_at`, `updated_at`) VALUES
+(299, '2020-10-09', 'EP-000336', 1, 1, 0, 'No toma el papel.', 'Se realizo la revision minuciosa y se observa suciedad (restos de heces de roedores) en el interior de la bandeja principal, el cual ocasiona problemas al momento de la toma del papel.\r\nSe efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 805.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario realizar el mantenimiento preventivo para garantizar su optimo funcionamiento.', 359, '2020-10-10 00:54:19', '2020-10-10 00:54:19'),
+(300, '2020-10-09', 'EP-000330', 1, 1, 0, 'No imprime colores.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos y conductos de tinta con aire, el cual ocasionaba el error reportado. \r\nSe realiza el proceso de recuperación de los inyectores y la limpieza de los conductos obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresa después de la solución 610.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 353, '2020-10-10 03:27:54', '2020-10-10 03:27:54'),
+(301, '2020-10-09', 'EP-000337', 1, 1, 0, 'Presenta una marca en las hojas al momento de la impresión.', 'Se realizo la revision minuciosa y se detecta STAR WELL mal posicionado, el cual dejaba una marca en la hoja al momento de pasar por el soporte de guía de avance de papel.\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 145.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 360, '2020-10-10 04:41:42', '2020-10-10 04:41:42'),
+(302, '2020-10-10', 'EP-000321', 1, 1, 0, 'Defectos de impresión. Fecha de compra 21/06/2019.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores muy obstruidos, el cual ocasiona el error reportado (imágenes con rayas). Se realizo el proceso de recuperación de los inyectores obteniendo como resultado el 100% de su operatividad. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1317.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 344, '2020-10-10 22:29:15', '2020-10-10 22:29:15'),
+(303, '2020-10-12', 'EP-000319', 1, 1, 0, 'Emite un sonido extraño al momento del encendido. Fecha de compra 09/07/2020.', 'Se realizo la revision minuciosa y se detecta engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasiona problemas al momento de la toma de papel y emite un sonido fuerte. Se efectúa el cambio y lubricacion de la parte mencionada obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 473.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 342, '2020-10-13 06:01:47', '2020-10-13 06:01:47'),
+(304, '2020-10-12', 'EP-000334', 1, 1, 0, 'Presenta error de impresora. Fecha de compra 21/09/2019.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa, el cual ocasiona el error general al momento del encendido (no se mueve el carruaje). Se realizo el descarte de la parte mencionada con una tarjeta de laboratorio obteniendo buenos resultados.Se efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 44.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 357, '2020-10-13 06:55:23', '2020-10-13 06:55:23'),
+(305, '2020-10-13', 'EP-000339', 1, 1, 0, 'Presenta error de atasco de papel.', 'Se realizo la revision minuciosa y se observa papel roto en el interior del sensor de hoja, el cual ocasionaba la activación de la misma y luego emitía el error reportado. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 4752.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario realizar el mantenimiento preventivo lo mas pronto posible ya que se observa exceso de suciedad.', 362, '2020-10-14 02:41:58', '2020-10-14 02:41:58'),
+(306, '2020-10-13', 'EP-000346', 1, 1, 0, 'Presenta atasco de papel.', 'Se realizo la revision minuciosa y se observa papel trabado en el interior del mecanismo, el cual ocasionaba el error reportado. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1351.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para evitar posibles fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro del papel al momento de presentar un atasco.', 369, '2020-10-14 02:56:59', '2020-10-14 02:56:59'),
+(307, '2020-10-13', 'EP-000344', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasiona el error de bloqueo. \r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1805.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por loa garantía.', 367, '2020-10-14 03:27:39', '2020-10-14 03:27:39'),
+(308, '2020-10-13', 'EP-000338', 1, 1, 0, 'Las letras salen dobles.', 'Se realizo la revision minuciosa y se observa restos de lubricante G-97 en el encoder CR, el cual ocasionaba la falla reportada. \r\nSe efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 126.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 361, '2020-10-14 04:41:34', '2020-10-14 04:41:34'),
+(309, '2020-10-14', 'EP-000332', 1, 1, 0, 'Presenta error de servicio. Fecha de compra 18/07/2020.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasiona el bloqueo del producto. Se efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 22357.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 355, '2020-10-15 02:39:27', '2020-10-15 02:39:27'),
+(310, '2020-10-15', 'EP-000353', 1, 1, 0, 'Presenta error de atasco.', 'Se realizo la revision minuciosa y se observa papel obstruido en el interior de la bandeja principal, el cual ocasionaba el error de atasco al momento del encendido. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 918.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 376, '2020-10-15 23:41:49', '2020-10-15 23:41:49'),
+(311, '2020-10-16', 'EP-000352', 1, 1, 0, 'Presenta error de escaner, no toma el papel.', 'Se realizo la revision minuciosa y se observa cable flat del escaner desconectado, así mismo se procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones las cuales presentan problemas al momento de la toma de papel (no jala la hoja). Se detecta engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasionaba problemas al momento de la toma de papel. Se efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas 6603.\r\nSe adjuntan las pruebas.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 375, '2020-10-16 22:39:42', '2020-10-16 22:39:42'),
+(312, '2020-10-16', 'EP-000331', 1, 1, 0, 'Defectos de impresión. Fecha de compra 14/10/2019.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores abiertos, el cual ocasiona problemas de impresiones (imágenes no legibles, cambio de color). Se tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales. Se efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 4263.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el uso de suministros originales ya que de lo contrario el uso de tintas no genuinas ocasionara daños irreparables y la anulación automática de la garantía.', 354, '2020-10-16 23:42:50', '2020-10-16 23:42:50'),
+(313, '2020-10-16', 'EP-000342', 1, 1, 0, 'No avanza el papel//Fecha de Compra: 07/11/2019//N° de Factura: FA01-445//Lugar de Compra: D\'Todo pa\' Tu Compu SAC', 'Se realizo la revision minuciosa y se detecta rodillo principal con signos de desgaste y exceso de suciedad en el interior del equipo. Se obtiene la cantidad de paginas impresas (53815), así mismo el producto cuenta con la garantía vencida ya que excedió el limite de paginas impresas (garantía 24 meses o 30.000 paginas). \r\nSe adjuntan las pruebas.', 'Se recomienda efectuar el mantenimiento general y el cambio de las partes desgastadas para el correcto funcionamiento del equipo.', 365, '2020-10-17 00:13:20', '2020-10-17 00:13:20'),
+(314, '2020-10-16', 'EP-000349', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona la falla reportada. \r\nSe efectúa el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1360.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 372, '2020-10-17 04:35:28', '2020-10-17 04:35:28'),
+(315, '2020-10-17', 'EP-000355', 1, 1, 0, 'Error de indicadores//Titular: Donato Alarco yuque//Fecha de Compra:13/10/2020//N° de Factura: 2280//Lugar de Compra: El gallo es mas gallo', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasiona el bloqueo del producto.\r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 50.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 378, '2020-10-18 00:26:36', '2020-10-18 00:26:36'),
+(316, '2020-10-17', 'EP-000227', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realiza el cambio del equipo: \r\n\r\nEPSON L3110 N/S: X645186028; Equipo sellado con accesorios completos.', 'Se recomienda realizar la correcta instalación mediante la guía de usuario.', 250, '2020-10-18 00:57:18', '2020-10-18 00:57:18'),
+(317, '2020-10-19', 'EP-000295', 1, 1, 0, 'No toma el papel. Fecha de compra 12/05/2020.', 'Se realizo la revision minuciosa y se observa resorte de la palanca del sensor de papel fuera de lugar, el cual ocasionaba el error reportado. Se procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 606. Se actualizo la versión del firmware para corregir errores a futuro.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 318, '2020-10-20 04:16:30', '2020-10-20 04:16:30'),
+(318, '2020-10-19', 'EP-000366', 1, 1, 0, 'No imprime a color y sale borroso.', 'Se realizo la revision minuciosa y se observa leve rastro de suciedad (polvo), el cual ocasionaba problemas al momento de la impresión. \r\nSe efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 430.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado y constante del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 389, '2020-10-20 05:18:19', '2020-10-20 05:18:19'),
+(319, '2020-10-19', 'EP-000347', 1, 1, 0, 'Imprime con espacios en Blanco //FC: 31-10-2019 //LC: Grupo Vasquez RVC SAC //NF: FPP1-000634', 'Se realizo la revision minuciosa y se observa defectos al momento de la impresión (texto no legible, espacios en blanco.\r\nSe efectúa pruebas de impresiones continuas con rollo de papel de laboratorio las cuales no muestran desperfectos, así mismo se prueba la impresión en el rollo que brindo el usuario las cuales muestran desperfectos. \r\nSe le indicara al usuario que realice el cambio del suministro (rollo de papel) para ofrecer su optimo funcionamiento.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda cambiar de suministro (rollo de papel) para el correcto desempeño del producto, así mismo es necesario realizar el mantenimiento preventivo cada 9 meses.', 370, '2020-10-20 05:41:13', '2020-10-20 05:41:13'),
+(320, '2020-10-19', 'EP-000343', 1, 1, 0, 'No responde el panel de control. Fecha de compra 23/12/2019.', 'Se realizo la revision minuciosa y se detecta cable flat del panel de control con exceso de suciedad, el cual ocasionaba un falso contacto para luego presenta fallas de operatividad (no responde los botones del panel). Se efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 4229.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda efectuar el mantenimiento preventivo lo mas pronto posible para garantizar su optimo desempeño.', 366, '2020-10-20 05:46:53', '2020-10-20 05:46:53'),
+(321, '2020-10-20', 'EP-000362', 1, 1, 0, 'Imprime en blanco//Factura a nombre de: Viviano Jorge Ernesto//Fecha de Compra: 07-05-2020//N° de Factura: 052231//Lugar de Compra: Tottus//CSA: C024 S&R Solution Service S.A.C.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos y conductos de tinta con aire, el cual ocasiona la falla reportada. \r\nSe efectúa el proceso de recuperación de los inyectores, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1560.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 385, '2020-10-21 03:52:16', '2020-10-21 03:52:16'),
+(322, '2020-10-20', 'EP-000320', 1, 1, 0, 'Usuario menciona que emite un sonido, defectos de impresión. Fecha de compra 25/07/2020.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores muy obstruidos, el cual ocasiona la falla reportada. Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 994.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 343, '2020-10-21 04:48:32', '2020-10-21 04:48:32'),
+(323, '2020-10-20', 'EP-000363', 1, 1, 0, 'Usuario menciona que se atasca el papel.', 'Se realizo la revision minuciosa y se observa objeto extraño (palito de helado) en el interior de la bandeja principal, el cual ocasiona el atasco de las hojas al momento de la impresión. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 464.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario no colocar objetos encima de la unidad de escaner ya que podría caer al interior del mecanismo y ocasionar daños irreparables.', 386, '2020-10-21 05:42:29', '2020-10-21 05:42:29'),
+(324, '2020-10-21', 'EP-000340', 1, 1, 0, 'Presenta error general. Fecha de compra 06/03/2019.', 'Se realizo la revision minuciosa y se detecta engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasionaba el trabado del mecanismo de arrastre para luego emitir el error general.Se efectúa el cambio de las partes afectadas, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1823.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 363, '2020-10-21 23:42:24', '2020-10-21 23:42:24'),
+(325, '2020-10-21', 'EP-000365', 1, 1, 0, 'Presenta efectos de impresión. Fecha de compra 28/09/2019.', 'Se realizo la revision y se detecta cabezal con inyectores obstruidos y conductos de tinta con aire, el cual ocasionada problemas al momento de la impresión. \r\nSe efectúa el proceso de recuperación de los inyectores y la eliminación de burbujas en los conductos obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2564.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 388, '2020-10-22 00:01:43', '2020-10-22 00:01:43'),
+(326, '2020-10-21', 'EP-000357', 1, 1, 0, 'Atasca papel // F.Compra:30/01/19 // HOSPITAL III EMERGENCIAS GRAU', 'Se realizo la revision minuciosa y se detecta mecanismo de arrastre trabado, el cual ocasiona el error general al momento del encendido.Se procede a corregir la sincronizacion de los engranajes, lubricacion y calibraciones al mecanismo, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 22007.Se adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario efectuar el mantenimiento preventivo para garantizar su optimo desempeño.', 380, '2020-10-22 00:19:53', '2020-10-22 00:19:53'),
+(327, '2020-10-21', 'EP-000358', 1, 1, 0, 'No jala papel // F.Compra:30/01/19 // HOSPITAL III EMERGENCIAS GRAU', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasiona el error presentado (bloqueo del panel de control).Se efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones observando que el producto cuenta con la garantía vencida, ya que excedió el limite de paginas impresas 56023 (Garantía 2 años o 30.000 paginas). Se adjuntan las pruebas correspondientes.', 'Se recomienda efectuar el mantenimiento preventivo y el cambio de las partes con desgaste (rodillo principal) para garantizar su optimo desempeño.', 381, '2020-10-22 00:21:19', '2020-10-22 00:21:19'),
+(328, '2020-10-21', 'EP-000360', 1, 1, 0, 'No funciona cabezal // F.Compra:30/01/19 // HOSPITAL III EMERGENCIAS GRAU', 'Se realizo la revision minuciosa y se observa objeto extraño (alambre plastificado) en el interior de la bandeja principal, el cual ocasiona el trabado de las hojas al momento de la impresión.Se procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 11676.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario efectuar el mantenimiento preventivo para garantizar su optimo desempeño.', 383, '2020-10-22 00:22:59', '2020-10-22 00:22:59'),
+(329, '2020-10-21', 'EP-000361', 1, 1, 0, 'No jala papel // F.Compra:30/01/19 // HOSPITAL III EMERGENCIAS GRAU', 'Se realizo la revision minuciosa y se observa objeto extraño (pastilla, liga) en el interior de la bandeja principal, el cual ocasiona el atasco de las hojas al momento de la impresión. Se procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 11458.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario efectuar el mantenimiento preventivo para garantizar su optimo desempeño.', 384, '2020-10-22 00:24:17', '2020-10-22 00:24:17'),
+(330, '2020-10-21', 'EP-000333', 1, 1, 0, 'Presenta error de escaner, no toma el papel. Fecha de compra 19/05/2020.', 'Se realizo la revision minuciosa y se observa cable flat de la unidad de escaner desconectada, el cual ocasiona el error reportado. Se procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1347.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 356, '2020-10-22 00:46:48', '2020-10-22 00:46:48'),
+(331, '2020-10-21', 'EP-000364', 1, 1, 0, 'Imprime con rayas //FC: 08-07-2020 //LC: Comercial D&A //NF: 001354', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores desviados, el cual ocasiona fallas al momento de la impresión. Se tomo una muestra de tinta para efectuar la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINAL.Este evento no califica como desperfecto de fabricación por lo cual se rechaza toda reparación por garantía. Nro. de paginas impresas 6016.\r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el cambio del cabezal de impresión, tanque de tinta y la instalación de suministros originales para garantizar su optimo funcionamiento.', 387, '2020-10-22 05:17:21', '2020-10-22 05:17:21'),
+(332, '2020-10-21', 'EP-000341', 1, 1, 0, 'Usuario menciona que emite un sonido fuerte al imprimir, se atasca el papel. Fecha de compra 18/07/2020.', 'Se realizo la revision minuciosa y se observa papel trabado en la unidad duplex, el cual ocasionaba problemas de atasco. Se procede a retirar el papel obstruido, luego se ejecutan pruebas de impresiones las cuales presentan desperfectos (texto con rayas). Se tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros no genuinos. Este evento no califica como desperfectos de fabricación por lo cual se invalida la garantía.', 'Se recomienda el cambio del cabezal de impresión y el lavado del tanque de tinta para garantizar su optimo funcionamiento.', 364, '2020-10-22 05:31:57', '2020-10-22 05:31:57'),
+(333, '2020-10-22', 'EP-000345', 1, 1, 0, 'Presenta error de servicio. Fecha de compra 29/09/2020.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta, el cual ocasionaba el error reportado (bloqueo del equipo).Se efectúa el reset del contador mediante el programa de ajustes obteniendo buenos resultados. Se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 145.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 368, '2020-10-22 23:19:04', '2020-10-22 23:19:04'),
+(334, '2020-10-22', 'EP-000369', 1, 1, 0, 'Presenta error de atasco de papel. Fecha de compra 02/04/2020.', 'Se realizo la revision minuciosa y se detecta engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasionaba problemas al momento de la toma de papel para luego emitir el error.\r\nse efectúa el cambio y lubricacion de la parte dañada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 327.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 392, '2020-10-23 00:29:26', '2020-10-23 00:29:26'),
+(335, '2020-10-22', 'EP-000372', 1, 1, 0, 'Impresión con líneas//Fecha de Compra: 08/03/2020//N° de Factura: 493832//Lugar de Compra: Elektra', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (no imprime color BK).\r\nSe tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINAL. \r\nEste evento no califica como desperfecto de fabricación por lo cual se invalida la garantía. \r\nNro. de paginas impresas 2648.\r\nSe adjuntan las pruebas.', 'Se recomienda el cambio de las partes afectadas y la instalación de tinta original para garantizar su optimo desempeño.', 395, '2020-10-23 02:50:22', '2020-10-23 02:50:22'),
+(336, '2020-10-22', 'EP-000351', 1, 1, 0, 'Obstrucción de papel.  Factura a nombre de: Edson ElliotFecha de Compra: 21-07-20N° de Factura: 000000 Lugar de Compra: Compuplaza', 'Se realizo la revision minuciosa y se observa papel obstruido en el interior de la bandeja principal, el cual ocasiona el error reportado. \r\nSe procede a retirar dicho papel, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 248. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 374, '2020-10-23 06:41:59', '2020-10-23 06:41:59'),
+(337, '2020-10-23', 'EP-000368', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision minuciosa y se observa exceso de suciedad en el sensor CR y PF, el cual ocasionaba problemas al momento del recorrido del carruaje para luego presentar el error general.\r\nSe efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 6578.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario efectuar el mantenimiento preventivo cada 9 meses para garantizar su optimo desempeño.', 391, '2020-10-23 22:28:37', '2020-10-23 22:28:37'),
+(338, '2020-10-23', 'EP-000374', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión. Se tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1710.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales para garantizar su optimo desempeño.', 397, '2020-10-24 00:52:21', '2020-10-24 00:52:21'),
+(339, '2020-10-23', 'EP-000373', 1, 1, 0, 'Usuario menciona que se atasca el papel, emite un sonido extraño.', 'Se realizo la revision minuciosa y se detecta faja de carruaje mal instalado, el cual ocasionaba problemas al momento del encendido (emite un sonido extraño).\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 360. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 396, '2020-10-24 06:38:54', '2020-10-24 06:38:54'),
+(340, '2020-10-26', 'EP-000375', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos y conductos de tinta con aire, el cual ocasiona fallas al momento de la impresión.\r\nSe efectúa el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 7951.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 398, '2020-10-27 00:39:22', '2020-10-27 00:39:22'),
+(341, '2020-10-26', 'EP-000371', 1, 1, 0, 'Presenta error de impresora.', 'Se realizo la revision minuciosa y se observa restos de lubricante (G-97) en el encoder PF, el cual ocasionaba el error general al momento de la impresión. Se efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2424.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja la momento de presentar un atasco.', 394, '2020-10-27 00:54:26', '2020-10-27 00:54:26'),
+(342, '2020-10-26', 'EP-000359', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 06/05/2020.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (texto e imagen con rayas). Se tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales. Se efectúa el cambio y calibración mediante el programa de ajustes de la parte afectada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 394.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 382, '2020-10-27 00:56:15', '2020-10-27 00:56:15'),
+(343, '2020-10-26', 'EP-000377', 1, 1, 0, 'Presenta error general (parpadean todos los leds).', 'Se realizo la revision minuciosa y se detecto cable flat de la unidad de escaner desconectado, el cual ocasionaba el error general al momento del encendido.\r\nSe procede a conectar la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 636.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 400, '2020-10-27 02:16:30', '2020-10-27 02:16:30'),
+(344, '2020-10-26', 'EP-000367', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 19/07/2020.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa, el cual ocasionaba problemas al momento de la impresión (texto e imagen no legible).\r\nSe realizo el descarte con una tarjeta de laboratorio obteniendo buenos resultados. \r\nSe efectúa el cambio de la parte mencionada, luego se realizan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nNro. de paginas impresas después de la solución 35.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 390, '2020-10-27 02:20:59', '2020-10-27 02:20:59'),
+(345, '2020-10-26', 'EP-000378', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta fuente de voltaje defectuosa, el cual ocasionaba las fallas de encendido.\r\nSe realiza el descarte de la parte mencionada con una fuente de laboratorio obteniendo buenos resultados. \r\nSe efectúa el cambio de la parte dañada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 564.\r\nSe adjuntan la pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario verificar la toma de voltaje ya que una mala conexión podría ocasionar daños irreparables.', 401, '2020-10-27 03:01:41', '2020-10-27 03:01:41'),
+(346, '2020-10-26', 'EP-000376', 1, 1, 0, 'Todas las luces parpadean.', 'Se realizo la revision minuciosa y se detecta cable flat del sensor CR dañado, el cual ocasionaba el error general al momento del encendido.\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 902.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario al forma correcta del retiro de la hoja al momento de presentar un atasco.', 399, '2020-10-27 06:13:47', '2020-10-27 06:13:47'),
+(347, '2020-10-27', 'EP-000379', 1, 1, 0, 'No toma el papel.', 'Se realizo la revision minuciosa y se observa objeto extraño (mondadientes) en el interior de la bandeja principal, el cual ocasionaba problemas al momento de la toma del papel. Se procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 701.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo de le indica al usuario no colocar objetos encima de la unidad de escaner ya que podría caer al interior de la bandeja y ocasionar daños irreparables.', 402, '2020-10-28 00:03:37', '2020-10-28 00:03:37'),
+(348, '2020-10-27', 'EP-000386', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (imágenes no legibles).\r\nSe efectúa el proceso de recuperación de los inyectores obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 328.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 409, '2020-10-28 02:24:08', '2020-10-28 02:24:08'),
+(349, '2020-10-27', 'EP-000383', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasionaba el bloqueo del producto.\r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3597.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 406, '2020-10-28 02:43:25', '2020-10-28 02:43:25'),
+(350, '2020-10-27', 'EP-000381', 1, 1, 0, 'Presenta defectos de impresión (imágenes con rayas), mancha las hojas. Fecha de compra 12/08/2020.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos y conductos de tinta con aire, el cual ocasiona fallas al momento de la impresión (imágenes con rayas).\r\nSe efectúa el proceso de recuperación y la limpieza de los conductos obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1680.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 404, '2020-10-28 04:00:25', '2020-10-28 04:00:25'),
+(351, '2020-10-28', 'EP-000385', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta conductos de tinta con aire y cabezal de impresión con inyectores obstruidos, el cual ocasiona la falla reportada. \r\nSe efectúa el proceso de recuperación de los inyectores y la limpieza de los conductos, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas después de la solución 1386.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 408, '2020-10-28 22:52:16', '2020-10-28 22:52:16'),
+(352, '2020-10-28', 'EP-000382', 1, 1, 0, 'No toma el papel.', 'Se realizo la revision minuciosa y se observa CLUTCH fuera de posición, el cual ocasiona fallas al momento de la toma de papel (no jala las hojas).Se procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 717.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 405, '2020-10-28 23:56:47', '2020-10-28 23:56:47'),
+(353, '2020-10-28', 'EP-000356', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision minuciosa y se detecta unidad de escaner dañada, el cual ocasiona el error reportado (parpadean todos los leds).\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 612.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 379, '2020-10-29 00:31:20', '2020-10-29 00:31:20'),
+(354, '2020-10-28', 'EP-000387', 1, 1, 0, 'No toma el papel.', 'Se realizo la revision minuciosa y detecta mecanismo de arrastre con exceso de suciedad (polvo), el cual ocasionaba problemas al momento de la toma de papel.\r\nSe efectúa la limpieza y lubricacion del mecanismo, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 526.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco. también es necesario efectuar el mantenimiento preventivo lo mas pronto posible para garantizar su optimo desempeño.', 410, '2020-10-29 03:00:35', '2020-10-29 03:00:35'),
+(355, '2020-10-28', 'EP-000380', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 08/02/2020.', 'Se realizo la revision minuciosa y detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (texto e imagen con rayas).Se efectúa el proceso de recuperación de los inyectores, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 525.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 403, '2020-10-29 03:49:04', '2020-10-29 03:49:04'),
+(356, '2020-10-28', 'EP-000109', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 27-04-2019.', 'Se realizo la revision y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (texto no legible). Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 675.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 131, '2020-10-29 04:29:39', '2020-10-29 04:29:39'),
+(357, '2020-10-28', 'EP-000389', 1, 1, 0, 'Mancha las hojas, defectos de impresión.', 'Se realizo la revision minuciosa y se observa trozo de papel en el interior de la unidad de CAP, el cual ocasionaba que el carruaje no culmine su proceso de recorrido, así mismo manchaba las hojas al momento de la impresión. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2458.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 412, '2020-10-29 05:18:16', '2020-10-29 05:18:16'),
+(358, '2020-10-29', 'EP-000392', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasionaba el mensaje de bloqueo. \r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 15924.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 415, '2020-10-30 02:29:57', '2020-10-30 02:29:57'),
+(359, '2020-10-29', 'EP-000392', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se observa cable de la fuente de voltaje mal instalado, el cual ocasiona las fallas de encendido. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 896.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 415, '2020-10-30 05:12:49', '2020-10-30 05:12:49'),
+(360, '2020-10-30', 'EP-000354', 1, 1, 0, 'Presenta error general, parpadean todos los leds. Fecha de compra 06/03/2020.', 'Se realizo la revision minuciosa y se observa suciedad en el interior de la unidad de escaner (sensor de posición), el cual ocasionaba el error general al momento del encendido.Se efectúa la limpieza y lubricacion de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1768.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario efectuar el mantenimiento preventivo cada 9 meses para garantizar su optimo desempeño.', 377, '2020-10-31 05:04:17', '2020-10-31 05:04:17');
+INSERT INTO `garantia_guia_egreso` (`id`, `fecha`, `orden_servicio`, `estado`, `egresado`, `informe_tecnico`, `descripcion_problema`, `diagnostico_solucion`, `recomendaciones`, `garantia_ingreso_id`, `created_at`, `updated_at`) VALUES
+(361, '2020-11-02', 'EP-000397', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasiona el error de servicio. \r\nSe tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINAL. \r\nEste evento no califica como desperfecto de fabricación por lo cual se invalida la garantía. \r\nNro. de paginas impresas 2711.', 'Se recomienda el cambio de los tanques de tinta y la instalación de suministros originales.', 420, '2020-11-03 02:03:45', '2020-11-03 02:03:45'),
+(362, '2020-11-02', 'EP-000396', 1, 1, 0, 'Presenta error general, parpadean todos los leds.', 'Se realizo la revision minuciosa y se observa restos de lubricante (G-97) en el encoder PF, el cual ocasionaba problemas al momento de la toma de papel. \r\nSe efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1612.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 419, '2020-11-03 03:48:58', '2020-11-03 03:48:58'),
+(363, '2020-11-02', 'EP-000393', 1, 1, 0, 'Presenta error de escaner.', 'Se realizo la revision minuciosa y se observa cable flat del escaner desconectado, el cual ocasiona la falla reportada (error de escaner).\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 133.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 416, '2020-11-03 03:56:34', '2020-11-03 03:56:34'),
+(364, '2020-11-03', 'EP-000398', 1, 1, 0, 'Presenta error de escaner.', 'Se realizo la revision minuciosa y se observa cable flat del escaner desconectado, el cual ocasionaba el error reportado. \r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1891.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 421, '2020-11-04 05:15:32', '2020-11-04 05:15:32'),
+(365, '2020-11-04', 'EP-000395', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasionaba fallas al momento de la impresión.\r\nSe efectúa el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 5899.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no originales ocasionara daños irreparables y la anulación automática de la garantía.', 418, '2020-11-05 00:11:55', '2020-11-05 00:11:55'),
+(366, '2020-11-04', 'EP-000401', 1, 1, 0, 'Mala calidad de imagen - Imprime amarillo.Factura a nombre de: Linda Vasquez Prado Fecha de Compra: 03-10-20', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasionaba fallas al momento de la impresión.\r\nSe efectúa el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 429.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no originales ocasionara daños irreparables y la anulación automática de la garantía.', 424, '2020-11-05 00:21:34', '2020-11-05 00:21:34'),
+(367, '2020-11-04', 'EP-000399', 1, 1, 0, 'Defectos de impresión (texto con rayas). Fecha de compra 10/09/2020.', 'Se realizo la revision minuciosa y se detecta cabeza con inyectores obstruidos, el cual ocasionaba fallas al momento de la impresión. \r\nSe tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales. \r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 730.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no originales ocasionara daños irreparables y la anulación automática de la garantía.', 422, '2020-11-05 02:15:52', '2020-11-05 02:15:52'),
+(368, '2020-11-04', 'EP-000388', 1, 1, 0, 'Parpadean todos los leds. Fecha de compra 28/08/2020.', 'Se realizo la revision minuciosa y se observa cable flat del escaner desconectado, el cual ocasiona el error al momento del encendido (parpadean todos los leds).Se procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 150.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario el funcionamiento de las herramientas que brinda el driver.', 411, '2020-11-05 02:19:27', '2020-11-05 02:19:27'),
+(369, '2020-11-05', 'EP-000402', 1, 1, 0, 'No toma el papel. Fecha de compra 22/08/2020.', 'Se realizo la revision minuciosa y se observa restos de papel en el interior de la bandeja principal, el cual ocasiona fallas al momento de la toma de papel. \r\nSe procede a retirar y limpieza la bandeja principal, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3656.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismos se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 425, '2020-11-05 23:55:53', '2020-11-05 23:55:53'),
+(370, '2020-11-05', 'EP-000407', 1, 1, 0, 'Presenta defectos de impresión (impresiones con sombras).', 'Se realizo la revision minuciosa y se observa encoder CR con restos de lubricante (G-97), el cual ocasiona problemas al momento de la impresión.\r\nSe efectúa la limpieza de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 253.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 430, '2020-11-06 02:19:19', '2020-11-06 02:19:19'),
+(371, '2020-11-05', 'EP-000409', 1, 1, 0, 'Presenta atasco de papel.', 'Se realizo la revision minuciosa y se observa trozo de papel en el interior de la bandeja principal, el cual ocasiona el atasco de las hojas al momento de la impresión. \r\nSe procede a limpiar y retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 397.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 432, '2020-11-06 03:49:37', '2020-11-06 03:49:37'),
+(372, '2020-11-05', 'EP-000408', 1, 1, 0, 'Usuario menciona que se atasca el papel.', 'Se realizo la revision minuciosa y el producto no presenta el error reportado por el usuario, así mismo se verifican los motores, sensor, y bandeja principal de papel las cuales se encuentran en buen estado. \r\nSe realizan pruebas de impresiones continuas las cuales no presentan desperfectos. Nro. de paginas después de la solución 97.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 431, '2020-11-06 04:12:16', '2020-11-06 04:12:16'),
+(373, '2020-11-05', 'EP-000406', 1, 1, 0, 'Presenta error de escaner.', 'Se realizo la revision minuciosa y se observa cable flat del escaner desconectado, el cual ocasiona el error reportado (error de escaner).\r\nSe procede a conectar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 14835.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 429, '2020-11-06 04:30:27', '2020-11-06 04:30:27'),
+(374, '2020-11-05', 'EP-000391', 1, 1, 0, 'Usuario menciona que no imprime. Fecha de compra 23/09/2019.', 'Se realizo la revision minuciosa y el equipo no presenta desperfectos al momento de la impresión, así mismo se verifican las partes (motor, sensores, cabezal y tarjeta principal) las cuales no presentan desperfectos.Se efectúa la instalación mediante RED cableada, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario realizar el mantenimiento preventivo para garantizar su optimo funcionamiento.', 414, '2020-11-06 05:22:38', '2020-11-06 05:22:38'),
+(375, '2020-11-05', 'EP-000411', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión. \r\nSe tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINAL.\r\nEste evento no califica como desperfecto de fabricación por lo cual se invalida la garantía. \r\nNro. de paginas impresas  17943.\r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el cambio del tanque de tinta, cabezal de impresión y la instalación de tintas originales para garantizar su optimo funcionamiento.', 434, '2020-11-06 05:36:02', '2020-11-06 05:36:02'),
+(376, '2020-11-05', 'EP-000411', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión. \r\nSe tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINAL.\r\nEste evento no califica como desperfecto de fabricación por lo cual se invalida la garantía. \r\nNro. de paginas impresas  17943.\r\nSe adjuntan las pruebas correspondientes.', 'Se recomienda el cambio del tanque de tinta, cabezal de impresión y la instalación de tintas originales para garantizar su optimo funcionamiento.', 434, '2020-11-06 05:36:02', '2020-11-06 05:36:02'),
+(377, '2020-11-06', 'EP-000405', 1, 1, 0, 'Presenta defectos de impresion.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de de la impresión. \r\nSe efectúa el proceso de recuperación de los inyectores, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. No. de paginas impresas después de la solución 3145.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 428, '2020-11-06 22:21:35', '2020-11-06 22:21:35'),
+(378, '2020-11-06', 'EP-000410', 1, 1, 0, 'Defectos de impresión.', 'Se realizo la revision minuciosa y se detecta conductos de tinta con aire, el cual ocasiona fallas al momento de la impresión. \r\nSe efectúa la limpieza y eliminación de exceso de burbujas, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1030.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le recomienda el consumo de tintas originales ya que de lo contrario el uso de suministros no originales ocasionara daños irreparables y la anulación automática de la garantía.', 433, '2020-11-07 04:22:36', '2020-11-07 04:22:36'),
+(379, '2020-11-06', 'EP-000394', 1, 1, 0, 'Presenta defectos de impresion.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores abiertos, el cual ocasiona fallas al momento de la impresión. \r\nSe tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales. \r\nSe efectúa el cambio de la parte afectada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 707.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 417, '2020-11-07 07:18:44', '2020-11-07 07:18:44'),
+(380, '2020-11-07', 'EP-000403', 1, 1, 0, 'El usuario menciona que se atasca papel , Emite un sonido extraño', 'Se realizo la revision minuciosa y se observa soporte de guía de avance de papel doblado, el cual ocasiona el trabado del carruaje para luego emitir un sonido fuerte al momento de la impresión. \r\nEste evento no califica como desperfecto de fabricación por lo cual se invalida la garantía.\r\nSe realizara la cotización de la parte defectuosa.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el cambio de la parte afectada para el correcto funcionamiento del equipo.', 426, '2020-11-07 23:09:30', '2020-11-07 23:09:30'),
+(381, '2020-11-07', 'EP-000404', 1, 1, 0, 'Presenta atasco de papel.', 'Se realizo la revision minuciosa y se observa objeto extraño (tapa de plástico) en el interior de la bandeja principal, el cual ocasiona el atasco de las hojas al momento de la impresión.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 125.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 427, '2020-11-07 23:31:31', '2020-11-07 23:31:31'),
+(382, '2020-11-07', 'EP-000414', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión. \r\nSe efectúa el proceso de recuperación de los inyectores, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1100. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 437, '2020-11-07 23:58:24', '2020-11-07 23:58:24'),
+(383, '2020-11-11', 'EP-000416', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasionaba el error de servicio. \r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 5166.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 439, '2020-11-11 22:22:06', '2020-11-11 22:22:06'),
+(384, '2020-11-11', 'EP-000400', 1, 1, 0, 'No enciende.', 'Se realizo la revision minuciosa y se detecta tarjeta principal con los controladores cruzados y cabezal de impresión cruzado (se utilizo el multimetro para la medición de los componentes), el cual ocasiona las fallas de encendido.Se efectúa el cambio de las partes dañadas, luego se ejecutan las calibraciones mediante el programa de ajustes obteniendo buenos resultados.Se realizan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 43.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario verificar la toma de voltaje ya que una mala instalación podría ocasionar daños irreparables.', 423, '2020-11-11 23:28:35', '2020-11-11 23:28:35'),
+(385, '2020-11-11', 'EP-000420', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta exceso de aire y burbujas en los conductos de tinta, el cual ocasiona fallas al momento de la impresión (texto e imagen con rayas).\r\nSe efectúa el proceso de limpieza y recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1674.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 443, '2020-11-12 02:13:19', '2020-11-12 02:13:19'),
+(386, '2020-11-11', 'EP-000370', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 24/02/2020.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, conducto de tinta con aire y adaptadores vacíos, el cual ocasiona fallas al momento de la impresión. Se efectúa el proceso de recuperación de los inyectores, limpieza y eliminación del exceso de aire, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. \r\nNro. de paginas impresas después de la solución 1330.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionadora daños irreparables y la anulación automática de la garantía.', 393, '2020-11-12 03:58:18', '2020-11-12 03:58:18'),
+(387, '2020-11-11', 'EP-000412', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa, el cual ocasiona fallas al momento de la impresión (error genera, carruaje se queda a la mitad).\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan las calibraciones mediante el programa de ajustes obteniendo buenos resultados. \r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 41.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 435, '2020-11-12 04:37:38', '2020-11-12 04:37:38'),
+(388, '2020-11-12', 'EP-000422', 1, 1, 0, 'Presenta defectos de impresión (no imprime color BK).', 'Se realizo la revision minuciosa y se detecta conducto de tinta con aire y adaptador vació, el cual ocasiona fallas al momento de la impresión. \r\nSe efectúa la limpieza de los conductos y eliminación del exceso de burbujas, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 8131.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 445, '2020-11-12 22:35:12', '2020-11-12 22:35:12'),
+(389, '2020-11-12', 'EP-000417', 1, 1, 0, 'Usuario menciona que se atasca el papel.', 'Se realizo la revision minuciosa y el producto no presenta el error reportado por el usuario, así mismo se efectúan pruebas de impresiones continuas las cuales no muestran desperfectos. \r\nSe realizo la revision minuciosa (motor, bandeja principal, sensores) las cuales se encuentran en buenas condiciones, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2435.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 440, '2020-11-13 02:53:13', '2020-11-13 02:53:13'),
+(390, '2020-11-12', 'EP-000335', 1, 1, 0, 'Presenta defectos de impresión, usuario menciona que emite un sonido extraño. Fecha de compra 08/09/2020.', 'Se realizo la revision minuciosa y se detecta cabezal de impresión con inyectores obstruidos, el cual ocasiona problemas de impresiones (imágenes no legibles). Se efectúa el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2930.El producto no emite ningún sonido extraño. \r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 358, '2020-11-13 03:50:08', '2020-11-13 03:50:08'),
+(391, '2020-11-13', 'EP-000423', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos y conductos de tinta con aire, el cual ocasiona fallas al momento de la impresión.\r\nSe efectúa el proceso de recuperación de los inyectores y la eliminación del exceso de burbujas obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1286.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 446, '2020-11-13 22:59:21', '2020-11-13 22:59:21'),
+(392, '2020-11-13', 'EP-000413', 1, 1, 0, 'El usuario menciona que se queda a la mitad las hojas al momento que imprime, presenta Defectos de impresión. Fecha de compra 27/06/2020.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión (texto e imagen con rayas).Se efectúa el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 879.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de suministros originales ya que de lo contrario el uso de tintas no genuinas ocasionara daños irreparables y la anulación automática de la garantía.', 436, '2020-11-13 23:34:55', '2020-11-13 23:34:55'),
+(393, '2020-11-13', 'EP-000427', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos y conductos de tinta con aire, el cual ocasiona fallas al momento de la impresión. \r\nSe efectúa el proceso de recuperación de los inyectores y la limpieza del exceso de burbujas, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3522.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 450, '2020-11-14 04:48:31', '2020-11-14 04:48:31'),
+(394, '2020-11-14', 'EP-000418', 1, 1, 0, 'Presenta error de servicio.', 'Se realizo la revision minuciosa y se detecta contador de gotas de tinta al 100%, el cual ocasiona el bloqueo del producto.\r\nSe efectúa el reset del contador mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 214.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 441, '2020-11-14 23:02:15', '2020-11-14 23:02:15'),
+(395, '2020-11-14', 'EP-000350', 1, 1, 0, 'Presenta error general. Fecha de compra 12/09/2020.', 'Se realizo la revision minuciosa y se observa encoder PF fuera de lugar, el cual ocasiona el error general al momento del encendido. Se procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1730.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 373, '2020-11-15 00:18:15', '2020-11-15 00:18:15'),
+(396, '2020-11-14', 'EP-000419', 1, 1, 0, 'Usuario menciona que no imprime. Fecha de compra 27/08/2020.', 'Se realizo la revision minuciosa y el producto no presente problemas al momento de la impresión, así mismo se verifica el funcionamiento de las siguientes partes: Motor, sensores, engranajes, las cuales no presentan desperfectos. \r\nSe ejecutan pruebas de impresiones continuas mediante conexión ETHERNET obteniendo buenos resultados.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, asi mismo se le indica al usuario seguir los pasos del manual para una correcta instalación.', 442, '2020-11-15 00:32:08', '2020-11-15 00:32:08'),
+(397, '2020-11-14', 'EP-000426', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos y conductos de tinta con aire, el cual ocasiona fallas al momento de la impresión. \r\nSe efectúa el proceso de recuperación y la eliminación del exceso de burbujas obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 3408.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros no genuinos ocasionara daños irreparables y la anulación automática de la garantía.', 449, '2020-11-15 01:09:05', '2020-11-15 01:09:05'),
+(398, '2020-11-16', 'EP-000425', 1, 1, 0, 'Presenta error de impresora.', 'Se realizo la revision minuciosa y se observa resto de papel en el interior del mecanismo, el cual ocasionaba el trabado de los engranajes para luego emitir el error general.\r\nSe  procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 7096.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 448, '2020-11-17 05:22:27', '2020-11-17 05:22:27'),
+(399, '2020-11-17', 'EP-000428', 1, 1, 0, 'Presenta error de atasco de papel, no toma las hojas.', 'Se realizo la revision minuciosa y se observa engranaje del mecanismo dañado (SPUR GEAR CLUTCH con dientes rotos), el cual ocasionaba problemas al momento de la toma de papel.\r\nSe realizo el cambio de la parte afectada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2117.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja la momento de presentar un atasco.', 451, '2020-11-17 23:35:22', '2020-11-17 23:35:22'),
+(400, '2020-11-17', 'EP-000421', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasionaba fallas al momento de la impresión.\r\nSe tomo una muestra de tinta para realizar la prueba cromatografica obteniendo como resultado el uso de suministros originales.\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. 6879.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 444, '2020-11-18 00:07:02', '2020-11-18 00:07:02'),
+(401, '2020-11-17', 'EP-000430', 1, 1, 0, 'Atasco de papel.', 'Se realizo la revision minuciosa y se observa papel trabado en el interior de la bandeja principal, el cual ocasiona problemas al momento del encendido.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1255.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 453, '2020-11-18 00:15:16', '2020-11-18 00:15:16'),
+(402, '2020-11-17', 'EP-000433', 1, 1, 0, 'Usuario menciona que no toma el papel.', 'Se realizo la revision minuciosa y se detecta problemas al momento de la toma de papel (no jala correctamente).\r\nSe realizan ajustes, lubricacion y calibración del mecanismo de arrastre, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 843.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 456, '2020-11-18 02:25:12', '2020-11-18 02:25:12'),
+(403, '2020-11-17', 'EP-000429', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision minuciosa y se observa objeto extraño (juguete pequeño) en el interior de la bandeja principal, el cual ocasionaba el trabado del mecanismo para luego emitir el error general al momento del encendido.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1441.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario tener cuidado de no colocar objetos encima de la unidad de escaner ya que podría caer el interior del equipo y ocasionar daños irreparables.', 452, '2020-11-18 02:45:04', '2020-11-18 02:45:04'),
+(404, '2020-11-18', 'EP-000424', 1, 1, 0, 'Presenta error de impresora.', 'Se realizo la revision minuciosa y se detecta tarjeta principal defectuosa y cabezal de impresión cruzada, el cual ocasionaba el error general al momento del encendido (no se mueve el carruaje).\r\nSe efectua el cambio de las partes afectadas, luego se realizan las calibraciones mediante el programa de ajustes, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 37.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía.', 447, '2020-11-18 23:01:15', '2020-11-18 23:01:15'),
+(405, '2020-11-19', 'EP-000431', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, conductos de tinta con aire, unidad de CAP con suciedad, el cual ocasionaba fallas al momento de la impresión. \r\nSe efectúa el proceso de recuperación de los inyectores, limpieza de la unidad de CAP y la eliminación de exceso del burbujas obteniendo buenos resultados.\r\nSe ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2313.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales ya que de lo contrario el uso de suministros originales ya que de lo contrario el uso de tintas no genuinas ocasionara daños irreparables y la anulación automática de la garantía.', 454, '2020-11-20 03:34:26', '2020-11-20 03:34:26'),
+(406, '2020-11-23', 'EP-000440', 1, 1, 0, 'Emite un sonido extraño al encener.', 'Se realizo la revision minuciosa y se  detecta mecanismo de arrastre trabado, el cual ocasionaba el sonido extraño al encender y luego emitía el error general.\r\nSe procede a instalar correctamente la parte mencionada, luego se ejecutan pruebas de impresiones continuas copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 675.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 463, '2020-11-24 04:21:04', '2020-11-24 04:21:04'),
+(407, '2020-11-24', 'EP-000436', 1, 1, 0, 'Presenta error general.', 'Se realizo la revision minuciosa y se observa trozo de papel en el interior del mecanismo de arrastre, el cual ocasionaba el trabado de los engranajes para luego emitir el error general.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 755.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 459, '2020-11-25 03:03:14', '2020-11-25 03:03:14'),
+(408, '2020-11-24', 'EP-000438', 1, 1, 0, 'Se atasca las hojas por la unidad DUPLEX.', 'Se realizo la revision minuciosa y se detecta unidad DUPLEX con problemas de calibraciones, el cual ocasionaba el atasco de las hojas al momento de la impresión.\r\nSe efectúan ajustes, lubricacion y calibración de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 384.\r\nSe adjuntan  las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 461, '2020-11-25 03:53:31', '2020-11-25 03:53:31'),
+(409, '2020-11-24', 'EP-000443', 1, 1, 0, 'Presenta error de atasco de papel.', 'Se realizo la revision minuciosa y se observa objeto extraño (mina de lapicero) en el interior de la bandeja principal, el cual ocasionaba la activación del actuador de papel para luego emitir el error de atasco.\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1059.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario tener cuidado de no colocar objeto encima de la unidad de escaner ya que podría caer al interior y causar daños irreparables.', 466, '2020-11-25 06:10:41', '2020-11-25 06:10:41'),
+(410, '2020-11-25', 'EP-000444', 1, 1, 0, 'No avanza el papel.', 'Se realizo la revision minuciosa y se observa objeto extraño (uña acrílica) en el interior de la bandeja principal, el cual ocasionaba problemas al momento de la toma de papel (no avanza las hojas).\r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 805.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario tener cuidado de no colocar objetos encima de la unidad ADF ya que podría caer al interior del mecanismo y causar daños irreparables.', 467, '2020-11-25 23:50:00', '2020-11-25 23:50:00'),
+(411, '2020-11-25', 'EP-000442', 1, 1, 0, 'Se atasca el papel.', 'Se realizo la revision minuciosa y se observa objeto extraño (restos de cinta adhesiva) en el interior de la bandeja principal, el cual ocasionaba el atasco de las hojas. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 2727.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario tener precaución de no colocar objetos encima de la unidad ADF ya que podría caer al interior del mecanismo y ocasionar daños irreparables.', 465, '2020-11-26 05:12:39', '2020-11-26 05:12:39'),
+(412, '2020-11-26', 'EP-000446', 1, 1, 0, 'Usuario menciona que se atasca el papel, presenta defectos de impresión.', 'Se realizo la revision minuciosa y se observa resorte de la palanca del papel fuera de lugar, el cual ocasionaba problemas al momento de la toma de papel, así mismo se detecta cabezal con inyectores obstruidos, el cual ocasiona problemas al momento de la impresión. \r\nSe realiza el proceso de recuperación de los inyectores y la correcta instalación del resorte, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 1091.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 469, '2020-11-27 00:08:29', '2020-11-27 00:08:29'),
+(413, '2020-11-26', 'EP-000439', 1, 1, 0, 'Presenta defectos de impresión.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión.\r\nSe tomo una muestra de tinta para efectuar la prueba cromatografica obteniendo como resultado el uso de suministros NO ORIGINAL.\r\nEste evento no califica como desperfecto de fabricación por lo cual invalida la garantía por parte del fabricante. \r\nSe adjunta el informe de las tintas. Nro. de paginas impresas 6559.', 'Se recomienda el uso adecuado, así mismo es necesario el cambio de las partes afectadas y el consumo de suministros originales que garanticen su optimo desempeño.', 462, '2020-11-27 04:29:17', '2020-11-27 04:29:17'),
+(414, '2020-11-26', 'EP-000434', 1, 1, 0, 'No pasa la hoja por ADF.', 'Se realizo la revision minuciosa y se detecta mecanismo de la unidad de ADF dañado, el cual ocasionaba problemas al momento de la toma del papel.\r\nSe efectúa el cambio de la parte mencionada, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 5094.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo se le indica al usuario la forma correcta del retiro de la hoja al momento de presentar un atasco.', 457, '2020-11-27 06:44:38', '2020-11-27 06:44:38'),
+(415, '2020-11-27', 'EP-000437', 1, 1, 0, 'Presenta defectos de impresión. Fecha de compra 17/07/2019.', 'Se realizo la revision minuciosa y se detecta cabezal con inyectores obstruidos, el cual ocasiona fallas al momento de la impresión. Se realiza el proceso de recuperación de los inyectores obteniendo buenos resultados, luego se ejecutan pruebas de impresiones continuas, copias y escaneo las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 4223.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo, así mismo es necesario el consumo de tintas originales que garanticen su optimo desempeño.', 460, '2020-11-28 00:38:01', '2020-11-28 00:38:01');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `garantia_guia_ingreso`
+--
+
+CREATE TABLE `garantia_guia_ingreso` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `motivo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` date NOT NULL,
+  `orden_servicio` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  `egresado` tinyint(1) NOT NULL,
+  `asunto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_equipo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numero_serie` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_interno` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_compra` date NOT NULL,
+  `descripcion_problema` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revision_diagnostico` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estetica` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `marca_id` bigint(20) UNSIGNED NOT NULL,
+  `personal_lab_id` bigint(20) UNSIGNED NOT NULL,
+  `cliente_id` bigint(20) UNSIGNED NOT NULL,
+  `contacto_cliente_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `garantia_guia_ingreso`
+--
+
+INSERT INTO `garantia_guia_ingreso` (`id`, `motivo`, `fecha`, `orden_servicio`, `estado`, `egresado`, `asunto`, `nombre_equipo`, `numero_serie`, `codigo_interno`, `fecha_compra`, `descripcion_problema`, `revision_diagnostico`, `estetica`, `marca_id`, `personal_lab_id`, `cliente_id`, `contacto_cliente_id`, `created_at`, `updated_at`) VALUES
+(7, 'Garantia', '2020-01-02', 'TOSH-000001', 0, 0, 'Garantia', 'TOSHIBA', 'LOUJ741852', '1', '2019-07-02', 'NO ENCIENDE.', 'Posible problema de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 8, 1, 13, NULL, '2020-01-02 23:14:33', '2020-01-03 22:25:39'),
+(8, 'Garantia', '2020-01-02', 'EP-000001', 0, 1, 'Garantia', 'EPSON L3110', 'X645007239', 'C0006759', '2019-04-06', 'No toma el papel /Factura a nombre de: Kepler Ramirez /Fecha de Compra: 06/04/2019', 'Se realiza prueba de impresión y presenta defectos, la hoja jalo correctamente al momento de la recepcion.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 14, NULL, '2020-01-03 03:21:30', '2020-01-28 23:56:14'),
+(9, 'Garantia', '2020-01-03', 'EP-000002', 0, 1, 'Garantia', 'EPSON L6171', 'X4ET004079', 'C0006801', '2019-02-08', 'Imprime con Líneas Horizontales y Manchas las Hojas // Fecha de Compra: 08/02/2019', 'Test de inyectores no muestra desperfectos.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 15, NULL, '2020-01-04 03:49:12', '2020-01-09 03:45:11'),
+(10, 'Garantia', '2020-01-04', 'EP-000003', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9091514', '3', '2020-01-03', 'Presenta error general al momento del encendido.', 'No se mueve la lampara de escaner.', 'Se observa en buen estado, ingresa equipo con accesorios completos.', 13, 1, 16, NULL, '2020-01-04 22:22:33', '2020-01-15 23:19:29'),
+(11, 'Garantia', '2020-01-06', 'EP-000004', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW093690', '4', '2019-09-18', 'Se traba la hoja (jala por un costado).', 'Posible suciedad en el rodillo principal.', 'Se observa restos de suciedad, liquido, ingresa solo equipo sin accesorios.', 13, 1, 17, NULL, '2020-01-06 23:22:26', '2020-01-09 06:28:16'),
+(12, 'Garantia', '2020-01-06', 'EP-000005', 0, 1, 'Garantia', 'EPSON L6171', 'X4ET009640', 'C0006797', '2019-09-04', 'No Avanza el Papel // Fecha de Compra: 04/09/2019', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 18, NULL, '2020-01-07 02:21:05', '2020-01-08 07:11:37'),
+(13, 'Garantia', '2020-01-06', 'EP-000006', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW073684', '4', '2019-06-24', 'No enciende.', 'Posibles falla de fuente.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 19, NULL, '2020-01-07 03:42:22', '2020-01-11 03:53:53'),
+(14, 'Garantia', '2020-01-07', 'EP-000007', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9099318', 'C0006845', '2019-12-07', 'Atasco de Papel //Fecha de Compra: 07/12/2019', 'Se imprime el test de inyectores y presenta desperfectos.', 'Se observa en buen estado, ingresa equipo con caja y cables.', 13, 1, 20, NULL, '2020-01-08 00:56:23', '2020-01-11 01:18:02'),
+(15, 'Garantia', '2020-01-07', 'EP-000008', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW030143', 'C0006831', '2019-03-15', 'Imprime con lineas horizontales /Factura a nombre de: Milagros Almeyda Hurtado /Fecha de Compra: 15/03/2019', 'Posible falla de cabezal de impresión.', 'Se observa restos de suciedad (pelos de animal en el interior del mecanismo), ingresa solo equipo sin accesorios.', 13, 1, 21, NULL, '2020-01-08 06:03:56', '2020-01-21 05:24:47'),
+(16, 'Garantia', '2020-01-07', 'EP-000009', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW020091', '4', '2018-09-16', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipos sin accesorios.', 13, 1, 22, NULL, '2020-01-08 06:47:32', '2020-01-10 06:18:36'),
+(17, 'Garantia', '2020-01-08', 'EP-000010', 0, 1, 'Garantia', 'EPSON L3110', 'X645003263', '5', '2019-04-02', 'No jala el papel', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 23, NULL, '2020-01-09 00:10:51', '2020-01-22 02:18:38'),
+(18, 'Garantia', '2020-01-08', 'EP-000011', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW071232', '5', '2019-07-12', 'No toma las hojas correctamente, falla aleatoria.', 'Posible falla de rodillos.', 'Se observa suciedad en el interior de la bandeja de papel, ingresa solo equipo sin accesorios.', 13, 1, 24, NULL, '2020-01-09 04:14:28', '2020-10-03 05:14:54'),
+(19, 'Garantia', '2020-01-08', 'EP-000012', 0, 1, 'Garantia', 'EPSON L396', 'X4FQ009918', 'C0006911', '2018-05-12', 'Impresiones En blanco Con Operacion De Impresion //Factura a nombre de: Jose Adolfo Valenzuela //Fecha de Compra: 12/05/2018/', 'Se realizo pruebas y las hojas pasan en blanco.', 'Se observa suciedad y restos de insectos (cucarachas), ingresa solo equipo con caja.', 13, 1, 25, NULL, '2020-01-09 04:25:56', '2020-01-11 23:01:38'),
+(20, 'Garantia', '2020-01-10', 'EP-000013', 0, 1, 'Garantia', 'EPSON POWERLITE S39', 'X52M833341L', 'C0006981', '2019-01-29', 'No enciende, parpadea el led de encendido y no prende.', 'Posible falla de tarjeta.', 'Ingresa solo equipo sin accesorios.', 13, 1, 26, NULL, '2020-01-11 00:46:58', '2020-01-18 00:38:51'),
+(21, 'Garantia', '2020-01-11', 'EP-000014', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW018970', '7', '2019-02-12', 'Se apaga y enciende automáticamente.', 'Posible falla de tarjeta.', 'Se observa rastro de suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 27, NULL, '2020-01-12 01:10:18', '2020-01-21 03:52:41'),
+(22, 'Garantia', '2020-01-13', 'EP-000015', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW091868', '8', '2019-12-20', 'Usuario menciona que no toma el papel (falla aleatoria).', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 28, NULL, '2020-01-14 02:37:19', '2020-01-28 23:59:24'),
+(23, 'Garantia', '2020-01-14', 'EP-000016', 0, 1, 'Garantia', 'M105', 'S2SY004610', '8', '2019-04-15', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa suciedad (polvo) en el interior del equipo, ingresa sin accesorios.', 13, 1, 29, NULL, '2020-01-14 22:35:21', '2020-01-23 04:59:02'),
+(24, 'Garantia', '2020-01-14', 'EP-000017', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP130394', '8', '2019-02-25', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 30, NULL, '2020-01-14 23:55:21', '2020-01-30 05:14:04'),
+(25, 'Garantia', '2020-01-15', 'EP-000018', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9143232', 'C0007101', '2019-10-10', 'Se apaga, luego parpadean todos los leds.', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 31, NULL, '2020-01-15 23:35:30', '2020-01-18 02:25:07'),
+(26, 'Garantia', '2020-01-15', 'EP-000019', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS029049', 'C0007066', '2019-12-16', 'Error de escaner (1077) /Fecha de Compra: 16-12-2019 /N° de Factura: FP95-24070 /Lugar de Compra: Riplay Sa', 'Posible falla de escaner.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 32, NULL, '2020-01-16 03:07:12', '2020-01-16 03:10:07'),
+(27, 'Garantia', '2020-01-15', 'EP-000020', 0, 1, 'Garantia', 'EPSON L575', 'W9AY133832', '9', '2019-01-07', 'Defectos de impresión (color BK).', 'Posible falla de cabezal.', 'Se observa en buen estado, conducto BK con tono verde, ingresa solo equipo sin accesorios.', 13, 1, 33, NULL, '2020-01-16 06:18:59', '2020-01-18 00:16:17'),
+(28, 'Garantia', '2020-01-16', 'EP-000021', 0, 1, 'Garantia', 'EPSON POWERLITE 970', 'X53B820223L', '10', '2018-07-06', 'No enciende.', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 34, NULL, '2020-01-17 00:16:51', '2020-02-19 03:10:06'),
+(29, 'Garantia', '2020-01-16', 'EP-000022', 0, 1, 'Garantia', 'EPSON L1300', 'UB5Y025796', '11', '2019-10-10', 'Usuario menciona que se atasca el papel después de 4 o 5 impresiones, defectos de impresión.', 'Posibles falla de rodillo.', 'Se observa suciedad en el interior del equipo, ingresa solo equipo sin accesorios.', 13, 1, 35, NULL, '2020-01-17 03:19:45', '2020-01-22 02:44:09'),
+(30, 'Garantia', '2020-01-16', 'EP-000023', 0, 1, 'Garantia', 'EPSON TM-m30', 'WPHF048797', '11', '2019-09-03', 'No corta el papel correctamente.', 'Posible falla de cuchilla.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 36, NULL, '2020-01-17 06:38:18', '2020-01-22 06:32:39'),
+(31, 'Garantia', '2020-01-17', 'EP-000024', 0, 1, 'Garantia', 'EPSON L395', 'X2P6288402', '12', '2019-02-02', 'Presenta error de servicio, usuario menciona que imprime con rayas.', 'Posible falla de cabezal.', 'Se observa suciedad en el interior del equipo, ingresa sin accesorios.', 13, 1, 37, NULL, '2020-01-17 23:56:26', '2020-01-21 04:09:23'),
+(42, 'Garantia', '2020-01-18', 'EP-000025', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS017647', '11', '2019-09-16', 'Presenta error de atasco de papel.', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 44, NULL, '2020-01-19 00:30:59', '2020-01-25 22:59:20'),
+(45, 'Garantia', '2020-01-20', 'EP-000026', 0, 1, 'Garantia', 'EPSON L395', 'X2P6119690', '13', '2019-03-09', 'No enciende.', 'Posible falla de fuente.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 46, NULL, '2020-01-20 22:59:04', '2020-02-06 22:49:42'),
+(46, 'Garantia', '2020-01-20', 'EP-000027', 0, 1, 'Garantia', 'EPSON L4150', 'X4DB046460', '14', '2019-11-20', 'Presenta defectos de impresión en el color BK.', 'Posible falla de cabezal.', 'Se observa suciedad en el interior del mecanismo, ingresa solo equipo sin accesorios.', 13, 1, 47, NULL, '2020-01-21 04:26:09', '2020-01-25 06:29:59'),
+(47, 'Garantia', '2020-01-21', 'EP-000028', 1, 0, 'Garantia', 'EPSON M2170', 'X67Z000201', '15', '2019-10-30', 'No imprime.', 'Posible falla de cabezal.', 'Se observa exceso de suciedad en el interior, ingresa solo equipo con caja, no tiene tapa de bandeja y rodillos fuera de lugar.', 13, 1, 48, NULL, '2020-01-21 23:28:11', '2020-01-21 23:28:11'),
+(48, 'Garantia', '2020-01-21', 'EP-000029', 0, 1, 'Garantia', 'EPSON L3110', 'X645095870', '16', '2019-12-10', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 49, NULL, '2020-01-22 04:28:29', '2020-01-24 22:56:08'),
+(49, 'Garantia', '2020-01-21', 'EP-000030', 0, 1, 'Garantia', 'EPSON TM-T88V', 'MXDF936750', '17', '2018-07-31', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 50, NULL, '2020-01-22 04:47:03', '2020-01-28 23:12:50'),
+(50, 'Garantia', '2020-01-22', 'EP-000031', 0, 1, 'Garantia', 'EPSON L3110', 'X645001616', 'C0007218', '2019-09-26', 'No avanza el papel //Titular: Access Net System SAC// Fecha de Compra:26/09/2019', 'Posible falla de rodillo.', 'Se observa en buen estado, no tiene tapa de bandeja, ingresa solo equipo sin accesorios.', 13, 1, 51, NULL, '2020-01-23 02:38:01', '2020-01-29 03:13:03'),
+(51, 'Garantia', '2020-01-22', 'EP-000032', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9058941', '17', '2019-11-08', 'No toma las hojas.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo si  accesorios.', 13, 1, 52, NULL, '2020-01-23 03:57:33', '2020-01-31 04:49:21'),
+(52, 'Garantia', '2020-01-22', 'EP-000033', 0, 1, 'Garantia', 'EPSON L4150', 'X4DB069141', '18', '2019-03-25', 'Defectos de impresión (imágenes con rayas).', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo con caja.', 13, 1, 53, NULL, '2020-01-23 05:36:34', '2020-01-23 05:40:05'),
+(53, 'Garantia', '2020-01-24', 'EP-000034', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW074197', 'C0007251', '2019-07-22', 'Alimentación múltiple en bandeja 1 ///Fecha de compra: 22/07/2019.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 54, NULL, '2020-01-25 02:34:44', '2020-01-30 02:52:31'),
+(54, 'Garantia', '2020-01-24', 'EP-000035', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW071780', '19', '2019-06-19', 'Presenta error de atasco de papel, la hoja se queda a la mitad.', 'Posible falla de sensor.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 55, NULL, '2020-01-25 03:43:04', '2020-01-29 22:49:09'),
+(55, 'Garantia', '2020-01-24', 'EP-000036', 0, 1, 'Garantia', 'EPSON L3110', 'X645007725', 'C0007277', '2019-08-13', 'Ruido anormal y no avanza el papel//Factura a nombre de: Orbes Agricolas SAC//Fecha de Compra: 13/08/2019', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios, garantía en consulta.', 13, 1, 56, NULL, '2020-01-25 04:42:35', '2020-01-30 04:15:44'),
+(56, 'Garantia', '2020-01-24', 'EP-000037', 0, 1, 'Garantia', 'TM-T20II', 'TC6Y446451', '20', '2020-01-06', 'Se observa engranaje de rodillo roto, usuario menciona que la cuchilla no finaliza su recorrido.', 'Parte rota.', 'Ingresa solo equipo sin accesorios.', 13, 1, 23, NULL, '2020-01-25 04:54:36', '2020-02-12 04:11:22'),
+(57, 'Garantia', '2020-01-27', 'EP-000038', 0, 1, 'Garantia', 'EPSON L575', 'W9AY131075', '21', '2019-06-24', 'Presenta atasco de papel.', 'Posible falla de rodillo.', 'Se observa suciedad en el interior y exterior, ingresa solo equipo sin accesorios.', 13, 1, 57, NULL, '2020-01-27 22:55:42', '2020-01-30 00:03:14'),
+(58, 'Garantia', '2020-01-27', 'EP-000039', 0, 1, 'Garantia', 'EPSON L3110', 'X645005706', '22', '2019-03-28', 'Presenta error general.', 'Posible falla de escaner.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 58, NULL, '2020-01-28 00:03:33', '2020-02-06 05:02:40'),
+(59, 'Garantia', '2020-01-27', 'EP-000040', 0, 1, 'Garantia', 'EPSON L805', 'W7VK029182', '23', '2019-06-15', 'Defectos de impresión (texto doble).', 'Posible falla de calibración.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 59, NULL, '2020-01-28 02:29:21', '2020-02-14 03:46:58'),
+(60, 'Garantia', '2020-01-27', 'EP-000041', 0, 1, 'Garantia', 'EPSON L575', 'W9AY162706', '23', '2019-04-08', 'Mancha las hojas y se traba el papel por la unidad ADF.', 'Posible suciedad en la bandeja.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 60, NULL, '2020-01-28 03:05:05', '2020-02-01 03:15:23'),
+(61, 'Garantia', '2020-01-28', 'EP-000042', 0, 1, 'Garantia', 'EPSON L4150', 'X4DB029710', 'C0007351', '2019-03-22', 'No avanza la hoja //Factura a nombre de: Elmer Altamirano Coronado //Fecha de Compra: 22-03-2019', 'Posible falla de rodillo.', 'Se observa suciedad en el interior de la bandeja, ingresa solo equipo sin accesorios.', 13, 1, 61, NULL, '2020-01-29 04:53:53', '2020-02-05 05:05:10'),
+(62, 'Garantia', '2020-01-28', 'EP-000043', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS031097', 'C0007367', '2020-01-07', 'Error de Scanner 100077 /Fecha de Compra: 07-01-2020', 'Posible falla de escaner.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 62, NULL, '2020-01-29 06:37:13', '2020-02-01 05:34:07'),
+(63, 'Garantia', '2020-01-29', 'EP-000044', 1, 0, 'Garantia', 'EPSON L395', 'X2P4041763', '24', '2019-04-25', 'No imprime.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 63, NULL, '2020-01-30 01:05:31', '2020-01-30 01:05:31'),
+(64, 'Garantia', '2020-01-30', 'EP-000045', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9062382', '24', '2019-10-10', 'Presenta error general.', 'Posible falla de escaner.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 64, NULL, '2020-01-30 23:11:53', '2020-02-05 22:19:31'),
+(65, 'Garantia', '2020-01-31', 'EP-000046', 0, 1, 'Garantia', 'EPSON L3110', 'X645001725', '25', '2019-06-06', 'No toma el papel.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 65, NULL, '2020-02-01 00:37:27', '2020-02-12 06:47:41'),
+(66, 'Garantia', '2020-02-01', 'MSI-000002', 1, 0, 'Garantia', 'msi3800', 'lopl22049918', '22', '2019-02-15', 'No enciende , se descarta el cable de poder y el problema persiste .', 'posible falla de fuente o tarjeta', 'Se observa equipo un buen estado , el equipo con  caja sin accesorios.', 3, 1, 66, NULL, '2020-02-02 00:06:55', '2020-02-02 00:06:55'),
+(67, 'Garantia', '2020-02-01', 'AMD-000001', 1, 0, 'Garantia', 'lpj124782', 'lopl25456', '65', '2019-03-15', 'No imprime , la hoja sale en blanco', 'posible falla de cabezal', 'En mal estado (con agua) , ingresa solo equipo sin caja ni accesorios', 2, 1, 67, NULL, '2020-02-02 00:16:30', '2020-02-02 00:16:30'),
+(68, 'Garantia', '2020-02-03', 'EP-000047', 0, 1, 'Garantia', 'C634A', 'X4DW035546', '12', '2020-02-03', 'Printer mode', 'Printer Mode', 'Se observa en buen estado , ingresa sin cables , sin accesorios', 13, 1, 68, NULL, '2020-02-04 00:31:46', '2020-02-07 04:15:26'),
+(69, 'Garantia', '2020-02-03', 'EP-000048', 1, 0, 'Garantia', 'FX-890II', 'X3YF023750', '27', '2019-03-09', 'NO ENCIENDE .', 'POSIBLE FALLA DE TARJETA', 'SE OBSERVA EN BUEN ESTADO INGRESA SOLO EQUIPO', 13, 1, 69, NULL, '2020-02-04 05:49:29', '2020-02-04 05:49:29'),
+(70, 'Garantia', '2020-02-04', 'EP-000049', 1, 0, 'Garantia', 'EPSON L1455', 'X2SF005637', '14', '2020-01-30', 'falla de impresion sale mal la linea blanca y negra en la impresion', 'falla de impresion sale mal la linea blanca y negra en la impresion', 'Se observa en buen estado , ingresa', 13, 1, 71, NULL, '2020-02-05 00:10:14', '2020-02-05 00:10:14'),
+(71, 'Garantia', '2020-02-04', 'EP-000050', 0, 1, 'Garantia', 'EPSON L3110', 'X5NS004320', 'C0007502', '2019-12-11', 'No jala', 'No jala', 'Ingresa en buen estado , ingresa sin cables , sin accesorios', 13, 1, 72, NULL, '2020-02-05 00:48:38', '2020-02-07 23:48:35'),
+(72, 'Garantia', '2020-02-04', 'EP-000050', 1, 0, 'Garantia', 'EPSON L5190', 'X5NS004320', 'C0007502', '2019-12-11', 'No jala', 'No jala', 'Ingresa en buen estado , ingresa sin cables , sin accesorios', 13, 1, 72, NULL, '2020-02-05 00:50:19', '2020-02-05 00:50:19'),
+(73, 'Garantia', '2020-02-04', 'EP-000052', 0, 1, 'Garantia', 'tm-t88v', 'X6AK008510', '12', '2019-12-06', 'Defecto de impresión', 'Defecto de impresión', 'Ingreso en buen estado , sin accesorio , sin cables', 13, 1, 74, NULL, '2020-02-05 03:33:15', '2020-06-18 00:37:29'),
+(74, 'Garantia', '2020-02-04', 'EP-000053', 0, 1, 'Garantia', 'EPSON TM-T20II', 'X39D013043', '26', '2018-02-22', 'Defectos de impresión, texto con rayas.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 75, NULL, '2020-02-05 07:53:01', '2020-02-22 03:32:27'),
+(75, 'Garantia', '2020-02-05', 'EP-000054', 0, 1, 'Garantia', 'EPSON L575', 'W9AY150036', 'C0007490', '2018-12-15', 'Mala calidad (No imprime bien los colores)//Factura a nombre de: Policía Nacional De Peru //Fecha de Compra: 15 Diciembre 2018', 'Posible falla de cabezal.', 'Se observa rastro de suciedad, se observa tinta derramada en el cable flat de cabezal y contactos de cabezal, ingresa solo equipo sin accesorios, no tiene bandeja de unidad ADF.', 13, 1, 76, NULL, '2020-02-06 03:36:30', '2020-02-15 04:05:59'),
+(76, 'Garantia', '2020-02-05', 'EP-000055', 0, 1, 'Garantia', 'EPSON POWERLITE U42', 'X4JL7900346', '28', '2018-04-05', 'No enciende.', 'Posible falla de tarjeta.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 77, NULL, '2020-02-06 04:20:57', '2020-02-15 04:20:27'),
+(77, 'Garantia', '2020-02-05', 'EP-000056', 0, 1, 'Garantia', 'EPSON L380', 'X34Q297079', '12', '2018-04-03', 'Presenta error de servicio', 'Presenta error de servicio', 'se observa con suciedad , Ingresa solo equipo sin accesorio', 13, 1, 78, NULL, '2020-02-06 04:35:06', '2020-02-07 05:23:49'),
+(78, 'Garantia', '2020-02-05', 'EP-000057', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW018542', 'C0007461', '2019-01-28', 'Mensaje de error 000041Factura a nombre de: Store Moda Y Estilo SACFecha de Compra: 28/01/2019', 'Posible falla de tarjeta.', 'Se observa suciedad en el interior del equipo, ingresa sin accesorios.', 13, 1, 79, NULL, '2020-02-06 06:48:59', '2020-02-12 06:56:54'),
+(79, 'Garantia', '2020-02-06', 'EP-000058', 0, 1, 'Garantia', 'EPSON WorkForce WF-C5790', 'X3B7007604', '28', '2020-01-11', 'Presenta error de servicio.', 'Caja de mantenimiento al final de su vida útil.', 'Se observa en buen estado, ingresa equipo con caja sin accesorios.', 13, 1, 80, NULL, '2020-02-07 03:14:36', '2020-07-07 04:02:14'),
+(80, 'Garantia', '2020-02-06', 'EP-000059', 0, 1, 'Garantia', 'EPSON L805', 'W7VK027496', '29', '2019-04-10', 'Defectos de impresión, imágenes con rayas.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 81, NULL, '2020-02-07 06:26:44', '2020-02-13 03:53:13'),
+(81, 'Garantia', '2020-02-07', 'EP-000060', 1, 0, 'Garantia', 'EPSON L5190', 'X5NS021815', '30', '2019-08-15', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 82, NULL, '2020-02-08 05:27:21', '2020-02-08 05:27:21'),
+(82, 'Garantia', '2020-02-07', 'EP-000061', 0, 1, 'Garantia', 'EPSON L1455', 'X2SF005225', '31', '2019-11-13', 'Presenta error de impresora.', 'Posible falla de mecanismo.', 'Se observa en buen estado, asi mismo no muestra daños externos ni signos de manipulación.', 13, 1, 83, NULL, '2020-02-08 05:44:09', '2020-02-12 05:42:49'),
+(83, 'Garantia', '2020-02-10', 'EP-000062', 0, 1, 'Garantia', 'EPSON POWERLITE X41+', 'X4HS8300267', '31', '2018-12-21', 'Enciende pero no emite imagen.', 'Posible falla de sensor.', 'Se observa tapa de unidad óptica rota, ingresa solo equipo sin accesorios.', 13, 1, 26, NULL, '2020-02-11 03:04:18', '2020-02-14 03:35:36'),
+(84, 'Garantia', '2020-02-10', 'EP-000063', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9021666', '32', '2020-02-07', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 84, NULL, '2020-02-11 04:00:05', '2020-02-18 00:59:57'),
+(85, 'Garantia', '2020-02-10', 'EP-000064', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW078910', '33', '2019-09-05', 'No jala el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 85, NULL, '2020-02-11 06:05:22', '2020-02-12 22:30:02'),
+(86, 'Garantia', '2020-02-11', 'EP-000065', 0, 1, 'Garantia', 'EPSON L3110', 'X645028656', 'C0007463', '2019-09-04', 'Atasco de papel //Fecha de Compra: 04/09/2019', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 86, NULL, '2020-02-11 23:27:04', '2020-02-11 23:30:40'),
+(87, 'Garantia', '2020-02-11', 'EP-000066', 0, 1, 'Garantia', 'EPSON L3110', 'X645028181', 'C0007464', '2019-08-15', 'Todas las luces parpadean //Fecha de Compra: 15/08/2019', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 86, NULL, '2020-02-11 23:32:58', '2020-02-11 23:33:48'),
+(88, 'Garantia', '2020-02-11', 'EP-000067', 0, 1, 'Garantia', 'EPSON TM-U220', 'FFCF292831', '33', '2019-03-04', 'Presenta error general.', 'Posible falla de cuchilla.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 87, NULL, '2020-02-12 00:13:21', '2020-02-18 03:39:21'),
+(89, 'Garantia', '2020-02-11', 'EP-000068', 0, 1, 'Garantia', 'EPSON L395', 'X2P6299209', '34', '2019-03-26', 'Presenta atasco de papel.', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 88, NULL, '2020-02-12 04:40:54', '2020-02-26 02:21:28'),
+(90, 'Garantia', '2020-02-12', 'EP-000069', 0, 1, 'Garantia', 'EPSON TM-T20II', 'TC6Y427611', 'C0007530', '2018-11-23', 'Impresión en blanco//Factura a nombre de: Consorcio el Norteño SAC//Fecha de Compra: 23/11/2018', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 89, NULL, '2020-02-13 00:10:30', '2020-02-13 00:11:18'),
+(91, 'Garantia', '2020-02-12', 'EP-000070', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9110866', 'C0007702', '2020-02-04', 'No avanza el papel//Fecha de Compra: 04/02/2020', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 91, NULL, '2020-02-13 05:46:50', '2020-02-18 04:25:21'),
+(92, 'Garantia', '2020-02-13', 'EP-000071', 0, 1, 'Garantia', 'EPSON L1800', 'UBHY010782', '35', '2019-11-15', 'Usuario menciona que no imprime los colores correctamente.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 92, NULL, '2020-02-13 23:43:31', '2020-02-21 22:46:56'),
+(93, 'Garantia', '2020-02-13', 'EP-000072', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9045993', '36', '2019-06-25', 'No imprime color BK.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 93, NULL, '2020-02-13 23:47:29', '2020-02-19 00:44:07'),
+(94, 'Garantia', '2020-02-15', 'EP-000073', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW039275', 'C0007786', '2019-01-31', 'No toma papel //FC: 31-01-2019.', 'Posible falla de rodillo.', 'Se observa exceso de suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 94, NULL, '2020-02-16 00:52:44', '2020-02-20 05:40:25'),
+(95, 'Garantia', '2020-02-17', 'EP-000074', 0, 1, 'Garantia', 'EPSON L575', 'W9AY150297', 'C0007796', '2018-12-24', 'Los colores al imprimir no son los correctos- Fecha de compra: 24 Diciembre 2018', 'Posible falla de cabezal.', 'Se observa suciedad en el interior del equipo, ingresa sin accesorios, no tiene bandeja de la unidad ADF.', 13, 1, 76, NULL, '2020-02-18 03:33:37', '2020-02-21 05:10:33'),
+(96, 'Garantia', '2020-02-17', 'EP-000075', 0, 1, 'Garantia', 'EPSON TM-T88V', 'MXDF832634', 'C0007797', '2017-12-14', 'No reconoce la impresora por cable USB //Fecha de Compra: 14/12/2017', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 95, NULL, '2020-02-18 03:46:30', '2020-02-26 04:01:18'),
+(97, 'Garantia', '2020-02-17', 'EP-000076', 0, 1, 'Garantia', 'EPSON TM-T88V', 'MXDF832629', 'C0007798', '2017-12-14', 'No reconoce la impresora por cable USB //Fecha de Compra: 14/12/2017', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 95, NULL, '2020-02-18 03:48:45', '2020-02-26 04:03:06'),
+(98, 'Garantia', '2020-02-17', 'EP-000077', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP144308', '36', '2019-10-05', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 96, NULL, '2020-02-18 03:57:57', '2020-02-23 00:54:14'),
+(99, 'Garantia', '2020-02-18', 'EP-000078', 0, 1, 'Garantia', 'EPSON L3160', 'X67B001722', '37', '2019-09-27', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 97, NULL, '2020-02-18 23:59:37', '2020-02-21 06:20:23'),
+(100, 'Garantia', '2020-02-18', 'EP-000079', 0, 1, 'Garantia', 'EPSON POWERLITE S39', 'X4YF8302188', '38', '2018-09-13', 'No enciende.', 'Posible falla de fuente de voltaje.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 98, NULL, '2020-02-19 01:04:41', '2020-02-26 03:25:49'),
+(101, 'Garantia', '2020-02-19', 'EP-000080', 0, 1, 'Garantia', 'EPSON L495', 'X2PE053502', '39', '2018-04-13', 'No responde el panel de control.', 'Posible falla de panel.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 99, NULL, '2020-02-19 22:50:56', '2020-02-27 05:18:52'),
+(102, 'Garantia', '2020-02-19', 'EP-000081', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW034192', '40', '2019-04-10', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 100, NULL, '2020-02-20 02:46:58', '2020-02-28 05:32:22'),
+(103, 'Garantia', '2020-02-19', 'EP-000082', 0, 1, 'Garantia', 'EPSON TM-T88V', 'MXDF831853', 'C0007867', '2017-12-14', 'Error de comunicación USB//Factura a nombre de: Continental SAC//Fecha de Compra: 14/12/2017', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 95, NULL, '2020-02-20 04:21:31', '2020-02-26 04:05:53'),
+(104, 'Garantia', '2020-02-19', 'EP-000083', 0, 1, 'Garantia', 'EPSON L3110', 'X645096238', '41', '2019-11-04', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 101, NULL, '2020-02-20 05:33:41', '2020-02-23 00:09:06'),
+(105, 'Garantia', '2020-02-20', 'EP-000084', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS041178', '41', '2020-01-31', 'Presenta error de impresora.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipos sin accesorios.', 13, 1, 102, NULL, '2020-02-20 23:55:50', '2020-02-24 23:52:36'),
+(106, 'Garantia', '2020-02-20', 'EP-000085', 0, 1, 'Garantia', 'EPSON TM-T88V', 'MXKF857080', 'C0007851', '2018-07-30', 'Se enciende luz de error no realiza ninguna impresión', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 103, NULL, '2020-02-21 04:03:00', '2020-02-29 03:31:12'),
+(107, 'Garantia', '2020-02-20', 'EP-000086', 0, 1, 'Garantia', 'EPSON TM-T88V', 'MXKF857093', 'C0007852', '2018-07-30', 'Se enciende luz de error no realiza ninguna impresión', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 103, NULL, '2020-02-21 04:04:31', '2020-02-29 03:31:59'),
+(108, 'Garantia', '2020-02-20', 'EP-000087', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP131227', '42', '2019-09-04', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 104, NULL, '2020-02-21 05:27:21', '2020-03-07 00:02:41'),
+(109, 'Garantia', '2020-02-21', 'EP-000088', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW046683', '45', '2019-03-12', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa suciedad, ingresa solo equipo sin accesorios.', 13, 1, 105, NULL, '2020-02-21 22:41:49', '2020-02-26 22:56:27'),
+(110, 'Garantia', '2020-02-21', 'EP-000089', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS016931', '46', '2019-09-26', 'No toma el papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 106, NULL, '2020-02-21 22:50:43', '2020-02-26 04:35:44'),
+(111, 'Garantia', '2020-02-21', 'EP-000090', 0, 1, 'Garantia', 'EPSON L3110', 'X645028295', '47', '2019-10-28', 'No toma el papel, emite un sonido extraño.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 107, NULL, '2020-02-21 22:55:04', '2020-02-27 02:22:22'),
+(112, 'Garantia', '2020-02-21', 'EP-000091', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS004328', '47', '2019-09-30', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 108, NULL, '2020-02-22 06:04:27', '2020-02-26 23:27:00'),
+(113, 'Garantia', '2020-02-22', 'EP-000092', 0, 1, 'Garantia', 'EPSON L805', 'W7VK029364', '48', '2019-05-06', 'Presenta defectos de impresión (imágenes con rayas).', 'Posible falla de cabezal.', 'Se observa suciedad (polvo), ingresa solo equipo sin accesorios, niveles de tinta muy bajos.', 13, 1, 109, NULL, '2020-02-22 23:49:44', '2020-03-03 03:33:16'),
+(114, 'Garantia', '2020-02-24', 'EP-000093', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9115807', '48', '2020-12-20', 'No enciende.', 'Posible falla de fuente.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 110, NULL, '2020-02-25 04:40:33', '2020-02-29 06:44:28'),
+(115, 'Garantia', '2020-02-25', 'EP-000094', 0, 1, 'Garantia', 'EPSON TM-U220', 'FFCF303059', '49', '2019-07-18', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa con caja y adaptador.', 13, 1, 111, NULL, '2020-02-25 23:14:42', '2020-02-28 23:51:33'),
+(116, 'Garantia', '2020-02-25', 'EP-000095', 0, 1, 'Garantia', 'EPSON L395', 'X2P6319416', '50', '2019-02-07', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 112, NULL, '2020-02-26 05:49:59', '2020-03-03 00:31:33'),
+(117, 'Garantia', '2020-02-26', 'EP-000096', 0, 1, 'Garantia', 'EPSON L6171', 'X4ET007797', 'C0008028', '2019-09-11', 'No reconoce el papel ///Fecha de Compra: 11/09/2019', 'Se detecta engranaje de la unidad duplex roto.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 113, NULL, '2020-02-27 00:26:07', '2020-02-29 23:53:39'),
+(118, 'Garantia', '2020-02-26', 'EP-000097', 0, 1, 'Garantia', 'EPSON L3110', 'X645003000', '52', '2019-08-27', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 114, NULL, '2020-02-27 03:32:41', '2020-03-04 02:57:43'),
+(119, 'Garantia', '2020-02-26', 'EP-000097', 1, 0, 'Garantia', 'EPSON L3110', 'X645003000', '52', '2019-08-27', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 114, NULL, '2020-02-27 03:32:43', '2020-02-27 03:32:43'),
+(120, 'Garantia', '2020-02-26', 'EP-000099', 0, 1, 'Garantia', 'EPSON L495', 'X2PE030520', 'C0007960', '2018-03-06', 'Mala calidad: Rayas / Factura a nombre de: Institución Educativa Jose Abelardo Quiñones / Fecha de Compra: 06/03/2018', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo  equipo sin accesorios.', 13, 1, 115, NULL, '2020-02-27 04:07:31', '2020-03-03 22:27:05'),
+(121, 'Garantia', '2020-02-26', 'EP-000100', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9024209', '53', '2019-05-27', 'Emite un sonido extraño al momento del encendido.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 116, NULL, '2020-02-27 05:52:35', '2020-02-29 03:26:29'),
+(122, 'Garantia', '2020-02-27', 'HP-000006', 1, 0, 'Garantia', 'EPSON L5190', 'X5NS005082', '53', '2019-03-06', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 1, 1, 117, NULL, '2020-02-28 03:16:33', '2020-02-28 03:16:33'),
+(123, 'Garantia', '2020-02-27', 'EP-000101', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS005082', '54', '2019-03-06', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 117, NULL, '2020-02-28 03:18:40', '2020-03-07 04:18:03'),
+(124, 'Garantia', '2020-02-27', 'EP-000102', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW081022', '55', '2019-08-31', 'Usuario menciona que no toma el papel correctamente (falla aleatoria).', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja.', 13, 1, 119, NULL, '2020-02-28 03:55:11', '2020-03-06 03:31:13'),
+(125, 'Garantia', '2020-02-28', 'EP-000103', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9141484', '56', '2019-10-29', 'Presenta error general.', 'Posible falla de escaner.', 'Se observa en buen estado, ingresa solo equipo con caja.', 13, 1, 120, NULL, '2020-02-28 22:42:57', '2020-03-06 03:39:21'),
+(126, 'Garantia', '2020-02-28', 'EP-000104', 0, 1, 'Garantia', 'EPSON L1300', 'UB5Y024596', '57', '2019-08-01', 'Presenta problemas de toma de papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 121, NULL, '2020-02-28 23:10:36', '2020-03-05 03:49:53'),
+(127, 'Garantia', '2020-02-28', 'EP-000105', 0, 1, 'Garantia', 'EPSON L3110', 'X645027743', '58', '2019-09-25', 'Usuario menciona que no toma el papel.', 'Posible falla de mecanismo.', 'Se observa tinta derramada en el interior del equipo, ingresa solo equipo con caja sin accesorios.', 13, 1, 122, NULL, '2020-02-29 00:51:49', '2020-03-05 03:24:04'),
+(128, 'Garantia', '2020-02-29', 'EP-000106', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW010031', '59', '2018-07-16', 'Presenta defectos de impresion.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 123, NULL, '2020-03-01 01:12:03', '2020-03-11 04:42:16'),
+(129, 'Garantia', '2020-03-02', 'EP-000107', 0, 1, 'Garantia', 'EPSON L3110', 'X5E9097682', '59', '2019-12-27', 'Presenta error de servicio, defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 124, NULL, '2020-03-03 00:00:48', '2020-03-06 00:14:21'),
+(130, 'Garantia', '2020-03-02', 'EP-000108', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS035248', '60', '2020-01-17', 'Presenta error de atasco de papel.', 'Posible falla de sensor.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 125, NULL, '2020-03-03 01:07:47', '2020-03-06 22:39:57'),
+(131, 'Garantia', '2020-03-02', 'EP-000109', 0, 1, 'Garantia', 'EPSON L3110', 'X645002660', '61', '2019-04-27', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja.', 13, 1, 126, NULL, '2020-03-03 02:22:29', '2020-10-29 04:29:39'),
+(132, 'Garantia', '2020-03-02', 'EP-000110', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP129231', '61', '2019-08-14', 'No enciende.', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 127, NULL, '2020-03-03 02:47:21', '2020-03-06 04:42:03'),
+(133, 'Garantia', '2020-03-02', 'EP-000111', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW079162', '62', '2019-07-17', 'No avanza el papel.', 'Se observa engranaje de la unidad DUPLEX rota.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 128, NULL, '2020-03-03 03:12:04', '2020-07-23 23:19:25'),
+(134, 'Garantia', '2020-03-03', 'EP-000112', 1, 0, 'Garantia', 'EPSON L3150', 'X5E9092114', '62', '2019-09-27', 'Presenta defectos de impresión, error de servicio.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 129, NULL, '2020-03-04 03:41:18', '2020-03-04 03:41:18'),
+(135, 'Garantia', '2020-03-03', 'EP-000113', 0, 1, 'Garantia', 'EPSON L3160', 'X67B015881', 'C0008127', '2019-09-18', 'No reconoce, no avanza el papel//Titular: Isabel Oliva Morales //Fecha de Compra:18/09/2019', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 130, NULL, '2020-03-04 03:59:07', '2020-03-04 04:02:33'),
+(136, 'Garantia', '2020-03-03', 'EP-000114', 0, 1, 'Garantia', 'EPSON L3110', 'X645025771', '62', '2019-06-25', 'Presenta error de servicio.', 'Contador de tinta al 100%.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 131, NULL, '2020-03-04 05:17:31', '2020-03-06 06:00:47'),
+(137, 'Garantia', '2020-03-05', 'EP-000115', 0, 1, 'Garantia', 'EPSON L3110', 'X645053219', 'C0008256', '2020-03-03', 'Calidad de impresión/Ausencia de Cian//Factura a nombre de: Roció Rodríguez Arias//Fecha de Compra: 03/marzo/2020//N° de Factura: 016032...', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa equipo con caja sin cables.', 13, 1, 134, NULL, '2020-03-06 06:36:40', '2020-03-12 07:06:20'),
+(138, 'Garantia', '2020-03-06', 'EP-000116', 0, 1, 'Garantia', 'EPSON L3110', 'X645002538', '63', '2019-04-03', 'Presenta error de atasco de papel y la hoja se queda al medio del mecanismo.', 'Posible falla de sensor.', 'Se observa suciedad en el interior del mecanismo, ingresa solo equipo sin accesorios.', 13, 1, 135, NULL, '2020-03-06 23:06:11', '2020-03-11 00:46:09'),
+(139, 'Garantia', '2020-03-06', 'EP-000117', 0, 1, 'Garantia', 'EPSON TM-T88V', 'MXDF831849', 'C0008270', '2017-12-14', 'Imprime con Líneas  //Fecha de Compra: 14/12/17 //N° de Factura: F016-00061639 //Lugar de Compra: Maxima //', 'Posible falla de cabezal.', 'Se observa restos de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 95, NULL, '2020-03-06 23:55:46', '2020-03-14 00:01:00'),
+(140, 'Garantia', '2020-03-07', 'EP-000118', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS007652', '64', '2020-02-24', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja.', 13, 1, 117, NULL, '2020-03-07 23:33:27', '2020-03-12 05:45:52'),
+(141, 'Garantia', '2020-03-07', 'EP-000119', 0, 1, 'Garantia', 'EPSON L495', 'X2PE059430', '65', '2018-09-19', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 136, NULL, '2020-03-07 23:37:41', '2020-03-12 00:57:19'),
+(142, 'Garantia', '2020-03-07', 'EP-000120', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9027003', '66', '2019-08-28', 'Presenta problemas de toma de papel (jala mas de una hoja).', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 137, NULL, '2020-03-07 23:41:59', '2020-03-11 01:01:34'),
+(143, 'Garantia', '2020-03-09', 'EP-000121', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP003174', '67', '2019-02-27', 'No enciende.', 'Posible falla de fuente.', 'Se observa con suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 138, NULL, '2020-03-09 22:25:54', '2020-03-12 23:06:20'),
+(145, 'Garantia', '2020-03-09', 'EP-000122', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW061641', '68', '2020-01-05', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja.', 13, 1, 143, NULL, '2020-03-10 06:26:23', '2020-07-31 03:35:55'),
+(146, 'Garantia', '2020-03-10', 'EP-000123', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP021163', '69', '2019-02-14', 'Presenta defectos de impresión (impresiones con rayas).', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 144, NULL, '2020-03-11 03:49:50', '2020-03-13 06:26:34'),
+(147, 'Garantia', '2020-03-10', 'EP-000124', 0, 1, 'Garantia', 'EPSON L6171', 'X4ET008775', '70', '2019-09-13', 'Presenta defectos de impresión colo CYAN.', 'Posible falla de cabezal.', 'Se observa equipo con suciedad (polvo), ingresa sin accesorios.', 13, 1, 145, NULL, '2020-03-11 05:32:53', '2020-03-13 00:34:13'),
+(148, 'Garantia', '2020-03-11', 'EP-000125', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9061381', '70', '2020-01-16', 'Presenta error general al momento del encendido.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja.', 13, 1, 146, NULL, '2020-03-12 04:27:34', '2020-08-20 02:41:56'),
+(149, 'Garantia', '2020-03-11', 'EP-000126', 0, 1, 'Garantia', 'EPSON L575', 'W9AY164097', '71', '2019-04-26', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 147, NULL, '2020-03-12 06:37:05', '2020-03-14 05:18:36'),
+(150, 'Garantia', '2020-03-12', 'EP-000127', 0, 1, 'Garantia', 'EPSON FX890II', 'X3YF029467', 'C0008427', '2019-10-29', 'Dobla La cinta Factura a nombre de: R&R quimicos Sac Fecha de Compra: 29/10/2019', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa equipo con bandeja, perilla, cinta y tractor.', 13, 1, 72, NULL, '2020-03-13 03:30:44', '2020-07-20 23:40:43'),
+(151, 'Garantia', '2020-03-13', 'EP-000128', 0, 1, 'Garantia', 'EPSON L4150', 'X4DB046892', '72', '2019-03-21', 'Presenta error general al momento del encendido.', 'Posible falla de mecanismo.', 'Se observa suciedad en el interior del equipo, ingresa sin accesorios.', 13, 1, 148, NULL, '2020-03-14 04:17:34', '2020-07-24 23:43:25'),
+(152, 'Garantia', '2020-03-13', 'EP-000129', 0, 1, 'Garantia', 'EPSON L3110', 'X645001374', '73', '2019-11-07', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 150, NULL, '2020-03-14 05:35:50', '2020-06-19 02:53:20'),
+(153, 'Garantia', '2020-03-14', 'EP-000130', 0, 1, 'Garantia', 'EPSON L3110', 'X645116072', '74', '2019-11-28', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 151, NULL, '2020-03-14 23:53:36', '2020-09-08 06:16:10'),
+(154, 'Garantia', '2020-07-06', 'EP-000131', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW079122', '1', '2020-03-05', 'Se atasca el papel después de 10 impresiones.', 'Posible falla de rodillo.', 'Se observa en buen estado ingresa solo equipo con caja.', 13, 1, 152, NULL, '2020-07-06 23:03:16', '2020-08-14 04:13:31'),
+(155, 'Garantia', '2020-07-09', 'EP-000132', 0, 1, 'Garantia', 'EPSON L4150', 'XD4B002092', '2', '2019-07-22', 'No toma el pape, presenta error de servicio.', 'Contador al 100%.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 153, NULL, '2020-07-10 02:24:58', '2020-07-14 05:16:14'),
+(156, 'Garantia', '2020-07-09', 'EP-000133', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS015738', '3', '2020-07-06', 'Presenta atasco de papel por la unidad ADF.', 'Posible falla de ADF.', 'Se observa en buen estado, ingresa equipo con accesorios completos.', 13, 1, 154, NULL, '2020-07-10 03:37:31', '2020-07-18 05:34:39'),
+(157, 'Garantia', '2020-07-09', 'EP-000134', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW046637', 'C0009284', '2020-02-15', 'Almohadillas de tinta llenas Factura a nombre de: Lucy Margot Conde Torres Fecha de Compra: 15-02-20N° de Factura: 000000 Lugar de Compra: Plaza Vea Código Postal: 51 Dirección: (El Agustino)', 'Contador al 100%.', 'Se observa rastros de suciedad, ingresa solo equipo con caja.', 13, 1, 155, NULL, '2020-07-10 06:46:26', '2020-07-14 04:26:38'),
+(158, 'Garantia', '2020-07-09', 'EP-000135', 1, 0, 'Garantia', 'EPSON L5190', 'X5NS039097', 'C0009326', '2020-01-20', 'Presenta error de servicio. Fecha de compra 20/01/2020.', 'Contador al 100%.', 'Se observa leve rastro de suciedad, ingresa solo equipo con caja.', 13, 1, 156, NULL, '2020-07-10 06:55:41', '2020-07-10 06:55:41'),
+(159, 'Garantia', '2020-07-13', 'EP-000136', 0, 1, 'Garantia', 'EPSON L4160', 'X4DU122426', 'C0009378', '2020-07-11', 'Ruido anormal /Fecha de Compra: 11/07/2020 /N° de Factura: 000082 /Lugar de Compra: JA Technology', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa equipo con accesorios completos.', 13, 1, 157, NULL, '2020-07-14 00:20:48', '2020-07-14 00:24:29'),
+(160, 'Garantia', '2020-07-14', 'EP-000137', 0, 1, 'Garantia', 'EPSON L3110', 'X645007812', 'C0009380', '2019-05-02', 'No escanea ni copia Factura a nombre de: Victoria Morveli Fecha de Compra: 02-05-19 N° de Factura: 002469 Lugar de Compra: AJ Tintas Código Postal: 51 Dirección: (Puente Piedra)', 'Posible falla de escaner.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 158, NULL, '2020-07-14 23:18:35', '2020-07-18 23:08:10'),
+(161, 'Garantia', '2020-07-14', 'EP-000138', 1, 0, 'Garantia', 'EPSON L3110', 'X645196497', '5', '2020-06-04', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 159, NULL, '2020-07-14 23:54:10', '2020-07-14 23:54:10'),
+(162, 'Garantia', '2020-07-14', 'EP-000139', 0, 1, 'Garantia', 'EPSON L5190', 'X5NQ099581', '6', '2020-05-27', 'Usuario menciona que pierde la comunicación de forma inalambrica.', 'Posible falla de conexión.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 160, NULL, '2020-07-15 01:59:19', '2020-07-22 04:56:51'),
+(163, 'Garantia', '2020-07-14', 'EP-000140', 1, 0, 'Garantia', 'EPSON L4160', 'X4DW143123', 'C0009401', '2020-06-24', 'Atasco de papel//Factura a nombre de: Vanessa Salcedo// Fecha de Compra: 24/JUNIO/2020//N° de Factura: 5439', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 161, NULL, '2020-07-15 02:31:21', '2020-07-15 02:31:21'),
+(164, 'Garantia', '2020-07-14', 'EP-000141', 1, 0, 'Garantia', 'EPSON L5190', 'X5NS043594', '7', '2020-04-08', 'Presenta error de escaner al momento del encendido.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 162, NULL, '2020-07-15 02:42:12', '2020-07-15 02:42:12'),
+(165, 'Garantia', '2020-07-15', 'EP-000142', 0, 1, 'Garantia', 'EPSON L3110', 'X645210056', '8', '2020-06-10', 'Presenta error de servicio.', 'Contador al 100%.', 'Se observa leve rastro de suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 163, NULL, '2020-07-15 23:44:00', '2020-07-18 03:51:36'),
+(166, 'Garantia', '2020-07-18', 'EP-000143', 0, 1, 'Garantia', 'EPSON L5190', 'X5NQ091312', 'C0009506', '2020-07-01', 'Presenta error de escaner.', 'Posible falla de escaner.', 'Se observa en buen estado.', 13, 1, 164, NULL, '2020-07-18 23:34:39', '2020-07-30 23:11:22'),
+(167, 'Garantia', '2020-07-18', 'EP-000144', 1, 0, 'Garantia', 'EPSON L5190', 'X5NS020959', 'C0009507', '2020-01-20', 'Presenta error de escaner. Fecha de compra 01/07/2020.', 'Posible falla de mecanismo.', 'Se observa en buen estado.', 13, 1, 165, NULL, '2020-07-18 23:39:07', '2020-07-18 23:39:07'),
+(168, 'Garantia', '2020-07-18', 'EP-000145', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9092013', 'C0009508', '2020-06-11', 'Presenta error general. Fecha de compra 11/06/2020.', 'posible falla de mecanismo.', 'Se observa en buen estado.', 13, 1, 166, NULL, '2020-07-18 23:48:39', '2020-07-21 03:35:01'),
+(169, 'Garantia', '2020-07-18', 'EP-000146', 0, 1, 'Garantia', 'EPSON L3160', 'X67B030337', 'C0009491', '2020-06-16', 'No enciende ///Fecha de compra: 16/06/2020 ///Número de Factura: N/A ///Lugar de compra: Taller PC ///', 'Posible falla de tarjeta.', 'Se observa en buen estado.', 13, 1, 167, NULL, '2020-07-18 23:51:54', '2020-07-24 05:46:31');
+INSERT INTO `garantia_guia_ingreso` (`id`, `motivo`, `fecha`, `orden_servicio`, `estado`, `egresado`, `asunto`, `nombre_equipo`, `numero_serie`, `codigo_interno`, `fecha_compra`, `descripcion_problema`, `revision_diagnostico`, `estetica`, `marca_id`, `personal_lab_id`, `cliente_id`, `contacto_cliente_id`, `created_at`, `updated_at`) VALUES
+(170, 'Garantia', '2020-07-18', 'EP-000147', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW107529', 'C0009436', '2020-05-09', 'Almohadilla llena// Factura a nombre de: Marco Antonio Caceres Gonzales//Fecha de Compra:09-05-2020//N° de Factura:002-0504//Lugar de Compra: Línea hogar electrones persona natural Claudina Peña Aranda', 'Posible falla de contador.', 'Se observa en buen estado.', 13, 1, 168, NULL, '2020-07-19 00:02:24', '2020-07-21 06:31:51'),
+(171, 'Garantia', '2020-07-20', 'EP-000148', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW108808', '14', '2020-07-04', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja cables y driver.', 13, 1, 169, NULL, '2020-07-20 22:52:35', '2020-07-23 02:19:31'),
+(172, 'Garantia', '2020-07-20', 'EP-000149', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9179262', '15', '2020-07-16', 'Presenta error de atasco de papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 170, NULL, '2020-07-21 01:01:52', '2020-07-22 06:11:30'),
+(173, 'Garantia', '2020-07-20', 'EP-000150', 0, 1, 'Garantia', 'EPSON L495', 'X2PE005325', '15', '2020-07-13', 'No enciende.', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 171, NULL, '2020-07-21 03:07:14', '2020-08-06 06:38:56'),
+(174, 'Garantia', '2020-07-21', 'EP-000151', 1, 0, 'Garantia', 'EPSON L5190', 'X5NS057903', 'C0009568', '2020-06-05', 'No proyecta imagen del panel de control. Fecha de compra 05/06/2020.', 'Posible falla de panel.', 'Se observa en buen estado.', 13, 1, 172, NULL, '2020-07-21 23:04:15', '2020-07-21 23:04:15'),
+(175, 'Garantia', '2020-07-21', 'EP-000152', 0, 1, 'Garantia', 'EPSON L1110', 'X5NB002574', '16', '2020-03-13', 'Presenta error de atasco de papel al momento del encendido.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa equipo con caja, cables y driver.', 13, 1, 173, NULL, '2020-07-21 23:24:40', '2020-07-24 23:32:39'),
+(176, 'Garantia', '2020-07-21', 'EP-000153', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW084693', '17', '2020-06-16', 'Presenta atasco de papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 174, NULL, '2020-07-22 00:11:52', '2020-07-22 00:15:23'),
+(177, 'Garantia', '2020-07-21', 'EP-000154', 0, 1, 'Garantia', 'EPSON L365', 'VH5K025721', '18', '2020-07-18', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 175, NULL, '2020-07-22 00:39:16', '2020-07-24 00:14:22'),
+(178, 'Garantia', '2020-07-22', 'EP-000155', 0, 1, 'Garantia', 'EPSON L395', 'X2P6305928', 'C0009653', '2019-08-01', 'Presenta error de atasco, las hojas se quedan a la mitad. Fecha de compra 01/08/2019.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 176, NULL, '2020-07-23 04:08:22', '2020-07-31 05:08:52'),
+(179, 'Garantia', '2020-07-22', 'EP-000156', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS007970', '19', '2019-07-30', 'No escanea, usuario menciona que emite un sonido extraño al momento de la toma de papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 177, NULL, '2020-07-23 04:11:23', '2020-07-25 22:36:03'),
+(180, 'Garantia', '2020-07-22', 'EP-000157', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9182713', '20', '2020-04-24', 'Presenta error general al momento de la toma de papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 178, NULL, '2020-07-23 04:21:29', '2020-07-31 04:51:29'),
+(181, 'Garantia', '2020-07-22', 'EP-000158', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW092657', '21', '2020-05-26', 'Presenta derrame de tinta, defectos de impresión.', 'Derrame de tinta.', 'Ingresa solo equipo con caja sin accesorios.', 13, 1, 179, NULL, '2020-07-23 04:40:26', '2020-07-24 00:59:17'),
+(182, 'Garantia', '2020-07-23', 'EP-000159', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9191090', '23', '2020-03-29', 'No toma el papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 180, NULL, '2020-07-23 23:56:23', '2020-07-24 04:36:15'),
+(183, 'Garantia', '2020-07-23', 'EP-000160', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS033868', '24', '2020-05-15', 'No toma el papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 181, NULL, '2020-07-24 01:02:38', '2020-07-25 00:59:09'),
+(184, 'Garantia', '2020-07-23', 'EP-000161', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9180168', '25', '2020-05-15', 'No toma el papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 182, NULL, '2020-07-24 04:11:55', '2020-08-05 03:44:31'),
+(185, 'Garantia', '2020-07-23', 'EP-000162', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS040814', '26', '2020-04-29', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 183, NULL, '2020-07-24 04:25:57', '2020-07-28 06:39:28'),
+(186, 'Garantia', '2020-07-24', 'EP-000163', 0, 1, 'Garantia', 'Epson L3110', 'X645172352', '26', '2020-04-11', 'No avanza el papel.', 'Posible falla de mecanismo.', 'Se observa en en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 184, NULL, '2020-07-25 03:30:31', '2020-08-02 00:11:24'),
+(187, 'Garantia', '2020-07-24', 'EP-000164', 0, 1, 'Garantia', 'Epson L5190', 'X5NS034681', '27', '2020-02-01', 'No pasan las hojas correctamente.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 185, NULL, '2020-07-25 04:26:39', '2020-08-02 00:28:17'),
+(188, 'Garantia', '2020-07-24', 'EP-000165', 1, 0, 'Garantia', 'Epson L3110', 'X5DP040074', '28', '2020-04-20', 'Presenta error general, parpadean todos los leds.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 186, NULL, '2020-07-25 06:09:27', '2020-07-25 06:09:27'),
+(189, 'Garantia', '2020-07-24', 'EP-000166', 0, 1, 'Garantia', 'Epson L3110', 'X645234338', '29', '2020-07-12', 'No enciende.', 'Posible falla de fuente.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 187, NULL, '2020-07-25 06:31:46', '2020-07-30 04:28:30'),
+(190, 'Garantia', '2020-07-25', 'EP-000167', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS058347', '30', '2020-06-02', 'Presenta error de impresora.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 188, NULL, '2020-07-25 22:26:32', '2020-08-06 05:56:07'),
+(191, 'Garantia', '2020-07-25', 'EP-000168', 0, 1, 'Garantia', 'EPSON L805', 'W7VK034771', '31', '1010-01-01', 'No enciende. Doc. de compra pendiente.', 'Posible falla de fuente o tarjeta.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 189, NULL, '2020-07-25 22:58:40', '2020-08-06 06:53:22'),
+(192, 'Garantia', '2020-07-25', 'EP-000169', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW130357', '31', '2020-05-18', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 190, NULL, '2020-07-25 23:40:45', '2020-07-31 00:05:55'),
+(193, 'Garantia', '2020-07-25', 'EP-000170', 0, 1, 'Garantia', 'EPSON L1110', 'X5NB005807', '32', '2020-07-18', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 191, NULL, '2020-07-26 00:13:43', '2020-08-01 04:44:44'),
+(194, 'Garantia', '2020-07-27', 'EP-000171', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9092013', '33', '2020-06-11', 'Presenta error general al momento del encendido, defectos de impresión. Fecha de compra 11/06/2020.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 166, NULL, '2020-07-27 22:52:32', '2020-07-31 02:11:23'),
+(195, 'Garantia', '2020-07-27', 'EP-000172', 1, 0, 'Garantia', 'EPSON L4150', 'X4DB068328', '34', '2019-03-25', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 192, NULL, '2020-07-28 02:11:13', '2020-07-28 02:11:13'),
+(196, 'Garantia', '2020-07-29', 'EP-000173', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP148759', '35', '2020-06-03', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 193, NULL, '2020-07-30 04:07:31', '2020-08-01 23:57:24'),
+(197, 'Garantia', '2020-07-30', 'EP-000174', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW031518', 'C0009894', '2019-12-06', 'Mensaje de error Scaner Factura a nombre de: Aurora Lopez Blas Fecha de Compra: 06-12-19N° de Factura: 00371Lugar de Compra: J/A Tecnologic Codigo Postal: 51 Direccion: (Cercado)Provincia: Lima Departamento: Lima', 'Posible falla de escaner.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 195, NULL, '2020-07-31 02:20:58', '2020-08-05 04:29:27'),
+(198, 'Garantia', '2020-07-30', 'EP-000175', 1, 0, 'Garantia', 'EPSON L3160', 'X67B030106', 'C0009876', '2020-07-01', 'Papel torcido del lado derecho Factura a nombre de: Jorge Ynca Henriquez Fecha de Compra: 01/07/2020N° de Factura: NO TIENE Lugar de Compra: Extec Inversiones', 'Se realizo la revision minuciosa y se observa objeto extraño (arete) en el interior de la bandeja de papel, el cual ocasiona el atasco de las hojas al momento de la impresión. \r\nSe procede a retirar dicho objeto, luego se ejecutan pruebas de impresiones continuas las cuales no muestran desperfectos. Nro. de paginas impresas después de la solución 315.\r\nSe adjuntan las pruebas correspondientes, a su vez se coloca el sello de seguridad.', 'Se recomienda el uso adecuado del equipo para prevenir fallas que no son cubiertas por la garantía, así mismo se le indica al usuario tener cuidado de colocar objeto encima de la unidad de escaner ya que podría caer al interior del equipo y ocasionar daños irreparables.', 13, 1, 196, NULL, '2020-07-31 04:01:11', '2020-07-31 04:01:11'),
+(199, 'Garantia', '2020-07-30', 'EP-000176', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ010564', '36', '2020-07-28', 'No toma el papel correctamente (jala mas de una hoja).', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 197, NULL, '2020-07-31 05:07:57', '2020-08-08 03:33:48'),
+(200, 'Garantia', '2020-07-31', 'EP-000177', 0, 1, 'Garantia', 'EPSON L3110', 'X645187961', '36', '2020-06-07', 'No toma el papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 198, NULL, '2020-08-01 03:39:11', '2020-08-07 04:11:06'),
+(201, 'Garantia', '2020-07-31', 'EP-000178', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9110183', 'C0009868', '2020-05-22', 'Impresiones borrosas Fecha de compra: 22 Mayo 2020 Lugar de compra: Grupo Delcron Fac: F103-0000223746Titular de compra: Tiendas Mas', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 199, NULL, '2020-08-01 04:50:19', '2020-08-06 02:09:47'),
+(202, 'Garantia', '2020-08-01', 'EP-000179', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW140568', 'C0009926', '2020-06-20', 'No toma el papel//Fecha de Compra: 20/06/2020//N° de Factura: BM62-116605//Lugar de Compra: Tottus', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 200, NULL, '2020-08-02 00:18:11', '2020-08-08 04:04:41'),
+(203, 'Garantia', '2020-08-03', 'EP-000180', 0, 1, 'Garantia', '4160', 'X4DW101685', '26', '2019-12-17', 'Falla de impresion', 'Posible falla de cabezal', 'Ingresa solo equipo sin caja , sin accesorios , Se obrserva en buen estado', 13, 1, 201, NULL, '2020-08-03 23:19:40', '2020-08-06 03:40:30'),
+(204, 'Garantia', '2020-08-03', 'EP-000181', 0, 1, 'Garantia', 'EPSON3110', 'X645194420', '22', '2020-05-29', 'Defecto de impresion , imprime rallas', 'posible falla de cabezal', 'ingresa solo equipo , sin caja , sin accesorios , se registra rasgo se polvo', 13, 1, 186, NULL, '2020-08-04 02:08:25', '2020-08-07 06:01:00'),
+(205, 'Garantia', '2020-08-03', 'EP-000182', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS051649', '12', '2020-07-31', 'Error de impresora al momento de encendido', 'Posible falla de mecanismo', 'Ingreso equipo con caja , Se observa en buen estado', 13, 1, 203, NULL, '2020-08-04 04:08:41', '2020-08-08 03:26:08'),
+(206, 'Garantia', '2020-08-03', 'EP-000183', 1, 0, 'Garantia', 'EPSON L 3150', 'X5E91208145', '22', '2019-12-03', 'Problemas al momento del encendido', 'posible fallo de panel', 'Ingreso solo equipo , sin accesorios , se observa rastros de polvo', 13, 1, 194, NULL, '2020-08-04 04:33:03', '2020-08-04 04:33:03'),
+(207, 'Garantia', '2020-08-04', 'EP-000184', 0, 1, 'Garantia', 'EPSON LX-350', 'Q76Y087310', '37', '2019-09-10', 'Usuario menciona que se atasca el papel.', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo con caja y cable de energía.', 13, 1, 204, NULL, '2020-08-05 04:18:44', '2020-08-07 06:33:51'),
+(208, 'Garantia', '2020-08-05', 'EP-000185', 1, 0, 'Garantia', 'EPSON L365', 'VH5K127828', '37', '2020-08-01', 'No enciende.', 'Posible falla de fuente.', 'Se observa en buen estado, ingresa equipo con caja sin accesorios.', 13, 1, 205, NULL, '2020-08-06 01:08:16', '2020-08-06 01:08:16'),
+(209, 'Garantia', '2020-08-05', 'EP-000186', 0, 1, 'Garantia', 'EPSON L3110', 'X645006799', '38', '2020-07-02', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 206, NULL, '2020-08-06 05:49:48', '2020-08-12 03:46:42'),
+(210, 'Garantia', '2020-08-06', 'EP-000187', 0, 1, 'Garantia', 'EPSON L3160', 'X67B018766', '38', '2020-04-10', 'Presenta error de escaner.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 207, NULL, '2020-08-07 03:07:21', '2020-08-11 02:59:17'),
+(211, 'Garantia', '2020-08-07', 'EP-000188', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS057153', '39', '2020-07-15', 'Presenta error de impresora.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 208, NULL, '2020-08-08 00:51:30', '2020-08-12 02:21:30'),
+(212, 'Garantia', '2020-08-07', 'EP-000189', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9000627', '40', '2020-02-02', 'Presenta defectos de impresión, mancha las hojas.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 209, NULL, '2020-08-08 00:58:58', '2020-08-12 03:30:09'),
+(213, 'Garantia', '2020-08-07', 'EP-000190', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS051332', '41', '2020-07-02', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa equipo con caja y accesorios completos.', 13, 1, 210, NULL, '2020-08-08 04:56:00', '2020-08-21 05:04:28'),
+(214, 'Garantia', '2020-08-08', 'EP-000191', 0, 1, 'Garantia', 'EPSON L 3110', 'X645181180', '22', '2020-07-04', 'No jala papel', 'Posible falla de mecanismo', 'Ingreso equipo con caja sin accesorios ,  se observa en buen estado', 13, 1, 211, NULL, '2020-08-09 00:45:35', '2020-08-14 06:37:09'),
+(215, 'Garantia', '2020-08-10', 'EP-000192', 0, 1, 'Garantia', 'EPSON POWERLITE U42+', 'X4JL9300538', '41', '2019-12-05', 'No proyecta //Fecha de Compra: 05/12/19 //N° de Factura: E001-1130 //Lugar de Compra: Grupo OPC SRL //', 'Posible falla de lampara.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 212, NULL, '2020-08-10 23:08:12', '2020-08-27 00:41:08'),
+(216, 'Garantia', '2020-08-10', 'EP-000193', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS006830', '42', '2019-11-11', 'Presenta un sonido extraño al momento del encendido.', 'Posible falla de mecanismo.', 'Se observa rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 213, NULL, '2020-08-10 23:20:22', '2020-08-11 23:07:52'),
+(217, 'Garantia', '2020-08-10', 'EP-000194', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW119783', 'C0010106', '2020-03-05', 'Error E-01//Factura a nombre de: Viviana Sanchez//Fecha de Compra: 05-03-2020 //N° de Factura: BC12377290//Lugar de Compra: Hiraoka//', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 214, NULL, '2020-08-11 02:09:50', '2020-08-19 05:57:08'),
+(218, 'Garantia', '2020-08-10', 'EP-000195', 0, 1, 'Garantia', 'EPSON L3110', 'X644198669', 'C0010131', '2020-08-09', 'Obstrucción de papel // Factura a nombre de: Yuri Piñas Esteban//Fecha de Compra: 09-08-2020//N° de Factura: EB01-27//Lugar de Compra: Compu Cegma', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa con caja sin accesorios.', 13, 1, 215, NULL, '2020-08-11 02:35:12', '2020-08-13 05:58:52'),
+(219, 'Garantia', '2020-08-10', 'EP-000196', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ014279', '42', '2020-05-13', 'Presenta error de atasco de papel.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa equipo con caja sin accesorios.', 13, 1, 216, NULL, '2020-08-11 04:08:19', '2020-08-19 04:49:36'),
+(220, 'Garantia', '2020-08-10', 'EP-000197', 0, 1, 'Garantia', 'EPSON L395', 'X2P6170141', '43', '2020-02-24', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 217, NULL, '2020-08-11 06:02:47', '2020-08-14 00:35:48'),
+(221, 'Garantia', '2020-08-11', 'EP-000198', 0, 1, 'Garantia', 'EPSON L3110', 'X645147299', '43', '2020-05-21', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 218, NULL, '2020-08-11 22:30:38', '2020-08-22 02:21:16'),
+(222, 'Garantia', '2020-08-11', 'EP-000199', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9031176', '44', '2019-08-10', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 219, NULL, '2020-08-11 23:58:03', '2020-08-14 00:15:26'),
+(223, 'Garantia', '2020-08-11', 'EP-000200', 0, 0, 'Garantia', 'EPSON L3150', 'X7GQ012504', '45', '2020-07-27', 'Presenta defectos de impresión, mancha las hojas.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 220, NULL, '2020-08-12 02:07:13', '2020-08-12 02:14:53'),
+(224, 'Garantia', '2020-08-12', 'EP-000201', 0, 1, 'Garantia', 'EPSON L3110', 'X645157512', '46', '2020-01-10', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 221, NULL, '2020-08-13 00:12:20', '2020-08-20 04:21:21'),
+(225, 'Garantia', '2020-08-12', 'EP-000202', 0, 1, 'Garantia', 'EPSON L3110', 'X645233771', 'C0010201', '2020-07-24', 'Luz de papel parpadeando //FC: 30-07-2020 //LC: Tiendas Metro', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa equipo con caja sin accesorios.', 13, 1, 222, NULL, '2020-08-13 04:54:25', '2020-08-15 04:12:56'),
+(226, 'Garantia', '2020-08-12', 'EP-000203', 0, 1, 'Garantia', 'EPSON L475', 'WBRK039189', 'C0010225', '2020-07-04', 'No enciende. Fecha de compra 04/07/2020.', 'Posible falla de tarjeta.', 'Se observa leve rastro de suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 223, NULL, '2020-08-13 07:49:58', '2020-08-21 00:49:55'),
+(227, 'Garantia', '2020-08-13', 'EP-000204', 0, 1, 'Garantia', 'EPSON L 5190', 'X5NS061312', '22', '2020-08-12', 'Problemas con el wifi y tema de configuracion', 'posible falla de configuración', 'Se observa en buen estado , Ingresa solo equipo sin accesorios sin caja', 13, 1, 224, NULL, '2020-08-13 22:30:12', '2020-08-15 06:52:06'),
+(228, 'Garantia', '2020-08-13', 'EP-000205', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9048304', 'C0010134', '2020-03-02', 'No toma la hoja//Factura a nombre de: Johnny Cruz//Fecha de Compra: marzo//N° de Factura: No tiene la factura a la mano//Lugar de Compra: Metro//Codigo Postal: 51Direccion: Cercado//Provincia: Lima//Departamento: Lima//CSA: C024', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 225, NULL, '2020-08-13 22:59:57', '2020-08-15 23:17:53'),
+(229, 'Garantia', '2020-08-13', 'EP-000206', 0, 1, 'Garantia', 'EPSON L1800', 'UBHY011275', '47', '2020-02-10', 'Presenta error general, parpadean todos los leds.', 'Se detecta cabezal flat del sensor CR doblado, garantía en consulta.', 'Se observa leve rastro de polvo, ingresa solo equipo sin accesorios.', 13, 1, 226, NULL, '2020-08-14 03:34:11', '2020-09-25 00:07:43'),
+(230, 'Garantia', '2020-08-14', 'EP-000207', 1, 0, 'Garantia', 'EPSON L4160', 'X4DW145371', '47', '2020-07-10', 'Presenta defectos de impresión, mancha las hojas.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa equipo con caja y botellas de tinta sin accesorios.', 13, 1, 227, NULL, '2020-08-14 22:53:13', '2020-08-14 22:53:13'),
+(231, 'Garantia', '2020-08-15', 'EP-000208', 0, 1, 'Garantia', 'EPSON L 3150', 'X5E9095435', '12', '2020-07-04', 'Problemas con el WIFI , Defecto de impresión , Parpadea las 2 luces , todas las luces a la vez', 'posible falla de conexión inalambrica , Posible falla de mecanismo , posible falla de cabezal', 'Se observa rastro de polvo , Ingresa equipo con caja sin accesorios, sin cables  , con manto', 13, 1, 228, NULL, '2020-08-15 22:23:53', '2020-08-21 22:24:07'),
+(232, 'Garantia', '2020-08-15', 'EP-000209', 0, 1, 'Garantia', 'EPSON L1800', 'UBHY011036', '48', '2020-01-29', 'Presenta error de atasco de papel al momento del encendido.', 'Se observa cable flat de sensor CR doblado.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 229, NULL, '2020-08-16 00:25:38', '2020-09-24 23:33:32'),
+(233, 'Garantia', '2020-08-17', 'EP-000210', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9117662', '48', '2020-03-07', 'No enciende.', 'Posible falla de fuente.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 230, NULL, '2020-08-17 23:06:06', '2020-08-19 00:44:30'),
+(234, 'Garantia', '2020-08-17', 'EP-000211', 1, 0, 'Garantia', 'EPSON L5190', 'C0010331', 'X5NS062533', '2020-06-27', 'No Toma Papel //FC: 27-06-2020 //LC:Totus //NF: B433-00142328', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 231, NULL, '2020-08-18 04:17:20', '2020-08-18 04:17:20'),
+(235, 'Garantia', '2020-08-17', 'EP-000212', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW101685', '49', '2019-12-17', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 201, NULL, '2020-08-18 04:31:09', '2020-09-01 05:31:07'),
+(236, 'Garantia', '2020-08-17', 'EP-000213', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9111603', '49', '2020-07-03', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa con caja sin accesorios.', 13, 1, 232, NULL, '2020-08-18 04:40:12', '2020-08-19 23:54:58'),
+(237, 'Garantia', '2020-08-17', 'EP-000214', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ012368', '50', '2020-07-03', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa equipo con caja sin accesorios.', 13, 1, 232, NULL, '2020-08-18 04:42:03', '2020-08-19 23:58:06'),
+(238, 'Garantia', '2020-08-18', 'EP-000215', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS055553', 'C0010352', '2020-07-13', 'Fecha de de compra 13 Julio 2020- Titular de compra: SA- YA- Fac: SP01-0002593 - Falla: Error 100077', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 233, NULL, '2020-08-19 00:11:13', '2020-08-21 04:57:37'),
+(239, 'Garantia', '2020-08-18', 'EP-000216', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9094918', '50', '2020-03-10', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 234, NULL, '2020-08-19 03:57:03', '2020-09-02 01:08:44'),
+(240, 'Garantia', '2020-08-18', 'EP-000217', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW089654', '51', '2019-12-11', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 235, NULL, '2020-08-19 04:14:20', '2020-08-21 05:25:50'),
+(241, 'Garantia', '2020-08-19', 'EP-000218', 0, 1, 'Garantia', 'EPSON L3110', 'X645002980', '22', '2019-09-26', 'Presenta error general al momento del encendido', 'posible falla de placa', 'Se observa en buen estado , Ingresa solo equipo sin , sin accesorios', 13, 1, 236, NULL, '2020-08-20 00:20:32', '2020-08-25 23:45:15'),
+(242, 'Garantia', '2020-08-19', 'EP-000219', 0, 1, 'Garantia', 'EPSON POWERLITE X39', 'X52Q960021L', '52', '2020-03-11', 'Usuario menciona que se apaga después de 2 hrs. de proyección y emite un sonido extraño.', 'Posible falla de ventilador.', 'Se observa equipo con exceso de suciedad en el filtro de aire, ingresa equipo con caja y accesorios.', 13, 1, 237, NULL, '2020-08-20 00:45:01', '2020-08-25 23:36:48'),
+(243, 'Garantia', '2020-08-20', 'EP-000220', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9107825', '53', '2019-10-15', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 238, NULL, '2020-08-21 00:06:16', '2020-08-28 05:21:10'),
+(244, 'Garantia', '2020-08-20', 'EP-000221', 0, 1, 'Garantia', 'EPSON L4150', 'X4DB046374', '54', '2019-04-22', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja.', 13, 1, 239, NULL, '2020-08-21 02:35:21', '2020-08-26 04:10:33'),
+(245, 'Garantia', '2020-08-20', 'EP-000222', 1, 0, 'Garantia', 'EPSON L3160', 'X67B017032', 'C0010420', '2020-05-16', 'Obstrucción de papel//Fecha de Compra: 16/05/2020//N° de Factura: B314-24252836Lugar de Compra: Tiendas Metro//', 'Se observa papel atascado.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 240, NULL, '2020-08-21 03:42:51', '2020-08-21 03:42:51'),
+(246, 'Garantia', '2020-08-20', 'EP-000223', 0, 1, 'Garantia', 'ESPON L3110', 'X645233969', 'C0010421', '2020-07-22', 'Usuario menciona que no enciende (falla aleatoria).', 'Posible falla de funcionamiento.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 241, NULL, '2020-08-21 04:51:37', '2020-08-25 05:11:24'),
+(247, 'Garantia', '2020-08-20', 'EP-000224', 0, 1, 'Garantia', 'EPSON L3160', 'X67B006095', '55', '2019-09-10', 'Presenta error de servicio.', 'Contador lleno.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 242, NULL, '2020-08-21 06:03:44', '2020-08-28 06:11:34'),
+(248, 'Garantia', '2020-08-21', 'EP-000225', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9022237', '56', '2020-05-08', 'Emite un sonido extraño, no jala el papel.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo con caja y botellas de tintas vacías.', 13, 1, 243, NULL, '2020-08-22 06:29:33', '2020-08-26 23:42:39'),
+(249, 'Garantia', '2020-08-22', 'EP-000226', 0, 1, 'Garantia', 'EPSON L805', 'W7VK031367', '56', '2019-11-02', 'Usuario menciona que presenta rayas al momento de la impresión en fotografía.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 244, NULL, '2020-08-22 23:06:43', '2020-09-12 04:54:17'),
+(250, 'Garantia', '2020-08-24', 'EP-000227', 0, 1, 'Garantia', 'EPSON L3110', 'X645027736', '57', '2020-08-24', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa equipo con caja y accesorios completos.', 13, 1, 245, NULL, '2020-08-25 05:04:32', '2020-10-18 00:57:18'),
+(251, 'Garantia', '2020-08-24', 'EP-000228', 0, 1, 'Garantia', 'EPSON L3110', 'X645044213', '58', '2019-06-02', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 246, NULL, '2020-08-25 05:58:15', '2020-08-29 06:25:20'),
+(252, 'Garantia', '2020-08-25', 'EP-000229', 0, 1, 'Garantia', 'EPSON L3160', 'X67B019941', '58', '2020-08-24', 'Lamina del panel de control despegada.', 'Falla de ensamblado.', 'Se observa en buen estado, ingresa equipo con accesorios completos.', 13, 1, 247, NULL, '2020-08-25 23:28:08', '2020-09-04 23:41:11'),
+(253, 'Garantia', '2020-08-25', 'EP-000230', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS060908', 'C0010495', '2020-07-24', 'Obstrucción de papel en bandeja 1//Fecha de Compra: 24-07-2020 //N° de Factura: EB01-538//Lugar de Compra: Edusistem SAC //', 'Posible falla de rodillo.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 248, NULL, '2020-08-25 23:51:34', '2020-09-01 03:25:53'),
+(254, 'Garantia', '2020-08-25', 'EP-000231', 1, 0, 'Garantia', 'EPSON L375', 'WBJK015648', '59', '2019-10-20', 'No enciende.', 'Posible falla de fuente,', 'Se observa rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 249, NULL, '2020-08-26 02:25:41', '2020-08-26 02:25:41'),
+(255, 'Garantia', '2020-08-25', 'EP-000232', 0, 0, 'Garantia', 'EPSON L5190', 'X5NQ077334', '60', '2020-08-06', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 250, NULL, '2020-08-26 02:54:29', '2020-08-26 03:01:10'),
+(256, 'Garantia', '2020-08-25', 'EP-000233', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9119869', 'C0010517', '2020-05-14', 'Obstrucción de papelFactura a nombre de: Sara CariFecha de Compra: 14-05-20N° de Factura: Lugar de Compra: IraocaCodigo Postal: 51Dirección: (Cercado)Provincia: Lima', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 251, NULL, '2020-08-26 03:09:09', '2020-08-27 05:51:56'),
+(257, 'Garantia', '2020-08-25', 'EP-000234', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW073661', '61', '2019-08-29', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 252, NULL, '2020-08-26 03:17:39', '2020-08-26 03:20:48'),
+(258, 'Garantia', '2020-08-25', 'EP-000235', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9208727', '62', '2020-07-06', 'Problemas con la conexión WiFi.', 'Posible falla de configuración.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 253, NULL, '2020-08-26 03:29:34', '2020-09-04 04:15:23'),
+(259, 'Garantia', '2020-08-25', 'EP-000236', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9057014', 'C0010482', '2020-04-30', 'No avanza PapelTitular: Felix Alfredo ÁnguloFecha de compra: 30-Abril-2020N. de factura: EB011368Lugar de compra: Mi pc lista', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa equipo con caja sin accesorios.', 13, 1, 254, NULL, '2020-08-26 04:43:30', '2020-08-28 01:05:23'),
+(260, 'Garantia', '2020-08-26', 'EP-000237', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS042324', 'C0010531', '2020-05-25', 'Obstrucción de papel// Factura a nombre de: Roger Morante Rivera// Fecha de Compra:25-05-2020//N° de Factura:0003902//Lugar de Compra:Econolapcop//', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 255, NULL, '2020-08-27 02:21:16', '2020-08-27 02:24:36'),
+(261, 'Garantia', '2020-08-26', 'EP-000238', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9023234', '63', '2019-09-19', 'No enciende.', 'Posible falla de fuente.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 256, NULL, '2020-08-27 04:07:45', '2020-09-10 06:04:59'),
+(262, 'Garantia', '2020-08-26', 'EP-000239', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9138355', '64', '2020-03-01', 'Presenta error general, se apaga automnaticamente.', 'Posible falla de tarjeta.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 257, NULL, '2020-08-27 05:25:11', '2020-08-29 04:07:08'),
+(263, 'Garantia', '2020-08-27', 'EP-000240', 0, 1, 'Garantia', 'EPSON L3110', 'X645047945', '65', '2020-02-24', 'Usuario menciona que presenta error general de manera aleatoria.', 'El equipo no presento fallas al momento de la recepcion.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 258, NULL, '2020-08-28 04:52:21', '2020-09-12 03:47:35'),
+(264, 'Garantia', '2020-08-28', 'EP-000241', 0, 1, 'Garantia', '3110', 'X645145853', '22', '2020-07-03', 'Presenta error general', 'posible falla de mecanismo', 'se observa en buen estado , Ingreso equipo con caja sin accesorios', 13, 1, 259, NULL, '2020-08-28 22:53:53', '2020-09-02 23:58:12'),
+(265, 'Garantia', '2020-08-29', 'EP-000242', 0, 1, 'Garantia', 'EPSON L3150', 'X76P004993', '22', '2020-07-18', 'Parpadean todas las luces , y el usuario comenta que suena al momento de imprimir', 'Posible falla de mecanismo', 'se observa rasgos de polvo y suciedad , Ingreso solo equipo sin accesorios , sin caja', 13, 1, 260, NULL, '2020-08-29 23:55:19', '2020-09-03 04:48:51'),
+(266, 'Garantia', '2020-08-31', 'EP-000243', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW054500', '67', '2019-08-08', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 261, NULL, '2020-09-01 00:13:51', '2020-09-04 23:44:24'),
+(267, 'Garantia', '2020-08-31', 'EP-000244', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9108301', '68', '2020-05-15', 'Toma varias hojas.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 262, NULL, '2020-09-01 02:48:40', '2020-09-08 00:31:28'),
+(268, 'Garantia', '2020-08-31', 'EP-000245', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS063907', 'C0010654', '2020-06-03', 'Error de escaner Factura a nombre de: Franck PalominoFecha de Compra: 03 de julio de 2020N° de Factura: 000326Lugar de Compra: Koby Inversiones', 'Posible falla de escaner.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 263, NULL, '2020-09-01 03:12:16', '2020-09-03 00:37:40'),
+(269, 'Garantia', '2020-08-31', 'EP-000246', 0, 1, 'Garantia', 'EPSON FX890II', 'X3YF019946', '69', '2019-10-17', 'No enciende.', 'Posible falla de fuente.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo con tractor, perilla, bandeja de papel. cinta, tapa acrílica y tensor.', 13, 1, 264, NULL, '2020-09-01 04:15:08', '2020-09-03 00:55:38'),
+(270, 'Garantia', '2020-08-31', 'EP-000247', 0, 1, 'Garantia', 'EPSON L396', 'X4FQ056135', '70', '2020-08-19', 'No enciende.', 'Garantía en consulta.', 'Se observa en buen estado, ingresa solo equipo con caja y accesorios completos.', 13, 1, 265, NULL, '2020-09-01 04:22:01', '2020-09-05 05:53:01'),
+(271, 'Garantia', '2020-09-01', 'EP-000248', 0, 1, 'Garantia', 'EPSON L396', 'X4FQ030675', 'C0010586', '2020-03-01', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 266, NULL, '2020-09-02 02:39:52', '2020-09-07 23:13:52'),
+(272, 'Garantia', '2020-09-01', 'EP-000249', 0, 1, 'Garantia', 'EPSON L3110', 'X645172521', '69', '2020-06-27', 'No toma la hoja.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 267, NULL, '2020-09-02 04:50:14', '2020-09-12 03:50:50'),
+(273, 'Garantia', '2020-09-02', 'EP-000250', 1, 0, 'Garantia', 'EPSON L 4150', 'X4DB049617', '22', '2020-07-06', 'No imprime nada , No escanea', 'Posible falla de mecanismo', 'Se observa rasgos de polvo , Ingreso equipo solo , sin accesorios , sin caja', 13, 1, 268, NULL, '2020-09-02 22:30:59', '2020-09-02 22:30:59'),
+(274, 'Garantia', '2020-09-02', 'EP-000251', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9097173', '70', '2020-03-14', 'Presenta atasco de papel, parpadean todos los leds.', 'Posible falla de mecanismo.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 269, NULL, '2020-09-02 23:36:07', '2020-09-04 23:55:42'),
+(275, 'Garantia', '2020-09-02', 'EP-000252', 0, 1, 'Garantia', 'EPSON L3160', 'X67B003173', '71', '2020-05-09', 'Se atasca el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 270, NULL, '2020-09-03 03:27:07', '2020-09-04 23:29:36'),
+(276, 'Garantia', '2020-09-02', 'EP-000253', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9056630', '72', '2020-01-23', 'Presenta error de atasco de papel.', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad, ingresa solo equipo equipo sin accesorios.', 13, 1, 271, NULL, '2020-09-03 04:11:00', '2020-09-08 04:03:37'),
+(277, 'Garantia', '2020-09-02', 'EP-000254', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS044698', '73', '2020-05-14', 'No emite imagen el panel de control.', 'Posible falla de panel.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 272, NULL, '2020-09-03 05:56:44', '2020-09-11 00:25:51'),
+(278, 'Garantia', '2020-09-02', 'EP-000255', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9111898', 'C0010642', '2020-06-01', 'No toma bien la hoja//Factura a nombre de: No tiene la factura//Fecha de Compra: junio 2020//N° de Factura: No tiene la factura//Lugar de Compra: Taller PC//Codigo Postal: 51//Direccion: mala//Provincia: Cañete//Departamento: Lima//CSA: C024//', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 167, NULL, '2020-09-03 06:35:06', '2020-09-04 04:39:34'),
+(279, 'Garantia', '2020-09-03', 'EP-000256', 0, 1, 'Garantia', 'EPSON L575', 'W9AY086895', 'C0010758', '2020-08-08', 'No enciende /Factura a nombre de: Javier Dominguez /Fecha de Compra: 08-08-2020 /N° de Factura: B007 N.04359353Lugar de Compra: Cencosud', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 273, NULL, '2020-09-03 22:30:00', '2020-09-15 02:19:22'),
+(280, 'Garantia', '2020-09-04', 'EP-000257', 0, 1, 'Garantia', 'EPSON L3110', 'X645158908', 'C0010683', '2020-05-13', 'Mancha de Tinta //Fecha de Compra: 13/05/20 //N° de Factura: BX01-05365506 //Lugar de Compra: Falabella //', 'Posible falla de CAP', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 274, NULL, '2020-09-05 03:14:01', '2020-09-10 23:19:37'),
+(281, 'Garantia', '2020-09-04', 'EP-000258', 0, 1, 'Garantia', 'EPSON FX890II', 'X3YF024542', '73', '2019-12-30', 'No enciende.', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa con cinta y tractor.', 13, 1, 275, NULL, '2020-09-05 04:46:04', '2020-09-08 05:34:23'),
+(282, 'Garantia', '2020-09-04', 'EP-000259', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9138472', '75', '2020-01-30', 'Emite un sonido extraño.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 276, NULL, '2020-09-05 04:54:40', '2020-09-09 04:38:39'),
+(283, 'Garantia', '2020-09-04', 'EP-000260', 0, 1, 'Garantia', 'EPSON LX-350', 'Q76Y089653', '76', '2019-12-02', 'Usuario menciona que no imprime correctamente.', 'Posible falla de cabezal.', 'Se observa exceso de suciedad, ingresa solo equipo con perilla, tractor y tapa acrílica.', 13, 1, 277, NULL, '2020-09-05 05:19:13', '2020-09-10 05:28:08'),
+(284, 'Garantia', '2020-09-05', 'EP-000261', 1, 0, 'Garantia', 'EPSON L  3150', 'X5E9087225', '22', '2020-02-18', 'Presenta defectos de impresion', 'Posible falla de cabezal', 'se observa en buen estado , Ingreso equipo con caja sin accesorios', 13, 1, 278, NULL, '2020-09-05 22:25:34', '2020-09-05 22:25:34'),
+(285, 'Garantia', '2020-09-05', 'EP-000262', 0, 1, 'Garantia', 'EPSON L3110', 'X645232156', 'C0010757', '2020-07-18', 'todas las luces parpadean //Fecha de Compra: 18/07/2020 //N° de Factura: 001000345 //Lugar de Compra: Printer Suport Peru //', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 279, NULL, '2020-09-06 00:20:43', '2020-09-09 07:11:54'),
+(286, 'Garantia', '2020-09-07', 'EP-000263', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9028100', '74', '2019-10-06', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 280, NULL, '2020-09-08 00:23:42', '2020-09-10 06:39:47'),
+(287, 'Garantia', '2020-09-07', 'EP-000264', 0, 1, 'Garantia', 'EPSON L3110', 'X645175982', '76', '2020-05-18', 'No toma el papel.', 'Posible falla de mecanismo.', 'Se observa en rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 281, NULL, '2020-09-08 03:38:23', '2020-09-20 00:56:37'),
+(288, 'Garantia', '2020-09-07', 'EP-000265', 0, 1, 'Garantia', 'EPSON L396', 'X4FQ028111', '77', '2020-08-14', 'No enciende.', 'Posible falla de fuente.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 282, NULL, '2020-09-08 04:22:43', '2020-09-17 04:39:24'),
+(289, 'Garantia', '2020-09-07', 'EP-000266', 0, 1, 'Garantia', 'EPSON L3110', 'X645155481', '78', '2020-04-18', 'Usuario menciona que no imprime, falla aleatoria.', 'El test de cabezal no presenta problemas.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 283, NULL, '2020-09-08 06:27:05', '2020-09-11 04:36:16'),
+(290, 'Garantia', '2020-09-08', 'EP-000267', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW090645', 'C0010874', '2020-08-07', 'Atasco de papel //Factura a nombre de: Pedro Tito Toledo// Fecha de Compra: 07-08-2020//N° de Factura: BB092-4605//Lugar de Compra: JBM Group//Codigo Postal: 51//', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 284, NULL, '2020-09-09 00:34:51', '2020-09-16 02:04:09'),
+(291, 'Garantia', '2020-09-08', 'EP-000268', 0, 1, 'Garantia', 'EPSON L3160', 'X67B028173', '78', '2020-06-05', 'Usuario menciona que no hay comunicación por WiFi.', 'Posible falla de configuración.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 285, NULL, '2020-09-09 01:09:49', '2020-09-15 00:53:37'),
+(292, 'Garantia', '2020-09-08', 'EP-000269', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW032507', 'C0010894', '2019-04-21', 'Derrame de tinta//Factura a nombre de: Julia Flores Ticlla//Fecha de Compra: 21-04-2019//N° de Factura: No tiene la factura a la mano//Lugar de Compra: Toppus//Codigo Postal: 51//Direccion: cercado//Provincia: Lima//Departamento:Lima//CSA: C024//', 'Se observa restos de tinta en el interior del equipo.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 286, NULL, '2020-09-09 04:14:54', '2020-09-12 01:20:39'),
+(293, 'Garantia', '2020-09-08', 'EP-000270', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9194201', '79', '2020-05-21', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 287, NULL, '2020-09-09 04:31:06', '2020-09-16 04:08:27'),
+(294, 'Garantia', '2020-09-08', 'EP-000271', 0, 1, 'Garantia', 'EPSON FX890II', 'X3YF039379', '80', '2020-07-23', 'Usuario menciona que se atasca el papel continuo después de la tercera impresión.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con perilla, cinta y tractor.', 13, 1, 275, NULL, '2020-09-09 05:57:20', '2020-09-19 06:22:48'),
+(295, 'Garantia', '2020-09-09', 'EP-000272', 1, 0, 'Garantia', 'EPSON L3110', 'X645229547', 'C0010936', '2020-07-22', 'Atasco de papel//Factura a nombre de: Juan Ignacio Lopez//Fecha de Compra: 22/07/2020//N° de Factura: BA56-09972571//Lugar de Compra: Supermercados Peruanos Plaza Vea.', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 288, NULL, '2020-09-09 23:05:34', '2020-09-09 23:05:34'),
+(296, 'Garantia', '2020-09-09', 'EP-000273', 0, 1, 'Garantia', 'EPSON L3160', 'X67B001064', '82', '2020-08-20', 'Mancha las hojas.', 'Problema de derrame de tinta en el soporte.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 93, NULL, '2020-09-09 23:45:38', '2020-09-12 01:10:00'),
+(297, 'Garantia', '2020-09-09', 'EP-000274', 1, 0, 'Garantia', 'EPSON L3110', 'X645152115', '83', '2020-05-28', 'Se atasca el papel.', 'Posible falla de rodillo.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 289, NULL, '2020-09-10 02:31:47', '2020-09-10 02:31:47'),
+(298, 'Garantia', '2020-09-10', 'EP-000275', 0, 1, 'Garantia', 'EPSON LX-350', 'Q76Y090998', '84', '2020-05-30', 'Parpadean todos los leds.', 'Posible falla de mecanismo.', 'Se observa rastros de suciedad, ingresa solo equipo con tapa, perilla, tensor y tractor.', 13, 1, 290, NULL, '2020-09-11 00:11:43', '2020-09-24 23:25:59'),
+(299, 'Garantia', '2020-09-10', 'EP-000276', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9110396', '85', '2020-02-18', 'Usuario menciona que parpadean todos los leds, defectos de impresión.', 'Se realizaron pruebas y no muestra el error mencionado.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 291, NULL, '2020-09-11 04:08:30', '2020-09-15 01:01:07'),
+(300, 'Garantia', '2020-09-11', 'EP-000277', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ010093', '85', '2020-07-25', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 292, NULL, '2020-09-12 00:06:10', '2020-09-16 01:02:31'),
+(301, 'Garantia', '2020-09-11', 'EP-000278', 0, 1, 'Garantia', 'EPSON L 4160', 'X4DW105404', '22', '2019-12-10', 'Regresa la hoja al momento de imprimir y se atasca', 'Posible falla de mecanismo', 'Se observa rasgos de polvo , suciedad , Ingresa equipo solo sin caja , sin accesorios', 13, 1, 293, NULL, '2020-09-12 00:53:43', '2020-09-24 06:13:33'),
+(302, 'Garantia', '2020-09-11', 'EP-000279', 0, 1, 'Garantia', 'EPSON L 3150', 'X5E9058646', '22', '2019-10-26', 'Emite un sonido extraño , No jala papel', 'Posible falla de mecanismo', 'Se observa rasgos de polvo y suciedad , Ingreso equipo solo sin accesorios , sin caja', 13, 1, 294, NULL, '2020-09-12 04:00:38', '2020-09-19 00:33:10'),
+(303, 'Garantia', '2020-09-11', 'EP-000280', 0, 1, 'Garantia', 'EPSON L 5190', 'X5NS007392', '22', '2019-11-12', 'El usuario menciona que no toma papel al momento de imprimir', 'Posible falla de mecanismo', 'Se observa rasgos de suciedad y polvo , Ingreso equipo sin caja , sin accesorios', 13, 1, 295, NULL, '2020-09-12 06:27:03', '2020-09-16 06:23:59'),
+(304, 'Garantia', '2020-09-12', 'EP-000281', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ014144', '86', '2020-07-18', 'Emite un sonido extraño al momento de la toma de papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 296, NULL, '2020-09-13 00:32:20', '2020-09-19 06:27:10'),
+(305, 'Garantia', '2020-09-14', 'EP-000282', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ067622', '86', '2020-09-03', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 297, NULL, '2020-09-14 23:06:44', '2020-09-17 03:15:35'),
+(306, 'Garantia', '2020-09-14', 'EP-000283', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW101137', '86', '2020-03-28', 'Presenta defectos de impresión, error general.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 298, NULL, '2020-09-15 03:37:25', '2020-09-18 05:42:35'),
+(307, 'Garantia', '2020-09-14', 'EP-000284', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ012055', 'C0011058', '2020-06-25', 'No imprime, las hojas pasan en blanco. Fecha de compra 25/06/2020.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 299, NULL, '2020-09-15 06:40:05', '2020-09-22 23:59:07'),
+(308, 'Garantia', '2020-09-15', 'EP-000285', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS058991', '87', '2020-08-27', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 300, NULL, '2020-09-16 05:18:19', '2020-09-19 06:58:10'),
+(309, 'Garantia', '2020-09-16', 'EP-000286', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ067658', 'C0011051', '2020-08-24', 'No avanza el papel Factura a nombre de: Carmen Rosa Condori Jeri Fecha de Compra: 24-08-20N° de Factura: 00466582 Lugar de Compra: Oesle Código Postal: 51Dirección: (San Juan De Lurigancho Provincia: Lima', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 301, NULL, '2020-09-16 23:48:13', '2020-09-19 00:27:01'),
+(310, 'Garantia', '2020-09-16', 'EP-000287', 0, 1, 'Garantia', 'EPSON M1120', 'X5J3001819', '88', '2019-08-13', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa exceso de suciedad en el interior del producto, ingresa solo equipo sin accesorios.', 13, 1, 302, NULL, '2020-09-17 00:32:59', '2020-09-28 22:47:15'),
+(311, 'Garantia', '2020-09-17', 'EP-000288', 0, 1, 'Garantia', 'EPSON L3110', 'X645001434', '89', '2019-11-04', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 303, NULL, '2020-09-18 00:22:59', '2020-09-22 04:07:52'),
+(312, 'Garantia', '2020-09-17', 'EP-000289', 0, 1, 'Garantia', 'EPSON L3110', 'X644531580', 'C0011138', '2019-12-01', 'Todas las luces están parpadeando /// Factura a nombre de: Luba Agafonova /// Fecha de Compra: Diciembre 2019', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 304, NULL, '2020-09-18 03:46:47', '2020-09-22 04:25:20');
+INSERT INTO `garantia_guia_ingreso` (`id`, `motivo`, `fecha`, `orden_servicio`, `estado`, `egresado`, `asunto`, `nombre_equipo`, `numero_serie`, `codigo_interno`, `fecha_compra`, `descripcion_problema`, `revision_diagnostico`, `estetica`, `marca_id`, `personal_lab_id`, `cliente_id`, `contacto_cliente_id`, `created_at`, `updated_at`) VALUES
+(313, 'Garantia', '2020-09-18', 'EP-000290', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS046945', 'C0011105', '2020-05-25', 'Imprime lineas verdes horizontales//Factura a nombre de: Cesar Salamanca//Fecha de Compra: 25-05-2020//N° de Factura: B301-23092405//Lugar de Compra: Metro', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 305, NULL, '2020-09-19 00:15:37', '2020-09-22 22:49:20'),
+(314, 'Garantia', '2020-09-19', 'EP-000291', 0, 1, 'Garantia', 'EPSON L 3160', 'X67B010036', '22', '2020-06-03', 'Defectos de impresion , no imprime el color magenta', 'Posible falla de cabezal', 'Se observa rasgos de suciedad y polvo , ingreso equipo con caja sin accesorios', 13, 1, 306, NULL, '2020-09-19 22:34:14', '2020-09-22 00:42:29'),
+(315, 'Garantia', '2020-09-19', 'EP-000292', 0, 1, 'Garantia', 'EPSON L3110', 'X645157537', '89', '2020-07-08', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad (polvo), Ingresa solo equipo sin accesorios.', 13, 1, 307, NULL, '2020-09-19 22:55:53', '2020-09-25 04:03:52'),
+(316, 'Garantia', '2020-09-21', 'EP-000293', 0, 1, 'Garantia', 'Epson L5190', 'X5NS033507', '90', '2020-03-05', 'Presenta error de atasco de papel.', 'Posible falla de sensor.', 'Se observa en buen estado, ingresa solo equipo sin accesorios', 13, 1, 308, NULL, '2020-09-21 23:19:18', '2020-09-24 00:31:14'),
+(317, 'Garantia', '2020-09-21', 'EP-000294', 0, 1, 'Garantia', 'Epson L1110', 'X5NB002421', '91', '2020-09-18', 'No enciende.', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa equipo con accesorios completos.', 13, 1, 309, NULL, '2020-09-21 23:52:33', '2020-10-06 23:20:54'),
+(318, 'Garantia', '2020-09-21', 'EP-000295', 0, 1, 'Garantia', 'Epson L3150', 'X7GQ046655', '91', '2020-05-12', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 310, NULL, '2020-09-22 00:17:12', '2020-10-20 04:16:30'),
+(319, 'Garantia', '2020-09-21', 'EP-000296', 0, 1, 'Garantia', 'Epson L4150', 'X4DB000844', '92', '2019-05-04', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 311, NULL, '2020-09-22 03:03:24', '2020-09-29 03:53:00'),
+(320, 'Garantia', '2020-09-21', 'EP-000297', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP149022', '93', '2020-06-08', 'Presenta error de servicio.', 'Contador de gotas al 100%.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 312, NULL, '2020-09-22 03:12:17', '2020-09-25 03:22:16'),
+(321, 'Garantia', '2020-09-21', 'EP-000298', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW115887', 'C0011207', '2020-05-13', 'Mensaje de error de atasco de papel, no avanza el papel // Fecha de Compra: 13/05/2020 //N° de Factura: 030B0900083985 //Lugar de Compra: La curacao, Conecta Retail SA', 'Posible objeto extraño en el interior del mecanismo.', 'Se observa restos de tinta en el interior del mecanismo, Ingresa solo equipo sin accesorios.', 13, 1, 313, NULL, '2020-09-22 04:44:55', '2020-09-23 03:43:09'),
+(322, 'Garantia', '2020-09-22', 'EP-000299', 0, 1, 'Garantia', 'EPSON L3110', 'X645208877', '93', '2020-06-19', 'Presenta defectos de impresion.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 314, NULL, '2020-09-22 23:54:00', '2020-09-25 04:37:25'),
+(323, 'Garantia', '2020-09-22', 'EP-000300', 0, 1, 'Garantia', 'EPSON L3110', 'X645177800', '94', '2020-04-29', 'No enciende.', 'Posible falla de fuente.', 'Se observa suciedad en el interior, ingresa solo equipo sin accesorios.', 13, 1, 315, NULL, '2020-09-23 05:05:43', '2020-09-30 05:41:35'),
+(324, 'Garantia', '2020-09-22', 'EP-000301', 1, 0, 'Garantia', 'EPSON L575', 'W9AY030064', '95', '2019-11-04', 'No enciende.', 'Posible falla electrica.', 'Se observa en buen estado, ingresa equipo con caja sin accesorios.', 13, 1, 316, NULL, '2020-09-23 05:46:54', '2020-09-23 05:46:54'),
+(325, 'Garantia', '2020-09-22', 'EP-000302', 0, 1, 'Garantia', 'EPSON L4160', 'X4DU121468', '96', '2020-08-01', 'Presenta defectos de impresión, derrame de tinta.', 'Posible falla de cabezal.', 'Se observa suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 317, NULL, '2020-09-23 06:00:49', '2020-09-26 03:44:05'),
+(326, 'Garantia', '2020-09-23', 'EP-000303', 0, 1, 'Garantia', 'EPSON L 495', 'X2PE005325', '12', '2020-07-13', 'El usuario menciona que tomas muchas hojas al momento de imprimir , defectos de impresion , manchas las hojas', 'posible falla de cabezal , mecanismo', 'Se observa le rasgo de polvo ,  Ingresa solo equipo , sin accesorios , sin caja', 13, 1, 318, NULL, '2020-09-23 22:19:59', '2020-09-26 02:18:05'),
+(327, 'Garantia', '2020-09-23', 'EP-000304', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW083641', '96', '2020-02-05', 'Presenta error de servicio.', 'Contador de gotas al 100%.', 'Se observa suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 319, NULL, '2020-09-24 04:10:04', '2020-10-06 22:42:32'),
+(328, 'Garantia', '2020-09-24', 'EP-000305', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS006538', '97', '2019-11-05', 'Mancha el papel, defectos de impresión.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 320, NULL, '2020-09-24 23:59:47', '2020-10-08 05:57:47'),
+(329, 'Garantia', '2020-09-25', 'EP-000306', 0, 1, 'Garantia', 'EPSON L3110', 'X645539931', '97', '2020-09-10', 'Defectos de impresión, mancha las hojas.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 321, NULL, '2020-09-26 00:35:38', '2020-09-30 04:28:58'),
+(330, 'Garantia', '2020-09-25', 'EP-000307', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW037106', '97', '2019-10-02', 'Presenta error de escaner.', 'Posible falla de escaner.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 322, NULL, '2020-09-26 02:27:38', '2020-10-08 05:08:09'),
+(331, 'Garantia', '2020-09-25', 'EP-000308', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ079145', '98', '2020-09-10', 'Impresión en blanco.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 323, NULL, '2020-09-26 02:35:14', '2020-09-30 02:17:50'),
+(332, 'Garantia', '2020-09-25', 'EP-000309', 0, 1, 'Garantia', 'EPSON L3110', 'X645157406', '98', '2020-06-13', 'Presenta error de atasco.', 'Posible falla de mecanismo.', 'Se observa leve rastro de polvo, ingresa solo equipo con caja sin accesorios.', 13, 1, 324, NULL, '2020-09-26 03:26:01', '2020-10-07 06:20:35'),
+(333, 'Garantia', '2020-09-25', 'EP-000310', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW120051', 'C0011326', '2020-03-14', 'Atasco de papel //Fecha de Compra: 14/03/2020//N° de Factura: 0646685//Lugar de Compra:Tiendas Peruanas S.A', 'Posible falla de mecanismo.', 'Se observa leve rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 325, NULL, '2020-09-26 03:49:11', '2020-09-30 04:02:41'),
+(334, 'Garantia', '2020-09-25', 'EP-000311', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS021644', 'C0011342', '2019-11-13', 'Mensajes de error de la impresora E-01//Factura a nombre de: Shougang Hierro Peru//Fecha de Compra: 13-11-2019//N° de Factura: F001-0002939//Lugar de Compra: Computel SA//Codigo Postal: 51//Direccion: cercado//Provincia: Lima//Departamento: Lima//CSA: C024', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 326, NULL, '2020-09-26 03:55:09', '2020-10-10 00:13:02'),
+(335, 'Garantia', '2020-09-28', 'EP-000312', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS068844', 'C0011402', '2020-09-19', 'No avanza el papel p-Bandeja 1//Factura a nombre de: Anita Diaz Aguilar//Fecha de Compra: 19-09-2020--N° de Factura: 00070828//Lugar de Compra: Falebella//Codigo Postal: 51//Direccion: Cercado//Provincia:Lima//Departamento:Lima//CSA: C024', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 327, NULL, '2020-09-29 06:29:44', '2020-09-29 06:35:41'),
+(336, 'Garantia', '2020-09-29', 'EP-000313', 0, 1, 'Garantia', 'EPSON L 3150', 'X7GQ020416', '22', '2020-07-11', 'Presenta error de atasco de papel , el usuario menciona que no responde el panel de control', 'Posible falla de rodillo , posible falla configuracion', 'Se observa rasgos de polvo , Ingreso equipo con caja sin accesorios', 13, 1, 328, NULL, '2020-09-29 23:04:35', '2020-10-06 23:10:11'),
+(337, 'Garantia', '2020-09-29', 'EP-000314', 0, 1, 'Garantia', 'EPSON L 4160', 'X4DW125562', '2', '2020-05-14', 'Presenta error de tapón debe reparase', 'Posible falla de mecanismo', 'Se observa rasgos de polvo y suciedad , Ingresa equipo con caja sin accesorios', 13, 1, 329, NULL, '2020-09-29 23:16:42', '2020-10-01 23:54:49'),
+(338, 'Garantia', '2020-09-29', 'EP-000315', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS040248', '98', '2020-03-06', 'Presenta atasco de papel.', 'Posible falla de rodillo.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 330, NULL, '2020-09-29 23:33:42', '2020-10-09 04:00:42'),
+(339, 'Garantia', '2020-09-29', 'EP-000316', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS006233', '99', '2020-06-05', 'No toma el papel.', 'Posible falla de mecanismo.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 330, NULL, '2020-09-29 23:35:57', '2020-10-09 04:02:15'),
+(340, 'Garantia', '2020-09-29', 'EP-000317', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS023771', '101', '2020-01-27', 'Presenta atasco de papel.', 'Posible falla de rodillo.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 330, NULL, '2020-09-29 23:37:36', '2020-10-09 04:04:15'),
+(341, 'Garantia', '2020-09-29', 'EP-000318', 0, 1, 'Garantia', 'EPSON L575', 'W9AY155511', '102', '2019-03-15', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 331, NULL, '2020-09-30 02:34:24', '2020-09-30 23:45:43'),
+(342, 'Garantia', '2020-09-30', 'EP-000319', 0, 1, 'Garantia', 'EPSON L3110', 'X645189862', '103', '2020-07-09', 'Emite un sonido extraño al momento del encendido.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 332, NULL, '2020-10-01 02:07:43', '2020-10-13 06:01:47'),
+(343, 'Garantia', '2020-09-30', 'EP-000320', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP123563', '104', '2020-07-25', 'Usuario menciona que emite un sonido, defectos de impresion.', 'Posible falla de mecanismo.', 'Se observa rastros de suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 333, NULL, '2020-10-01 02:32:09', '2020-10-21 04:48:32'),
+(344, 'Garantia', '2020-10-01', 'EP-000321', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW065501', '106', '2019-06-21', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 334, NULL, '2020-10-01 22:23:02', '2020-10-10 22:29:15'),
+(345, 'Garantia', '2020-10-01', 'EP-000322', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS015304', '107', '2019-09-13', 'Presenta error de atasco, error de escaner.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 335, NULL, '2020-10-02 00:53:19', '2020-10-06 23:40:17'),
+(346, 'Garantia', '2020-10-01', 'EP-000323', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW146391', '108', '2020-06-15', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 336, NULL, '2020-10-02 03:20:55', '2020-10-07 04:24:22'),
+(347, 'Garantia', '2020-10-02', 'EP-000324', 0, 1, 'Garantia', 'EPSON L4150', 'X4D9349489', '108', '2019-07-06', 'Defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 337, NULL, '2020-10-03 00:50:44', '2020-10-08 02:52:49'),
+(348, 'Garantia', '2020-10-02', 'EP-000325', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9191041', '109', '2020-05-05', 'Presenta defectos de impresion.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 338, NULL, '2020-10-03 00:57:47', '2020-10-03 01:02:32'),
+(349, 'Garantia', '2020-10-02', 'EP-000326', 0, 1, 'Garantia', 'EPSON L3110', 'X644479874', 'C0011472', '2020-09-26', 'Error de almohadilla //Fecha de Compra: 26-09-2020 //N° de Factura: 5307053/80397195 // Lugar de Compra: La curacao', 'Equipo bloqueado.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 339, NULL, '2020-10-03 02:59:51', '2020-10-06 02:15:58'),
+(350, 'Garantia', '2020-10-02', 'EP-000327', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ066144', 'C0011538', '2020-09-12', 'error de almohadilla //fecha de compra:12/septiembre://lugar de compra:centro de lima quirmin 769 //titular: odelia quite', 'Equipo bloqueado.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 340, NULL, '2020-10-03 04:10:16', '2020-10-03 04:22:24'),
+(351, 'Garantia', '2020-10-02', 'EP-000328', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9118553', '110', '2020-02-25', 'Defectos de impresion.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 342, NULL, '2020-10-03 04:44:21', '2020-10-04 01:22:55'),
+(352, 'Garantia', '2020-10-03', 'EP-000329', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ008036', '111', '2020-07-06', 'Presenta atasco de papel.', 'Se observa papel atascado.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 343, NULL, '2020-10-04 01:09:16', '2020-10-07 00:34:12'),
+(353, 'Garantia', '2020-10-05', 'EP-000330', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW075610', 'C0011576', '2019-08-12', 'No imprime los colores - Fecha de compra 12 Agosto 2019 - Lugar de compra: Importadora Center- Fac: BA04-000886', 'Posible falla de cabezal.', 'Se observa suciedad en el interior del equipo, ingresa solo equipo con caja sin accesorios.', 13, 1, 344, NULL, '2020-10-06 04:20:26', '2020-10-10 03:27:54'),
+(354, 'Garantia', '2020-10-06', 'EP-000331', 0, 1, 'Garantia', 'EPSON L 805', 'X7VK025512', '22', '2019-10-14', 'Imprime con sombras , defectos de impresion', 'Posible falla de cabezal', 'Se observa rasgos de polvo , Ingresa equipo solo con caja sin accesorios', 13, 1, 345, NULL, '2020-10-06 22:26:24', '2020-10-16 23:42:50'),
+(355, 'Garantia', '2020-10-06', 'EP-000332', 0, 1, 'Garantia', 'EPSON L5190', 'X5NQ090334', '112', '2020-07-18', 'Presenta error de servicio.', 'Contador de tinta al 100%.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 319, NULL, '2020-10-06 22:35:12', '2020-10-15 02:39:27'),
+(356, 'Garantia', '2020-10-06', 'EP-000333', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS046868', '113', '2020-05-19', 'Presenta error de escaner.', 'Posible falla de escaner.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 346, NULL, '2020-10-07 03:54:21', '2020-10-22 00:46:48'),
+(357, 'Garantia', '2020-10-06', 'EP-000334', 0, 1, 'Garantia', 'EPSON L3160', 'X4DW059740', '114', '2019-09-21', 'Presenta error de impresora.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 347, NULL, '2020-10-07 05:31:39', '2020-10-13 06:55:23'),
+(358, 'Garantia', '2020-10-07', 'EP-000335', 0, 1, 'Garantia', 'EPSON L3110', 'X644543813', '114', '2020-09-08', 'Presenta defectos de impresión, usuario menciona que emite un sonido extraño.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 348, NULL, '2020-10-08 04:17:24', '2020-11-13 03:50:08'),
+(359, 'Garantia', '2020-10-07', 'EP-000336', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9001092', '115', '2019-09-16', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 349, NULL, '2020-10-08 05:33:33', '2020-10-10 00:54:19'),
+(360, 'Garantia', '2020-10-07', 'EP-000337', 0, 1, 'Garantia', 'EPSON L3110', 'X644550774', '115', '2020-09-04', 'Presenta una marca en las hojas al momento de la impresión.', 'Posible falla de mecanismo.', 'Se observa rastros de suciedad (polvo, ingresa solo equipo con caja sin accesorios.', 13, 1, 350, NULL, '2020-10-08 06:56:31', '2020-10-10 04:41:42'),
+(361, 'Garantia', '2020-10-08', 'EP-000338', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS038419', 'C0011613', '2020-09-16', 'Las letras salen dobles- Fecha de compra: 16 de Septiembre 2020 - Lugar de compra: Coolbox- Titular de compra: Suministros JLA- Fac: F978-1387', 'Posible falla de sensor CR.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 351, NULL, '2020-10-08 23:13:56', '2020-10-14 04:41:34'),
+(362, 'Garantia', '2020-10-09', 'EP-000339', 0, 1, 'Garantia', 'EPSON L1300', 'UBHY030666', '115', '2020-07-24', 'Presenta error de atasco de papel.', 'Posible falla de sensor.', 'Se observa exceso de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 311, NULL, '2020-10-09 23:59:47', '2020-10-14 02:41:58'),
+(363, 'Garantia', '2020-10-09', 'EP-000340', 0, 1, 'Garantia', 'EPSON L4150', 'X4DB012518', '116', '2019-03-06', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 352, NULL, '2020-10-10 03:20:26', '2020-10-21 23:42:24'),
+(364, 'Garantia', '2020-10-09', 'EP-000341', 0, 1, 'Garantia', 'EPSON L1455', 'X2SF005897', '117', '2020-07-18', 'Usuario menciona que emite un sonido fuerte al imprimir.', 'Posible falla de mecanismo.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 118, NULL, '2020-10-10 05:10:19', '2020-10-22 05:31:57'),
+(365, 'Garantia', '2020-10-12', 'EP-000342', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP129432', 'C0011689', '2019-11-07', 'No avanza el papel//Fecha de Compra: 07/11/2019//N° de Factura: FA01-445//Lugar de Compra: D\'Todo pa\' Tu Compu SAC', 'Posible falla de rodillo.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 353, NULL, '2020-10-13 00:36:52', '2020-10-17 00:13:20'),
+(366, 'Garantia', '2020-10-12', 'EP-000343', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW035112', '117', '2019-12-23', 'No responde el panel de control.', 'Posible falla de panel.', 'Se observa exceso de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 354, NULL, '2020-10-13 00:43:23', '2020-10-20 05:46:53'),
+(367, 'Garantia', '2020-10-13', 'EP-000344', 0, 1, 'Garantia', 'EPSON L3150', 'X5E91429999', '118', '2019-09-19', 'Presenta error de servicio.', 'Contador de gotas de tinta al 100%.', 'Se observa suciedad (polvo), ingresa equipo con cables USB y Power.', 13, 1, 355, NULL, '2020-10-13 23:59:20', '2020-10-14 03:27:39'),
+(368, 'Garantia', '2020-10-13', 'EP-000345', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ085802', '118', '2020-09-29', 'Presenta error de servicio.', 'Contador al 100%.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 357, NULL, '2020-10-14 01:11:17', '2020-10-22 23:19:04'),
+(369, 'Garantia', '2020-10-13', 'EP-000346', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ011254', 'C0011799', '2020-06-13', 'Obstrucción de papel en bandeja 1//Fecha de Compra: 13-06-2020//N° de Factura: 044-0701105//Lugar de Compra: Oesle', 'Papel atascado.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 358, NULL, '2020-10-14 02:50:08', '2020-10-14 02:56:59'),
+(370, 'Garantia', '2020-10-13', 'EP-000347', 0, 1, 'Garantia', 'EPSON TM-T20II', 'TC6Y537396', 'C0011808', '2019-10-31', 'Imprime con espacios en Blanco //FC: 31-10-2019 //LC: Grupo Vasquez RVC SAC //NF: FPP1-000634', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con adaptador.', 13, 1, 359, NULL, '2020-10-14 03:02:55', '2020-10-20 05:41:13'),
+(371, 'Garantia', '2020-10-13', 'EP-000348', 1, 0, 'Garantia', 'EPSON L3110', 'X645118520', '119', '2020-09-05', 'No imprime color BK.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 360, NULL, '2020-10-14 03:45:38', '2020-10-14 03:45:38'),
+(372, 'Garantia', '2020-10-14', 'EP-000349', 0, 1, 'Garantia', 'EPSON L3110', 'X645195683', '119', '2020-06-09', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 361, NULL, '2020-10-15 00:03:57', '2020-10-17 04:35:28'),
+(373, 'Garantia', '2020-10-14', 'EP-000350', 0, 1, 'Garantia', 'EPSON L3110', 'X644531632', '119', '2020-09-12', 'Presenta error general.', 'Posible falla de mecanismno.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 362, NULL, '2020-10-15 00:12:37', '2020-11-15 00:18:15'),
+(374, 'Garantia', '2020-10-14', 'EP-000351', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS059669', 'C0011798', '2020-07-22', 'Obstrucción de papel Factura a nombre de: Edson ElliotFecha de Compra: 21-07-20N° de Factura: 000000 Lugar de Compra: Comuplaza Código Postal: 51Dirección: ( Villa del Triunfo)', 'Se observa papel trabado.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 363, NULL, '2020-10-15 00:32:44', '2020-10-23 06:41:59'),
+(375, 'Garantia', '2020-10-14', 'EP-000352', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS021723', 'C0011831', '2019-09-30', 'Presenta error de escaner.', 'Posible falla de escaner.', 'Se observa leve rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 364, NULL, '2020-10-15 03:01:42', '2020-10-16 22:39:42'),
+(376, 'Garantia', '2020-10-14', 'EP-000353', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9118198', '120', '2020-01-03', 'Presenta error de atasco.', 'Papel trabado.', 'Se observa restos de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 365, NULL, '2020-10-15 05:09:00', '2020-10-15 23:41:49'),
+(377, 'Garantia', '2020-10-14', 'EP-000354', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9121011', '121', '2020-03-06', 'Presenta error general, parpadean todos los leds.', 'Posible falla de mecanismo.', 'Se observa suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 366, NULL, '2020-10-15 05:39:33', '2020-10-31 05:04:17'),
+(378, 'Garantia', '2020-10-15', 'EP-000355', 0, 1, 'Garantia', 'EPSON L3110', 'X644081905', 'C0011865', '2020-10-13', 'Error de indicadores//Titular: Donato Alarco yuque//Fecha de Compra:13/10/2020//N° de Factura: 2280//Lugar de Compra: El gallo es mas gallo', 'Contador al 100%.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 367, NULL, '2020-10-16 02:46:50', '2020-10-18 00:26:36'),
+(379, 'Garantia', '2020-10-16', 'EP-000356', 0, 1, 'Garantia', 'EPSON L 3150', 'X76Q014455', '22', '2020-07-09', 'Presenta error de servicio , Error general', 'Posible falla de mecanismo', 'Se observa rasgos de polvo , Ingreso equipo con , sin  accesorios', 13, 1, 368, NULL, '2020-10-16 22:25:14', '2020-10-29 00:31:20'),
+(380, 'Garantia', '2020-10-16', 'EP-000357', 0, 1, 'Garantia', 'EPSON L4150', 'X4DB043503', 'C0011758', '2019-01-30', 'Atasca papel // F.Compra:30/01/19 // HOSPITAL III EMERGENCIAS GRAU', 'Posible falla de rodillo.', 'Se observa exceso de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 369, NULL, '2020-10-16 23:38:59', '2020-10-22 00:19:53'),
+(381, 'Garantia', '2020-10-16', 'EP-000358', 0, 1, 'Garantia', 'EPSON L4150', 'C0011757', 'X4D9322789', '2019-01-30', 'Presenta error de servicio.', 'Contador al 100%.', 'Se observa exceso de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 369, NULL, '2020-10-17 00:08:25', '2020-10-22 00:21:19'),
+(382, 'Garantia', '2020-10-16', 'EP-000359', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9140385', '120', '2020-05-06', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 370, NULL, '2020-10-17 01:09:13', '2020-10-27 00:56:15'),
+(383, 'Garantia', '2020-10-16', 'EP-000360', 0, 1, 'Garantia', 'EPSON L4150', 'X4DB011633', 'C0011759', '2019-01-30', 'Presenta atasco de papel.', 'Posible falla de rodillo.', 'Se observa exceso de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 369, NULL, '2020-10-17 02:34:23', '2020-10-22 00:22:59'),
+(384, 'Garantia', '2020-10-16', 'EP-000361', 0, 1, 'Garantia', 'EPSON L4150', 'X4D9349979', 'C0011761', '2019-01-30', 'No jala papel // F.Compra:30/01/19 // HOSPITAL III EMERGENCIAS GRAU', 'Posible falla de rodillo.', 'Se observa exceso de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 369, NULL, '2020-10-17 03:36:04', '2020-10-22 00:24:17'),
+(385, 'Garantia', '2020-10-16', 'EP-000362', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS047429', 'C0011897', '2020-05-07', 'Imprime en blanco//Factura a nombre de: Viviano Jorge Ernesto//Fecha de Compra: 07-05-2020//N° de Factura: 052231//Lugar de Compra: Tottus//CSA: C024 S&R Solution Service S.A.C.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 371, NULL, '2020-10-17 04:55:37', '2020-10-21 03:52:16'),
+(386, 'Garantia', '2020-10-17', 'EP-000363', 0, 1, 'Garantia', 'EPSON L 3110', 'X645222568', '22', '2020-07-10', 'El usuario menciona que se atasca el papel', 'Posible falla de mecanismo', 'Se observa el equipo con rasgos de polvo , Ingreso solo equipo , sin accesorios', 13, 1, 372, NULL, '2020-10-17 22:27:52', '2020-10-21 05:42:29'),
+(387, 'Garantia', '2020-10-17', 'EP-000364', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW105784', 'C0011768', '2020-07-08', 'Imprime con rayas //FC: 08-07-2020 //LC: Comercial D&A //NF: 001354', 'Cabezal con inyectores obstruidos.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 373, NULL, '2020-10-17 23:56:34', '2020-10-22 05:17:21'),
+(388, 'Garantia', '2020-10-17', 'EP-000365', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW082985', '121', '2019-09-28', 'Presenta efectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 374, NULL, '2020-10-18 00:48:27', '2020-10-22 00:01:43'),
+(389, 'Garantia', '2020-10-19', 'EP-000366', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9045921', 'C0011920', '2020-01-20', 'no imprime a color y sale borroso//N° de Factura: B012-00006740//Lugar de Compra: Super Tec SA', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 375, NULL, '2020-10-20 03:13:32', '2020-10-20 05:18:19'),
+(390, 'Garantia', '2020-10-19', 'EP-000367', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW132054', '123', '2020-07-19', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 376, NULL, '2020-10-20 04:52:15', '2020-10-27 02:20:59'),
+(391, 'Garantia', '2020-10-19', 'EP-000368', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS045489', '124', '2020-02-23', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 377, NULL, '2020-10-20 05:02:26', '2020-10-23 22:28:37'),
+(392, 'Garantia', '2020-10-20', 'EP-000369', 0, 1, 'Garantia', 'EPSON L 3150', 'X5E9093642', '22', '2020-04-02', 'Presenta error de atasco de papel', 'Posible falla de mecanismo', 'Se observa leve rasgo de polvo , Ingreso equipo con caja sin accesorios', 13, 1, 378, NULL, '2020-10-20 22:25:57', '2020-10-23 00:29:26'),
+(393, 'Garantia', '2020-10-20', 'EP-000370', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS007652', '124', '2020-02-24', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo con caja (caja no pertenece al producto).', 13, 1, 379, NULL, '2020-10-21 00:09:55', '2020-11-12 03:58:18'),
+(394, 'Garantia', '2020-10-20', 'EP-000371', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS069451', '125', '2020-09-19', 'Presenta error de impresora.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 380, NULL, '2020-10-21 03:08:34', '2020-10-27 00:54:26'),
+(395, 'Garantia', '2020-10-21', 'EP-000372', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS019416', 'C0012004', '2020-03-08', 'Impresión con líneas//Fecha de Compra: 08/03/2020//N° de Factura: 493832//Lugar de Compra: Elektra', 'Posible falla de cabezal.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 381, NULL, '2020-10-22 02:18:45', '2020-10-23 02:50:22'),
+(396, 'Garantia', '2020-10-21', 'EP-000373', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ071143', '126', '2020-08-15', 'Usuario menciona que se atasca el papel, emite un sonido extraño.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa equipo con caja sin accesorios.', 13, 1, 382, NULL, '2020-10-22 05:10:51', '2020-10-24 06:38:54'),
+(397, 'Garantia', '2020-10-21', 'EP-000374', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS047429', '126', '2020-05-07', 'Imprime en blanco//Factura a nombre de: Viviano Jorge Ernesto//Fecha de Compra: 07-05-2020', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 371, NULL, '2020-10-22 05:36:37', '2020-10-24 00:52:21'),
+(398, 'Garantia', '2020-10-22', 'EP-000375', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9045993', '127', '2019-06-25', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 93, NULL, '2020-10-23 01:06:47', '2020-10-27 00:39:22'),
+(399, 'Garantia', '2020-10-22', 'EP-000376', 0, 1, 'Garantia', 'EPSON L3110', 'X644488171', 'C0011960', '2020-09-28', 'Todas las luces parpadean.Factura a nombre de: Jose Luis RoqueFecha de Compra: 28-09-20', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 383, NULL, '2020-10-23 02:03:52', '2020-10-27 06:13:47'),
+(400, 'Garantia', '2020-10-22', 'EP-000377', 0, 1, 'Garantia', 'EPSON L3110', 'X645151440', '128', '2020-06-04', 'Presenta error general (parpadean todos los leds).', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 384, NULL, '2020-10-23 02:36:54', '2020-10-27 02:16:30'),
+(401, 'Garantia', '2020-10-22', 'EP-000378', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9118971', 'C0012030', '2020-07-09', 'No enciende /// Factura a nombre de: Richard Urbizagasstegui /// Fecha de Compra: Septiembre 2020', 'Posible falla de fuente.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 385, NULL, '2020-10-23 02:42:07', '2020-10-27 03:01:41'),
+(402, 'Garantia', '2020-10-22', 'EP-000379', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9185923', '128', '2020-06-27', 'No toma el papel.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 386, NULL, '2020-10-23 03:08:41', '2020-10-28 00:03:37'),
+(403, 'Garantia', '2020-10-22', 'EP-000380', 0, 1, 'Garantia', 'EPSON L3110', 'X645047617', '129', '2020-02-08', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 218, NULL, '2020-10-23 05:34:22', '2020-10-29 03:49:04'),
+(404, 'Garantia', '2020-10-23', 'EP-000381', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW144613', '129', '2020-08-12', 'Presenta defectos de impresión (imágenes con rayas), mancha las hojas.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad (polvo), no muestra daños físicos, ingresa solo equipo sin accesorios.', 13, 1, 387, NULL, '2020-10-23 23:03:07', '2020-10-28 04:00:25'),
+(405, 'Garantia', '2020-10-23', 'EP-000382', 0, 1, 'Garantia', 'EPSON L805', 'W7VK031343', '130', '2020-01-11', 'No toma el papel.', 'Posible falla de bandeja.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 388, NULL, '2020-10-24 00:03:05', '2020-10-28 23:56:47'),
+(406, 'Garantia', '2020-10-23', 'EP-000383', 0, 1, 'Garantia', 'EPSON L3110', 'X645128936', '131', '2020-02-20', 'Presenta error de servicio.', 'Contador al 100%.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 389, NULL, '2020-10-24 01:04:06', '2020-10-28 02:43:25'),
+(407, 'Garantia', '2020-10-24', 'EP-000384', 1, 0, 'Garantia', 'EPSON L 6171', 'X4ET017722', '22', '2020-10-03', 'Presenta defectos de impresion', 'Posible falla de cabezal', 'Se observa en buen estado , Ingreso equipo con caja , sin accesorios', 13, 1, 390, NULL, '2020-10-24 23:18:30', '2020-10-24 23:18:30'),
+(408, 'Garantia', '2020-10-24', 'EP-000385', 0, 1, 'Garantia', 'EPSON L 4160', 'X4DW065501', '21', '2019-06-21', 'Presenta defectos de impresion , IMPRIME CON RAYAS', 'Posible falla de cabezal', 'Se observa en buen estado , Ingreso equipo con caja sin accesorios', 13, 1, 334, NULL, '2020-10-24 23:37:51', '2020-10-28 22:52:16'),
+(409, 'Garantia', '2020-10-24', 'EP-000386', 0, 1, 'Garantia', 'EPSON L 3110', 'X5DP019787', '22', '2019-01-12', 'Presenta defectos de impresion', 'Posible falla de cabezal', 'Se observa en suciedad , polvo , Ingreso solo equipo sin accesorios', 13, 1, 391, NULL, '2020-10-25 00:41:13', '2020-10-28 02:24:08'),
+(410, 'Garantia', '2020-10-26', 'EP-000387', 0, 1, 'Garantia', 'EPSON L4160', 'X4DU122663', '131', '2020-08-05', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa exceso de suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 392, NULL, '2020-10-27 00:07:03', '2020-10-29 03:00:35'),
+(411, 'Garantia', '2020-10-27', 'EP-000388', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9177880', '132', '2020-08-28', 'Parpadean todos los leds.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 393, NULL, '2020-10-28 00:15:17', '2020-11-05 02:19:27'),
+(412, 'Garantia', '2020-10-27', 'EP-000389', 0, 1, 'Garantia', 'EPSON L5190', 'X5NQ075519', '133', '2020-07-27', 'Mancha las hojas, defectos de impresión.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 394, NULL, '2020-10-28 00:42:38', '2020-10-29 05:18:16'),
+(413, 'Garantia', '2020-10-27', 'EP-000390', 1, 0, 'Garantia', 'EPSON L3110', 'X645183370', '134', '2020-09-10', 'No enciende.', 'Posible falla de tarjeta.', 'Se observa leve rastro de suciedad, ingresa equipo con caja sin accesorios.', 13, 1, 395, NULL, '2020-10-28 03:44:23', '2020-10-28 03:44:23'),
+(414, 'Garantia', '2020-10-28', 'EP-000391', 0, 1, 'Garantia', 'EPSON TM-T20II', 'X39D081639', '135', '2019-09-23', 'Usuario menciona que no imprime.', 'Se realizo el auto test y no presenta desperfectos.', 'Se observa suciedad, ingresa solo equipo con adaptador de voltaje.', 13, 1, 104, NULL, '2020-10-29 02:53:01', '2020-11-06 05:22:38'),
+(415, 'Garantia', '2020-10-29', 'EP-000392', 0, 1, 'Garantia', 'EPSON L 3160', 'X67B008678', '22', '2019-09-16', 'Presenta error de Servicio', 'Posible falla de mecanismo', 'Se Observa rastros leve de polvo , Ingreso solo equipo con caja sin accesorios', 13, 1, 396, NULL, '2020-10-29 22:26:15', '2020-10-30 02:29:57'),
+(416, 'Garantia', '2020-10-29', 'EP-000393', 0, 1, 'Garantía', 'Epson L5190', 'X5NS072775', '136', '2020-10-10', 'Presenta error de escaner', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa equipo con caja y cable de red y de power.', 13, 1, 397, NULL, '2020-10-29 22:50:44', '2020-11-03 03:56:34'),
+(417, 'Garantia', '2020-10-29', 'EP-000394', 0, 1, 'Garantia', 'EPSON L850', 'UTQY006289', '137', '2020-02-27', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 398, NULL, '2020-10-30 00:50:17', '2020-11-07 07:18:44'),
+(418, 'Garantia', '2020-10-30', 'EP-000395', 0, 1, 'Garantia', 'EPSON L 5190', 'X5NS032212', '23', '2020-01-13', 'Presenta defectos de impresion', 'Posible falla de cabezal', 'Se observa el equipo con leve rasgos de polvo , Ingreso equipo  sin caja sin accesorios', 13, 1, 399, NULL, '2020-10-31 01:09:59', '2020-11-05 00:11:55'),
+(419, 'Garantia', '2020-10-30', 'EP-000396', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9138472', '138', '2020-01-31', 'Presenta error general, la hoja se queda a la mitad.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 276, NULL, '2020-10-31 03:05:47', '2020-11-03 03:48:58'),
+(420, 'Garantia', '2020-10-31', 'EP-000397', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW093010', 'C0012217', '2020-04-02', 'Tapón de tinta lleno - No imprime a color ///Fecha de compra: 02/04/2020 ///Número de Factura: SA6200721168', 'Contador de tinta al 100%.', 'Se observa rastros de suciedad, ingresa solo equipo sin caja.', 13, 1, 400, NULL, '2020-10-31 23:25:35', '2020-11-03 02:03:45'),
+(421, 'Garantia', '2020-11-02', 'EP-000398', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS069657', '138', '2020-10-06', 'Presenta error de escaner.', 'Posible falla de escaner.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 401, NULL, '2020-11-02 23:27:22', '2020-11-04 05:15:32'),
+(422, 'Garantia', '2020-11-02', 'EP-000399', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ080585', 'C0012293', '2020-09-10', 'Defectos de impresión (texto con rayas). Fecha de compra 10/09/2020.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja.', 13, 1, 402, NULL, '2020-11-03 07:09:09', '2020-11-05 02:15:52'),
+(423, 'Garantia', '2020-11-02', 'EP-000400', 0, 1, 'Garantia', 'EPSON L495', 'X2PE046458', 'C0012294', '2020-08-08', 'No enciende. Fecha de compra 08/08/2020.', 'Posible falla de tarjeta.', 'Se observa en buen estado, ingresa solo equipo con caja.', 13, 1, 403, NULL, '2020-11-03 08:14:10', '2020-11-11 23:28:35'),
+(424, 'Garantia', '2020-11-02', 'EP-000401', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ085841', 'C0012234', '2020-10-03', 'Mala calidad de imagen - Imprime amarillo.Factura a nombre de: Linda Vasquez PradoFecha de Compra: 03-10-20N° de Factura: 005569 Lugar de Compra: TratechCódigo Postal', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo.', 13, 1, 404, NULL, '2020-11-03 08:18:42', '2020-11-05 00:21:34'),
+(425, 'Garantia', '2020-11-02', 'EP-000402', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ071227', '139', '2020-08-22', 'No toma el papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 405, NULL, '2020-11-03 08:27:01', '2020-11-05 23:55:53'),
+(426, 'Garantia', '2020-11-03', 'EP-000403', 0, 1, 'Garantia', 'EPSON FX890II', 'X3YF0033535', '20', '0206-02-20', 'El usuario menciona que se atasca papel ,  Emite un sonido extraño', 'Posible falla de mecanismo', 'Se observa en buen estado , Ingreso solo equipo sin accesorios', 13, 1, 406, NULL, '2020-11-03 22:25:36', '2020-11-07 23:09:30'),
+(427, 'Garantia', '2020-11-03', 'EP-000404', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9119676', '140', '2020-05-12', 'Presenta atasco de papel.', 'Posible falla de rodillo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 407, NULL, '2020-11-03 23:27:14', '2020-11-07 23:31:31'),
+(428, 'Garantia', '2020-11-03', 'EP-000405', 0, 1, 'Garantia', 'EPSON L 5190', 'X5NS050696', '22', '2020-07-09', 'Presenta defectos de impresion , Imprime distorsionado', 'Posible falla de cabezal', 'Se observa rasgos de polvo , Ingreso equipo con caja sin accesorios', 13, 1, 408, NULL, '2020-11-04 00:20:15', '2020-11-06 22:21:35'),
+(429, 'Garantia', '2020-11-03', 'EP-000406', 0, 1, 'Garantia', 'EPSON L6171', 'X4ET014730', '141', '2020-08-17', 'Presenta error de escaner.', 'Posible falla de escaner.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 409, NULL, '2020-11-04 01:02:58', '2020-11-06 04:30:27'),
+(430, 'Garantia', '2020-11-03', 'EP-000407', 0, 1, 'Garantia', 'EPSON L6171', 'X4ET017961', '142', '2020-10-01', 'Presenta defectos de impresión.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 410, NULL, '2020-11-04 02:24:10', '2020-11-06 02:19:19'),
+(431, 'Garantia', '2020-11-03', 'EP-000408', 0, 1, 'Garantia', 'EPSON L 805', 'W7VK036770', '143', '2020-10-21', 'Usuario menciona que se atasca el papel.', 'El producto no presenta la falla reportada, ingresa para revision minuciosa.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 411, NULL, '2020-11-04 03:18:23', '2020-11-06 04:12:16'),
+(432, 'Garantia', '2020-11-03', 'EP-000409', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ079463', '143', '2020-09-05', 'Presenta atasco de papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 412, NULL, '2020-11-04 03:32:01', '2020-11-06 03:49:37'),
+(433, 'Garantia', '2020-11-03', 'EP-000410', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW146391', 'C0012282', '2020-06-15', 'Impresión con líneas// Factura a nombre de: Roxana Diana Torres// Fecha de Compra: 15/06/2020.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 336, NULL, '2020-11-04 04:13:17', '2020-11-07 04:22:36'),
+(434, 'Garantia', '2020-11-03', 'EP-000411', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP140547', '144', '2019-12-17', 'Presenta defectos de impresion.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 413, NULL, '2020-11-04 04:38:18', '2020-11-06 05:36:02'),
+(435, 'Garantia', '2020-11-03', 'EP-000412', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9084273', 'C0012313', '2020-07-17', 'Impresión con líneas//Fecha de Compra: 17/07/2020//N° de Factura: 473//Lugar de Compra: Claussen Y Asociados', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 414, NULL, '2020-11-04 05:40:28', '2020-11-12 04:37:38'),
+(436, 'Garantia', '2020-11-04', 'EP-000413', 0, 1, 'Garantia', 'EPSON L 5190', 'X5N5051074', '20', '2020-06-27', 'El usuario menciona que se queda a la mitad las hojas al momento que  imprime , Presenta Defectos de impresion', 'Posible falla de mecanismo , Posible falla de cabezal', 'Se observa leve rastros de polvo , Ingreso solo equipo con caja sin accesorios', 13, 1, 415, NULL, '2020-11-04 22:14:07', '2020-11-13 23:34:55'),
+(437, 'Garantia', '2020-11-05', 'EP-000414', 0, 1, 'Garantia', 'EPSON L3110', 'X644481409', '20', '2020-10-09', 'PRESENTA DEFECTOS DE IMPRESION', 'Posible falla de cabezal', 'Se observa rasgos de polvo , Ingreso equipo con caja sin accesorios', 13, 1, 416, NULL, '2020-11-06 00:41:14', '2020-11-07 23:58:24'),
+(438, 'Garantia', '2020-11-05', 'EP-000415', 1, 0, 'Garantia', 'TM-T20II', 'X39D072419', '144', '2019-09-25', 'Usuario menciona que no imprime.', 'Ingresa para revision general.', 'Se observa rastros de suciedad, ingresa solo equipo con adaptador sin accesorios.', 13, 1, 319, NULL, '2020-11-06 05:21:11', '2020-11-06 05:21:11'),
+(439, 'Garantia', '2020-11-06', 'EP-000416', 0, 1, 'Garantia', 'EPSON L3110', 'X644538692', '145', '2020-08-28', 'Presenta error de servicio.', 'Contador de gotas al 100%.', 'Se observa leve rastro de suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 417, NULL, '2020-11-06 22:33:45', '2020-11-11 22:22:06'),
+(440, 'Garantia', '2020-11-06', 'EP-000417', 0, 1, 'Garantia', 'EPSON L850', 'UTQY006039', '146', '2019-12-02', 'Usuario menciona que se atasca el papel.', 'El equipo no presento fallas, ingresa para revision general.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 418, NULL, '2020-11-07 05:04:41', '2020-11-13 02:53:13'),
+(441, 'Garantia', '2020-11-07', 'EP-000418', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9087225', 'C0012425', '2020-02-18', 'almohadilla de tinta Factura a nombre de: Proweld sac Fecha de Compra: 18/02/2020.', 'Contador al 100%.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 278, NULL, '2020-11-07 22:33:25', '2020-11-14 23:02:15'),
+(442, 'Garantia', '2020-11-09', 'EP-000419', 0, 1, 'Garantia', 'EPSON TM-m30', 'WPHF050828', '146', '2020-08-27', 'Usuario menciona que no imprime.', 'El producto ingresa para descarte.', 'Se observa en buen estado, ingresa solo equipo con, caja, adaptador y cable power.', 13, 1, 36, NULL, '2020-11-09 23:11:27', '2020-11-15 00:32:08'),
+(443, 'Garantia', '2020-11-09', 'EP-000420', 0, 1, 'Garantia', 'EPSON L3110', 'X645205272', '148', '2020-07-06', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 419, NULL, '2020-11-09 23:51:32', '2020-11-12 02:13:19'),
+(444, 'Garantia', '2020-11-09', 'EP-000421', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS032212', '148', '2020-01-13', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 399, NULL, '2020-11-10 03:13:10', '2020-11-18 00:07:02'),
+(445, 'Garantia', '2020-11-09', 'EP-000422', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9045993', '148', '2019-07-25', 'Presenta defectos de impresión (no imprime BK).', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 93, NULL, '2020-11-10 04:46:19', '2020-11-12 22:35:12'),
+(446, 'Garantia', '2020-11-09', 'EP-000423', 0, 1, 'Garantia', 'EPSON L3110', 'X5DP009248', '149', '2020-07-22', 'Presenta defectos de impresion.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 420, NULL, '2020-11-10 04:55:07', '2020-11-13 22:59:21'),
+(447, 'Garantia', '2020-11-11', 'EP-000424', 0, 1, 'Garantia', 'EPSON M2140', 'X5JP000053', 'C0012522', '2020-10-02', 'Presenta error de impresora.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 421, NULL, '2020-11-11 23:03:05', '2020-11-18 23:01:15'),
+(448, 'Garantia', '2020-11-11', 'EP-000425', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW125478', '149', '2020-07-16', 'Presenta error de impresora.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 422, NULL, '2020-11-12 00:20:45', '2020-11-17 05:22:27'),
+(449, 'Garantia', '2020-11-11', 'EP-000426', 0, 1, 'Garantia', 'EPSON L3110', 'X645131694', '149', '2020-02-12', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 423, NULL, '2020-11-12 02:32:52', '2020-11-15 01:09:05'),
+(450, 'Garantia', '2020-11-11', 'EP-000427', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW114882', '150', '2020-03-09', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad.', 13, 1, 424, NULL, '2020-11-12 04:03:58', '2020-11-14 04:48:31'),
+(451, 'Garantia', '2020-11-12', 'EP-000428', 0, 1, 'Garantia', 'EPSON L3110', 'X645230695', '151', '2020-07-02', 'Presenta error de atasco de papel.', 'Posible falla de mecanismo.', 'Se observa rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 236, NULL, '2020-11-13 02:16:47', '2020-11-17 23:35:22'),
+(452, 'Garantia', '2020-11-13', 'EP-000429', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9099452', '152', '2019-09-12', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa exceso de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 425, NULL, '2020-11-14 05:09:19', '2020-11-18 02:45:04'),
+(453, 'Garantia', '2020-11-16', 'EP-000430', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9140859', 'C0012623', '2020-05-08', 'Atasco de papel //Fecha de Compra: 08/05/2020.', 'Se observa papel trabado.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 426, NULL, '2020-11-16 23:23:55', '2020-11-18 00:15:16'),
+(454, 'Garantia', '2020-11-16', 'EP-000431', 0, 1, 'Garantia', 'EPSON L3160', 'X67B008094', '152', '2020-03-12', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 427, NULL, '2020-11-17 04:58:34', '2020-11-20 03:34:26'),
+(455, 'Garantia', '2020-11-17', 'EP-000432', 1, 0, 'Garantia', 'EPSON L6171', 'X4ET016639', '153', '2020-07-22', 'Usuario menciona que muerde las hoja al momento de la impresión en imagines.', 'Posible falla de rodillo.', 'Se observa rastros de suciedad (polvo), ingresa solo equipo sin accesorios.', 13, 1, 428, NULL, '2020-11-18 00:55:16', '2020-11-18 00:55:16'),
+(456, 'Garantia', '2020-11-17', 'EP-000433', 0, 1, 'Garantia', 'EPSON L3150', 'X5E9196970', '154', '2020-05-21', 'Usuario menciona que no toma el papel.', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad (polvo), ingresa solo equipo con caja sin accesorios.', 13, 1, 429, NULL, '2020-11-18 02:20:48', '2020-11-18 02:25:12'),
+(457, 'Garantia', '2020-11-19', 'EP-000434', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS069451', '154', '2020-09-19', 'No pasa la hoja por ADF.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 380, NULL, '2020-11-20 05:56:26', '2020-11-27 06:44:38'),
+(458, 'Garantia', '2020-11-20', 'EP-000435', 1, 0, 'Garantia', 'EPSON POWERLITE U42+', 'X4JL9900375', '155', '2019-12-10', 'Se apaga automáticamente después de 10 minutos.', 'Posible falla de fuente.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 430, NULL, '2020-11-20 23:33:38', '2020-11-20 23:33:38');
+INSERT INTO `garantia_guia_ingreso` (`id`, `motivo`, `fecha`, `orden_servicio`, `estado`, `egresado`, `asunto`, `nombre_equipo`, `numero_serie`, `codigo_interno`, `fecha_compra`, `descripcion_problema`, `revision_diagnostico`, `estetica`, `marca_id`, `personal_lab_id`, `cliente_id`, `contacto_cliente_id`, `created_at`, `updated_at`) VALUES
+(459, 'Garantia', '2020-11-20', 'EP-000436', 0, 1, 'Garantia', 'EPSON L3110', 'X645158670', '156', '2020-08-21', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 431, NULL, '2020-11-20 23:49:00', '2020-11-25 03:03:14'),
+(460, 'Garantia', '2020-11-20', 'EP-000437', 0, 1, 'Garantia', 'EPSON L4160', 'X4DW079162', '156', '2019-07-17', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 128, NULL, '2020-11-21 02:29:23', '2020-11-28 00:38:01'),
+(461, 'Garantia', '2020-11-20', 'EP-000438', 0, 1, 'Garantia', 'EPSON L4160', 'X95H000746', '157', '2020-10-23', 'Se atasca las hojas por la unidad DUPLEX.', 'Posible falla de duplex.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 432, NULL, '2020-11-21 03:58:15', '2020-11-25 03:53:31'),
+(462, 'Garantia', '2020-11-20', 'EP-000439', 0, 1, 'Garantia', 'EPSON L3150', 'X7GQ020438', '157', '2020-07-17', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 433, NULL, '2020-11-21 04:58:41', '2020-11-27 04:29:17'),
+(463, 'Garantia', '2020-11-20', 'EP-000440', 0, 1, 'Garantia', 'EPSON L3110', 'X645182107', '158', '2020-06-03', 'Emite un sonido extraño al encender.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 434, NULL, '2020-11-21 05:06:01', '2020-11-24 04:21:04'),
+(464, 'Garantia', '2020-11-21', 'EP-000441', 1, 0, 'Garantia', 'EPSON L3150', 'X7GQ065658', '158', '2020-08-29', 'Presenta error general.', 'Posible falla de mecanismo.', 'Se observa leve rastro de suciedad, ingresa solo equipo con caja y botellas de tintas vacías.', 13, 1, 435, NULL, '2020-11-21 23:31:06', '2020-11-21 23:31:06'),
+(465, 'Garantia', '2020-11-21', 'EP-000442', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS003453', '159', '2020-08-29', 'Se atasca el papel, mancha las hojas.', 'Posible falla de rodillo.', 'Se observa exceso de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 436, NULL, '2020-11-22 00:57:27', '2020-11-26 05:12:39'),
+(466, 'Garantia', '2020-11-21', 'EP-000443', 0, 1, 'Garantia', 'EPSON L3110', 'X645146895', '160', '2020-03-28', 'Presenta error de atasco de papel.', 'Posible falla de sensor.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 437, NULL, '2020-11-22 01:03:59', '2020-11-25 06:10:41'),
+(467, 'Garantia', '2020-11-23', 'EP-000444', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS006454', '159', '2019-06-30', 'No avanza el papel.', 'Posible falla de rodillo.', 'Se observa exceso de suciedad, ingresa solo equipo con caja sin accesorios.', 13, 1, 438, NULL, '2020-11-23 23:28:58', '2020-11-25 23:50:00'),
+(468, 'Garantia', '2020-11-23', 'EP-000445', 1, 0, 'Garantia', 'EPSON L4160', 'X4DW144613', '160', '2020-08-12', 'Presenta defectos de impresión (imágenes con rayas), mancha las hojas.', 'Reingreso por el mismo desperfecto, usuario menciona que después de las 10 paginas hacia adelante presenta el problema (imágenes con rayas).', 'Se observa en buen estado, ingresa solo equipo con caja.', 13, 1, 387, NULL, '2020-11-24 04:32:17', '2020-11-24 04:32:17'),
+(469, 'Garantia', '2020-11-24', 'EP-000446', 0, 1, 'Garantia', 'EPSON L5190', 'X5NS059019', '190', '2020-06-17', 'Usuario menciona que se atasca el papel, presenta defectos de impresión.', 'Posible falla de mecanismo.', 'Se observa exceso de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 439, NULL, '2020-11-25 00:06:10', '2020-11-27 00:08:29'),
+(470, 'Garantia', '2020-11-24', 'EP-000447', 1, 0, 'Garantia', 'EPSON L5190', 'X5NS007392', '191', '0001-01-01', 'Usuario menciona que no imprime.', 'Equipo ingresa para descarte.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 295, NULL, '2020-11-25 02:24:36', '2020-11-25 02:24:36'),
+(471, 'Garantia', '2020-11-24', 'EP-000448', 1, 0, 'Garantia', 'EPSON L4160', 'X4DW155536', '192', '2020-11-09', 'Presenta defectos de impresión.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 440, NULL, '2020-11-25 05:20:44', '2020-11-25 05:20:44'),
+(472, 'Garantia', '2020-11-24', 'EP-000449', 1, 0, 'Garantia', 'EPSON L4160', 'X4DW139603', 'C0012843', '2020-06-28', 'No avanza el papel ///Fecha de Compra: 28/06/2020 ///N° de Factura: CP150103 ///Lugar de Compra: Wong', 'Posible falla de rodillo.', 'Se observa leve rastro de suciedad, ingresa solo equipo sin accesorios.', 13, 1, 441, NULL, '2020-11-25 06:33:14', '2020-11-25 06:33:14'),
+(473, 'Garantia', '2020-11-25', 'EP-000450', 1, 0, 'Garantia', 'EPSON M1120', 'X5J3003620', '192', '2020-11-02', 'Usuario menciona que no imprime por WiFi, presenta defectos de impresión.', 'Posible falla de conexión.', 'Se observa en buen estado, ingresa solo equipo sin accesorios.', 13, 1, 442, NULL, '2020-11-25 22:48:25', '2020-11-25 22:48:25'),
+(474, 'Garantia', '2020-11-26', 'EP-000451', 1, 0, 'Garantia', 'EPSON L4160', 'X4DW018970', 'C0007069', '2019-02-12', 'Presenta defectos de impresion.', 'Posible falla de cabezal.', 'Se observa exceso de suciedad, ingresa solo equipo con caja (L3150).', 13, 1, 27, NULL, '2020-11-27 02:45:26', '2020-11-27 02:45:26'),
+(475, 'Garantia', '2020-11-27', 'EP-000452', 1, 0, 'Garantia', 'EPSON L5190', 'X5NS074541', '193', '2020-10-26', 'No toma el papel.', 'Posible falla de mecanismo.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 443, NULL, '2020-11-28 00:36:03', '2020-11-28 00:36:03'),
+(476, 'Garantia', '2020-11-27', 'EP-000453', 1, 0, 'Garantia', 'EPSON L3110', 'X645228826', '194', '2020-07-27', 'Presenta defectos de impresion.', 'Posible falla de cabezal.', 'Se observa en buen estado, ingresa solo equipo con caja sin accesorios.', 13, 1, 444, NULL, '2020-11-28 00:48:02', '2020-11-28 00:48:02');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `garantia_informe_tecnico`
+--
+
+CREATE TABLE `garantia_informe_tecnico` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `orden_servicio` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  `fecha` date NOT NULL,
+  `egresado` tinyint(1) NOT NULL,
+  `informe_tecnico` tinyint(1) NOT NULL,
+  `estetica` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revision_diagnostico` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `causas_del_problema` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `solucion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `garantia_egreso_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `garantia_informe_tecnico_archivos`
+--
+
+CREATE TABLE `garantia_informe_tecnico_archivos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_informe_tecnico` bigint(20) UNSIGNED DEFAULT NULL,
+  `archivos` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `guia_remision`
+--
+
+CREATE TABLE `guia_remision` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `cod_guia` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `cotizador_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `almacen_id` bigint(20) UNSIGNED NOT NULL,
+  `cliente_id` bigint(20) UNSIGNED NOT NULL,
+  `fecha_emision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_entrega` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `conductor_id` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `vehiculo_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `observacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `motivo_traslado` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado_anulado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado_registrado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `g_remision_registros`
+--
+
+CREATE TABLE `g_remision_registros` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `producto_id` bigint(20) UNSIGNED NOT NULL,
+  `cantidad` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numero_serie` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guia_remision_id` bigint(20) UNSIGNED NOT NULL,
+  `peso` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `igv`
+--
+
+CREATE TABLE `igv` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `igv_total` decimal(8,2) NOT NULL,
+  `renta` decimal(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `igv`
+--
+
+INSERT INTO `igv` (`id`, `igv_total`, `renta`, `created_at`, `updated_at`) VALUES
+(1, '18.00', '18.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kardex_entrada`
+--
+
+CREATE TABLE `kardex_entrada` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `codigo_guia` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `motivo_id` bigint(20) UNSIGNED NOT NULL,
+  `provedor_id` bigint(20) UNSIGNED NOT NULL,
+  `categoria_id` bigint(20) UNSIGNED NOT NULL,
+  `almacen_id` bigint(20) UNSIGNED NOT NULL,
+  `moneda_id` bigint(20) UNSIGNED NOT NULL,
+  `guia_remision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `factura` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `informacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kardex_entrada_registro`
+--
+
+CREATE TABLE `kardex_entrada_registro` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `kardex_entrada_id` bigint(20) UNSIGNED NOT NULL,
+  `producto_id` bigint(20) UNSIGNED NOT NULL,
+  `cantidad_inicial` int(11) NOT NULL,
+  `precio_nacional` double(10,2) NOT NULL,
+  `precio_extranjero` double(10,2) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `cambio` double(10,2) NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kardex_salida`
+--
+
+CREATE TABLE `kardex_salida` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `motivo_id` bigint(20) UNSIGNED NOT NULL,
+  `informacion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `kardex_salida_registro`
+--
+
+CREATE TABLE `kardex_salida_registro` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `kardex_salida_id` bigint(20) UNSIGNED NOT NULL,
+  `producto_id` bigint(20) UNSIGNED NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `marcas`
+--
+
+CREATE TABLE `marcas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `abreviatura` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre_empresa` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `imagen` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `marcas`
+--
+
+INSERT INTO `marcas` (`id`, `nombre`, `codigo`, `abreviatura`, `nombre_empresa`, `descripcion`, `imagen`, `created_at`, `updated_at`) VALUES
+(1, 'HP', '00001', 'HP', 'Hewlett-Packard', 'más conocida como HP, fue una empresa de tecnología estadounidense', '1575000434hp.png', '2019-08-01 12:00:00', '2020-01-01 09:11:13'),
+(2, 'AMD', '00002', 'AMD', 'Advanced Micro Devices', 'es una compañía estadounidense de semiconductores establecida en Santa Clara, California, que desarrolla procesadores de cómputo y productos tecnológicos relacionados para el mercado de consumo.', '1575001776amd.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(3, 'MSI', '00003', 'MSI', 'Micro-Star International', 'es una corporación multinacional taiwanesa de tecnología de la información con sede en Nuevo Taipei, Taiwán (República de China). Diseña, desarrolla y proporciona equipo informático, productos y servicios relacionados', '1575059774msi.png', '2019-08-01 12:00:00', '2020-01-01 09:11:29'),
+(4, 'ADVANCE', '00004', 'ADV', 'ADVANCE', 'empresa de tecnología con más de ocho años de presencia en Latinoamérica y el mundo', '1575060799advance.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(5, 'WESTER DIGITAL', '00005', 'WD', 'Western Digital Corporation', 'es un fabricante mundial de discos duros, con una larga historia en la industria electrónica, es un fabricante de circuitos integrados y de productos de almacenamiento, actualmente es el primer fabricante de discos duros por delante de Seagate', '1575061272wd.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(6, 'LENOVO', '00006', 'LE', 'Lenovo Group, Ltd', 'es una compañía multinacional de tecnología china, fabricante de productos electrónicos, ordenadores, tabletas y smartphones.', '1575061430lenovo.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(7, 'D-LINK', '00007', 'DLINK', 'D-Link Corporation', 'es un proovedor global con sede en Taipei, Taiwan, cuyo principal negocio son las soluciones de redes y comunicaciones para consumidores y empresas', '1575061561dlink.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(8, 'TOSHIBA', '00008', 'TOSH', 'Toshiba', ' es una compañía japonesa, con sede en Tokio, dedicada a la manufactura de aparatos eléctricos y electrónicos.', '1575062143toshi.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(9, 'KIGSTON', '00009', 'KG', 'Kingston Technology Corporation', 'es un fabricante estadounidense de productos de memorias de ordenadores', '1575062262kingston.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(10, 'NEXXT', '00010', 'NEX', 'Nexxt Solutions Connectivity', 'desarrolla productos y soluciones que permiten conectar a gente y dispositivos, generando nuevas experiencias de conectividad inteligente', '1575062629next.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(11, 'HALION', '00011', 'HAL', 'Halion International S.A', 'empresa dedicada a la venta de parlantes ,teclados ,mous ,auriculares y otros accesorios', '1575062932halion.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(12, 'AVATEC', '00012', 'AVA', 'ITD', 'empresa comercializadora de partes, accesorios y suministros de cómputo para consumidores, empresas e instituciones', '1575063072ava.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(13, 'EPSON', '00013', 'EP', 'Seiko Epson Corporation', 'es una compañía japonesa y uno de los mayores fabricantes del mundo de impresoras de inyección de tinta, matricial y de impresoras láser, escáneres, ordenadores de escritorio, proyectores, home cinema, televisores, robots, equipamiento de automatismo industrial, TPV, máquinas registradoras, ordenadores portátiles, circuitos integrados, componentes de LCD y otros componentes electrónicos.', '1575063287Epson.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(14, 'DELL', '00014', 'DEL', 'Dell Technologies', 'es una compañía multinacional estadounidense establecida en Round Rock (Texas), la cual desarrolla, fabrica, vende y da soporte a computadoras personales, servidores, switches de red, programas informáticos, periféricos y otros productos relacionados con la tecnología.', '1575063406dell.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(15, 'INTEL', '00015', 'INT', 'Intel Corporation', 'es la creadora de la serie de procesadores x86, los procesadores más comúnmente encontrados en la mayoría de las computadoras personales', '1575063475intel.png', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(16, 'CANON', '00016', 'CANON', 'Canon Corporation', 'es la creadora de la serie de procesadores x86, los procesadores más comúnmente encontrados en la mayoría de las computadoras personales', '15778456251575062629next.png', '2019-08-01 12:00:00', '2020-01-01 09:27:05'),
+(17, 'dfsdsf', '00017', 'dsfds', 'fds', 'sdf', '15778456421577845367canonmarca.png', '2020-01-01 09:27:22', '2020-01-01 09:27:22');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `migrations`
+--
+
+CREATE TABLE `migrations` (
+  `id` int(10) UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `migrations`
+--
+
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES
+(79, '2013_10_12_100000_create_configs_table', 1),
+(80, '2014_10_12_100000_create_password_resets_table', 1),
+(81, '2019_08_19_152114_create_personal_table', 1),
+(82, '2019_08_19_154110_create_almacen_table', 1),
+(83, '2019_08_19_154110_create_paises_table', 1),
+(84, '2019_08_20_000000_create_users_table', 1),
+(85, '2019_08_20_194919_create_empresa_table', 1),
+(86, '2019_08_20_194919_create_estado_table', 1),
+(87, '2019_08_20_212058_create_igv_table', 1),
+(88, '2019_08_21_141945_create_unidad-medida_table', 1),
+(89, '2019_08_22_175050_create_monedas_table', 1),
+(90, '2019_08_29_003016_create_productos_table', 1),
+(91, '2019_08_30_013321_create_kardex_entrada_table', 1),
+(92, '2019_09_02_174426_create_transaccion_compra_table', 1),
+(93, '2019_09_02_182651_create_transaccion_compra_cod_table', 1),
+(94, '2019_09_04_135102_create_personal_ventas_table', 1),
+(95, '2019_09_30_181748_create_garantia_guia_ingreso_table', 1),
+(96, '2019_09_30_181812_create_garantia_guia_egreso_table', 1),
+(97, '2019_10_02_213613_create_marcas_table', 1),
+(98, '2019_10_02_214401_create_familias_table', 1),
+(99, '2019_10_02_214617_create_categorias_table', 1),
+(100, '2019_10_14_105142_create_garantia_informe_tecnico', 1),
+(101, '2019_10_18_113708_create_clientes_table', 1),
+(102, '2019_10_21_121428_create_motivo_table', 1),
+(103, '2019_10_23_113119_create_provedores_table', 1),
+(104, '2019_11_06_130031_add_foreign_key_garantia_ingreso_table', 1),
+(105, '2019_11_11_013129_add_foreign_key_garantia_egreso_table', 1),
+(106, '2019_11_13_115422_add_foreign_key_productos_table', 1),
+(107, '2019_11_17_173752_add_foreign_key_garantia_informe_tecnico_table', 1),
+(108, '2019_12_17_130305_create_inventario_inicial_table', 1),
+(109, '2019_12_20_133621_add_foreign_key_inventario_table', 1),
+(110, '2020_01_13_124233_add_foreign_key_kardex_entrada_table', 1),
+(111, '2020_01_15_115723_create_kardex_entrada_registro', 1),
+(112, '2020_01_15_120150_add_foreign_key_kardex_entrada_registro_table', 1),
+(113, '2020_01_22_121947_create_kardex_salida_table', 1),
+(114, '2020_01_22_122547_create_kardex_salida_registro_table', 1),
+(115, '2020_01_22_122602_add_foreign_key_kardex_salida_table', 1),
+(116, '2020_01_22_122670_add_foreign_key_kardex_salida_registro_table', 1),
+(117, '2020_02_04_125722_create_forma_pago_table', 1),
+(118, '2020_02_07_105320_create_cotizacion_table', 1),
+(119, '2020_02_09_122119_create_cotizacion_factura_registro_table', 1),
+(120, '2020_02_09_122224_add_foreign_key_cotizacion_table', 1),
+(121, '2020_02_09_122234_add_foreign_key_cotizacion_factura_registro_table', 1),
+(122, '2020_02_10_132313_create_periodo_consulta_table', 1),
+(123, '2020_02_10_132329_create_periodo_consulta_registro_table', 1),
+(124, '2020_02_10_132480_add_foreign_key_periodo_consulta_table', 1),
+(125, '2020_02_10_132559_add_foreign_key_periodo_consulta_registro_table', 1),
+(126, '2020_03_16_103407_create_tipo_cambio_table', 1),
+(127, '2020_03_24_205347_create_facturacion_table', 1),
+(128, '2020_04_04_111048_create_cotizacion_boleta_registro_table', 1),
+(129, '2020_04_04_111102_add_foreign_key_cotizacion_boleta_registro_table', 1),
+(130, '2020_04_05_130248_add_foreign_key_personal_ventas_table', 1),
+(131, '2020_04_06_184858_create_ventas_registro_table', 1),
+(132, '2020_04_06_185237_add_foreign_key_ventas_registro_table', 1),
+(133, '2020_04_18_170630_add_foreign_key_facturacion_table', 1),
+(134, '2020_05_20_182843_create_banco_table', 1),
+(135, '2020_07_01_120946_create_boleta_table', 1),
+(136, '2020_07_08_153127_create_vehiculos_table', 1),
+(137, '2020_07_09_095520_create_guia_remision_table', 1),
+(138, '2020_07_10_111126_create_permission_tables', 1),
+(139, '2020_07_13_103312_create_g_remision_registros_table', 1),
+(140, '2020_07_28_105842_create_servicios_table', 1),
+(141, '2020_07_31_132954_create_cotizacion_servicio_table', 1),
+(142, '2020_07_31_133050_create_cotizacion_servicio_boleta_registro_table', 1),
+(143, '2020_07_31_133102_create_cotizacion_servicio_factura_registro_table', 1),
+(144, '2020_07_31_133214_add_foreign_key_cotizacion_servicio_table', 1),
+(145, '2020_07_31_133235_add_foreign_key_cotizacion_servicio_boleta_registro_table', 1),
+(146, '2020_07_31_133248_add_foreign_key_cotizacion_servicio_factura_registro_table', 1),
+(147, '2020_08_07_090831_create_facturacion_registro_table', 1),
+(148, '2020_08_12_114058_create_boleta_registro_table', 1),
+(149, '2020_08_14_120615_add_id_cotizacion_servicio_to_facturacion', 1),
+(150, '2020_08_14_123443_add_id_cotizacion_servicio_to_boleta', 1),
+(151, '2020_08_18_103756_create_email_bandeja_envios_table', 1),
+(152, '2020_08_18_103856_create_email_bandeja_envios_archivos_table', 1),
+(153, '2020_08_18_104050_create_email_configuraciones_table', 1),
+(154, '2020_08_21_150316_create_config_fe_table', 1),
+(155, '2020_08_21_150316_create_motivo_traslado_table', 1),
+(156, '2020_10_12_133627_create_garantia_informe_tecnico_archivos_table', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_permissions`
+--
+
+CREATE TABLE `model_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `model_has_roles`
+--
+
+CREATE TABLE `model_has_roles` (
+  `role_id` bigint(20) UNSIGNED NOT NULL,
+  `model_type` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `model_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `model_has_roles`
+--
+
+INSERT INTO `model_has_roles` (`role_id`, `model_type`, `model_id`) VALUES
+(1, 'App\\User', 1),
+(1, 'App\\User', 2),
+(1, 'App\\User', 3);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `monedas`
+--
+
+CREATE TABLE `monedas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `simbolo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `pais` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `principal` tinyint(1) DEFAULT NULL,
+  `tipo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `monedas`
+--
+
+INSERT INTO `monedas` (`id`, `nombre`, `simbolo`, `codigo`, `pais`, `principal`, `tipo`, `created_at`, `updated_at`) VALUES
+(1, 'soles', 'S/', 'PEN', 'Peru', 1, 'nacional', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(2, 'Dolares', '$', 'USD', 'Estados Unidos', 0, 'extranjera', '2019-08-01 05:00:00', '2019-08-01 05:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `motivos`
+--
+
+CREATE TABLE `motivos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `motivos`
+--
+
+INSERT INTO `motivos` (`id`, `nombre`, `created_at`, `updated_at`) VALUES
+(1, 'Compras Locales', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(2, 'compras Internacionales', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(3, 'Devolucion Clientes', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(4, 'Devolucion Guia/Remision', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(5, 'Inventario Inicial', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(6, 'Traslado de Almacen', '2019-08-01 05:00:00', '2019-08-01 05:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `motivo_traslado`
+--
+
+CREATE TABLE `motivo_traslado` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `motivo_traslado`
+--
+
+INSERT INTO `motivo_traslado` (`id`, `nombre`, `estado`, `created_at`, `updated_at`) VALUES
+(1, 'Venta', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(2, 'Venta sujeta a confirmación del comprobador ', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(3, 'Compra', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(4, 'Consignación ', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(5, 'Devolución ', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(6, 'traslado entre Establecimiento de la misma Empresa', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(7, 'Traslado de bienes para Transformación ', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(8, 'Recojo de bienes', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(9, 'Traslado por bienes itinerante  de comprobante de pago', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(10, 'Traslado zona primaria ', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(11, 'Importación ', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(12, 'Exportación', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(13, 'Venta con entrega a terceros', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(14, 'Otros', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `paises`
+--
+
+CREATE TABLE `paises` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `iso` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `paises`
+--
+
+INSERT INTO `paises` (`id`, `iso`, `nombre`, `created_at`, `updated_at`) VALUES
+(1, 'AF', 'Afganistán', NULL, NULL),
+(2, 'AX', 'Islas Gland', NULL, NULL),
+(3, 'AL', 'Albania', NULL, NULL),
+(4, 'DE', 'Alemania', NULL, NULL),
+(5, 'AD', 'Andorra', NULL, NULL),
+(6, 'AO', 'Angola', NULL, NULL),
+(7, 'AI', 'Anguilla', NULL, NULL),
+(8, 'AQ', 'Antártida', NULL, NULL),
+(9, 'AG', 'Antigua y Barbuda', NULL, NULL),
+(10, 'AN', 'Antillas Holandesas', NULL, NULL),
+(11, 'SA', 'Arabia Saudí', NULL, NULL),
+(12, 'DZ', 'Argelia', NULL, NULL),
+(13, 'AR', 'Argentina', NULL, NULL),
+(14, 'AM', 'Armenia', NULL, NULL),
+(15, 'AW', 'Aruba', NULL, NULL),
+(16, 'AU', 'Australia', NULL, NULL),
+(17, 'AT', 'Austria', NULL, NULL),
+(18, 'AZ', 'Azerbaiyán', NULL, NULL),
+(19, 'BS', 'Bahamas', NULL, NULL),
+(20, 'BH', 'Bahréin', NULL, NULL),
+(21, 'BD', 'Bangladesh', NULL, NULL),
+(22, 'BB', 'Barbados', NULL, NULL),
+(23, 'BY', 'Bielorrusia', NULL, NULL),
+(24, 'BE', 'Bélgica', NULL, NULL),
+(25, 'BZ', 'Belice', NULL, NULL),
+(26, 'BJ', 'Benin', NULL, NULL),
+(27, 'BM', 'Bermudas', NULL, NULL),
+(28, 'BT', 'Bhután', NULL, NULL),
+(29, 'BO', 'Bolivia', NULL, NULL),
+(30, 'BA', 'Bosnia y Herzegovina', NULL, NULL),
+(31, 'BW', 'Botsuana', NULL, NULL),
+(32, 'BV', 'Isla Bouvet', NULL, NULL),
+(33, 'BR', 'Brasil', NULL, NULL),
+(34, 'BN', 'Brunéi', NULL, NULL),
+(35, 'BG', 'Bulgaria', NULL, NULL),
+(36, 'BF', 'Burkina Faso', NULL, NULL),
+(37, 'BI', 'Burundi', NULL, NULL),
+(38, 'CV', 'Cabo Verde', NULL, NULL),
+(39, 'KY', 'Islas Caimán', NULL, NULL),
+(40, 'KH', 'Camboya', NULL, NULL),
+(41, 'CM', 'Camerún', NULL, NULL),
+(42, 'CA', 'Canadá', NULL, NULL),
+(43, 'CF', 'República Centroafricana', NULL, NULL),
+(44, 'TD', 'Chad', NULL, NULL),
+(45, 'CZ', 'República Checa', NULL, NULL),
+(46, 'CL', 'Chile', NULL, NULL),
+(47, 'CN', 'China', NULL, NULL),
+(48, 'CY', 'Chipre', NULL, NULL),
+(49, 'CX', 'Isla de Navidad', NULL, NULL),
+(50, 'VA', 'Ciudad del Vaticano', NULL, NULL),
+(51, 'CC', 'Islas Cocos', NULL, NULL),
+(52, 'CO', 'Colombia', NULL, NULL),
+(53, 'KM', 'Comoras', NULL, NULL),
+(54, 'CD', 'República Democrática del Congo', NULL, NULL),
+(55, 'CG', 'Congo', NULL, NULL),
+(56, 'CK', 'Islas Cook', NULL, NULL),
+(57, 'KP', 'Corea del Norte', NULL, NULL),
+(58, 'KR', 'Corea del Sur', NULL, NULL),
+(59, 'CI', 'Costa de Marfil', NULL, NULL),
+(60, 'CR', 'Costa Rica', NULL, NULL),
+(61, 'HR', 'Croacia', NULL, NULL),
+(62, 'CU', 'Cuba', NULL, NULL),
+(63, 'DK', 'Dinamarca', NULL, NULL),
+(64, 'DM', 'Dominica', NULL, NULL),
+(65, 'DO', 'República Dominicana', NULL, NULL),
+(66, 'EC', 'Ecuador', NULL, NULL),
+(67, 'EG', 'Egipto', NULL, NULL),
+(68, 'SV', 'El Salvador', NULL, NULL),
+(69, 'AE', 'Emiratos Árabes Unidos', NULL, NULL),
+(70, 'ER', 'Eritrea', NULL, NULL),
+(71, 'SK', 'Eslovaquia', NULL, NULL),
+(72, 'SI', 'Eslovenia', NULL, NULL),
+(73, 'ES', 'España', NULL, NULL),
+(74, 'UM', 'Islas ultramarinas de Estados Unidos', NULL, NULL),
+(75, 'US', 'Estados Unidos', NULL, NULL),
+(76, 'EE', 'Estonia', NULL, NULL),
+(77, 'ET', 'Etiopía', NULL, NULL),
+(78, 'FO', 'Islas Feroe', NULL, NULL),
+(79, 'PH', 'Filipinas', NULL, NULL),
+(80, 'FI', 'Finlandia', NULL, NULL),
+(81, 'FJ', 'Fiyi', NULL, NULL),
+(82, 'FR', 'Francia', NULL, NULL),
+(83, 'GA', 'Gabón', NULL, NULL),
+(84, 'GM', 'Gambia', NULL, NULL),
+(85, 'GE', 'Georgia', NULL, NULL),
+(86, 'GS', 'Islas Georgias del Sur y Sandwich del Sur', NULL, NULL),
+(87, 'GH', 'Ghana', NULL, NULL),
+(88, 'GI', 'Gibraltar', NULL, NULL),
+(89, 'GD', 'Granada', NULL, NULL),
+(90, 'GR', 'Grecia', NULL, NULL),
+(91, 'GL', 'Groenlandia', NULL, NULL),
+(92, 'GP', 'Guadalupe', NULL, NULL),
+(93, 'GU', 'Guam', NULL, NULL),
+(94, 'GT', 'Guatemala', NULL, NULL),
+(95, 'GF', 'Guayana Francesa', NULL, NULL),
+(96, 'GN', 'Guinea', NULL, NULL),
+(97, 'GQ', 'Guinea Ecuatorial', NULL, NULL),
+(98, 'GW', 'Guinea-Bissau', NULL, NULL),
+(99, 'GY', 'Guyana', NULL, NULL),
+(100, 'HT', 'Haití', NULL, NULL),
+(101, 'HM', 'Islas Heard y McDonald', NULL, NULL),
+(102, 'HN', 'Honduras', NULL, NULL),
+(103, 'HK', 'Hong Kong', NULL, NULL),
+(104, 'HU', 'Hungría', NULL, NULL),
+(105, 'IN', 'India', NULL, NULL),
+(106, 'ID', 'Indonesia', NULL, NULL),
+(107, 'IR', 'Irán', NULL, NULL),
+(108, 'IQ', 'Iraq', NULL, NULL),
+(109, 'IE', 'Irlanda', NULL, NULL),
+(110, 'IS', 'Islandia', NULL, NULL),
+(111, 'IL', 'Israel', NULL, NULL),
+(112, 'IT', 'Italia', NULL, NULL),
+(113, 'JM', 'Jamaica', NULL, NULL),
+(114, 'JP', 'Japón', NULL, NULL),
+(115, 'JO', 'Jordania', NULL, NULL),
+(116, 'KZ', 'Kazajstán', NULL, NULL),
+(117, 'KE', 'Kenia', NULL, NULL),
+(118, 'KG', 'Kirguistán', NULL, NULL),
+(119, 'KI', 'Kiribati', NULL, NULL),
+(120, 'KW', 'Kuwait', NULL, NULL),
+(121, 'LA', 'Laos', NULL, NULL),
+(122, 'LS', 'Lesotho', NULL, NULL),
+(123, 'LV', 'Letonia', NULL, NULL),
+(124, 'LB', 'Líbano', NULL, NULL),
+(125, 'LR', 'Liberia', NULL, NULL),
+(126, 'LY', 'Libia', NULL, NULL),
+(127, 'LI', 'Liechtenstein', NULL, NULL),
+(128, 'LT', 'Lituania', NULL, NULL),
+(129, 'LU', 'Luxemburgo', NULL, NULL),
+(130, 'MO', 'Macao', NULL, NULL),
+(131, 'MK', 'ARY Macedonia', NULL, NULL),
+(132, 'MG', 'Madagascar', NULL, NULL),
+(133, 'MY', 'Malasia', NULL, NULL),
+(134, 'MW', 'Malawi', NULL, NULL),
+(135, 'MV', 'Maldivas', NULL, NULL),
+(136, 'ML', 'Malí', NULL, NULL),
+(137, 'MT', 'Malta', NULL, NULL),
+(138, 'FK', 'Islas Malvinas', NULL, NULL),
+(139, 'MP', 'Islas Marianas del Norte', NULL, NULL),
+(140, 'MA', 'Marruecos', NULL, NULL),
+(141, 'MH', 'Islas Marshall', NULL, NULL),
+(142, 'MQ', 'Martinica', NULL, NULL),
+(143, 'MU', 'Mauricio', NULL, NULL),
+(144, 'MR', 'Mauritania', NULL, NULL),
+(145, 'YT', 'Mayotte', NULL, NULL),
+(146, 'MX', 'México', NULL, NULL),
+(147, 'FM', 'Micronesia', NULL, NULL),
+(148, 'MD', 'Moldavia', NULL, NULL),
+(149, 'MC', 'Mónaco', NULL, NULL),
+(150, 'MN', 'Mongolia', NULL, NULL),
+(151, 'MS', 'Montserrat', NULL, NULL),
+(152, 'MZ', 'Mozambique', NULL, NULL),
+(153, 'MM', 'Myanmar', NULL, NULL),
+(154, 'NA', 'Namibia', NULL, NULL),
+(155, 'NR', 'Nauru', NULL, NULL),
+(156, 'NP', 'Nepal', NULL, NULL),
+(157, 'NI', 'Nicaragua', NULL, NULL),
+(158, 'NE', 'Níger', NULL, NULL),
+(159, 'NG', 'Nigeria', NULL, NULL),
+(160, 'NU', 'Niue', NULL, NULL),
+(161, 'NF', 'Isla Norfolk', NULL, NULL),
+(162, 'NO', 'Noruega', NULL, NULL),
+(163, 'NC', 'Nueva Caledonia', NULL, NULL),
+(164, 'NZ', 'Nueva Zelanda', NULL, NULL),
+(165, 'OM', 'Omán', NULL, NULL),
+(166, 'NL', 'Países Bajos', NULL, NULL),
+(167, 'PK', 'Pakistán', NULL, NULL),
+(168, 'PW', 'Palau', NULL, NULL),
+(169, 'PS', 'Palestina', NULL, NULL),
+(170, 'PA', 'Panamá', NULL, NULL),
+(171, 'PG', 'Papúa Nueva Guinea', NULL, NULL),
+(172, 'PY', 'Paraguay', NULL, NULL),
+(173, 'PE', 'Perú', NULL, NULL),
+(174, 'PN', 'Islas Pitcairn', NULL, NULL),
+(175, 'PF', 'Polinesia Francesa', NULL, NULL),
+(176, 'PL', 'Polonia', NULL, NULL),
+(177, 'PT', 'Portugal', NULL, NULL),
+(178, 'PR', 'Puerto Rico', NULL, NULL),
+(179, 'QA', 'Qatar', NULL, NULL),
+(180, 'GB', 'Reino Unido', NULL, NULL),
+(181, 'RE', 'Reunión', NULL, NULL),
+(182, 'RW', 'Ruanda', NULL, NULL),
+(183, 'RO', 'Rumania', NULL, NULL),
+(184, 'RU', 'Rusia', NULL, NULL),
+(185, 'EH', 'Sahara Occidental', NULL, NULL),
+(186, 'SB', 'Islas Salomón', NULL, NULL),
+(187, 'WS', 'Samoa', NULL, NULL),
+(188, 'AS', 'Samoa Americana', NULL, NULL),
+(189, 'KN', 'San Cristóbal y Nevis', NULL, NULL),
+(190, 'SM', 'San Marino', NULL, NULL),
+(191, 'PM', 'San Pedro y Miquelón', NULL, NULL),
+(192, 'VC', 'San Vicente y las Granadinas', NULL, NULL),
+(193, 'SH', 'Santa Helena', NULL, NULL),
+(194, 'LC', 'Santa Lucía', NULL, NULL),
+(195, 'ST', 'Santo Tomé y Príncipe', NULL, NULL),
+(196, 'SN', 'Senegal', NULL, NULL),
+(197, 'CS', 'Serbia y Montenegro', NULL, NULL),
+(198, 'SC', 'Seychelles', NULL, NULL),
+(199, 'SL', 'Sierra Leona', NULL, NULL),
+(200, 'SG', 'Singapur', NULL, NULL),
+(201, 'SY', 'Siria', NULL, NULL),
+(202, 'SO', 'Somalia', NULL, NULL),
+(203, 'LK', 'Sri Lanka', NULL, NULL),
+(204, 'SZ', 'Suazilandia', NULL, NULL),
+(205, 'ZA', 'Sudáfrica', NULL, NULL),
+(206, 'SD', 'Sudán', NULL, NULL),
+(207, 'SE', 'Suecia', NULL, NULL),
+(208, 'CH', 'Suiza', NULL, NULL),
+(209, 'SR', 'Surinam', NULL, NULL),
+(210, 'SJ', 'Svalbard y Jan Mayen', NULL, NULL),
+(211, 'TH', 'Tailandia', NULL, NULL),
+(212, 'TW', 'Taiwán', NULL, NULL),
+(213, 'TZ', 'Tanzania', NULL, NULL),
+(214, 'TJ', 'Tayikistán', NULL, NULL),
+(215, 'IO', 'Territorio Británico del Océano Índico', NULL, NULL),
+(216, 'TF', 'Territorios Australes Franceses', NULL, NULL),
+(217, 'TL', 'Timor Oriental', NULL, NULL),
+(218, 'TG', 'Togo', NULL, NULL),
+(219, 'TK', 'Tokelau', NULL, NULL),
+(220, 'TO', 'Tonga', NULL, NULL),
+(221, 'TT', 'Trinidad y Tobago', NULL, NULL),
+(222, 'TN', 'Túnez', NULL, NULL),
+(223, 'TC', 'Islas Turcas y Caicos', NULL, NULL),
+(224, 'TM', 'Turkmenistán', NULL, NULL),
+(225, 'TR', 'Turquía', NULL, NULL),
+(226, 'TV', 'Tuvalu', NULL, NULL),
+(227, 'UA', 'Ucrania', NULL, NULL),
+(228, 'UG', 'Uganda', NULL, NULL),
+(229, 'UY', 'Uruguay', NULL, NULL),
+(230, 'UZ', 'Uzbekistán', NULL, NULL),
+(231, 'VU', 'Vanuatu', NULL, NULL),
+(232, 'VE', 'Venezuela', NULL, NULL),
+(233, 'VN', 'Vietnam', NULL, NULL),
+(234, 'VG', 'Islas Vírgenes Británicas', NULL, NULL),
+(235, 'VI', 'Islas Vírgenes de los Estados Unidos', NULL, NULL),
+(236, 'WF', 'Wallis y Futuna', NULL, NULL),
+(237, 'YE', 'Yemen', NULL, NULL),
+(238, 'DJ', 'Yibuti', NULL, NULL),
+(239, 'ZM', 'Zambia', NULL, NULL),
+(240, 'ZW', 'Zimbabue', NULL, NULL);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `password_resets`
+--
+
+CREATE TABLE `password_resets` (
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `periodo_consulta`
+--
+
+CREATE TABLE `periodo_consulta` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `almacen_id` bigint(20) UNSIGNED NOT NULL,
+  `categoria_id` bigint(20) UNSIGNED NOT NULL,
+  `informacion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `periodo_consulta_registro`
+--
+
+CREATE TABLE `periodo_consulta_registro` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `periodo_consulta_id` bigint(20) UNSIGNED NOT NULL,
+  `producto_id` bigint(20) UNSIGNED NOT NULL,
+  `cantidad_inicial` int(11) NOT NULL,
+  `precio_nacional` double NOT NULL,
+  `precio_extranjero` double NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `permissions`
+--
+
+CREATE TABLE `permissions` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `permissions`
+--
+
+INSERT INTO `permissions` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+(1, 'inicio', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(2, 'transacciones', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(3, 'transacciones-ventas', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(4, 'transacciones-ventas-cotizaciones.index', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(5, 'transacciones-ventas-cotizaciones.create', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(6, 'transacciones-ventas-cotizaciones.store', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(7, 'transacciones-ventas-cotizaciones.show', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(8, 'transacciones-ventas-cotizaciones.edit', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(9, 'transacciones-ventas-cotizaciones.update', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(10, 'transacciones-ventas-cotizaciones.destroy', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(11, 'transacciones-ventas-facturacion.index', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(12, 'transacciones-ventas-facturacion.create', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(13, 'transacciones-ventas-facturacion.store', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(14, 'transacciones-ventas-facturacion.show', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(15, 'transacciones-ventas-facturacion.edit', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(16, 'transacciones-ventas-facturacion.update', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(17, 'transacciones-ventas-facturacion.destroy', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(18, 'transacciones-ventas-boleta.index', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(19, 'transacciones-ventas-boleta.create', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(20, 'transacciones-ventas-boleta.store', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(21, 'transacciones-ventas-boleta.show', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(22, 'transacciones-ventas-boleta.edit', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(23, 'transacciones-ventas-boleta.update', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(24, 'transacciones-ventas-boleta.destroy', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(25, 'transacciones-ventas-guia_remision.index', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(26, 'transacciones-ventas-guia_remision.create', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(27, 'transacciones-ventas-guia_remision.store', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(28, 'transacciones-ventas-guia_remision.show', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(29, 'transacciones-ventas-guia_remision.edit', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(30, 'transacciones-ventas-guia_remision.update', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(31, 'transacciones-ventas-guia_remision.destroy', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(32, 'transacciones-garantias', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(33, 'transacciones-garantias-guias_ingreso.index', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(34, 'transacciones-garantias-guias_ingreso.create', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(35, 'transacciones-garantias-guias_ingreso.store', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(36, 'transacciones-garantias-guias_ingreso.show', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(37, 'transacciones-garantias-guias_ingreso.edit', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(38, 'transacciones-garantias-guias_ingreso.update', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(39, 'transacciones-garantias-guias_ingreso.destroy', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(40, 'transacciones-garantias-guias_egreso.index', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(41, 'transacciones-garantias-guias_egreso.create', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(42, 'transacciones-garantias-guias_egreso.store', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(43, 'transacciones-garantias-guias_egreso.show', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(44, 'transacciones-garantias-guias_egreso.edit', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(45, 'transacciones-garantias-guias_egreso.update', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(46, 'transacciones-garantias-guias_egreso.destroy', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(47, 'transacciones-garantias-informe_tecnico.index', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(48, 'transacciones-garantias-informe_tecnico.create', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(49, 'transacciones-garantias-informe_tecnico.store', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(50, 'transacciones-garantias-informe_tecnico.show', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(51, 'transacciones-garantias-informe_tecnico.edit', 'web', '2020-11-28 16:15:52', '2020-11-28 16:15:52'),
+(52, 'transacciones-garantias-informe_tecnico.update', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(53, 'transacciones-garantias-informe_tecnico.destroy', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(54, 'inventario', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(55, 'inventario-productos_kardex', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(56, 'inventario-productos_kardex-entrada_producto.index', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(57, 'inventario-productos_kardex-entrada_producto.create', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(58, 'inventario-productos_kardex-entrada_producto.store', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(59, 'inventario-productos_kardex-entrada_producto.show', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(60, 'inventario-productos_kardex-entrada_producto.edit', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(61, 'inventario-productos_kardex-entrada_producto.update', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(62, 'inventario-productos_kardex-entrada_producto.destroy', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(63, 'inventario-productos_kardex-salida_producto.index', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(64, 'inventario-productos_kardex-salida_producto.create', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(65, 'inventario-productos_kardex-salida_producto.store', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(66, 'inventario-productos_kardex-salida_producto.show', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(67, 'inventario-productos_kardex-salida_producto.edit', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(68, 'inventario-productos_kardex-salida_producto.update', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(69, 'inventario-productos_kardex-salida_producto.destroy', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(70, 'inventario-productos-inventario_inicial.index', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(71, 'inventario-productos-inventario_inicial.create', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(72, 'inventario-productos-inventario_inicial.store', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(73, 'inventario-productos-inventario_inicial.show', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(74, 'inventario-productos-inventario_inicial.edit', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(75, 'inventario-productos-inventario_inicial.update', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(76, 'inventario-productos-inventario_inicial.destroy', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(77, 'inventario-toma_de_inventario.index', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(78, 'inventario-toma_de_inventario.create', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(79, 'inventario-toma_de_inventario.store', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(80, 'inventario-toma_de_inventario.show', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(81, 'inventario-toma_de_inventario.edit', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(82, 'inventario-toma_de_inventario.update', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(83, 'inventario-toma_de_inventario.destroy', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(84, 'planilla', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(85, 'planilla-datos_generales.index', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(86, 'planilla-datos_generales.create', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(87, 'planilla-datos_generales.store', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(88, 'planilla-datos_generales.show', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(89, 'planilla-datos_generales.edit', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(90, 'planilla-datos_generales.update', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(91, 'planilla-datos_generales.destroy', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(92, 'planilla-vendedores.index', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(93, 'planilla-vendedores.create', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(94, 'planilla-vendedores.store', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(95, 'planilla-vendedores.show', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(96, 'planilla-vendedores.edit', 'web', '2020-11-28 16:15:53', '2020-11-28 16:15:53'),
+(97, 'planilla-vendedores.update', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(98, 'planilla-vendedores.destroy', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(99, 'consultas', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(100, 'consultas-garantias', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(101, 'consultas-garantias-guia_ingreso.index', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(102, 'consultas-garantias-guia_ingreso.create', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(103, 'consultas-garantias-guia_ingreso.store', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(104, 'consultas-garantias-guia_ingreso.show', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(105, 'consultas-garantias-guia_ingreso.edit', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(106, 'consultas-garantias-guia_ingreso.update', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(107, 'consultas-garantias-guia_ingreso.destroy', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(108, 'consultas-garantias-guia_egreso.index', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(109, 'consultas-garantias-guia_egreso.create', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(110, 'consultas-garantias-guia_egreso.store', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(111, 'consultas-garantias-guia_egreso.show', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(112, 'consultas-garantias-guia_egreso.edit', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(113, 'consultas-garantias-guia_egreso.update', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(114, 'consultas-garantias-guia_egreso.destroy', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(115, 'consultas-garantias-informe_tecnico.index', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(116, 'consultas-garantias-informe_tecnico.create', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(117, 'consultas-garantias-informe_tecnico.store', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(118, 'consultas-garantias-informe_tecnico.show', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(119, 'consultas-garantias-informe_tecnico.edit', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(120, 'consultas-garantias-informe_tecnico.update', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(121, 'consultas-garantias-informe_tecnico.destroy', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(122, 'auxiliares', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(123, 'auxiliares-clientes.index', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(124, 'auxiliares-clientes.create', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(125, 'auxiliares-clientes.store', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(126, 'auxiliares-clientes.show', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(127, 'auxiliares-clientes.edit', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(128, 'auxiliares-clientes.update', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(129, 'auxiliares-clientes.destroy', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(130, 'auxiliares-provedores.index', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(131, 'auxiliares-provedores.create', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(132, 'auxiliares-provedores.store', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(133, 'auxiliares-provedores.show', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(134, 'auxiliares-provedores.edit', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(135, 'auxiliares-provedores.update', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(136, 'auxiliares-provedores.destroy', 'web', '2020-11-28 16:15:54', '2020-11-28 16:15:54'),
+(137, 'maestro', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(138, 'maestro-catalogo', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(139, 'maestro-catalogo-productos.index', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(140, 'maestro-catalogo-productos.create', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(141, 'maestro-catalogo-productos.store', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(142, 'maestro-catalogo-productos.show', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(143, 'maestro-catalogo-productos.edit', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(144, 'maestro-catalogo-productos.update', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(145, 'maestro-catalogo-productos.destroy', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(146, 'maestro-catalogo-clasificacion', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(147, 'maestro-catalogo-clasificacion-categorias.index', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(148, 'maestro-catalogo-clasificacion-categorias.create', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(149, 'maestro-catalogo-clasificacion-categorias.store', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(150, 'maestro-catalogo-clasificacion-categorias.show', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(151, 'maestro-catalogo-clasificacion-categorias.edit', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(152, 'maestro-catalogo-clasificacion-categorias.update', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(153, 'maestro-catalogo-clasificacion-categorias.destroy', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(154, 'maestro-catalogo-clasificacion-familias.index', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(155, 'maestro-catalogo-clasificacion-familias.create', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(156, 'maestro-catalogo-clasificacion-familias.store', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(157, 'maestro-catalogo-clasificacion-familias.show', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(158, 'maestro-catalogo-clasificacion-familias.edit', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(159, 'maestro-catalogo-clasificacion-familias.update', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(160, 'maestro-catalogo-clasificacion-familias.destroy', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(161, 'maestro-catalogo-clasificacion-marcas.index', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(162, 'maestro-catalogo-clasificacion-marcas.create', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(163, 'maestro-catalogo-clasificacion-marcas.store', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(164, 'maestro-catalogo-clasificacion-marcas.show', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(165, 'maestro-catalogo-clasificacion-marcas.edit', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(166, 'maestro-catalogo-clasificacion-marcas.update', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(167, 'maestro-catalogo-clasificacion-marcas.destroy', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(168, 'maestro-tablas_generales', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(169, 'maestro-tablas_generales-motivos.index', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(170, 'maestro-tablas_generales-motivos.create', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(171, 'maestro-tablas_generales-motivos.store', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(172, 'maestro-tablas_generales-motivos.show', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(173, 'maestro-tablas_generales-motivos.edit', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(174, 'maestro-tablas_generales-motivos.update', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(175, 'maestro-tablas_generales-motivos.destroy', 'web', '2020-11-28 16:15:55', '2020-11-28 16:15:55'),
+(176, 'maestro-almacenes.index', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(177, 'maestro-almacenes.create', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(178, 'maestro-almacenes.store', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(179, 'maestro-almacenes.show', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(180, 'maestro-almacenes.edit', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(181, 'maestro-almacenes.update', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(182, 'maestro-almacenes.destroy', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(183, 'maestro-usuarios.index', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(184, 'maestro-usuarios.create', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(185, 'maestro-usuarios.store', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(186, 'maestro-usuarios.show', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(187, 'maestro-usuarios.edit', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(188, 'maestro-usuarios.update', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(189, 'maestro-usuarios.destroy', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(190, 'maestro-monedas.index', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(191, 'maestro-monedas.create', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(192, 'maestro-monedas.store', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(193, 'maestro-monedas.show', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(194, 'maestro-monedas.edit', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(195, 'maestro-monedas.update', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(196, 'maestro-monedas.destroy', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(197, 'maestro-tipo_de_cambio.index', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(198, 'maestro-tipo_de_cambio.create', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(199, 'maestro-tipo_de_cambio.store', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(200, 'maestro-tipo_de_cambio.show', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(201, 'maestro-tipo_de_cambio.edit', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(202, 'maestro-tipo_de_cambio.update', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(203, 'maestro-tipo_de_cambio.destroy', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(204, 'maestro-configuracion_general', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(205, 'maestro-configuracion_general.mi_empresa.index', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(206, 'maestro-configuracion_general.mi_empresa.create', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(207, 'maestro-configuracion_general.mi_empresa.store', 'web', '2020-11-28 16:15:56', '2020-11-28 16:15:56'),
+(208, 'maestro-configuracion_general.mi_empresa.show', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(209, 'maestro-configuracion_general.mi_empresa.edit', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(210, 'maestro-configuracion_general.mi_empresa.update', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(211, 'maestro-configuracion_general.mi_empresa.destroy', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(212, 'maestro-configuracion_general.unidad_de_medida.index', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(213, 'maestro-configuracion_general.unidad_de_medida.create', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(214, 'maestro-configuracion_general.unidad_de_medida.store', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(215, 'maestro-configuracion_general.unidad_de_medida.show', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(216, 'maestro-configuracion_general.unidad_de_medida.edit', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(217, 'maestro-configuracion_general.unidad_de_medida.update', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(218, 'maestro-configuracion_general.unidad_de_medida.destroy', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(219, 'maestro-configuracion_general.igv.index', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(220, 'maestro-configuracion_general.igv.create', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(221, 'maestro-configuracion_general.igv.store', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(222, 'maestro-configuracion_general.igv.show', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(223, 'maestro-configuracion_general.igv.edit', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(224, 'maestro-configuracion_general.igv.update', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(225, 'maestro-configuracion_general.igv.destroy', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personal`
+--
+
+CREATE TABLE `personal` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `nombres` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `apellidos` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `fecha_nacimiento` date NOT NULL,
+  `celular` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefono` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `genero` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `documento_identificacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numero_documento` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nacionalidad` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado_civil` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nivel_educativo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `profesion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado_trabajador_laboral` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT 'Activo',
+  `estado` tinyint(1) DEFAULT '1',
+  `usuario_registrado` tinyint(1) DEFAULT '1',
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL DEFAULT 'perfil.svg',
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `personal`
+--
+
+INSERT INTO `personal` (`id`, `nombres`, `apellidos`, `fecha_nacimiento`, `celular`, `telefono`, `email`, `genero`, `documento_identificacion`, `numero_documento`, `nacionalidad`, `estado_civil`, `nivel_educativo`, `profesion`, `direccion`, `estado_trabajador_laboral`, `estado`, `usuario_registrado`, `foto`, `created_at`, `updated_at`) VALUES
+(1, 'Fernando Franco', 'Solis Quispe', '2019-08-01', '324234234', '5235432', 'fer@gma.com', 'masculino', 'DNI', '47587674', 'Peru', 'Soltero', 'Secundaria', 'ingeniero', 'aV.Rodalds', 'Activo', 1, 1, '1111111-a6.jpg', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(2, 'Neyser Pablo', ' Quispe Villarroel', '2019-08-01', '324234234', '5235432', 'nan@gma.com', 'masculino', 'DNI', '70104903', 'Peru', 'Viudo con hijos', 'Secundaria', 'Doctor', 'aV.Rodalds', 'Activo', 1, 1, '74894537-a1.jpg', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(3, 'Christian Gilmar ', 'Flores Gallardo \r\n  ', '2019-08-01', '324234234', '5235432', 'juñli@gma.com', 'masculino', 'DNI', '41882203', 'Peru', 's', 'Secundaria', 'obrero', 'aV.Rodalds', 'Activo', 1, 1, '74894537-a2.jpg', '2019-08-01 12:00:00', '2019-08-01 12:00:00'),
+(4, 'Efrain Apolinario', 'Solis Venancio', '2019-08-01', '324234234', '5235432', 'crs@gma.com', 'masculino', 'DNI', '09782642', 'Peru', 'Casado', 'Secundaria', 'barrendero', 'aV.Rodalds', 'Activo', 1, 1, '74894537-a2.jpg', '2019-08-01 12:00:00', '2019-08-01 12:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personal_datos_laborales`
+--
+
+CREATE TABLE `personal_datos_laborales` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `personal_id` bigint(20) UNSIGNED NOT NULL,
+  `fecha_vinculacion` date DEFAULT NULL,
+  `fecha_retiro` date DEFAULT NULL,
+  `forma_pago` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `salario` int(11) DEFAULT NULL,
+  `categoria_ocupacional` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado_trabajador` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `sede` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `turno` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `departamento_area` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `cargo` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tipo_trabajador` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `tipo_contrato` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `regimen_pensionario` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `afiliacion_salud` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `banco_renumeracion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `numero_cuenta` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `notas` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `personal_ventas`
+--
+
+CREATE TABLE `personal_ventas` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `id_personal` bigint(20) UNSIGNED NOT NULL,
+  `cod_vendedor` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `tipo_comision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comision` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `productos`
+--
+
+CREATE TABLE `productos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `codigo_producto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_original` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `utilidad` int(11) NOT NULL,
+  `descuento1` int(11) NOT NULL,
+  `descuento2` int(11) NOT NULL,
+  `descuento_maximo` int(11) NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci,
+  `origen` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `garantia` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `peso` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `stock_minimo` int(11) NOT NULL,
+  `stock_maximo` int(11) NOT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado_anular` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categoria_id` bigint(20) UNSIGNED NOT NULL,
+  `familia_id` bigint(20) UNSIGNED NOT NULL,
+  `marca_id` bigint(20) UNSIGNED NOT NULL,
+  `unidad_medida_id` bigint(20) UNSIGNED NOT NULL,
+  `estado_id` bigint(20) UNSIGNED NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `provedores`
+--
+
+CREATE TABLE `provedores` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `ruc` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `empresa` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `direccion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `telefonos` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contacto_provedor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `celular_provedor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `email_provedor` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `observacion` text COLLATE utf8mb4_unicode_ci,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `roles`
+--
+
+CREATE TABLE `roles` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `guard_name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `roles`
+--
+
+INSERT INTO `roles` (`id`, `name`, `guard_name`, `created_at`, `updated_at`) VALUES
+(1, 'Admin', 'web', '2020-11-28 16:15:57', '2020-11-28 16:15:57'),
+(2, 'Guest', 'web', '2020-11-28 16:15:58', '2020-11-28 16:15:58');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `role_has_permissions`
+--
+
+CREATE TABLE `role_has_permissions` (
+  `permission_id` bigint(20) UNSIGNED NOT NULL,
+  `role_id` bigint(20) UNSIGNED NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `role_has_permissions`
+--
+
+INSERT INTO `role_has_permissions` (`permission_id`, `role_id`) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1),
+(7, 1),
+(8, 1),
+(9, 1),
+(10, 1),
+(11, 1),
+(12, 1),
+(13, 1),
+(14, 1),
+(15, 1),
+(16, 1),
+(17, 1),
+(18, 1),
+(19, 1),
+(20, 1),
+(21, 1),
+(22, 1),
+(23, 1),
+(24, 1),
+(25, 1),
+(26, 1),
+(27, 1),
+(28, 1),
+(29, 1),
+(30, 1),
+(31, 1),
+(32, 1),
+(33, 1),
+(34, 1),
+(35, 1),
+(36, 1),
+(37, 1),
+(38, 1),
+(39, 1),
+(40, 1),
+(41, 1),
+(42, 1),
+(43, 1),
+(44, 1),
+(45, 1),
+(46, 1),
+(47, 1),
+(48, 1),
+(49, 1),
+(50, 1),
+(51, 1),
+(52, 1),
+(53, 1),
+(54, 1),
+(55, 1),
+(56, 1),
+(57, 1),
+(58, 1),
+(59, 1),
+(60, 1),
+(61, 1),
+(62, 1),
+(63, 1),
+(64, 1),
+(65, 1),
+(66, 1),
+(67, 1),
+(68, 1),
+(69, 1),
+(70, 1),
+(71, 1),
+(72, 1),
+(73, 1),
+(74, 1),
+(75, 1),
+(76, 1),
+(77, 1),
+(78, 1),
+(79, 1),
+(80, 1),
+(81, 1),
+(82, 1),
+(83, 1),
+(84, 1),
+(85, 1),
+(86, 1),
+(87, 1),
+(88, 1),
+(89, 1),
+(90, 1),
+(91, 1),
+(92, 1),
+(93, 1),
+(94, 1),
+(95, 1),
+(96, 1),
+(97, 1),
+(98, 1),
+(99, 1),
+(100, 1),
+(101, 1),
+(102, 1),
+(103, 1),
+(104, 1),
+(105, 1),
+(106, 1),
+(107, 1),
+(108, 1),
+(109, 1),
+(110, 1),
+(111, 1),
+(112, 1),
+(113, 1),
+(114, 1),
+(115, 1),
+(116, 1),
+(117, 1),
+(118, 1),
+(119, 1),
+(120, 1),
+(121, 1),
+(122, 1),
+(123, 1),
+(124, 1),
+(125, 1),
+(126, 1),
+(127, 1),
+(128, 1),
+(129, 1),
+(130, 1),
+(131, 1),
+(132, 1),
+(133, 1),
+(134, 1),
+(135, 1),
+(136, 1),
+(137, 1),
+(138, 1),
+(139, 1),
+(140, 1),
+(141, 1),
+(142, 1),
+(143, 1),
+(144, 1),
+(145, 1),
+(146, 1),
+(147, 1),
+(148, 1),
+(149, 1),
+(150, 1),
+(151, 1),
+(152, 1),
+(153, 1),
+(154, 1),
+(155, 1),
+(156, 1),
+(157, 1),
+(158, 1),
+(159, 1),
+(160, 1),
+(161, 1),
+(162, 1),
+(163, 1),
+(164, 1),
+(165, 1),
+(166, 1),
+(167, 1),
+(168, 1),
+(169, 1),
+(170, 1),
+(171, 1),
+(172, 1),
+(173, 1),
+(174, 1),
+(175, 1),
+(176, 1),
+(177, 1),
+(178, 1),
+(179, 1),
+(180, 1),
+(181, 1),
+(182, 1),
+(183, 1),
+(184, 1),
+(185, 1),
+(186, 1),
+(187, 1),
+(188, 1),
+(189, 1),
+(190, 1),
+(191, 1),
+(192, 1),
+(193, 1),
+(194, 1),
+(195, 1),
+(196, 1),
+(197, 1),
+(198, 1),
+(199, 1),
+(200, 1),
+(201, 1),
+(202, 1),
+(203, 1),
+(204, 1),
+(205, 1),
+(206, 1),
+(207, 1),
+(208, 1),
+(209, 1),
+(210, 1),
+(211, 1),
+(212, 1),
+(213, 1),
+(214, 1),
+(215, 1),
+(216, 1),
+(217, 1),
+(218, 1),
+(219, 1),
+(220, 1),
+(221, 1),
+(222, 1),
+(223, 1),
+(224, 1),
+(225, 1),
+(1, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `servicios`
+--
+
+CREATE TABLE `servicios` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `codigo_servicio` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo_original` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `nombre` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `categoria` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `precio` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `utilidad` int(11) NOT NULL,
+  `descuento` int(11) NOT NULL,
+  `descripcion` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `foto` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado_anular` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado_activo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `servicios`
+--
+
+INSERT INTO `servicios` (`id`, `codigo_servicio`, `codigo_original`, `nombre`, `categoria`, `precio`, `utilidad`, `descuento`, `descripcion`, `foto`, `estado_anular`, `estado_activo`, `created_at`, `updated_at`) VALUES
+(1, 'SERV-00001', '123', 'Formateos', 'Servicios', '100', 50, 10, 'instalacion de windows', 'defecto.png', '0', '0', '2019-08-01 05:00:00', '2019-08-01 05:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `tipo_cambio`
+--
+
+CREATE TABLE `tipo_cambio` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `compra` decimal(8,2) NOT NULL,
+  `venta` decimal(8,2) NOT NULL,
+  `paralelo` decimal(8,2) NOT NULL,
+  `fecha` date NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `tipo_cambio`
+--
+
+INSERT INTO `tipo_cambio` (`id`, `compra`, `venta`, `paralelo`, `fecha`, `created_at`, `updated_at`) VALUES
+(1, '3.60', '3.61', '3.56', '2020-11-28', '2020-11-28 17:16:32', '2020-11-28 17:16:32');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaccion_compra`
+--
+
+CREATE TABLE `transaccion_compra` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `proveedor` int(11) NOT NULL,
+  `direccion` int(11) NOT NULL,
+  `fecha_entrega` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `atencion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `forma_pago` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `transaccion_compra_cod`
+--
+
+CREATE TABLE `transaccion_compra_cod` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `identificador_cod` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `codigo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `descripcion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unidad` int(11) NOT NULL,
+  `cantidad` int(11) NOT NULL,
+  `precio_unitario` int(11) NOT NULL,
+  `descuento` int(11) NOT NULL,
+  `importe` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `unidad_medida`
+--
+
+CREATE TABLE `unidad_medida` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `simbolo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `medida` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `unidad` decimal(8,2) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `unidad_medida`
+--
+
+INSERT INTO `unidad_medida` (`id`, `simbolo`, `medida`, `unidad`, `created_at`, `updated_at`) VALUES
+(1, 'BOL', 'Bolsa', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(2, 'CTO', 'Ciento', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(3, 'DOC', 'Docena', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(4, 'FAR', 'Fardo', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(5, 'GLNES', 'galones', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(6, 'JGO', 'juego', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(7, 'KL', 'Kilos', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(8, 'KT', 'Kit', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(9, 'LB', 'Libras', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(10, 'M', 'Metros', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(11, 'M2', 'Metros Cuadrados', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(12, 'MLL', 'Millar', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(13, 'PKG', 'Paquete', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(14, 'PAR', 'Par', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(15, 'PZA', 'Pieza', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(16, 'ROL', 'Rollo', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(17, 'SET', 'Set', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(18, 'UD', 'Unidades', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(19, 'CAJ', 'Caja', '12.00', '2019-08-01 05:00:00', '2019-08-01 05:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `users`
+--
+
+CREATE TABLE `users` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `personal_id` bigint(20) UNSIGNED NOT NULL,
+  `confi_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `numero_validacion` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `estado_validacion` tinyint(1) DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado` tinyint(1) NOT NULL,
+  `email_creado` tinyint(1) NOT NULL,
+  `almacen_id` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `users`
+--
+
+INSERT INTO `users` (`id`, `personal_id`, `confi_id`, `name`, `email`, `numero_validacion`, `estado_validacion`, `password`, `estado`, `email_creado`, `almacen_id`, `created_at`, `updated_at`) VALUES
+(1, 1, 1, 'Administrador', 'admin@admin.com', NULL, NULL, '$2y$10$/b2FMb7I.Hsf5U9T5lFyXuF8lRvpDI2l13Jpy02I.7iCu0vkj54S6', 1, 0, 1, '2020-11-28 05:00:00', '2020-11-28 05:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `vehiculos`
+--
+
+CREATE TABLE `vehiculos` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `placa` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `marca` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `modelo` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `año` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado_activo` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Dumping data for table `vehiculos`
+--
+
+INSERT INTO `vehiculos` (`id`, `placa`, `marca`, `modelo`, `año`, `estado_activo`, `created_at`, `updated_at`) VALUES
+(1, 'B5R365', 'TOYOTA  ', 'LAN CRUICE', '2000', 0, '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(2, 'A78-405', 'Kia', 'acces', '2002', 0, '2019-08-01 05:00:00', '2019-08-01 05:00:00'),
+(3, 'A2E-456', 'chebrolet', 'sses', '2020', 0, '2019-08-01 05:00:00', '2019-08-01 05:00:00');
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `ventas_registro`
+--
+
+CREATE TABLE `ventas_registro` (
+  `id` bigint(20) UNSIGNED NOT NULL,
+  `estado_aprobado` tinyint(1) NOT NULL,
+  `pago_efectuado` tinyint(1) NOT NULL,
+  `observacion` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `comisionista` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `estado_fac` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `id_facturacion` bigint(20) UNSIGNED DEFAULT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+--
+-- Indexes for dumped tables
+--
+
+--
+-- Indexes for table `almacen`
+--
+ALTER TABLE `almacen`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `almacen_responsable_foreign` (`responsable`);
+
+--
+-- Indexes for table `banco`
+--
+ALTER TABLE `banco`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `boleta`
+--
+ALTER TABLE `boleta`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `boleta_almacen_id_foreign` (`almacen_id`),
+  ADD KEY `boleta_id_cotizador_foreign` (`id_cotizador`),
+  ADD KEY `boleta_cliente_id_foreign` (`cliente_id`),
+  ADD KEY `boleta_moneda_id_foreign` (`moneda_id`),
+  ADD KEY `boleta_forma_pago_id_foreign` (`forma_pago_id`),
+  ADD KEY `boleta_id_cotizador_servicio_foreign` (`id_cotizador_servicio`);
+
+--
+-- Indexes for table `boleta_registro`
+--
+ALTER TABLE `boleta_registro`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `boleta_registro_boleta_id_foreign` (`boleta_id`),
+  ADD KEY `boleta_registro_servicio_id_foreign` (`servicio_id`),
+  ADD KEY `boleta_registro_producto_id_foreign` (`producto_id`);
+
+--
+-- Indexes for table `categorias`
+--
+ALTER TABLE `categorias`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `clientes`
+--
+ALTER TABLE `clientes`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `clientes_nombre_unique` (`nombre`),
+  ADD UNIQUE KEY `clientes_numero_documento_unique` (`numero_documento`),
+  ADD UNIQUE KEY `clientes_email_unique` (`email`);
+
+--
+-- Indexes for table `configs`
+--
+ALTER TABLE `configs`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `config_fe`
+--
+ALTER TABLE `config_fe`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `contactos`
+--
+ALTER TABLE `contactos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `contactos_clientes_id_foreign` (`clientes_id`);
+
+--
+-- Indexes for table `cotizacion`
+--
+ALTER TABLE `cotizacion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cotizacion_almacen_id_foreign` (`almacen_id`),
+  ADD KEY `cotizacion_cliente_id_foreign` (`cliente_id`),
+  ADD KEY `cotizacion_moneda_id_foreign` (`moneda_id`),
+  ADD KEY `cotizacion_forma_pago_id_foreign` (`forma_pago_id`),
+  ADD KEY `cotizacion_aprobado_por_foreign` (`aprobado_por`),
+  ADD KEY `cotizacion_comisionista_id_foreign` (`comisionista_id`),
+  ADD KEY `cotizacion_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `cotizacion_boleta_registro`
+--
+ALTER TABLE `cotizacion_boleta_registro`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cotizacion_boleta_registro_cotizacion_id_foreign` (`cotizacion_id`),
+  ADD KEY `cotizacion_boleta_registro_producto_id_foreign` (`producto_id`);
+
+--
+-- Indexes for table `cotizacion_factura_registro`
+--
+ALTER TABLE `cotizacion_factura_registro`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cotizacion_factura_registro_cotizacion_id_foreign` (`cotizacion_id`),
+  ADD KEY `cotizacion_factura_registro_producto_id_foreign` (`producto_id`);
+
+--
+-- Indexes for table `cotizacion_servicio`
+--
+ALTER TABLE `cotizacion_servicio`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cotizacion_servicio_cliente_id_foreign` (`cliente_id`),
+  ADD KEY `cotizacion_servicio_moneda_id_foreign` (`moneda_id`),
+  ADD KEY `cotizacion_servicio_forma_pago_id_foreign` (`forma_pago_id`),
+  ADD KEY `cotizacion_servicio_aprobado_por_foreign` (`aprobado_por`),
+  ADD KEY `cotizacion_servicio_comisionista_id_foreign` (`comisionista_id`),
+  ADD KEY `cotizacion_servicio_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `cotizacion_servicio_boleta_r`
+--
+ALTER TABLE `cotizacion_servicio_boleta_r`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cotizacion_servicio_boleta_r_cotizacion_servicio_id_foreign` (`cotizacion_servicio_id`),
+  ADD KEY `cotizacion_servicio_boleta_r_servicio_id_foreign` (`servicio_id`);
+
+--
+-- Indexes for table `cotizacion_servicio_factura_r`
+--
+ALTER TABLE `cotizacion_servicio_factura_r`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `cotizacion_servicio_factura_r_cotizacion_servicio_id_foreign` (`cotizacion_servicio_id`),
+  ADD KEY `cotizacion_servicio_factura_r_servicio_id_foreign` (`servicio_id`);
+
+--
+-- Indexes for table `email_bandeja_envios`
+--
+ALTER TABLE `email_bandeja_envios`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `email_bandeja_envios_id_usuario_foreign` (`id_usuario`);
+
+--
+-- Indexes for table `email_bandeja_envios_archivos`
+--
+ALTER TABLE `email_bandeja_envios_archivos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `email_bandeja_envios_archivos_id_bandeja_envios_foreign` (`id_bandeja_envios`);
+
+--
+-- Indexes for table `email_configuraciones`
+--
+ALTER TABLE `email_configuraciones`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email_configuraciones_email_unique` (`email`),
+  ADD KEY `email_configuraciones_id_usuario_foreign` (`id_usuario`);
+
+--
+-- Indexes for table `empresa`
+--
+ALTER TABLE `empresa`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `estado`
+--
+ALTER TABLE `estado`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `facturacion`
+--
+ALTER TABLE `facturacion`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `facturacion_almacen_id_foreign` (`almacen_id`),
+  ADD KEY `facturacion_id_cotizador_foreign` (`id_cotizador`),
+  ADD KEY `facturacion_cliente_id_foreign` (`cliente_id`),
+  ADD KEY `facturacion_moneda_id_foreign` (`moneda_id`),
+  ADD KEY `facturacion_forma_pago_id_foreign` (`forma_pago_id`),
+  ADD KEY `facturacion_id_cotizador_servicio_foreign` (`id_cotizador_servicio`);
+
+--
+-- Indexes for table `facturacion_registro`
+--
+ALTER TABLE `facturacion_registro`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `facturacion_registro_facturacion_id_foreign` (`facturacion_id`),
+  ADD KEY `facturacion_registro_producto_id_foreign` (`producto_id`),
+  ADD KEY `facturacion_registro_servicio_id_foreign` (`servicio_id`);
+
+--
+-- Indexes for table `familias`
+--
+ALTER TABLE `familias`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `forma_pago`
+--
+ALTER TABLE `forma_pago`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `garantia_guia_egreso`
+--
+ALTER TABLE `garantia_guia_egreso`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `garantia_guia_egreso_garantia_ingreso_id_foreign` (`garantia_ingreso_id`);
+
+--
+-- Indexes for table `garantia_guia_ingreso`
+--
+ALTER TABLE `garantia_guia_ingreso`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `garantia_guia_ingreso_marca_id_foreign` (`marca_id`),
+  ADD KEY `garantia_guia_ingreso_personal_lab_id_foreign` (`personal_lab_id`),
+  ADD KEY `garantia_guia_ingreso_cliente_id_foreign` (`cliente_id`),
+  ADD KEY `garantia_guia_ingreso_contacto_cliente_id_foreign` (`contacto_cliente_id`);
+
+--
+-- Indexes for table `garantia_informe_tecnico`
+--
+ALTER TABLE `garantia_informe_tecnico`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `garantia_informe_tecnico_garantia_egreso_id_foreign` (`garantia_egreso_id`);
+
+--
+-- Indexes for table `garantia_informe_tecnico_archivos`
+--
+ALTER TABLE `garantia_informe_tecnico_archivos`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `garantia_informe_tecnico_archivos_id_informe_tecnico_foreign` (`id_informe_tecnico`);
+
+--
+-- Indexes for table `guia_remision`
+--
+ALTER TABLE `guia_remision`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `guia_remision_cotizador_id_foreign` (`cotizador_id`),
+  ADD KEY `guia_remision_almacen_id_foreign` (`almacen_id`),
+  ADD KEY `guia_remision_cliente_id_foreign` (`cliente_id`),
+  ADD KEY `guia_remision_vehiculo_id_foreign` (`vehiculo_id`),
+  ADD KEY `guia_remision_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `g_remision_registros`
+--
+ALTER TABLE `g_remision_registros`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `g_remision_registros_producto_id_foreign` (`producto_id`),
+  ADD KEY `g_remision_registros_guia_remision_id_foreign` (`guia_remision_id`);
+
+--
+-- Indexes for table `igv`
+--
+ALTER TABLE `igv`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `kardex_entrada`
+--
+ALTER TABLE `kardex_entrada`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kardex_entrada_motivo_id_foreign` (`motivo_id`),
+  ADD KEY `kardex_entrada_provedor_id_foreign` (`provedor_id`),
+  ADD KEY `kardex_entrada_categoria_id_foreign` (`categoria_id`),
+  ADD KEY `kardex_entrada_almacen_id_foreign` (`almacen_id`),
+  ADD KEY `kardex_entrada_moneda_id_foreign` (`moneda_id`),
+  ADD KEY `kardex_entrada_user_id_foreign` (`user_id`);
+
+--
+-- Indexes for table `kardex_entrada_registro`
+--
+ALTER TABLE `kardex_entrada_registro`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kardex_entrada_registro_kardex_entrada_id_foreign` (`kardex_entrada_id`),
+  ADD KEY `kardex_entrada_registro_producto_id_foreign` (`producto_id`);
+
+--
+-- Indexes for table `kardex_salida`
+--
+ALTER TABLE `kardex_salida`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kardex_salida_motivo_id_foreign` (`motivo_id`);
+
+--
+-- Indexes for table `kardex_salida_registro`
+--
+ALTER TABLE `kardex_salida_registro`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `kardex_salida_registro_kardex_salida_id_foreign` (`kardex_salida_id`),
+  ADD KEY `kardex_salida_registro_producto_id_foreign` (`producto_id`);
+
+--
+-- Indexes for table `marcas`
+--
+ALTER TABLE `marcas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `migrations`
+--
+ALTER TABLE `migrations`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_permissions_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD PRIMARY KEY (`role_id`,`model_id`,`model_type`),
+  ADD KEY `model_has_roles_model_id_model_type_index` (`model_id`,`model_type`);
+
+--
+-- Indexes for table `monedas`
+--
+ALTER TABLE `monedas`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `motivos`
+--
+ALTER TABLE `motivos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `motivo_traslado`
+--
+ALTER TABLE `motivo_traslado`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `paises`
+--
+ALTER TABLE `paises`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `password_resets`
+--
+ALTER TABLE `password_resets`
+  ADD KEY `password_resets_email_index` (`email`);
+
+--
+-- Indexes for table `periodo_consulta`
+--
+ALTER TABLE `periodo_consulta`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `periodo_consulta_almacen_id_foreign` (`almacen_id`),
+  ADD KEY `periodo_consulta_categoria_id_foreign` (`categoria_id`);
+
+--
+-- Indexes for table `periodo_consulta_registro`
+--
+ALTER TABLE `periodo_consulta_registro`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `periodo_consulta_registro_periodo_consulta_id_foreign` (`periodo_consulta_id`),
+  ADD KEY `periodo_consulta_registro_producto_id_foreign` (`producto_id`);
+
+--
+-- Indexes for table `permissions`
+--
+ALTER TABLE `permissions`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `personal`
+--
+ALTER TABLE `personal`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `personal_nombres_unique` (`nombres`),
+  ADD UNIQUE KEY `personal_email_unique` (`email`);
+
+--
+-- Indexes for table `personal_datos_laborales`
+--
+ALTER TABLE `personal_datos_laborales`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `personal_datos_laborales_personal_id_foreign` (`personal_id`);
+
+--
+-- Indexes for table `personal_ventas`
+--
+ALTER TABLE `personal_ventas`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `personal_ventas_id_personal_foreign` (`id_personal`);
+
+--
+-- Indexes for table `productos`
+--
+ALTER TABLE `productos`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `productos_codigo_original_unique` (`codigo_original`),
+  ADD KEY `productos_categoria_id_foreign` (`categoria_id`),
+  ADD KEY `productos_familia_id_foreign` (`familia_id`),
+  ADD KEY `productos_marca_id_foreign` (`marca_id`),
+  ADD KEY `productos_unidad_medida_id_foreign` (`unidad_medida_id`),
+  ADD KEY `productos_estado_id_foreign` (`estado_id`);
+
+--
+-- Indexes for table `provedores`
+--
+ALTER TABLE `provedores`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `roles`
+--
+ALTER TABLE `roles`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD PRIMARY KEY (`permission_id`,`role_id`),
+  ADD KEY `role_has_permissions_role_id_foreign` (`role_id`);
+
+--
+-- Indexes for table `servicios`
+--
+ALTER TABLE `servicios`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `servicios_codigo_original_unique` (`codigo_original`);
+
+--
+-- Indexes for table `tipo_cambio`
+--
+ALTER TABLE `tipo_cambio`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `transaccion_compra`
+--
+ALTER TABLE `transaccion_compra`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `transaccion_compra_cod`
+--
+ALTER TABLE `transaccion_compra_cod`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `unidad_medida`
+--
+ALTER TABLE `unidad_medida`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `users`
+--
+ALTER TABLE `users`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `users_email_unique` (`email`),
+  ADD KEY `users_personal_id_foreign` (`personal_id`),
+  ADD KEY `users_confi_id_foreign` (`confi_id`),
+  ADD KEY `users_almacen_id_foreign` (`almacen_id`);
+
+--
+-- Indexes for table `vehiculos`
+--
+ALTER TABLE `vehiculos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indexes for table `ventas_registro`
+--
+ALTER TABLE `ventas_registro`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `ventas_registro_id_facturacion_foreign` (`id_facturacion`);
+
+--
+-- AUTO_INCREMENT for dumped tables
+--
+
+--
+-- AUTO_INCREMENT for table `almacen`
+--
+ALTER TABLE `almacen`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `banco`
+--
+ALTER TABLE `banco`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `boleta`
+--
+ALTER TABLE `boleta`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `boleta_registro`
+--
+ALTER TABLE `boleta_registro`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `categorias`
+--
+ALTER TABLE `categorias`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `clientes`
+--
+ALTER TABLE `clientes`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=445;
+
+--
+-- AUTO_INCREMENT for table `configs`
+--
+ALTER TABLE `configs`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `config_fe`
+--
+ALTER TABLE `config_fe`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `contactos`
+--
+ALTER TABLE `contactos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=450;
+
+--
+-- AUTO_INCREMENT for table `cotizacion`
+--
+ALTER TABLE `cotizacion`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cotizacion_boleta_registro`
+--
+ALTER TABLE `cotizacion_boleta_registro`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cotizacion_factura_registro`
+--
+ALTER TABLE `cotizacion_factura_registro`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cotizacion_servicio`
+--
+ALTER TABLE `cotizacion_servicio`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cotizacion_servicio_boleta_r`
+--
+ALTER TABLE `cotizacion_servicio_boleta_r`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `cotizacion_servicio_factura_r`
+--
+ALTER TABLE `cotizacion_servicio_factura_r`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `email_bandeja_envios`
+--
+ALTER TABLE `email_bandeja_envios`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `email_bandeja_envios_archivos`
+--
+ALTER TABLE `email_bandeja_envios_archivos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `email_configuraciones`
+--
+ALTER TABLE `email_configuraciones`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `empresa`
+--
+ALTER TABLE `empresa`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `estado`
+--
+ALTER TABLE `estado`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `facturacion`
+--
+ALTER TABLE `facturacion`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `facturacion_registro`
+--
+ALTER TABLE `facturacion_registro`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `familias`
+--
+ALTER TABLE `familias`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `forma_pago`
+--
+ALTER TABLE `forma_pago`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+
+--
+-- AUTO_INCREMENT for table `garantia_guia_egreso`
+--
+ALTER TABLE `garantia_guia_egreso`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=416;
+
+--
+-- AUTO_INCREMENT for table `garantia_guia_ingreso`
+--
+ALTER TABLE `garantia_guia_ingreso`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=477;
+
+--
+-- AUTO_INCREMENT for table `garantia_informe_tecnico`
+--
+ALTER TABLE `garantia_informe_tecnico`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `garantia_informe_tecnico_archivos`
+--
+ALTER TABLE `garantia_informe_tecnico_archivos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `guia_remision`
+--
+ALTER TABLE `guia_remision`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `g_remision_registros`
+--
+ALTER TABLE `g_remision_registros`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `igv`
+--
+ALTER TABLE `igv`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `kardex_entrada`
+--
+ALTER TABLE `kardex_entrada`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `kardex_entrada_registro`
+--
+ALTER TABLE `kardex_entrada_registro`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+
+--
+-- AUTO_INCREMENT for table `kardex_salida`
+--
+ALTER TABLE `kardex_salida`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `kardex_salida_registro`
+--
+ALTER TABLE `kardex_salida_registro`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `marcas`
+--
+ALTER TABLE `marcas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+
+--
+-- AUTO_INCREMENT for table `migrations`
+--
+ALTER TABLE `migrations`
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=157;
+
+--
+-- AUTO_INCREMENT for table `monedas`
+--
+ALTER TABLE `monedas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `motivos`
+--
+ALTER TABLE `motivos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT for table `motivo_traslado`
+--
+ALTER TABLE `motivo_traslado`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+
+--
+-- AUTO_INCREMENT for table `paises`
+--
+ALTER TABLE `paises`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=241;
+
+--
+-- AUTO_INCREMENT for table `periodo_consulta`
+--
+ALTER TABLE `periodo_consulta`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `periodo_consulta_registro`
+--
+ALTER TABLE `periodo_consulta_registro`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `permissions`
+--
+ALTER TABLE `permissions`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=226;
+
+--
+-- AUTO_INCREMENT for table `personal`
+--
+ALTER TABLE `personal`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `personal_datos_laborales`
+--
+ALTER TABLE `personal_datos_laborales`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `personal_ventas`
+--
+ALTER TABLE `personal_ventas`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `productos`
+--
+ALTER TABLE `productos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=26;
+
+--
+-- AUTO_INCREMENT for table `provedores`
+--
+ALTER TABLE `provedores`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `roles`
+--
+ALTER TABLE `roles`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
+-- AUTO_INCREMENT for table `servicios`
+--
+ALTER TABLE `servicios`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `tipo_cambio`
+--
+ALTER TABLE `tipo_cambio`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT for table `transaccion_compra`
+--
+ALTER TABLE `transaccion_compra`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `transaccion_compra_cod`
+--
+ALTER TABLE `transaccion_compra_cod`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT for table `unidad_medida`
+--
+ALTER TABLE `unidad_medida`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
+
+--
+-- AUTO_INCREMENT for table `users`
+--
+ALTER TABLE `users`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+
+--
+-- AUTO_INCREMENT for table `vehiculos`
+--
+ALTER TABLE `vehiculos`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
+-- AUTO_INCREMENT for table `ventas_registro`
+--
+ALTER TABLE `ventas_registro`
+  MODIFY `id` bigint(20) UNSIGNED NOT NULL AUTO_INCREMENT;
+
+--
+-- Constraints for dumped tables
+--
+
+--
+-- Constraints for table `almacen`
+--
+ALTER TABLE `almacen`
+  ADD CONSTRAINT `almacen_responsable_foreign` FOREIGN KEY (`responsable`) REFERENCES `personal` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `boleta`
+--
+ALTER TABLE `boleta`
+  ADD CONSTRAINT `boleta_almacen_id_foreign` FOREIGN KEY (`almacen_id`) REFERENCES `almacen` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `boleta_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `boleta_forma_pago_id_foreign` FOREIGN KEY (`forma_pago_id`) REFERENCES `forma_pago` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `boleta_id_cotizador_foreign` FOREIGN KEY (`id_cotizador`) REFERENCES `cotizacion` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `boleta_id_cotizador_servicio_foreign` FOREIGN KEY (`id_cotizador_servicio`) REFERENCES `cotizacion_servicio` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `boleta_moneda_id_foreign` FOREIGN KEY (`moneda_id`) REFERENCES `monedas` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `boleta_registro`
+--
+ALTER TABLE `boleta_registro`
+  ADD CONSTRAINT `boleta_registro_boleta_id_foreign` FOREIGN KEY (`boleta_id`) REFERENCES `boleta` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `boleta_registro_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `boleta_registro_servicio_id_foreign` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `contactos`
+--
+ALTER TABLE `contactos`
+  ADD CONSTRAINT `contactos_clientes_id_foreign` FOREIGN KEY (`clientes_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `cotizacion`
+--
+ALTER TABLE `cotizacion`
+  ADD CONSTRAINT `cotizacion_almacen_id_foreign` FOREIGN KEY (`almacen_id`) REFERENCES `almacen` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_aprobado_por_foreign` FOREIGN KEY (`aprobado_por`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_comisionista_id_foreign` FOREIGN KEY (`comisionista_id`) REFERENCES `personal_ventas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_forma_pago_id_foreign` FOREIGN KEY (`forma_pago_id`) REFERENCES `forma_pago` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_moneda_id_foreign` FOREIGN KEY (`moneda_id`) REFERENCES `monedas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `cotizacion_boleta_registro`
+--
+ALTER TABLE `cotizacion_boleta_registro`
+  ADD CONSTRAINT `cotizacion_boleta_registro_cotizacion_id_foreign` FOREIGN KEY (`cotizacion_id`) REFERENCES `cotizacion` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_boleta_registro_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `cotizacion_factura_registro`
+--
+ALTER TABLE `cotizacion_factura_registro`
+  ADD CONSTRAINT `cotizacion_factura_registro_cotizacion_id_foreign` FOREIGN KEY (`cotizacion_id`) REFERENCES `cotizacion` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_factura_registro_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `cotizacion_servicio`
+--
+ALTER TABLE `cotizacion_servicio`
+  ADD CONSTRAINT `cotizacion_servicio_aprobado_por_foreign` FOREIGN KEY (`aprobado_por`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_servicio_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_servicio_comisionista_id_foreign` FOREIGN KEY (`comisionista_id`) REFERENCES `personal_ventas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_servicio_forma_pago_id_foreign` FOREIGN KEY (`forma_pago_id`) REFERENCES `forma_pago` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_servicio_moneda_id_foreign` FOREIGN KEY (`moneda_id`) REFERENCES `monedas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_servicio_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `cotizacion_servicio_boleta_r`
+--
+ALTER TABLE `cotizacion_servicio_boleta_r`
+  ADD CONSTRAINT `cotizacion_servicio_boleta_r_cotizacion_servicio_id_foreign` FOREIGN KEY (`cotizacion_servicio_id`) REFERENCES `cotizacion_servicio` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_servicio_boleta_r_servicio_id_foreign` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `cotizacion_servicio_factura_r`
+--
+ALTER TABLE `cotizacion_servicio_factura_r`
+  ADD CONSTRAINT `cotizacion_servicio_factura_r_cotizacion_servicio_id_foreign` FOREIGN KEY (`cotizacion_servicio_id`) REFERENCES `cotizacion_servicio` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `cotizacion_servicio_factura_r_servicio_id_foreign` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `email_bandeja_envios`
+--
+ALTER TABLE `email_bandeja_envios`
+  ADD CONSTRAINT `email_bandeja_envios_id_usuario_foreign` FOREIGN KEY (`id_usuario`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `email_bandeja_envios_archivos`
+--
+ALTER TABLE `email_bandeja_envios_archivos`
+  ADD CONSTRAINT `email_bandeja_envios_archivos_id_bandeja_envios_foreign` FOREIGN KEY (`id_bandeja_envios`) REFERENCES `email_bandeja_envios` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `email_configuraciones`
+--
+ALTER TABLE `email_configuraciones`
+  ADD CONSTRAINT `email_configuraciones_id_usuario_foreign` FOREIGN KEY (`id_usuario`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `facturacion`
+--
+ALTER TABLE `facturacion`
+  ADD CONSTRAINT `facturacion_almacen_id_foreign` FOREIGN KEY (`almacen_id`) REFERENCES `almacen` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `facturacion_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `facturacion_forma_pago_id_foreign` FOREIGN KEY (`forma_pago_id`) REFERENCES `forma_pago` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `facturacion_id_cotizador_foreign` FOREIGN KEY (`id_cotizador`) REFERENCES `cotizacion` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `facturacion_id_cotizador_servicio_foreign` FOREIGN KEY (`id_cotizador_servicio`) REFERENCES `cotizacion_servicio` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `facturacion_moneda_id_foreign` FOREIGN KEY (`moneda_id`) REFERENCES `monedas` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `facturacion_registro`
+--
+ALTER TABLE `facturacion_registro`
+  ADD CONSTRAINT `facturacion_registro_facturacion_id_foreign` FOREIGN KEY (`facturacion_id`) REFERENCES `facturacion` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `facturacion_registro_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `facturacion_registro_servicio_id_foreign` FOREIGN KEY (`servicio_id`) REFERENCES `servicios` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `garantia_guia_egreso`
+--
+ALTER TABLE `garantia_guia_egreso`
+  ADD CONSTRAINT `garantia_guia_egreso_garantia_ingreso_id_foreign` FOREIGN KEY (`garantia_ingreso_id`) REFERENCES `garantia_guia_ingreso` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `garantia_guia_ingreso`
+--
+ALTER TABLE `garantia_guia_ingreso`
+  ADD CONSTRAINT `garantia_guia_ingreso_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `garantia_guia_ingreso_contacto_cliente_id_foreign` FOREIGN KEY (`contacto_cliente_id`) REFERENCES `contactos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `garantia_guia_ingreso_marca_id_foreign` FOREIGN KEY (`marca_id`) REFERENCES `marcas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `garantia_guia_ingreso_personal_lab_id_foreign` FOREIGN KEY (`personal_lab_id`) REFERENCES `personal` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `garantia_informe_tecnico`
+--
+ALTER TABLE `garantia_informe_tecnico`
+  ADD CONSTRAINT `garantia_informe_tecnico_garantia_egreso_id_foreign` FOREIGN KEY (`garantia_egreso_id`) REFERENCES `garantia_guia_egreso` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `garantia_informe_tecnico_archivos`
+--
+ALTER TABLE `garantia_informe_tecnico_archivos`
+  ADD CONSTRAINT `garantia_informe_tecnico_archivos_id_informe_tecnico_foreign` FOREIGN KEY (`id_informe_tecnico`) REFERENCES `garantia_informe_tecnico` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `guia_remision`
+--
+ALTER TABLE `guia_remision`
+  ADD CONSTRAINT `guia_remision_almacen_id_foreign` FOREIGN KEY (`almacen_id`) REFERENCES `almacen` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `guia_remision_cliente_id_foreign` FOREIGN KEY (`cliente_id`) REFERENCES `clientes` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `guia_remision_cotizador_id_foreign` FOREIGN KEY (`cotizador_id`) REFERENCES `cotizacion` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `guia_remision_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `guia_remision_vehiculo_id_foreign` FOREIGN KEY (`vehiculo_id`) REFERENCES `vehiculos` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `g_remision_registros`
+--
+ALTER TABLE `g_remision_registros`
+  ADD CONSTRAINT `g_remision_registros_guia_remision_id_foreign` FOREIGN KEY (`guia_remision_id`) REFERENCES `guia_remision` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `g_remision_registros_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `kardex_entrada`
+--
+ALTER TABLE `kardex_entrada`
+  ADD CONSTRAINT `kardex_entrada_almacen_id_foreign` FOREIGN KEY (`almacen_id`) REFERENCES `almacen` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `kardex_entrada_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `kardex_entrada_moneda_id_foreign` FOREIGN KEY (`moneda_id`) REFERENCES `monedas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `kardex_entrada_motivo_id_foreign` FOREIGN KEY (`motivo_id`) REFERENCES `motivos` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `kardex_entrada_provedor_id_foreign` FOREIGN KEY (`provedor_id`) REFERENCES `provedores` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `kardex_entrada_user_id_foreign` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `kardex_entrada_registro`
+--
+ALTER TABLE `kardex_entrada_registro`
+  ADD CONSTRAINT `kardex_entrada_registro_kardex_entrada_id_foreign` FOREIGN KEY (`kardex_entrada_id`) REFERENCES `kardex_entrada` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `kardex_entrada_registro_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `kardex_salida`
+--
+ALTER TABLE `kardex_salida`
+  ADD CONSTRAINT `kardex_salida_motivo_id_foreign` FOREIGN KEY (`motivo_id`) REFERENCES `motivos` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `kardex_salida_registro`
+--
+ALTER TABLE `kardex_salida_registro`
+  ADD CONSTRAINT `kardex_salida_registro_kardex_salida_id_foreign` FOREIGN KEY (`kardex_salida_id`) REFERENCES `kardex_salida` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `kardex_salida_registro_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `model_has_permissions`
+--
+ALTER TABLE `model_has_permissions`
+  ADD CONSTRAINT `model_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `model_has_roles`
+--
+ALTER TABLE `model_has_roles`
+  ADD CONSTRAINT `model_has_roles_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `periodo_consulta`
+--
+ALTER TABLE `periodo_consulta`
+  ADD CONSTRAINT `periodo_consulta_almacen_id_foreign` FOREIGN KEY (`almacen_id`) REFERENCES `almacen` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `periodo_consulta_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `periodo_consulta_registro`
+--
+ALTER TABLE `periodo_consulta_registro`
+  ADD CONSTRAINT `periodo_consulta_registro_periodo_consulta_id_foreign` FOREIGN KEY (`periodo_consulta_id`) REFERENCES `periodo_consulta` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `periodo_consulta_registro_producto_id_foreign` FOREIGN KEY (`producto_id`) REFERENCES `productos` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `personal_datos_laborales`
+--
+ALTER TABLE `personal_datos_laborales`
+  ADD CONSTRAINT `personal_datos_laborales_personal_id_foreign` FOREIGN KEY (`personal_id`) REFERENCES `personal` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `personal_ventas`
+--
+ALTER TABLE `personal_ventas`
+  ADD CONSTRAINT `personal_ventas_id_personal_foreign` FOREIGN KEY (`id_personal`) REFERENCES `personal_datos_laborales` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `productos`
+--
+ALTER TABLE `productos`
+  ADD CONSTRAINT `productos_categoria_id_foreign` FOREIGN KEY (`categoria_id`) REFERENCES `categorias` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `productos_estado_id_foreign` FOREIGN KEY (`estado_id`) REFERENCES `estado` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `productos_familia_id_foreign` FOREIGN KEY (`familia_id`) REFERENCES `familias` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `productos_marca_id_foreign` FOREIGN KEY (`marca_id`) REFERENCES `marcas` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `productos_unidad_medida_id_foreign` FOREIGN KEY (`unidad_medida_id`) REFERENCES `unidad_medida` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `role_has_permissions`
+--
+ALTER TABLE `role_has_permissions`
+  ADD CONSTRAINT `role_has_permissions_permission_id_foreign` FOREIGN KEY (`permission_id`) REFERENCES `permissions` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `role_has_permissions_role_id_foreign` FOREIGN KEY (`role_id`) REFERENCES `roles` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `users`
+--
+ALTER TABLE `users`
+  ADD CONSTRAINT `users_almacen_id_foreign` FOREIGN KEY (`almacen_id`) REFERENCES `almacen` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `users_confi_id_foreign` FOREIGN KEY (`confi_id`) REFERENCES `configs` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `users_personal_id_foreign` FOREIGN KEY (`personal_id`) REFERENCES `personal` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `ventas_registro`
+--
+ALTER TABLE `ventas_registro`
+  ADD CONSTRAINT `ventas_registro_id_facturacion_foreign` FOREIGN KEY (`id_facturacion`) REFERENCES `facturacion` (`id`) ON DELETE CASCADE;
+COMMIT;
+
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
