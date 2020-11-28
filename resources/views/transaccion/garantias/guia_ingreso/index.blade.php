@@ -108,7 +108,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$garantias_guias_ingreso->motivo}}</td>
-                                            <td>{{$garantias_guias_ingreso->personal_laborales->personal_l->nombres}}</td>
+                                            <td>{{$garantias_guias_ingreso->personal_laborales->nombres}}</td>
                                             <td>{{$garantias_guias_ingreso->fecha}}</td>
                                             <td>{{$garantias_guias_ingreso->orden_servicio}}</td>
                                             <td>{{$garantias_guias_ingreso->asunto}}</td>

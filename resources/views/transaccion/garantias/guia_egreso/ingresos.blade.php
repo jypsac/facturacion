@@ -62,7 +62,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$garantias_guias_ingreso->motivo}}</td>
-                                            <td>{{$garantias_guias_ingreso->personal_laborales->personal_l->nombres}}</td>
+                                            <td>{{$garantias_guias_ingreso->personal_laborales->nombres}}</td>
                                             <td>{{$garantias_guias_ingreso->fecha}}</td>
                                             <td>{{$garantias_guias_ingreso->orden_servicio}}</td>
                                             <td>{{$garantias_guias_ingreso->asunto}}</td>
@@ -70,7 +70,7 @@
                                             <td><center>
                                                 @if($garantias_guias_ingreso->estado==0)
                                                     <button class="btn btn-w-m btn-secondary">ANULADO</button>
-                                                
+
                                                 @elseif($garantias_guias_ingreso->egresado==0)
                                                     <a href="{{route('garantia_guia_egreso.edit', $garantias_guias_ingreso->id)}}"><button class="btn btn-w-m btn-info">Egresar</button></a>
                                                 @else

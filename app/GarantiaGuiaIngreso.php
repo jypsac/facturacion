@@ -15,16 +15,16 @@ class GarantiaGuiaIngreso extends Model
     }
 
     public function personal_laborales(){
-        return $this->belongsTo(Personal_datos_laborales::class,'personal_lab_id');
+        return $this->belongsTo(Personal::class,'personal_lab_id');
     }
 
     public function clientes_i(){
         return $this->belongsTo(Cliente::class,'cliente_id');
     }
 
-    public function contactos(){
-        return $this->belongsTo(Contacto::class,'contacto_cliente_id');
-    }
+    // public function contactos(){
+    //     return $this->belongsTo(Contacto::class,'contacto_cliente_id');
+    // }
 
 
 }

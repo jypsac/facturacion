@@ -74,7 +74,7 @@
                                 <strong>Direccion:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->direccion}}<br>
                                 <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
-                                <strong>Contacto:&nbsp;</strong>{{$garantia_guia_ingreso->contactos->nombre}} &nbsp;
+                                {{-- <strong>Contacto:&nbsp;</strong>{{$garantia_guia_ingreso->contactos->nombre}} &nbsp; --}}
                                 <br>
                             </div>
                         </div>
@@ -83,7 +83,7 @@
                          <div class="form-control" >
                              <h3>Condiciones Generales</h3>
                              <div align="left">
-                                <strong>Ing. Asignado:</strong>&nbsp;{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                <strong>Ing. Asignado:</strong>&nbsp;{{$garantia_guia_ingreso->personal_laborales->nombres}} {{$garantia_guia_ingreso->personal_laborales->apellidos}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                 <strong>Motivo:</strong>&nbsp;{{$garantia_guia_ingreso->motivo}}<br>
                                 <strong>Marca :</strong>&nbsp;{{$garantia_guia_ingreso->marcas_i->nombre}} &nbsp;<br>
 
@@ -184,7 +184,7 @@
     <div class="child1"><br>
         <hr />
         <p style="width:250px;" align="center">Departamento de Servicio Tecnico <br>
-        Ing. {{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</p>
+        Ing. {{$garantia_guia_ingreso->personal_laborales->nombres}} {{$garantia_guia_ingreso->personal_laborales->apellidos}}</p>
     </div>
     <div class="child2"><br>
         <hr />

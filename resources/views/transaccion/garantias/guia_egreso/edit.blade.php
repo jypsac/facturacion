@@ -7,17 +7,17 @@
 @section('value_accion', 'Atras')
 
 @section('content')
-	            		
+
  <form action="{{route('garantia_guia_egreso.store')}}"  enctype="multipart/form-data" method="post">
 									 	@csrf
 									 	<div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
-	
+
     <div class="row">
-            
-        <fieldset class="col-sm-6">    	
+
+        <fieldset class="col-sm-6">
 					<legend>Datos<br>Generales</legend>
-			
-					
+
+
 				<div class="panel panel-default">
 					<div class="panel-body" align="left">
 						<div class="row">
@@ -46,16 +46,16 @@
 
 
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Ing. Asignado:</label>
                         		 <div class="col-sm-10">
-                         		<input type="text" class="form-control" name="ing_asignado" value="{{$garantias_guias_ingresos->personal_laborales->personal_l->nombres}}" readonly>
+                         		<input type="text" class="form-control" name="ing_asignado" value="{{$garantias_guias_ingresos->personal_laborales->nombres}}" readonly>
                 				</div>
 
 						</div>
 
 						<div class="row">
-							
+
                       			<label class="col-sm-2 col-form-label">Asunto:</label>
                         		 <div class="col-sm-10">
                          		<input type="text" class="form-control" name="asunto" value="{{$garantias_guias_ingresos->asunto}}" readonly>
@@ -64,14 +64,14 @@
 						</div>
 
 
-						
+
 						<br>
 				</div>
-					
-		</fieldset>		
-		<fieldset class="col-sm-6">    	
+
+		</fieldset>
+		<fieldset class="col-sm-6">
 					<legend> Datos del <br>  Cliente </legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -86,29 +86,29 @@
 								<label class="col-sm-2 col-form-label">Telefono:</label>
                               <div class="col-sm-10">
                      			<input type="text" class="form-control" name="telefono" value="{{$garantias_guias_ingresos->clientes_i->telefono}}" readonly>
-                              	
+
                               </div>
 
                     			<label class="col-sm-2 col-form-label">Correo:</label>
                               <div class="col-sm-10">
                               	<input type="text" class="form-control" name="correo" value="{{$garantias_guias_ingresos->clientes_i->email}}" readonly>
                               </div>
-                              <label class="col-sm-2 col-form-label">Contacto:</label>
+                              {{-- <label class="col-sm-2 col-form-label">Contacto:</label>
                               <div class="col-sm-10">
                               	<input type="text" class="form-control" name="contacto" value="{{$garantias_guias_ingresos->contactos->nombre}}" readonly>
-                              </div>
+                              </div> --}}
 							</div>
 
 
 						</div>
 					</div>
-					
-		</fieldset>		
+
+		</fieldset>
 
 
-		<fieldset class="col-sm-12">    	
+		<fieldset class="col-sm-12">
 					<legend> Datos del <br> Equipoo </legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -123,7 +123,7 @@
 								<label class="col-sm-2 col-form-label">Codigo Interno:</label>
                               <div class="col-sm-4">
                      					<input type="text" class="form-control" name="codigo_interno" value="{{$garantias_guias_ingresos->codigo_interno}}" readonly>
-                              	
+
                               </div>
 
                     			<label class="col-sm-2 col-form-label">Fecha de Compra:</label>
@@ -135,12 +135,12 @@
 
 						</div>
 					</div>
-					
-		</fieldset>		
 
-		<fieldset class="col-sm-12">    	
+		</fieldset>
+
+		<fieldset class="col-sm-12">
 					<legend> Informe del <br>Problema</legend>
-					
+
 					<div class="panel panel-default">
 						<div class="panel-body" align="left">
 							<div class="row">
@@ -151,7 +151,7 @@
                 				</div>
                    			 </div>
 
-                   			
+
 							</div>
 						</div>
 
@@ -167,7 +167,7 @@
                 				</div>
                    			 </div>
 
-                   			
+
 							</div>
 						</div>
 
@@ -182,31 +182,31 @@
                 				</div>
                    			 </div>
 
-                   			
+
 							</div>
 						</div>
 
 					</div>
 
-						
-					
-		</fieldset>	
+
+
+		</fieldset>
 		 <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
-	                       
+
 
 
     </div>
 
 </div>
- </form>	
-                
+ </form>
+
 <style>
 	.form-control{    margin-bottom: 15px;
 }
-   fieldset 
+   fieldset
   {
     /*border: 1px solid #ddd !important;*/
-    padding: 10px;       
+    padding: 10px;
     /*border-radius:4px ;*/
     background-color:#f5f5f5;
     padding-left:10px!important;
@@ -214,19 +214,19 @@
     margin-bottom: 10px;
     border-left: 1px solid #ddd !important;
 
-  } 
-  
+  }
+
     legend
     {
       font-size:14px;
       font-weight:bold;
-      margin-bottom: 0px; 
-      width: 35%; 
+      margin-bottom: 0px;
+      width: 35%;
       border: 1px solid #ddd;
-      border-radius: 4px; 
-      padding: 5px 5px 5px 10px; 
+      border-radius: 4px;
+      padding: 5px 5px 5px 10px;
       background-color: #ffffff;
-    } 
+    }
 </style>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>

@@ -56,12 +56,12 @@
             <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
             <strong>Direccion:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->direccion}}<br>
-            <strong>Contacto:</strong>&nbsp;{{$garantia_guia_ingreso->contactos->nombre}}<br>
+            {{-- <strong>Contacto:</strong>&nbsp;{{$garantia_guia_ingreso->contactos->nombre}}<br> --}}
         </td>
         <th style="width: 10%;border-color: white"></th>
         <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto">
             <center><strong style="align-content: center;margin: 5px">Condiciones Generales </strong></center><br>
-            <strong>Ing. Asignado:</strong>&nbsp;{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}<br>
+            <strong>Ing. Asignado:</strong>&nbsp;{{$garantia_guia_ingreso->personal_laborales->nombres}} {{$garantia_guia_ingreso->personal_laborales->apellidos}}<br>
             <strong>Motivo:</strong>&nbsp;{{$garantia_guia_ingreso->motivo}}<br>
             <strong>Marca:</strong>&nbsp;{{$garantia_guia_ingreso->marcas_i->nombre}}<br>
             <strong>Asunto:</strong>&nbsp;{{$garantia_guia_ingreso->asunto}}<br>
@@ -282,7 +282,7 @@
                 </tr>
                 <tr>
                     <td class="blanco"></td>
-                    <th class="blanco" style="width: 200px;border-top: none;"><center>    Departamento de Servicio Tecnico <br>Ing. {{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}} {{$garantia_guia_ingreso->personal_laborales->personal_l->apellidos}}</center></th>
+                    <th class="blanco" style="width: 200px;border-top: none;"><center>    Departamento de Servicio Tecnico <br>Ing. {{$garantia_guia_ingreso->personal_laborales->nombres}} {{$garantia_guia_ingreso->personal_laborales->apellidos}}</center></th>
                     <th class="blanco" style="border-top: none;"></th>
                     <th class="blanco" style="width: 200px; border-top: none;"><center>{{$garantia_guia_ingreso->clientes_i->nombre}}<br> ({{$garantia_guia_ingreso->clientes_i->documento_identificacion}}: {{$garantia_guia_ingreso->clientes_i->numero_documento}})  </center></th>
                 </tr>

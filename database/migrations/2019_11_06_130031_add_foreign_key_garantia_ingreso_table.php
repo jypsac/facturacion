@@ -18,7 +18,7 @@ class AddForeignKeyGarantiaIngresoTable extends Migration
             $table->foreign('marca_id')->references('id')->on('marcas')->onDelete('cascade');
 
             $table->unsignedBigInteger('personal_lab_id');
-            $table->foreign('personal_lab_id')->references('id')->on('personal_datos_laborales')->onDelete('cascade');
+            $table->foreign('personal_lab_id')->references('id')->on('personal')->onDelete('cascade');
 
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
