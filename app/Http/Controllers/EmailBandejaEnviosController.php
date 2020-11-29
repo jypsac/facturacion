@@ -204,7 +204,6 @@ class EmailBandejaEnviosController extends Controller
               $regla=$cotizacion->tipo;
            // return $cotizacion;
          $archivo=$name.$regla.$id.".pdf";
-        $archivo=$name.$regla.$id.".pdf";
          $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
 
          $contenido=$pdf->download();

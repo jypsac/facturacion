@@ -400,7 +400,7 @@
                             @if( isset($mailbox_files->archivo) )
                             <div class="file-box">
                                 <div class="file">
-                                    <a href="" download="{{$mailbox_files->archivo}}">
+                                    <a href="{{storage_path('/app/public/'.$mailbox_files->archivo)}}" target="_blank" download="">
                                         <span class="corner"></span>
                                         <div class="icon">
                                             <i class="fa fa-file-pdf-o"></i>
@@ -418,7 +418,7 @@
                             @endif
                             @endforeach
 
-                            @foreach($mailbox_file as $mailbox_files)
+                           {{--  @foreach($mailbox_file as $mailbox_files)
                                 @if($mailbox_files->id_bandeja_envios ==  $row->id)
                                     @if( isset($mailbox_files->imagen) )
                                     <div class="file-box">
@@ -440,7 +440,7 @@
                                     </div>
                                     @endif
                                 @endif
-                            @endforeach
+                            @endforeach --}}
                             <div class="clearfix"></div>
                         </div>
                     </div>
