@@ -12,20 +12,12 @@
     <div class="ibox-title" align="right" style="padding-right: 3.1%">
         {{-- <div class="ibox-tools"> --}}
             {{-- <a class="btn btn-success"  href="" >Imprimir --}}
-            <div class="tooltip-demo">
+            <div class="tooltip-demo" >
             <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}">
                 <input type="text" name="archivo" id="texto2"  maxlength="50" value="{{$garantia_guia_ingreso->orden_servicio}}" oninput="actualizatext()" />
-                <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
+                <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg" ></i>  </button>
             </form>
-            <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
-                @csrf
-                 <input type="tel" name="numero"  value="{{$garantia_guia_ingreso->clientes_i->celular}}" hidden="" />
-                 <input type="text" name="mensaje" id="texto_orden" hidden="" />
-                 <input type="text" hidden="" name="url" value="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}?archivo=">
-                 <input type="text" name="name_sin_cambio" hidden="" value="{{$garantia_guia_ingreso->orden_servicio}}" />
-                <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-whatsapp fa-lg"></i>  </button>
-            </form>
-                     {{-- </a> --}}
+
             @if(Auth::user()->email_creado == 0)
                  <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
             @else
@@ -41,11 +33,25 @@
             <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i>   </a>
             {{-- <a href="" target="_blank" class="btn btn-success"><i class="fa fa-print"></i>Whatsapp</a> --}}
         {{-- </div> --}}
+            <div id="auto" onclick="divAuto()">
+                <a class="btn  btn-success" style="background: green;border-color: green;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-whatsapp fa-lg" style="color: white"></i>  </a>
+            </div>
+            <div id="div-mostrar">
+                {{-- <br style="width: -1px"> --}}
+               <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
+                @csrf
+                 <input type="tel" name="numero"  value="{{$garantia_guia_ingreso->clientes_i->celular}}"   />
+                 <input type="text" name="mensaje" id="texto_orden" hidden="" />
+                 <input type="text" hidden="" name="url" value="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}?archivo=">
+                 <input type="text" name="name_sin_cambio" hidden="" value="{{$garantia_guia_ingreso->orden_servicio}}" />
+                <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-send fa-lg"></i>  </button>
+            </form>
+            </div>
             </div>
     </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
+    <div class="row" >
+        <div class="col-lg-12" style="margin-top: -2px">
+            <div class="ibox-content p-xl" style=" margin-bottom: 2px;padding-bottom: 50px;">
                 <div class="row">
                     <div class="col-sm-6 text-left" align="left">
                         <address class="col-sm-4" align="left">
@@ -298,6 +304,41 @@
         opacity: 0  ;
     }
 </style>
+<style>
+
+#auto{
+    /*padding: -100px;*/
+    /*background: orange;*/
+    /*width: 95px;*/
+    cursor: pointer;
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
+    box-shadow: 0px 0px 1px #000;
+    display: inline-block;
+}
+
+#auto:hover{
+    opacity: .8;
+}
+
+#div-mostrar{
+    /*width: 50%;*/
+    margin: auto;
+    height: 0px;
+    /*margin-top: -5px*/
+    /*background: #000;*/
+    /*box-shadow: 10px 10px 3px #D8D8D8;*/
+    transition: height .4s;
+    color:white;
+    text-align: right;
+}
+#auto:hover{
+    opacity: .8;
+}
+#auto:hover + #div-mostrar{
+    height: 50px;
+}
+    </style>
 <script type="text/javascript">
     function mostrarPassword(){
         var cambio = document.getElementById("txtPassword");
@@ -339,6 +380,18 @@
         }
     }
 }
+</script>
+<script>
+    var clic = 1;
+    function divAuto(){
+       if(clic==1){
+       document.getElementById("div-mostrar").style.height = "50px";
+       clic = clic + 1;
+       } else{
+        document.getElementById("div-mostrar").style.height = "0px";
+        clic = 1;
+       }
+    }
 </script>
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
