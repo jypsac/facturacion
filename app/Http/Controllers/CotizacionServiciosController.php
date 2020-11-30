@@ -618,6 +618,36 @@ class CotizacionServiciosController extends Controller
             return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
         }
 
+        // $facturacion=Facturacion::where('id_cotizador',$id)->first();
+        // $boleta=Boleta::where('id_cotizador',$id)->first();
+        // $banco=Banco::where('estado','0')->get();
+        // $moneda=Moneda::where('principal',1)->first();
+        // $cotizacion=Cotizacion_Servicios::find($id);
+
+        // $empresa=Empresa::first();
+        // $sum=0;
+        // $igv=Igv::first();
+        // $sub_total=0;
+        // $regla=$cotizacion->tipo;
+        // $i=1;
+
+        // if($cotizacion->tipo=="factura"){
+        //     //FACTURA
+        //     $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
+        //     foreach ($cotizacion_registro as $cotizacion_registros) {
+        //        $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+        //     }
+        //     return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
+        // }else{
+        //     //BOLETA
+        //     $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+        //     foreach ($cotizacion_registro as $cotizacion_registros) {
+        //         $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+        //     }
+        //     return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
+        // }
+
+
    }
 
 //ENVIO DE FACTURAR A VISTA
