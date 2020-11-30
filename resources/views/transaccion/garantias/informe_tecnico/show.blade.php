@@ -294,7 +294,7 @@
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Encryption:</label>
                                             <div class="col-sm-4">
-                                                <select class="form-control" name="encryp" required="">
+                                                <select class="form-control" name="encryp" >
                                                     <option value="">Ninguno</option>
                                                     <option value="SSL">SSL</option>
                                                     <option value="TLS">TLS</option>
