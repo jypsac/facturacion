@@ -1,4 +1,3 @@
-
 @extends('layout')
 @section('title', 'Email')
 @section('breadcrumb', 'Email')
@@ -10,9 +9,9 @@
     @section('value_accion', 'Redactar')
     @section('data-config', 'modal')
     @section('config', '#configu')
-    @section('nombre', '')  
+    @section('nombre', '')
     @section('class', 'btn btn-primary fa fa-gear')
-   
+
 @elseif( $user->email_creado==1)
     @section('data-toggle', 'modal')
     @section('href_accion', '#redactar')
@@ -20,9 +19,9 @@
 
     @section('data-config', 'modal')
     @section('config', '#edits')
-    @section('nombre', '')  
+    @section('nombre', '')
     @section('class', 'btn btn-primary fa fa-gear')
-    
+
 @endif
 @section('content')
 
@@ -50,7 +49,7 @@
 
                     <form action="{{route('email.configstore')}}"  enctype="multipart/form-data" method="post">
                         @csrf
-                        <div class="row"> 
+                        <div class="row">
                             <fieldset >
                                 <legend> Agregar Configuracion </legend>
                                 {{-- <div> --}}
@@ -86,7 +85,7 @@
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Encryption:</label>
                                             <div class="col-sm-4">
-                                                <select class="form-control" name="encryp" required="">
+                                                <select class="form-control" name="encryp" >
                                                     <option value="">Ninguno</option>
                                                     <option value="SSL">SSL</option>
                                                     <option value="TLS">TLS</option>
@@ -135,7 +134,7 @@
 
                     <form action="{{route('email.configupdate',$config_emails->id)}}"  enctype="multipart/form-data" method="post">
                         @csrf
-                        
+
                         <div class="row">
                             <fieldset>
                                 <legend> Configuracion </legend>
@@ -355,11 +354,11 @@
                             {{-- <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="left" title="Plug this message"><i class="fa fa-plug"></i> Plug it</button>
                             <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="Mark as read"><i class="fa fa-eye"></i> </button>
                             <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Mark as important"><i class="fa fa-exclamation"></i> </button> --}}
-                            <form action="{{route('email.delete')}}" method="post">    
+                            <form action="{{route('email.delete')}}" method="post">
                                 @csrf
                             <button class="btn btn-white btn-xs" data-toggle="tooltip" data-placement="top" title="" data-original-title="Move to trash"><i class="fa fa-trash-o"></i> </button>
                             <input type="hidden" name="id" value="{{$row->id}}" />
-                                
+
                             </form>
                         </div>
                     </div>
@@ -400,7 +399,9 @@
                             @if( isset($mailbox_files->archivo) )
                             <div class="file-box">
                                 <div class="file">
-                                    <a href="{{storage_path('/app/public/'.$mailbox_files->archivo)}}" target="_blank" download="">
+                                    {{-- {{storage_path('app/public/'.$mailbox_files->archivo)}} --}}
+                                    <a href="{{storage_path().'/app/public/'.$mailbox_files->archivo}}" target="_blank"
+                                    download="{{($mailbox_files->archivo)}}" >
                                         <span class="corner"></span>
                                         <div class="icon">
                                             <i class="fa fa-file-pdf-o"></i>
@@ -470,7 +471,7 @@ div.note-editable.card-block{
 }
  table.table.table-bordered, td, th {
   border: 1px solid black !important;
-} 
+}
 div.form-group.note-form-group.note-group-select-from-files{
     display: none !important;
 }
@@ -528,10 +529,11 @@ span.fileinput-filename{
     $(function() {
       $('.summernote').summernote({
         height: 200,
-       
+
     });
 
   });
+
 </script>
 <script type="text/javascript">
         // <div class="col-sm-10">

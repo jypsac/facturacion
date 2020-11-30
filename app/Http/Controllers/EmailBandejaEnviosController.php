@@ -149,7 +149,7 @@ class EmailBandejaEnviosController extends Controller
           $mail->asunto =$request->get('asunto') ;
           $mail->mensaje =$mensaje_con_firma;
           $mail->mensaje_sin_html =$texto ;
-          $mail->estado= $estado;
+          $mail->estado = '0';
           $mail->fecha_hora =Carbon::now() ;
           $mail-> save();
 
@@ -202,6 +202,7 @@ class EmailBandejaEnviosController extends Controller
               $sum=0;
               $i=1;
               $regla=$cotizacion->tipo;
+              $cotizacion_factura = ' ';
            // return $cotizacion;
          $archivo=$name.$regla.$id.".pdf";
          $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
@@ -314,6 +315,7 @@ class EmailBandejaEnviosController extends Controller
         $port = $correo_busqueda->port;
         $encryption = $correo_busqueda->encryption;
         $yourEmail = $correo;
+        $estado = '0';
         //$mailbackup =  ; // = $request->yourmail
         $yourPassword = $correo_busqueda->password;
         $sendto = $request->get('remitente')  ;
