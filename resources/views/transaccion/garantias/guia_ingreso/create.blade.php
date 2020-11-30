@@ -400,7 +400,7 @@
                               	<input name="nombre_equipos" list="browserprod"   class="form-control" autocomplete="off" />
 	                              	<datalist id="browserprod">
 		                              	@foreach($productos as $producto)
-		                              	<option  id="a">{{$producto->id}} - {{$producto->nombre}}</option>
+		                              	<option  id="{{$producto->nombre}}">{{$producto->nombre}}</option>
 		                              	@endforeach
 	                              	</datalist>
                               </div>

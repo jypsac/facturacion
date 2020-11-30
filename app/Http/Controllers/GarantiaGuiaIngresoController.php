@@ -119,8 +119,8 @@ class GarantiaGuiaIngresoController extends Controller
         // $nombre_cliente=$request->get('nombre_cliente');
         // $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
         // $numero_doc=$cliente->numero_documento;
-      $equipo = $request->get('nombre_equipos');
-      $nombre_equipo = substr(strstr($equipo, '-'),1);
+      $nombre_equipo = $request->get('nombre_equipos');
+      // $nombre_equipo = substr(strstr($equipo, '-'),1);
 
         //TRAANSFORMNADO CON VALUE DE MARCA A UN ID
       $marca_nombre=$request->get('marca_id');
