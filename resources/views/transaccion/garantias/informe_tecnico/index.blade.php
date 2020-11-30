@@ -64,7 +64,8 @@
                                                 @endif
                                             </td>
                                             <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}</td>
-                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}}</td>
+                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->nombres}}</td>
+                                            {{-- <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}}</td> --}}
                                             <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha}}</td>
                                             <td>{{$garantias_informe_tecnico->orden_servicio}}</td>
                                             <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</td>

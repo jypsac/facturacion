@@ -58,7 +58,7 @@
                       			<label class="col-sm-2 col-form-label">Ing. Asignado:</label>
                         		 <div class="col-sm-10">
                          		<select class="form-control m-b" name="personal_lab_id">
-												<option value="{{$garantia_guia_ingreso->personal_laborales->personal_l->id}}">{{$garantia_guia_ingreso->personal_laborales->personal_l->nombres}}</option>
+												<option value="{{$garantia_guia_ingreso->personal_laborales->id}}">{{$garantia_guia_ingreso->personal_laborales->nombres}}</option>
 												<option disabled="">--------------</option>
 												@foreach($personales as $personal)
 												<option value="{{$personal->id}}">{{$personal->nombres}}   </option>
@@ -83,18 +83,18 @@
                         </div>
 
 						</div>
-            <div class="row">
+            {{-- <div class="row">
 
                             <label class="col-sm-2 col-form-label">Contacto:</label>
                              <div class="col-sm-10">
                               <input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"   value="{{$garantia_guia_ingreso->contactos->nombre}}" required   autocomplete="off"  >
-                              <datalist id="contacto_cliente" >
+                              <datalist id="contacto_cliente" > --}}
                                 {{-- <option id="contacto_cliente">a</option> --}}
-                             </datalist>
+                             {{-- </datalist>
                         </div>
 
             </div>
-						<div class="row">
+ --}}						<div class="row">
 
                       			<label class="col-sm-2 col-form-label">Asunto:</label>
                         		 <div class="col-sm-10">

@@ -63,7 +63,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$garantias_guias_egreso->garantia_ingreso_i->motivo}}</td>
-                                            <td>{{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}}</td>
+                                            <td>{{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->nombres}}</td>
                                             <td>{{$garantias_guias_egreso->garantia_ingreso_i->fecha}}</td>
                                             <td>{{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</td>
                                             <td>{{$garantias_guias_egreso->garantia_ingreso_i->asunto}}</td>

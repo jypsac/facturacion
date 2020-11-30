@@ -226,9 +226,9 @@ class GarantiaGuiaIngresoController extends Controller
       $cliente_nombre=Cliente::where("nombre","=",$cliente)->first();
       $cliente_id = $cliente_nombre->id;
       //Contacto
-      $contacto = $request->get('contacto_cliente');
-      $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
-      $contacto_id = $contacto_nombre->id;
+      // $contacto = $request->get('contacto_cliente');
+      // $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
+      // $contacto_id = $contacto_nombre->id;
 
         // ACTUALIZACION DE GUIA DE INGRESO
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
@@ -246,7 +246,7 @@ class GarantiaGuiaIngresoController extends Controller
 
       $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
       $garantia_guia_ingreso->cliente_id=$cliente_id;
-      $garantia_guia_ingreso->contacto_cliente_id = $contacto_id;
+      // $garantia_guia_ingreso->contacto_cliente_id = $contacto_id;
 
       $garantia_guia_ingreso->save();
 
