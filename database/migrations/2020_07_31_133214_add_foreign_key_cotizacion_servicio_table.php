@@ -15,6 +15,9 @@ class AddForeignKeyCotizacionServicioTable extends Migration
     {
         Schema::table('cotizacion_servicio', function (Blueprint $table) {
 
+            $table->unsignedBigInteger('almacen_id');
+            $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
+
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
 
@@ -25,6 +28,7 @@ class AddForeignKeyCotizacionServicioTable extends Migration
             $table->foreign('forma_pago_id')->references('id')->on('forma_pago')->onDelete('cascade');
 
             $table->boolean('estado_aprobar');
+            
             $table->boolean('estado_aprobado');
 
             $table->unsignedBigInteger('aprobado_por')->nullable();
@@ -47,7 +51,7 @@ class AddForeignKeyCotizacionServicioTable extends Migration
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
             
-            $table->boolean('estado');
+            $table->boolean('estado');              
             $table->boolean('estado_vigente');
             $table->string('tipo');
             $table->timestamps();
