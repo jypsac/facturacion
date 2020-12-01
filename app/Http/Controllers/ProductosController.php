@@ -25,7 +25,7 @@ class ProductosController extends Controller
         // $stok=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
         $marcas=Marca::all();
         $productos=Producto::all();
-        return view('maestro.catalogo.productos.index',compact('productos','marcas'));
+        return view('producto_servicios.productos.index',compact('productos','marcas'));
     }
 
     /**
@@ -41,7 +41,7 @@ class ProductosController extends Controller
         $estados=Estado::all();
         $categorias=Categoria::where('descripcion','PRODUCTOS')->first();
         $unidad_medidas=Unidad_medida::all();
-        return view('maestro.catalogo.productos.create',compact('unidad_medidas','categorias','marcas','estados','familias','monedas'));
+        return view('producto_servicios.productos.create',compact('unidad_medidas','categorias','marcas','estados','familias','monedas'));
     }
 
     /**
@@ -126,7 +126,7 @@ class ProductosController extends Controller
     public function show($id)
     {
         $producto=Producto::find($id);
-        return view('maestro.catalogo.productos.show',compact('producto'));
+        return view('producto_servicios.productos.show',compact('producto'));
     }
 
     /**
@@ -149,7 +149,7 @@ class ProductosController extends Controller
         $estados=Estado::all();
         $categorias=Categoria::all();
         $unidad_medidas=Unidad_medida::all();
-        return view('maestro.catalogo.productos.edit',compact('unidad_medidas','categorias','marcas','estados','familias','monedas','producto','peso','simbolo'));
+        return view('producto_servicios.productos.edit',compact('unidad_medidas','categorias','marcas','estados','familias','monedas','producto','peso','simbolo'));
     }
 
     /**

@@ -14,7 +14,7 @@ class ServiciosController extends Controller
     public function index()
     {
         $servicios=Servicios::all();
-        return view('maestro.catalogo.servicios.index',compact('servicios'));
+        return view('producto_servicios.servicios.index',compact('servicios'));
     }
 
     /**
@@ -24,7 +24,7 @@ class ServiciosController extends Controller
      */
     public function create()
     {
-        return view('maestro.catalogo.servicios.create');
+        return view('producto_servicios.servicios.create');
         //
     }
 
@@ -77,7 +77,7 @@ class ServiciosController extends Controller
     public function show($id)
     {
         $servicios=Servicios::find($id);
-        return view('maestro.catalogo.servicios.show',compact('servicios'));
+        return view('producto_servicios.servicios.show',compact('servicios'));
     }
 
     /**
@@ -89,7 +89,7 @@ class ServiciosController extends Controller
     public function edit($id)
     {
         $servicios=Servicios::find($id);
-        return view('maestro.catalogo.servicios.edit',compact('servicios'));
+        return view('producto_servicios.servicios.edit',compact('servicios'));
     }
 
     /**
