@@ -36,7 +36,9 @@ class GarantiaGuiaIngresoController extends Controller
     {
       $marcas=Marca::all();
       $garantias_guias_ingresos=GarantiaGuiaIngreso::all();
-      return view('transaccion.garantias.guia_ingreso.index',compact('marcas','garantias_guias_ingresos'));
+
+      $contacto = Contacto::all();
+      return view('transaccion.garantias.guia_ingreso.index',compact('marcas','garantias_guias_ingresos','contacto'));
     }
 
     /**
@@ -106,8 +108,12 @@ class GarantiaGuiaIngresoController extends Controller
       $cliente_id_nombre=Cliente::where("numero_documento","=",$nombre)->first();
       //Contacto
       $contacto = $request->get('contacto_cliente');
-      $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
-      $contacto_id = $contacto_nombre->id;
+       $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
+      if($contacto == ""){
+        $contacto_id = null;
+      }else{
+        $contacto_id = $contacto_nombre->id;
+      }
         // $cliente=$request->get('cliente_id');
         // $cliente_id_nombre=Cliente::where("nombre","=",$cliente)->first();
       $cliente_id=$cliente_id_nombre->id;
@@ -168,9 +174,10 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function show($id)
     {
+      $contacto = Contacto::all();
       $empresa=Empresa::first();
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
-      return view('transaccion.garantias.guia_ingreso.show',compact('garantia_guia_ingreso','empresa'));
+      return view('transaccion.garantias.guia_ingreso.show',compact('garantia_guia_ingreso','empresa','contacto'));
     }
 
     /**
@@ -181,10 +188,11 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function edit($id)
     {
+       $contacto = Contacto::all();
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
       $clientes=Cliente::all();
       $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
-      return view('transaccion.garantias.guia_ingreso.edit',compact('garantia_guia_ingreso','clientes','personales'));
+      return view('transaccion.garantias.guia_ingreso.edit',compact('garantia_guia_ingreso','clientes','personales','contacto'));
     }
 
     /**
@@ -222,12 +230,19 @@ class GarantiaGuiaIngresoController extends Controller
     }
     public function actualizar(Request $request, $id)
     {
+
       $cliente=$request->get('cliente_id');
       $cliente_nombre=Cliente::where("nombre","=",$cliente)->first();
       $cliente_id = $cliente_nombre->id;
       //Contacto
-      // $contacto = $request->get('contacto_cliente');
-      // $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
+      $contacto = $request->get('contacto_cliente');
+      $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
+      if($contacto == ""){
+        $contacto_id = null;
+      }else{
+        $contacto_id = $contacto_nombre->id;
+      }
+
       // $contacto_id = $contacto_nombre->id;
 
         // ACTUALIZACION DE GUIA DE INGRESO
@@ -246,7 +261,7 @@ class GarantiaGuiaIngresoController extends Controller
 
       $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
       $garantia_guia_ingreso->cliente_id=$cliente_id;
-      // $garantia_guia_ingreso->contacto_cliente_id = $contacto_id;
+      $garantia_guia_ingreso->contacto_cliente_id = $contacto_id;
 
       $garantia_guia_ingreso->save();
 
@@ -266,18 +281,20 @@ class GarantiaGuiaIngresoController extends Controller
 
     public function print($id){
       $mi_empresa=Empresa::first();
+      $contacto = Contacto::all();
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
-      return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
+      return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa','contacto'));
     }
 
     public function pdf(Request $request,$id){
+      $contacto = Contacto::all();
       $mi_empresa=Empresa::first();
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome').;
       $archivo=$request->get('archivo');
-      $pdf=PDF::loadView('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','mi_empresa'));
+      $pdf=PDF::loadView('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','mi_empresa','contacto'));
             // return $pdf->download();
       return $pdf->download('Guia Ingreso - '.$archivo.' .pdf');
 

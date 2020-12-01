@@ -38,18 +38,8 @@
                     <div class="col-sm-6 text-left" align="left">
                         <address class="col-sm-4" >
                             <img src="{{asset('storage/marcas/'.$garantias_guias_egreso->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 300px;height: 100px;margin-top: 5px" align="left">
-                            {{-- <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px" align="left"> --}}
-
                         </address>
                     </div>
-                    {{-- <div class="col-sm-6" align="right">
-                        <address class="col-sm-4" align="right">
-                            <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="right">
-                        </address>
-                    </div> --}}
-                {{-- </div> --}}
-                {{-- <div class="row"> --}}
-                    {{-- <div align="right"> --}}
                         <div class="col-sm-2">
                         </div>
                         <div class="col-sm-4" align="right" style="width: 100%">
@@ -59,7 +49,6 @@
                                 <h5>{{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</h5>
                             </div>
                         </div>
-                    {{-- </div> --}}
                 </div>
                 <br>
                 <div class="row" align="center" style="padding-bottom: 5px">
@@ -73,7 +62,12 @@
                                 <strong>Direccion:</strong>&nbsp; {{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->direccion}}<br>
                                 <strong>Telefono:</strong>&nbsp;{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <strong>Correo:</strong>&nbsp; {{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->email}}<br>
-                                {{-- <strong>Contacto:&nbsp;</strong>{{$garantias_guias_egreso->garantia_ingreso_i->contactos->nombre}} &nbsp; --}}
+                                <strong>Contacto:&nbsp;</strong>
+                                @if($garantias_guias_egreso->garantia_ingreso_i->contacto_cliente_id == null)
+                                <em>Sin Registro</em>
+                                @else
+                                {{$contacto->where('id','=',$garantias_guias_egreso->garantia_ingreso_i->contacto_cliente_id)->pluck('nombre')->first()}} &nbsp;
+                                @endif<br>
                                 <br>
                             </div>
                         </div>

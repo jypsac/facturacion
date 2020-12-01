@@ -7,6 +7,7 @@ use App\GarantiaGuiaIngreso;
 use App\GarantiaGuiaEgreso;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Marca;
+use App\Contacto;
 use App\Empresa;
 use App\Cliente;
 use Carbon\Carbon;
@@ -100,9 +101,10 @@ class GarantiaGuiaEgresoController extends Controller
      */
     public function show($id)
     {
+         $contacto = Contacto::all();
         $empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
-        return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso','empresa'));
+        return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso','empresa','contacto'));
     }
 
     /**
@@ -144,12 +146,14 @@ class GarantiaGuiaEgresoController extends Controller
     }
 
       public function print($id){
+        $contacto = Contacto::all();
         $mi_empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
-        return view('transaccion.garantias.guia_egreso.show_print',compact('garantias_guias_egreso','mi_empresa'));
+        return view('transaccion.garantias.guia_egreso.show_print',compact('garantias_guias_egreso','mi_empresa','contacto'));
     }
 
     public function pdf(Request $request,$id){
+        $contacto = Contacto::all();
         $mi_empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
         $archivo=$request->get('archivo');
@@ -157,7 +161,7 @@ class GarantiaGuiaEgresoController extends Controller
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome');
-        $pdf=PDF::loadView('transaccion.garantias.guia_egreso.show_pdf',compact('garantias_guias_egreso','mi_empresa'));
+        $pdf=PDF::loadView('transaccion.garantias.guia_egreso.show_pdf',compact('garantias_guias_egreso','mi_empresa','contacto'));
     //     return $pdf->download();
         return $pdf->download('Guia Egreso - '.$archivo.' .pdf');
     }
@@ -173,17 +177,17 @@ class GarantiaGuiaEgresoController extends Controller
         Storage::disk('garantias_guias_egreso')->put($archivo,$content);
 
         return view('transaccion.garantias.guia_egreso.correo',compact('id'));
-    } 
+    }
 
     public function enviar(Request $request){
        $smtpAddress = 'smtp.gmail.com'; // = $request->smtp
         $port = 465;
         $encryption = 'ssl';
         $yourEmail = 'danielrberru@gmail.com'; // = $request->yourmail
-        $yourPassword = 'digimonheroes@1'; //colocar el password, 
+        $yourPassword = 'digimonheroes@1'; //colocar el password,
 
 
-        //Envio del mail al corre 
+        //Envio del mail al corre
         $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
         $mailer =new \Swift_Mailer($transport);
 
@@ -214,12 +218,12 @@ class GarantiaGuiaEgresoController extends Controller
         }
 
         if($mailer->send($message)){
-           return redirect()->route('garantia_guia_egreso.index');  
-        }   
+           return redirect()->route('garantia_guia_egreso.index');
+        }
            return "Something went wrong :(";
-            
-            
-         
+
+
+
     }
 
 }
