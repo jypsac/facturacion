@@ -71,10 +71,15 @@
                 <div class="col-sm-10">
                   <input type="text" class="form-control" name="correo" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}" readonly>
                 </div>
-                {{-- <label class="col-sm-2 col-form-label">Contacto:</label>
+                <label class="col-sm-2 col-form-label">Contacto:</label>
                 <div class="col-sm-10">
-                  <input type="text" class="form-control" name="contacto" value="{{$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->contactos->nombre}}" readonly>
-                </div> --}}
+                  @if($garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->contacto_cliente_id == null)
+                  <input type="text" class="form-control" name="contacto" value="Sin Registro" style="font-style: italic;" readonly>
+                  @else
+                  <input type="text" class="form-control" name="contacto" value="{{$contacto->where('id','=',$garantia_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->contacto_cliente_id)->pluck('nombre')->first()}}"  readonly>
+                  @endif
+
+                </div>
             </div>
           </div>
         </div>

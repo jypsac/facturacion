@@ -365,7 +365,7 @@
 
                       			<label class="col-sm-2 col-form-label">Contacto:</label>
                         		 <div class="col-sm-10">
-                        		 	<input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"   id="" required   autocomplete="off"  >
+                        		 	<input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"   id=""    autocomplete="off"  >
                          			<datalist id="contacto_cliente" >
                          				{{-- <option id="contacto_cliente">a</option> --}}
 									</datalist>

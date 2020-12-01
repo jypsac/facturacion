@@ -83,18 +83,22 @@
                         </div>
 
 						</div>
-            {{-- <div class="row">
+            <div class="row">
 
                             <label class="col-sm-2 col-form-label">Contacto:</label>
                              <div class="col-sm-10">
-                              <input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"   value="{{$garantia_guia_ingreso->contactos->nombre}}" required   autocomplete="off"  >
-                              <datalist id="contacto_cliente" > --}}
+                              @if( $garantia_guia_ingreso->contacto_cliente_id == null)
+                              <input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"   value=" {{$contacto->where('id','=',$garantia_guia_ingreso->contacto_cliente_id)->pluck('nombre')->first()}}"  autocomplete="off"  >
+                              @else
+                              <input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"       autocomplete="off"  >
+                              @endif
+                              <datalist id="contacto_cliente" >
                                 {{-- <option id="contacto_cliente">a</option> --}}
-                             {{-- </datalist>
+                             </datalist>
                         </div>
 
             </div>
- --}}						<div class="row">
+						<div class="row">
 
                       			<label class="col-sm-2 col-form-label">Asunto:</label>
                         		 <div class="col-sm-10">

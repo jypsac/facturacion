@@ -23,12 +23,6 @@
 }
 </style>
 <body class="white-bg">
-{{-- <div class="ibox" style=" margin-bottom:0px; width: 100%">
-    <div class="table-responsive" >
-
-        <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:200px;height: 50px ;margin-top: 5px">
-    </div>
-</div> --}}
     <table style="width: 100%;border-collapse:separate">
         <tr>
             <td style="width: auto;border-color: white" >
@@ -56,7 +50,12 @@
             <strong>Telefono:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <strong>Correo:</strong>&nbsp; {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->email}}<br>
             <strong>Direccion:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->direccion}}<br>
-            {{-- <strong>Contacto:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->contactos->nombre}}<br> --}}
+            <strong>Contacto:</strong>&nbsp;
+            @if($garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->contacto_cliente_id == null)
+            <em>Sin Registro</em>
+            @else
+            {{$contacto->where('id','=',$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->contacto_cliente_id)->pluck('nombre')->first()}} &nbsp;
+            @endif<br>
         </td>
         <th style="width: 5%;border-color: white"></th>
         <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto" >

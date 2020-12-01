@@ -31,13 +31,10 @@
                 </form>
             @endif
             <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i>   </a>
-            {{-- <a href="" target="_blank" class="btn btn-success"><i class="fa fa-print"></i>Whatsapp</a> --}}
-        {{-- </div> --}}
             <div id="auto" onclick="divAuto()">
                 <a class="btn  btn-success" style="background: green;border-color: green;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-whatsapp fa-lg" style="color: white"></i>  </a>
             </div>
             <div id="div-mostrar">
-                {{-- <br style="width: -1px"> --}}
                <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
                 @csrf
                  <input type="tel" name="numero"  value="{{$garantia_guia_ingreso->clientes_i->celular}}"   />
@@ -52,33 +49,24 @@
     <div class="row" >
         <div class="col-lg-12" style="margin-top: -2px">
             <div class="ibox-content p-xl" style=" margin-bottom: 2px;padding-bottom: 50px;">
-                <div class="row">
-                    <div class="col-sm-6 text-left" align="left">
-                        <address class="col-sm-4" align="left">
-                            <img align="left" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 300px;height: 100px;margin-top: 5px">
-                            {{-- <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="left" /> --}}
-                            {{-- <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px" align="left"> --}}
-
-                        </address>
+                <div class="row" style="height: 120px">
+                    <div class="col-sm-4 text-left" align="left">
+                        <div class="form-control" align="center" style="height: 79%;" align="left">
+                            <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="height: 70px;width: 320px;margin-top: 5px">
+                        </div>
                     </div>
-                    {{-- <div class="col-sm-6" align="right">
-                        <address class="col-sm-4" align="right">
-                            <img src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" alt="" width="300px" align="right">
-                        </address>
-                    </div> --}}
-                {{-- </div> --}}
-                {{-- <div class="row"> --}}
-                    {{-- <div align="right"> --}}
-                        <div class="col-sm-2">
+                    <div class="col-sm-4" align="center">
+                        <div class="form-control" align="center" style="height: 79%;" align="center"  >
+                            <img align="center" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="height: 70px;width: 320px;margin-top: 5px">
+                         </div>
+                    </div>
+                    <div class="col-sm-4" align="right" >
+                        <div class="form-control" align="center" style="height: 79%;"align="right">
+                            <h3 style="">R.U.C {{$empresa->ruc}}</h3>
+                            <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
+                            <h5>{{$garantia_guia_ingreso->orden_servicio}}</h5>
                         </div>
-                        <div class="col-sm-4" align="right" style="width: 100%">
-                            <div class="form-control" align="center" style="height: auto;" align="right">
-                                <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
-                                <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
-                                <h5>{{$garantia_guia_ingreso->orden_servicio}}</h5>
-                            </div>
-                        </div>
-                    {{-- </div> --}}
+                    </div>
                 </div>
                 <br>
                 <div class="row" align="center" style="padding-bottom: 5px">
@@ -92,7 +80,12 @@
                                 <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
                                 <strong>Direccion:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->direccion}}<br>
-                                {{-- <strong>Cliente:&nbsp;</strong>{{$garantia_guia_ingreso->contactos->nombre}} &nbsp; --}}
+                                <strong>Cliente:&nbsp;</strong>
+                                @if($garantia_guia_ingreso->contacto_cliente_id == null)
+                                <em>Sin Registro</em>
+                                @else
+                                {{$contacto->where('id','=',$garantia_guia_ingreso->contacto_cliente_id)->pluck('nombre')->first()}} &nbsp;
+                                @endif
                                 <br>
                             </div>
                         </div>

@@ -56,7 +56,14 @@
             <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
             <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
             <strong>Direccion:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->direccion}}<br>
-            {{-- <strong>Contacto:</strong>&nbsp;{{$garantia_guia_ingreso->contactos->nombre}}<br> --}}
+
+            <strong>Contacto:</strong>&nbsp;
+            @if($garantia_guia_ingreso->contacto_cliente_id == null)
+            <em>Sin Registro</em>
+            @else
+            {{$contacto->where('id','=',$garantia_guia_ingreso->contacto_cliente_id)->pluck('nombre')->first()}} &nbsp;
+            @endif
+            <br>
         </td>
         <th style="width: 10%;border-color: white"></th>
         <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto">

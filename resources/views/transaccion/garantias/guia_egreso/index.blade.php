@@ -46,8 +46,6 @@
                                             <th>Asunto</th>
                                             <th>Cliente</th>
                                             <th>Ver</th>
-
-
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -71,7 +69,6 @@
                                             <td>
                                                 <center><a href="{{ route('garantia_guia_egreso.show', $garantias_guias_egreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>
                                             </td>
-
                                         </tr>
                                         @endforeach
                                     </tbody>

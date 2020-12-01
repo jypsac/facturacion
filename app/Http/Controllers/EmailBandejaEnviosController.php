@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App;
 use App\Cliente;
 use App\Cotizacion;
+use App\Contacto;
 use App\EmailBandejaEnvios;
 use App\EmailBandejaEnviosArchivos;
 use App\EmailConfiguraciones;
@@ -258,8 +259,9 @@ class EmailBandejaEnviosController extends Controller
             $garantias_informe_tecnico = $tipo::find($id);
             $name = 'Informe_Tecnico_';
           }
+          $contacto = Contacto::all();
         $archivo=$name.$id.".pdf";
-        $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa'));
+        $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa','contacto'));
         $content=$pdf->download();
         Storage::disk($redic)->put($archivo,$content);
         return view('mailbox.create',compact('archivo','clientes','redic'));
