@@ -49,21 +49,24 @@
     <div class="row" >
         <div class="col-lg-12" style="margin-top: -2px">
             <div class="ibox-content p-xl" style=" margin-bottom: 2px;padding-bottom: 50px;">
-                <div class="row">
-                    <div class="col-sm-6 text-left" align="left">
-                        <address class="col-sm-4" align="left">
-                            <img align="left" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 300px;height: 100px;margin-top: 5px">
-                        </address>
+                <div class="row" style="height: 120px">
+                    <div class="col-sm-4 text-left" align="left">
+                        <div class="form-control" align="center" style="height: 47%;width: 100%" align="left">
+                            <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="width: 100%;height: 100%;margin-top: 5px">
+                        </div>
                     </div>
-                        <div class="col-sm-2">
+                    <div class="col-sm-4" align="center">
+                        <div class="form-control" align="center" style="height: 47%;width: 100%;" align="left"  >
+                            <img align="center" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 100%;height: 100%;margin-top: 5px">
+                         </div>
+                    </div>
+                    <div class="col-sm-4" align="right" >
+                        <div class="form-control" align="center" style="height: 47%;width: 100%;"align="right">
+                            <h3 style="">R.U.C {{$empresa->ruc}}</h3>
+                            <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
+                            <h5>{{$garantia_guia_ingreso->orden_servicio}}</h5>
                         </div>
-                        <div class="col-sm-4" align="right" style="width: 100%">
-                            <div class="form-control" align="center" style="height: auto;" align="right">
-                                <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
-                                <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
-                                <h5>{{$garantia_guia_ingreso->orden_servicio}}</h5>
-                            </div>
-                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="row" align="center" style="padding-bottom: 5px">

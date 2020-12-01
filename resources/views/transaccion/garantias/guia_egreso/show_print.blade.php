@@ -34,21 +34,24 @@
 <div class="row">
         <div class="col-lg-12">
             <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
-                <div class="row">
-                    <div class="col-sm-6 text-left" align="left">
-                        <address class="col-sm-4" >
-                            <img src="{{asset('storage/marcas/'.$garantias_guias_egreso->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 300px;height: 100px;margin-top: 5px" align="left">
-                        </address>
+                <div class="row" style="height: 90px">
+                    <div class="col-sm-4 text-left" align="left">
+                        <div class="form-control" align="center" style="height: 47%;width: 100%" align="left">
+                            <img align="center" src="{{asset('img/logos/'.$mi_empresa->foto)}}" style="width: 100%;height: 100%;margin-top: 5px">
+                        </div>
                     </div>
-                        <div class="col-sm-2">
+                    <div class="col-sm-4" align="center">
+                        <div class="form-control" align="center" style="height: 47%;width: 100%;" align="left"  >
+                            <img align="center" src="{{asset('storage/marcas/'.$garantias_guias_egreso->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 100%;height: 100%;margin-top: 5px">
+                         </div>
+                    </div>
+                    <div class="col-sm-4" align="right" >
+                        <div class="form-control" align="center" style="height: 47%;width: 100%;"align="right">
+                            <h3 style="">R.U.C {{$mi_empresa->ruc}}</h3>
+                            <h2 style="font-size: 19px">GUIA DE EGRESO</h2>
+                            <h5>{{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</h5>
                         </div>
-                        <div class="col-sm-4" align="right" style="width: 100%">
-                            <div class="form-control" align="center" style="height: auto;" align="right">
-                                <h3 style="padding-top:10px ">R.U.C {{$mi_empresa->ruc}}</h3>
-                                <h2 style="font-size: 19px">GUIA DE EGRESO</h2>
-                                <h5>{{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}</h5>
-                            </div>
-                        </div>
+                    </div>
                 </div>
                 <br>
                 <div class="row" align="center" style="padding-bottom: 5px">
@@ -67,7 +70,7 @@
                                 <em>Sin Registro</em>
                                 @else
                                 {{$contacto->where('id','=',$garantias_guias_egreso->garantia_ingreso_i->contacto_cliente_id)->pluck('nombre')->first()}} &nbsp;
-                                @endif<br>
+                                @endif
                                 <br>
                             </div>
                         </div>
