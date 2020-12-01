@@ -51,17 +51,17 @@
             <div class="ibox-content p-xl" style=" margin-bottom: 2px;padding-bottom: 50px;">
                 <div class="row" style="height: 120px">
                     <div class="col-sm-4 text-left" align="left">
-                        <div class="form-control" align="center" style="height: 47%;width: 100%" align="left">
-                            <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="width: 100%;height: 100%;margin-top: 5px">
+                        <div class="form-control" align="center" style="height: 79%;" align="left">
+                            <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="height: 70px;width: 320px;margin-top: 5px">
                         </div>
                     </div>
                     <div class="col-sm-4" align="center">
-                        <div class="form-control" align="center" style="height: 47%;width: 100%;" align="left"  >
-                            <img align="center" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="width: 100%;height: 100%;margin-top: 5px">
+                        <div class="form-control" align="center" style="height: 79%;" align="center">
+                            <img align="center" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="height: 70px;width: 320px;margin-top: 5px">
                          </div>
                     </div>
                     <div class="col-sm-4" align="right" >
-                        <div class="form-control" align="center" style="height: 47%;width: 100%;"align="right">
+                        <div class="form-control" align="center" style="height: 79%;" align="right">
                             <h3 style="">R.U.C {{$empresa->ruc}}</h3>
                             <h2 style="font-size: 19px">GUIA DE INFORME TECNICO</h2>
                             <h5>{{$garantias_informe_tecnico->orden_servicio}}</h5>

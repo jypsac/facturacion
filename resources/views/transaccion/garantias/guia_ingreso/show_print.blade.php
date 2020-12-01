@@ -34,19 +34,19 @@
 <div class="row">
         <div class="col-lg-12">
             <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
-                <div class="row" style="height: 90px">
+                <div class="row" style="height: 130px">
                     <div class="col-sm-4 text-left" align="left">
-                        <div class="form-control" align="center" style="height: 47%;width: 100%" align="left">
-                            <img align="center" src="{{asset('img/logos/'.$mi_empresa->foto)}}" style="width: 100%;height: 100%;margin-top: 5px">
+                        <div class="form-control" align="center" style="height: 79%;" align="left">
+                            <img align="center" src="{{asset('img/logos/'.$mi_empresa->foto)}}" style="height: 70px;width: 250px;margin-top: 5px">
                         </div>
                     </div>
                     <div class="col-sm-4" align="center">
-                        <div class="form-control" align="center" style="height: 47%;width: 100%;" align="left"  >
-                            <img align="center" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="width: 100%;height: 100%;margin-top: 5px">
+                         <div class="form-control" align="center" style="height: 79%;" align="center">
+                            <img align="center" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="height: 70px;width: 250px;margin-top: 5px">
                          </div>
                     </div>
                     <div class="col-sm-4" align="right" >
-                        <div class="form-control" align="center" style="height: 47%;width: 100%;"align="right">
+                         <div class="form-control" align="center" style="height: 79%;" align="right">
                             <h3 style="">R.U.C {{$mi_empresa->ruc}}</h3>
                             <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
                             <h5>{{$garantia_guia_ingreso->orden_servicio}}</h5>
