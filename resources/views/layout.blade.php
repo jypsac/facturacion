@@ -86,6 +86,7 @@
                                         <ul class="nav nav-second-level collapse">
                                             <li><a href="{{route('cotizacion.index')}}"  style="padding-left: 80px;">C.Productos</a></li>
                                             <li><a href="{{route('cotizacion_servicio.index')}}"  style="padding-left: 80px;">C.Servicios</a></li>
+                                             <li><a href="{{route('otros.index')}}"  style="padding-left: 80px;">C.Manual</a></li>
                                         </ul></li>
                                         @endcan
                                         @can('transacciones-ventas-facturacion.index')
