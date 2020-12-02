@@ -294,6 +294,17 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="row">
+                                                    <label class="col-sm-2 col-form-label">Almacen:</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control" name="almacen">
+                                                            @foreach($almacenes as $almacen)
+                                                        <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div><br>
+
                                             </div>
                                             <div class="col-sm-12" style="padding-top: 15px">
                                                 <div class="row">

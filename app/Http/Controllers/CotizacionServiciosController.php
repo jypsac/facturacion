@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Almacen;
 use App\Banco;
 use App\Boleta;
 use App\Boleta_registro;
@@ -70,7 +70,14 @@ class CotizacionServiciosController extends Controller
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
 
-        return view('transaccion.venta.servicios.cotizacion.factura.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
+        $user_id =auth()->user();
+        if($user_id->name=="Administrador"){
+            $almacenes=Almacen::all();
+        }else{
+            $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
+        }
+
+        return view('transaccion.venta.servicios.cotizacion.factura.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
 
         
     }
@@ -100,7 +107,14 @@ class CotizacionServiciosController extends Controller
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
 
-        return view('transaccion.venta.servicios.cotizacion.factura.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
+        $user_id =auth()->user();
+        if($user_id->name=="Administrador"){
+            $almacenes=Almacen::all();
+        }else{
+            $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
+        }
+
+        return view('transaccion.venta.servicios.cotizacion.factura.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
     }
 
     /**
@@ -204,8 +218,17 @@ class CotizacionServiciosController extends Controller
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        //PARA GENERAR EL CODIGO DE LA COTIZACION
+        //ALMACEN
+        $user_id =auth()->user();
+        if($user_id->name=="Administrador"){
+            $almacen=$request->get('almacen');
+        }else{
+            $almacen_seleccionado=Almacen::where('id',$user_id->almacen_id)->first();
+            $almacen=$almacen_seleccionado->id;
+        }
+
         
+        $sucursal=Almacen::where('id',$almacen)->first();
         $ultima_factura=Cotizacion_Servicios::latest()->first();
         if($ultima_factura){
             $code=$ultima_factura->id;
@@ -213,11 +236,13 @@ class CotizacionServiciosController extends Controller
         }else{
             $code=1;
         }
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
         $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
-        $cotizacion_numero="COTSF "."-".$cotizacion_nr;
+        $cotizacion_numero="COTSF ".$sucursal_nr."-".$cotizacion_nr;
 
         $cotizacion=new Cotizacion_Servicios;
         $cotizacion->cod_cotizacion=$cotizacion_numero;
+        $cotizacion->almacen_id =$almacen;
         $cotizacion->cliente_id=$cliente_buscador->id;
         $cotizacion->moneda_id=$id_moneda;
         $cotizacion->forma_pago_id=$request->get('forma_pago');
@@ -340,7 +365,14 @@ class CotizacionServiciosController extends Controller
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
 
-        return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
+        $user_id =auth()->user();
+        if($user_id->name=="Administrador"){
+            $almacenes=Almacen::all();
+        }else{
+            $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
+        }
+        
+        return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
     }
 
     public function create_boleta_ms()
@@ -372,7 +404,14 @@ class CotizacionServiciosController extends Controller
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
 
-        return view('transaccion.venta.servicios.cotizacion.boleta.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
+        $user_id =auth()->user();
+        if($user_id->name=="Administrador"){
+            $almacenes=Almacen::all();
+        }else{
+            $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
+        }
+
+        return view('transaccion.venta.servicios.cotizacion.boleta.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
     }
 
     /**
@@ -478,8 +517,17 @@ class CotizacionServiciosController extends Controller
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        //PARA GENERAR EL CODIGO DE LA COTIZACION
+        //ALMACEN
+        $user_id =auth()->user();
+        if($user_id->name=="Administrador"){
+            $almacen=$request->get('almacen');
+        }else{
+            $almacen_seleccionado=Almacen::where('id',$user_id->almacen_id)->first();
+            $almacen=$almacen_seleccionado->id;
+        }
+
         
+        $sucursal=Almacen::where('id',$almacen)->first();
         $ultima_factura=Cotizacion_Servicios::latest()->first();
         if($ultima_factura){
             $code=$ultima_factura->id;
@@ -487,11 +535,13 @@ class CotizacionServiciosController extends Controller
         }else{
             $code=1;
         }
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
         $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
-        $cotizacion_numero="COTSB "."-".$cotizacion_nr;
+        $cotizacion_numero="COTSF ".$sucursal_nr."-".$cotizacion_nr;
 
         $cotizacion=new Cotizacion_Servicios;
         $cotizacion->cod_cotizacion=$cotizacion_numero;
+        $cotizacion->almacen_id=$almacen;
         $cotizacion->cliente_id=$cliente_buscador->id;
         $cotizacion->moneda_id=$id_moneda;
         $cotizacion->forma_pago_id=$request->get('forma_pago');
