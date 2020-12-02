@@ -104,7 +104,7 @@ class CotizacionOtrosController extends Controller
             $cantidad[]=$request->input('cantidad')[$i];
             $precio[]=$request->input('precio')[$i];
         }
-        return view('transaccion.venta.cotizacion.otros.fast_print',compact('producto_codigo','sub_total','igv','cliente_id','forma_pago_id','validez','user_id','observacion','producto_id','stock','cantidad','precio','check_descuento','promedio_original','descuento','precio_unitario_descuento','comision','precio_unitario_comision','codigo','fecha_emision','moneda_id','garantia','empresa','banco','banco_count','articulos', 'costo_sub_total','costo_igv','costo_total','personal','end','punto','end_final'));
+        return view('transaccion.venta.cotizacion.otros.fast_print',compact('producto_codigo','sub_total','igv','cliente_id','forma_pago_id','validez','observacion','producto_id','cantidad','precio','codigo','fecha_emision','moneda_id','garantia','empresa','banco','banco_count','articulos', 'costo_sub_total','costo_igv','costo_total','personal','end','punto','end_final'));
         // }
     }
 
