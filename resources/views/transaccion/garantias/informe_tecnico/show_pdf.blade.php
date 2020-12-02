@@ -25,20 +25,25 @@
 <body class="white-bg">
     <table style="width: 100%;border-collapse:separate">
         <tr>
-            <td style="width: auto;border-color: white" >
-                <img align="" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="height: 75px;margin-top: 5px" />
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto;padding-top: 5px;" align="center">
+                <img align="center" src="{{asset('img/logos/'.$mi_empresa->foto)}}" style="height: 50px;width: 150px;margin-top: 5px">
             </td>
-            <td style="width: 30%; ;border: 1px #e5e6e7 solid;border-radius: 4px;" align="right">
-                <center>
-                    <br>
-                    <span style="margin: 5px;font-weight: 200;text-align: center;"> R.U.C {{$mi_empresa->ruc}}</span><br>
-                    <span style="margin: 5px;font-size: 15px;text-align: center;" >GUIA DE EGRESO</span><br>
-                    <span style="margin: 5px;text-align: center;" >{{$garantias_informe_tecnico->orden_servicio}}</span>
-                </center>
+            <td style="width: 5px;border: 1px white"></td>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto;padding-top: 5px" align="center">
+                <img align="" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="height: 50px;width: 150px;margin-top: 5px" />
+            </td>
+            <td style="width: 5px;border: 1px white"></td>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto;margin-top: -10px;" align="center">
+                <div style="height: 50px;width: 165px;border: 1px white solid;margin-right: -5px;margin-top: -15px;padding-right: -45px"   >
+                {{-- <center> --}}<br>
+                    <span style="margin: 5px;font-weight: 250;"> R.U.C {{$mi_empresa->ruc}}</span><br>
+                    <span style="margin: 5px;font-size: 15px;" >GUIA DE INFORME TECNICO</span><br>
+                    <span style="margin: 5px;font-size: 10px;" >{{$garantias_informe_tecnico->orden_servicio}}</span>
+                {{-- </center> --}}
+                </div>
             </td>
         </tr>
     </table>
-
 
 <div class="wrapper wrapper-content animated fadeIn">
 <table style="width: 100%;border-collapse:separate">
@@ -68,39 +73,43 @@
     </tr>
 </table>
 <br>
-<table style="width: 100%;border-collapse:separate">
+
+
+<table style="width: 100%;border-collapse:separate;height: 11%">
     <tr>
         <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto">
-            <center><strong style="align-content: center;margin: 5px">Datos del Equipo</strong></center><br>
+          <center><strong style="align-content: center;margin: 5px">Datos del Equipo</strong></center>
+            <table style="border-color: white;padding-bottom: -30px">
+                <tr >
+                    <td style="width: 10%;border-color: white;"><strong>MODELO:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->nombre_equipo}}</td>
+                    <td style="width: 10%;border-color: white;"><strong>Codigo Interno:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->codigo_interno}}</td>
+                </tr>
+                <tr  >
+                    <td style="width: 10%;border-color: white;padding-top: -10px"> <strong>Número de Serie:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->numero_serie}}</td>
+                    <td style="width: 10%;border-color: white;padding-top: -10px"><strong>Fecha de Compra:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha_compra}}</td>
+                </tr>
+                <tr>
+                    <td style="width: 10%;border-color: white;padding-top: -10px">
+                        <span style="float:left;position:relative;width: 59%">
+                            <strong>Descripcion del Problema:</strong><br>
+                            {!! nl2br($garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->descripcion_problema)!!}
+                        </span>
+                    </td>
+                    <td style="width: 10%;border-color: white;padding-top: -10px">
+                        <span style="float:left;position:relative;width: 59%">
+                            <strong>Revision y Diagnistico:</strong>
+                            {!! nl2br($garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->revision_diagnostico)!!} 
+                        </span>
+                    </td>
+                    </tr>
+            </table>
 
-            <span style="float:left;position:relative;width: 59%">
-                <strong>MODELO:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->nombre_equipo}}
-           </span>
-            <span style="float:left;position:relative">
-                 <strong>Codigo Interno:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->codigo_interno}}
-            </span>
-
-            <br>
-            <span style="float:left;position:relative;width: 59%">
-                <strong>Número de Serie:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->numero_serie}}
-            </span>
-            <span style="float:left;position:relative">
-                <strong>Fecha de Compra:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha_compra}}
-            </span>
-            <br>
-            <span style="float:left;position:relative;width: 59%">
-                <strong>Descripcion del Problema:</strong><br>
-                {!! nl2br($garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->descripcion_problema)!!}
-            </span>
-            <span style="float:left;position:relative">
-
-                <strong>Revision y Diagnistico:</strong>
-                {!! nl2br($garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->revision_diagnostico)!!}
-            </span>
-            <br>
         </td>
     </tr>
 </table>
+
+
+
 <table style="width: 100%;border-collapse:separate">
     <tr >
          <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto" >
@@ -179,7 +188,7 @@
 </div>
 
 <style>
-    *{font-size: 8px}
+    *{font-size: 8px;font-family: -apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol";}
     .cero{
     margin-bottom: 0px;
 

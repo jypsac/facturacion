@@ -71,7 +71,7 @@
                 <br>
                 <div class="row" align="center" style="padding-bottom: 5px">
                     <div class="col-sm-6" align="center">
-                        <div class="form-control">
+                        <div class="form-control" style="height: 90%">
                             <h3>Contacto Cliente</h3>
                             <div align="left">
                                 <strong>Señor(es):</strong> &nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->clientes_i->nombre}}<br>
@@ -86,13 +86,12 @@
                                 @else
                                 {{$contacto->where('id','=',$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->contacto_cliente_id)->pluck('nombre')->first()}} &nbsp;
                                 @endif<br> &nbsp;
-
                                 <br>
                             </div>
                         </div>
                     </div>
                     <div class="col-sm-6" align="center">
-                         <div class="form-control" >
+                         <div class="form-control" style="height: 90%" >
                              <h3>Condiciones Generales</h3>
                              <div align="left">
                                 <strong>Ing. Asignado:</strong>&nbsp;{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->apellidos}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; {{-- {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; --}}<br>
