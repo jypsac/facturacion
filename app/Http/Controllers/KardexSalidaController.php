@@ -3,12 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Empresa;
-use App\Producto;
-use App\Motivo;
-use App\Kardex_salida;
-use App\kardex_salida_registro;
 use App\Kardex_entrada;
+use App\Motivo;
+use App\Producto;
 use App\kardex_entrada_registro;
+use App\kardex_salida;
+use App\kardex_salida_registro;
 use Illuminate\Http\Request;
 
 class KardexSalidaController extends Controller
@@ -20,11 +20,11 @@ class KardexSalidaController extends Controller
      */
     public function index()
     {
-        $kardex_salidas=Kardex_salida::all();
+        $kardex_salidas=kardex_salida::all();
         // return view('inventario.kardex.salida.index');
         return view('inventario.kardex.salida.index' ,compact('kardex_salidas'));
     }
-        
+
     /**
      * Show the form for creating a new resource.
      *
@@ -83,7 +83,7 @@ class KardexSalidaController extends Controller
 
             }
         }
-        
+
         //Validacion para cantidad
 
         for ($i=0; $i < $count_articulo1; $i++){
