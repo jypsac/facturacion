@@ -30,8 +30,9 @@ class CotizacionOtrosController extends Controller
         $moneda=Moneda::all();
         $forma_pagos= Forma_pago::all();
         $igv=Igv::first();
+        $productos=Producto::all();
         $empresa=Empresa::first();
-        return view('transaccion.venta.cotizacion.otros.create',compact('igv','empresa','clientes','forma_pagos','moneda'));
+        return view('transaccion.venta.cotizacion.otros.create',compact('igv','empresa','clientes','forma_pagos','moneda','productos'));
 
     }
 

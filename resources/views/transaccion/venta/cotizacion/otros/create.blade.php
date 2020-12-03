@@ -32,9 +32,9 @@
                 </div>
                 <div class="ibox-content">
                     <form action="{{route('otros.store')}}"  enctype="multipart/form-data" method="post">
-                     @csrf
-                     {{-- Cabecera --}}
-                     <div class="row">
+                       @csrf
+                       {{-- Cabecera --}}
+                       <div class="row">
                         <div class="col-sm-4 text-left" align="left">
                             <address class="col-sm-4" align="left">
                                 <img src="{{asset('img/logos/'.$empresa->foto)}}" alt="" width="300px">
@@ -43,7 +43,7 @@
                         <div class="col-sm-4"></div>
                         <div class="col-sm-4">
 
-                           <div class="form-control" align="center" style="height: auto;">
+                         <div class="form-control" align="center" style="height: auto;">
                             <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
                             <h2 style="font-size: 19px">COTIZACION ELECTRONICA</h2>
                             <h5> COTPF 001-0000000<input required="" name="codigo" class="form-control" style="width:  50px;display: inline-block;" type="text" value="185"></h5>
@@ -100,7 +100,7 @@
                                     <td>Moneda</td>
                                     <td>:</td>
                                     <td>
-                                     <select name="moneda" class="form-control" >
+                                       <select name="moneda" class="form-control" >
                                         @foreach($moneda as $monedas)
                                         <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
                                         @endforeach
@@ -141,7 +141,12 @@
                                     <td>
                                         <input type='checkbox' class="case">
                                     </td>
-                                    <td> <input  class="form-control " name="articulo[]" class="monto0 form-control" required></td>
+                                    <td><input  class="form-control " list="browsers2" name="articulo[]" class="monto0 form-control" required autocomplete="off">
+                                     <datalist id="browsers2" >
+                                        @foreach($productos as $index)
+                                        <option>{{$index->nombre}} / {{$index->descripcion}}</option>
+                                        @endforeach
+                                    </td>
                                     <td>
                                         <input style="width: 76px" type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
                                     </td>
@@ -183,7 +188,7 @@
                             <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                             <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
                         </div>
-                         <div class="col-sm-6">
+                        <div class="col-sm-6">
                             {{-- <input type="submit" name="pdf" class="btn btn-primary float-right" value="" > --}}
                             <button class="btn btn-primary float-right" name="name" value="print" formtarget="_blank" type="submit" style="margin-right: 5px"><i class="fa fa-print fa-lg" > </i></button>
                             <button type="submit" name="name" value="pdf" class="btn btn-info float-right"  data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF"  style="margin-right: 5px"><i class="fa fa-file-pdf-o fa-lg"></i></button>
@@ -224,7 +229,11 @@
         <input type='checkbox' class='case'/>
         </td>";
         <td>
-        <input  class="form-control " name="articulo[]" required  autocomplete="off">
+        <input  class="form-control " list="browsers2" name="articulo[]" class="monto0 form-control" required autocomplete="off">
+        <datalist id="browsers2" >
+        @foreach($productos as $index)
+        <option>{{$index->nombre}} / {{$index->descripcion}}</option>
+        @endforeach
         </td>
         <td>
         <input type='text' style="width: 76px"  id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
