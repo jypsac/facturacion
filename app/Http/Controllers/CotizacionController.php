@@ -122,6 +122,8 @@ class CotizacionController extends Controller
             }
         }
 
+        // return $productos;
+
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
         $personales=Personal::all();
