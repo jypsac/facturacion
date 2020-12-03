@@ -10,6 +10,7 @@ use App\Igv;
 use App\Kardex_entrada;
 use App\Moneda;
 use App\Personal;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Producto;
 use App\TipoCambio;
 use App\Unidad_medida;
@@ -52,9 +53,10 @@ class CotizacionOtrosController extends Controller
      */
     public function store(Request $request)
     {
-       // $print=$request->get('print');
-
+        /*IMPRENSION*/
        //  if($print==1){
+        $name = $request->get('name');
+
         $banco=Banco::where('estado','0')->get();
         $banco_count=Banco::where('estado','0')->count();
         $empresa=Empresa::first();
@@ -104,9 +106,16 @@ class CotizacionOtrosController extends Controller
             $cantidad[]=$request->input('cantidad')[$i];
             $precio[]=$request->input('precio')[$i];
         }
-        return view('transaccion.venta.cotizacion.otros.fast_print',compact('producto_codigo','sub_total','igv','cliente_id','forma_pago_id','validez','observacion','producto_id','cantidad','precio','codigo','fecha_emision','moneda_id','garantia','empresa','banco','banco_count','articulos', 'costo_sub_total','costo_igv','costo_total','personal','end','punto','end_final'));
+        if ($name=='print') {
+           return view('transaccion.venta.cotizacion.otros.print',compact('producto_codigo','sub_total','igv','cliente_id','forma_pago_id','validez','observacion','producto_id','cantidad','precio','codigo','fecha_emision','moneda_id','garantia','empresa','banco','banco_count','articulos', 'costo_sub_total','costo_igv','costo_total','personal','end','punto','end_final'));
+       }
+       elseif ($name=='pdf'){
+         $pdf=PDF::loadView('transaccion.venta.cotizacion.otros.pdf',compact('producto_codigo','sub_total','igv','cliente_id','forma_pago_id','validez','observacion','producto_id','cantidad','precio','codigo','fecha_emision','moneda_id','garantia','empresa','banco','banco_count','articulos', 'costo_sub_total','costo_igv','costo_total','personal','end','punto','end_final'));
+         return $pdf->download('Cotizacion '.'.pdf');
+     }
+
         // }
-    }
+ }
 
     /**
      * Display the specified resource.
@@ -114,10 +123,10 @@ class CotizacionOtrosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function show($id)
+    public function show(Request $request, $id)
     {
-        //
-    }
+
+  }
 
     /**
      * Show the form for editing the specified resource.
