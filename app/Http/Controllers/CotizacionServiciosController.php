@@ -700,26 +700,60 @@ class CotizacionServiciosController extends Controller
     $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
     $cotizacion->estado=1;
     $cotizacion->save();
-    $fac= Facturacion::all()->count();
-    $suma=$fac+1;
-    $cod_fac='FC-000'.$suma;
+
+    //buscador al cambio
+    $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+    if(!$cambio){
+        return "error por no hacer el cambio diario";
+    }
+
+    // obtencion de la sucursal
+       $almacen=$cotizacion->almacen_id;
+
+       //obtencion del almacen
+       $sucursal=Almacen::where('id', $almacen)->first();
+
+       $factura_cod_fac=$sucursal->cod_fac;
+       if (is_numeric($factura_cod_fac)) {
+           // exprecion del numero de fatura
+           $factura_cod_fac++;
+           $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+           $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+       }else{
+           // exprecion del numero de fatura
+           // GENERACION DE NUMERO DE FACTURA
+           $ultima_factura=Facturacion::latest()->first();
+           $factura_num=$ultima_factura->codigo_fac;
+           $factura_num_string_porcion= explode("-", $factura_num);
+           $factura_num_string=$factura_num_string_porcion[1];
+           $factura_num=(int)$factura_num_string;
+           $factura_num++;
+           $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+           $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+       }
+
+       $factura_numero="F".$sucursal_nr."-".$factura_nr;
 
     // Creacion de Facturacion
     $facturar=new Facturacion;
-    $facturar->codigo_fac=$cod_fac;
+    $facturar->codigo_fac=$factura_numero;
+    $facturar->almacen_id =$almacen;
     $facturar->id_cotizador_servicio=$request->get('id_cotizador');
     $facturar->orden_compra=$request->get('orden_compra');
     $facturar->guia_remision=$request->get('guia_remision');
     $facturar->cliente_id=$cotizacion->cliente_id;
     $facturar->moneda_id=$cotizacion->moneda_id;
     $facturar->forma_pago_id=$cotizacion->forma_pago_id;
-    $facturar->comisionista=$cotizacion->comisionista_id;
     $facturar->fecha_emision=$request->get('fecha_emision');
     $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
+    $facturar->cambio=$cambio->paralelo;
+    // $facturacion->observacion=$request->get('observacion');
+    $facturar->comisionista=$cotizacion->comisionista_id;
+    $facturar->user_id =auth()->user()->id;
     $facturar->estado='0';
     $facturar->tipo='servicio';
-    $facturar->user_id =auth()->user()->id;
     $facturar->save();
+
 
     $buscador_id=Cotizacion_Servicios::where('id',$facturar->id_cotizador_servicio)->first();
 
