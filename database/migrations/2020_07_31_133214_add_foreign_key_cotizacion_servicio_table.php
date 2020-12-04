@@ -28,7 +28,7 @@ class AddForeignKeyCotizacionServicioTable extends Migration
             $table->foreign('forma_pago_id')->references('id')->on('forma_pago')->onDelete('cascade');
 
             $table->boolean('estado_aprobar');
-            
+
             $table->boolean('estado_aprobado');
 
             $table->unsignedBigInteger('aprobado_por')->nullable();
@@ -50,8 +50,8 @@ class AddForeignKeyCotizacionServicioTable extends Migration
 
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
-            
-            $table->boolean('estado');              
+
+            $table->boolean('estado');
             $table->boolean('estado_vigente');
             $table->string('tipo');
             $table->timestamps();
