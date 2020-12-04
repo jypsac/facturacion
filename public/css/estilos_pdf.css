@@ -304,8 +304,6 @@ table-sm th,
     border: 1px solid #dee2e6 !important;
   }
 
-
-
   .blockquote-footer {
   display: block;
   font-size: 80%;
@@ -315,3 +313,4 @@ table-sm th,
 .blockquote-footer::before {
   content: "\2014 \00A0";
 }
+

@@ -90,7 +90,7 @@
                 </div><br>
                 <div class="table-responsive">
                     <table class="table " >
-                        <thead>
+                        <thead >
                            <tr >
                             <th>ITEM </th>
                             <th>Descripcion</th>
@@ -99,7 +99,7 @@
                             <th>Total<span >{{$moneda_id->simbolo}}</span></th>
                         </tr>
                     </thead>
-                    <tbody> <span hidden="">{{$i=1}}</span>
+                    <tbody > <span hidden="">{{$i=1}}</span>
                      @foreach ($producto_id as $index => $producto_ids)
                      <tr>
                         <td>{{$i++}}</td>

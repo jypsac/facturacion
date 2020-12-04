@@ -40,7 +40,7 @@
                 <center>
                     <h3 style="text-align: center;padding-top:10px;margin-bottom: -28px;margin-top: -10px"> R.U.C {{$empresa->ruc}}</h3><br>
                     <h2 style="font-size: 19px;text-align: center;margin-bottom: -28px" >COTIZACION ELECTRONICA</h2><br>
-                    <h5 style="text-align: center;margin-bottom: -5px" >{{$cotizacion->cod_cotizacion}}</h5>
+                    <h5 style="text-align: center;margin-bottom: -5px" >COTPF 001-0000000{{$codigo}}</h5>
                 </center>
             </td>
         </tr>
@@ -50,51 +50,49 @@
     <tr >
         <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 8px;width: auto" >
             <center><strong style="align-content: center;margin: 5px">Contacto Cliente </strong></center><br>
-            <strong>Nombre o Empresa:</strong>&nbsp;{{$cotizacion->cliente->nombre}}<br>
-            <strong>{{$cotizacion->cliente->documento_identificacion}} :</strong>&nbsp;{{$cotizacion->cliente->numero_documento}}&nbsp;&nbsp;<br>
-            <strong>Fecha:</strong>&nbsp;{{$cotizacion->created_at}}<br>
-            <strong>Telefono:</strong>&nbsp;{{$cotizacion->cliente->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-            <strong>Celular:</strong>&nbsp;{{$cotizacion->cliente->celular}}<br>
+            <strong>Señor(es):</strong>&nbsp;{{$cliente_id->nombre}}<br>
+            <strong>{{$cliente_id->documento_identificacion}} :</strong>&nbsp;{{$cliente_id->numero_documento}}&nbsp;&nbsp;<br>
+            <strong>Fecha:</strong>&nbsp;{{$fecha_emision}}<br>
+            <strong>Telefono:</strong>&nbsp;{{$cliente_id->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <strong>Celular:</strong>&nbsp;{{$cliente_id->celular}}<br>
         </td>
         <th style="width: 5%;border-color: white"></th>
         <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 8px;width: auto">
             <center><strong style="align-content: center;margin: 5px">Condiciones Generales </strong></center><br>
-            <strong>Forma de Pago:</strong>&nbsp;{{$cotizacion->forma_pago->nombre }}<br>
-            <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
-            <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-            <strong>Tipo de Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+            <strong>Forma de Pago:</strong>&nbsp;{{$forma_pago_id }}<br>
+            <strong>Validez :</strong> &nbsp;{{$validez}}<br>
+            <strong>Garantia:</strong> &nbsp;{{$garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+            <strong>Tipo de Moneda:</strong> &nbsp;{{$moneda_id->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
         </td>
     </tr>
 </table>
 
 <div class="form-control" style="border: none;height: auto" >
     <div align="left">
-        <strong>observaciones:</strong> &nbsp;{{$cotizacion->observacion }}<br>
+        <strong>observaciones:</strong> &nbsp;{{$observacion }}<br>
     </div>
 </div>
 <br>
-
+<span hidden="" style="color:white;">{{$i=1}}</span>
 <div class="table-responsive">
     <table class="table " style="border-top: 0px" >
-        <thead style="">
+        <thead align="left">
            <tr style="text-align: left;font-weight: bold;border-top-width:  0px ">
-                <td width="30px">ITEM </td>
-                <td width="120px" >Codigo </td>
-                <td width="400px">Descripcion</td>
-                <td width="auto">Cantidad</td>
-                <td width="auto">P.Unitario</td>
-                <td width="80px">Total <span hidden="hidden">{{$simbologia=$cotizacion->moneda->simbolo}}</span></td>
+                <th >ITEM </th>
+                <th >Descripcion</th>
+                <th >Cantidad</th>
+                <th >P.Unitario</th>
+                <th >Total <span hidden="hidden">{{$moneda_id->simbolo}}</span></th>
             </tr>
         </thead>
-        <tbody>
-           @foreach($cotizacion_registro as $cotizacion_registros)
+        <tbody align="left">
+             @foreach ($producto_id as $index => $producto_ids)
            <tr style="border-bottom-width:   0px white ">
-                <td width="30px" style="">{{$i++}} </td>
-                <td width="120px" style="">{{$cotizacion_registros->producto->codigo_producto}}</td>
-                <td width="400px" style="">{{$cotizacion_registros->producto->nombre}} <br>{{$cotizacion_registros->producto->descripcion}}</span></td>
-                <td width="auto" style="">{{$cotizacion_registros->cantidad}}</td>
-                <td width="auto" style="">{{$cotizacion_registros->precio_unitario_comi}}</td>
-                <td width="80px" style="" >{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
+                <td >{{$i++}} </td>
+                <td >{{$articulos[$index]}}</td>
+                <td >{{$cantidad[$index]}}</td>
+                <td >{{$moneda_id->simbolo}}{{$precio[$index]}}</td>
+                <td>{{$moneda_id->simbolo}}{{$cantidad[$index] *$precio[$index]}}</td>
             </tr>
             @endforeach
         </tbody>
@@ -102,12 +100,11 @@
 </div><!-- /table-responsive -->
 <footer style="padding-top: 120px">
  <h3 align="left">
-    <?php $v=new CifrasEnLetras() ;
+     <?php $v=new CifrasEnLetras() ;
     $letra=($v->convertirEurosEnLetras($end));
     $letra_final = strstr($letra, 'soles',true);
-    $end_final=strstr($end, '.');
     ?>
-    Son : {{$letra_final}} {{$end_final}}/100 {{$cotizacion->moneda->nombre }}
+    Son : {{$letra_final}} {{$end_final}}/100 {{$moneda_id->nombre }}
 </h3>
 
 <table style="border: white 0px solid;text-align: center;" >
@@ -130,19 +127,19 @@
     </tr>
     <tr style="border: white 0px solid" >
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
+                {{$moneda_id->simbolo}}{{$costo_sub_total}}
             </td>
         <th style="width: 2%;border-color: white"></th>
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                {{$simbologia=$cotizacion->moneda->simbolo}}.00
+               {{$moneda_id->simbolo}}.00
             </td>
         <th style="width: 2%;border-color: white"></th>
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}} @else  {{$cotizacion->moneda->simbolo}}.00 @endif
+               {{$moneda_id->simbolo}}{{$costo_igv}}
             </td>
         <th style="width: 2%;border-color: white"></th>
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif
+               {{$moneda_id->simbolo}}{{$costo_total}}
             </td>
     </tr>
 </table>
@@ -186,9 +183,9 @@
     <tr style="border:  0px solid white">
         <td>
             <p><u>centro de Atencion : </u></p>
-            Telefono : {{$cotizacion->user_personal->personal->telefono }}<br>
-            Celular : {{$cotizacion->user_personal->personal->celular }}<br>
-            Email : {{$cotizacion->user_personal->personal->email }}<br>
+            Telefono : {{$personal->telefono }}<br>
+            Celular : {{$personal->celular }}<br>
+            Email : {{$personal->email }}<br>
             Web : {{$empresa->pagina_web}} <br>
         </td>
         <td >
@@ -199,7 +196,7 @@
             <br>
             <br>
             <hr>
-            <center>{{$cotizacion->user_personal->personal->nombres }}</center>
+            <center>{{$personal->nombres }}</center>
         </td>
     </tr>
 </table>
