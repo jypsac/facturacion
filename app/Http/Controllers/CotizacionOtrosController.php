@@ -16,6 +16,7 @@ use App\TipoCambio;
 use App\Unidad_medida;
 use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 
 class CotizacionOtrosController extends Controller
 {
@@ -112,7 +113,22 @@ class CotizacionOtrosController extends Controller
        }
        elseif ($name=='pdf'){
          $pdf=PDF::loadView('transaccion.venta.cotizacion.otros.pdf',compact('producto_codigo','sub_total','igv','cliente_id','forma_pago_id','validez','observacion','producto_id','cantidad','precio','codigo','fecha_emision','moneda_id','garantia','empresa','banco','banco_count','articulos', 'costo_sub_total','costo_igv','costo_total','personal','end','punto','end_final'));
-         return $pdf->download('Cotizacion '.'.pdf');
+         return $pdf->download('COTPF 001-0000000'.$codigo.'.pdf');
+     }
+     elseif ($name=='correo'){
+         $redic='cotizacion_manual';
+         $clientes=$cliente_id->email;
+         $rutapdf = 'transaccion.venta.cotizacion.pdf';
+         $name = 'COTPF 001-0000000';
+
+           // return $cotizacion;
+         $archivo=$name.$codigo.".pdf";
+         $pdf=PDF::loadView('transaccion.venta.cotizacion.otros.pdf',compact('producto_codigo','sub_total','igv','cliente_id','forma_pago_id','validez','observacion','producto_id','cantidad','precio','codigo','fecha_emision','moneda_id','garantia','empresa','banco','banco_count','articulos', 'costo_sub_total','costo_igv','costo_total','personal','end','punto','end_final'));
+
+         $contenido=$pdf->download();
+         Storage::disk($redic)->put($archivo,$contenido);
+
+         return view('mailbox.create',compact('archivo','clientes','redic'));
      }
 
         // }
@@ -127,7 +143,7 @@ class CotizacionOtrosController extends Controller
     public function show(Request $request, $id)
     {
 
-  }
+    }
 
     /**
      * Show the form for editing the specified resource.
