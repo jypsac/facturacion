@@ -3,10 +3,61 @@
 @section('title', 'kardex Salida')
 @section('breadcrumb', 'Salida')
 @section('breadcrumb2', 'Salida')
-@section('href_accion', route('kardex-salida.create'))
+@section('data-toggle', 'modal')
+@section('href_accion', '#modal-form')
 @section('value_accion', 'Agregar')
+@section('content')
 
 @section('content')
+<!-- modal -->
+<div class="row">
+    <div class="col-lg-12">
+        <div id="modal-form" class="modal fade" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row" align="center">
+                            <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Kardex Salida</h3>
+                            </div>
+                            <!--FACTURA-->
+                            <div class="col-sm-12">
+                                @if($conteo_almacen==1)
+                                <form action="{{ route('kardex-salida.create')}}" enctype="multipart/form-data" method="post">
+                                    @csrf
+                                    <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
+                                    <input class="btn btn-sm btn-info"  type="submit" value="Crear" >
+                                </form>
+                                @else
+                                @if($user_login->name=='Administrador')
+                                <div class="dropdown">
+                                  <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Factura</button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <form action="{{ route('kardex-salida.create')}}"enctype="multipart/form-data" method="post">
+                                        @csrf
+                                        @foreach($almacen as $almacens)
+                                        <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
+                                        @endforeach
+                                    </form>
+                                </div>
+                            </div>
+                            @elseif($user_login->name=='Colaborador')
+                            <form action="{{ route('kardex-salida.create')}}"enctype="multipart/form-data" method="post">
+                                @csrf
+                                <input type="text"  hidden="hidden" name="almacen"  value="{{$user_login->almacen_id}}">
+                                <input type="submit" class="btn btn-sm btn-info"  value="Crear una cotizacion factura">
+                            </form>
+                            @endif
+                            @endif
+                        </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{{-- fimodal --}}
+
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -39,10 +90,7 @@
                                 <th>ID</th>
                                 <th>Motivo</th>
                                 <th>Informacion</th>
-                                {{-- <th>Estado</th> --}}
-                                <th>Ver</th>{{-- 
-                                <th>Editar</th>
-                                <th>Anular</th> --}}
+                                <th>Ver</th>
                             </tr>
                         </thead>
                     <tbody>
@@ -51,18 +99,7 @@
                                 <td>{{$kardex_salida->id}}</td>
                                 <td>{{$kardex_salida->motivos->nombre}}</td>
                                 <td>{{$kardex_salida->informacion}}</td>
-                                {{-- <td>{{$kardex_salida->estado}}</td> --}}
                                 <td><center><a href="{{ route('kardex-salida.show', $kardex_salida->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-                                {{-- <td><center><a href="{{ route('kardex-salida.edit', $kardex_salida->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td>
-                                <td>
-                                    <center>
-                                        <form action="{{ route('kardex-entrada.destroy', $kardex_salida->id)}}" method="POST">
-                                            @csrf
-                                            @method('delete')
-                                            <button type="submit" class="btn btn-s-m btn-danger">Anular</button>
-                                        </form>
-                                    </center>
-                                </td> --}}
                             </tr>
                         @endforeach
                     </tbody>
@@ -112,10 +149,7 @@
                     }
                     }
                 ]
-
             });
-
         });
-
     </script>
 @endsection

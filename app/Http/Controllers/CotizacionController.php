@@ -155,7 +155,6 @@ class CotizacionController extends Controller
 
     public function create_factura_ms(Request $request)
     {
-
         $almacen_p=$request->get('almacen');
         $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
         $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
@@ -205,7 +204,6 @@ class CotizacionController extends Controller
             }
         }
 
-
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
 
@@ -221,12 +219,14 @@ class CotizacionController extends Controller
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
         $ultima_factura=Cotizacion::latest()->first();
+        
         if($ultima_factura){
             $code=$ultima_factura->id;
             $code++;
         }else{
             $code=1;
         }
+
         $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
         $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
         $cotizacion_numero="COTPF ".$sucursal_nr."-".$cotizacion_nr;
@@ -242,6 +242,7 @@ class CotizacionController extends Controller
      */
 
      ///agregamiento de un parametro extra
+
     public function store_factura(Request $request,$id_moneda)
     {
 

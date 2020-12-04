@@ -63,8 +63,18 @@
 										@endforeach
 									</select>
 								</div>
-							<label class="col-sm-2 col-form-label">Informaciones:</label>
+
+								
+
+							<label class="col-sm-2 col-form-label">Almacen:</label>
 								<div class="col-sm-4">
+								<input type="text" class="form-control" name="almacen" value="{{$almacen_nombre}}" disabled>
+							    </div>
+						</div>
+
+						<div class="form-group row ">
+							<label class="col-sm-2 col-form-label">Informaciones:</label>
+								<div class="col-sm-10">
 									<input type="text" class="form-control" name="informacion">
 							    </div>
 						</div>
@@ -74,6 +84,7 @@
 								<tr>
 									<th><input class='check_all' type='checkbox' onclick="select_all()" /></th>
 									<th>Producto</th>
+									<th>Stock</th>
 									<th>Cantidad</th>
 								</tr>
 							</thead>
@@ -91,6 +102,9 @@
 											</datalist>
 									</td>
 									<td>
+										<input type='text' id='stock0' name='stock[]' class="stock0 form-control" required/>
+									</td>
+									<td>
 										<input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control" required/>
 									</td>
 									<span id="spTotal"></span>
@@ -98,12 +112,9 @@
 							</tbody>
 						</table>
 
-						
 						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
 						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
 						<button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
-
-
 					</form>
 				</div>
 			</div>
@@ -131,15 +142,16 @@
         $(".addmore").on('click', function () {
             var data = `[<tr><td><input type='checkbox' class='case'/></td>";
              <td>
-				<input list="browsers" class="form-control " name="articulo[]" required id='articulo' autocomplete="off">
+				<input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' autocomplete="off" onkeyup="ajax(${i})">
 						<datalist id="browsers" >
 							@foreach($productos as $producto)
 							<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
 							@endforeach
 						</datalist>
 			</td>
+			<td><input type='text' id='stock${i}' name='stock[]' class="stock${i} form-control"  required/></td>
 
-			<td><input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto form-control"  required/></td>
+			<td><input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control"  required/></td>
 			
 			</tr>`;
             $('table').append(data);
@@ -175,6 +187,45 @@
 				radioClass: 'iradio_square-green',
 			});
 		});
+
+		$('#articulo').change(function(e){
+			e.preventDefault();
+
+			var articulo = $('[id="articulo"]').val();
+			// var data={articulo:articulo,_token:token};
+				$.ajax({
+					type: "post",
+					url: "{{ route('stock_ajax') }}",
+					data: {
+						'_token': $('input[name=_token]').val(),
+						'articulo': articulo
+						},
+					success: function (msg) {
+						// console.log(msg);
+
+						$('#stock0').val(msg);
+					}
+				});
+			});
+
+
+		function ajax (a){
+			var articulo2 = $(`[id='articulo${a}']`).val();
+			$.ajax({
+				type: "post",
+				url: "{{ route('stock_ajax') }}",
+				data: {
+					'_token': $('input[name=_token]').val(),
+					'articulo': articulo2
+					},
+				success: function (msg) {
+					// console.log(msg);
+
+					$(`#stock${a}`).val(msg);
+				}
+			});
+		}
 	</script>
+
 
 @endsection

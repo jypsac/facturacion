@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Almacen;
 use App\Empresa;
 use App\Kardex_entrada;
 use App\Motivo;
@@ -21,8 +22,20 @@ class KardexSalidaController extends Controller
     public function index()
     {
         $kardex_salidas=kardex_salida::all();
+        $user_login =auth()->user();
+        $conteo_almacen=Almacen::where('estado',0)->count();
+        $almacen=Almacen::where('estado',0)->get();
+        $almacen_primero=Almacen::where('estado',0)->first();
         // return view('inventario.kardex.salida.index');
-        return view('inventario.kardex.salida.index' ,compact('kardex_salidas'));
+        // return $conteo_almacen;
+        return view('inventario.kardex.salida.index' ,compact('kardex_salidas','user_login','conteo_almacen','almacen','almacen_primero'));
+    }
+
+    public function stock_ajax(Request $request){
+        $articulo=$request->get('articulo');
+        $id=explode(" ",$articulo);
+        $producto=kardex_entrada_registro::where('producto_id',$id[0])->where('estado',1)->sum('cantidad');
+        return $producto;
     }
 
     /**
@@ -30,23 +43,59 @@ class KardexSalidaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        $motivos=Motivo::all();
-        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-        return view('inventario.kardex.salida.create',compact('motivos','productos'));
-    }
+        $almacen_p=$request->get('almacen');
+        $almacen_buscar=Almacen::find($almacen_p)->first();
+        $almacen_nombre=$almacen_buscar->nombre;
+        // return $almacen_nombre;
+        $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
+        $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
 
+        //return $kardex_entrada;
+        foreach($kardex_entrada as $kardex_entradas){
+            $kadex_entrada_id[]=$kardex_entradas->id;
+        }
+
+        for($x=0;$x<$kardex_entrada_count;$x++){
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
+                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
+                foreach( $nueva as $nuevas){
+                    $prod[]=$nuevas->producto_id;
+                }
+            }
+        }
+        //validacion si hay prductos en el almacen
+        if(!isset($prod)){
+            return "no hay prodcutos en el almacen seleccionado";
+        }
+
+        // return $nueva;
+        $lista=array_values(array_unique($prod));
+        $lista_count=count($lista);
+        // return $lista_count;
+
+        for($x=0;$x<$lista_count;$x++){
+            $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+        }
+
+        // foreach ($productos as  $producto) {
+        //     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+        // }
+
+        $motivos=Motivo::all();
+
+        // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        return view('inventario.kardex.salida.create',compact('motivos','productos','almacen_nombre','array_cantidad'));
+    }
     /**
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-
     public function store(Request $request)
     {
-
         //codigo para convertir nombre a producto
         $cantidad_p = $request->input('cantidad');
         $count_cantidad_p=count($cantidad_p);

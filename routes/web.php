@@ -12,7 +12,7 @@ Route::group(
 		Route::post('/whatsapp','AgregadoRapidoController@send_whatsapp')->name('agregado.whatsapp_send');
 		Route::resource('/almacen','AlmacenController');
 		Route::resource('/apariencia','ConfigController');
-		Route::resource('/cotizacion/otros','CotizacionOtrosController');
+		Route::resource('/|/otros','CotizacionOtrosController');
 
 		Route::resource('/categoria','CategoriaController')->only(['index','create','store','update']);;
 		Route::resource('/vendedores','PersonalVentaController');
@@ -115,6 +115,7 @@ Route::group(
 		Route::get('/guia_remision/print/{id}' , 'GuiaRemisionController@print')->name('guia_remision.print');
 		Route::resource('/guia_remision','GuiaRemisionController');
 
+		Route::post('stock_ajax', 'KardexSalidaController@stock_ajax')->name('stock_ajax');
 		Route::post('descripcion_ajax', 'CotizacionController@descripcion_ajax')->name('descripcion_ajax');
 
 		Route::get('guias_remision/seleccionar', 'GuiaRemisionController@seleccionar')->name('guia_remision.seleccionar');
@@ -193,7 +194,8 @@ Route::group(
 		Route::get('autocomplete', 'KardexEntradaController@search');
 		Route::get('kardex_entrada_productos','KardexEntradaController@productos');
 		Route::resource('/kardex-entrada','KardexEntradaController');
-		Route::resource('/kardex-salida','KardexSalidaController');
+		Route::post('/kardex-salida/create' , 'KardexSalidaController@create')->name('kardex-salida.create');
+		Route::resource('/kardex-salida','KardexSalidaController')->except(['create']);
 		Route::resource('/periodo-consulta','PeriodoConsultaController');
 
 		//Fin de inventarios
@@ -247,3 +249,4 @@ Route::group(
 	Route::get('garantia_informe_tecnico/pdf/{id}' , 'GarantiaInformeTecnicoController@pdf')->name('pdf_informe');
 	Route::get('cotizacion/pdf/{id}' , 'CotizacionController@pdf')->name('pdf_cotizacion');
 	Route::get('/home', 'HomeController@index')->name('home');
+
