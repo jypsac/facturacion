@@ -12,7 +12,7 @@ Route::group(
 		Route::post('/whatsapp','AgregadoRapidoController@send_whatsapp')->name('agregado.whatsapp_send');
 		Route::resource('/almacen','AlmacenController');
 		Route::resource('/apariencia','ConfigController');
-		Route::resource('/|/otros','CotizacionOtrosController');
+		Route::resource('/cotizacion/otros','CotizacionOtrosController');
 
 		Route::resource('/categoria','CategoriaController')->only(['index','create','store','update']);;
 		Route::resource('/vendedores','PersonalVentaController');
