@@ -19,7 +19,7 @@ use App\Cotizacion_Servicios_factura_registro;
 use App\Cotizacion_Servicios_boleta_registro;
 use App\kardex_entrada_registro;
 use App\Igv;
-use App\GarantiaGuiaIngreso;
+use App\GarantiaInformeTecnicoArchivos;
 use App\User;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
@@ -61,6 +61,10 @@ class EmailBandejaEnviosController extends Controller
      */
   public function store(Request $request)
   {
+    $date_sp = Carbon::now();
+    $data_g = str_replace(' ', '_',$date_sp);
+    $carbon_sp = str_replace(':','-',$data_g);
+
     $id_usuario=auth()->user()->id;
     $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
     $firma=$correo_busqueda->firma;
@@ -128,9 +132,10 @@ class EmailBandejaEnviosController extends Controller
         if($request->hasfile('archivos')){
           foreach ($newfile as $file) {
             $nombre =  $file->getClientOriginalName();
-            \Storage::disk('mailbox')->put($nombre,  \File::get($file));
+            $especif = $carbon_sp.$nombre;
+            \Storage::disk('mailbox')->put( $especif ,  \File::get($file));
 
-            $news[] = storage_path().'/app/public/'.$nombre;
+            $news[] = public_path().'/archivos/'.$especif;
             $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
             foreach ($news as $attachment) {
               $message->attach(\Swift_Attachment::fromPath($attachment));
@@ -160,7 +165,7 @@ class EmailBandejaEnviosController extends Controller
               $guardar_email_archivo=new EmailBandejaEnviosArchivos;
               $guardar_email_archivo->id_bandeja_envios=$mail->id;
               $guardar_email_archivo->archivo= $file2->getClientOriginalName();
-              $guardar_email_archivo->fecha_hora=Carbon::now();
+              $guardar_email_archivo->fecha_hora = $carbon_sp;
               $guardar_email_archivo->save();
             }
           }
@@ -171,6 +176,9 @@ class EmailBandejaEnviosController extends Controller
       }
 
       function save(Request $request){
+         $date_sp = Carbon::now();
+    $data_g = str_replace(' ', '_',$date_sp);
+    $carbon_sp = str_replace(':','-',$data_g);
         $tipo = $request->get('tipo');
         $id =$request->get('id');
         $redic=$request->get('redict');
@@ -209,6 +217,8 @@ class EmailBandejaEnviosController extends Controller
          $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
 
          $contenido=$pdf->download();
+            // $especif = $carbon_sp.$nombre;
+            // \Storage::disk('mailbox')->put( $especif ,  \File::get($file));
          Storage::disk($redic)->put($archivo,$contenido);
 
          return view('mailbox.create',compact('archivo','clientes','redic'));
@@ -258,18 +268,37 @@ class EmailBandejaEnviosController extends Controller
             $rutapdf= 'transaccion.garantias.informe_tecnico.show_pdf';
             $garantias_informe_tecnico = $tipo::find($id);
             $name = 'Informe_Tecnico_';
+            $contacto = Contacto::all();
+            $archivo_informe_tecnico  = GarantiaInformeTecnicoArchivos::where('id_informe_tecnico',$garantias_informe_tecnico)->get();
+            $archivo=$name.$id.".pdf";
+            $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa','contacto','archivo_informe_tecnico'));
+            $content=$pdf->download();
+
+            $especif = $carbon_sp.$archivo;
+            Storage::disk('mailbox')->put($especif,$content);
+            $date = $carbon_sp;
+            return view('mailbox.create',compact('archivo','clientes','redic','date'));
           }
           $contacto = Contacto::all();
         $archivo=$name.$id.".pdf";
         $pdf=PDF::loadView($rutapdf,compact($redic,'mi_empresa','contacto'));
         $content=$pdf->download();
-        Storage::disk($redic)->put($archivo,$content);
-        return view('mailbox.create',compact('archivo','clientes','redic'));
+
+       $especif = $carbon_sp.$archivo;
+       // $archivo=$especif;
+            // \Storage::disk('mailbox')->put( $especif ,  \File::get($file));
+
+        Storage::disk('mailbox')->put($especif,$content);
+        $date = $carbon_sp;
+        return view('mailbox.create',compact('archivo','clientes','redic','date'));
       }
   }
 
   public function send(Request $request){
-
+    $date_sp = Carbon::now();
+    $data_g = str_replace(' ', '_',$date_sp);
+    $carbon_sp = str_replace(':','-',$data_g);
+    $dates = $request->get('dates');
     $id_usuario=auth()->user()->id;
     $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
     $correo=$correo_busqueda->email;
@@ -325,21 +354,22 @@ class EmailBandejaEnviosController extends Controller
         $mensaje = $mensaje_con_firma;
         $bakcup=    $correo_busqueda->email_backup ;
 
-        $file = $request->archivo;
+        // $file = $request->archivo;
         $pdf=$request->get('pdf');
         $carpet =$request->get('redict');
-        $pdfile = storage_path().'/app/public/'.$carpet.'/'.$pdf;
+        $pdfile = public_path().'/archivos/'.$dates.$pdf;
 
         $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
         $mailer =new \Swift_Mailer($transport);
 
-        $newfile = $request->file('archivo');
-        if($request->hasfile('archivo')){
+        $newfile = $request->file('archivos');
+        if($request->hasfile('archivos')){
           foreach ($newfile as $file) {
             $nombre =  $file->getClientOriginalName();
-            \Storage::disk('mailbox')->put($nombre,  \File::get($file));
+            $especif = $carbon_sp.$nombre;
+            \Storage::disk('mailbox')->put( $especif ,  \File::get($file));
 
-            $news[] = storage_path().'/app/public/'.$nombre;
+            $news[] = public_path().'/archivos/'.$especif;
             $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
             $message->attach(\Swift_Attachment::fromPath($pdfile));
             foreach ($news as $attachment) {
@@ -366,19 +396,19 @@ class EmailBandejaEnviosController extends Controller
           $mail-> save();
 
           $newfile2 = $request->file('archivos');
-          if($request->hasfile('archivo')){
+          if($request->hasfile('archivos')){
             foreach ($newfile2 as $file2) {
               $guardar_email_archivo=new EmailBandejaEnviosArchivos;
               $guardar_email_archivo->id_bandeja_envios=$mail->id;
               $guardar_email_archivo->archivo= $file2->getClientOriginalName();
-              $guardar_email_archivo->fecha_hora=Carbon::now();
+              $guardar_email_archivo->fecha_hora= $carbon_sp;
               $guardar_email_archivo->save();
             }
           }
           $archivo_pdf = new EmailBandejaEnviosArchivos;
           $archivo_pdf->id_bandeja_envios=$mail->id;
           $archivo_pdf->archivo=$pdf;
-          $archivo_pdf->fecha_hora=Carbon::now();
+          $archivo_pdf->fecha_hora= $dates;
           $archivo_pdf->save();
 
           return redirect()->route('email.index');

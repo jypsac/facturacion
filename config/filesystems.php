@@ -53,37 +53,37 @@ return [
             'root' => storage_path('app/public/'),
         ],
 
-        'garantia_guia_ingreso' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/garantia_guia_ingreso/'),
-        ],
-        'garantias_guias_egreso' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/garantias_guias_egreso/'),
-        ],
-        'garantias_informe_tecnico' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/garantias_informe_tecnico/'),
-        ],
-        'ventas_cotizacion' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/ventas_cotizacion/'),
-        ],
-        'cotizacion_factura' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/cotizacion_factura/'),
-        ],
-        'cotizacion_manual' => [
-            'driver' => 'local',
-            'root' => storage_path('app/public/cotizacion_manual/'),
-        ],
+        // 'garantia_guia_ingreso' => [
+        //     'driver' => 'local',
+        //     'root' => public_path('archivos/garantia_guia_ingreso/'),
+        // ],
+        // 'garantias_guias_egreso' => [
+        //     'driver' => 'local',
+        //     'root' => public_path('archivos/garantias_guias_egreso/'),
+        // ],
+        // 'garantias_informe_tecnico' => [
+        //     'driver' => 'local',
+        //     'root' => public_path('archivos/garantias_informe_tecnico/'),
+        // ],
+        // 'ventas_cotizacion' => [
+        //     'driver' => 'local',
+        //     'root' => public_path('archivos/ventas_cotizacion/'),
+        // ],
+        // 'cotizacion_factura' => [
+        //     'driver' => 'local',
+        //     'root' => public_path('archivos/cotizacion_factura/'),
+        // ],
+        // 'cotizacion_manual' => [
+        //     'driver' => 'local',
+        //     'root' => public_path('archivos/cotizacion_manual/'),
+        // ],
         'mailbox' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/'),
+            'root' =>  public_path('archivos/'),
         ],
         'informe_tecnico_imagenes' => [
             'driver' => 'local',
-            'root' => public_path('archivos/imagenes/informe_tecnico/'),
+            'root' => storage_path('archivos/imagenes/informe_tecnico/'),
         ],
 
         'public' => [

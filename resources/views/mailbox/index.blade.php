@@ -400,8 +400,9 @@
                             <div class="file-box">
                                 <div class="file">
                                     {{-- {{storage_path('app/public/'.$mailbox_files->archivo)}} --}}
-                                    <a href="{{storage_path().'/app/public/'.$mailbox_files->archivo}}" target="_blank"
-                                    download="{{($mailbox_files->archivo)}}" >
+                                    <a href="{{asset('/archivos/'.$mailbox_files->fecha_hora.$mailbox_files->archivo)}}"
+                                    download="{{$mailbox_files->archivo}}" >
+                                    {{-- <a href="{{route('descarga')}}" target="_blank"> --}}
                                         <span class="corner"></span>
                                         <div class="icon">
                                             <i class="fa fa-file-pdf-o"></i>

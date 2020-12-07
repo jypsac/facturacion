@@ -12,6 +12,8 @@
     <div class="col-lg-10 container animated fadeInRight" >
         <div class="mail-box">
             <form action ="{{route('email.send')}}" method="POST" enctype="multipart/form-data" >
+                <input type="text" hidden=""  name="dates" value="{{$date}}" id="">
+                <input type="text" hidden="" name="redict" value="{{$redic}}">
                 @csrf
                 <div class="mail-body">
                     <div class="form-group row">
@@ -38,7 +40,7 @@
                                 </div>
                             <div class="file-name">
                                 <input type="text" name="redict" hidden="hidden" value="{{$redic}}">
-                                <input type="text" name="pdf" hidden="hidden" value="{{$archivo}}">
+                                <input type="text" name="pdf" hidden="" value="{{$archivo}}">
                                 {{$archivo}}
                                 <br/>
                                 <small>{{ date('Y-m-d H:i:s') }} </small>

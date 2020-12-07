@@ -35,6 +35,7 @@
 
       <form action ="{{route('garantia_ingreso.enviar')}}" method="POST" enctype="multipart/form-data" >
                 @csrf
+                <input type="text" hidden="hidden" name="redict" value="garantia_guia_ingreso">
                 <input type="hidden" value="{{$id}}" name="id">
                 <div class="mail-body">
           <div class="form-group row">
