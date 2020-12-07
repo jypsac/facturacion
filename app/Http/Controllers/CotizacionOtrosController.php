@@ -14,6 +14,7 @@ use Barryvdh\DomPDF\Facade as PDF;
 use App\Producto;
 use App\TipoCambio;
 use App\Unidad_medida;
+use Carbon\Carbon;
 use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
@@ -116,7 +117,11 @@ class CotizacionOtrosController extends Controller
          return $pdf->download('COTPF 001-0000000'.$codigo.'.pdf');
      }
      elseif ($name=='correo'){
-         $redic='cotizacion_manual';
+        $date_sp = Carbon::now();
+        $data_g = str_replace(' ', '_',$date_sp);
+        $carbon_sp = str_replace(':','-',$data_g);
+        $date = $carbon_sp;
+         $redic='mailbox';
          $clientes=$cliente_id->email;
          $rutapdf = 'transaccion.venta.cotizacion.pdf';
          $name = 'COTPF 001-0000000';
@@ -124,11 +129,18 @@ class CotizacionOtrosController extends Controller
            // return $cotizacion;
          $archivo=$name.$codigo.".pdf";
          $pdf=PDF::loadView('transaccion.venta.cotizacion.otros.pdf',compact('producto_codigo','sub_total','igv','cliente_id','forma_pago_id','validez','observacion','producto_id','cantidad','precio','codigo','fecha_emision','moneda_id','garantia','empresa','banco','banco_count','articulos', 'costo_sub_total','costo_igv','costo_total','personal','end','punto','end_final'));
-
+          $especif = $carbon_sp.$archivo;
          $contenido=$pdf->download();
-         Storage::disk($redic)->put($archivo,$contenido);
+         Storage::disk($redic)->put($especif,$contenido);
 
-         return view('mailbox.create',compact('archivo','clientes','redic'));
+
+       // $archivo=$especif;
+            // \Storage::disk('mailbox')->put( $especif ,  \File::get($file));
+
+        // Storage::disk('mailbox')->put($especif,$content);
+        // $date = $carbon_sp;
+
+         return view('mailbox.create',compact('archivo','clientes','redic','date'));
      }
 
         // }
