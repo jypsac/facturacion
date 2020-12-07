@@ -883,6 +883,71 @@ class CotizacionServiciosController extends Controller
     return redirect()->route('boleta.show',$id_cotizador);
     }
 
+    // public function boletear_store(Request $request){
+
+    //     $id_cotizador=$request->get('id_cotizador');
+    //     $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
+    //     $cotizacion->estado=1;
+    //     $cotizacion->save();
+    //     $fac= Boleta::all()->count();
+    //     $suma=$fac+1;
+    //     $cod_bol='FC-000'.$suma;
+    
+    //     // Creacion de Facturacion
+    //     $boletear=new Boleta;
+    //     $boletear->codigo_boleta=$cod_bol;
+    //     $boletear->id_cotizador_servicio=$request->get('id_cotizador');
+    //     $boletear->orden_compra=$request->get('orden_compra');
+    //     $boletear->guia_remision=$request->get('guia_remision');
+    //     $boletear->cliente_id=$cotizacion->cliente_id;
+    //     $boletear->moneda_id=$cotizacion->moneda_id;
+    //     $boletear->forma_pago_id=$cotizacion->forma_pago_id;
+    //     $boletear->comisionista=$cotizacion->comisionista_id;
+    //     $boletear->fecha_emision=$request->get('fecha_emision');
+    //     $boletear->fecha_vencimiento=$request->get('fecha_vencimiento');
+    //     $boletear->estado='0';
+    //     $boletear->tipo='servicio';
+    //     $boletear->user_id =auth()->user()->id;
+    //     $boletear->save();
+    
+    //     $buscador_id=Cotizacion_Servicios::where('id',$boletear->id_cotizador_servicio)->first();
+    
+    //     $cotizaciones_boletaciones=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$buscador_id->id)->get();
+    
+    //     foreach ($cotizaciones_boletaciones as $index => $cotizacion_boleta) {
+    //         $boleta_registro=new Boleta_registro();
+    //         $boleta_registro->boleta_id=$boletear->id;
+    //         $boleta_registro->servicio_id=$cotizacion_boleta->servicio_id;
+    //         $boleta_registro->promedio_original=$cotizacion_boleta->promedio_original;
+    //         $boleta_registro->precio=$cotizacion_boleta->precio;
+    //         $boleta_registro->cantidad=$cotizacion_boleta->cantidad;
+    //         $boleta_registro->descuento=$cotizacion_boleta->descuento;
+    //         $boleta_registro->precio_unitario_desc=$cotizacion_boleta->precio_unitario_desc;
+    //         $boleta_registro->comision=$cotizacion_boleta->comision;
+    //         $boleta_registro->precio_unitario_comi=$cotizacion_boleta->precio_unitario_comi;
+    //         $boleta_registro->save();
+    //     }
+    
+    //     // Creacion de Ventas Registros del Comisinista
+    //     $cotizador=$request->get('id_cotizador');
+    //     $id_comisionista=$request->get('id_comisionista');
+    //     $comisionista=Cotizacion_Servicios::where('id',$cotizador)->first();
+    //     $id_comi=$comisionista->comisionista_id;
+    
+    //     if(isset($id_comi)){
+    //        $comisionista=new Ventas_registro;
+    //        $comisionista->id_facturacion=$request->get('fac_id');
+    //        $comisionista->comisionista=$request->get('id_comisionista');
+    //        $comisionista->estado_aprobado='0';
+    //        $comisionista->pago_efectuado='0';
+    //        $comisionista->estado_fac='0';
+    //        $comisionista->observacion='Viene del Cotizador';
+    //        $comisionista->save();
+    //     }
+    
+    //     return redirect()->route('boleta.show',$id_cotizador);
+    //     }
+    
 
     /**
      * Remove the specified resource from storage.
