@@ -154,7 +154,6 @@
                     <div class="col-sm-4">
                         <input type="text" class="form-control" name="direccion" id="domicilio" class="form-control" required value="{{ old('direccion')}}" autocomplete="off">
                     </div>
-
                 </div>
 
                 <div class="form-group row">
@@ -162,19 +161,13 @@
                     <div class="col-sm-4">
                         <input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}" autocomplete="off">
                     </div>
-
-
                 </div>
-
-
                 <input type="submit"class="btn btn-primary" value="Grabar">
-
             </form>
-
         </div>
     </div>
 </div>
-<!-- Fin Modal Clieb¿nte -->
+<!-- Fin Modal Cliente -->
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -231,13 +224,17 @@
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Moneda:</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" name="moneda" required="required">
-                                                    @foreach($moneda as $monedas)
-                                                    <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
-                                                    @endforeach
-                                                    <select>
-                                                    </div>
-                                                </div><br>
+                                                <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
+                                                <a class="col-sm-5" href="{{route('facturacion_servicio.create')}}">
+                                                    <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>
+                                                        @if($moneda->tipo=='nacional')Dolares 
+                                                        @elseif($moneda->tipo=='extranjera') Soles 
+                                                        @endif
+                                                    </button>
+                                                 </a> 
+                                            </div>
+                                            </div>
+                                            <br>
                                                 <div class="row">
                                                     <label class="col-sm-2 col-form-label">Vendedor:</label>
                                                     <div class="col-sm-10">
@@ -294,6 +291,17 @@
                                                         </datalist>
                                                     </div>
                                                 </div>
+
+                                                <div class="row">
+                                                    <label class="col-sm-2 col-form-label">Almacen:</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control" name="almacen">
+                                                            @foreach($almacenes as $almacen)
+                                                        <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div><br>
 
                                             </div>
                                             <div class="col-sm-12" style="padding-top: 15px">

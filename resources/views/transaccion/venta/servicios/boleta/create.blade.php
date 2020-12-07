@@ -231,13 +231,17 @@
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Moneda:</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" name="moneda" required="required">
-                                                    @foreach($moneda as $monedas)
-                                                    <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
-                                                    @endforeach
-                                                    <select>
-                                                    </div>
-                                                </div><br>
+                                                <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
+                                                <a class="col-sm-5" href="{{route('boleta_servicio.create_ms')}}">
+                                                    <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>
+                                                        @if($moneda->tipo=='nacional')Dolares 
+                                                        @elseif($moneda->tipo=='extranjera') Soles 
+                                                        @endif
+                                                    </button>
+                                                 </a> 
+                                            </div>
+                                            </div>
+                                                <br>
                                                 <div class="row">
                                                     <label class="col-sm-2 col-form-label">Vendedor:</label>
                                                     <div class="col-sm-10">
@@ -294,6 +298,16 @@
                                                         </datalist>
                                                     </div>
                                                 </div>
+                                                <div class="row">
+                                                    <label class="col-sm-2 col-form-label">Almacen:</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control" name="almacen">
+                                                            @foreach($almacenes as $almacen)
+                                                        <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div><br>
 
                                             </div>
                                             <div class="col-sm-12" style="padding-top: 15px">

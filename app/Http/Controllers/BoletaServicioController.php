@@ -14,6 +14,8 @@ use App\Moneda;
 use App\Personal;
 use App\Personal_venta;
 use App\Servicios;
+use App\TipoCambio;
+use App\Almacen;
 use Illuminate\Http\Request;
 
 class BoletaServicioController extends Controller
@@ -35,24 +37,82 @@ class BoletaServicioController extends Controller
      */
     public function create()
     {
+        
         $servicios=Servicios::where('estado_anular',0)->get();
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
+        $moneda=Moneda::where('principal','1')->first();
         $igv_proceso=Igv::first();
         $igv_total=$igv_proceso->igv_total;
 
-        foreach ($servicios as $index => $servicio) {
-            $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-            $igv[]=$servicio->precio*$igv_total/100;
-            $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+        if($moneda->tipo =='nacional'){
+            foreach ($servicios as $index => $servicio) {
+                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $igv[]=$servicio->precio*$igv_total/100;
+                $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+            }
+        }else{
+            foreach ($servicios as $index => $servicio) {
+                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $igv[]=$servicio->precio*$igv_total/100;
+                $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])*$tipo_cambio->paralelo;
+            }
         }
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        $moneda=Moneda::all();
+        
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
 
-        return view('transaccion.venta.servicios.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta'));
+        $user_id =auth()->user();
+        if($user_id->name=="Administrador"){
+            $almacenes=Almacen::all();
+        }else{
+            $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
+        }
+
+        return view('transaccion.venta.servicios.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
+    }
+
+    public function create_ms()
+    {
+        
+        $servicios=Servicios::where('estado_anular',0)->get();
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
+        $moneda=Moneda::where('principal','1')->first();
+        $igv_proceso=Igv::first();
+        $igv_total=$igv_proceso->igv_total;
+
+        if($moneda->tipo =='nacional'){
+            foreach ($servicios as $index => $servicio) {
+                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $igv[]=$servicio->precio*$igv_total/100;
+                $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+            }
+        }else{
+            foreach ($servicios as $index => $servicio) {
+                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $igv[]=$servicio->precio*$igv_total/100;
+                $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])*$tipo_cambio->paralelo;
+            }
+        }
+
+        $forma_pagos=Forma_pago::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
+        
+        $personales=Personal::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
+        $igv=Igv::first();
+
+        $user_id =auth()->user();
+        if($user_id->name=="Administrador"){
+            $almacenes=Almacen::all();
+        }else{
+            $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
+        }
+
+        return view('transaccion.venta.servicios.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
     }
 
     /**

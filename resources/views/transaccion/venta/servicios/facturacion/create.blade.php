@@ -156,21 +156,14 @@
                     </div>
 
                 </div>
-
                 <div class="form-group row">
                     <label class="col-sm-2 col-form-label" >correo:</label>
                     <div class="col-sm-4">
                         <input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}" autocomplete="off">
                     </div>
-
-
                 </div>
-
-
                 <input type="submit"class="btn btn-primary" value="Grabar">
-
             </form>
-
         </div>
     </div>
 </div>
@@ -231,13 +224,19 @@
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Moneda:</label>
                                             <div class="col-sm-10">
-                                                <select class="form-control" name="moneda" required="required">
-                                                    @foreach($moneda as $monedas)
-                                                    <option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
-                                                    @endforeach
-                                                    <select>
-                                                    </div>
-                                                </div><br>
+                                                <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
+                                                <a class="col-sm-5" href="{{route('facturacion_servicio.create_ms')}}">
+                                                    <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>
+                                                        @if($moneda->tipo=='nacional')Dolares 
+                                                        @elseif($moneda->tipo=='extranjera') Soles 
+                                                        @endif
+                                                    </button>
+                                                 </a> 
+                                            </div>
+                                            </div>
+                                                        
+                                                        
+                                                        <br>
                                                 <div class="row">
                                                     <label class="col-sm-2 col-form-label">Vendedor:</label>
                                                     <div class="col-sm-10">
@@ -295,6 +294,17 @@
                                                     </div>
                                                 </div>
 
+                                                <div class="row">
+                                                    <label class="col-sm-2 col-form-label">Almacen:</label>
+                                                    <div class="col-sm-10">
+                                                        <select class="form-control" name="almacen">
+                                                            @foreach($almacenes as $almacen)
+                                                        <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                    </div>
+                                                </div><br>
+
                                             </div>
                                             <div class="col-sm-12" style="padding-top: 15px">
                                                 <div class="row">
@@ -339,7 +349,6 @@
                                                                 <input type='text' id='cantidad0' name='cantidad[]' class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
                                                             </td>
                                                             <td>
-                                                                {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
                                                                 <div style="position: relative;">
                                                                     <input class="text_des" type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
                                                                 </div>

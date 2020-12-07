@@ -77,6 +77,7 @@ Route::group(
 		Route::resource('/facturacion_servicio','FacturacionServicioController');
 
 //BOLETA SERVICIOS
+		Route::get('/boleta_servicio/create_ms','BoletaServicioController@create_ms')->name('boleta_servicio.create_ms');
 		Route::resource('/boleta_servicio','BoletaServicioController');
 
 //FACTURACION ELECTRONICA

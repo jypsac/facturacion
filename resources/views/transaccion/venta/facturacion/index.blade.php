@@ -38,31 +38,25 @@
                                 </div>
                             </div>
                             @elseif($user_login->name=='Colaborador')
-                            <form action="{{ route('facturacion.create')}}"enctype="multipart/form-data" method="post">
-                                @csrf
-                                <input type="text"  hidden="hidden" name="almacen"  value="{{$user_login->almacen_id}}">
-                                <input type="submit" class="btn btn-sm btn-info"  value="Producto">
-                            </form>
+                                <form action="{{ route('facturacion.create')}}"enctype="multipart/form-data" method="post">
+                                    @csrf
+                                    <input type="text"  hidden="hidden" name="almacen"  value="{{$user_login->almacen_id}}">
+                                    <input type="submit" class="btn btn-sm btn-info"  value="Producto">
+                                </form>
+                                @endif
                             @endif
-                            @endif
-                        </div>
-                        <!--Servicios-->
-                        <div class="col-sm-6">
-                                    {{-- <form action="{{ route('facturacion_servicio.create')}}" enctype="multipart/form-data"  method="post">
-                                        @csrf
-                                        <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
-                                        <input class="btn btn-sm btn-info"  type="submit" value="Servicio" >
-                                    </form>  --}}
-
-                                    <a href="{{ route('facturacion_servicio.create')}}"><button class="btn btn-sm btn-info" >Servicios</a>
-                                    </div>
-                                </div>
+                            </div>
+                            <!--Servicios-->
+                            <div class="col-sm-6">
+                                <a href="{{ route('facturacion_servicio.create')}}"><button class="btn btn-sm btn-info" >Servicios</a>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+    </div>
+</div>
         {{-- fimodal --}}
         <div class="wrapper wrapper-content animated fadeInRight">
             <div class="row">

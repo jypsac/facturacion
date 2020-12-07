@@ -50,33 +50,7 @@
                             </div>
                             <!--Servicios-->
                             <div class="col-sm-6">
-                                @if($conteo_almacen==1)
-                                    <form action="{{ route('boleta_servicio.create')}}" enctype="multipart/form-data"  method="post">
-                                        @csrf
-                                        <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
-                                        <input class="btn btn-sm btn-info"  type="submit" value="Servicio" >
-                                    </form>
-                                @else
-                                        @if($user_login->name=='Administrador')
-                                            <div class="dropdown">
-                                              <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Servicios</button>
-                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <form action="{{ route('boleta_servicio.create')}}"enctype="multipart/form-data" method="post">
-                                                    @csrf
-                                                    @foreach($almacen as $almacens)
-                                                    <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
-                                                    @endforeach
-                                                </form>
-                                             </div>
-                                             </div>
-                                        @elseif($user_login->name=='Colaborador')
-                                            <form action="{{ route('boleta_servicio.create')}}"enctype="multipart/form-data" method="post">
-                                            @csrf
-                                             <input type="text"  hidden="hidden" name="almacen"  value="{{$user_login->almacen_id}}">
-                                             <input type="submit" class="btn btn-sm btn-info"  value="Servicio">
-                                            </form>
-                                        @endif
-                                @endif
+                                <a href="{{ route('boleta_servicio.create')}}"><button class="btn btn-sm btn-info" >Servicios</a>
                             </div>
                         </div>
                     </div>
