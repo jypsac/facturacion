@@ -177,8 +177,8 @@ class EmailBandejaEnviosController extends Controller
 
       function save(Request $request){
          $date_sp = Carbon::now();
-    $data_g = str_replace(' ', '_',$date_sp);
-    $carbon_sp = str_replace(':','-',$data_g);
+        $data_g = str_replace(' ', '_',$date_sp);
+        $carbon_sp = str_replace(':','-',$data_g);
         $tipo = $request->get('tipo');
         $id =$request->get('id');
         $redic=$request->get('redict');
