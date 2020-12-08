@@ -3,9 +3,94 @@
 @section('title', 'Cotizacion Servicio')
 @section('breadcrumb', 'Cotizacion Servicio')
 @section('breadcrumb2', 'cotizacion_servicio')
-@section('href_accion', route('cotizacion_servicio.create_factura'))
+{{-- @section('href_accion', route('cotizacion_servicio.create_factura'))
+@section('value_accion', 'Agregar') --}}
+@section('data-toggle', 'modal')
+@section('href_accion', '#modal-form')
 @section('value_accion', 'Agregar')
 @section('content')
+
+<!-- modal -->
+<div class="row">
+    <div class="col-lg-12">
+        <div id="modal-form" class="modal fade" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row" align="center">
+                            <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Cotizacion Servicio</h3>
+                            </div>
+                            <!--FACTURA-->
+                            <div class="col-sm-6">
+                                @if($conteo_almacen==1)
+                                <form action="{{ route('cotizacion_servicio.create_factura')}}" enctype="multipart/form-data" method="post">
+                                    @csrf
+                                    <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
+                                    <input class="btn btn-sm btn-info"  type="submit" value="Crear una cotizacion factura" >
+                                </form>
+                                @else
+                                @if($user_login->name=='Administrador')
+                                <div class="dropdown">
+                                  <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Factura</button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <form action="{{ route('cotizacion_servicio.create_factura')}}"enctype="multipart/form-data" method="post">
+                                        @csrf
+                                        @foreach($almacen as $almacens)
+                                        <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
+                                        @endforeach
+                                    </form>
+                                </div>
+                            </div>
+                            @elseif($user_login->name=='Colaborador')
+                            <form action="{{ route('cotizacion_servicio.create_factura')}}"enctype="multipart/form-data" method="post">
+                                @csrf
+                                <input type="text"  hidden="hidden" name="almacen"  value="{{$user_login->almacen_id}}">
+                                <input type="submit" class="btn btn-sm btn-info"  value="Crear una cotizacion factura">
+                            </form>
+                            @endif
+                            @endif
+                        </div>
+                        <!--BOLETA-->
+                        <div class="col-sm-6">
+                            @if($conteo_almacen==1)
+                            <form action="{{ route('cotizacion_servicio.create_boleta')}}" enctype="multipart/form-data"  method="post">
+                                @csrf
+                                <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
+                                <input class="btn btn-sm btn-info"  type="submit" value="Crear cotizacion boleta" >
+                            </form>
+                            @else
+                            @if($user_login->name=='Administrador')
+                            <div class="dropdown">
+                              <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Boleta</button>
+                              <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                <form action="{{ route('cotizacion_servicio.create_boleta')}}"enctype="multipart/form-data" method="post">
+                                    @csrf
+                                    @foreach($almacen as $almacens)
+                                    <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
+                                    @endforeach
+                                </form>
+                            </div>
+                        </div>
+                        @elseif($user_login->name=='Colaborador')
+                        <form action="{{ route('cotizacion_servicio.create_boleta')}}"enctype="multipart/form-data" method="post">
+                            @csrf
+                            <input type="text"  hidden="hidden" name="almacen"  value="{{$user_login->almacen_id}}">
+                            <input type="submit" class="btn btn-sm btn-info"  value="Crear cotizacion boleta">
+                        </form>
+                        @endif
+                        @endif
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{{-- fimodal --}}
+
+
+
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -51,7 +136,7 @@
                                       <td>{{$cotizacion_servicio->id}}</td>
                                       <td>{{$cotizacion_servicio->cliente->numero_documento}}</td>
                                       <td>{{$cotizacion_servicio->cliente->nombre}}</td>
-                                      <td>{{$cotizacion_servicio->cod_comision}}</td>
+                                      <td>{{$cotizacion_servicio->cod_cotizacion}}</td>
                                       <td>{{$cotizacion_servicio->created_at}}</td>
                                       <td><center><a href="{{route('cotizacion_servicio.show',$cotizacion_servicio->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                       <td>
