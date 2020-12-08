@@ -22,33 +22,45 @@
                                 <a href="{{route('guia_remision.seleccionar') }}"><button class="btn btn-sm btn-info" type="submit"><strong>Ver Aprobadas</strong></button></a>
                             </div>
                             <div class="col-sm-6">
-                                @if($conteo_almacen==1)
-                                    <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
-                                        @csrf
-                                        <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
-                                        <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
-                                    </form>
-                                @else
-                                        @if($user_login->name=='Administrador')
+                                @if($conteo_almacen==1 and $user_login->name=='Administrador' )
+                                        <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
+                                            @csrf
+                                            <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
+                                            <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
+                                        </form>
+                                @elseif($conteo_almacen==1 and $user_login->almacen->estado==1 and $user_login->name=='Colaborador' )
+                                        <input id="auto" onclick="divAuto()" type="submit" class="btn btn-sm btn-info"  value="Crear una Nueva Guia">
+                                        <div id="div-mostrar" style="color: black">
+                                            <div id="texto" style="opacity:0;transition: .4s ;text-align: center;padding-top: 10px;" >Almacen Asignado esta Desactivado, Activelo o cambie de Almacen.</div>
+                                        </div>
+
+                                @elseif($conteo_almacen > 1 and $user_login->name =='Administrador')
                                             <div class="dropdown">
                                               <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Crear una Nueva Guia</button>
-                                             <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                <form action="{{ route('guia_remision.create')}}"enctype="multipart/form-data" >
+                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                                    <form action="{{ route('guia_remision.create')}}"enctype="multipart/form-data" >
+                                                        @csrf
+                                                        @foreach($almacen as $almacens)
+                                                        <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
+                                                        @endforeach
+                                                    </form>
+                                                </div>
+                                            </div>
+                                    @elseif($conteo_almacen > 1 and $user_login->name=='Colaborador')
+                                            @if($user_login->almacen->estado==1  )
+                                                <input id="auto" onclick="divAuto()" type="submit" class="btn btn-sm btn-info"  value="Crear una Nueva Guia">
+                                                <div id="div-mostrar" style="color: black">
+                                                    <div id="texto" style="opacity:0;transition: .4s ;text-align: center;padding-top: 10px;" >Almacen Asignado esta Desactivado, Activelo o cambie de Almacen.</div>
+                                                </div>
+                                            @elseif($user_login->almacen->estado==0 )
+                                                    <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
                                                     @csrf
-                                                    @foreach($almacen as $almacens)
-                                                    <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
-                                                    @endforeach
-                                                </form>
-                                             </div>
-                                             </div>
-                                        @elseif($user_login->name=='Colaborador')
-                                            <form action="{{ route('guia_remision.create')}}"enctype="multipart/form-data" >
-                                            @csrf
-                                             <input type="text"  hidden="hidden" name="almacen"  value="{{$user_login->almacen_id}}">
-                                             <input type="submit" class="btn btn-sm btn-info"  value="Crear una Nueva Guia">
-                                            </form>
-                                        @endif
-                                @endif
+                                                    <input type="text" value="{{$user_login->almacen_id}}" hidden="hidden" name="almacen">
+                                                    <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
+                                                    </form>
+
+                                             @endif
+                                 @endif
                         </div>
                     </div>
                 </div>
@@ -63,7 +75,7 @@
         <div class="col-lg-12">
             <div class="ibox ">
                 <div class="ibox-title">
-                    <h5>Lista de Boletas</h5>
+                    <h5>Lista de Guias R.</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -110,48 +122,48 @@
                                       @if($guias_remision->estado_anulado == '0')
                                       <!-- Button trigger modal -->
                                       <button type="button" class="btn btn-s-m btn-danger" data-toggle="modal" data-target="#1">
-                                         Anular
-                                     </button>
+                                       Anular
+                                   </button>
 
-                                     <!-- Modal -->
-                                     <div class="modal fade" id="1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-                                         <div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">
-                                            <div class="modal-content" >
-                                                <div class="modal-body" style="padding: 0px;">
+                                   <!-- Modal -->
+                                   <div class="modal fade" id="1" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                       <div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">
+                                        <div class="modal-content" >
+                                            <div class="modal-body" style="padding: 0px;">
 
-                                                 <div class="ibox-content float-e-margins">
+                                               <div class="ibox-content float-e-margins">
 
-                                                   <h3 class="font-bold col-lg-12" align="center">
-                                                      ¿Esta Seguro que Deseas Anular la Guia de remision: ".?<br>
-                                                      <h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4>
-                                                  </h3>
-                                                  <p align="center">
-                                                    <form action="{{route('guia_remision.destroy', $guias_remision->id)}}" method="POST">
-                                                      @csrf
-                                                      @method('delete')
-                                                      <center>
-                                                        <button type="submit" class="btn btn-w-m btn-primary">Anular</button>
-                                                        {{-- <button type="button" class="btn btn-w-m btn-danger" data-dismiss="modal">Cancelar</button> --}}</center>
-                                                    </form>
+                                                 <h3 class="font-bold col-lg-12" align="center">
+                                                  ¿Esta Seguro que Deseas Anular la Guia de remision: ".?<br>
+                                                  <h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4>
+                                              </h3>
+                                              <p align="center">
+                                                <form action="{{route('guia_remision.destroy', $guias_remision->id)}}" method="POST">
+                                                  @csrf
+                                                  @method('delete')
+                                                  <center>
+                                                    <button type="submit" class="btn btn-w-m btn-primary">Anular</button>
+                                                    {{-- <button type="button" class="btn btn-w-m btn-danger" data-dismiss="modal">Cancelar</button> --}}</center>
+                                                </form>
 
-                                                </p>
-                                            </div>
-
+                                            </p>
                                         </div>
+
                                     </div>
                                 </div>
                             </div>
-                            @elseif($guias_remision->estado_anulado == '1')
-                            <button type="button" class="btn btn-secondary" >Anulado</button>
-                            @endif
-                        </td>
+                        </div>
+                        @elseif($guias_remision->estado_anulado == '1')
+                        <button type="button" class="btn btn-secondary" >Anulado</button>
+                        @endif
+                    </td>
 
-                    </tr>
-                    @endforeach
-                </tbody>
-            </table>
-        </div>
+                </tr>
+                @endforeach
+            </tbody>
+        </table>
     </div>
+</div>
 </div>
 </div>
 </div>
@@ -160,6 +172,39 @@
 
 <style type="text/css">
     .a{width: 200px}
+
+    #auto{
+        /*padding: -100px;*/
+        /*background: orange;*/
+        /*width: 95px;*/
+        cursor: pointer;
+        /*margin-top: 10px;*/
+        /*margin-bottom: 10px;*/
+        box-shadow: 0px 0px 1px #000;
+        display: inline-block;
+    }
+
+    #auto:hover{
+        opacity: .8;
+    }
+
+    #div-mostrar{
+        /*width: 50%;*/
+        margin: auto;
+        height: 0px;
+        /*margin-top: -5px*/
+        /*background: #000;*/
+        /*box-shadow: 10px 10px 3px #D8D8D8;*/
+        transition: height .4s;
+        color:white;
+        text-align: right;
+    }
+    #auto:hover{
+        opacity: .8;
+    }
+/*#auto:hover + #div-mostrar{
+    height: 50px;
+    }*/
 </style>
 
 
@@ -178,6 +223,21 @@
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
 <!-- Page-Level Scripts -->
+<script>
+    var clic = 1;
+    function divAuto(){
+     if(clic==1){
+         document.getElementById("div-mostrar").style.height = "50px";
+         document.getElementById("texto").style.opacity = "1";
+         clic = clic + 1;
+     } else{
+        document.getElementById("div-mostrar").style.height = "0px";
+        document.getElementById("texto").style.opacity = "0";
+
+        clic = 1;
+    }
+}
+</script>
 <script>
     $(document).ready(function(){
         $('.dataTables-example').DataTable({

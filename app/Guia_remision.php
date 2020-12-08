@@ -22,4 +22,7 @@ class Guia_remision extends Model
      public function personal(){
         return $this->belongsTo(Personal::class,'conductor_id');
     }
+     public function almacen(){
+        return $this->belongsTo(Almacen::class,'almacen_id');
+    }
 }
