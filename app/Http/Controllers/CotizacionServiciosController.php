@@ -276,7 +276,7 @@ class CotizacionServiciosController extends Controller
 
         $cotizacion=new Cotizacion_Servicios;
         $cotizacion->cod_cotizacion=$cotizacion_numero;
-        $cotizacion->almacen_id=$request->get('almacen');
+        $cotizacion->almacen_id =$almacen;
         $cotizacion->cliente_id=$cliente_buscador->id;
         $cotizacion->moneda_id=$id_moneda;
         $cotizacion->forma_pago_id=$request->get('forma_pago');
@@ -369,7 +369,7 @@ class CotizacionServiciosController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function create_boleta()
+    public function create_boleta(Request $request)
     {
 
         $servicios=Servicios::where('estado_anular',0)->get();
@@ -406,7 +406,21 @@ class CotizacionServiciosController extends Controller
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
 
-        return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
+        $empresa  = Empresa::first();
+         //CODIGO COTIZACION
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        $ultima_factura=Cotizacion_Servicios::latest()->first();
+        if($ultima_factura){
+            $code=$ultima_factura->id;
+            $code++;
+        }else{
+            $code=1;
+        }
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="COTSB ".$sucursal_nr."-".$cotizacion_nr;
+        return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','empresa','sucursal','cotizacion_numero'));
     }
 
     public function create_boleta_ms()
@@ -601,7 +615,8 @@ class CotizacionServiciosController extends Controller
         $count_check=count($check);
 
 
-
+        $moneda=Moneda::where('principal',1)->first();
+        $moneda_registrada=$cotizacion->moneda_id;
         $igv_proceso=Igv::first();
         $igv_total=$igv_proceso->igv_total;
 

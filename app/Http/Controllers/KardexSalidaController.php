@@ -86,7 +86,7 @@ class KardexSalidaController extends Controller
         $motivos=Motivo::all();
 
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-        return view('inventario.kardex.salida.create',compact('motivos','productos','almacen_nombre','array_cantidad'));
+        return view('inventario.kardex.salida.create',compact('motivos','productos','almacen_nombre'));
     }
     /**
      * Store a newly created resource in storage.

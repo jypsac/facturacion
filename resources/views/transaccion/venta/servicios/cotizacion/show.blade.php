@@ -149,7 +149,7 @@
                                     <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
                                     <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}} </td>
                                     <td style="display: none"> {{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
-                                        @if ($regla=="factura")
+                                        @if ($regla=="boleta")
                                             S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                         @endif
@@ -180,7 +180,7 @@
                         </div>
                         <div class="col-sm-3 ">
                             <p class="form-control a"> Op. Agravada</p>
-                            <p class="form-control a">{{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
                         </div>
                         <div class="col-sm-3 ">
                             <p class="form-control a"> IGV</p>

@@ -219,7 +219,7 @@ class CotizacionController extends Controller
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
         $ultima_factura=Cotizacion::latest()->first();
-        
+
         if($ultima_factura){
             $code=$ultima_factura->id;
             $code++;
