@@ -56,14 +56,14 @@ Route::group(
 
 //COTIZACIOBNES SERVICIO
 		//FACTURA
-		Route::get('/cotizacion_servicio/create_factura' , 'CotizacionServiciosController@create_factura')->name('cotizacion_servicio.create_factura');
-		Route::get('/cotizacion_servicio/create_factura_ms' , 'CotizacionServiciosController@create_factura_ms')->name('cotizacion_servicio.create_factura_ms');
+		Route::post('/cotizacion_servicio/create_factura' , 'CotizacionServiciosController@create_factura')->name('cotizacion_servicio.create_factura');
+		Route::post('/cotizacion_servicio/create_factura_ms' , 'CotizacionServiciosController@create_factura_ms')->name('cotizacion_servicio.create_factura_ms');
 		Route::put('/cotizacion_servicio/store_factura/{id}','CotizacionServiciosController@store_factura')->name('cotizacion_servicio.store_factura');
 		Route::get('/cotizacion_servicio/facturar/{id}' , 'CotizacionServiciosController@facturar')->name('cotizacion_servicio.facturar');
 		Route::post('/cotizacion_servicio/facturar_store' , 'CotizacionServiciosController@facturar_store')->name('cotizacion_servicio.facturar_store');
 
 		// boleta
-		Route::get('/cotizacion_servicio/create_boleta' , 'CotizacionServiciosController@create_boleta')->name('cotizacion_servicio.create_boleta');
+		Route::post('/cotizacion_servicio/create_boleta' , 'CotizacionServiciosController@create_boleta')->name('cotizacion_servicio.create_boleta');
 		Route::get('/cotizacion_servicio/create_boleta_ms' , 'CotizacionServiciosController@create_boleta_ms')->name('cotizacion_servicio.create_boleta_ms');
 		Route::put('/cotizacion_servicio/store_boleta/{id}','CotizacionServiciosController@store_boleta')->name('cotizacion_servicio.store_boleta');
 		Route::get('/cotizacion_servicio/boletear/{id}' , 'CotizacionServiciosController@boletear')->name('cotizacion_servicio.boletear');

@@ -19,9 +19,9 @@
                     content: "Ver";
                 }
                 .bot{
-                background-color: #1c84c6; border: none; color: white; cursor: pointer;font-size: 13px; 
+                background-color: #1c84c6; border: none; color: white; cursor: pointer;font-size: 13px;
                 }
-                
+
                 form.btn.btn-success:hover{
                     background-color: #1c84c6;
                 }
@@ -51,7 +51,7 @@
                 <input type="text" hidden="hidden" name="tipo" value="App\Cotizacion_Servicios"/>
                 <input type="text" hidden="hidden" name="id" value="{{$cotizacion->id}}"/>
                 <input type="text" hidden="hidden" name="redict" value="ventas_cotizacion"/>
-                <input type="text" hidden="hidden" name="cliente" value="{{$cotizacion->cliente->email}}"/> 
+                <input type="text" hidden="hidden" name="cliente" value="{{$cotizacion->cliente->email}}"/>
                 <button type="submit" class="bot"  >Enviar</button>
              </form>
         </div>
@@ -176,38 +176,38 @@
                     <div class="row">
                         <div class="col-sm-3 ">
                             <p class="form-control a"> Sub Total</p>
-                            <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}</p>
                         </div>
                         <div class="col-sm-3 ">
                             <p class="form-control a"> Op. Agravada</p>
-                            <p class="form-control a"> S/.00</p>
+                            <p class="form-control a">{{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
                         </div>
                         <div class="col-sm-3 ">
                             <p class="form-control a"> IGV</p>
-                            <p class="form-control a"> S/.{{round($igv_p, 2)}}</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}}</p>
                         </div>
                         <div class="col-sm-3 ">
                             <p class="form-control a"> Importe Total</p>
-                            <p class="form-control a"> S/.{{$end}}</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end}}</p>
                         </div>
                     </div>
                 @else
                     <div class="row">
                         <div class="col-sm-3 ">
                             <p class="form-control a"> Sub Total</p>
-                            <p class="form-control a"> S/.{{$end=round($sub_total, 2)}}</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}}</p>
                         </div>
                         <div class="col-sm-3 ">
                             <p class="form-control a"> Op. Agravada</p>
-                            <p class="form-control a"> S/.00</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
                         </div>
                         <div class="col-sm-3 ">
                             <p class="form-control a"> IGV</p>
-                            <p class="form-control a"> S/.00</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
                         </div>
                         <div class="col-sm-3 ">
                             <p class="form-control a"> Importe Total</p>
-                            <p class="form-control a"> S/.{{$end=round($sub_total, 2)}}</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}}</p>
                         </div>
                     </div>
                 @endif

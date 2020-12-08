@@ -36,7 +36,12 @@ class CotizacionServiciosController extends Controller
     public function index()
     {
         $cotizaciones_servicios=Cotizacion_Servicios::all();
-        return view('transaccion.venta.servicios.cotizacion.index',compact('cotizaciones_servicios'));
+        $user_login =auth()->user();
+        $conteo_almacen=Almacen::where('estado',0)->count();
+        $almacen=Almacen::where('estado',0)->get();
+        $almacen_primero=Almacen::where('estado',0)->first();
+
+        return view('transaccion.venta.servicios.cotizacion.index',compact('cotizaciones_servicios','conteo_almacen','user_login','almacen','almacen_primero'));
     }
 
     /**
@@ -44,7 +49,7 @@ class CotizacionServiciosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create_factura()
+    public function create_factura(Request $request)
     {
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
@@ -62,10 +67,10 @@ class CotizacionServiciosController extends Controller
             }
         }
 
-        
+
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        
+
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
@@ -77,12 +82,27 @@ class CotizacionServiciosController extends Controller
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
 
-        return view('transaccion.venta.servicios.cotizacion.factura.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
+        $empresa  = Empresa::first();
+         //CODIGO COTIZACION
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        $ultima_factura=Cotizacion_Servicios::latest()->first();
+        if($ultima_factura){
+            $code=$ultima_factura->id;
+            $code++;
+        }else{
+            $code=1;
+        }
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="COTSF ".$sucursal_nr."-".$cotizacion_nr;
 
-        
+        return view('transaccion.venta.servicios.cotizacion.factura.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','empresa','sucursal','cotizacion_numero'));
+
+
     }
 
-    public function create_factura_ms()
+    public function create_factura_ms(Request $request)
     {
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
@@ -99,7 +119,7 @@ class CotizacionServiciosController extends Controller
                 $array[]=$servicio->precio+$utilidad[$index];
             }
         }
-        
+
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
         $moneda=Moneda::where('principal','0')->first();
@@ -113,8 +133,22 @@ class CotizacionServiciosController extends Controller
         }else{
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
+        $empresa  = Empresa::first();
+         //CODIGO COTIZACION
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        $ultima_factura=Cotizacion_Servicios::latest()->first();
+        if($ultima_factura){
+            $code=$ultima_factura->id;
+            $code++;
+        }else{
+            $code=1;
+        }
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="COTSF ".$sucursal_nr."-".$cotizacion_nr;
 
-        return view('transaccion.venta.servicios.cotizacion.factura.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
+        return view('transaccion.venta.servicios.cotizacion.factura.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','empresa','cotizacion_numero','sucursal'));
     }
 
     /**
@@ -227,7 +261,7 @@ class CotizacionServiciosController extends Controller
             $almacen=$almacen_seleccionado->id;
         }
 
-        
+
         $sucursal=Almacen::where('id',$almacen)->first();
         $ultima_factura=Cotizacion_Servicios::latest()->first();
         if($ultima_factura){
@@ -242,7 +276,7 @@ class CotizacionServiciosController extends Controller
 
         $cotizacion=new Cotizacion_Servicios;
         $cotizacion->cod_cotizacion=$cotizacion_numero;
-        $cotizacion->almacen_id =$almacen;
+        $cotizacion->almacen_id=$request->get('almacen');
         $cotizacion->cliente_id=$cliente_buscador->id;
         $cotizacion->moneda_id=$id_moneda;
         $cotizacion->forma_pago_id=$request->get('forma_pago');
@@ -296,7 +330,7 @@ class CotizacionServiciosController extends Controller
                         $cotizacion_registro->precio=$array;
                     }
                 }
-                
+
                 $cotizacion_registro->cantidad=$request->get('cantidad')[$i];
 
                 //descuento
@@ -337,7 +371,7 @@ class CotizacionServiciosController extends Controller
      */
     public function create_boleta()
     {
-        
+
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','1')->first();
@@ -360,7 +394,7 @@ class CotizacionServiciosController extends Controller
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        
+
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
@@ -371,7 +405,7 @@ class CotizacionServiciosController extends Controller
         }else{
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
-        
+
         return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
     }
 
@@ -399,7 +433,7 @@ class CotizacionServiciosController extends Controller
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        
+
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
@@ -526,7 +560,7 @@ class CotizacionServiciosController extends Controller
             $almacen=$almacen_seleccionado->id;
         }
 
-        
+
         $sucursal=Almacen::where('id',$almacen)->first();
         $ultima_factura=Cotizacion_Servicios::latest()->first();
         if($ultima_factura){
@@ -910,7 +944,7 @@ class CotizacionServiciosController extends Controller
        $sub_total=0;
        $end=0;
        $regla=$cotizacion->tipo;
-       
+
        return view('transaccion.venta.servicios.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv',"array","sub_total","moneda",'banco','end','igv_p'));
    }
 }
