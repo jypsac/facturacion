@@ -67,11 +67,12 @@
                         </address>
                     </div>
                     <div class="col-sm-4"></div>
-                    <div class="col-sm-3 ">
-                        <h4>{{$empresa->nombre}}</h4>
-                        <h4>{{$empresa->ruc}}</h4>
-                        <h4>{{$empresa->calle}}</h4>
-                        <h4 class="text-navy">Cotizacion N°: {{$cotizacion->cod_comision}}</h4>
+                    <div class="col-sm-4">
+                        <div class="form-control" align="center" style="height: auto;">
+                            <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
+                            <h2 style="font-size: 19px">COTIZACION ELECTRONICA</h2>
+                            <h5>{{$cotizacion->cod_cotizacion}} </h5>
+                        </div>
                     </div>
                 </div>
                 <br>
@@ -149,7 +150,7 @@
                                     <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
                                     <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}} </td>
                                     <td style="display: none"> {{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
-                                        @if ($regla=="boleta")
+                                        @if ($regla=="factura")
                                             S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                         @endif
@@ -192,6 +193,7 @@
                         </div>
                     </div>
                 @else
+                
                     <div class="row">
                         <div class="col-sm-3 ">
                             <p class="form-control a"> Sub Total</p>

@@ -585,7 +585,7 @@ class CotizacionServiciosController extends Controller
         }
         $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
         $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
-        $cotizacion_numero="COTSF ".$sucursal_nr."-".$cotizacion_nr;
+        $cotizacion_numero="COTSB ".$sucursal_nr."-".$cotizacion_nr;
 
         $cotizacion=new Cotizacion_Servicios;
         $cotizacion->cod_cotizacion=$cotizacion_numero;
@@ -608,7 +608,7 @@ class CotizacionServiciosController extends Controller
         $cotizacion->user_id =auth()->user()->id;
         $cotizacion->estado='0';
         $cotizacion->estado_vigente='0';
-        $cotizacion->tipo='factura';
+        $cotizacion->tipo='boleta';
         $cotizacion->save();
 
         $check = $request->input('descuento_unitario');
