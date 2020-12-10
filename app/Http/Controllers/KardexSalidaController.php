@@ -76,7 +76,8 @@ class KardexSalidaController extends Controller
         // return $lista_count;
 
         for($x=0;$x<$lista_count;$x++){
-            $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            $productos[]=Producto::where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            // $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         }
 
         // foreach ($productos as  $producto) {

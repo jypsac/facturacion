@@ -181,7 +181,8 @@ class CotizacionController extends Controller
         $lista_count=count($lista);
 
         for($x=0;$x<$lista_count;$x++){
-            $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            $productos[]=Producto::where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            // $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         }
 
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
@@ -445,7 +446,8 @@ class CotizacionController extends Controller
                 $cotizacion_registro=new Cotizacion_factura_registro;
                 $cotizacion_registro->cotizacion_id=$cotizacion->id;
                 $cotizacion_registro->producto_id=$producto_id[$i];
-                $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
+                $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->first();
+                // $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $cotizacion_registro->stock=$stock;
@@ -552,7 +554,8 @@ class CotizacionController extends Controller
         $lista_count=count($lista);
 
         for($x=0;$x<$lista_count;$x++){
-            $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            $productos[]=Producto::where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            // $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         }
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
@@ -638,7 +641,8 @@ class CotizacionController extends Controller
         $lista_count=count($lista);
 
         for($x=0;$x<$lista_count;$x++){
-            $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            $productos[]=Producto::where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            // $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         }
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         $moneda=Moneda::where('principal','0')->first();
@@ -917,7 +921,8 @@ class CotizacionController extends Controller
                 $cotizacion_registro=new Cotizacion_boleta_registro;
                 $cotizacion_registro->cotizacion_id=$cotizacion->id;
                 $cotizacion_registro->producto_id=$producto_id[$i];
-                $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
+                $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->first();
+                // $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $cotizacion_registro->stock=$stock;
@@ -1097,7 +1102,8 @@ class CotizacionController extends Controller
 
         $productos=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
         foreach($productos as $lista){
-            $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
+            $produc[]=Producto::where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
+            // $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
         }
         // $produc=Producto::where('producto_id',$id)->get();
         // return $produc;
@@ -1274,7 +1280,8 @@ public function facturar_store(Request $request)
     // $cotizaciones_facturaciones=Cotizacion_factura_registro::where('cotizacion_id',$buscador_id->id)->get();
     $productos=Cotizacion_factura_registro::where('cotizacion_id',$buscador_id->id)->get();
         foreach($productos as $lista){
-            $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
+            $produc[]=Producto::where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
+            // $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
         }
 
     //validacion dependiendo de la amoneda escogida
@@ -1353,7 +1360,8 @@ public function facturar_store(Request $request)
             $facturacion_registro->producto_id=$p[$index];
             $facturacion_registro->numero_serie=$request->get('numero_serie')[$index];
 
-            $producto=Producto::where('id',$p[$index])->where('estado_id',1)->where('estado_anular',1)->first();
+            $producto=Producto::where('id',$p[$index])->where('estado_id',1)->first();
+            // $producto=Producto::where('id',$p[$index])->where('estado_id',1)->where('estado_anular',1)->first();
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->sum('cantidad');
             $facturacion_registro->stock=$stock;
@@ -1445,7 +1453,8 @@ public function boletear($id)
 
     $productos=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
     foreach($productos as $lista){
-        $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
+        $produc[]=Producto::where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
+        // $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
     }
 
     $igv=Igv::where('id','1')->first();
@@ -1608,7 +1617,8 @@ public function boletear_store(Request $request)
 
     $productos=Cotizacion_boleta_registro::where('cotizacion_id',$buscador_id->id)->get();
         foreach($productos as $lista){
-            $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
+            $produc[]=Producto::where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
+            // $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
         }
 
     //validacion dependiendo de la amoneda escogida
@@ -1694,7 +1704,8 @@ public function boletear_store(Request $request)
             $boleta_registro->producto_id=$p[$index];
             $boleta_registro->numero_serie=$request->get('numero_serie')[$index];
 
-            $producto=Producto::where('id',$p[$index])->where('estado_id',1)->where('estado_anular',1)->first();
+            $producto=Producto::where('id',$p[$index])->where('estado_id',1)->first();
+            // $producto=Producto::where('id',$p[$index])->where('estado_id',1)->where('estado_anular',1)->first();
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->sum('cantidad');
             $boleta_registro->stock=$stock;
