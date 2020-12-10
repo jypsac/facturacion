@@ -16,6 +16,7 @@ use App\Personal_venta;
 use App\Servicios;
 use App\TipoCambio;
 use App\Almacen;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class BoletaServicioController extends Controller
@@ -40,7 +41,7 @@ class BoletaServicioController extends Controller
         
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
-        $moneda=Moneda::where('principal','1')->first();
+        $moneda=Moneda::where('principal','0')->first();
         $igv_proceso=Igv::first();
         $igv_total=$igv_proceso->igv_total;
 
@@ -84,17 +85,17 @@ class BoletaServicioController extends Controller
         $igv_proceso=Igv::first();
         $igv_total=$igv_proceso->igv_total;
 
-        if($moneda->tipo =='nacional'){
+        if($moneda->tipo =='extranjera'){
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $igv[]=$servicio->precio*$igv_total/100;
-                $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+                $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])/$tipo_cambio->paralelo;
             }
         }else{
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $igv[]=$servicio->precio*$igv_total/100;
-                $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])*$tipo_cambio->paralelo;
+                $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
             }
         }
 
@@ -123,7 +124,13 @@ class BoletaServicioController extends Controller
      */
     public function store(Request $request)
     {
-        //codigo para convertir nombre a producto
+        //buscador al cambio -----------------------------------------------------------------------------------------------------------
+        $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+        if(!$cambio){
+            return "error por no hacer el cambio diario";
+        }
+
+        //codigo para convertir nombre a producto --------------------------------------------------------------------------------------
         $articulo = $request->input('articulo');
         $count_servicio=count($articulo);
 
@@ -132,7 +139,7 @@ class BoletaServicioController extends Controller
             $servicio_id[$i]=strstr($articulos[$i], ' ', true);
         }
 
-        //validacion para la no incersion de dobles articulos
+        //validacion para la no incersion de dobles articulos  -------------------------------------------------------------------------
         for ($e=0; $e < $count_servicio; $e++){
             $articulo_comparacion_inicial=$request->get('articulo')[$e];
             for ($a=0; $a< $count_servicio ; $a++) {
@@ -147,7 +154,7 @@ class BoletaServicioController extends Controller
 
             }
         }
-        // Comisionista cobnvertir id
+        // Comisionista convertir id --------------------------------------------------------------------------------------------------
 
         $comisionista=$request->get('comisionista');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
@@ -160,42 +167,72 @@ class BoletaServicioController extends Controller
             $comi=0;
         }
 
-        //Convertir nombre del cliente a id
+        //Convertir nombre del cliente a id --------------------------------------------------------------------------------------------
         $cliente_nombre=$request->get('cliente');
         $nombre = strstr($cliente_nombre, '-',true);
-
         $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
-        // return $cliente_buscador->id;
 
         $forma_pago_id=$request->get('forma_pago');
         $formapago= Forma_pago::find($forma_pago_id);
         $dias= $formapago->dias;
-        /*Fecha vencimiento*/
+
+        // Fecha vencimiento ------------------------------------------------------------------------------------------------------------
         $fecha =date("d-m-Y");
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        //REVISAR PARA EL CASO DE SERVICIOS BOLETA SEA EL NUMERO CORRECTO
-        $personal_contador= Cotizacion_Servicios::all()->count();
-        $suma=$personal_contador+1;
-        $codigo='COFAC-0000'.$suma;
+        // Moneda -----------------------------------------------------------------------------------------------------------------------
+        $moneda_input=$request->get('moneda');
+        $moneda=Moneda::where('nombre',$moneda_input)->first();
 
+        // Almacen ---------------------------------------------------------------------------------------------------------------------
+        $almacen=auth()->user()->almacen_id;
+        $user_tipo=auth()->user()->name;
+        if($user_tipo=='Administrador'){
+            $almacen=$request->get('almacen');
+        }
+
+        // Codigo de Facturación -------------------------------------------------------------------------------------------------------
+        // obtencion de la sucursal 
+        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
+       
+        $boletear_cod_bol=$sucursal->cod_fac;
+        if (is_numeric($boletear_cod_bol)) {
+            // exprecion del numero de fatura
+            $boletear_cod_bol++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boletear_cod_bol, 8, "0", STR_PAD_LEFT);
+        }else{
+            // expreción del numero de fatura
+            // generacion del numero de la factura
+            $ultima_boleta=Boleta::latest()->first();
+            $boleta_num=$ultima_boleta->codigo_fac;
+            $boleta_num_string_porcion= explode("-", $boleta_num);
+            $boleta_num_string=$boleta_num_string_porcion[1];
+            $boleta_num=(int)$boleta_num_string;
+            $boleta_num++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+        }
+        $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
+
+        // Guardado de Boleta ------------------------------------------------------------------------------------------------------
         $boleta=new Boleta;
-        $boleta->codigo_boleta=$codigo;
-        $boleta->cliente_id=$cliente_buscador->id;
-        $boleta->forma_pago_id=$request->get('forma_pago');
-
-        $boleta->moneda_id=$request->get('moneda');
-
-        $boleta->user_id =auth()->user()->id;
-        $boleta->observacion=$request->get('observacion');
-        $boleta->fecha_emision=$request->get('fecha_emision');
+        $boleta->codigo_boleta=$boleta_numero;
+        $boleta->almacen_id=$almacen;     
         $boleta->orden_compra=$request->get('orden_compra');
-        $boleta->fecha_vencimiento=$nuevafechas;
         $boleta->guia_remision=$request->get('guia_r');
+        $boleta->cliente_id=$cliente_buscador->id;
+        $boleta->moneda_id=$moneda->id;
+        $boleta->forma_pago_id=$request->get('forma_pago');
+        $boleta->fecha_emision=$request->get('fecha_emision');
+        $boleta->fecha_vencimiento=$nuevafechas;
+        $boleta->cambio=$cambio->paralelo;
+        $boleta->observacion=$request->get('observacion');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $boleta->comisionista_id= $comisionista_buscador->id;
         }
+        $boleta->user_id =auth()->user()->id;
         $boleta->estado='0';
         $boleta->tipo='servicio';
         $boleta->save();
@@ -203,50 +240,72 @@ class BoletaServicioController extends Controller
         $check = $request->input('descuento_unitario');
         $count_check=count($check);
 
-
+        // Obtención del IGV -----------------------------------------------------------------------------------------------------
         $igv_proceso=Igv::first();
         $igv_total=$igv_proceso->igv_total;
 
+        //validacion dependiendo de la moneda escogida ----------------------------------------------------------------------------
+        $moneda=Moneda::where('principal',1)->first();
+        $moneda_registrada=$boleta->moneda_id;
+
         if($count_servicio = $count_check){
             for($i=0;$i<$count_servicio;$i++){
-                $cotizacion_registro=new Boleta_registro();
-                $cotizacion_registro->boleta_id=$boleta->id;
-                $cotizacion_registro->servicio_id=$servicio_id[$i];
+                $boleta_registro=new Boleta_registro();
+                $boleta_registro->boleta_id=$boleta->id;
+                $boleta_registro->servicio_id=$servicio_id[$i];
 
-                    $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
-                    $utilidad=$servicio->precio*$servicio->utilidad/100;
-                    $igv=$servicio->precio*$igv_total/100;
-                    $array=$servicio->precio+$utilidad+$igv;
+                $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
+                //Precio -----------------------------------------------------------------------------------------
+                if($moneda->id == $moneda_registrada){
+                    if ($moneda->tipo == 'nacional'){
+                        $utilidad=$servicio->precio*($servicio->utilidad)/100;
+                        $igv=$servicio->precio*$igv_total/100;
+                        $array=$servicio->precio+$utilidad+$igv;
+                    }else{
+                        $utilidad=$servicio->precio*($servicio->utilidad)/100;
+                        $igv=$servicio->precio*$igv_total/100;
+                        $array=($servicio->precio+$utilidad+$igv)*$tipo_cambio->paralelo;
+                    }
+                }else{
+                    if ($moneda->tipo == 'extranjera'){
+                        $utilidad=$servicio->precio*($servicio->utilidad)/100;
+                        $igv=$servicio->precio*$igv_total/100;
+                        $array=($servicio->precio+$utilidad+$igv)/$tipo_cambio->paralelo;
+                    }else{
+                        $utilidad=$servicio->precio*($servicio->utilidad)/100;
+                        $igv=$servicio->precio*$igv_total/100;
+                        $array=$servicio->precio+$utilidad+$igv;
+                    }
+                }
 
-
-                $cotizacion_registro->promedio_original=$servicio->precio;
-                $cotizacion_registro->precio=$array;
-                $cotizacion_registro->cantidad=$request->get('cantidad')[$i];
+                $boleta_registro->promedio_original=$servicio->precio;
+                $boleta_registro->precio=$array;
+                $boleta_registro->cantidad=$request->get('cantidad')[$i];
 
                 //descuento
                 $descuento_verificacion=$request->get('check_descuento')[$i];
                 if($descuento_verificacion <> 0){
-                    $cotizacion_registro->descuento=$servicio->descuento;
+                    $boleta_registro->descuento=$servicio->descuento;
                     $desc_comprobacion=$servicio->descuento;
                 }else{
-                    $cotizacion_registro->descuento=0;
+                    $boleta_registro->descuento=0;
                     $desc_comprobacion=0;
                 }
 
                 //precio unitario descuento
                 if($desc_comprobacion <> 0){
-                    $cotizacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
+                    $boleta_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
                     $precio_unitario_desc=$array-($array*$desc_comprobacion/100);
                 }else{
-                    $cotizacion_registro->precio_unitario_desc=$array;
+                    $boleta_registro->precio_unitario_desc=$array;
                     $precio_unitario_desc=$array;
                 }
 
-                $cotizacion_registro->comision=$comi;
-                $cotizacion_registro->precio_unitario_comi=$precio_unitario_desc+($precio_unitario_desc*$comi/100);
+                $boleta_registro->comision=$comi;
+                $boleta_registro->precio_unitario_comi=$precio_unitario_desc+($precio_unitario_desc*$comi/100);
 
 
-                $cotizacion_registro->save();
+                $boleta_registro->save();
             }
         }else {
             return redirect()->route('boleta_servicio.create')->with('campo', 'Falto introducir un campo de la tabla productos');

@@ -239,9 +239,9 @@ class FacturacionServicioController extends Controller
 
         if($count_servicio = $count_check){
             for($i=0;$i<$count_servicio;$i++){
-                $cotizacion_registro=new Facturacion_registro();
-                $cotizacion_registro->facturacion_id=$facturacion->id;
-                $cotizacion_registro->servicio_id=$servicio_id[$i];
+                $facturacion_registro=new Facturacion_registro();
+                $facturacion_registro->facturacion_id=$facturacion->id;
+                $facturacion_registro->servicio_id=$servicio_id[$i];
 
                 $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
                 //Precio -----------------------------------------------------------------------------------------
@@ -263,34 +263,34 @@ class FacturacionServicioController extends Controller
                     }
                 }
 
-                $cotizacion_registro->promedio_original=$servicio->precio;
-                $cotizacion_registro->precio=$array;
-                $cotizacion_registro->cantidad=$request->get('cantidad')[$i];
+                $facturacion_registro->promedio_original=$servicio->precio;
+                $facturacion_registro->precio=$array;
+                $facturacion_registro->cantidad=$request->get('cantidad')[$i];
 
                 //descuento
                 $descuento_verificacion=$request->get('check_descuento')[$i];
                 if($descuento_verificacion <> 0){
-                    $cotizacion_registro->descuento=$servicio->descuento;
+                    $facturacion_registro->descuento=$servicio->descuento;
                     $desc_comprobacion=$servicio->descuento;
                 }else{
-                    $cotizacion_registro->descuento=0;
+                    $facturacion_registro->descuento=0;
                     $desc_comprobacion=0;
                 }
 
                 //precio unitario descuento
                 if($desc_comprobacion <> 0){
-                    $cotizacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
+                    $facturacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
                     $precio_unitario_desc=$array-($array*$desc_comprobacion/100);
                 }else{
-                    $cotizacion_registro->precio_unitario_desc=$array;
+                    $facturacion_registro->precio_unitario_desc=$array;
                     $precio_unitario_desc=$array;
                 }
 
-                $cotizacion_registro->comision=$comi;
-                $cotizacion_registro->precio_unitario_comi=$precio_unitario_desc+($precio_unitario_desc*$comi/100);
+                $facturacion_registro->comision=$comi;
+                $facturacion_registro->precio_unitario_comi=$precio_unitario_desc+($precio_unitario_desc*$comi/100);
 
 
-                $cotizacion_registro->save();
+                $facturacion_registro->save();
             }
         }else {
             return redirect()->route('facturacion_servicio.create')->with('campo', 'Falto introducir un campo de la tabla productos');

@@ -206,7 +206,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label">Clientessss:</label>
+                                    <label class="col-sm-2 col-form-label">Clientes:</label>
                                     <div class="col-sm-10">
                                         <input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off" onclick="Clear(this);">
                                         <datalist id="browsersc1" >
@@ -232,7 +232,7 @@
                                             <label class="col-sm-2 col-form-label">Moneda:</label>
                                             <div class="col-sm-10">
                                                 <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
-                                                <a class="col-sm-5" href="{{route('boleta_servicio.create_ms')}}">
+                                                <a class="col-sm-5" href="{{route('boleta_servicio.create')}}">
                                                     <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>
                                                         @if($moneda->tipo=='nacional')Dolares 
                                                         @elseif($moneda->tipo=='extranjera') Soles 
