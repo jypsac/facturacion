@@ -33,6 +33,12 @@
                                         <div id="div-mostrar" style="color: black">
                                             <div id="texto" style="opacity:0;transition: .4s ;text-align: center;padding-top: 10px;" >Almacen Asignado esta Desactivado, Activelo o cambie de Almacen.</div>
                                         </div>
+                                @elseif($conteo_almacen==1 and $user_login->almacen->estado==0 and $user_login->name=='Colaborador' )
+                                       <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
+                                            @csrf
+                                            <input type="text" value="{{$user_login->almacen_id}}" hidden="hidden" name="almacen">
+                                            <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
+                                        </form>
 
                                 @elseif($conteo_almacen > 1 and $user_login->name =='Administrador')
                                             <div class="dropdown">

@@ -9,179 +9,185 @@
  @section('content')
 
  <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="ibox-title">
-        <div class="ibox-tools">
-            <style type="text/css">
-                .procesado:before {
-                    content: "Procesado";
-                }
-                .procesado:hover:before {
-                    content: "Ver";
-                }
-            </style>
-            <a class="btn btn-success"  href="{{route('guia_remision.print' , $guia_remision->id)}}" target="_blank">Imprimir</a>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
-                <div class="row">
-                    <div class="col-sm-4 text-left" align="left">
+    <div class="ibox-title" style="padding-right: 3.1%">
+        <div class="row tooltip-demo">
+         <div class="col-sm-6">
 
-                        <address class="col-sm-4" align="left">
-                            <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
-                        </address>
-                    </div>
-                    <div class="col-sm-4">
-                    </div>
+         </div>
 
-                    <div class="col-sm-4 ">
-                        <div class="form-control" align="center" style="height: auto;">
-                            <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
-                            <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>
-                            <h5>{{$guia_remision->cod_guia}} </h5>
-                        </div>
+         <div class="col-sm-6" align="right">
+            <a href="{{route('pdf_guia' ,$guia_remision->id)}}" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </a>
+         {{--   <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button> --}}
+
+           <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-whatsapp fa-lg"></i>  </button>
+
+           <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title=""  formtarget="_blank"  data-original-title="Enviar por correo"><i class="fa fa-envelope fa-lg"  ></i> </button>
+
+           <a class="btn btn-success" href="{{route('guia_remision.print' , $guia_remision->id)}}"target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i></a>
+       </div>
+   </div>
+
+</div>
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
+            <div class="row">
+                <div class="col-sm-4 text-left" align="left">
+
+                    <address class="col-sm-4" align="left">
+                        <img src="{{asset('img/logos/')}}/{{$empresa->foto}}" alt="" width="300px">
+                    </address>
+                </div>
+                <div class="col-sm-4">
+                </div>
+
+                <div class="col-sm-4 ">
+                    <div class="form-control" align="center" style="height: auto;">
+                        <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
+                        <h2 style="font-size: 19px">GUIA REMISION ELECTRONICA</h2>
+                        <h5>{{$guia_remision->cod_guia}} </h5>
                     </div>
-                </div><br>
-                <div class="row" align="center" style="padding-bottom: 5px">
-                    <div class="col-sm-6" align="center">
-                        <div class="form-control"><h3>Domicilio De Partida</h3>
-                            <div align="left" style="font-size: 13px">
-                                <p>{{$empresa->calle}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6" align="center">
-                        <div class="form-control" ><h3>Domicilio De Llegada</h3>
-                            <div align="left" style="font-size: 13px">
-                                <p>{{$guia_remision->cliente->direccion}}</p>
-                            </div>
+                </div>
+            </div><br>
+            <div class="row" align="center" style="padding-bottom: 5px">
+                <div class="col-sm-6" align="center">
+                    <div class="form-control"><h3>Domicilio De Partida</h3>
+                        <div align="left" style="font-size: 13px">
+                            <p>{{$empresa->calle}}</p>
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-6" align="center">
+                    <div class="form-control" ><h3>Domicilio De Llegada</h3>
+                        <div align="left" style="font-size: 13px">
+                            <p>{{$guia_remision->cliente->direccion}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-                <div class="row" align="center">
-                    <div class="col-sm-6" align="center">
-                        <div class="form-control"><h3>Destinario</h3>
-                            <div align="left" style="font-size: 13px">
-                                <p><b>señor(es) :</b> {{$guia_remision->cliente->nombre}} <br>
-                                   <b>R.U.C / DNI : </b> {{$guia_remision->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;<b>Fecha Emision :</b> {{$guia_remision->fecha_emision}} <br><b>Fecha Traslado :</b> {{$guia_remision->fecha_entrega}} </p>
-                               </div>
+            <div class="row" align="center">
+                <div class="col-sm-6" align="center">
+                    <div class="form-control"><h3>Destinario</h3>
+                        <div align="left" style="font-size: 13px">
+                            <p><b>señor(es) :</b> {{$guia_remision->cliente->nombre}} <br>
+                               <b>R.U.C / DNI : </b> {{$guia_remision->cliente->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;<b>Fecha Emision :</b> {{$guia_remision->fecha_emision}} <br><b>Fecha Traslado :</b> {{$guia_remision->fecha_entrega}} </p>
                            </div>
                        </div>
-                       <div class="col-sm-6" align="center">
-                        <div class="form-control" ><h3>Unidad de Transporte/Conductor</h3>
-                            <div align="left" style="font-size: 13px">
-                                @if(isset($guia_remision->vehiculo_id))
-                                <p>
-                                    <b>Placa del Vehiculo : </b>{{$guia_remision->vehiculo->placa}}<br>
-                                    <b>Marca del Vehiculo : </b>{{$guia_remision->vehiculo->marca}}<br>
-                                    <b>Conductor : </b>
-                                    @if(isset($guia_remision->conductor_id))
-                                    <b>Conductor : </b>{{$guia_remision->personal->nombres}}
-                                    @else
-                                    <b>Conductor : </b> No Hay Conductor
-                                    @endif
-                                </p>
+                   </div>
+                   <div class="col-sm-6" align="center">
+                    <div class="form-control" ><h3>Unidad de Transporte/Conductor</h3>
+                        <div align="left" style="font-size: 13px">
+                            @if(isset($guia_remision->vehiculo_id))
+                            <p>
+                                <b>Placa del Vehiculo : </b>{{$guia_remision->vehiculo->placa}}<br>
+                                <b>Marca del Vehiculo : </b>{{$guia_remision->vehiculo->marca}}<br>
+                                <b>Conductor : </b>
+                                @if(isset($guia_remision->conductor_id))
+                                <b>Conductor : </b>{{$guia_remision->personal->nombres}}
                                 @else
-                                <p>
-                                    <b>Placa del Vehiculo : </b>No Hay Vehiculo<br>
-                                    <b>Marca del Vehiculo : </b>No Hay Vehiculo<br>
-                                    @if(isset($guia_remision->conductor_id))
-                                    <b>Conductor : </b>{{$guia_remision->personal->nombres}}
-                                    @else
-                                    <b>Conductor : </b> No Hay Conductor
-                                    @endif
-                                </p>
-
+                                <b>Conductor : </b> No Hay Conductor
                                 @endif
-                            </div>
-                        </div>
-                    </div>
-                </div><br>
+                            </p>
+                            @else
+                            <p>
+                                <b>Placa del Vehiculo : </b>No Hay Vehiculo<br>
+                                <b>Marca del Vehiculo : </b>No Hay Vehiculo<br>
+                                @if(isset($guia_remision->conductor_id))
+                                <b>Conductor : </b>{{$guia_remision->personal->nombres}}
+                                @else
+                                <b>Conductor : </b> No Hay Conductor
+                                @endif
+                            </p>
 
-                <div class="table-responsive">
-                    <table class="table " >
-                        <thead>
-                            <tr >
-                                <th>Codigo Producto </th>
-                                <th>Marca / Descripcion</th>
-                                <th>N/S</th>
-                                <th>Unid.Medida</th>
-                                <th>Cantidad</th>
-                                <th>Peso</th>
-                            </thead>
-                            <tbody>
-                             @foreach($guia_registro as $guia_registros)
-                             <tr>
-                                <td>{{$guia_registros->id}}</td>
-                                <td>{{$guia_registros->producto->marcas_i_producto->nombre}} / {{$guia_registros->producto->nombre}}</td>
-                                <td>{{$guia_registros->numero_serie}}</td>
-                                <td>{{$guia_registros->producto->unidad_i_producto->medida}}</td>
-                                <td>{{$guia_registros->cantidad}}</td>
-                                <td>{{$guia_registros->producto->peso}}</td>
-                            </tr>
-                            @endforeach
-                        </tbody>
-                    </table>
-                </div><!-- /table-responsive -->
-
-
-                <footer style="padding-top: 120px">
-                   <div class="row" align="center" style="padding-bottom: 5px">
-                    <div class="col-sm-6" align="center">
-                        <div class="form-control"><h3>Observacion:</h3>
-                            <div align="left" style="font-size: 13px">
-                                <p>{{$guia_remision->observacion}}</p>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-6" align="center">
-                        <div class="form-control" ><h3>Motivo de Traslado</h3>
-                            <div align="left" style="font-size: 13px">
-                                <p>{{$guia_remision->motivo_traslado}}</p>
-                            </div>
+                            @endif
                         </div>
                     </div>
                 </div>
-            </footer>
+            </div><br>
 
-            <br>
-            <!-- Fin Totales de Productos -->
-            <div class="row">
-                @foreach($banco as $bancos)
-                <div class="col-sm-3 " align="center">
-                    <p class="form-control" style="height: 100px">
-                      <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
-                      <br>
-                      N° S/. : {{$bancos->numero_soles}}
-                      <br>
-                      N° $ : {{$bancos->numero_dolares}}<br>
+            <div class="table-responsive">
+                <table class="table " >
+                    <thead>
+                        <tr >
+                            <th>Codigo Producto </th>
+                            <th>Marca / Descripcion</th>
+                            <th>N/S</th>
+                            <th>Unid.Medida</th>
+                            <th>Cantidad</th>
+                            <th>Peso</th>
+                        </thead>
+                        <tbody>
+                         @foreach($guia_registro as $guia_registros)
+                         <tr>
+                            <td>{{$guia_registros->id}}</td>
+                            <td>{{$guia_registros->producto->marcas_i_producto->nombre}} / {{$guia_registros->producto->nombre}}</td>
+                            <td>{{$guia_registros->numero_serie}}</td>
+                            <td>{{$guia_registros->producto->unidad_i_producto->medida}}</td>
+                            <td>{{$guia_registros->cantidad}}</td>
+                            <td>{{$guia_registros->producto->peso}}</td>
+                        </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+            </div><!-- /table-responsive -->
 
-                  </p>
-              </div>
-              @endforeach
 
+            <footer style="padding-top: 120px">
+               <div class="row" align="center" style="padding-bottom: 5px">
+                <div class="col-sm-6" align="center">
+                    <div class="form-control"><h3>Observacion:</h3>
+                        <div align="left" style="font-size: 13px">
+                            <p>{{$guia_remision->observacion}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6" align="center">
+                    <div class="form-control" ><h3>Motivo de Traslado</h3>
+                        <div align="left" style="font-size: 13px">
+                            <p>{{$guia_remision->motivo_traslado}}</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </footer>
+
+        <br>
+        <!-- Fin Totales de Productos -->
+        <div class="row">
+            @foreach($banco as $bancos)
+            <div class="col-sm-3 " align="center">
+                <p class="form-control" style="height: 100px">
+                  <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
+                  <br>
+                  N° S/. : {{$bancos->numero_soles}}
+                  <br>
+                  N° $ : {{$bancos->numero_dolares}}<br>
+
+              </p>
           </div>
-          <br>
-          <div class="row">
-            <div class="col-sm-3">
-                <p><u>centro de Atencion : </u></p>
-                Telefono : {{$guia_remision->user_personal->personal->telefono }}<br>
-                Celular : {{$guia_remision->user_personal->personal->celular }}<br>
-                Email : {{$guia_remision->user_personal->personal->email }}<br>
-                Web : {{$empresa->pagina_web}}<br>
-            </div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3"><br><br>
-                <hr>
-                <center>{{$guia_remision->user_personal->personal->nombres }}</center>
-            </div>
+          @endforeach
 
+      </div>
+      <br>
+      <div class="row">
+        <div class="col-sm-3">
+            <p><u>centro de Atencion : </u></p>
+            Telefono : {{$guia_remision->user_personal->personal->telefono }}<br>
+            Celular : {{$guia_remision->user_personal->personal->celular }}<br>
+            Email : {{$guia_remision->user_personal->personal->email }}<br>
+            Web : {{$empresa->pagina_web}}<br>
+        </div>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-3"><br><br>
+            <hr>
+            <center>{{$guia_remision->user_personal->personal->nombres }}</center>
         </div>
 
     </div>
+
+</div>
 </div>
 </div>
 

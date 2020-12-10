@@ -5,7 +5,7 @@
 
 Route::group(
 	[ 'middleware' => ['auth','cambio_diario']],
-		function(){
+	function(){
 
 		// Route::view('/' , 'home')->name('inicio');
 		Route::get('/' , 'ViewController@home')->name('inicio');
@@ -114,6 +114,7 @@ Route::group(
 		/*Guia Remision*/
 		//para guia agregar el store en create_moneda secundaria enviando este una acptacion de 2 variables put en store para la identificaion de la moneda principal o secundaria
 		Route::get('/guia_remision/print/{id}' , 'GuiaRemisionController@print')->name('guia_remision.print');
+		Route::get('guia_remision/pdf/{id}' , 'GuiaRemisionController@pdf')->name('pdf_guia');
 		Route::resource('/guia_remision','GuiaRemisionController');
 
 		Route::post('stock_ajax', 'KardexSalidaController@stock_ajax')->name('stock_ajax');
@@ -158,6 +159,7 @@ Route::group(
 		Route::get('garantia_guia_ingreso/impresionIngreso/{id}' , 'GarantiaGuiaIngresoController@print')->name('impresiones_ingreso');
 		Route::put('garantia_guia_ingreso/{guia}', 'GarantiaGuiaIngresoController@actualizar')->name('garantia_guia_ingreso.actualizar');
 		Route::resource('/garantia_guia_ingreso','GarantiaGuiaIngresoController');
+
 
 		Route::POST('garantia_guia_egreso/email/enviar','GarantiaGuiaEgresoController@enviar')->name('garantia_egreso.enviar');
 		Route::get('garantia_guia_egreso/email/{id}','GarantiaGuiaEgresoController@email')->name('guia_egreso.email');
@@ -242,12 +244,12 @@ Route::group(
 		Route::post('/inventario.kardex.entrada.create/fetcha', 'KardexEntradaController@fetcha')->name('autocomplete.fetcha');
 
 	});
-	Auth::routes();
-	Route::post('sunat_cambio','TipoCambioController@sunat_cambio');
-	Route::resource('/tipo_cambio','TipoCambioController')->middleware('auth');
-	Route::get('garantia_guia_ingreso/pdf/{id}' , 'GarantiaGuiaIngresoController@pdf')->name('pdf_ingreso');
-	Route::get('garantia_guia_egreso/pdf/{id}' , 'GarantiaGuiaEgresoController@pdf')->name('pdf_egreso');
-	Route::get('garantia_informe_tecnico/pdf/{id}' , 'GarantiaInformeTecnicoController@pdf')->name('pdf_informe');
-	Route::get('cotizacion/pdf/{id}' , 'CotizacionController@pdf')->name('pdf_cotizacion');
-	Route::get('/home', 'HomeController@index')->name('home');
+Auth::routes();
+Route::post('sunat_cambio','TipoCambioController@sunat_cambio');
+Route::resource('/tipo_cambio','TipoCambioController')->middleware('auth');
+Route::get('garantia_guia_ingreso/pdf/{id}' , 'GarantiaGuiaIngresoController@pdf')->name('pdf_ingreso');
+Route::get('garantia_guia_egreso/pdf/{id}' , 'GarantiaGuiaEgresoController@pdf')->name('pdf_egreso');
+Route::get('garantia_informe_tecnico/pdf/{id}' , 'GarantiaInformeTecnicoController@pdf')->name('pdf_informe');
+Route::get('cotizacion/pdf/{id}' , 'CotizacionController@pdf')->name('pdf_cotizacion');
+Route::get('/home', 'HomeController@index')->name('home');
 
