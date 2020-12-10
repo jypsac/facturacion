@@ -176,10 +176,16 @@ class FacturacionServicioController extends Controller
         // Moneda -----------------------------------------------------------------------------------------------------------------------
         $moneda_input=$request->get('moneda');
         $moneda=Moneda::where('nombre',$moneda_input)->first();
+
+        // Almacen ---------------------------------------------------------------------------------------------------------------------
+        $almacen=auth()->user()->almacen_id;
+        $user_tipo=auth()->user()->name;
+        if($user_tipo=='Administrador'){
+            $almacen=$request->get('almacen');
+        }
+
         // Codigo de Facturación -------------------------------------------------------------------------------------------------------
         // obtencion de la sucursal 
-        $almacen=auth()->user()->almacen_id;
-        
         //obtencion del almacen
         $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
        
