@@ -112,7 +112,7 @@ class BoletaServicioController extends Controller
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
 
-        return view('transaccion.venta.servicios.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
+        return view('transaccion.venta.servicios.boleta.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
     }
 
     /**
