@@ -183,8 +183,10 @@ class CotizacionController extends Controller
         $lista_count=count($lista);
 
         for($x=0;$x<$lista_count;$x++){
-            $productos[]=Producto::where('estado_id','!=',2)->where('id',$lista[$x])->first();
-            // $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            $validacion[$x]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            if(!$validacion[$x]==NULL){
+                $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            }
         }
 
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
@@ -556,9 +558,13 @@ class CotizacionController extends Controller
         $lista_count=count($lista);
 
         for($x=0;$x<$lista_count;$x++){
-            $productos[]=Producto::where('estado_id','!=',2)->where('id',$lista[$x])->first();
-            // $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            $validacion[$x]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            if(!$validacion[$x]==NULL){
+                $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            }
         }
+
+        
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
         $moneda=Moneda::where('principal','1')->first();
@@ -643,8 +649,10 @@ class CotizacionController extends Controller
         $lista_count=count($lista);
 
         for($x=0;$x<$lista_count;$x++){
-            $productos[]=Producto::where('estado_id','!=',2)->where('id',$lista[$x])->first();
-            // $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            $validacion[$x]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            if(!$validacion[$x]==NULL){
+                $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            }
         }
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         $moneda=Moneda::where('principal','0')->first();
