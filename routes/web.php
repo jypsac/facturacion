@@ -251,5 +251,6 @@ Route::get('garantia_guia_ingreso/pdf/{id}' , 'GarantiaGuiaIngresoController@pdf
 Route::get('garantia_guia_egreso/pdf/{id}' , 'GarantiaGuiaEgresoController@pdf')->name('pdf_egreso');
 Route::get('garantia_informe_tecnico/pdf/{id}' , 'GarantiaInformeTecnicoController@pdf')->name('pdf_informe');
 Route::get('cotizacion/pdf/{id}' , 'CotizacionController@pdf')->name('pdf_cotizacion');
+Route::get('cotizacion_servicio/pdf/{id}' , 'CotizacionServiciosController@pdf')->name('pdf_cotizacion_servicio');
 Route::get('/home', 'HomeController@index')->name('home');
 
