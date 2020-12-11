@@ -70,10 +70,25 @@
                         <th style="width: 5%;border-color: white"></th>
                         <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 8px;width: auto">
                             <center><strong style="align-content: center;margin: 5px">Unidad de Transporte/Conductor</strong></center><br>
-                            <strong>Forma de Pago:</strong>&nbsp;{{$cotizacion->forma_pago->nombre }}<br>
-                            <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
-                            <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                            <strong>Tipo de Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                             @if(isset($guia_remision->vehiculo_id))
+                                    <b>Placa del Vehiculo : </b>{{$guia_remision->vehiculo->placa}}<br>
+                                    <b>Marca del Vehiculo : </b>{{$guia_remision->vehiculo->marca}}<br>
+                                    <b>Conductor : </b>
+                                    @if(isset($guia_remision->conductor_id))
+                                    <b>Conductor : </b>{{$guia_remision->personal->nombres}}
+                                    @else
+                                    <b>Conductor : </b> No Hay Conductor
+                                    @endif
+                                @else
+                                   <b>Placa del Vehiculo : </b>No Hay Vehiculo<br>
+                                    <b>Marca del Vehiculo : </b>No Hay Vehiculo<br>
+                                    @if(isset($guia_remision->conductor_id))
+                                    <b>Conductor : </b>{{$guia_remision->personal->nombres}}
+                                    @else
+                                    <b>Conductor : </b> No Hay Conductor
+                                    @endif
+
+                                @endif
                         </td>
                     </tr>
                 </table>
