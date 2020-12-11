@@ -207,13 +207,22 @@ class ProductosController extends Controller
      */
     public function destroy($id)
     {
-    //     $producto=Producto::findOrFail($id);
-    //     $producto->delete();
-        $producto=Producto::find($id);
-        $producto->codigo_original='Codigo Anulado N°'.$id;
-        $producto->estado_anular='0';
-        $producto->save();
+        
+        // Validación para la anulacion Kardex Entrada
+        $kardex_entrada=kardex_entrada_registro::where('producto_id',$id)->where('estado',1)->get();
+        // return $kardex_entrada;
 
-        return redirect()->route('productos.index');
+        if(!get_object_vars($kardex_entrada)){
+            
+            $producto=Producto::find($id);
+            $producto->codigo_original='Codigo Anulado N°'.$id;
+            $producto->estado_anular='0';
+            $producto->save();
+            return redirect()->route('productos.index');
+        }else{
+            
+            return "Error por tener producto en kardex, no se puede eliminar";
+        }
+        
     }
 }
