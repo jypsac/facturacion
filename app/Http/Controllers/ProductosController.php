@@ -212,8 +212,8 @@ class ProductosController extends Controller
         $kardex_entrada=kardex_entrada_registro::where('producto_id',$id)->where('estado',1)->get();
         // return $kardex_entrada;
 
-        if(!get_object_vars($kardex_entrada)){
-            
+        if(get_object_vars($kardex_entrada)){
+
             $producto=Producto::find($id);
             $producto->codigo_original='Codigo Anulado N°'.$id;
             $producto->estado_anular='0';
