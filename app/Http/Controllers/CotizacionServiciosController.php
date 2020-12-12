@@ -24,6 +24,7 @@ use App\Ventas_registro;
 use Illuminate\Http\Request;
 use App\TipoCambio;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\kardex_entrada_registro;
 
 class CotizacionServiciosController extends Controller
@@ -947,9 +948,9 @@ class CotizacionServiciosController extends Controller
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
         $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
-        foreach ($cotizacion_registro as $cotizacion_registros) {
-           $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
-       }
+       //  foreach ($cotizacion_registro as $cotizacion_registros) {
+       //     $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+       // }
 
         // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
        $cotizacion=Cotizacion_Servicios::find($id);
@@ -959,7 +960,60 @@ class CotizacionServiciosController extends Controller
        $sub_total=0;
        $end=0;
        $regla=$cotizacion->tipo;
+       $i=1;
 
-       return view('transaccion.venta.servicios.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv',"array","sub_total","moneda",'banco','end','igv_p'));
+       if($cotizacion->tipo=="factura"){
+            //FACTURA
+            $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
+            foreach ($cotizacion_registro as $cotizacion_registros) {
+               $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+            }
+            return view('transaccion.venta.servicios.cotizacion.print', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
+        }else{
+            //BOLETA
+            $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+            foreach ($cotizacion_registro as $cotizacion_registros) {
+                $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+            }
+            return view('transaccion.venta.servicios.cotizacion.print', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
+        }
+
+
+       // return view('transaccion.venta.servicios.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv',"array","sub_total","moneda",'banco','end','igv_p'));
    }
+
+   public function pdf(Request $request,$id){
+    $name = $request->get('name');
+    $banco=Banco::where('estado','0')->get();
+    $banco_count=Banco::where('estado','0')->count();
+    $moneda=Moneda::where('principal',1)->first();
+    $cotizacion=Cotizacion_Servicios::find($id);
+    $regla=$cotizacion->tipo;
+    $sub_total=0;
+    $igv=Igv::first();
+    $empresa=Empresa::first();
+    $sum=0;
+    $i=1;
+    $regla=$cotizacion->tipo;
+    /*registros boleta y factura*/
+        if($cotizacion->tipo=="factura"){
+            //FACTURA
+            $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
+            foreach ($cotizacion_registro as $cotizacion_registros) {
+               $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+            }
+            
+        }else{
+            //BOLETA
+            $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+            foreach ($cotizacion_registro as $cotizacion_registros) {
+                $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+            }
+
+        }
+        $archivo=$name.$regla.$id;
+            $pdf=PDF::loadView('transaccion.venta.servicios.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
+          return $pdf->download('Cotizacion - '.$archivo.'.pdf');
+
+    }
 }
