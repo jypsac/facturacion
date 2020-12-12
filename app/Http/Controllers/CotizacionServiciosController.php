@@ -382,17 +382,20 @@ class CotizacionServiciosController extends Controller
         if($moneda->tipo =='nacional'){
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $igv[]=$servicio->precio*$igv_total/100;
+                $igv_precio[]=$servicio->precio+$utilidad[$index];
+                $igv[]=$igv_precio[$index]*$igv_total/100;
                 $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
             }
         }else{
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $igv[]=$servicio->precio*$igv_total/100;
+                $igv_precio[]=$servicio->precio+$utilidad[$index];
+                $igv[]=$igv_precio[$index]*$igv_total/100;
                 $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])*$tipo_cambio->paralelo;
             }
         }
 
+        // return $utilidad;
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
 
@@ -435,13 +438,15 @@ class CotizacionServiciosController extends Controller
         if($moneda->tipo =='extranjera'){
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $igv[]=$servicio->precio*$igv_total/100;
+                $igv_precio[]=$servicio->precio+$utilidad[$index];
+                $igv[]=$igv_precio[$index]*$igv_total/100;
                 $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])/$tipo_cambio->paralelo;
             }
         }else{
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $igv[]=$servicio->precio*$igv_total/100;
+                $igv_precio[]=$servicio->precio+$utilidad[$index];
+                $igv[]=$igv_precio[$index]*$igv_total/100;
                 $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
             }
         }

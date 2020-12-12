@@ -64,7 +64,7 @@ Route::group(
 
 		// boleta
 		Route::post('/cotizacion_servicio/create_boleta' , 'CotizacionServiciosController@create_boleta')->name('cotizacion_servicio.create_boleta');
-		Route::get('/cotizacion_servicio/create_boleta_ms' , 'CotizacionServiciosController@create_boleta_ms')->name('cotizacion_servicio.create_boleta_ms');
+		Route::post('/cotizacion_servicio/create_boleta_ms' , 'CotizacionServiciosController@create_boleta_ms')->name('cotizacion_servicio.create_boleta_ms');
 		Route::put('/cotizacion_servicio/store_boleta/{id}','CotizacionServiciosController@store_boleta')->name('cotizacion_servicio.store_boleta');
 		Route::get('/cotizacion_servicio/boletear/{id}' , 'CotizacionServiciosController@boletear')->name('cotizacion_servicio.boletear');
 		Route::post('/cotizacion_servicio/boletear_store' , 'CotizacionServiciosController@boletear_store')->name('cotizacion_servicio.boletear_store');
