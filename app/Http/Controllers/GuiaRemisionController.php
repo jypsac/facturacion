@@ -206,34 +206,37 @@ class GuiaRemisionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function print($id){
+      $banco_count=Banco::where('estado','0')->count();
       $guia_remision=Guia_remision::find($id);
       $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
       $banco=Banco::where('estado','0')->get();
       $empresa=Empresa::first();
 
-      return view('transaccion.venta.guia_remision.print',compact('empresa','banco','guia_remision','guia_registro'));
+      return view('transaccion.venta.guia_remision.print',compact('empresa','banco','guia_remision','guia_registro','banco_count'));
 
     }
     public function pdf(Request $request,$id){
-     $guia_remision=Guia_remision::find($id);
-     $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
-     $banco=Banco::where('estado','0')->get();
-     $empresa=Empresa::first();
+      $banco_count=Banco::where('estado','0')->count();
+      $guia_remision=Guia_remision::find($id);
+      $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
+      $banco=Banco::where('estado','0')->get();
+      $empresa=Empresa::first();
 
      // $archivo=$name.$regla.$id.".pdf";
-     $pdf=PDF::loadView('transaccion.venta.guia_remision.pdf',compact('guia_remision','guia_registro','banco','empresa'));
-     return $pdf->download('GuiaRemision - '.'.pdf');
-   }
+      $pdf=PDF::loadView('transaccion.venta.guia_remision.pdf',compact('guia_remision','guia_registro','banco','empresa','banco_count'));
+      return $pdf->download('GuiaRemision - '.'.pdf');
+    }
 
-   public function show($id)
-   {
-    $guia_remision=Guia_remision::find($id);
-    $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
-    $banco=Banco::where('estado','0')->get();
-    $empresa=Empresa::first();
+    public function show($id)
+    {
+      $banco_count=Banco::where('estado','0')->count();
+      $guia_remision=Guia_remision::find($id);
+      $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
+      $banco=Banco::where('estado','0')->get();
+      $empresa=Empresa::first();
 
-    return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision','guia_registro'));
-  }
+      return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision','guia_registro','banco_count'));
+    }
 
     /**
      * Show the form for editing the specified resource.

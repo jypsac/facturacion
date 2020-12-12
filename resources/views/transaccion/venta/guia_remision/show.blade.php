@@ -112,7 +112,6 @@
                         <tr >
                             <th>Codigo Producto </th>
                             <th>Marca / Descripcion</th>
-                            <th>N/S</th>
                             <th>Unid.Medida</th>
                             <th>Cantidad</th>
                             <th>Peso</th>
@@ -121,8 +120,7 @@
                          @foreach($guia_registro as $guia_registros)
                          <tr>
                             <td>{{$guia_registros->id}}</td>
-                            <td>{{$guia_registros->producto->marcas_i_producto->nombre}} / {{$guia_registros->producto->nombre}}</td>
-                            <td>{{$guia_registros->numero_serie}}</td>
+                            <td>{{$guia_registros->producto->marcas_i_producto->nombre}} / {{$guia_registros->producto->nombre}} N/S: {{$guia_registros->numero_serie}}</td>
                             <td>{{$guia_registros->producto->unidad_i_producto->medida}}</td>
                             <td>{{$guia_registros->cantidad}}</td>
                             <td>{{$guia_registros->producto->peso}}</td>
@@ -154,21 +152,40 @@
 
         <br>
         <!-- Fin Totales de Productos -->
+
         <div class="row">
-            @foreach($banco as $bancos)
-            <div class="col-sm-3 " align="center">
-                <p class="form-control" style="height: 100px">
-                  <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="width: 100px;height: 30px;">
-                  <br>
-                  N° S/. : {{$bancos->numero_soles}}
-                  <br>
-                  N° $ : {{$bancos->numero_dolares}}<br>
+    @foreach($banco as $bancos)
 
-              </p>
-          </div>
-          @endforeach
+    @if($banco_count==3)
+    <div class="col-sm-4 " align="center">
+    <p class="form-control" >
 
-      </div>
+    @elseif($banco_count==2)
+    <div class="col-sm-6" align="center">
+    <p class="form-control">
+
+    @elseif($banco_count==1)
+    <div class="col-sm-12" align="center" style="width: 100px">
+    <p class="form-control" style="width: 426px;">
+
+    @else
+    <div class="col-sm-3 " align="center">
+    <p class="form-control" >
+    @endif
+
+      <img  src="{{asset('img/logos/'.$bancos->foto)}}" style="height: 30px;"><br>
+      <span style="font-size: 11px"><strong> {{$bancos->tipo_cuenta}}</strong></span>
+      <br>
+      <span style="font-size: 12px">
+      S/: {{$bancos->numero_soles}}
+      <br>
+      $: {{$bancos->numero_dolares}}<br>
+      </span>
+     </p>
+     </div>
+      @endforeach
+</div>
+
       <br>
       <div class="row">
         <div class="col-sm-3">
