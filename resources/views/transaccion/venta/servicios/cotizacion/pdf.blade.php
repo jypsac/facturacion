@@ -73,9 +73,8 @@
     </div>
 </div>
 <br>
-{{-- <span hidden="" style="color:white;">{{$i=1}}</span> --}}
 <span hidden="" style="color:white;">{{$i=1}}</span>
-
+{{-- <span hidden="hidden">{{$i = 1}}</span> --}}
 <div class="table-responsive">
     <table class="table " style="border-top: 0px" >
         <thead align="left">
@@ -93,7 +92,7 @@
                  {{-- <span hidden="" style="color:white;">{{$i=1}}</span> --}}
                 @foreach($cotizacion_registro as $cotizacion_registros)
                 <tr>
-                    <td>{{$i}} </td>
+                    <td>{{$i++}} </td>
                     <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
                     {{-- <td>{{$cotizacion_registros->servicio->unidad_i_producto->medida}}</td> --}}
                     <td>{{$cotizacion_registros->servicio->nombre}}</td>
@@ -107,14 +106,14 @@
                         @endif
                     </td>
                 </tr>
-                    <span hidden="hidden">{{$i++}}</span>
+                    {{-- <span hidden="hidden">{{$i++}}</span> --}}
                @endforeach
 
             @else
             {{-- <span hidden="" style="color:white;">{{$i=1}}</span> --}}
             @foreach($cotizacion_registro2 as $cotizacion_registros)
             <tr>
-                <td>{{$i}} </td>
+                <td>{{$i++}} </td>
                 <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
                 {{-- <td>{{$cotizacion_registros->servicio->unidad_i_producto->medida}}</td> --}}
                 <td>{{$cotizacion_registros->servicio->nombre}}</td>
@@ -129,7 +128,7 @@
                     @endif
                 </td>
             </tr>
-            <span hidden="hidden">{{$i++}}</span>
+            {{-- <span hidden="hidden">{{$i++}}</span> --}}
 
             @endforeach
             @endif

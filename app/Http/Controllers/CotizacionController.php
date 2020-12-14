@@ -318,7 +318,7 @@ class CotizacionController extends Controller
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
                     if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return "uno de los articulo son repetidos";
+                        return redirect()->route('cotizacion.index')->with('repite', 'Datos repetidos - No permitidos!');
                     }
                 }
             }
@@ -345,6 +345,9 @@ class CotizacionController extends Controller
         $nombre = strstr($cliente_nombre, '-',true);
         $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
 
+        if(!$cliente_buscador){
+            return 'NO hay';
+        }
 
         $forma_pago_id=$request->get('forma_pago');
         $formapago= Forma_pago::find($forma_pago_id);
@@ -564,7 +567,7 @@ class CotizacionController extends Controller
             }
         }
 
-        
+
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
         $moneda=Moneda::where('principal','1')->first();
@@ -783,7 +786,7 @@ class CotizacionController extends Controller
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
                     if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return redirect()->route('cotizacion.create_boleta')->with('repite', 'Datos repetidos - No permitidos!');
+                        return redirect()->route('cotizacion.index')->with('repite', 'Datos repetidos - No permitidos!');
                     }
                 }
 
@@ -814,7 +817,11 @@ class CotizacionController extends Controller
         $nombre = strstr($cliente_nombre, '-',true);
 
         $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
-        // return $cliente_buscador->id;
+
+        if(!$cliente_buscador){
+           return 'NO hay';
+        }
+
 
         $personal_contador= Cotizacion::all()->count();
         $suma=$personal_contador+1;
