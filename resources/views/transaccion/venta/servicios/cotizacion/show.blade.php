@@ -6,7 +6,16 @@
 @section('href_accion', route('cotizacion_servicio.index'))
 @section('value_accion', 'Atras')
 
+@section('button2', 'Nueva cotizacion')
+@section('onclick',"event.preventDefault();document.getElementById('nueva_cot').submit();")
+
 @section('content')
+
+<form action="{{ route($nueva_cot)}}"enctype="multipart/form-data" method="post" id="nueva_cot">
+    @csrf
+    <input type="text"  hidden="hidden" name="almacen"  value="{{$almacen}}">
+    <input  hidden="hidden" type="submit"  >
+</form>
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title" style="padding-right: 3.1%;">

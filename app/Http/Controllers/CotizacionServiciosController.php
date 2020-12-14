@@ -662,7 +662,7 @@ class CotizacionServiciosController extends Controller
                         $cotizacion_registro->precio=$array;
                     }else{
                         // return 2;
-                        
+
 
                         $utilidad=$servicio->precio*$servicio->utilidad/100;
                         $igv_precio=$servicio->precio+$utilidad;
@@ -723,21 +723,23 @@ class CotizacionServiciosController extends Controller
         $sub_total=0;
         $regla=$cotizacion->tipo;
         $i=1;
-
+        $almacen=auth()->user()->almacen_id;
         if($cotizacion->tipo=="factura"){
             //FACTURA
             $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
             foreach ($cotizacion_registro as $cotizacion_registros) {
                $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
             }
-            return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
+            $nueva_cot='cotizacion_servicio.create_'.$regla;
+            return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','nueva_cot','almacen'));
         }else{
             //BOLETA
             $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
             foreach ($cotizacion_registro as $cotizacion_registros) {
                 $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
             }
-            return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
+            $nueva_cot='cotizacion_servicio.create_'.$regla;
+            return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','nueva_cot','almacen'));
         }
    }
 

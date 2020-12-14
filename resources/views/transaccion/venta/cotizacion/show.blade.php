@@ -4,7 +4,7 @@
 @section('breadcrumb2', 'Cotizacion')
 @section('href_accion', route('cotizacion.index'))
 @section('value_accion', 'Atras')
-@section('nombre', 'nueva cotizacion')
+@section('button2', 'Nueva cotizacion')
 @section('onclick',"event.preventDefault();document.getElementById('nueva_cot').submit();")
 
 @section('content')
@@ -31,14 +31,7 @@
                 <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
                 </form>
                 <a class="btn btn-success" href="{{route('cotizacion.print',$cotizacion->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i></a>
-                <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
-                    @csrf
-                     <input type="tel" name="numero"  value="{{$cotizacion->cliente->celular}}" hidden="" />
-                     <input type="text" name="mensaje"  hidden="" value="" />
-                     <input type="text" hidden="" name="url" value="{{route('pdf_cotizacion' ,$cotizacion->id)}}?archivo=">
-                     <input type="text" name="name_sin_cambio" hidden="" value="Cotizacion_{{$cotizacion->tipo}}" />
-                    <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-whatsapp fa-lg"></i>  </button>
-                </form>
+
                          {{-- </a> --}}
                 @if(Auth::user()->email_creado == 0)
                     <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
@@ -52,13 +45,26 @@
                        <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title=""  formtarget="_blank"  data-original-title="Enviar por correo"><i class="fa fa-envelope fa-lg"  ></i> </button>
                     </form>
                 @endif
+                <div id="auto" onclick="divAuto()">
+                    <a class="btn  btn-success" style="background: green;border-color: green;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-whatsapp fa-lg" style="color: white"></i>  </a>
+                </div>
+                <div id="div-mostrar">
+                   <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
+                    @csrf
+                     <input type="tel" name="numero"  value="{{$cotizacion->cliente->celular}}"   />
+                     <input type="text" name="mensaje" id="texto_orden" hidden="" />
+                     <input type="text" hidden="" name="url" value="{{route('pdf_cotizacion_servicio' ,$cotizacion->id)}}?archivo=">
+                     <input type="text" name="name_sin_cambio" hidden="" value="Cotizacion_Servicio_{{$cotizacion->tipo}}" />
+                    <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-send fa-lg"></i>  </button>
+                    </form>
+                </div>
             </div>
         </div>
 
     </div>
 
     <div class="row">
-        <div class="col-lg-12">
+        <div class="col-lg-12" style="margin-top: -5px;">
             <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">
                 <div class="row">
                     <div class="col-sm-4 text-left" align="left">
@@ -320,6 +326,41 @@
         height:100%;
         opacity: 0  ;
     }
+</style>
+<style>
+
+#auto{
+    /*padding: -100px;*/
+    /*background: orange;*/
+    /*width: 95px;*/
+    cursor: pointer;
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
+    box-shadow: 0px 0px 1px #000;
+    display: inline-block;
+}
+
+#auto:hover{
+    opacity: .8;
+}
+
+#div-mostrar{
+    /*width: 50%;*/
+    margin: auto;
+    height: 0px;
+    /*margin-top: -5px*/
+    /*background: #000;*/
+    /*box-shadow: 10px 10px 3px #D8D8D8;*/
+    transition: height .4s;
+    color:white;
+    text-align: right;
+}
+#auto:hover{
+    opacity: .8;
+}
+#auto:hover + #div-mostrar{
+    height: 50px;
+}
 </style>
 <style type="text/css">
     .form-control{border-radius: 10px; padding: 10px }

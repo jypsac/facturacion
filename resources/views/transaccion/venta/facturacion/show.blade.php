@@ -6,7 +6,7 @@
  @section('href_accion', route('facturacion.index'))
  @section('value_accion', 'Atras')
 
-@section('nombre', 'nueva Facturacion')
+@section('button2', 'Nueva Facturacion')
 @section('onclick',"event.preventDefault();document.getElementById('nueva_cot').submit();")
 
 @section('content')

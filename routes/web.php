@@ -114,7 +114,7 @@ Route::group(
 		/*Guia Remision*/
 		//para guia agregar el store en create_moneda secundaria enviando este una acptacion de 2 variables put en store para la identificaion de la moneda principal o secundaria
 		Route::get('/guia_remision/print/{id}' , 'GuiaRemisionController@print')->name('guia_remision.print');
-		
+
 		Route::resource('/guia_remision','GuiaRemisionController');
 
 		Route::post('stock_ajax', 'KardexSalidaController@stock_ajax')->name('stock_ajax');
