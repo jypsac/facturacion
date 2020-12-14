@@ -555,6 +555,7 @@ class CotizacionServiciosController extends Controller
         if(!$cambio){
             return "error por no hacer el cambio diario";
         }
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
 
         //Convertir nombre del cliente a id
         $cliente_nombre=$request->get('cliente');
@@ -632,25 +633,41 @@ class CotizacionServiciosController extends Controller
                 $cotizacion_registro->cotizacion_servicio_id=$cotizacion->id;
                 $cotizacion_registro->servicio_id=$servicio_id[$i];
 
-                    $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
-                    $utilidad=$servicio->precio*$servicio->utilidad/100;
-                    $igv=$servicio->precio*$igv_total/100;
-                    $array=$servicio->precio+$utilidad+$igv;
-
+                $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
 
                 $cotizacion_registro->promedio_original=$servicio->precio;
 
                 //logica para el precio dependiendo de la moneda
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional') {
+                        $utilidad=$servicio->precio*$servicio->utilidad/100;
+                        $igv_precio=$servicio->precio+$utilidad;
+                        $igv=$igv_precio*$igv_total/100;
+                        $array=$servicio->precio+$utilidad+$igv;
                         $cotizacion_registro->precio=$array;
                     }else{
+                        $utilidad=$servicio->precio*$servicio->utilidad/100;
+                        $igv_precio=$servicio->precio+$utilidad;
+                        $igv=$igv_precio*$igv_total/100;
+                        $array=($servicio->precio+$utilidad+$igv)*$tipo_cambio->paralelo;
                         $cotizacion_registro->precio=$array;
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera') {
+                        // return 1;
+                        $utilidad=$servicio->precio*$servicio->utilidad/100;
+                        $igv_precio=$servicio->precio+$utilidad;
+                        $igv=$igv_precio*$igv_total/100;
+                        $array=$servicio->precio+$utilidad+$igv;
                         $cotizacion_registro->precio=$array;
                     }else{
+                        // return 2;
+                        
+
+                        $utilidad=$servicio->precio*$servicio->utilidad/100;
+                        $igv_precio=$servicio->precio+$utilidad;
+                        $igv=$igv_precio*$igv_total/100;
+                        $array=($servicio->precio+$utilidad+$igv)*$tipo_cambio->paralelo;
                         $cotizacion_registro->precio=$array;
                     }
                 }
