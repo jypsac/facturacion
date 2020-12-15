@@ -253,5 +253,6 @@ Route::get('garantia_informe_tecnico/pdf/{id}' , 'GarantiaInformeTecnicoControll
 Route::get('cotizacion/pdf/{id}' , 'CotizacionController@pdf')->name('pdf_cotizacion');
 Route::get('cotizacion_servicio/pdf/{id}' , 'CotizacionServiciosController@pdf')->name('pdf_cotizacion_servicio');
 Route::get('guia_remision/pdf/{id}' , 'GuiaRemisionController@pdf')->name('pdf_guia');
+Route::get('facturacion/pdf/{id}' , 'FacturacionController@pdf')->name('pdf_fac');
 Route::get('/home', 'HomeController@index')->name('home');
 
