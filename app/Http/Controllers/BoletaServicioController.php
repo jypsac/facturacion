@@ -38,7 +38,7 @@ class BoletaServicioController extends Controller
      */
     public function create()
     {
-        
+
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','0')->first();
@@ -61,7 +61,7 @@ class BoletaServicioController extends Controller
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        
+
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
@@ -78,7 +78,7 @@ class BoletaServicioController extends Controller
 
     public function create_ms()
     {
-        
+
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','1')->first();
@@ -101,7 +101,7 @@ class BoletaServicioController extends Controller
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        
+
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
@@ -193,9 +193,9 @@ class BoletaServicioController extends Controller
         }
 
         // Codigo de Facturación -------------------------------------------------------------------------------------------------------
-        // obtencion de la sucursal 
+        // obtencion de la sucursal
         $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-       
+
         $boletear_cod_bol=$sucursal->cod_fac;
         if (is_numeric($boletear_cod_bol)) {
             // exprecion del numero de fatura
@@ -206,20 +206,20 @@ class BoletaServicioController extends Controller
             // expreción del numero de fatura
             // generacion del numero de la factura
             $ultima_boleta=Boleta::latest()->first();
-            $boleta_num=$ultima_boleta->codigo_fac;
+            $boleta_num=$ultima_boleta->codigo_boleta;
             $boleta_num_string_porcion= explode("-", $boleta_num);
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
             $boleta_num++;
             $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
-            $boleta_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
 
         // Guardado de Boleta ------------------------------------------------------------------------------------------------------
         $boleta=new Boleta;
         $boleta->codigo_boleta=$boleta_numero;
-        $boleta->almacen_id=$almacen;     
+        $boleta->almacen_id=$almacen;
         $boleta->orden_compra=$request->get('orden_compra');
         $boleta->guia_remision=$request->get('guia_r');
         $boleta->cliente_id=$cliente_buscador->id;

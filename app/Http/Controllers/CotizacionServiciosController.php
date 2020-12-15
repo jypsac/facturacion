@@ -862,7 +862,7 @@ class CotizacionServiciosController extends Controller
        $comisionista->observacion='Viene del Cotizador';
        $comisionista->save();
     }
-    return redirect()->route('facturacion_servicio.show',$id_cotizador);
+    return redirect()->route('facturacion_servicio.show',$facturar->id);
     }
 
 //ENVIO DE BOLETEAR A VISTA
@@ -958,7 +958,7 @@ class CotizacionServiciosController extends Controller
        $comisionista->save();
     }
 
-    return redirect()->route('boleta_servicio.show',$id_cotizador);
+    return redirect()->route('boleta_servicio.show',$boletear->id);
     }
 
     /**
