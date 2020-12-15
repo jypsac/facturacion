@@ -711,8 +711,8 @@ class CotizacionServiciosController extends Controller
     public function show($id)
     {
 
-        $facturacion=Facturacion::where('id_cotizador',$id)->first();
-        $boleta=Boleta::where('id_cotizador',$id)->first();
+        $facturacion=Facturacion::where('id_cotizador_servicio',$id)->first();
+        $boleta=Boleta::where('id_cotizador_servicio',$id)->first();
         $banco=Banco::where('estado','0')->get();
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion=Cotizacion_Servicios::find($id);
@@ -862,7 +862,7 @@ class CotizacionServiciosController extends Controller
        $comisionista->observacion='Viene del Cotizador';
        $comisionista->save();
     }
-    return redirect()->route('facturacion.show',$id_cotizador);
+    return redirect()->route('facturacion_servicio.show',$id_cotizador);
     }
 
 //ENVIO DE BOLETEAR A VISTA
@@ -901,10 +901,13 @@ class CotizacionServiciosController extends Controller
     $fac= Boleta::all()->count();
     $suma=$fac+1;
     $cod_bol='FC-000'.$suma;
+    $almacen = $request->get('almacen');
+    $tipo_cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
 
     // Creacion de Facturacion
     $boletear=new Boleta;
     $boletear->codigo_boleta=$cod_bol;
+    $boletear->almacen_id = $almacen;
     $boletear->id_cotizador_servicio=$request->get('id_cotizador');
     $boletear->orden_compra=$request->get('orden_compra');
     $boletear->guia_remision=$request->get('guia_remision');
@@ -912,6 +915,7 @@ class CotizacionServiciosController extends Controller
     $boletear->moneda_id=$cotizacion->moneda_id;
     $boletear->forma_pago_id=$cotizacion->forma_pago_id;
     $boletear->comisionista=$cotizacion->comisionista_id;
+    $boletear->cambio = $tipo_cambio->paralelo;
     $boletear->fecha_emision=$request->get('fecha_emision');
     $boletear->fecha_vencimiento=$request->get('fecha_vencimiento');
     $boletear->estado='0';
@@ -954,7 +958,7 @@ class CotizacionServiciosController extends Controller
        $comisionista->save();
     }
 
-    return redirect()->route('boleta.show',$id_cotizador);
+    return redirect()->route('boleta_servicio.show',$id_cotizador);
     }
 
     /**

@@ -23,15 +23,17 @@
              <div class="col-sm-6" style="padding-left: 3.1%;padding-top: 5px" >
                 @if($cotizacion->estado == '1')
                     @if($cotizacion->tipo=='factura')
-                        <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$facturacion->id)}}" ></a>
+                        <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion_servicio.show',$facturacion->id)}}" >Ver Factura</a>
                     @else
-                        <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta.show',$boleta->id)}}" ></a>
+                        <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta_servicio.show',$boleta->id)}}" >Ver Boleta</a>
                     @endif
-            {{-- SIN PROCESAR --}}
-                @elseif($cotizacion->tipo=='factura')
-                    <a class="btn btn-info" href="{{route('cotizacion_servicio.facturar' , $cotizacion->id)}}">Facturar</a>
-                @elseif($cotizacion->tipo=='boleta')
-                    <a class="btn btn-success"  href="{{route('cotizacion_servicio.boletear', $cotizacion->id)}}">Boletear</a>
+                @else
+                {{-- SIN PROCESAR --}}
+                    @if($cotizacion->tipo=='factura')
+                        <a class="btn btn-info" href="{{route('cotizacion_servicio.facturar' , $cotizacion->id)}}">Facturar</a>
+                    @else
+                        <a class="btn btn-success"  href="{{route('cotizacion_servicio.boletear', $cotizacion->id)}}">Boletear</a>
+                    @endif
                 @endif
             </div>
              <div class="col-sm-6" align="right">

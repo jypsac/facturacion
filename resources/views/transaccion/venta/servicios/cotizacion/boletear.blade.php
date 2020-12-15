@@ -28,6 +28,7 @@
  <div class="wrapper wrapper-content animated fadeInRight">
     <form action="{{route('cotizacion_servicio.boletear_store')}}"  enctype="multipart/form-data" method="post">
         @csrf
+        <input type="text" value="{{$cotizacion->almacen_id}}" hidden="" name="almacen">
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 50px;">

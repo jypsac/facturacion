@@ -226,7 +226,7 @@ class EmailBandejaEnviosController extends Controller
 
     return view('mailbox.create',compact('archivo','clientes','redic','date'));
    }
-   else if ($tipo=='App\Cotizacion_Servicios') 
+   else if ($tipo=='App\Cotizacion_Servicios')
    {
       $rutapdf = 'transaccion.venta.servicios.cotizacion.print';
       $name = 'Cotizacion_Servicio_';
@@ -249,7 +249,7 @@ class EmailBandejaEnviosController extends Controller
               foreach ($cotizacion_registro as $cotizacion_registros) {
                  $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
               }
-              
+
           }else{
               //BOLETA
               $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
@@ -261,7 +261,7 @@ class EmailBandejaEnviosController extends Controller
           $archivo=$name.$regla.$id.'.pdf';
           $regla=$cotizacion->tipo;
 
-          $pdf=PDF::loadView('transaccion.venta.servicios.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i'));
+          $pdf=PDF::loadView('transaccion.venta.servicios.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','banco_count'));
            $content = $pdf->download();
            // $especif = $carbon_sp.$nombre;
       // \Storage::disk('mailbox')->put( $especif ,  \File::get($file));

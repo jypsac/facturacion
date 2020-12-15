@@ -141,7 +141,7 @@
                                                 </a>
                                                 @elseif($facturacions->tipo=='producto')
                                                 <a href="{{route('facturacion.show',$facturacions->id)}}">
-                                                    <button type="button" class="btn btn-w-m btn-primary">VER PRODUCTOSSSS</button>
+                                                    <button type="button" class="btn btn-w-m btn-primary">VER PRODUCTO</button>
                                                 </a>
                                                 @endif
 
