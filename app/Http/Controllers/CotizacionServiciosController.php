@@ -63,7 +63,6 @@ class CotizacionServiciosController extends Controller
             }
         }else{
             foreach ($servicios as $index => $servicio) {
-                return 2;
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $array[]=$servicio->precio+$utilidad[$index]*$tipo_cambio->paralelo;
             }
@@ -112,13 +111,12 @@ class CotizacionServiciosController extends Controller
 
         if($moneda->tipo =='extranjera'){
             foreach ($servicios as $index => $servicio) {
-
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $array[]=($servicio->precio+$utilidad[$index])/$tipo_cambio->paralelo;
             }
         }else{
             foreach ($servicios as $index => $servicio) {
-
+                return 3;
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $array[]=$servicio->precio+$utilidad[$index];
             }

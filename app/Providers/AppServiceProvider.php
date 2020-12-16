@@ -4,6 +4,8 @@ namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
 // use Illuminate\Support\Facades\Schema;
+use App\TipoCambio;
+use App\Observers\TipoCambioObserver;
 
 class AppServiceProvider extends ServiceProvider
 {
@@ -24,6 +26,8 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
+        TipoCambio::observe(TipoCambioObserver::class);
+        // TipoCambio::observe(new TipoCambioObserver());
         // Schema::defaultStringLength(191);
     }
 }
