@@ -51,7 +51,7 @@
 
 <div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
-    <a href="{{route('cotizacion_servicio.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Boleta</span></a>
+    {{-- <a href="{{route('cotizacion_servicio.create_boleta')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Boleta</span></a> --}}
 
 </div>
 <form action="{{ route('cotizacion_servicio.create_factura')}}" enctype="multipart/form-data" id="almacen-form" method="POST">
