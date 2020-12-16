@@ -1,8 +1,8 @@
 @extends('layout')
 
 @section('title', 'Cotizacion Servicio M.S - Boleta')
-@section('breadcrumb', 'Cotizacion Servicio M.S - Boleta')
-@section('breadcrumb2', 'Cotizacion Servicio M.S - Boleta')
+@section('breadcrumb', 'Cotizacion Servicio M.S- Boleta')
+@section('breadcrumb2', 'Cotizacion Servicio M.S- Boleta')
 @section('href_accion', route('cotizacion_servicio.index') )
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
@@ -51,7 +51,7 @@
 
 <div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
-    <a href="{{route('cotizacion_servicio.create_factura')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a>
+    {{-- <a href="{{route('cotizacion_servicio.create_factura')}}" class="icon icon-twitter" ><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a> --}}
 
 </div>
 <!-- Modal CLiente -->
@@ -175,6 +175,11 @@
     </div>
 </div>
 <!-- Fin Modal Clieb¿nte -->
+<form action="{{ route('cotizacion_servicio.create_boleta')}}" enctype="multipart/form-data" id="almacen-form" method="POST">
+    @csrf
+    <input type="text" value="{{$sucursal->id}}" hidden="hidden" name="almacen">
+    <input class="btn btn-sm btn-info" hidden="hidden" type="submit" value="cambiar" >
+</form>
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
@@ -202,118 +207,122 @@
                 </div>
                 <div class="ibox-content">
                     <form action="{{route('cotizacion_servicio.store_boleta',$moneda->id)}}"  enctype="multipart/form-data" method="post">
-                        @csrf
+                         @csrf
                         @method('put')
+                        {{-- Cabecera --}}
                         <div class="row">
-                            <div class="col-sm-6">
-                                <div class="row">
-                                    <label class="col-sm-2 col-form-label">Cliente:</label>
-                                    <div class="col-sm-10">
-                                        <input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off" onclick="Clear(this);">
-                                        <datalist id="browsersc1" >
-                                            @foreach($clientes as $cliente)
+                            <div class="col-sm-4 text-left" align="left">
+                                <address class="col-sm-4" align="left">
+                                     <img src="{{asset('img/logos/'.$empresa->foto)}}" alt="" width="300px">
+                                </address>
+                            </div>
+                            <div class="col-sm-4"></div>
+                            <div class="col-sm-4">
+
+                             <div class="form-control" align="center" style="height: auto;">
+                                <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
+                                <h2 style="font-size: 19px">COTIZACION ELECTRONICA</h2>
+                                <h5>{{$cotizacion_numero}}</h5>
+                            </div>
+                        </div>
+                    </div>
+                    <br>
+                     <table class="table">
+                        <tbody>
+                            <tr>
+                                <td>Cliente</td>
+                                <td>:</td>
+                                <td>
+                                    <input list="browsersc1" class="form-control m-b" name="cliente" required="required" value="{{ old('nombre')}}" autocomplete="off">
+                                    <datalist id="browsersc1" >
+                                        @foreach($clientes as $cliente)
                                             <option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
-                                            @endforeach
-                                        </datalist>
-                                    </div>
-                                    <input type="hidden" value="0" name="print" id="prints">
-                                </div><br>
-                                <div class="row">
-                                    <label class="col-sm-2 col-form-label">Forma de pago:</label>
-                                    <div class="col-sm-10">
-                                        <select class="form-control" name="forma_pago" required="required">
-                                            @foreach($forma_pagos as $forma_pago)
-                                            <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
-                                            @endforeach
-                                            <select>
-                                            </div>
-                                        </div><br>
+                                        @endforeach
+                                    </datalist>
+                                </td>
+                                <input type="hidden" value="0" name="print" id="prints">
+                                <td>Comisionista</td>
+                                <td>:</td>
+                                <td>
+                                    <input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="Sin comision - 0" onkeyup="comision()" autocomplete="off">
+                                    <datalist id="browsersc2" >
+                                        <option id="">Sin comision - 0 </option>
+                                        @foreach($p_venta as $p_ventas)
+                                        <option id="{{$p_ventas->id}}">{{$p_ventas->cod_vendedor}} - {{$p_ventas->personal->personal_l->nombres}} - <span style="color: red">{{$p_ventas->comision}}</span></option>
+                                        @endforeach
+                                    </datalist>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Forma de pago</td>
+                                <td>:</td>
+                                <td>
+                                    <select class="form-control" name="forma_pago" required="required">
+                                        @foreach($forma_pagos as $forma_pago)
+                                        <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
+                                        @endforeach
+                                        <select>
+                                        </td>
+                                        <td>Validez</td>
+                                        <td>:</td>
+                                        <td><select  class="form-control" name="validez" required="required">
+                                            <option value="5 Días">5 Días</option>
+                                            <option value="4 Días">4 Días</option>
+                                            <option value="3 Días">3 Días</option>
+                                            <option value="2 Días">2 Días</option>
+                                            <option value="1 Día">1 Día</option>
+                                        </select></td>
+                                    </tr>
+                                    <tr>
+                                        <td>Vendedor</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}">
+                                        </td>
+                                        <td>Garantia</td>
+                                        <td>:</td>
+                                        <td><select class="form-control" name="garantia">
+                                            <option value="1 año">1 Año</option>
+                                            <option value="2 años">2 Años</option>
+                                            <option value="3 años">3 Años</option>
+                                            <option value="6 meses">6 Meses</option>
+                                        </select></td>
+                                    </tr>
 
-                                        <div class="row">
-                                            <label class="col-sm-2 col-form-label">Moneda:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
-                                                    <a class="col-sm-5" href="{{route('cotizacion_servicio.create_factura')}}">
+                                    <tr>
+                                        <td>Moneda</td>
+                                        <td>:</td>
+                                        <td>
+                                            <div class="row">
+                                                <input type="hidden" name="almacen" class="form-control " value="{{$sucursal->id}}" readonly="readonly">
+
+                                                <div class=" col-sm-5">
+                                                    <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
+                                                </div>
+
+                                                <a class="col-sm-5" onclick="event.preventDefault();document.getElementById('almacen-form').submit();">
                                                     <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>@if($moneda->tipo=='nacional')Dolares @elseif($moneda->tipo=='extranjera') Soles @endif</button></a>
-                                            </div>
-                                                </div><br>
-                                                <div class="row">
-                                                    <label class="col-sm-2 col-form-label">Vendedor:</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}">
-                                                    </div>
+
                                                 </div>
 
-                                            </div>
-                                            <div class="col-sm-6">
-                                                <div class="row">
+                                            </td>
+                                            <td>Fecha de cotizacion</td>
+                                            <td>:</td>
+                                            <td>
+                                                <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
+                                            </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Observacion</td>
+                                            <td>:</td>
+                                            <td colspan="4">
+                                                <textarea class="form-control" name="observacion" id="observacion"  rows="1"  >Emitimos la siguiente cotización a vuestra solicitud</textarea>
+                                            </td>
+                                        </tr>
+                                    </tbody>
+                                </table>
 
-                                                    <label class="col-sm-2 col-form-label">Fecha de cotizacion:</label>
-                                                    <div class="col-sm-10">
-                                                        <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
-                                                    </div>
-
-                                                </div><br>
-                                                <div class="row">
-                                                    <label class="col-sm-2 col-form-label">Validez:</label>
-                                                    <div class="col-sm-10">
-                                                        <select  class="form-control" name="validez" required="required">
-                                                            <option value="5 Días">5 Días</option>
-                                                            <option value="4 Días">4 Días</option>
-                                                            <option value="3 Días">3 Días</option>
-                                                            <option value="2 Días">2 Días</option>
-                                                            <option value="1 Día">1 Día</option>
-                                                        </select>
-                                                    </div>
-                                                </div><br><br>
-
-                                                <div class="row">
-                                                    <label class="col-sm-2 col-form-label">Garantia:</label>
-                                                    <div class="col-sm-10">
-                                                        <!-- <input type="text" class="form-control" name="referencia" > -->
-                                                        <select class="form-control" name="garantia">
-                                                            <option value="1 año">1 Año</option>
-                                                            <option value="2 años">2 Años</option>
-                                                            <option value="3 años">3 Años</option>
-                                                            <option value="6 meses">6 Meses</option>
-                                                        </select>
-                                                    </div>
-                                                </div><br>
-
-                                                <div class="row">
-                                                    <label class="col-sm-2 col-form-label">Comisionista:</label>
-                                                    <div class="col-sm-10">
-                                                        <!-- <input type="text" name="comisionista" class="form-control"> -->
-                                                        <input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="Sin comision - 0" onkeyup="comision()"  onclick="Clear(this);" autocomplete="off">
-                                                        <datalist id="browsersc2" >
-                                                            <option id="">Sin comision - 0 </option>
-                                                            @foreach($p_venta as $p_ventas)
-                                                            <option id="{{$p_ventas->id}}">{{$p_ventas->cod_vendedor}} - {{$p_ventas->personal->personal_l->nombres}} - <span style="color: red">{{$p_ventas->comision}}</span></option>
-                                                            @endforeach
-                                                        </datalist>
-                                                    </div>
-                                                </div>
-
-                                                <div class="row">
-                                                    <label class="col-sm-2 col-form-label">Almacen:</label>
-                                                    <div class="col-sm-10">
-                                                        <select class="form-control" name="almacen">
-                                                            @foreach($almacenes as $almacen)
-                                                        <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
-                                                            @endforeach
-                                                        </select>
-                                                    </div>
-                                                </div><br>
-
-                                            </div>
-                                            <div class="col-sm-12" style="padding-top: 15px">
-                                                <div class="row">
-                                                    <label class="col-sm-1 col-form-label">Observacion:</label>
-                                                    <div class="col-sm-11">
-                                                        <textarea class="form-control" name="observacion" id="observacion"  rows="1"  >Emitimos la siguiente cotización a vuestra solicitud</textarea>
-                                                    </div>
-                                                </div>
-                                            </div>
+                                <div id="resultado_moneda"></div>
 
                                             <div class="table-responsive">
                                                 <table   cellspacing="0" class="table tables  " {{-- style="width: 1150px" --}}>
@@ -483,7 +492,7 @@
                                 </td>
 
                                 </tr>`;
-                                $('table').append(data);
+                                $('.tables').append(data);
                                 i++;
                             });
                         </script>

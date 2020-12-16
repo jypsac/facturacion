@@ -63,6 +63,7 @@ class CotizacionServiciosController extends Controller
             }
         }else{
             foreach ($servicios as $index => $servicio) {
+                return 2;
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $array[]=$servicio->precio+$utilidad[$index]*$tipo_cambio->paralelo;
             }
@@ -111,11 +112,13 @@ class CotizacionServiciosController extends Controller
 
         if($moneda->tipo =='extranjera'){
             foreach ($servicios as $index => $servicio) {
+
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $array[]=($servicio->precio+$utilidad[$index])/$tipo_cambio->paralelo;
             }
         }else{
             foreach ($servicios as $index => $servicio) {
+
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $array[]=$servicio->precio+$utilidad[$index];
             }
@@ -237,6 +240,7 @@ class CotizacionServiciosController extends Controller
         if(!$cambio){
             return "error por no hacer el cambio diario";
         }
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
 
         //Convertir nombre del cliente a id
         $cliente_nombre=$request->get('cliente');
@@ -313,21 +317,25 @@ class CotizacionServiciosController extends Controller
                 $cotizacion_registro->servicio_id=$servicio_id[$i];
 
                 $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
-                $utilidad=$servicio->precio*$servicio->utilidad/100;
-                $array=$servicio->precio+$utilidad;
                 $cotizacion_registro->promedio_original=$servicio->precio;
 
                 //logica para el precio dependiendo de la moneda
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional') {
+                        $utilidad=$servicio->precio*$servicio->utilidad/100;
+                        $array=$servicio->precio+$utilidad;
                         $cotizacion_registro->precio=$array;
                     }else{
+                        return 2;
                         $cotizacion_registro->precio=$array;
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera') {
+                        return 3;
                         $cotizacion_registro->precio=$array;
                     }else{
+                        $utilidad=$servicio->precio*$servicio->utilidad/100;
+                        $array=($servicio->precio+$utilidad)/$tipo_cambio->paralelo;
                         $cotizacion_registro->precio=$array;
                     }
                 }
@@ -427,7 +435,7 @@ class CotizacionServiciosController extends Controller
         return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','empresa','sucursal','cotizacion_numero'));
     }
 
-    public function create_boleta_ms()
+    public function create_boleta_ms(Request $request)
     {
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
@@ -437,6 +445,7 @@ class CotizacionServiciosController extends Controller
 
         if($moneda->tipo =='extranjera'){
             foreach ($servicios as $index => $servicio) {
+
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $igv_precio[]=$servicio->precio+$utilidad[$index];
                 $igv[]=$igv_precio[$index]*$igv_total/100;
@@ -444,6 +453,7 @@ class CotizacionServiciosController extends Controller
             }
         }else{
             foreach ($servicios as $index => $servicio) {
+                return 2;
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $igv_precio[]=$servicio->precio+$utilidad[$index];
                 $igv[]=$igv_precio[$index]*$igv_total/100;
@@ -465,7 +475,22 @@ class CotizacionServiciosController extends Controller
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
 
-        return view('transaccion.venta.servicios.cotizacion.boleta.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
+        $empresa  = Empresa::first();
+         //CODIGO COTIZACION
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        $ultima_factura=Cotizacion_Servicios::latest()->first();
+        if($ultima_factura){
+            $code=$ultima_factura->id;
+            $code++;
+        }else{
+            $code=1;
+        }
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="COTSB ".$sucursal_nr."-".$cotizacion_nr;
+
+        return view('transaccion.venta.servicios.cotizacion.boleta.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','cotizacion_numero','sucursal','empresa'));
     }
 
     /**
@@ -637,6 +662,8 @@ class CotizacionServiciosController extends Controller
 
                 $cotizacion_registro->promedio_original=$servicio->precio;
 
+
+
                 //logica para el precio dependiendo de la moneda
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional') {
@@ -646,6 +673,7 @@ class CotizacionServiciosController extends Controller
                         $array=$servicio->precio+$utilidad+$igv;
                         $cotizacion_registro->precio=$array;
                     }else{
+                        return 2;
                         $utilidad=$servicio->precio*$servicio->utilidad/100;
                         $igv_precio=$servicio->precio+$utilidad;
                         $igv=$igv_precio*$igv_total/100;
@@ -654,20 +682,17 @@ class CotizacionServiciosController extends Controller
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera') {
-                        // return 1;
+                        return 3;
                         $utilidad=$servicio->precio*$servicio->utilidad/100;
                         $igv_precio=$servicio->precio+$utilidad;
                         $igv=$igv_precio*$igv_total/100;
                         $array=$servicio->precio+$utilidad+$igv;
                         $cotizacion_registro->precio=$array;
                     }else{
-                        // return 2;
-
-
                         $utilidad=$servicio->precio*$servicio->utilidad/100;
                         $igv_precio=$servicio->precio+$utilidad;
                         $igv=$igv_precio*$igv_total/100;
-                        $array=($servicio->precio+$utilidad+$igv)*$tipo_cambio->paralelo;
+                        $array=($servicio->precio+$utilidad+$igv)/$tipo_cambio->paralelo;
                         $cotizacion_registro->precio=$array;
                     }
                 }
