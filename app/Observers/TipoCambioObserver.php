@@ -14,10 +14,16 @@ class TipoCambioObserver
      */
     public function created(TipoCambio $tipoCambio)
     {
-        $m=servicios::find(1);
-        $m->codigo_original="999";
-        $m->save();
-        // return $tipoCambio;
+        $servicios=servicios::get();
+        foreach ($servicios as $servicio) {
+            $servicio_id=$servicio->id;
+            $precio_nacional=$servicio->precio_nacional;
+            $precio_extranjero=$precio_nacional/$tipoCambio->paralelo;
+
+            $servicio=servicios::find($servicio_id);
+            $servicio->precio_extranjero=round($precio_extranjero,2);
+            $servicio->save();
+        }
     }
 
     /**
