@@ -34,13 +34,25 @@
        <div class="panel-body" align="left">
         <div class="row">
           <label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
-          <div class="col-sm-4"><input type="text" class="form-control" name="codigo_original" required="required"></div>
+          <div class="col-sm-4">
+            <input type="text" class="form-control" name="codigo_original" required="required">
+          </div>
 
 
           <label class="col-sm-2 col-form-label">Categoria:</label>
           <div class="col-sm-4">
             <input type="text" class="form-control m-b" readonly="readonly" value="Servicios" name="categoria">
           </div>
+
+          <label class="col-sm-2 col-form-label">Moneda:</label>
+          <div class="col-sm-4">
+            <select class="form-control" name="moneda">
+              @foreach($monedas as $moneda)
+              <option value="{{$moneda->id}}">{{$moneda->nombre}}</option>
+              @endforeach
+            </select>
+          </div>
+
         </div>
 
       </div>

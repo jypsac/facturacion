@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 use App\Servicios;
+use App\TipoCambio;
+use App\Moneda;
 use Illuminate\Http\Request;
 
 class ServiciosController extends Controller
@@ -24,7 +26,8 @@ class ServiciosController extends Controller
      */
     public function create()
     {
-        return view('producto_servicios.servicios.create');
+        $monedas=Moneda::all();
+        return view('producto_servicios.servicios.create',compact('monedas'));
         //
     }
 
@@ -50,13 +53,34 @@ class ServiciosController extends Controller
         }
         $conteo=Servicios::all()->count();
         $suma=$conteo +1;
-        $codigo_servicio='SERV-0000'.$suma;
+        $servicio_nr=str_pad($suma, 8, "0", STR_PAD_LEFT);
+        $cotizacion_numero="SERV-".$servicio_nr;
+
+        // Tipo de cambio -------------------------------------------------------------------------------------
+        $cambio=TipoCambio::latest('created_at')->first();
+
+        //  Moneda --------------------------------------------------------------------------------------------
+        $moneda_principal=Moneda::where('tipo','nacional')->first();
+        $moneda_principal_id=$moneda_principal->id;
+        $moneda_id=$request->get('moneda');
+
+        // Generar Cambio para precio nacional y precio extranjero ----------------------------------------------
+        if($moneda_principal_id==$moneda_id){
+            $precio_nacional=$request->get('precio');
+            $precio_extranjero=$precio_nacional/$cambio->paralelo;
+          }else{
+            $precio_extranjero=$request->get('precio');
+            $precio_nacional=$precio_extranjero*$cambio->paralelo;
+          }
+
         $servicios=new Servicios;
         $servicios->codigo_servicio=$codigo_servicio;
         $servicios->codigo_original=$request->get('codigo_original');
+        $servicios->moneda_id=$moneda_id;
         $servicios->nombre=$request->get('nombre');
         $servicios->categoria=$request->get('categoria');
-        $servicios->precio=$request->get('precio');
+        $servicios->precio_nacional=round($precio_nacional,2);
+        $servicios->precio_extranjero=round($precio_extranjero,2);
         $servicios->descripcion=$request->get('descripcion');
         $servicios->descuento=$request->get('descuento');
         $servicios->utilidad=$request->get('utilidad');
@@ -117,12 +141,32 @@ class ServiciosController extends Controller
         }else{
             $name=$request->get('foto_original');
         }
+
+        // Tipo de cambio -------------------------------------------------------------------------------------
+        $cambio=TipoCambio::latest('created_at')->first();
+
+        //  Moneda --------------------------------------------------------------------------------------------
+        $moneda_principal=Moneda::where('tipo','nacional')->first();
+        $moneda_principal_id=$moneda_principal->id;
+        $moneda_id=$request->get('moneda');
+
+        // Generar Cambio para precio nacional y precio extranjero ----------------------------------------------
+        if($moneda_principal_id==$moneda_id){
+            $precio_nacional=$request->get('precio');
+            $precio_extranjero=$precio_nacional/$cambio->paralelo;
+        }else{
+            $precio_extranjero=$request->get('precio');
+            $precio_nacional=$precio_extranjero*$cambio->paralelo;
+        }
+
         $servicio= Servicios::find($id);
+        $servicio->moneda_id=$moneda_id;
         $servicio->nombre=$request->get('nombre');
         $servicio->descripcion=$request->get('descripcion');
         $servicio->descuento=$request->get('descuento');
         $servicio->utilidad=$request->get('utilidad');
-        $servicio->precio=$request->get('precio');
+        $servicio->precio_nacional=round($precio_nacional,2);
+        $servicio->precio_extranjero=round($precio_extranjero,2);
         $servicio->foto=$name;
         $servicio->save();
         return redirect()->route('servicios.show', $id);

@@ -14,6 +14,7 @@ class ServicioSeeder extends Seeder
         DB::table('servicios')->insert([
             'codigo_servicio'=>"SERV-00001",
             'codigo_original'=>123,
+            'moneda_id'=>1,
             'nombre'=>"Formateos",
             'categoria'=>"Servicios",
             'precio_nacional'=>100,
