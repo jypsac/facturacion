@@ -387,13 +387,14 @@ class CotizacionServiciosController extends Controller
 
         if($moneda->tipo =='nacional'){
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+                $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
                 $igv_precio[]=$servicio->precio+$utilidad[$index];
                 $igv[]=$igv_precio[$index]*$igv_total/100;
                 $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
             }
         }else{
             foreach ($servicios as $index => $servicio) {
+                return 1;
                 $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
                 $igv_precio[]=$servicio->precio+$utilidad[$index];
                 $igv[]=$igv_precio[$index]*$igv_total/100;

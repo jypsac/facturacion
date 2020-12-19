@@ -54,7 +54,7 @@ class ServiciosController extends Controller
         $conteo=Servicios::all()->count();
         $suma=$conteo +1;
         $servicio_nr=str_pad($suma, 8, "0", STR_PAD_LEFT);
-        $cotizacion_numero="SERV-".$servicio_nr;
+        $codigo_servicio="SERV-".$servicio_nr;
 
         // Tipo de cambio -------------------------------------------------------------------------------------
         $cambio=TipoCambio::latest('created_at')->first();

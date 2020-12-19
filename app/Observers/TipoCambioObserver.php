@@ -31,12 +31,12 @@ class TipoCambioObserver
             // Generar Cambio para precio nacional y precio extranjero ----------------------------------------------
             if($moneda_principal_id==$moneda_id){
                 $precio_nacional=$servicio->precio_nacional;
-                $precio_extranjero=$precio_nacional/$cambio->paralelo;
+                $precio_extranjero=$precio_nacional*$cambio->paralelo;
                 $servicio->precio_extranjero=round($precio_extranjero,2);
                 $servicio->save();
             }else{
                 $precio_extranjero=$servicio->precio_extranjero;
-                $precio_nacional=$precio_extranjero*$cambio->paralelo;
+                $precio_nacional=$precio_extranjero/$cambio->paralelo;
                 $servicio->precio_nacional=round($precio_nacional,2);
                 $servicio->save();
             }
