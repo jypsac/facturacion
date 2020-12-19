@@ -98,9 +98,6 @@ class MonedaController extends Controller
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $tipo_cambio_delete=TipoCambio::findOrFail($tipo_cambio->id);
         $tipo_cambio_delete->delete();
-
-
-
     }
     else{ $principal='0';}
 
