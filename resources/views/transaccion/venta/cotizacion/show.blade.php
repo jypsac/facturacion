@@ -19,11 +19,26 @@
     <div class="ibox-title" style="padding-right: 3.1%">
         <div class="row tooltip-demo">
              <div class="col-sm-6">
-                {{-- @if ($regla=='factura')
+              {{--   @if ($regla=='factura')
                     <a class="btn btn-success" href="{{route('cotizacion.facturar',$cotizacion->id)}}" target="_blank">Facturar</a>
-                @elseif(($regla=='boleta'))
+                @elseif($regla=='boleta')
                     <a class="btn btn-success" href="{{route('cotizacion.boletear',$cotizacion->id)}}" target="_blank">Boletear</a>
                 @endif --}}
+
+                 @if($cotizacion->estado == '1')
+                    @if($cotizacion->tipo=='factura')
+                        <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('facturacion.show',$factura->id)}}" >Ver Factura</a>
+                    @else
+                        <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  href="{{route('boleta.show',$boleta->id)}}" >Ver Boleta</a>
+                    @endif
+                @else
+                {{-- SIN PROCESAR --}}
+                    @if($cotizacion->tipo=='factura')
+                        <a class="btn btn-info" href="{{route('cotizacion.facturar' , $cotizacion->id)}}">Facturar</a>
+                    @else
+                        <a class="btn btn-success"  href="{{route('cotizacion.boletear', $cotizacion->id)}}">Boletear</a>
+                    @endif
+                @endif
             </div>
              <div class="col-sm-6" align="right">
                 <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_cotizacion' ,$cotizacion->id)}}">

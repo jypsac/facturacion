@@ -254,5 +254,6 @@ Route::get('cotizacion/pdf/{id}' , 'CotizacionController@pdf')->name('pdf_cotiza
 Route::get('cotizacion_servicio/pdf/{id}' , 'CotizacionServiciosController@pdf')->name('pdf_cotizacion_servicio');
 Route::get('guia_remision/pdf/{id}' , 'GuiaRemisionController@pdf')->name('pdf_guia');
 Route::get('facturacion/pdf/{id}' , 'FacturacionController@pdf')->name('pdf_fac');
+Route::get('boleta/pdf/{id}' , 'BoletaController@pdf')->name('pdf_bol');
 Route::get('/home', 'HomeController@index')->name('home');
 

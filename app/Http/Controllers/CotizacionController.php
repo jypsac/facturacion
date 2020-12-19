@@ -1019,6 +1019,8 @@ public function show($id)
     $regla=$cotizacion->tipo;
     $sub_total=0;
     $igv=Igv::first();
+    $factura= Facturacion::where('id_cotizador',$id)->first();
+    $boleta=Boleta::where('id_cotizador',$id)->first();
     /*registros boleta y factura*/
     if ($regla=='factura') {
         $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
@@ -1044,7 +1046,7 @@ public function show($id)
     $almacen=auth()->user()->almacen_id;
     $nueva_cot='cotizacion.create_'.$regla;
 
-    return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','end','igv_p','almacen','nueva_cot','banco_count','i'));
+    return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','end','igv_p','almacen','nueva_cot','banco_count','i','boleta','factura'));
 }
 
 public function print($id){
@@ -1811,7 +1813,7 @@ public function boletear_store(Request $request)
  }
 
 
- return redirect()->route('boleta.show',$id_cotizador);
+ return redirect()->route('boleta.show',$boletear->id);
 
 
 }

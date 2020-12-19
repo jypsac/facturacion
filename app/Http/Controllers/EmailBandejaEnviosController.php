@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App;
+use App\Boleta_registro;
+use App\Boleta;
 use App\Cliente;
 use App\Cotizacion;
 use App\Contacto;
@@ -12,6 +14,8 @@ use App\EmailConfiguraciones;
 use App\Empresa;
 use App\Banco;
 use App\Moneda;
+use App\Facturacion;
+use App\facturacion_registro;
 use App\Cotizacion_Servicios;
 use App\Cotizacion_factura_registro;
 use App\Cotizacion_boleta_registro;
@@ -288,6 +292,45 @@ class EmailBandejaEnviosController extends Controller
       Storage::disk('mailbox')->put($especif,$content);
 
       return view('mailbox.create',compact('archivo','clientes','redic','date'));
+   }
+   elseif ($tipo == 'App\Facturacion') {
+        $name = 'Factura';
+        $empresa=Empresa::first();
+        $facturacion=Facturacion::find($id);
+        $facturacion_registro=Facturacion_registro::where('facturacion_id',$id)->get();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $banco=Banco::where('estado',0)->get();
+
+        $archivo=$name.'_'.$id.".pdf";
+        $pdf=PDF::loadView('transaccion.venta.facturacion.pdf', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
+        $content = $pdf->download();
+        $date = $carbon_sp;
+        $especif = $carbon_sp.$archivo;
+        Storage::disk('mailbox')->put($especif,$content);
+
+        return view('mailbox.create',compact('archivo','clientes','redic','date'));
+   }
+   elseif ($tipo == 'App\Boleta') {
+        $name = 'Boleta';
+        $name = $request->get('name');
+        // $regla=$cotizacion->tipo;
+        $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
+        $igv=Igv::first();
+        $banco=Banco::all();
+        $empresa=Empresa::first();
+        $sub_total=0;
+        $boleta=Boleta::find($id);
+
+        $archivo=$name.'_'.$id.".pdf";
+        $pdf=PDF::loadView('transaccion.venta.boleta.pdf', compact('boleta','empresa','banco','boleta_registro','igv','sub_total'));
+        $content = $pdf->download();
+        $date = $carbon_sp;
+        $especif = $carbon_sp.$archivo;
+        Storage::disk('mailbox')->put($especif,$content);
+
+        return view('mailbox.create',compact('archivo','clientes','redic','date'));
    }
    else
    {

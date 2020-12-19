@@ -25,6 +25,7 @@ use App\Kardex_entrada;
 use App\kardex_entrada_registro;
 use App\TipoCambio;
 use Carbon\Carbon;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\Almacen;
 use Illuminate\Http\Request;
 
@@ -61,14 +62,14 @@ class BoletaController extends Controller
         foreach($kardex_entrada as $kardex_entradas){
             $kadex_entrada_id[]=$kardex_entradas->id;
         }
-        
+
         for($x=0;$x<$kardex_entrada_count;$x++){
             if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
                 $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
                 foreach( $nueva as $nuevas){
                     $prod[]=$nuevas->producto_id;
                 }
-            }   
+            }
         }
         //validar almacen con prodcutos vacios
         if(!isset($prod)){
@@ -91,7 +92,7 @@ class BoletaController extends Controller
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                 $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])*($igv->igv_total/100);
-                
+
                 $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]+$igv_p[$index];
                 $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
                 $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
@@ -113,7 +114,7 @@ class BoletaController extends Controller
         $p_venta=Personal_venta::where('estado','0')->get();
 
         $empresa=Empresa::first();
-        
+
         // obtencion de la sucursal
         $almacen=$request->get('almacen');
         //obtencion del almacen
@@ -161,7 +162,7 @@ class BoletaController extends Controller
             foreach ($productos as $index => $producto) {
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                 $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*($igv->igv_total/100);
-                
+
                 $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]+$igv_p[$index])*$tipo_cambio->paralelo;
                 $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
                 $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
@@ -170,10 +171,10 @@ class BoletaController extends Controller
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','dni')->get();
-        
+
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
-        
+
 
         $empresa=Empresa::first();
 
@@ -321,7 +322,7 @@ class BoletaController extends Controller
         $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
         $nuevafechas = date("d-m-Y", $nuevafecha );
 
-        
+
 
         //buscador al cambio
         $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
@@ -367,7 +368,7 @@ class BoletaController extends Controller
             for($x=0;$x<$kardex_entrada_count_v;$x++){
                 if(Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first()){
                     $nueva_v[]=Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first();
-                }   
+                }
             }
             $comparacion_v=$nueva_v;
             //buble para la cantidad
@@ -432,7 +433,7 @@ class BoletaController extends Controller
                 $boleta_registro->numero_serie=$request->get('numero_serie')[$i];
                 //producto
                 $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->where('estado_anular',1)->first();
-                
+
                 //stock --------------------------------------------------------
                 $stock=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->sum('cantidad');
                 $boleta_registro->stock=$stock;
@@ -451,7 +452,7 @@ class BoletaController extends Controller
                         //promedio original revisar que es  promedio nacional--------------------------------------------------------
                         $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero');
                         $boleta_registro->promedio_original=$array2;
-                        
+
                         $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                         $igv_p=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad)*($igv->igv_total/100);
                         $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad+$igv_p);
@@ -508,7 +509,7 @@ class BoletaController extends Controller
                 for($x=0;$x<$kardex_entrada_count;$x++){
                     if(Kardex_entrada_registro::where('producto_id',$boleta_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first()){
                         $nueva[]=Kardex_entrada_registro::where('producto_id',$boleta_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
-                    }   
+                    }
                 }
                 $comparacion=$nueva;
                 //buble para la cantidad
@@ -579,7 +580,22 @@ class BoletaController extends Controller
         $boleta=Boleta::find($id);
         return view('transaccion.venta.boleta.print', compact('boleta','empresa','banco','boleta_registro','igv','sub_total'));
     }
+    public function pdf(Request $request,$id){
+        $name = $request->get('name');
+        // $regla=$cotizacion->tipo;
+        $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
+        $igv=Igv::first();
+        $banco=Banco::all();
+        $empresa=Empresa::first();
+        $sub_total=0;
+        $boleta=Boleta::find($id);
 
+        $archivo=$name.'_'.$id;
+        $pdf=PDF::loadView('transaccion.venta.boleta.pdf', compact('boleta','empresa','banco','boleta_registro','igv','sub_total'));
+        return $pdf->download('Boleta - '.$archivo.'.pdf');
+
+        // return view('transaccion.venta.facturacion.print', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
+    }
     public function show_boleta(Request $request,$id)
     {
 

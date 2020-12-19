@@ -40,10 +40,10 @@
                 @else
                     <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
                         @csrf
-                        {{-- <input type="text" hidden="hidden"  name="tipo" value="App\Cotizacion"/>
-                        <input type="text" hidden="hidden"  name="id" value="{{$cotizacion->id}}"/>
+                        <input type="text" hidden="hidden"  name="tipo" value="App\Facturacion"/>
+                        <input type="text" hidden="hidden"  name="id" value="{{$facturacion->id}}"/>
                         <input type="text" hidden="hidden"  name="redict" value="cotizacion_factura"/>
-                        <input type="text" hidden="hidden"  name="cliente" value=" {{$cotizacion->cliente->email}}"/> --}}
+                        <input type="text" hidden="hidden"  name="cliente" value=" {{$facturacion->cliente->email}}"/>
                        <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title=""  formtarget="_blank"  data-original-title="Enviar por correo"><i class="fa fa-envelope fa-lg"  ></i> </button>
                     </form>
                 @endif
