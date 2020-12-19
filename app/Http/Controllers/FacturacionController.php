@@ -182,7 +182,6 @@ class FacturacionController extends Controller
             }
         }
 
-
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
 
