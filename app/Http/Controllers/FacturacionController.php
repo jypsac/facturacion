@@ -612,9 +612,11 @@ class FacturacionController extends Controller
         $igv=Igv::first();
         $sub_total=0;
         $banco=Banco::where('estado',0)->get();
+        $banco_count=Banco::where('estado','0')->count();
+        $i = 1;
 
         $archivo=$name.'_'.$id;
-        $pdf=PDF::loadView('transaccion.venta.facturacion.pdf',compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
+        $pdf=PDF::loadView('transaccion.venta.facturacion.pdf',compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco','banco_count','i'));
         return $pdf->download('Facturacion - '.$archivo.'.pdf');
 
         // return view('transaccion.venta.facturacion.print', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));

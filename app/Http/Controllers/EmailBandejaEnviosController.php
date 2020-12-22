@@ -302,9 +302,11 @@ class EmailBandejaEnviosController extends Controller
         $igv=Igv::first();
         $sub_total=0;
         $banco=Banco::where('estado',0)->get();
+        $banco_count=Banco::where('estado','0')->count();
+        $i = 1;
 
         $archivo=$name.'_'.$id.".pdf";
-        $pdf=PDF::loadView('transaccion.venta.facturacion.pdf', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco'));
+        $pdf=PDF::loadView('transaccion.venta.facturacion.pdf', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco','banco_count','i'));
         $content = $pdf->download();
         $date = $carbon_sp;
         $especif = $carbon_sp.$archivo;
@@ -319,12 +321,14 @@ class EmailBandejaEnviosController extends Controller
         $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
         $igv=Igv::first();
         $banco=Banco::all();
+        $banco_count=Banco::where('estado','0')->count();
         $empresa=Empresa::first();
         $sub_total=0;
         $boleta=Boleta::find($id);
+        $i = 1;
 
         $archivo=$name.'_'.$id.".pdf";
-        $pdf=PDF::loadView('transaccion.venta.boleta.pdf', compact('boleta','empresa','banco','boleta_registro','igv','sub_total'));
+        $pdf=PDF::loadView('transaccion.venta.boleta.pdf', compact('boleta','empresa','banco','boleta_registro','igv','sub_total','banco_count','i'));
         $content = $pdf->download();
         $date = $carbon_sp;
         $especif = $carbon_sp.$archivo;
