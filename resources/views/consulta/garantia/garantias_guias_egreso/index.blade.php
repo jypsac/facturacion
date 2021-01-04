@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Garantia - Guia de egreso')
+@section('title', 'Consulta - Guia de egreso')
 @section('breadcrumb', 'Guia de egreso')
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('consultas.garantias.guias_egreso'))
-@section('value_accion', 'Actualizar')
+@section('value_accion', 'Consulta')
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -59,12 +59,13 @@
 
                                             <td>
                                                 @if($garantias_guias_egreso->estado==1)Activo
-                                                @elseAnulado
+                                                @else
+                                                Anulado
                                                 @endif
                                             </td>
                                             <td>{{$garantias_guias_egreso->garantia_ingreso_i->motivo}}</td>
 
-                                            <td>{{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->nombres}} {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->personal_l->apellidos}}</td>
+                                            <td>{{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->nombres}} {{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->apellidos}}</td>
 
                                             <td>{{$garantias_guias_egreso->garantia_ingreso_i->fecha}}</td>
 

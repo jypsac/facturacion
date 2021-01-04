@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Garantia - Guia de ingreso')
+@section('title', 'Consulta - Guia de ingreso')
 @section('breadcrumb', 'Guia de ingreso')
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('consultas.garantias.guias_ingreso'))
-@section('value_accion', 'Actualizar')
+@section('value_accion', 'Consulta')
 
 @section('content')
 
@@ -51,7 +51,7 @@
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        
+
                                         @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
                                         <tr class="">
                                             <td>{{$garantias_guias_ingreso->id}} </td>
@@ -69,7 +69,7 @@
                                             <td> {{$garantias_guias_ingreso->motivo}}</td>
 
                                             <td>
-                                                {{$garantias_guias_ingreso->personal_laborales->personal_l->nombres}} {{$garantias_guias_ingreso->personal_laborales->personal_l->apellidos}}
+                                                {{$garantias_guias_ingreso->personal_laborales->nombres}} {{$garantias_guias_ingreso->personal_laborales->apellidos}}
                                             </td>
 
                                             <td>{{$garantias_guias_ingreso->fecha}} </td>

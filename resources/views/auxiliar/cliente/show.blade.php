@@ -3,8 +3,8 @@
 @section('title', 'cliente ver')
 @section('breadcrumb', 'cliente ver')
 @section('breadcrumb2', 'cliente ver')
-@section('href_accion', route('cliente.index'))
-@section('value_accion', 'atras')
+@section('href_accion', route('cliente.create'))
+@section('value_accion', 'Cliente Nuevo')
 
 @section('content')
 

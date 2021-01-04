@@ -3,8 +3,8 @@
 @section('title', 'Provedor Ver')
 @section('breadcrumb', 'Provedor Ver')
 @section('breadcrumb2', 'Provedor Ver')
-@section('href_accion', route('provedor.index'))
-@section('value_accion', 'atras')
+@section('href_accion', route('provedor.create'))
+@section('value_accion', 'Provedor Nuevo')
 
 @section('content')
 
@@ -58,10 +58,10 @@
 
 
 
-    </div> 
+    </div>
 
 
-                           
+
 </div>
 </div>
 

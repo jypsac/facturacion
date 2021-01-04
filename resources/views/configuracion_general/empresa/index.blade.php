@@ -27,8 +27,16 @@
                 <div class="panel-body" >
                   <div class="row">
                     <div class="col-sm-12">
-                      <img src="{{asset('img/logos/'.$mi_empresa->foto)}}" alt="">
-                    </div>
+                       <input type="file" id="archivoInputs" name="fotos" onchange="return validarExtImg()" align="right" style="text-align: center;" />
+                       <div id="visorArchivos">
+                         <!--Aqui se desplegará el fichero-->
+                         <center >
+                          <img src="{{asset('img/logos/'.$mi_empresa->foto)}}" style="width: 378px;height: 77px;margin-bottom: 15px;"></center>
+                        </div>
+                        <input type="text" value="{{$mi_empresa->foto}}" style="width: 378px;height: 77px;margin-bottom: 15px;" class="form-control" name="ori_foto" hidden="hidden">
+                      </div>
+
+
                     <label class="col-sm-2 col-form-label">Descripcion:</label>
                     <div class="col-sm-10" style="padding-bottom: 10px">
                       <textarea name="descripcion" class="form-control">{{$mi_empresa->descripcion}}</textarea>
@@ -71,11 +79,11 @@
                       <input type="text" class="form-control" name="rubro" value="{{$mi_empresa->rubro}}">
                     </div>
                     <label class="col-sm-2 col-form-label">Pagina Web:</label>
-                    <div class="col-sm-4">
+                    <div class="col-sm-4" style="    padding-bottom: 10px;">
                       <input  type="text" class="form-control" name="pagina_web" value="{{$mi_empresa->pagina_web}}">
                     </div>
-                    
-                    <label class="col-sm-2 col-form-label">background inicial:</label>
+
+                    <label class="col-sm-2 col-form-label">Background inicial:</label>
                     <div class="col-sm-10" style="padding-bottom: 10px">
                       <input type="text" name="background" class="form-control" value="{{$mi_empresa->background}}"/>
                     </div>
@@ -349,7 +357,15 @@
   <!-- Custom and plugin javascript -->
   <script src="{{ asset('js/inspinia.js') }}"></script>
   <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+  <style>input#archivoInputs{
+      position:absolute;
 
+      right:130px;
+
+      width:378px;
+      height:77px;
+      opacity: 0  ;
+    }</style>
   <script>
 
     $(document).ready(function () {
@@ -362,5 +378,29 @@
       });
 
     </script>
-
+    <script type="text/javascript">
+        {{-- Fotooos --}}
+function validarExtImg(){
+    var archivoInput = document.getElementById('archivoInputs');
+    var archivoRuta = archivoInput.value;
+    var extPermitidas = /(.jpg|.png|.jfif)$/i;
+    if(!extPermitidas.exec(archivoRuta)){
+        alert('Asegurese de haber seleccionado una Imagen');
+        archivoInput.value = '';
+        return false;
+    }else{
+        //PRevio del PDF
+        if (archivoInput.files && archivoInput.files[0])
+        {
+            var visor = new FileReader();
+            visor.onload = function(e)
+            {
+                document.getElementById('visorArchivos').innerHTML =
+                '<img name="fotos" src="'+e.target.result+'" style="width: 378px;height: 77px;margin-bottom: 15px;border-radius: 10px"/>';
+            };
+            visor.readAsDataURL(archivoInput.files[0]);
+        }
+    }
+}
+</script>
     @endsection

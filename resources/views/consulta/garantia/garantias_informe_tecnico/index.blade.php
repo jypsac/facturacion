@@ -4,7 +4,7 @@
 @section('breadcrumb', 'Informe Tecnico')
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('consultas.garantias.informe_tecnico'))
-@section('value_accion', 'Actualizar')
+@section('value_accion', 'Consulta')
 
 @section('content')
     <div class="wrapper wrapper-content animated fadeInRight">
@@ -62,7 +62,7 @@
                                                 @endif
                                             </td>
                                             <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}</td>
-                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}}</td>
+                                            <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->nombres}} {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->apellidos}}</td>
                                             <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha}}</td>
                                             <td>{{$garantias_informe_tecnico->orden_servicio}}</td>
                                             <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</td>
@@ -71,7 +71,7 @@
                                                 <td>
                                                 <center><a href="{{ route('garantia_informe_tecnico.show', $garantias_informe_tecnico->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>
                                             </td>
-    
+
                                             </tr>
                                             @endforeach
                                         </tbody>
