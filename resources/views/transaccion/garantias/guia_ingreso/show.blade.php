@@ -3,11 +3,43 @@
 @section('title', 'Ver - Guia de Ingreso')
 @section('breadcrumb', 'Ver Guia de Ingreso')
 @section('breadcrumb2', 'Garantia')
-@section('href_accion', route('garantia_guia_ingreso.index'))
-@section('value_accion', 'Atras')
+@section('data-toggle', 'modal')
+@section('href_accion', '#modal-form')
+@section('value_accion', 'Nueva Guia')
 
 @section('content')
+<div id="modal-form" class="modal fade" aria-hidden="true">
+<div class="modal-dialog">
+    <div class="modal-content">
+        <div class="modal-body">
+            <div class="row">
+                <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
 
+                    <p>Selecciona marca a agregar</p>
+
+                    <form action="{{ route('garantia_guia_ingreso.create') }}"  enctype="multipart/form-data" method="get">
+                        <div class="form-group">{{-- <label>Marca</label> --}}
+                            <div class="form-group row"><label class="col-sm-2 col-form-label">Marca:</label>
+                                <div class="col-sm-10">
+                                    <select class="form-control m-b" name="familia">
+                                    @foreach($marcas as $marca)
+                                    <option value="{{$marca->id}}" >{{$marca->nombre_empresa}}</option>
+                                    @endforeach
+                                    </select>
+                                </div>
+                            </div>
+                        </div>
+
+                            <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
+                    </form>
+
+                        </div>
+                </div>
+
+            </div>
+    </div>
+    </div>
+</div>
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title" align="right" style="padding-right: 3.1%">
         {{-- <div class="ibox-tools"> --}}

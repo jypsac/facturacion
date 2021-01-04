@@ -177,7 +177,8 @@ class GarantiaGuiaIngresoController extends Controller
       $contacto = Contacto::all();
       $empresa=Empresa::first();
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
-      return view('transaccion.garantias.guia_ingreso.show',compact('garantia_guia_ingreso','empresa','contacto'));
+      $marcas=Marca::all();
+      return view('transaccion.garantias.guia_ingreso.show',compact('garantia_guia_ingreso','empresa','contacto','marcas'));
     }
 
     /**

@@ -3,8 +3,8 @@
 @section('title', 'Ver Informe Tecnico')
 @section('breadcrumb', 'Ver informe Tecnico')
 @section('breadcrumb2', 'Informe Tecnico')
-@section('href_accion', route('garantia_informe_tecnico.index') )
-@section('value_accion', 'Atras')
+@section('href_accion', route('garantia_informe_tecnico.guias') )
+@section('value_accion', 'Nueva Guia')
 
 @section('content')
 

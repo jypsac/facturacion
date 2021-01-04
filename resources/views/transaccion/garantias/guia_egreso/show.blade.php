@@ -3,8 +3,8 @@
 @section('title', 'Ver - Guia de Egreso')
 @section('breadcrumb', 'Ver Guia de Egreso')
 @section('breadcrumb2', 'Garantia')
-@section('href_accion', route('garantia_guia_egreso.index'))
-@section('value_accion', 'Atras')
+@section('href_accion', route('garantia_guia_egreso.guias'))
+@section('value_accion', 'Nueva Guia')
 
 @section('content')
 

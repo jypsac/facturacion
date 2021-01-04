@@ -3,8 +3,8 @@
 @section('title', 'Servicios/Ver')
 @section('breadcrumb', 'Servicios/Ver')
 @section('breadcrumb2', 'Servicios/Ver')
-@section('href_accion', route('servicios.index'))
-@section('value_accion', 'Atras')
+@section('href_accion', route('servicios.create'))
+@section('value_accion', 'Servicio Nuevo')
 
 @section('content')
 @if ($servicios->estado_anular=='0')
