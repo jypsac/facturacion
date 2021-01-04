@@ -7,6 +7,28 @@
 @section('value_accion', 'Atras')
 
 @section('content')
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    @if($errors->any())
+
+    <div style="padding-top: 20px;">
+       <div class="alert alert-danger">
+        <a class="alert-link" href="#">
+          @foreach ($errors->all() as $error)
+          <li class="error">{{ $error }}</li>
+          @endforeach
+      </a>
+  </div>
+</div>
+@endif
+@if(isset($errores))
+<div>
+  <div class="alert alert-danger">
+    <div class="alert-link" href="#">
+      <li style="color: red;">{{ $errores }}</li>
+  </div>
+</div>
+</div>
+@endif
 		<div class="wrapper wrapper-content animated fadeInRight">
                     <div class="row">
                         <div class="col-lg-12">
@@ -33,20 +55,44 @@
                             </div>
                             <div class="ibox-content">
                                 <div class="table-responsive">
+
                                     <table class="table table-striped table-bordered table-hover dataTables-example" >
                                         <thead>
                                             <tr>
+                                                <th><input type="checkbox" name=""id="select_all" ></th>
                                                 <th>Nombre del Permiso</th>
-                                                <th>Estado</th>
+                                                <th >Estado</th>
+                                                <th ></th>
                                             </tr>
                                         </thead>
                                     <tbody>
                                         @foreach($permisos as $permiso)
                                             <tr class="gradeX">
-                                                <td>{{$permiso->nombre}}</td>
-                                                <td><center><a href="{{ route('usuario.crear', $permiso->id,$usuario->id) }}"><button type="button" class="btn btn-s-m btn-success">Activar</button></a></center></td>
+                                                <td><input type="checkbox" id="" name="select[]"></td>
+                                                <td>{{$permiso->name}}</td>
+                                                <td>
+                                                    <center>
+                                                    <form method="POST" action="{{route('usuario.asignar_permiso',$usuario->id)}}">
+                                                        @csrf
+                                                        <input type="hidden" name="permisos" id="" value="{{$permiso->name}}">
+                                                        <input type="submit" class="btn btn-s-m btn-success" value="Activar" />
+                                                    </form>
+
+                                                    </center>
+                                                </td>
+                                                <td>
+                                                    <center>
+                                                    <form method="POST" action="{{route('usuario.delegar_permiso',$usuario->id)}}">
+                                                        @csrf
+                                                        <input type="hidden" name="permisos" id="" value="{{$permiso->name}}">
+                                                        <input type="submit" class="btn btn-s-m btn-danger" value="Desactivar" />
+                                                    </form>
+
+                                                    </center>
+                                                </td>
                                             </tr>
                                         @endforeach
+
                                     </tbody>
                                     </table>
                                 </div>
@@ -98,6 +144,11 @@
             });
 
         });
-
+        $('#select_all').click(function() {
+  var c = this.checked;
+  $(':checkbox').prop('checked', c);
+});
     </script>
+
+
 @endsection

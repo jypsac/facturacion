@@ -3,8 +3,8 @@
 @section('title', 'productos')
 @section('breadcrumb', 'productos')
 @section('breadcrumb2', 'productos')
-@section('href_accion', route('productos.index'))
-@section('value_accion', 'Atras')
+@section('href_accion', route('productos.create'))
+@section('value_accion', 'Nuevo Producto')
 
 @section('content')
 

@@ -232,6 +232,8 @@ Route::group(
 		Route::post('usuario/envio_codigo/{id}', 'UsuarioController@envio_codigo')->name('usuario.envio_codigo');
 		Route::post('usuario/activar/{id}', 'UsuarioController@activar')->name('usuario.activar');
 		Route::get('usuario/permiso/{id}','UsuarioController@permiso')->name('usuario.permiso');
+		Route::post('usuario/permisos/asignar/{id}','UsuarioController@asignar_permiso')->name('usuario.asignar_permiso');
+		Route::post('usuario/permisos/delegar/{id}','UsuarioController@delegar_permiso')->name('usuario.delegar_permiso');
 		Route::resource('/usuario','UsuarioController');
 		Route::resource('/venta','VentaController');
 

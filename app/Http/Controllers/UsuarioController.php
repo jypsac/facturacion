@@ -7,6 +7,7 @@ use App\Config;
 use App\Permiso;
 use App\Personal;
 use App\User;
+use Auth;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -430,11 +431,31 @@ public function activar($id)
 public function permiso($id){
 
     $usuario=User::find($id);
+    $user= User::where('id',$id)->pluck('id')->first();
     $permisos=Permiso::all();
-    return view('configuracion_general.usuario.permisos.lista',compact('usuario','permiso'));
+
+    $hola = $user->hasPermissionTo('inicio');
+    return view('configuracion_general.usuario.permisos.lista',compact('usuario','permisos','user'));
+
+    // return $hola;
 }
 
-public function asignar_permiso(){
+public function asignar_permiso(Request $request,$id){
         //asignamiento de permisos
+    $permisos = $request->get('permisos');
+    $user = User::find($id);
+    $user->givePermissionTo($permisos);
+    $user->save();
+
+    return  back();
+}
+public function delegar_permiso(Request $request,$id){
+        //asignamiento de permisos
+    $permisos = $request->get('permisos');
+    $user = User::find($id);
+    $user->revokePermissionTo($permisos);
+    $user->save();
+
+    return  back();
 }
 }
