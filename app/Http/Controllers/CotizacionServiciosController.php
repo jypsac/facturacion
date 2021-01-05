@@ -313,28 +313,31 @@ class CotizacionServiciosController extends Controller
                 $cotizacion_registro->servicio_id=$servicio_id[$i];
 
                 $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
-                $cotizacion_registro->promedio_original=$servicio->precio;
-
+                // return $servicio;
                 //logica para el precio dependiendo de la moneda
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional') {
+                        $cotizacion_registro->promedio_original=$servicio->precio_nacional;
                         $utilidad=$servicio->precio_nacional*$servicio->utilidad/100;
                         $array=$servicio->precio_nacional+$utilidad;
-                        $cotizacion_registro->precio_nacional=$array;
+                        $cotizacion_registro->precio=$array;
                     }else{
+                        $cotizacion_registro->promedio_original=$servicio->precio_extranjero;
                         $utilidad=$servicio->precio_extranjero*$servicio->utilidad/100;
                         $array=$servicio->precio_extranjero+$utilidad;
-                        $cotizacion_registro->precio_extranjero=$array;
+                        $cotizacion_registro->precio=$array;
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera') {
+                        $cotizacion_registro->promedio_original=$servicio->precio_extranjero;
                         $utilidad=$servicio->precio_extranjero*$servicio->utilidad/100;
                         $array=($servicio->precio_extranjero+$utilidad)*$tipo_cambio->paralelo;
-                        $cotizacion_registro->precio_extranjero=$array;
+                        $cotizacion_registro->precio=$array;
                     }else{
+                        $cotizacion_registro->promedio_original=$servicio->precio_nacional;
                         $utilidad=$servicio->precio_nacional*$servicio->utilidad/100;
                         $array=($servicio->precio_nacional+$utilidad)/$tipo_cambio->paralelo;
-                        $cotizacion_registro->precio_nacional=$array;
+                        $cotizacion_registro->precio=$array;
                     }
                 }
 
