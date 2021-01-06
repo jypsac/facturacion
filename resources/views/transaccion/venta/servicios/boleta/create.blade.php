@@ -206,7 +206,7 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <div class="row">
-                                    <label class="col-sm-2 col-form-label">Clientes:</label>
+                                    <label class="col-sm-2 col-form-label">Cliente:</label>
                                     <div class="col-sm-10">
                                         <input list="browsersc1" class="form-control m-b" name="cliente" required value="{{ old('nombre')}}" autocomplete="off" onclick="Clear(this);">
                                         <datalist id="browsersc1" >
@@ -230,15 +230,18 @@
 
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Moneda:</label>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-8">
                                                 <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
-                                                <a class="col-sm-5" href="{{route('boleta_servicio.create_ms')}}">
+
+                                            </div>
+                                            <div class="col-sm-1">
+                                                <a href="{{route('boleta_servicio.create_ms')}}">
                                                     <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>
-                                                        @if($moneda->tipo=='nacional')Dolares 
-                                                        @elseif($moneda->tipo=='extranjera') Soles 
+                                                        @if($moneda->tipo=='nacional')Dolares
+                                                        @elseif($moneda->tipo=='extranjera') Soles
                                                         @endif
                                                     </button>
-                                                 </a> 
+                                                 </a>
                                             </div>
                                             </div>
                                                 <br>

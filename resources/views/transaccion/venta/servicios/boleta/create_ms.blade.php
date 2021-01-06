@@ -230,15 +230,18 @@
 
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Moneda:</label>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-8">
                                                 <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
+
+                                            </div>
+                                            <div class="col-sm-1">
                                                 <a class="col-sm-5" href="{{route('boleta_servicio.create')}}">
                                                     <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>
-                                                        @if($moneda->tipo=='nacional')Dolares 
-                                                        @elseif($moneda->tipo=='extranjera') Soles 
+                                                        @if($moneda->tipo=='nacional')Dolares
+                                                        @elseif($moneda->tipo=='extranjera') Soles
                                                         @endif
                                                     </button>
-                                                 </a> 
+                                                 </a>
                                             </div>
                                             </div>
                                                 <br>

@@ -103,7 +103,7 @@
 
 <div class="form-control" style="border: none;height: auto" >
     <div align="left">
-       
+
     </div>
 </div>
 <br>
@@ -153,7 +153,7 @@
                 <td width="30px">ITEM </td>
                 <td width="120px" >Codigo Servicio</td>
                 <td width="auto">Cantidad</td>
-                <td width="400px">Descripcion</td>
+                <td width="auto">Descripcion</td>
                 <td width="auto">Valor Unitario</td>
                 <td width="auto">Dscto.%</td>
                 <td width="auto">Precio Unitario</td>
