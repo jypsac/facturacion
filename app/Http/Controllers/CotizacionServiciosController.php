@@ -50,6 +50,14 @@ class CotizacionServiciosController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+    public function descripcion_ajax_serv(Request $request){
+        $articulo=$request->get('articulo');
+        $id=explode(" ",$articulo);
+        $producto=Servicios::where('id',$id[0])->first();
+        $descripcion= $producto->descripcion;
+        return $descripcion;
+    }
+
     public function create_factura(Request $request)
     {
         $servicios=Servicios::where('estado_anular',0)->get();

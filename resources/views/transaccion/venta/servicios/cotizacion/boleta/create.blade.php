@@ -350,6 +350,7 @@
                                                                     <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 0 0 {{$servicio->descuento}} {{$array[$index]}}">
                                                                     @endforeach
                                                                 </datalist>
+                                                                <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                                             </td>
                                                             <td>
                                                                 <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
@@ -450,12 +451,13 @@
                                 <input type='checkbox' class='case'/>
                                 </td>";
                                 <td>
-                                <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i})" onclick="Clear(this);" autocomplete="off" >
+                                <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i});ajax(${i})" onclick="Clear(this);" autocomplete="off" >
                                 <datalist id="browsers" >
                                 @foreach($servicios as $index => $servicio)
                                 <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 0 0 {{$servicio->descuento}} {{$array[$index]}}">
                                 @endforeach
                                 </datalist>
+                                <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                 </td>
 
 
@@ -496,7 +498,45 @@
                                 i++;
                             });
                         </script>
+<script>
+                        $('#articulo').change(function(e){
+                            e.preventDefault();
 
+                            var articulo = $('[id="articulo"]').val();
+                            // var data={articulo:articulo,_token:token};
+                                    $.ajax({
+                                        type: "post",
+                                        url: "{{ route('descripcion_ajax_serv') }}",
+                                        data: {
+                                            '_token': $('input[name=_token]').val(),
+                                            'articulo': articulo
+                                            },
+                                        success: function (msg) {
+                                            // console.log(msg);
+
+                                            $('#descripcion0').val(msg);
+                                        }
+                                    });
+                                });
+
+
+                        function ajax (a){
+                            var articulo2 = $(`[id='articulo${a}']`).val();
+                            $.ajax({
+                                        type: "post",
+                                        url: "{{ route('descripcion_ajax_serv') }}",
+                                        data: {
+                                            '_token': $('input[name=_token]').val(),
+                                            'articulo': articulo2
+                                            },
+                                        success: function (msg) {
+                                            // console.log(msg);
+
+                                            $(`#descripcion${a}`).val(msg);
+                                        }
+                                    });
+                        }
+                    </script>
                         <script>
                             function print(){
                                 var print_input=1;

@@ -95,7 +95,7 @@
                     <td>{{$i++}} </td>
                     <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
                     {{-- <td>{{$cotizacion_registros->servicio->unidad_i_producto->medida}}</td> --}}
-                    <td>{{$cotizacion_registros->servicio->nombre}}</td>
+                    <td>{{$cotizacion_registros->servicio->nombre}}&nbsp;<span style="font-size: 10px">{{$cotizacion_registros->servicio->descripcion}}</span></td>
                     <td>{{$cotizacion_registros->cantidad}}</td>
                     <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
                     <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
@@ -116,7 +116,7 @@
                 <td>{{$i++}} </td>
                 <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
                 {{-- <td>{{$cotizacion_registros->servicio->unidad_i_producto->medida}}</td> --}}
-                <td>{{$cotizacion_registros->servicio->nombre}}</td>
+                <td>{{$cotizacion_registros->servicio->nombre}}&nbsp;<span style="font-size: 10px">{{$cotizacion_registros->servicio->descripcion}}</span></td>
                 <td>{{$cotizacion_registros->cantidad}}</td>
                 <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
 

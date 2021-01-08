@@ -106,7 +106,7 @@
 
 <div class="form-control" style="border: none;height: auto" >
     <div align="left">
-       
+
     </div>
 </div>
 <br>
@@ -119,7 +119,7 @@
                 <td width="120px" >Codigo Producto</td>
                 <td width="60px">Cantidad</td>
                 <td width="60px">Unid.Medida</td>
-                <td width="auto">Descripción</td>
+                <td width="200px">Descripción</td>
                 <td width="auto">Valor Unitario</td>
                 <td width="auto">Dscto.%</td>
                 <td width="auto">Precio Unitario</td>
@@ -128,7 +128,7 @@
         </thead>
         <tbody>
             @foreach($boleta_registro as $boleta_registros)
-                
+
                 <tr style="border-bottom-width:   0px white ">
                     <td>{{$i++}} </td>
                     <td>{{$boleta_registros->producto->codigo_producto}}</td>
@@ -156,16 +156,16 @@
                 <td width="30px">ITEM </td>
                 <td width="120px" >Codigo Servicio</td>
                 <td width="auto">Cantidad</td>
-                <td width="400px">Descripcion</td>
+                <td width="200px">Descripcion</td>
                 <td width="auto">Valor Unitario</td>
                 <td width="auto">Dscto.%</td>
-                <<td width="auto">Precio Unitario</td>
+                <td width="auto">Precio Unitario</td>
                 <td width="80px">Valor Venta</td>
             </tr>
         </thead>
         <tbody>
            @foreach($boleta_registro as $boleta_registros)
-                
+
                 <tr style="border-bottom-width:   0px white ">
                     <td width="30px" style="">{{$i++}} </td>
                     <td  width="120px" style="">{{$boleta_registros->servicio->codigo_servicio}}</td>
@@ -181,7 +181,7 @@
                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                     </td>
                 </tr>
-                
+
             @endforeach
         </tbody>
     </table>
@@ -217,7 +217,7 @@
             </td>
         <th style="width: 2%;border-color: white"></th>
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-               {{-- {{$simbologia=$cotizacion->moneda->simbolo}} --}} s/ .00 
+               {{-- {{$simbologia=$cotizacion->moneda->simbolo}} --}} s/ .00
             </td>
         <th style="width: 2%;border-color: white"></th>
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">

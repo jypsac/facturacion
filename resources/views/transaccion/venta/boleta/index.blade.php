@@ -91,7 +91,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Cliente ID</th>
+                                    <th>Cliente </th> {{-- <th>Cliente ID</th> --}}
                                     <th>Forma de pago</th>
                                     <th>Fecha de emision</th>
                                     <th>Fecha Vencimiento</th>
@@ -103,8 +103,8 @@
                                 @foreach($boletas as $boleta)
                                 <tr class="gradeX">
                                     <td>{{$boleta->id}}</td>
-                                    <td>{{$boleta->cliente_id}}</td> {{-- <td>{{$boleta->cliente->nombre}}</td> --}}
-                                    <td>{{$boleta->forma_pago_id}}</td> {{-- <td>{{$boleta->forma_pago->nombre}}</td> --}}
+                                    {{-- <td>{{$boleta->cliente_id}}</td> --}} <td>{{$boleta->cliente->nombre}}</td>
+                                    {{-- <td>{{$boleta->forma_pago_id}}</td> --}} <td>{{$boleta->forma_pago->nombre}}</td>
                                     <td>{{$boleta->fecha_emision}}</td>
                                     <td>{{$boleta->fecha_vencimiento }}</td>
                                     <td><center>

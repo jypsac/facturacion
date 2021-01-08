@@ -32,7 +32,7 @@
 {{-- LLAMADO AL BODY EN FUNCION CERRAR CON UNA DURACION DE 10 SEGUNDOS --}}
 <body class="white-bg" onLoad="setTimeout('cerrar()',1*1000)">
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">  
+    <div class="row">
         <div class="col-lg-12">
             <div class="ibox-content p-xl" style=" margin-bottom: 20px;padding-bottom: 20px;">
                     <div class="row">
@@ -51,7 +51,7 @@
                                 <h5>{{$cotizacion->cod_cotizacion}} </h5>
                             </div>
                         </div>
-                         
+
                     </div>
                     </div>
                     <br>
@@ -113,12 +113,12 @@
                                 <td>{{$i}} </td>
                                 <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
                                 {{-- <td>{{$cotizacion_registros->servicio->unidad_i_producto->medida}}</td> --}}
-                                <td>{{$cotizacion_registros->servicio->nombre}}</td>
+                                <td>{{$cotizacion_registros->servicio->nombre}}&nbsp;<span style="font-size: 10px">{{$cotizacion_registros->servicio->descripcion}}</span></td>
                                 <td>{{$cotizacion_registros->cantidad}}</td>
                                 <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
 
                                 <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
-                                <td style="display: none"> {{$sub_total = ($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi) + $sub_total }} 
+                                <td style="display: none"> {{$sub_total = ($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi) + $sub_total }}
                                     @if ($regla=="factura")
                                     S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                     {{$end=round($sub_total, 2)+round($igv_p, 2)}}
@@ -135,9 +135,9 @@
                             @foreach($cotizacion_registro2 as $cotizacion_registros)
                             <tr>
                                 <td>{{$i}} </td>
-                                        <td>{{$cotizacion_registros->servicio->codigo_producto}}</td>
-                                        <td>{{$cotizacion_registros->servicio->unidad_i_producto->medida}}</td>
-                                        <td>{{$cotizacion_registros->servicio->nombre}}</td>
+                                        <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
+                                        {{-- <td>{{$cotizacion_registros->servicio->unidad_i_producto->medida}}</td> --}}
+                                        <td>{{$cotizacion_registros->servicio->nombre}}&nbsp;<span style="font-size: 10px">{{$cotizacion_registros->servicio->descripcion}}</span></td>
                                         <td>{{$cotizacion_registros->cantidad}}</td>
                                         <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
 
@@ -189,7 +189,7 @@
                 </div>
             </div>
         @else
-        
+
             <div class="row">
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Sub Total</p>
