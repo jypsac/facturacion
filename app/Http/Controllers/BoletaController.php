@@ -119,7 +119,7 @@ class BoletaController extends Controller
         $almacen=$request->get('almacen');
         //obtencion del almacen
         $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-        $boleta_cod_fac=$sucursal->cod_fac;
+        $boleta_cod_fac=$sucursal->cod_bol;
         if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
             $boleta_cod_fac++;

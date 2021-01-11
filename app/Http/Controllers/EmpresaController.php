@@ -72,6 +72,14 @@ class EmpresaController extends Controller
      */
     public function update(Request $request, $id)
     {
+        if($request->hasfile('fotos')){
+            $image1 =$request->file('fotos');
+            $name =$image1->getClientOriginalName();
+            $destinationPath = public_path('/img/logos/');
+            $image1->move($destinationPath,$name);
+        }else{
+            $name=$request->get('ori_foto') ;
+        }
         $empresa=Empresa::find($id);
         $empresa->telefono=$request->get('telefono');
         $empresa->movil=$request->get('movil');
@@ -84,9 +92,10 @@ class EmpresaController extends Controller
         $empresa->rubro=$request->get('rubro');
         $empresa->descripcion=$request->get('descripcion');
         $empresa->pagina_web=$request->get('pagina_web');
+        $empresa->foto=$name;
         $empresa->background=$request->get('background');
         $empresa->save();
-
+        return back();
     }
 
     /**
