@@ -23,7 +23,7 @@ class AddForeignKeyGarantiaIngresoTable extends Migration
             $table->unsignedBigInteger('cliente_id');
             $table->foreign('cliente_id')->references('id')->on('clientes')->onDelete('cascade');
 
-            $table->unsignedBigInteger('contacto_cliente_id');
+            $table->unsignedBigInteger('contacto_cliente_id')->nullable();
             $table->foreign('contacto_cliente_id')->references('id')->on('contactos')->onDelete('cascade');
 
             // $table->unsignedBigInteger('contacto_id');

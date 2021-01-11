@@ -667,17 +667,20 @@ class CotizacionServiciosController extends Controller
 
                 $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
 
-                $cotizacion_registro->promedio_original=$servicio->precio;
+
+
 
                 //logica para el precio dependiendo de la moneda
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional') {
+                        $cotizacion_registro->promedio_original=$servicio->precio_nacional;
                         $utilidad=$servicio->precio_nacional*$servicio->utilidad/100;
                         $igv_precio=$servicio->precio_nacional+$utilidad;
                         $igv=$igv_precio*$igv_total/100;
                         $array=$servicio->precio_nacional+$utilidad+$igv;
                         $cotizacion_registro->precio=$array;
                     }else{
+                        $cotizacion_registro->promedio_original=$servicio->precio_extranjero;
                         $utilidad=$servicio->precio_extranjero*$servicio->utilidad/100;
                         $igv_precio=$servicio->precio_extranjero+$utilidad;
                         $igv=$igv_precio*$igv_total/100;
@@ -686,12 +689,15 @@ class CotizacionServiciosController extends Controller
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera') {
+                        $cotizacion_registro->promedio_original=$servicio->precio_extranjero;
                         $utilidad=$servicio->precio_extranjero*$servicio->utilidad/100;
                         $igv_precio=$servicio->precio_extranjero+$utilidad;
                         $igv=$igv_precio*$igv_total/100;
                         $array=($servicio->precio_extranjero+$utilidad+$igv)*$tipo_cambio->paralelo;
                         $cotizacion_registro->precio=$array;
                     }else{
+
+                        $cotizacion_registro->promedio_original=$servicio->precio_nacional;
                         $utilidad=$servicio->precio_nacional*$servicio->utilidad/100;
                         $igv_precio=$servicio->precio_nacional+$utilidad;
                         $igv=$igv_precio*$igv_total/100;

@@ -1458,7 +1458,7 @@ if(isset($id_comi)){
  $comisionista->observacion='Viene del Cotizador';
  $comisionista->save();
 }
-return redirect()->route('facturacion.show',$facturacion_registro->id);
+return redirect()->route('facturacion.show',$facturar->id);
 }
 
 public function boletear($id)

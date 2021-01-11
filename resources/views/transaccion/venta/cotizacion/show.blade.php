@@ -16,9 +16,9 @@
 </form>
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="ibox-title" style="padding-right: 3.1%">
+    <div class="ibox-title" style="padding-right: 3.1%;padding-left:  3.1%">
         <div class="row tooltip-demo">
-             <div class="col-sm-6">
+             <div class="col-sm-6" >
               {{--   @if ($regla=='factura')
                     <a class="btn btn-success" href="{{route('cotizacion.facturar',$cotizacion->id)}}" target="_blank">Facturar</a>
                 @elseif($regla=='boleta')

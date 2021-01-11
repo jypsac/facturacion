@@ -112,7 +112,7 @@
                                 <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
                                 <strong>Direccion:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->direccion}}<br>
-                                <strong>Cliente:&nbsp;</strong>
+                                <strong>Contacto:&nbsp;</strong>
                                 @if($garantia_guia_ingreso->contacto_cliente_id == null)
                                 <em>Sin Registro</em>
                                 @else
