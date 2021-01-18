@@ -5,7 +5,8 @@
  @section('breadcrumb2', 'Boleta')
  @section('href_accion', route('boleta.index'))
  @section('value_accion', 'Atras')
-
+@section('button2', 'Nueva Facturacion')
+@section('config',route('boleta_servicio.create'))
  @section('content')
  <div class="wrapper wrapper-content animated fadeInRight">
 <div class="ibox-title" style="padding-right: 3.1%">

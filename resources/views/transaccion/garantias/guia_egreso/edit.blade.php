@@ -147,7 +147,7 @@
 								 <label class="col-sm-2 col-form-label">Descripcion del Problema:</label>
                               <div class="col-sm-10">
                               	<div class="input-group m-b">
-                  					<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" maxlength="630" required></textarea>
+                  					<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" maxlength="1230" required></textarea>
                 				</div>
                    			 </div>
 
@@ -163,7 +163,7 @@
 								 <label class="col-sm-2 col-form-label"> Diagnostico y Solucion:</label>
                               <div class="col-sm-10">
                               	<div class="input-group m-b">
-                  				<textarea class="form-control" rows="5" id="comment" name="diagnostico_solucion"  maxlength="630" required></textarea>
+                  				<textarea class="form-control" rows="5" id="comment" name="diagnostico_solucion"  maxlength="1230" required></textarea>
                 				</div>
                    			 </div>
 
@@ -178,7 +178,7 @@
 								 <label class="col-sm-2 col-form-label">Recomendaciones:</label>
                               <div class="col-sm-10">
                               	<div class="input-group m-b">
-                  				<textarea class="form-control" rows="5" id="comment" name="recomendaciones"  maxlength="630" required></textarea>
+                  				<textarea class="form-control" rows="5" id="comment" name="recomendaciones"  maxlength="1230" required></textarea>
                 				</div>
                    			 </div>
 

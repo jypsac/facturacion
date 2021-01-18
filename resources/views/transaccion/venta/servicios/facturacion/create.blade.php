@@ -157,7 +157,7 @@
 
                 </div>
                 <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" >correo:</label>
+                    <label class="col-sm-2 col-form-label" >Correo:</label>
                     <div class="col-sm-4">
                         <input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}" autocomplete="off">
                     </div>

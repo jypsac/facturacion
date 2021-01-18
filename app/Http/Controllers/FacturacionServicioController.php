@@ -44,19 +44,19 @@ class FacturacionServicioController extends Controller
 
         if($moneda->tipo =='nacional'){
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $array[]=$servicio->precio+$utilidad[$index];
+                $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
+                $array[]=$servicio->precio_nacional+$utilidad[$index];
             }
         }else{
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $array[]=$servicio->precio+$utilidad[$index]*$tipo_cambio->paralelo;
+                $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
+                $array[]=$servicio->precio_extranjero+$utilidad[$index]*$tipo_cambio->paralelo;
             }
         }
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
-        
+
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
@@ -73,23 +73,23 @@ class FacturacionServicioController extends Controller
 
     public function create_ms()
     {
-        
+
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','0')->first();
 
         if($moneda->tipo =='extranjera'){
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $array[]=($servicio->precio+$utilidad[$index])/$tipo_cambio->paralelo;
+                $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
+                $array[]=($servicio->precio_extranjero+$utilidad[$index])/$tipo_cambio->paralelo;
             }
         }else{
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $array[]=$servicio->precio+$utilidad[$index];
+                $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
+                $array[]=$servicio->precio_nacional+$utilidad[$index];
             }
         }
-        
+
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
         $moneda=Moneda::where('principal','0')->first();
@@ -162,7 +162,7 @@ class FacturacionServicioController extends Controller
         $cliente_nombre=$request->get('cliente');
         $nombre = strstr($cliente_nombre, '-',true);
         $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
-        
+
 
         $forma_pago_id=$request->get('forma_pago');
         $formapago= Forma_pago::find($forma_pago_id);
@@ -185,10 +185,10 @@ class FacturacionServicioController extends Controller
         }
 
         // Codigo de Facturación -------------------------------------------------------------------------------------------------------
-        // obtencion de la sucursal 
+        // obtencion de la sucursal
         //obtencion del almacen
         $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-       
+
         $factura_cod_fac=$sucursal->cod_fac;
         if (is_numeric($factura_cod_fac)) {
             // exprecion del numero de fatura
@@ -232,7 +232,7 @@ class FacturacionServicioController extends Controller
 
         $check = $request->input('descuento_unitario');
         $count_check=count($check);
-
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
         //validacion dependiendo de la moneda escogida ----------------------------------------------------------------------------
         $moneda=Moneda::where('principal',1)->first();
         $moneda_registrada=$facturacion->moneda_id;
@@ -247,23 +247,27 @@ class FacturacionServicioController extends Controller
                 //Precio -----------------------------------------------------------------------------------------
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional'){
-                        $utilidad=$servicio->precio*($servicio->utilidad)/100;
-                        $array=$servicio->precio+$utilidad;
+                        $facturacion_registro->promedio_original=$servicio->precio_nacional;
+                        $utilidad=$servicio->precio_nacional*($servicio->utilidad)/100;
+                        $array=$servicio->precio_nacional+$utilidad;
                     }else{
-                        $utilidad=$servicio->precio*($servicio->utilidad)/100;
-                        $array=$servicio->precio+$utilidad*$tipo_cambio->paralelo;
+                        $facturacion_registro->promedio_original=$servicio->precio_extranjero;
+                        $utilidad=$servicio->precio_extranjero*($servicio->utilidad)/100;
+                        $array=$servicio->precio_extranjero+$utilidad*$tipo_cambio->paralelo;
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera'){
-                        $utilidad=$servicio->precio*($servicio->utilidad)/100;
-                        $array=($servicio->precio+$utilidad)/$tipo_cambio->paralelo;
+                        $facturacion_registro->promedio_original=$servicio->precio_extranjero;
+                        $utilidad=$servicio->precio_extranjero*($servicio->utilidad)/100;
+                        $array=($servicio->precio_extranjero+$utilidad)/$tipo_cambio->paralelo;
                     }else{
-                        $utilidad=$servicio->precio*($servicio->utilidad)/100;
-                        $array=$servicio->precio+$utilidad;
+                        $facturacion_registro->promedio_original=$servicio->precio_nacional;
+                        $utilidad=$servicio->precio_nacional*($servicio->utilidad)/100;
+                        $array=$servicio->precio_nacional+$utilidad;
                     }
                 }
 
-                $facturacion_registro->promedio_original=$servicio->precio;
+
                 $facturacion_registro->precio=$array;
                 $facturacion_registro->cantidad=$request->get('cantidad')[$i];
 
