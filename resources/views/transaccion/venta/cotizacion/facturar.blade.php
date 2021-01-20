@@ -122,7 +122,7 @@
                                     <td>S/.{{$array[$index]}}</td>
                                     <td>{{$array[$index]*$cotizacion_registros->cantidad}}</td>
 
-                                    
+
                                     <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$array[$index])-($cotizacion_registros->cantidad*$array[$index]*$cotizacion_registros->descuento/100)+$sub_total}}
                                         S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                         {{$end=round($sub_total, 2)+round($igv_p, 2)}}
@@ -169,6 +169,9 @@
                             </tbody>
                         </table>
                     </div>
+                     <input type="text" name="name" maxlength="50" hidden="" value="{{$cotizacion->cod_cotizacion}}"  >
+                    <input type="text" name="id" maxlength="50" hidden="" value="{{$cotizacion->id}}"  >
+                    <input type="text" name="remitente" hidden=""  value="{{$cotizacion->cliente->email}}"  >
                     <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true">Guardar</i></button>&nbsp;
                 </div>
             </div>
