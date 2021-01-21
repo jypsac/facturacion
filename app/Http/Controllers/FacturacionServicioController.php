@@ -42,17 +42,30 @@ class FacturacionServicioController extends Controller
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','1')->first();
 
+        // if($moneda->tipo =='nacional'){
+        //     foreach ($servicios as $index => $servicio) {
+        //         $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
+        //         $array[]=$servicio->precio_nacional+$utilidad[$index];
+        //     }
+        // }else{
+        //     foreach ($servicios as $index => $servicio) {
+        //         $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
+        //         $array[]=$servicio->precio_extranjero+$utilidad[$index]*$tipo_cambio->paralelo;
+        //     }
+        // }
+
         if($moneda->tipo =='nacional'){
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
-                $array[]=$servicio->precio_nacional+$utilidad[$index];
+                $array[]=round($servicio->precio_nacional+$utilidad[$index],2);
             }
         }else{
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
-                $array[]=$servicio->precio_extranjero+$utilidad[$index]*$tipo_cambio->paralelo;
+                $array[]=round($servicio->precio_extranjero+$utilidad[$index],2);
             }
         }
+
 
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
@@ -78,15 +91,27 @@ class FacturacionServicioController extends Controller
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','0')->first();
 
+        // if($moneda->tipo =='extranjera'){
+        //     foreach ($servicios as $index => $servicio) {
+        //         $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
+        //         $array[]=($servicio->precio_extranjero+$utilidad[$index])/$tipo_cambio->paralelo;
+        //     }
+        // }else{
+        //     foreach ($servicios as $index => $servicio) {
+        //         $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
+        //         $array[]=$servicio->precio_nacional+$utilidad[$index];
+        //     }
+        // }
+
         if($moneda->tipo =='extranjera'){
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
-                $array[]=($servicio->precio_extranjero+$utilidad[$index])/$tipo_cambio->paralelo;
+                $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
+                $array[]=round(($servicio->precio_nacional+$utilidad[$index])/$tipo_cambio->paralelo,2);
             }
         }else{
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
-                $array[]=$servicio->precio_nacional+$utilidad[$index];
+                $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
+                $array[]=round(($servicio->precio_extranjero+$utilidad[$index])/$tipo_cambio->paralelo,2);
             }
         }
 
