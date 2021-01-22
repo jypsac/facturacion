@@ -1244,229 +1244,226 @@ public function facturar_store(Request $request)
      $factura_cod_fac++;
      $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
      $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
- }else{
-           // exprecion del numero de fatura
-           // GENERACION DE NUMERO DE FACTURA
-     $ultima_factura=Facturacion::latest()->first();
-     $factura_num=$ultima_factura->codigo_fac;
-     $factura_num_string_porcion= explode("-", $factura_num);
-     $factura_num_string=$factura_num_string_porcion[1];
-     $factura_num=(int)$factura_num_string;
-     $factura_num++;
-     $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
-     $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
- }
+     }else{
+               // exprecion del numero de fatura
+               // GENERACION DE NUMERO DE FACTURA
+         $ultima_factura=Facturacion::latest()->first();
+         $factura_num=$ultima_factura->codigo_fac;
+         $factura_num_string_porcion= explode("-", $factura_num);
+         $factura_num_string=$factura_num_string_porcion[1];
+         $factura_num=(int)$factura_num_string;
+         $factura_num++;
+         $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+         $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+     }
 
- $factura_numero="F".$sucursal_nr."-".$factura_nr;
+     $factura_numero="F".$sucursal_nr."-".$factura_nr;
 
-       // Comisionista convertir id
+           // Comisionista convertir id
 
- $comisionista=$cotizacion->comisionista_id;
- if($comisionista!="" and $comisionista!="Sin comision - 0"){
-     $numero = strstr($comisionista, '-',true);
+     $comisionista=$cotizacion->comisionista_id;
+     if($comisionista!="" and $comisionista!="Sin comision - 0"){
+         $numero = strstr($comisionista, '-',true);
 
-     $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
-     $id_personal=$cod_vendedor->id;
+         $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
+         $id_personal=$cod_vendedor->id;
 
-     $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
-           //Comision segun comisionista
-     $comi=$comisionista_buscador->comision;
- }else{
-     $comi=0;
- }
+         $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
+               //Comision segun comisionista
+         $comi=$comisionista_buscador->comision;
+     }else{
+         $comi=0;
+     }
 
-    // Creacion de Facturacion
- $facturar=new Facturacion;
- $facturar->codigo_fac=$factura_numero;
- $facturar->almacen_id=$cotizacion->almacen_id;
- $facturar->id_cotizador=$request->get('id_cotizador');
- $facturar->orden_compra=$request->get('orden_compra');
- $facturar->guia_remision=$request->get('guia_remision');
- $facturar->cliente_id=$cotizacion->cliente_id;
- $facturar->moneda_id=$cotizacion->moneda_id;
- $facturar->forma_pago_id=$cotizacion->forma_pago_id;
- $facturar->fecha_emision=$request->get('fecha_emision');
- $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
- $facturar->cambio=$cambio->paralelo;
- $facturar->observacion=$cotizacion->observacion;
- $facturar->comisionista=$cotizacion->comisionista_id;
- $facturar->user_id =auth()->user()->id;
- $facturar->estado='0';
- $facturar->tipo='producto';
- $facturar->save();
+        // Creacion de Facturacion
+     $facturar=new Facturacion;
+     $facturar->codigo_fac=$factura_numero;
+     $facturar->almacen_id=$cotizacion->almacen_id;
+     $facturar->id_cotizador=$request->get('id_cotizador');
+     $facturar->orden_compra=$request->get('orden_compra');
+     $facturar->guia_remision=$request->get('guia_remision');
+     $facturar->cliente_id=$cotizacion->cliente_id;
+     $facturar->moneda_id=$cotizacion->moneda_id;
+     $facturar->forma_pago_id=$cotizacion->forma_pago_id;
+     $facturar->fecha_emision=$request->get('fecha_emision');
+     $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
+     $facturar->cambio=$cambio->paralelo;
+     $facturar->observacion=$cotizacion->observacion;
+     $facturar->comisionista=$cotizacion->comisionista_id;
+     $facturar->user_id =auth()->user()->id;
+     $facturar->estado='0';
+     $facturar->tipo='producto';
+     $facturar->save();
 
-    // modificacion para que se cierre el codigo en almacen
-    // obtencion de la sucursal
- $sucursal=auth()->user()->almacen->codigo_sunat;
-    //obtencion del almacen
- $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
- $factura_primera->cod_fac='NN';
- $factura_primera->save();
+        // modificacion para que se cierre el codigo en almacen
+        // obtencion de la sucursal
+     $sucursal=auth()->user()->almacen->codigo_sunat;
+        //obtencion del almacen
+     $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
+     $factura_primera->cod_fac='NN';
+     $factura_primera->save();
 
- $buscador_id=Cotizacion::where('id',$facturar->id_cotizador)->first();
+     $buscador_id=Cotizacion::where('id',$facturar->id_cotizador)->first();
 
-    // $cotizaciones_facturaciones=Cotizacion_factura_registro::where('cotizacion_id',$buscador_id->id)->get();
- $productos=Cotizacion_factura_registro::where('cotizacion_id',$buscador_id->id)->get();
- foreach($productos as $lista){
-    $produc[]=Producto::where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
-            // $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
-}
+        // $cotizaciones_facturaciones=Cotizacion_factura_registro::where('cotizacion_id',$buscador_id->id)->get();
+     $productos=Cotizacion_factura_registro::where('cotizacion_id',$buscador_id->id)->get();
+     foreach($productos as $lista){
+        $produc[]=Producto::where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
+                // $produc[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
+    }
 
-    //validacion dependiendo de la amoneda escogida
-$moneda=Moneda::where('principal',1)->first();
-$moneda_registrada=$facturar->moneda_id;
+        //validacion dependiendo de la amoneda escogida
+    $moneda=Moneda::where('principal',1)->first();
+    $moneda_registrada=$facturar->moneda_id;
 
-$moneda1=Moneda::where('principal',1)->first();
-$moneda2=Moneda::where('principal',0)->first();
+    $moneda1=Moneda::where('principal',1)->first();
+    $moneda2=Moneda::where('principal',0)->first();
 
-if($facturar->moneda_id==$moneda1->id){
+    if($facturar->moneda_id==$moneda1->id){
 
-    if ($moneda1->tipo == 'nacional') {
-        foreach ($productos as $index => $producto) {
-            $p[]=$producto->producto_id;
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
-            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
-            if($array_cantidad[$index]>=$producto->producto_id){
-                $validor[]=1;
-            }else{
-                $validor[]=0;
+        if ($moneda1->tipo == 'nacional') {
+            foreach ($productos as $index => $producto) {
+                $p[]=$producto->producto_id;
+                $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
+                $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
+                $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
+                if($array_cantidad[$index]>=$producto->producto_id){
+                    $validor[]=1;
+                }else{
+                    $validor[]=0;
+                }
+            }
+        }else{
+            foreach ($productos as $index => $producto) {
+                $p[]=$producto->producto_id;
+                $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
+                $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
+                $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
+                if($array_cantidad[$index]>=$producto->producto_id){
+                    $validor[]=1;
+                }else{
+                    $validor[]=0;
+                }
             }
         }
-    }else{
-        foreach ($productos as $index => $producto) {
-            $p[]=$producto->producto_id;
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
-            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
-            if($array_cantidad[$index]>=$producto->producto_id){
-                $validor[]=1;
-            }else{
-                $validor[]=0;
+    }elseif($facturar->moneda_id==$moneda2->id){
+        if ($moneda2->tipo == 'extranjera'){
+            foreach ($productos as $index => $producto) {
+                $p[]=$producto->producto_id;
+                $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo;
+                $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
+                $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
+                if($array_cantidad[$index]>=$producto->producto_id){
+                    $validor[]=1;
+                }else{
+                    $validor[]=0;
+                }
+            }
+        }else{
+            foreach ($productos as $index => $producto) {
+                $p[]=$producto->producto_id;
+                $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo;
+                $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
+                $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
+                if($array_cantidad[$index]>=$producto->producto_id){
+                    $validor[]=1;
+                }else{
+                    $validor[]=0;
+                }
             }
         }
     }
-}elseif($facturar->moneda_id==$moneda2->id){
-    if ($moneda2->tipo == 'extranjera'){
-        foreach ($productos as $index => $producto) {
-            $p[]=$producto->producto_id;
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
-            $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo;
-            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
-            if($array_cantidad[$index]>=$producto->producto_id){
-                $validor[]=1;
+
+    foreach ($productos as $index => $cotizacion_facturacion) {
+        if($validor[$index]=1){
+            $facturacion_registro=new Facturacion_registro;
+            $facturacion_registro->facturacion_id=$facturar->id;
+            $facturacion_registro->producto_id=$p[$index];
+            $facturacion_registro->numero_serie=$request->get('numero_serie')[$index];
+
+            $producto=Producto::where('id',$p[$index])->where('estado_id',1)->first();
+                // $producto=Producto::where('id',$p[$index])->where('estado_id',1)->where('estado_anular',1)->first();
+                    //stock --------------------------------------------------------
+            $stock=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->sum('cantidad');
+            $facturacion_registro->stock=$stock;
+                //precio --------------------------------------------------------
+            if($moneda->id == $moneda_registrada){
+                if ($moneda->tipo == 'nacional') {
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                    $array2=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional');
+                    $facturacion_registro->promedio_original=$array2;
+                        // respectividad de la moneda deacurdo al id
+                    $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                    $array=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad;
+                    $facturacion_registro->precio=$array;
+                }else {
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                    $array2=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero');
+                    $facturacion_registro->promedio_original=$array2;
+                        // validacion para la otra moneda con igv paralelo
+                    $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                    $array=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad;
+                    $facturacion_registro->precio=$array;
+                }
             }else{
-                $validor[]=0;
+                if ($moneda->tipo == 'extranjera') {
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                    $array2=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero');
+                    $facturacion_registro->promedio_original=$array2;
+                        // respectividad de la moneda deacuerdo al id
+                    $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                    $array=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad)*$cambio->paralelo;
+                    $facturacion_registro->precio=$array;
+                }else{
+                        //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                    $array2=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional');
+                    $facturacion_registro->promedio_original=$array2;
+                        // validacion para la otra moneda con igv paralelo
+                    $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                    $array=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad)/$cambio->paralelo;
+                    $facturacion_registro->precio=$array;
+                }
             }
-        }
-    }else{
-        foreach ($productos as $index => $producto) {
-            $p[]=$producto->producto_id;
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
-            $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo;
-            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
-            if($array_cantidad[$index]>=$producto->producto_id){
-                $validor[]=1;
+            $facturacion_registro->cantidad=$cotizacion_facturacion->cantidad;
+            $facturacion_registro->descuento=$cotizacion_facturacion->descuento;
+            $facturacion_registro->comision=$cotizacion_facturacion->comision;
+                //precio unitario descuento ----------------------------------------
+            $desc_comprobacion=$cotizacion_facturacion->descuento;
+
+            if($desc_comprobacion <> 0){
+                $facturacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
             }else{
-                $validor[]=0;
+                $facturacion_registro->precio_unitario_desc=$array;
             }
+                //precio unitario comision ----------------------------------------
+            if($desc_comprobacion <> 0){
+                $facturacion_registro->precio_unitario_comi=($array-($array*$desc_comprobacion/100))+($array*$comi/100);
+            }else{
+                $facturacion_registro->precio_unitario_comi=$array+($array*$comi/100);
+            }
+            $facturacion_registro->save();
         }
     }
-}
 
-
-
-
-foreach ($productos as $index => $cotizacion_facturacion) {
-    if($validor[$index]=1){
-        $facturacion_registro=new Facturacion_registro;
-        $facturacion_registro->facturacion_id=$facturar->id;
-        $facturacion_registro->producto_id=$p[$index];
-        $facturacion_registro->numero_serie=$request->get('numero_serie')[$index];
-
-        $producto=Producto::where('id',$p[$index])->where('estado_id',1)->first();
-            // $producto=Producto::where('id',$p[$index])->where('estado_id',1)->where('estado_anular',1)->first();
-                //stock --------------------------------------------------------
-        $stock=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->sum('cantidad');
-        $facturacion_registro->stock=$stock;
-            //precio --------------------------------------------------------
-        if($moneda->id == $moneda_registrada){
-            if ($moneda->tipo == 'nacional') {
-                    //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                $array2=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional');
-                $facturacion_registro->promedio_original=$array2;
-                    // respectividad de la moneda deacurdo al id
-                $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-                $array=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad;
-                $facturacion_registro->precio=$array;
-            }else {
-                    //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                $array2=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero');
-                $facturacion_registro->promedio_original=$array2;
-                    // validacion para la otra moneda con igv paralelo
-                $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-                $array=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad;
-                $facturacion_registro->precio=$array;
-            }
-        }else{
-            if ($moneda->tipo == 'extranjera') {
-                    //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                $array2=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero');
-                $facturacion_registro->promedio_original=$array2;
-                    // respectividad de la moneda deacuerdo al id
-                $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-                $array=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad)*$cambio->paralelo;
-                $facturacion_registro->precio=$array;
-            }else{
-                    //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                $array2=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional');
-                $facturacion_registro->promedio_original=$array2;
-                    // validacion para la otra moneda con igv paralelo
-                $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-                $array=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad)/$cambio->paralelo;
-                $facturacion_registro->precio=$array;
-            }
-        }
-        $facturacion_registro->cantidad=$cotizacion_facturacion->cantidad;
-        $facturacion_registro->descuento=$cotizacion_facturacion->descuento;
-        $facturacion_registro->comision=$cotizacion_facturacion->comision;
-            //precio unitario descuento ----------------------------------------
-        $desc_comprobacion=$cotizacion_facturacion->descuento;
-
-        if($desc_comprobacion <> 0){
-            $facturacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
-        }else{
-            $facturacion_registro->precio_unitario_desc=$array;
-        }
-            //precio unitario comision ----------------------------------------
-        if($desc_comprobacion <> 0){
-            $facturacion_registro->precio_unitario_comi=($array-($array*$desc_comprobacion/100))+($array*$comi/100);
-        }else{
-            $facturacion_registro->precio_unitario_comi=$array+($array*$comi/100);
-        }
-        $facturacion_registro->save();
+        // Creacion de Ventas Registros del Comisinista
+    $cotizador=$request->get('id_cotizador');
+    $id_comisionista=$request->get('id_comisionista');
+    $comisionista=Cotizacion::where('id',$cotizador)->first();
+    $id_comi=$comisionista->comisionista_id;
+    if(isset($id_comi)){
+     $comisionista=new Ventas_registro;
+     $comisionista->id_facturacion=$request->get('fac_id');
+     $comisionista->comisionista=$request->get('id_comisionista');
+     $comisionista->estado_aprobado='0';
+     $comisionista->pago_efectuado='0';
+     $comisionista->estado_fac='0';
+     $comisionista->observacion='Viene del Cotizador';
+     $comisionista->save();
     }
-}
-
-    // Creacion de Ventas Registros del Comisinista
-$cotizador=$request->get('id_cotizador');
-$id_comisionista=$request->get('id_comisionista');
-$comisionista=Cotizacion::where('id',$cotizador)->first();
-$id_comi=$comisionista->comisionista_id;
-if(isset($id_comi)){
- $comisionista=new Ventas_registro;
- $comisionista->id_facturacion=$request->get('fac_id');
- $comisionista->comisionista=$request->get('id_comisionista');
- $comisionista->estado_aprobado='0';
- $comisionista->pago_efectuado='0';
- $comisionista->estado_fac='0';
- $comisionista->observacion='Viene del Cotizador';
- $comisionista->save();
-}
 
         $name = $request->get('name');
         $banco=Banco::where('estado','0')->get();
@@ -1610,10 +1607,10 @@ if(isset($id_comi)){
           $archivo_pdf->archivo=$pdf;
           $archivo_pdf->fecha_hora= $especif;
           $archivo_pdf->save();
-          $id_cotizador=$request->get('id_cotizador');
-          $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
-          $cotizacion->estado=1;
-          $cotizacion->save();
+          // $id_cotizador=$request->get('id_cotizador');
+          // $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
+          // $cotizacion->estado=1;
+          // $cotizacion->save();
 
                 return redirect()->route('facturacion.show',$facturar->id);
         }else{
@@ -1712,7 +1709,11 @@ public function boletear($id)
 
 public function boletear_store(Request $request)
 {
-    //buscador al cambio
+    $date_sp = Carbon::now();
+    $data_g = str_replace(' ', '_',$date_sp);
+    $carbon_sp = str_replace(':','-',$data_g);
+    $id = $request->get('id');
+          //buscador al cambio
     $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
     if(!$cambio){
         return "error por no hacer el cambio diario";
@@ -1969,14 +1970,159 @@ public function boletear_store(Request $request)
      $comisionista->estado_fac='0';
      $comisionista->observacion='Viene del Cotizador';
      $comisionista->save();
+    }
+    $name = $request->get('name');
+    $banco=Banco::where('estado','0')->get();
+    $banco_count=Banco::where('estado','0')->count();
+    $cotizacion=Cotizacion::find($id);
+    $regla=$cotizacion->tipo;
+    $sub_total=0;
+    $igv=Igv::first();
+    /*registros boleta y factura*/
+    if($regla=='factura'){
+      $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+      }elseif($regla=='boleta'){
+          $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+      }
+      /* FIN registros boleta y factura*/
+      /*de numeros a Letras*/
+      foreach($cotizacion_registro as $cotizacion_registros){
+          $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
+          $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+          if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
+      }
+      /* Finde numeros a Letras*/
+      $empresa=Empresa::first();
+      $sum=0;
+      $i=1;
+      $regla=$cotizacion->tipo;
 
- }
+        $archivo=$name.'_'.$id.".pdf";
+        $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
+        $content = $pdf->download();
+        $especif = $carbon_sp.$archivo;
+        Storage::disk('mailbox')->put($especif,$content);
+        $date = $carbon_sp;
 
+        $id_usuario=auth()->user()->id;
+        $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
+        $correo=$correo_busqueda->email;
 
- return redirect()->route('boleta.show',$boletear->id);
+        $firma=$correo_busqueda->firma;
+        $mensaje_html = $request->get('mensaje');
+        if($firma == null){
+          $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script>
+          $(document).ready(function(){
+              $("table").removeClass("table table-bordered").addClass("css");
+          });
+          </script>
+          <style>
+         .css,table,tr,td{
+          padding: 15px;
+          border: 1px solid black;
+          border-collapse: collapse;
+            }
+          table{
+            width:100%;
+          }
+          </style>'.$mensaje_html.'</body>';
+        }else{
+          $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+          <script>
+          $(document).ready(function(){
+              $("table").removeClass("table table-bordered").addClass("css");
+          });
+          </script>
+          <style>
+          .css,table,tr,td{
+          padding: 15px;
+          border: 1px solid black;
+          border-collapse: collapse;
+            }
+          table{
+            width:100%;
+          }
+          </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
+        }
+        /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
+        $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
+        $port = $correo_busqueda->port;
+        $encryption = $correo_busqueda->encryption;
+        $yourEmail = $correo;
+        $estado = '0';
+        //$mailbackup =  ; // = $request->yourmail
+        $yourPassword = $correo_busqueda->password;
+        $sendto = $request->get('remitente') ;
+        $titulo = "Envio de Factura Automatico";
+        $mensaje = $mensaje_con_firma;
+        $bakcup=    $correo_busqueda->email_backup ;
 
+        // $file = $request->archivo;
+        $pdf=$archivo;
+        // $carpet =$request->get('redict');
+        $pdfile = public_path().'/archivos/'.$especif;
 
-}
+        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+        $mailer =new \Swift_Mailer($transport);
+
+        $newfile = $request->file('archivos');
+        if($request->hasfile('archivos')){
+          foreach ($newfile as $file) {
+            $nombre =  $file->getClientOriginalName();
+            $especif = $carbon_sp.$nombre;
+            \Storage::disk('mailbox')->put( $especif ,  \File::get($file));
+
+            $news[] = public_path().'/archivos/'.$especif;
+            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
+            $message->attach(\Swift_Attachment::fromPath($pdfile));
+            foreach ($news as $attachment) {
+              $message->attach(\Swift_Attachment::fromPath($attachment));
+            }
+          }
+        }else{
+          $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
+          $message->attach(\Swift_Attachment::fromPath($pdfile));
+        }
+        if($mailer->send($message)){
+          $mensaje =$request->get('mensaje') ;
+          $texto= strip_tags($mensaje);
+          $mail = new EmailBandejaEnvios;
+          $mail->id_usuario =auth()->user()->id;
+          $mail->destinatario =$correo;
+          $mail->remitente =$request->get('remitente') ;
+          $mail->asunto =$titulo;
+          $mail->mensaje =$mensaje_con_firma;
+          $mail->mensaje_sin_html =$texto ;
+          $mail->estado= $estado;
+          $mail->fecha_hora =Carbon::now() ;
+          $mail-> save();
+
+          $newfile2 = $request->file('archivos');
+          if($request->hasfile('archivos')){
+            foreach ($newfile2 as $file2) {
+              $guardar_email_archivo=new EmailBandejaEnviosArchivos;
+              $guardar_email_archivo->id_bandeja_envios=$mail->id;
+              $guardar_email_archivo->archivo= $file2->getClientOriginalName();
+              $guardar_email_archivo->fecha_hora= $carbon_sp;
+              $guardar_email_archivo->save();
+            }
+          }
+          $archivo_pdf = new EmailBandejaEnviosArchivos;
+          $archivo_pdf->id_bandeja_envios=$mail->id;
+          $archivo_pdf->archivo=$pdf;
+          $archivo_pdf->fecha_hora= $especif;
+          $archivo_pdf->save();
+          // $id_cotizador=$request->get('id_cotizador');
+          // $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
+          // $cotizacion->estado=1;
+          // $cotizacion->save();
+
+         return redirect()->route('boleta.show',$boletear->id);
+        }else{
+            return "Something went wrong :(";
+        }
+    }
 
 public function aprobar(Request $request, $id)
 {

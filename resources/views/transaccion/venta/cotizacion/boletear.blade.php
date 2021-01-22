@@ -121,10 +121,10 @@
                                      {{-- MODIFICAR ESTA PARTE CON LOGICA DE REPROGRAMACION PARA UN NUEVO PRODUCTO DIRECTAMENTE DESDE KARDEX --}}
                                      <td>S/.{{$array[$index]}}</td>
                                      <td>{{$array[$index]*$cotizacion_registros->cantidad}}</td>
- 
-                                     
+
+
                                      <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$array[$index])-($cotizacion_registros->cantidad*$array[$index]*$cotizacion_registros->descuento/100)+$sub_total}}
-                                         
+
                                      </td>
                                  </tr>
                                  @endif
@@ -158,31 +158,34 @@
                              </tbody>
                          </table>
                      </div>
+                     <input type="text" name="name" maxlength="50" hidden="" value="{{$cotizacion->cod_cotizacion}}"  >
+                    <input type="text" name="id" maxlength="50" hidden="" value="{{$cotizacion->id}}"  >
+                    <input type="text" name="remitente" hidden=""  value="{{$cotizacion->cliente->email}}"  >
                      <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true">Guardar</i></button>&nbsp;
                  </div>
              </div>
          </div>
      </form>
  </div>
- 
- 
+
+
  <style type="text/css">
      .ruc{border-radius: 10px; height: 150px;}
      .form-control{border-radius: 10px;}
  </style>
- 
+
  <!-- Mainly scripts -->
  <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
  <script src="{{ asset('js/popper.min.js') }}"></script>
  <script src="{{ asset('js/bootstrap.js') }}"></script>
  <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
  <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
- 
+
  <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
  <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
  <!-- Custom and plugin javascript -->
  <script src="{{ asset('js/inspinia.js') }}"></script>
  <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
- 
- 
+
+
  @endsection

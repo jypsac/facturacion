@@ -1027,10 +1027,6 @@ class CotizacionServiciosController extends Controller
           $archivo_pdf->archivo=$pdf;
           $archivo_pdf->fecha_hora= $especif;
           $archivo_pdf->save();
-          $id_cotizador=$request->get('id_cotizador');
-          $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
-          $cotizacion->estado=1;
-          $cotizacion->save();
 
                 return redirect()->route('facturacion_servicio.show',$facturar->id);
         }else{
@@ -1261,9 +1257,6 @@ class CotizacionServiciosController extends Controller
           $archivo_pdf->archivo=$pdf;
           $archivo_pdf->fecha_hora= $especif;
           $archivo_pdf->save();
-
-
-
             return redirect()->route('boleta_servicio.show',$boletear->id);
         }else{
             return "Something went wrong :(";
