@@ -100,7 +100,22 @@ class EmailConfiguracionesController extends Controller
     {
         //
     }
-
+    public function email_backup()
+    {
+        $config = EmailConfiguraciones::get('email_backup')->first();
+        return view('mailbox.edit',compact('config'));
+    }
+    public function backup_save(Request $request){
+        $newvar = $request->get('backup');
+        $mails = EmailConfiguraciones::get();
+        foreach ($mails as $mail) {
+            $mail_id = $mail->id;
+            $mail_upd =EmailConfiguraciones::find($mail_id);
+            $mail_upd->email_backup= $newvar;
+            $mail_upd->save();
+        }
+        return back();
+    }
     /**
      * Update the specified resource in storage.
      *

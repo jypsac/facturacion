@@ -150,6 +150,8 @@ Route::group(
 		Route::post('/trash/delete','EmailBandejaEnviosController@destroy')->name('email.destroy');
 		Route::post('/email/config','EmailBandejaEnviosController@configstore')->name('email.configstore');
 		Route::post('/email/config/{id}','EmailBandejaEnviosController@configupdate')->name('email.configupdate');
+		Route::get('/email_backup','EmailConfiguracionesController@email_backup')->name('email_backup');
+		Route::post('/email_backup/save','EmailConfiguracionesController@backup_save')->name('backup_save');
 
 		//Garantias
 		Route::get('contacto_cliente','GarantiaGuiaIngresoController@contacto_cliente');
