@@ -161,7 +161,16 @@
                      <input type="text" name="name" maxlength="50" hidden="" value="{{$cotizacion->cod_cotizacion}}"  >
                     <input type="text" name="id" maxlength="50" hidden="" value="{{$cotizacion->id}}"  >
                     <input type="text" name="remitente" hidden=""  value="{{$cotizacion->cliente->email}}"  >
-                     <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true">Guardar</i></button>&nbsp;
+                     <div class="row" align="center" >
+                        <div class="col-sm-4">
+                        </div>
+                        <div class="  col-sm-6 alert alert-info" >
+                            <p style="margin-bottom: 0px">!Al momento de Boletear se le enviará una copia al correo del cliente!</p>
+                        </div>
+                        <div class="col-sm-2" align="center" >
+                            <button class="btn btn-primary " style="margin-top: 5px" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true">Guardar</i></button>&nbsp;
+                        </div>
+                    </div>
                  </div>
              </div>
          </div>
