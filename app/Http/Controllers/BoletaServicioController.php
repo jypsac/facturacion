@@ -41,21 +41,37 @@ class BoletaServicioController extends Controller
 
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
-        $moneda=Moneda::where('principal','0')->first();
+        $moneda=Moneda::where('principal','1')->first();
         $igv_proceso=Igv::first();
         $igv_total=$igv_proceso->igv_total;
 
+        // if($moneda->tipo =='nacional'){
+        //     foreach ($servicios as $index => $servicio) {
+        //         $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+        //         $igv[]=$servicio->precio*$igv_total/100;
+        //         $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+        //     }
+        // }else{
+        //     foreach ($servicios as $index => $servicio) {
+        //         $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+        //         $igv[]=$servicio->precio*$igv_total/100;
+        //         $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])*$tipo_cambio->paralelo;
+        //     }
+        // }
+
         if($moneda->tipo =='nacional'){
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $igv[]=$servicio->precio*$igv_total/100;
-                $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+                $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
+                $igv_precio[]=$servicio->precio_nacional+$utilidad[$index];
+                $igv[]=$igv_precio[$index]*$igv_total/100;
+                $array[]=$servicio->precio_nacional+$utilidad[$index]+$igv[$index];
             }
         }else{
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $igv[]=$servicio->precio*$igv_total/100;
-                $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])*$tipo_cambio->paralelo;
+                $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
+                $igv_precio[]=$servicio->precio_extranjero+$utilidad[$index];
+                $igv[]=$igv_precio[$index]*$igv_total/100;
+                $array[]=$servicio->precio_extranjero+$utilidad[$index]+$igv[$index];
             }
         }
 
@@ -81,21 +97,37 @@ class BoletaServicioController extends Controller
 
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
-        $moneda=Moneda::where('principal','1')->first();
+        $moneda=Moneda::where('principal','0')->first();
         $igv_proceso=Igv::first();
         $igv_total=$igv_proceso->igv_total;
 
+        // if($moneda->tipo =='extranjera'){
+        //     foreach ($servicios as $index => $servicio) {
+        //         $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+        //         $igv[]=$servicio->precio*$igv_total/100;
+        //         $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])/$tipo_cambio->paralelo;
+        //     }
+        // }else{
+        //     foreach ($servicios as $index => $servicio) {
+        //         $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
+        //         $igv[]=$servicio->precio*$igv_total/100;
+        //         $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+        //     }
+        // }
+
         if($moneda->tipo =='extranjera'){
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $igv[]=$servicio->precio*$igv_total/100;
-                $array[]=($servicio->precio+$utilidad[$index]+$igv[$index])/$tipo_cambio->paralelo;
+                $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
+                $igv_precio[]=$servicio->precio_nacional+$utilidad[$index];
+                $igv[]=$igv_precio[$index]*$igv_total/100;
+                $array[]=($servicio->precio_nacional+$utilidad[$index]+$igv[$index])/$tipo_cambio->paralelo;
             }
         }else{
             foreach ($servicios as $index => $servicio) {
-                $utilidad[]=$servicio->precio*($servicio->utilidad)/100;
-                $igv[]=$servicio->precio*$igv_total/100;
-                $array[]=$servicio->precio+$utilidad[$index]+$igv[$index];
+                $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
+                $igv_precio[]=$servicio->precio_extranjero+$utilidad[$index];
+                $igv[]=$igv_precio[$index]*$igv_total/100;
+                $array[]=($servicio->precio_extranjero+$utilidad[$index]+$igv[$index])/$tipo_cambio->paralelo;
             }
         }
 
