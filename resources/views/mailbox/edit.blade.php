@@ -3,9 +3,14 @@
 @section('title', 'Email Backup')
 @section('breadcrumb', 'Email Backup')
 @section('breadcrumb2', 'Email Backup')
-@section('data-toggle', 'modal')
-@section('href_accion', '#exampleModal')
-@section('value_accion', 'Editar')
+@if($config->email_backup == null)
+	@section('href_accion', '#')
+	@section('value_accion', '#')
+@else
+	@section('data-toggle', 'modal')
+	@section('href_accion', '#exampleModal')
+	@section('value_accion', 'Editar')
+@endif
 
 @section('content')
  <div class="wrapper wrapper-content animated fadeInRight">
@@ -26,7 +31,16 @@
 			<div class=" col-sm-4">
 			</div>
 			<div class="col-sm-4">
-				<label class="form-control" style="text-align: center;">{{$config->email_backup}}</label>
+				@if($config->email_backup == null)
+				<div class="alert alert-danger" role="alert"  style="text-align: center;">
+				  Un usuario debe registrar su correo en el apartado de Correo para configurar este aspecto
+				</div>
+				@else
+
+				<div class="alert alert-primary" role="alert"  style="text-align: center;">
+				  {{$config->email_backup}}
+				</div>
+				@endif
 			</div>
 			<div class=" col-sm-4">
 			</div>

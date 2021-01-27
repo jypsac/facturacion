@@ -101,7 +101,7 @@
                                 <tr class="gradeX">
                                     <td><img src="https://www.flaticon.es/premium-icon/icons/svg/2460/2460831.svg" width="16px" alt=""></td>
                                     <td>Backup de Email</td>
-                                    <td><a class="btn btn-primary" href="{{route('email.backup')}}"><i class="fa fa-gear"></i></a></td>
+                                    <td><a class="btn btn-primary" href="{{route('email_backup')}}"><i class="fa fa-gear"></i></a></td>
                                 </tr>
                             </tbody>
                         </table>
