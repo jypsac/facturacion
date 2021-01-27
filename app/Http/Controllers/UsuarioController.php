@@ -73,6 +73,7 @@ class UsuarioController extends Controller
         $usuarios=User::all();
         $name=$request->get('name');
         $email=$request->get('correo');
+        $celular=$request->get('celular');
         $almacen_id=$request->get('almacen_id');
         $password=$request->get('password');
         $password_2=$request->get('password_2');
@@ -99,6 +100,7 @@ class UsuarioController extends Controller
             $user->confi_id=$apariencia->id;
             $user->name=$name;
             $user->email=$email;
+            $user->celular=$celular;
             $user->password=bcrypt($password);
             $user->almacen_id=$almacen_id;
             $user->numero_validacion=$numero_validacion;
@@ -192,8 +194,10 @@ class UsuarioController extends Controller
         $usuario_id=User::where('id',$id)->first();
         $usuarios=User::all();
         $almacen=Almacen::all();
+        $celular=$request->get('celular');
         $contrasena_confirmar=$request->get('contrasena_confirmar');
         $correo_new=$request->get('correo');
+
         $password_new=$request->get('password_new');
         $contrasena_adm=$request->get('contrasena_adm');
         $almacen_id=$request->get('almacen_id');
@@ -254,6 +258,7 @@ class UsuarioController extends Controller
             else{
                 $user=User::find($id);
                 $user->almacen_id=$almacen_id;
+                $user->celular=$celular;
                 $user->estado=$estado_numero;
                 $user->password=$password;
                 $user->save();

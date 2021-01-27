@@ -63,6 +63,7 @@
                                 <th>Personal</th>
                                 <th>Cargo</th>
                                 <th>Correo</th>
+                                <th>Celular</th>
                                 <th>Almacen Asignado</th>
                                 <th>Activo/desactivo</th>
                                 <th>Permisos</th>
@@ -76,6 +77,7 @@
                                 <td>{{$usuario->personal->nombres}}</td>
                                 <td>{{$usuario->name}}</td>
                                 <td>{{$usuario->email}}</td>
+                                <td>{{$usuario->celular}}</td>
                                 <td>{{$usuario->almacen->nombre}}</td>
                                 @if($usuario->estado == 1)
                                 <td>Activo</td>
@@ -110,7 +112,8 @@
 
                                                                                 <label class="col-sm-3 col-form-label">Contraseña:</label>
                                                                                 <div class="col-sm-9"><input type="password" class="form-control" name="password_new" placeholder="******" ></div>
-
+                                                                                <label class="col-sm-3 col-form-label">Celular:</label>
+                                                                                <div class="col-sm-9"><input type="text" class="form-control" name="celular" value="{{$usuario->celular}}"></div>
                                                                                 <label class="col-sm-3 col-form-label">Almacen Asignado:</label>
                                                                                 <div class="col-sm-4">
                                                                                     <select class="form-control" name="almacen_id">

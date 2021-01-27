@@ -55,6 +55,7 @@ class MarcaController extends Controller
         $marca->codigo=$contador;
         $marca->abreviatura=strtoupper($request->get('abreviatura'));
         $marca->nombre_empresa=strtoupper($request->get('nombre_empresa'));
+        $marca->telefono=strtoupper($request->get('telefono'));
         $marca->descripcion=$descripcion;
         $marca->imagen=$nombre_imagen;
         $marca->save();
@@ -107,6 +108,7 @@ class MarcaController extends Controller
         $marca->nombre=strtoupper($request->get('nombre'));
         $marca->abreviatura=strtoupper($request->get('abreviatura'));
         $marca->nombre_empresa=strtoupper($request->get('nombre_empresa'));
+        $marca->telefono=strtoupper($request->get('telefono'));
         $marca->descripcion=$request->get('descripcion');
         $marca->imagen=$nombre_imagen;
         $marca->save();

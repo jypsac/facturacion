@@ -34,6 +34,10 @@
                                         <label class="col-sm-2 col-form-label">Abreviatura:</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" name="abreviatura" required="required">
+                                        </div>
+                                        <label class="col-sm-2 col-form-label">Telefono:</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="telefono" required="required">
                                         </div><label class="col-sm-2 col-form-label">Empresa:</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" name="nombre_empresa" required="required">
@@ -126,6 +130,7 @@
                                     <th>Nombre</th>
                                     <th>Abreviatura</th>
                                     <th>Empresa</th>
+                                    <th>Telefono</th>
                                     <th>codigo</th>
                                     <th>Descripcion</th>
                                     <th>Foto</th>
@@ -139,6 +144,7 @@
                                     <td>{{$marca->nombre}}</td>
                                     <td>{{$marca->abreviatura}}</td>
                                     <td>{{$marca->nombre_empresa}}</td>
+                                    <td>{{$marca->telefono}}</td>
                                     <td>{{$marca->codigo}}</td>
                                     <td>{{$marca->descripcion}}</td>
                                     <td> @if(isset($marca->imagen))
@@ -171,9 +177,14 @@
                                                                             <label class="col-sm-2 col-form-label">Abreviatura:</label>
                                                                             <div class="col-sm-10">
                                                                                 <input required="required" type="text" class="form-control" value="{{$marca->abreviatura}}" name="abreviatura">
-                                                                            </div><label class="col-sm-2 col-form-label">Empresa:</label>
+                                                                            </div>
+                                                                            <label class="col-sm-2 col-form-label">Empresa:</label>
                                                                             <div class="col-sm-10">
                                                                                 <input required="required" type="text" class="form-control" value="{{$marca->nombre_empresa}}" name="nombre_empresa">
+                                                                            </div>
+                                                                             <label class="col-sm-2 col-form-label">Telefono:</label>
+                                                                            <div class="col-sm-10">
+                                                                                <input required="required" type="text" class="form-control" value="{{$marca->telefono}}" name="telefono">
                                                                             </div><label class="col-sm-2 col-form-label">Descripcion:</label>
                                                                             <div class="col-sm-10">
                                                                                 <textarea type="text" class="form-control" placeholder="opcional" name="descripcion"> {{$marca->descripcion}}</textarea>
