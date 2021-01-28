@@ -284,6 +284,8 @@ class BoletaServicioController extends Controller
         //validacion dependiendo de la moneda escogida ----------------------------------------------------------------------------
         $moneda=Moneda::where('principal',1)->first();
         $moneda_registrada=$boleta->moneda_id;
+        //ultimo tipo de cambio
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
 
         if($count_servicio = $count_check){
             for($i=0;$i<$count_servicio;$i++){
