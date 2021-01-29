@@ -468,7 +468,7 @@ class CotizacionServiciosController extends Controller
                 $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
                 $igv_precio[]=$servicio->precio_extranjero+$utilidad[$index];
                 $igv[]=$igv_precio[$index]*$igv_total/100;
-                $array[]=($servicio->precio_extranjero+$utilidad[$index]+$igv[$index])/$tipo_cambio->paralelo;
+                $array[]=($servicio->precio_extranjero+$utilidad[$index]+$igv[$index])*$tipo_cambio->paralelo;
             }
         }
 

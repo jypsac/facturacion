@@ -65,6 +65,7 @@ class BoletaServicioController extends Controller
                 $igv_precio[]=$servicio->precio_nacional+$utilidad[$index];
                 $igv[]=$igv_precio[$index]*$igv_total/100;
                 $array[]=$servicio->precio_nacional+$utilidad[$index]+$igv[$index];
+
             }
         }else{
             foreach ($servicios as $index => $servicio) {
@@ -72,6 +73,7 @@ class BoletaServicioController extends Controller
                 $igv_precio[]=$servicio->precio_extranjero+$utilidad[$index];
                 $igv[]=$igv_precio[$index]*$igv_total/100;
                 $array[]=$servicio->precio_extranjero+$utilidad[$index]+$igv[$index];
+
             }
         }
 
@@ -121,13 +123,15 @@ class BoletaServicioController extends Controller
                 $igv_precio[]=$servicio->precio_nacional+$utilidad[$index];
                 $igv[]=$igv_precio[$index]*$igv_total/100;
                 $array[]=($servicio->precio_nacional+$utilidad[$index]+$igv[$index])/$tipo_cambio->paralelo;
+
             }
         }else{
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
                 $igv_precio[]=$servicio->precio_extranjero+$utilidad[$index];
                 $igv[]=$igv_precio[$index]*$igv_total/100;
-                $array[]=($servicio->precio_extranjero+$utilidad[$index]+$igv[$index])/$tipo_cambio->paralelo;
+                $array[]=($servicio->precio_extranjero+$utilidad[$index]+$igv[$index])*$tipo_cambio->paralelo;
+
             }
         }
 
@@ -161,6 +165,7 @@ class BoletaServicioController extends Controller
         if(!$cambio){
             return "error por no hacer el cambio diario";
         }
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
 
         //codigo para convertir nombre a producto --------------------------------------------------------------------------------------
         $articulo = $request->input('articulo');
@@ -289,39 +294,54 @@ class BoletaServicioController extends Controller
                 $boleta_registro->servicio_id=$servicio_id[$i];
 
                 $servicio=Servicios::where('id',$servicio_id[$i])->where('estado_anular',0)->first();
+                
                 //Precio -----------------------------------------------------------------------------------------
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional'){
                         $boleta_registro->promedio_original=$servicio->precio_nacional;
+
                         $utilidad=$servicio->precio_nacional*($servicio->utilidad)/100;
-                        $igv=$servicio->precio_nacional*$igv_total/100;
+                        $igv_precio=$servicio->precio_nacional+$utilidad;
+                        $igv=$igv_precio*$igv_total/100;
                         $array=$servicio->precio_nacional+$utilidad+$igv;
-                         $boleta_registro->precio=$array;
+                        $boleta_registro->precio=$array;
+                        // return 1;
+
                     }else{
                         $boleta_registro->promedio_original=$servicio->precio_extranjero;
+
                         $utilidad=$servicio->precio_extranjero*($servicio->utilidad)/100;
-                        $igv=$servicio->precio_extranjero*$igv_total/100;
-                        $array=($servicio->precio_extranjero+$utilidad+$igv)*$tipo_cambio->paralelo;
-                         $boleta_registro->precio=$array;
+                        $igv_precio=$servicio->precio_extranjero+$utilidad;
+                        $igv=$igv_precio*$igv_total/100;
+                        $array=$servicio->precio_extranjero+$utilidad+$igv;
+                        $boleta_registro->precio=$array;
+                        // return 2;
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera'){
                         $boleta_registro->promedio_original=$servicio->precio_extranjero;
+
                         $utilidad=$servicio->precio_extranjero*($servicio->utilidad)/100;
-                        $igv=$servicio->precio_extranjero*$igv_total/100;
-                        $array=($servicio->precio_extranjero+$utilidad+$igv)/$tipo_cambio->paralelo;
-                         $boleta_registro->precio=$array;
+                        $igv_precio=$servicio->precio_extranjero+$utilidad;
+                        $igv=$igv_precio*$igv_total/100;
+                        $array=($servicio->precio_extranjero+$utilidad+$igv)*$tipo_cambio->paralelo;
+                        $boleta_registro->precio=$array;
+                        // return 3;
+
                     }else{
                         $boleta_registro->promedio_original=$servicio->precio_nacional;
+
                         $utilidad=$servicio->precio_nacional*($servicio->utilidad)/100;
-                        $igv=$servicio->precio_nacional*$igv_total/100;
-                        $array=$servicio->precio_nacional+$utilidad+$igv;
-                         $boleta_registro->precio=$array;
+                        $igv_precio=$servicio->precio_nacional+$utilidad;
+                        $igv=$igv_precio*$igv_total/100;
+                        $array=($servicio->precio_nacional+$utilidad+$igv)/$tipo_cambio->paralelo;
+                        $boleta_registro->precio=$array;
+                        // return 4;
+
                     }
                 }
-
-
-
+                
+                
                 $boleta_registro->cantidad=$request->get('cantidad')[$i];
 
                 //descuento
