@@ -11,36 +11,37 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        $this->call(CategoriasTableSeeder::class);
-        $this->call(FamiliasTableSeeder::class);
-        $this->call(MarcasTableSeeder::class);
+        // $this->call(CategoriasTableSeeder::class);      //innecesario
+        // $this->call(FamiliasTableSeeder::class);        //innecesario
+        // $this->call(MarcasTableSeeder::class);          //inncesario
+        // $this->call(ServicioSeeder::class); //innecesario
+        // $this->call(ConfigFacturacionElectronicaSeeder::class); //innecesario
+        // $this->call(MotivoTrasladoSeeder::class);   //innecesario
+        // $this->call(VehiculostableSeeder::class); //innecesario
+        // $this->call(VentasRegistroTableSeeder::class);  //innecesario
+        // $this->call(KardexEntradaSeeder::class);    //inncesario
+        // $this->call(KardexEntradaRegistroSeeder::class);    //innceario
+        // $this->call(ClientesSeeder::class);             //innesa
+        // $this->call(ProvedorTableSeeder::class);        //innecesario
+        // $this->call(FacturacionTableSeeder::class);     //innecesario
+        // $this->call(GarantiaTableSeeder::class);        //innecesario
+        // $this->call(ProductosTableSeeder::class);       //inncesario
+        // $this->call(MotivoTableSeeder::class);          //innecesario
+        // $this->call(FormaPagoSeeder::class);        //innecesario
+        $this->call(PersonalTableSeeder::class);
+        $this->call(AlmacenTableSeeder::class);
         $this->call(PaisesTableSeeder::class);
-        $this->call(EmpresaSeeder::class);
-        $this->call(IgvSeeder::class);
+        $this->call(Personal_laboralTableSeeder::class);
+        $this->call(PersonalVentasTableSeeder::class);  //solo 1
+        $this->call(ConfiTableSeeder::class);
+        $this->call(UsersTableSeeder::class);           //solo 1
+        $this->call(EstadoSeeder::class);
         $this->call(MonedasSeeder::class);
         $this->call(UnidadMedidaSeeder::class);
-        $this->call(PersonalTableSeeder::class);
-        $this->call(ClientesSeeder::class);
-        $this->call(ProvedorTableSeeder::class);
-        $this->call(AlmacenTableSeeder::class);
-        $this->call(Personal_laboralTableSeeder::class);
-        $this->call(EstadoSeeder::class);
-        $this->call(GarantiaTableSeeder::class);
-        $this->call(ProductosTableSeeder::class);
-        $this->call(MotivoTableSeeder::class);
-        $this->call(FormaPagoSeeder::class);
-        $this->call(ConfiTableSeeder::class);
-        $this->call(FacturacionTableSeeder::class);
-        $this->call(UsersTableSeeder::class);
-        $this->call(KardexEntradaSeeder::class);
-        $this->call(KardexEntradaRegistroSeeder::class);
-        $this->call(PersonalVentasTableSeeder::class);
-        $this->call(VentasRegistroTableSeeder::class);
         $this->call(BancoTableSeeder::class);
-        $this->call(VehiculostableSeeder::class);
+        $this->call(EmpresaSeeder::class);              //innecesario 1/2
+        $this->call(IgvSeeder::class);                  //18.00
         $this->call(PermissionsTableSeeder::class);
-        $this->call(ServicioSeeder::class);
-        $this->call(ConfigFacturacionElectronicaSeeder::class);
-        $this->call(MotivoTrasladoSeeder::class);
+
     }
 }
