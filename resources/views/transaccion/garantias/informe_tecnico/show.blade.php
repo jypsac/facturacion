@@ -205,9 +205,9 @@
             <div class="col-sm-4">
                 <strong><p><u>Centro de Atencion : </strong></u></p>
                 <strong>Direccion:</strong> {{$empresa->calle}}<br>
-                <strong>Telefono:</strong> {{$empresa->telefono}}<br>
-                <strong>Celular:</strong> {{$empresa->movil}}<br>
-                <strong>Email:</strong> {{$empresa->correo}}<br>
+                <strong>Telefono:</strong> {{Auth::user()->celular}} &nbsp;<br>
+                <strong>Celular-Soporte:</strong> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->teleofno }}<br>
+                <strong>Email:</strong> {{Auth::user()->email}}<br>
                 <strong>Web:</strong> {{$empresa->pagina_web}}<br>
             </div>
             <div class="col-sm-2"></div>

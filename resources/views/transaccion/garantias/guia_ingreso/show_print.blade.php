@@ -157,9 +157,9 @@
             <div class="col-sm-4">
                 <strong><p><u>Centro de Atencion : </strong></u></p>
                 <strong>Direccion:</strong> {{$mi_empresa->calle}}<br>
-                <strong>Telefono:</strong> {{$mi_empresa->telefono}}<br>
-                <strong>Celular:</strong> {{$mi_empresa->movil}}<br>
-                <strong>Email:</strong> {{$mi_empresa->correo}}<br>
+                <strong>Telefono:</strong> {{Auth::user()->celular}} &nbsp;<br>
+                <strong>Celular-Soporte:</strong> {{$garantia_guia_ingreso->marcas_i->telefono}}<br>
+                <strong>Email:</strong> {{Auth::user()->email}}<br>
                 <strong>Web:</strong> {{$mi_empresa->pagina_web}}<br>
             </div>
             <div class="col-sm-2"></div>
