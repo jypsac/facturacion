@@ -13,50 +13,49 @@ class MarcasTableSeeder extends Seeder
     {
     	DB::table('marcas')->insert([
 			'id' => 1 ,
-			'nombre' => 'BRTH' ,
-			'codigo' => '00001',
-			'abreviatura' => 'BRTH',
-			'nombre_empresa' => 'Bosch Rexroth',
-			'descripcion' => 'Bosch Rexroth AG es una empresa de ingeniería con sede en Lohr am Main en Alemania. Es el resultado de una fusión el 1 de mayo de 2001 entre Mannesmann Rexroth AG y la Unidad de Negocios de Tecnología de Automatización de Robert Bosch GmbH, y es una subsidiaria de propiedad total de Robert Bosch GmbH
-                                ',
+			'nombre' => 'Example' ,
+			'codigo' => '00000',
+			'abreviatura' => 'EP',
+			'nombre_empresa' => 'Marca 01',
+			'descripcion' => 'Descripcion del Producto',
 			'imagen'=>'1596486447Rexroth.png',
 			'created_at' => date('2020-08-01 15:27:28'),
            	'updated_at' => date('2020-08-01 15:27:28')
 		]);
-		DB::table('marcas')->insert([
-			'id' => 2 ,
-			'nombre' => 'VICKERS EATON' ,
-			'codigo' => '00002',
-			'abreviatura' => 'VIEA',
-			'nombre_empresa' => 'VICKERS EATON',
-			'descripcion' => 'Eaton es una compañía diversificada de administración de energía que ofrece soluciones de eficiencia energética que ayudan a nuestros clientes a administrar eficazmente la energía eléctrica, hidráulica y mecánica. La compañía es líder mundial en tecnología en productos, sistemas y servicios eléctricos para productos de calidad, distribución y control de energía, transmisión de energía, iluminación y cableado; componentes, sistemas y servicios hidráulicos para equipos industriales y móviles; combustible aeroespacial, sistemas hidráulicos y neumáticos para uso comercial y militar; y sistemas de transmisión y tren motriz de camiones y automóviles para rendimiento, economía de combustible y seguridad. ',
-			'imagen'=>'1596577669eaton.gif',
-			'created_at' => date('2020-08-01 15:27:28'),
-           	'updated_at' => date('2020-08-01 15:27:28')
-		]);
-		DB::table('marcas')->insert([
-			'id' => 3 ,
-			'nombre' => 'Saar HK' ,
-			'codigo' => '00003',
-			'abreviatura' => 'HK',
-			'nombre_empresa' => 'Saar HK',
-			'descripcion' => 'SAAR es su mejor, más seguro y más rápido socio en China para comprar maquinaria y componentes electrónicos. Solo necesita enviarnos el número de parte o decirnos la marca y la sepcificación que está buscando, haremos la cotización lo antes posible.
- ',
-			'imagen'=>'1596577918hk.gif',
-			'created_at' => date('2020-08-01 15:27:28'),
-           	'updated_at' => date('2020-08-01 15:27:28')
-		]);
-		DB::table('marcas')->insert([
-			'id' =>4,
-			'nombre' => 'HENGSHENG ' ,
-			'codigo' => '00004',
-			'abreviatura' => 'HEN',
-			'nombre_empresa' => 'HENGSHENG ',
-			'descripcion' => 'Desconocido ',
-			'imagen'=>'1596578099HENGSHENG.jpg',
-			'created_at' => date('2020-08-01 15:27:28'),
-           	'updated_at' => date('2020-08-01 15:27:28')
-		]);
+		// DB::table('marcas')->insert([
+		// 	'id' => 2 ,
+		// 	'nombre' => 'VICKERS EATON' ,
+		// 	'codigo' => '00002',
+		// 	'abreviatura' => 'VIEA',
+		// 	'nombre_empresa' => 'VICKERS EATON',
+		// 	'descripcion' => 'Eaton es una compañía diversificada de administración de energía que ofrece soluciones de eficiencia energética que ayudan a nuestros clientes a administrar eficazmente la energía eléctrica, hidráulica y mecánica. La compañía es líder mundial en tecnología en productos, sistemas y servicios eléctricos para productos de calidad, distribución y control de energía, transmisión de energía, iluminación y cableado; componentes, sistemas y servicios hidráulicos para equipos industriales y móviles; combustible aeroespacial, sistemas hidráulicos y neumáticos para uso comercial y militar; y sistemas de transmisión y tren motriz de camiones y automóviles para rendimiento, economía de combustible y seguridad. ',
+		// 	'imagen'=>'1596577669eaton.gif',
+		// 	'created_at' => date('2020-08-01 15:27:28'),
+  //          	'updated_at' => date('2020-08-01 15:27:28')
+		// ]);
+	// 	DB::table('marcas')->insert([
+	// 		'id' => 3 ,
+	// 		'nombre' => 'Saar HK' ,
+	// 		'codigo' => '00003',
+	// 		'abreviatura' => 'HK',
+	// 		'nombre_empresa' => 'Saar HK',
+	// 		'descripcion' => 'SAAR es su mejor, más seguro y más rápido socio en China para comprar maquinaria y componentes electrónicos. Solo necesita enviarnos el número de parte o decirnos la marca y la sepcificación que está buscando, haremos la cotización lo antes posible.
+ // ',
+	// 		'imagen'=>'1596577918hk.gif',
+	// 		'created_at' => date('2020-08-01 15:27:28'),
+ //           	'updated_at' => date('2020-08-01 15:27:28')
+	// 	]);
+	// 	DB::table('marcas')->insert([
+	// 		'id' =>4,
+	// 		'nombre' => 'HENGSHENG ' ,
+	// 		'codigo' => '00004',
+	// 		'abreviatura' => 'HEN',
+	// 		'nombre_empresa' => 'HENGSHENG ',
+	// 		'descripcion' => 'Desconocido ',
+	// 		'imagen'=>'1596578099HENGSHENG.jpg',
+	// 		'created_at' => date('2020-08-01 15:27:28'),
+ //           	'updated_at' => date('2020-08-01 15:27:28')
+	// 	]);
   //       DB::table('marcas')->insert([
 		// 	'id' => 1 ,
 		// 	'nombre' => 'HP' ,

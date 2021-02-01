@@ -15,7 +15,7 @@ class ServicioSeeder extends Seeder
             'codigo_servicio'=>"SERV-00001",
             'codigo_original'=>123,
             'moneda_id'=>1,
-            'nombre'=>"Formateos",
+            'nombre'=>"Servicios1",
             'categoria'=>"Servicios",
             'precio_nacional'=>100,
             'precio_extranjero'=>30,
