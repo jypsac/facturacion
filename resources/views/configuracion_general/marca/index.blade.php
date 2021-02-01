@@ -37,7 +37,7 @@
                                         </div>
                                         <label class="col-sm-2 col-form-label">Telefono:</label>
                                         <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="telefono" required="required">
+                                            <input type="text" class="form-control" name="telefono" >
                                         </div><label class="col-sm-2 col-form-label">Empresa:</label>
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" name="nombre_empresa" required="required">
@@ -184,7 +184,7 @@
                                                                             </div>
                                                                              <label class="col-sm-2 col-form-label">Telefono:</label>
                                                                             <div class="col-sm-10">
-                                                                                <input required="required" type="text" class="form-control" value="{{$marca->telefono}}" name="telefono">
+                                                                                <input  type="text" class="form-control" value="{{$marca->telefono}}" name="telefono">
                                                                             </div><label class="col-sm-2 col-form-label">Descripcion:</label>
                                                                             <div class="col-sm-10">
                                                                                 <textarea type="text" class="form-control" placeholder="opcional" name="descripcion"> {{$marca->descripcion}}</textarea>
