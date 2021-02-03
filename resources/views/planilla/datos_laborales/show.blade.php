@@ -17,11 +17,11 @@
        >
     <table>
             <tr>
-                <th width="100% "><h1 style="color: black">{{$persona->nombres}} {{$persona->apellidos}} <br> <span style="font-size: 20px">&nbsp;&nbsp;{{$persona->nacionalidad}}</span></h1>
+                <th width="100% "><h1 style="color: black">{{$personales->nombres}} {{$personales->apellidos}} <br> <span style="font-size: 20px">&nbsp;&nbsp;{{$personales->nacionalidad}}</span></h1>
                 </th>
                 <th  width="100%" rowspan="2">
 
-                            <a href="{{ asset('/profile/images/')}}/{{$persona->foto}}" title="{{$persona->nombres}}  {{$persona->apellidos}}" data-gallery=""><img src="{{ asset('/profile/images/')}}/{{$persona->foto}}" class="rounded-circle circle-border m-b-md" alt="profile"  width="150px" height="150px" ></a>
+                            <a href="{{ asset('/profile/images/')}}/{{$personales->foto}}" title="{{$personales->nombres}}  {{$personales->apellidos}}" data-gallery=""><img src="{{ asset('/profile/images/')}}/{{$personales->foto}}" class="rounded-circle circle-border m-b-md" alt="profile"  width="150px" height="150px" ></a>
 
                            <!-- The Gallery as lightbox dialog, should be a child element of the document body -->
                             <div id="blueimp-gallery" class="blueimp-gallery">
