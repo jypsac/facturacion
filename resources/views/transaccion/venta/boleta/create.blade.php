@@ -292,12 +292,12 @@
                                             <tr>
                                                 <td>Moneda</td>
                                                 <td>:</td>
-                                                <td>
-                                                    <input type="text" name="moneda" class="form-control" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">
-                                                    <br>
-                                                    <input type="hidden" name="almacen" class="form-control" value="{{$sucursal->id}}" readonly="readonly">
+                                                <td class="row" style="padding-left: 20px">
+                                                    <input type="text" name="moneda" class="form-control col-sm-8" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">&nbsp;
+                                                    {{-- <br> --}}
+                                                    <input type="hidden" name="almacen" class="form-control col-sm-4" value="{{$sucursal->id}}" readonly="readonly">
                                                     <a onclick="event.preventDefault();
-                                                        document.getElementById('almacen-form').submit();">
+                                                        document.getElementById('almacen-form').submit(); " style="padding-left: 10px;padding-top: 5px ">
                                                         <button type="button" class='addmores btn btn-success'>Cambiar</button>
                                                     </a>
                                                 </td>
