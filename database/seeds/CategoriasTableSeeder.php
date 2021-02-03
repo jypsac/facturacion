@@ -30,8 +30,8 @@ class CategoriasTableSeeder extends Seeder
 		]);
 
 		DB::table('categorias')->insert([
-			'id' => 2 ,
-			'codigo' => '002',
+			'id' => 3,
+			'codigo' => '003',
 			'descripcion' => 'SERVICIOS',
 			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
