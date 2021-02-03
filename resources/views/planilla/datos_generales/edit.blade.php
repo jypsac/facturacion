@@ -100,6 +100,7 @@
           <option value="Administracion">Administracion</option>
           <option value="Ingenieria">Ingenieria</option>
           <option value="Ciencias de la comunicación">Ciencias de la comunicación</option>
+          <option value="Tecnico Informatico">Tecnico Informatico</option>
           <option value="Marketing y Mercadotecnia">Marketing y Mercadotecnia</option>
           <option value="Economia">Economia</option>
           <option value="Derecho">Derecho</option>

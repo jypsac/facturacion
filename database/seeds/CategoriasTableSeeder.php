@@ -13,7 +13,7 @@ class CategoriasTableSeeder extends Seeder
     {
         DB::table('categorias')->insert([
 			'id' => 1 ,
-			'codigo' => '000',
+			'codigo' => '0001',
 			'descripcion' => 'PRODUCTOS',
 			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
