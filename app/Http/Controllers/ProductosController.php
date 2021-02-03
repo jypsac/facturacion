@@ -207,7 +207,7 @@ class ProductosController extends Controller
      */
     public function destroy($id)
     {
-        
+
         // Validación para la anulacion Kardex Entrada
         $kardex_entrada=kardex_entrada_registro::where('producto_id',$id)->where('estado',1)->get();
         // return $kardex_entrada;
@@ -220,9 +220,9 @@ class ProductosController extends Controller
             $producto->save();
             return redirect()->route('productos.index');
         }else{
-            
+
             return "Error por tener producto en kardex, no se puede eliminar";
         }
-        
+
     }
 }
