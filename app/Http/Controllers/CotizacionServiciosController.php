@@ -1313,9 +1313,9 @@ class CotizacionServiciosController extends Controller
    }
 
    public function pdf(Request $request,$id){
-    $name = $request->get('name');
-    $banco=Banco::where('estado','0')->get();
-    $banco_count=Banco::where('estado','0')->count();
+        $name = $request->get('name');
+        $banco=Banco::where('estado','0')->get();
+        $banco_count=Banco::where('estado','0')->count();
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
         $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();

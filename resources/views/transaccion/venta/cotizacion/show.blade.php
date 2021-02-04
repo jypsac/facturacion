@@ -68,8 +68,8 @@
                     @csrf
                      <input type="tel" name="numero"  value="{{$cotizacion->cliente->celular}}"   />
                      <input type="text" name="mensaje" id="texto_orden" hidden="" />
-                     <input type="text" hidden="" name="url" value="{{route('pdf_cotizacion_servicio' ,$cotizacion->id)}}?archivo=">
-                     <input type="text" name="name_sin_cambio" hidden="" value="Cotizacion_Servicio_{{$cotizacion->tipo}}" />
+                     <input type="text" hidden="" name="url" value="{{route('pdf_cotizacion' ,$cotizacion->id)}}?archivo=">
+                     <input type="text" name="name_sin_cambio" hidden="" value="Cotizacion_{{$cotizacion->tipo}}" />
                     <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-send fa-lg"></i>  </button>
                     </form>
                 </div>
@@ -228,7 +228,7 @@
           <div class="row">
             <div class="col-sm-3">
                 <p><u>centro de Atencion : </u></p>
-                Telefono : {{$cotizacion->user_personal->personal->telefono }}<br>
+                Telefono :  {{$empresa->telefono}}<br>
                 Celular : {{$cotizacion->user_personal->personal->celular }}<br>
                 Email : {{$cotizacion->user_personal->personal->email }}<br>
                 Web : {{$empresa->pagina_web}} <br>
