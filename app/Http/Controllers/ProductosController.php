@@ -212,16 +212,18 @@ class ProductosController extends Controller
         $kardex_entrada=kardex_entrada_registro::where('producto_id',$id)->where('estado',1)->get();
         // return $kardex_entrada;
 
-        if(get_object_vars($kardex_entrada)){
 
+        // Si el producto existe en cardex entrada
+        if(get_object_vars($kardex_entrada)){
+            // NO ANULA EL PRODUCTO
+            return back();
+            // return "Error por tener producto en kardex, no se puede eliminar";
+        }else{
             $producto=Producto::find($id);
             $producto->codigo_original='Codigo Anulado N°'.$id;
             $producto->estado_anular='0';
             $producto->save();
             return redirect()->route('productos.index');
-        }else{
-
-            return "Error por tener producto en kardex, no se puede eliminar";
         }
 
     }

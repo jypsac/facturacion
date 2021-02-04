@@ -64,8 +64,8 @@ class GarantiaGuiaIngresoController extends Controller
       $marca_cantidad=substr($marca_cantidad,1);
       $orden_servicio=$marca.$guion.$marca_cantidad;
       $paises = Pais::all();
-
-      $productos = Producto::all();
+      // Producto que no esten anulados
+      $productos = Producto::all()->where('estado_anular',1);
 
       $clientes=Cliente::all();
         // $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
