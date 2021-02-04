@@ -45,7 +45,7 @@
             </td>
             <td style="width: 5px;border: 1px white"></td>
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto;padding-top: 5px" align="center">
-                <img align="" src="{{asset('storage/marcas/'.$garantias_guias_egreso->garantia_ingreso_i->marcas_i->imagen)}}" style="height: 50px;width: 150px;margin-top: 5px" />
+                <img align="" src="{{asset('archivos/imagenes/marcas/'.$garantias_guias_egreso->garantia_ingreso_i->marcas_i->imagen)}}" style="height: 50px;width: 150px;margin-top: 5px" />
             </td>
             <td style="width: 5px;border: 1px white"></td>
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto;margin-top: -10px;" align="center">

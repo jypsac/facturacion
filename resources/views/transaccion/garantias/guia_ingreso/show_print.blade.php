@@ -37,12 +37,12 @@
                 <div class="row" style="height: 130px">
                     <div class="col-sm-4 text-left" align="left">
                         <div class="form-control" align="center" style="height: 79%;" align="left">
-                            <img align="center" src="{{asset('img/logos/'.$mi_empresa->foto)}}" style="height: 70px;width: 250px;margin-top: 5px">
+                            <img align="center" src="{{asset('img/logos/'.$mi_empresa->foto)}}" style="height: 70px;width: 90%;margin-top: 5px">
                         </div>
                     </div>
                     <div class="col-sm-4" align="center">
                          <div class="form-control" align="center" style="height: 79%;" align="center">
-                            <img align="center" src="{{asset('storage/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="height: 70px;width: 250px;margin-top: 5px">
+                            <img align="center" src="{{asset('archivos/imagenes/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="height: 70px;width: 90%;margin-top: 5px">
                          </div>
                     </div>
                     <div class="col-sm-4" align="right" >

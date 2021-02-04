@@ -50,7 +50,7 @@ return [
 
         'marcas' => [
             'driver' => 'local',
-            'root' => storage_path('app/public/'),
+            'root' => public_path('archivos/imagenes/marcas/'),
         ],
 
         // 'garantia_guia_ingreso' => [

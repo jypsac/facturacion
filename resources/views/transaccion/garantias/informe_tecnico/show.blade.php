@@ -52,12 +52,12 @@
                 <div class="row" style="height: 120px">
                     <div class="col-sm-4 text-left" align="left">
                         <div class="form-control" align="center" style="height: 79%;" align="left">
-                            <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="height: 70px;width: 320px;margin-top: 5px">
+                            <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="height: 70px;width: 90%;margin-top: 5px">
                         </div>
                     </div>
                     <div class="col-sm-4" align="center">
                         <div class="form-control" align="center" style="height: 79%;" align="center">
-                            <img align="center" src="{{asset('storage/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="height: 70px;width: 320px;margin-top: 5px">
+                            <img align="center" src="{{asset('archivos/imagenes/marcas/'.$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->imagen)}}" style="height: 70px;width: 90%;margin-top: 5px">
                          </div>
                     </div>
                     <div class="col-sm-4" align="right" >

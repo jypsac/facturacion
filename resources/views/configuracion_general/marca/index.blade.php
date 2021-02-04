@@ -148,7 +148,7 @@
                                     <td>{{$marca->codigo}}</td>
                                     <td>{{$marca->descripcion}}</td>
                                     <td> @if(isset($marca->imagen))
-                                        <img src="{{asset('storage/marcas/'.$marca->imagen)}}" style="width: 150px;height:50px">
+                                        <img src="{{asset('archivos/imagenes/marcas/'.$marca->imagen)}}" style="width: 150px;height:50px">
                                         @else
                                         <img src="{{asset('img/logos/marca_ejemplo.svg')}}" style="width: 150px;height:50px">
                                         @endif
@@ -196,7 +196,7 @@
                                                                                 <!--Aqui se desplegará el fichero-->
 
                                                                                 @if(isset($marca->imagen))
-                                                                                 <img name="imagen" src="{{asset('storage/marcas/'.$marca->imagen)}}" width="300px" height="200px" />
+                                                                                 <img name="imagen" src="{{asset('archivos/imagenes/marcas/'.$marca->imagen)}}" width="300px" height="200px" />
                                                                                 @else
                                                                                 <img src="{{asset('img/logos/marca_ejemplo.svg')}}" width="300px" height="200px">
                                                                                 @endif

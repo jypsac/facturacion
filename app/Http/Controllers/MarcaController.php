@@ -40,7 +40,9 @@ class MarcaController extends Controller
         if($request->hasfile('imagen')){
             $imagen =$request->file('imagen');
             $nombre_imagen = time().$imagen->getClientOriginalName();
-            $imagen =$request->file('imagen')->storeAs('marcas',$nombre_imagen);
+            // $imagen =$request->file('imagen');
+            $destinationPath = public_path('/archivos/imagenes/marcas/');
+            $imagen->move($destinationPath,$nombre_imagen);
         }else{
             $nombre_imagen=$request->get('imagen');
         }
@@ -99,7 +101,8 @@ class MarcaController extends Controller
         if($request->hasfile('imagen')){
             $imagen =$request->file('imagen');
             $nombre_imagen = time().$imagen->getClientOriginalName();
-            $imagen =$request->file('imagen')->storeAs('marcas',$nombre_imagen);
+            $destinationPath = public_path('/archivos/imagenes/marcas/');
+            $imagen->move($destinationPath,$nombre_imagen);
         }else{
             $nombre_imagen=$request->get('imagenes');
         }
