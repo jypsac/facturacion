@@ -29,7 +29,7 @@
         <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:200px;height: 50px ;margin-top: 5px">
     </div>
 </div> --}}
-    
+
     <table style="width: 100%;border-collapse:separate">
         <tr>
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: auto;padding-top: 5px;" align="center">

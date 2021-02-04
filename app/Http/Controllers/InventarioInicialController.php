@@ -24,7 +24,7 @@ class InventarioInicialController extends Controller
     {
         $almacenes=Almacen::all();
         $clasificaciones=Categoria::all();
-        // $inventario_iniciales=InventarioInicial::all();
+        $inventario_iniciales=InventarioInicial::all();
         $kardex_entradas=Kardex_entrada::where('motivo_id','4')->get();
         return view('inventario.inventario-inicial.index',compact('inventario_iniciales','clasificaciones','almacenes','kardex_entradas'));
     }

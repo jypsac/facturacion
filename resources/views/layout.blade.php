@@ -139,9 +139,9 @@
                                 </li>
                                 @endcan
                                 {{-- <li><a href="{{route('pagados.index')}}">Pagados</a></li> --}}
-                                @can('inventario-productos-inventario_inicial.index')
+                                {{-- @can('inventario-productos-inventario_inicial.index')
                                 <li><a href="{{route('inventario-inicial.index')}}">Inventario Inicial</a></li>
-                                @endcan
+                                @endcan --}}
                                 @can('inventario-toma_de_inventario.index')
                                 <li><a href="{{route('periodo-consulta.index')}}">Toma de Inventario</a></li><!-- Periodo Consulta -->
                                 @endcan
