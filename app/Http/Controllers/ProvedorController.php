@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Cliente;
 use App\Provedor;
 use Illuminate\Http\Request;
 
@@ -51,7 +52,7 @@ class ProvedorController extends Controller
 
     }
 
-     public function store_kardex(Request $request)
+    public function store_kardex(Request $request)
     {
         $provedor=new Provedor;
         $provedor->ruc=$request->get('ruc');
@@ -114,7 +115,7 @@ class ProvedorController extends Controller
         $provedor->observacion=$request->get('observacion');
         $provedor->save();
         return redirect()->route('provedor.show', $provedor->id);
-    } 
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -133,27 +134,33 @@ class ProvedorController extends Controller
     function ruc(Request $request){
 
         $ruc=$request->get('ruc');
-        $data = file_get_contents("https://api.sunat.cloud/ruc/".$ruc);
+        $btn=$request->get('btn');
+        $data = file_get_contents("https://dniruc.apisperu.com/api/v1/ruc/".$ruc."?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRlc2Fycm9sbG9Aanlwc2FjLmNvbSJ9.1Pt1A4PEFAGmFySlfVeFKZKuVCC-u_ZEW-KYQq-P57k");
         $info = json_decode($data, true);
 
-        if($data==='[]' || $info['fecha_inscripcion']==='--'){
-            $datos = array(0 => 'nada');
-            echo json_encode($datos);
-        }else{
-        $datos = array(
-            0 => $info['ruc'],
-            1 => $info['razon_social'],
-            2 => date("d/m/Y", strtotime($info['fecha_actividad'])),
-            3 => $info['contribuyente_condicion'],
-            4 => $info['contribuyente_tipo'],
-            5 => $info['contribuyente_estado'],
-            6 => date("d/m/Y", strtotime($info['fecha_inscripcion'])),
-            7 => $info['domicilio_fiscal'],
-            8 => date("d/m/Y", strtotime($info['emision_electronica'])),
-            9 => $info['ruc']."@correo.com"
-        );
-            echo json_encode($datos);
+        $clientes=Cliente::where('numero_documento',array($info['ruc']))->first();
+        if (isset($clientes)) {
+            $ruc_view=$clientes->numero_documento.'- existente';
+         }
+        else{
+        $ruc_view=array($info['ruc']);
         }
 
+    if($data==='[]' || $info['fechaInscripcion']==='--'){
+        $datos = array(0 => 'nada');
+        echo json_encode($datos);
+    }else{
+        $datos = array(
+            // 0 => $info['ruc'],
+            0 => $ruc_view,
+            1 => $info['razonSocial'],
+            2 => $info['direccion'],
+            3 => $info['departamento'].' - '.$info['provincia'].' - '.$info['distrito'],
+            4 => date("d/m/Y", strtotime($info['fechaInscripcion'])),
+            5 => $info['departamento']
+        );
+        return json_encode($datos);
     }
+
+}
 }

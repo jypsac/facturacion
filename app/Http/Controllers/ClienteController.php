@@ -41,11 +41,9 @@ class ClienteController extends Controller
          $this->validate($request,[
             'nombre' => ['required','unique:clientes,nombre'],
             'numero_documento' => ['required','unique:clientes,numero_documento'],
-            'email' => ['required','email','unique:clientes,email'],
         ],[
             'nombre.unique' => 'El Cliente ya ha sido registrado',
             'nombre.numero_documento' => 'El numero de documentacion ya ha sido registrado',
-            'nombre.email' => 'El correo ya existe'
         ]);
 
         $data = $request->all();

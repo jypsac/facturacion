@@ -41,10 +41,10 @@
             {{ csrf_field() }}
             <div class="form-group  row"><label class="col-sm-2 col-form-label">Introducir Ruc (Inestable):</label>
                 <div class="col-sm-10">
-                    <input type="text" class="form-control" class="ruc" id="ruc" name="ruc">
+                    <input type="text" class="form-control" class="ruc" id="ruc" name="ruc" required="required">
                 </div>
             </div>
-            <button class="btn btn-primary" id="botoncito" class="botoncito"><i class="fa fa-search"></i> Buscar</button>
+            <button class="btn btn-primary" id="botoncito" name="btn" value="cliente" class="botoncito"><i class="fa fa-search"></i> Buscar</button>
         </form><script>
             $(function(){
                 $('#botoncito').on('click', function(){
@@ -64,13 +64,16 @@
                             }else{
                                 $('#numero_ruc').val(datos[0]);
                                 $('#razon_social').val(datos[1]);
-                                $('#fecha_actividad').val(datos[2]);
-                                $('#condicion').val(datos[3]);
-                                $('#tipo').val(datos[4]);
-                                $('#estado').val(datos[5]);
-                                $('#fecha_inscripcion').val(datos[6]);
-                                $('#domicilio').val(datos[7]);
-                                $('#emision').val(datos[8]);
+                                $('#direccion').val(datos[2]);
+                                $('#ciudad').val(datos[3]);
+                                $('#fechaInscripcion').val(datos[4]);
+                                $('#departamento').val(datos[5]);
+                                // $('#fecha_actividad').val(datos[2]);
+                                // $('#condicion').val(datos[3]);
+                                // $('#tipo').val(datos[4]);
+                                // $('#estado').val(datos[5]);
+                                // $('#domicilio').val(datos[7]);
+                                // $('#emision').val(datos[8]);
                             }
                         }
                     });
@@ -109,7 +112,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Numero de Documento *</label>
-                                            <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required value="{{ old('numero_documento')}}" autocomplete="off" type="number">
+                                            <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required  autocomplete="off" type="text">
                                             <datalist id="browserdoc" >
                                                 @foreach($clientes as $cliente)
                                                 <option id="a">{{$cliente->numero_documento}} - existente</option>
@@ -119,7 +122,7 @@
 
                                         <div class="form-group">
                                             <label>Direccion *</label>
-                                            <input type="text" class="form-control" name="direccion" id="domicilio" class="form-control required" required="required">
+                                            <input type="text" class="form-control" name="direccion" id="direccion" class="form-control required" required="required">
                                         </div>
                                     </div>
                                     <!--  -->
@@ -127,12 +130,12 @@
                                         <div class="row">
                                             <div class="form-group col-lg-6 ">
                                                 <label>Correo *</label>
-                                                <input  name="email" type="text" class="form-control required " required="required">
+                                                <input  name="email" value="sincorreo@gmail.com" type="text" class="form-control required " required="required">
                                             </div>
 
                                             <div class="form-group col-lg-6">
                                                 <label>Ciudad *</label>
-                                                <input type="text" class="form-control" name="ciudad" class="form-control required" required="required">
+                                                <input type="text" class="form-control" name="ciudad" id="ciudad" class="form-control required" required="required">
                                             </div>
                                         </div>
                                     </div>
@@ -148,12 +151,12 @@
                                         <div class="row">
                                             <div class="form-group col-lg-6 ">
                                                 <label>Telefono *</label>
-                                                <input value="5200000" type="number" class="form-control" name="telefono" class="form-control required">
+                                                <input value="00000" type="number" class="form-control" name="telefono" class="form-control required">
                                             </div>
 
                                             <div class="form-group col-lg-6">
                                                 <label>Departamento *</label>
-                                                <input value="Lima" type="text" class="form-control" name="departamento" class="form-control required">
+                                                <input value="Lima" type="text" class="form-control" name="departamento" id="departamento" class="form-control required">
                                             </div>
                                         </div>
                                     </div>
@@ -162,7 +165,7 @@
                                         <div class="row">
                                             <div class="form-group col-lg-6 ">
                                                 <label>Celular *</label>
-                                                <input value="92000000" type="number" class="form-control" name="celular" class="form-control required">
+                                                <input value="0000000" type="number" class="form-control" name="celular" class="form-control required">
                                             </div>
 
                                             <div class="form-group col-lg-6">
@@ -197,7 +200,7 @@
 
                                         <div class="form-group">
                                             <label>Fecha Registro *</label>
-                                            <input value="{{date("Y-m-d")}}" type="date" class="form-control" name="fecha_registro" class="form-control required">
+                                            <input  type="text" class="form-control" id="fechaInscripcion" name="fecha_registro" class="form-control required">
                                         </div>
 
                                     </div>
