@@ -377,47 +377,48 @@
 
                    </div></h1>
                    {{-- <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)" style="width: 50px" /> --}}
-                   <h5>to: {{$row->remitente}}</h5>
+                   <h5>De: {{$row->remitente}}</h5>
                    <hr>
                    {!!$row->mensaje!!}
-                   <p class="small">
+                   {{-- <p class="small"> --}}
                     {{-- Firma --}}
-                    <strong>Best regards, Anthony Smith </strong>
-                </p>
+                    {{-- <strong>Best regards, Anthony Smith </strong>
+                </p> --}}
 
                 <div class="m-t-lg">
                     <p>
                         <span><i class="fa fa-paperclip"></i> Archivos </span>
-                            {{-- <a href="#">Download all</a>
-                            |
-                            <a href="#">View all images</a> --}}
                         </p>
-
                         <div class="attachment">
                             @foreach($mailbox_file as $mailbox_files)
-                            @if($mailbox_files->id_bandeja_envios ==  $row->id)
-                            @if( isset($mailbox_files->archivo) )
-                            <div class="file-box">
-                                <div class="file">
-                                    {{-- {{storage_path('app/public/'.$mailbox_files->archivo)}} --}}
-                                    <a href="{{asset('/archivos/'.$mailbox_files->fecha_hora.$mailbox_files->archivo)}}"
-                                    download="{{$mailbox_files->archivo}}" >
-                                    {{-- <a href="{{route('descarga')}}" target="_blank"> --}}
-                                        <span class="corner"></span>
-                                        <div class="icon">
-                                            <i class="fa fa-file-pdf-o"></i>
-                                        </div>
-                                        <div class="file-name">
-                                            {{$mailbox_files->archivo}}
-                                            <br>
-                                            <small>Añadido: {{$mailbox_files->fecha_hora}}</small>
-                                        </div>
-                                    </a>
+                                @if($mailbox_files->id_bandeja_envios ==  $row->id)
+                                    @if( isset($mailbox_files->archivo) )
+                                    <div class="file-box">
+                                        <div class="file" style="width: 150px">
+                                            {{-- {{storage_path('app/public/'.$mailbox_files->archivo)}} --}}
+                                            <a href="{{asset('/archivos/'.$mailbox_files->fecha_hora.$mailbox_files->archivo)}}"
+                                            download="{{$mailbox_files->archivo}}" >
+                                            {{-- <a href="{{route('descarga')}}" target="_blank"> --}}
+                                                {{-- <span class="corner"></span> --}}
+                                                {{-- <div class="icon">
+                                                    <p><i class="fa fa-file"></i></p>
+                                                </div> --}}
+                                                <div class="file-name" style="background-color: white">
+                                                    <center>
+                                                        <i class="fa fa-file" style="font-size:  60px"></i>
+                                                    </center>
+                                                </div>
+                                                <div class="file-name">
+                                                    {{$mailbox_files->archivo}}
+                                                    <br>
+                                                    <small>{{$mailbox_files->fecha_hora}}</small>
+                                                </div>
+                                            </a>
 
-                                </div>
-                            </div>
-                            @endif
-                            @endif
+                                        </div>
+                                    </div>
+                                    @endif
+                                @endif
                             @endforeach
 
                            {{--  @foreach($mailbox_file as $mailbox_files)

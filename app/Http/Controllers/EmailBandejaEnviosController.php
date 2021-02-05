@@ -111,7 +111,7 @@ class EmailBandejaEnviosController extends Controller
     table{
       width:100%;
     }
-      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
+      </style>'.$mensaje_html.'</body><br/><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="150px" height="100px" /></footer>';
     }
 
 
@@ -421,7 +421,7 @@ class EmailBandejaEnviosController extends Controller
     table{
       width:100%;
     }
-      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
+      </style>'.$mensaje_html.'</body><br/><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="150px" height="100px" /></footer>';
     }
     /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
 
