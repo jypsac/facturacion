@@ -61,6 +61,12 @@ class EmailConfiguracionesController extends Controller
         }else{
             $name="";
         }
+        $ancho=$request->get('ancho_firma');
+        $alto =$request->get('alto_firma');
+        if( $ancho == "" || $alto  == ""){
+            $ancho = '150';
+            $alto = '100';
+        }
         $id_usuario=auth()->user()->id;
         $configmail = new EmailConfiguraciones;
         $configmail->id_usuario =auth()->user()->id;
@@ -70,6 +76,8 @@ class EmailConfiguracionesController extends Controller
         $configmail->smtp =$request->get('smtp') ;
         $configmail->port = $request->get('port');
         $configmail->firma = $name;
+        $configmail->ancho_firma= $ancho;
+        $configmail->alto_firma= $alto;
         $configmail->encryption= $request->get('encryp') ;
         $configmail-> save();
 
@@ -141,6 +149,12 @@ class EmailConfiguracionesController extends Controller
         }else{
             $name=$request->get('firma_nombre') ;
         }
+        $ancho=$request->get('ancho_firma');
+        $alto =$request->get('alto_firma');
+        //  if( $ancho == "" || $alto  == ""){
+        //     $ancho = '150px';
+        //     $alto = '100px';
+        // }
         $configmail=EmailConfiguraciones::find($id);
         $configmail->email = $correo ;
         $configmail->password = $request->get('password') ;
@@ -148,6 +162,9 @@ class EmailConfiguracionesController extends Controller
         $configmail->port = $request->get('port');
         $configmail->encryption= $request->get('encryp') ;
         $configmail->firma = $name;
+        $configmail->ancho_firma= $ancho;
+        $configmail->alto_firma= $alto;
+
         $configmail->save();
         return redirect()->route('configuracion_email.index');
     }

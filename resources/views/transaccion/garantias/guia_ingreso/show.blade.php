@@ -297,6 +297,16 @@
                                                 </span>
                                             </div>
                                         </div>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Ancho(px)</label>
+                                                <div class="col-sm-4">
+                                                    <input type="number" class="form-control" name="ancho_firma">
+                                                </div>
+                                            <label class="col-sm-2 col-form-label" >Alto(px)</label>
+                                                <div class="col-sm-4">
+                                                    <input type="number" class="form-control" name="alto_firma">
+                                                </div>
+                                        </div>
                                         <br>
                                     </div>
                                 </fieldset>

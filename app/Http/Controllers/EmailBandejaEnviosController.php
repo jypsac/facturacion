@@ -75,6 +75,8 @@ class EmailBandejaEnviosController extends Controller
     $id_usuario=auth()->user()->id;
     $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
     $firma=$correo_busqueda->firma;
+    $ancho= $correo_busqueda->ancho_firma;
+    $alto = $correo_busqueda->alto_firma;
     $mensaje_html = $request->get('mensaje');
 
 
@@ -111,7 +113,7 @@ class EmailBandejaEnviosController extends Controller
     table{
       width:100%;
     }
-      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
+      </style>'.$mensaje_html.'</body><br/><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="'.$ancho.'px" height=" '.$alto.'px " /></footer>';
     }
 
 
@@ -221,7 +223,7 @@ class EmailBandejaEnviosController extends Controller
     $regla=$cotizacion->tipo;
     $cotizacion_factura = ' ';
      // return $cotizacion;
-    $archivo=$name.$regla.$id.".pdf";
+    $archivo=$cotizacion->cod_cotizacion.".pdf";
     $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
     $content = $pdf->download();
     $especif = $carbon_sp.$archivo;
@@ -262,7 +264,7 @@ class EmailBandejaEnviosController extends Controller
               }
 
           }
-          $archivo=$name.$regla.$id.'.pdf';
+          $archivo=$cotizacion->cod_cotizacion.'.pdf';
           $regla=$cotizacion->tipo;
 
           $pdf=PDF::loadView('transaccion.venta.servicios.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','banco_count'));
@@ -284,7 +286,7 @@ class EmailBandejaEnviosController extends Controller
       $banco=Banco::where('estado','0')->get();
       $empresa=Empresa::first();
       $name = 'Guia_Remision';
-      $archivo=$name.$id.".pdf";
+      $archivo=$guia_remision->cod_guia.".pdf";
       $pdf=PDF::loadView('transaccion.venta.guia_remision.pdf',compact('guia_remision','guia_registro','banco','empresa','banco_count'));
       $content = $pdf->download();
       $date = $carbon_sp;
@@ -305,7 +307,7 @@ class EmailBandejaEnviosController extends Controller
         $banco_count=Banco::where('estado','0')->count();
         $i = 1;
 
-        $archivo=$name.'_'.$id.".pdf";
+        $archivo=$facturacion->codigo_fac.".pdf";
         $pdf=PDF::loadView('transaccion.venta.facturacion.pdf', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco','banco_count','i'));
         $content = $pdf->download();
         $date = $carbon_sp;
@@ -327,7 +329,7 @@ class EmailBandejaEnviosController extends Controller
         $boleta=Boleta::find($id);
         $i = 1;
 
-        $archivo=$name.'_'.$id.".pdf";
+        $archivo=$boleta->codigo_boleta.".pdf";
         $pdf=PDF::loadView('transaccion.venta.boleta.pdf', compact('boleta','empresa','banco','boleta_registro','igv','sub_total','banco_count','i'));
         $content = $pdf->download();
         $date = $carbon_sp;
@@ -421,7 +423,7 @@ class EmailBandejaEnviosController extends Controller
     table{
       width:100%;
     }
-      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
+      </style>'.$mensaje_html.'</body><br/><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="'.$correo_busqueda->firma_ancho.'px" height="'.$correo_busqueda->firma_alto.'px" /></footer>';
     }
     /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
 
@@ -597,6 +599,12 @@ class EmailBandejaEnviosController extends Controller
         }else{
             $name="";
         }
+        $ancho=$request->get('ancho_firma');
+        $alto =$request->get('alto_firma');
+        if( $ancho == "" || $alto  == ""){
+            $ancho = '150';
+            $alto = '100';
+        }
         $id_usuario=auth()->user()->id;
         $configmail = new EmailConfiguraciones;
         $configmail->id_usuario =auth()->user()->id;
@@ -606,6 +614,8 @@ class EmailBandejaEnviosController extends Controller
         $configmail->smtp =$request->get('smtp') ;
         $configmail->port = $request->get('port');
         $configmail->firma = $name;
+        $configmail->ancho_firma= $ancho;
+        $configmail->alto_firma= $alto;
         $configmail->encryption= $request->get('encryp') ;
         $configmail-> save();
 
@@ -633,6 +643,12 @@ class EmailBandejaEnviosController extends Controller
         }else{
             $name=$request->get('firma_nombre') ;
         }
+        // $ancho=$request->get('ancho_firma');
+        // $alto =$request->get('alto_firma');
+        // if( $ancho == "" || $alto  == ""){
+        //     $ancho = '150px';
+        //     $alto = '100px';
+        // }
         $configmail=EmailConfiguraciones::find($id);
         $configmail->email = $correo ;
         $configmail->password = $request->get('password') ;
@@ -640,6 +656,8 @@ class EmailBandejaEnviosController extends Controller
         $configmail->port = $request->get('port');
         $configmail->encryption= $request->get('encryp') ;
         $configmail->firma = $name;
+        $configmail->ancho_firma=$request->get('ancho_firma');
+        $configmail->alto_firma =$request->get('alto_firma');
         $configmail->save();
         return redirect()->route('email.index');
     }

@@ -32,12 +32,17 @@
                 </div>
                 <br/>
                 <div class="form-group row container">
-                    <div class="col-lg-3">
-                        <div class="file">
-                                <span class="corner"></span>
-                                <div class="icon">
-                                    <i class="fa fa-file" ></i>
-                                </div>
+                    <div class="col-lg-2">
+                        <div class="file" style="width: 150px">
+                            <a href="{{asset('/archivos/'.$date.$archivo)}}"
+                                            download="{{$archivo}}" >
+                            <div class="file-name" style="background-color: white">
+
+                                <center>
+                                    <i class="fa fa-file" style="font-size:  60px"></i>
+                                </center>
+
+                            </div>
                             <div class="file-name">
                                 <input type="text" name="redict" hidden="hidden" value="{{$redic}}">
                                 <input type="text" name="pdf" hidden="" value="{{$archivo}}">
@@ -45,9 +50,10 @@
                                 <br/>
                                 <small>{{ date('Y-m-d H:i:s') }} </small>
                             </div>
+                            </a>
                         </div>
                     </div>
-                    <div class="col-lg-9">
+                    <div class="col-lg-5">
                         <div class="fileinput fileinput-new" data-provides="fileinput">
                             <span class="btn btn-default btn-file" style="left: 20px !important;">
                                 <span class="fileinput-new">Seleccionar</span>
