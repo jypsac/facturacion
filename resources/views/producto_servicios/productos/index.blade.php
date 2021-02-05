@@ -52,6 +52,11 @@
 
 </script>
 <div class="wrapper wrapper-content animated fadeInRight">
+    @if (session('anulacion'))
+    <div class="alert alert-danger">
+        {{ session('anulacion') }}
+    </div>
+@endif
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">

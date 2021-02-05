@@ -216,7 +216,9 @@ class ProductosController extends Controller
         // Si el producto existe en cardex entrada
         if(isset($kardex_entrada->producto_id)){
             // NO ANULA EL PRODUCTO
-            return back();
+            // $errors = "Para anular un producto, haga la salida de todo el stock en kardex";
+            // return route('productos.index',compact('errors'));
+            return redirect()->route('productos.index')->with('anulacion', 'Para anular un producto, haga la salida de todo el stock en kardex');
             // return "Error por tener producto en kardex, no se puede eliminar";
             // return $kardex_entrada;
         }else{
