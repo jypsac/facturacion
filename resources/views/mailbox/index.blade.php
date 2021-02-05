@@ -101,6 +101,17 @@
                                                     <img name="firma"  src="" width="390px" height="200px" />
                                                 </span>
                                             </div>
+
+                                        </div>
+                                         <div class="row">
+                                            <label class="col-sm-2 col-form-label">Ancho(px)</label>
+                                                <div class="col-sm-4">
+                                                    <input type="number" class="form-control" name="ancho_firma">
+                                                </div>
+                                            <label class="col-sm-2 col-form-label" >Alto(px)</label>
+                                                <div class="col-sm-4">
+                                                    <input type="number" class="form-control" name="alto_firma">
+                                                </div>
                                         </div>
                                         <br>
                                     </div>
@@ -189,6 +200,16 @@
                                                     <input type="text" name="firma_nombre" hidden="hidden" value="{{$config_emails->firma}}">
                                                 </span>
                                             </div>
+                                        </div>
+                                        <div class="row">
+                                            <label class="col-sm-2 col-form-label">Ancho(px)</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" name="ancho_firma" value="{{$config_emails->ancho_firma}}">
+                                                </div>
+                                            <label class="col-sm-2 col-form-label" >Alto(px)</label>
+                                                <div class="col-sm-4">
+                                                    <input type="text" class="form-control" name="alto_firma" value="{{$config_emails->alto_firma}}">
+                                                </div>
                                         </div>
                                     <br>
                                 </div>
