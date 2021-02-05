@@ -393,8 +393,8 @@
                             @foreach($mailbox_file as $mailbox_files)
                                 @if($mailbox_files->id_bandeja_envios ==  $row->id)
                                     @if( isset($mailbox_files->archivo) )
-                                    <div class="file-box">
-                                        <div class="file" style="width: 150px">
+                                    <div class="file-box" style="width: 170px">
+                                        <div class="file" style="width: 150px;margin: 0px 0px 0px 0px">
                                             {{-- {{storage_path('app/public/'.$mailbox_files->archivo)}} --}}
                                             <a href="{{asset('/archivos/'.$mailbox_files->fecha_hora.$mailbox_files->archivo)}}"
                                             download="{{$mailbox_files->archivo}}" >
@@ -414,7 +414,6 @@
                                                     <small>{{$mailbox_files->fecha_hora}}</small>
                                                 </div>
                                             </a>
-
                                         </div>
                                     </div>
                                     @endif
