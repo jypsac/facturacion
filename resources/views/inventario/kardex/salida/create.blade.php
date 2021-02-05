@@ -64,7 +64,7 @@
 									</select>
 								</div>
 
-								
+
 
 							<label class="col-sm-2 col-form-label">Almacen:</label>
 								<div class="col-sm-4">
@@ -75,10 +75,10 @@
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label">Informaciones:</label>
 								<div class="col-sm-10">
-									<input type="text" class="form-control" name="informacion">
+									<input type="text" required="" class="form-control" name="informacion">
 							    </div>
 						</div>
-					 	
+
 						<table cellspacing="0" class="table table-striped ">
 							<thead>
 								<tr>
@@ -122,7 +122,7 @@
 	</div>
 </div>
 
-	<style>	
+	<style>
 	.form-control{
 		border-radius: 5px;
 	}
@@ -152,7 +152,7 @@
 			<td><input type='text' id='stock${i}' name='stock[]' class="stock${i} form-control"  required/></td>
 
 			<td><input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control"  required/></td>
-			
+
 			</tr>`;
             $('table').append(data);
             i++;
