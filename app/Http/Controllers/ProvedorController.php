@@ -132,9 +132,9 @@ class ProvedorController extends Controller
     }
 
     function ruc(Request $request){
-
         $ruc=$request->get('ruc');
         $btn=$request->get('btn');
+
         $data = file_get_contents("https://dniruc.apisperu.com/api/v1/ruc/".$ruc."?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRlc2Fycm9sbG9Aanlwc2FjLmNvbSJ9.1Pt1A4PEFAGmFySlfVeFKZKuVCC-u_ZEW-KYQq-P57k");
         $info = json_decode($data, true);
 
