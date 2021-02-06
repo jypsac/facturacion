@@ -624,8 +624,8 @@ class CotizacionController extends Controller
         $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
         $cotizacion_numero="COTPB ".$sucursal_nr."-".$cotizacion_nr;
 
-        return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_codigo','cotizacion_numero','sucursal'));
-
+        return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','cotizacion_numero','sucursal'));
+        // 'boleta_codigo',
         //return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio'));
     }
 
