@@ -34,6 +34,14 @@
           </div>
           <label class="col-sm-2 col-form-label">Codigo Automatico:</label>
           <div class="col-sm-4"><input type="text" class="form-control"  required="required" value="{{$servicios->codigo_servicio}}" readonly="readonly"></div>
+          <label class="col-sm-2 col-form-label">Moneda:</label>
+          <div class="col-sm-4">
+            <select class="form-control" name="moneda">
+              @foreach($monedas as $moneda)
+              <option value="{{$moneda->id}}">{{$moneda->nombre}}</option>
+              @endforeach
+            </select>
+          </div>  
         </div>
 
       </div>
@@ -91,7 +99,11 @@
     <div class="input-group-prepend">
       <span class="input-group-addon">S/.</span>
     </div>
-    <input type="text" class="form-control" name="precio" required="required"  value="{{$servicios->precio}}" >
+    @if($moneda_principal_id==$servicios->moneda->id)
+    <input type="text" class="form-control" name="precio" required="required"  value="{{$servicios->precio_nacional}}" >
+    @else
+    <input type="text" class="form-control" name="precio" required="required"  value="{{$servicios->precio_extranjero}}" >
+    @endif
   </div>
 </div>
 </div>

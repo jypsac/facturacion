@@ -28,6 +28,13 @@
           <div class="col-sm-4">
             <input type="text" class="form-control m-b" readonly="readonly" value="Servicios" name="categoria">
           </div>
+          <label class="col-sm-2 col-form-label">Codigo Automatico:</label>
+          <div class="col-sm-4"><input type="text" class="form-control"  required="required" value="{{$servicios->codigo_servicio}}" readonly="readonly"></div>
+          <label class="col-sm-2 col-form-label">Moneda:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control"  required="required" value="{{$servicios->moneda->nombre}}" readonly="readonly">
+
+          </div> 
         </div>
 
       </div>

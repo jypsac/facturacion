@@ -101,7 +101,8 @@ class ServiciosController extends Controller
     public function show($id)
     {
         $servicios=Servicios::find($id);
-        return view('producto_servicios.servicios.show',compact('servicios'));
+        $monedas=Moneda::all();
+        return view('producto_servicios.servicios.show',compact('servicios','monedas'));
     }
 
     /**
@@ -112,8 +113,13 @@ class ServiciosController extends Controller
      */
     public function edit($id)
     {
+        $moneda_principal=Moneda::where('tipo','nacional')->first();
+        $moneda_principal_id=$moneda_principal->id;
+        // $moneda_id=$request->get('moneda');
+
+        $monedas=Moneda::all();
         $servicios=Servicios::find($id);
-        return view('producto_servicios.servicios.edit',compact('servicios'));
+        return view('producto_servicios.servicios.edit',compact('servicios','monedas','moneda_principal_id'));
     }
 
     /**
