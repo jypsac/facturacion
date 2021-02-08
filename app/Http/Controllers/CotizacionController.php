@@ -1116,7 +1116,7 @@ public function pdf(Request $request,$id){
   return $pdf->download('Cotizacion - '.$archivo.'.pdf');
 }
     //envio hacia facturar cambiar en caso incluya algo
-public function facturar($id){
+public function facturar(Request $request,$id){
 
     $cotizacion=Cotizacion::where('id',$id)->first();
     $cotizacion_moneda=$cotizacion->moneda_id;
@@ -1209,7 +1209,33 @@ public function facturar($id){
     $igv=Igv::first();
     $sub_total=0;
 
-    $cod_fac='- - -';
+    $almacen=$request->get('almacen');
+
+    //obtencion del almacen
+    $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
+
+    $factura_cod_fac=$sucursal->cod_fac;
+    if (is_numeric($factura_cod_fac)) {
+        // exprecion del numero de fatura
+        $factura_cod_fac++;
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+    }else{
+        // exprecion del numero de fatura
+        // GENERACION DE NUMERO DE FACTURA
+        $ultima_factura=Facturacion::latest()->first();
+        $factura_num=$ultima_factura->codigo_fac;
+        $factura_num_string_porcion= explode("-", $factura_num);
+        $factura_num_string=$factura_num_string_porcion[1];
+        $factura_num=(int)$factura_num_string;
+        $factura_num++;
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+    }
+
+    $cod_fac="F".$sucursal_nr."-".$factura_nr;
+
+    // $cod_fac='- - -';
 
     return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','sum','igv',"array","sub_total","moneda",'cod_fac','productos','array_cantidad','validor'));
 }
@@ -1226,7 +1252,7 @@ public function facturar_store(Request $request)
     if(!$cambio){
         return "error por no hacer el cambio diario";
     }
-
+    $tipo_cambio=TipoCambio::latest('created_at')->first();
     // return $request;
     // cambio de Estado Cotizador
     $id_cotizador=$request->get('id_cotizador');
@@ -1465,9 +1491,11 @@ public function facturar_store(Request $request)
      $comisionista->observacion='Viene del Cotizador';
      $comisionista->save();
     }
-
-        $name = $request->get('name');
-        $banco=Banco::where('estado','0')->get();
+     $validacion = $request->get('validacion');
+    if($validacion==1){
+        //pdf request
+    $name = $request->get('name');
+    $banco=Banco::where('estado','0')->get();
     $banco_count=Banco::where('estado','0')->count();
     $cotizacion=Cotizacion::find($id);
     $regla=$cotizacion->tipo;
@@ -1475,95 +1503,96 @@ public function facturar_store(Request $request)
     $igv=Igv::first();
     /*registros boleta y factura*/
     if($regla=='factura'){
-      $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
-  }elseif($regla=='boleta'){
-      $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
-  }
-  /* FIN registros boleta y factura*/
-  /*de numeros a Letras*/
-  foreach($cotizacion_registro as $cotizacion_registros){
-      $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
-      $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
-      if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
-  }
-  /* Finde numeros a Letras*/
-  $empresa=Empresa::first();
-  $sum=0;
-  $i=1;
-  $regla=$cotizacion->tipo;
+        $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+    }elseif($regla=='boleta'){
+        $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+    }
+    /* FIN registros boleta y factura*/
+    /*de numeros a Letras*/
+    foreach($cotizacion_registro as $cotizacion_registros){
+        $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
+        $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+        if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
+    }
+    /* Finde numeros a Letras*/
+    $empresa=Empresa::first();
+    $sum=0;
+    $i=1;
+    $regla=$cotizacion->tipo;
 
-        $archivo=$name.'_'.$id.".pdf";
-        $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
-        $content = $pdf->download();
-        $especif = $carbon_sp.$archivo;
-        Storage::disk('mailbox')->put($especif,$content);
-        $date = $carbon_sp;
+    $archivo=$name.'_'.$id.".pdf";
+    $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
+    $content = $pdf->download();
+    //pdf fin
+    $especif = $carbon_sp.$archivo;
+    Storage::disk('mailbox')->put($especif,$content);
+    $date = $carbon_sp;
 
-        $id_usuario=auth()->user()->id;
-        $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
-        $correo=$correo_busqueda->email;
+    $id_usuario=auth()->user()->id;
+    $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
+    $correo=$correo_busqueda->email;
 
-        $firma=$correo_busqueda->firma;
-        $mensaje_html = $request->get('mensaje');
-        if($firma == null){
-          $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-          <script>
-          $(document).ready(function(){
-              $("table").removeClass("table table-bordered").addClass("css");
-          });
-          </script>
-          <style>
-         .css,table,tr,td{
-          padding: 15px;
-          border: 1px solid black;
-          border-collapse: collapse;
-            }
-          table{
-            width:100%;
-          }
-          </style>'.$mensaje_html.'</body>';
-        }else{
-          $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-          <script>
-          $(document).ready(function(){
-              $("table").removeClass("table table-bordered").addClass("css");
-          });
-          </script>
-          <style>
-          .css,table,tr,td{
-          padding: 15px;
-          border: 1px solid black;
-          border-collapse: collapse;
-            }
-          table{
-            width:100%;
-          }
-          </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
+    $firma=$correo_busqueda->firma;
+    $mensaje_html = $request->get('mensaje');
+    if($firma == null){
+      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      $(document).ready(function(){
+          $("table").removeClass("table table-bordered").addClass("css");
+      });
+      </script>
+      <style>
+     .css,table,tr,td{
+      padding: 15px;
+      border: 1px solid black;
+      border-collapse: collapse;
         }
-        /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
-        $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
-        $port = $correo_busqueda->port;
-        $encryption = $correo_busqueda->encryption;
-        $yourEmail = $correo;
-        $estado = '0';
-        //$mailbackup =  ; // = $request->yourmail
-        $yourPassword = $correo_busqueda->password;
-        $sendto = $request->get('remitente') ;
-        $titulo = "Envio de Factura Automatico";
-        $mensaje = $mensaje_con_firma;
-        $bakcup=    $correo_busqueda->email_backup ;
+      table{
+        width:100%;
+      }
+      </style>'.$mensaje_html.'</body>';
+    }else{
+      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+      <script>
+      $(document).ready(function(){
+          $("table").removeClass("table table-bordered").addClass("css");
+      });
+      </script>
+      <style>
+      .css,table,tr,td{
+      padding: 15px;
+      border: 1px solid black;
+      border-collapse: collapse;
+        }
+      table{
+        width:100%;
+      }
+      </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
+    }
+    /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
+    $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
+    $port = $correo_busqueda->port;
+    $encryption = $correo_busqueda->encryption;
+    $yourEmail = $correo;
+    $estado = '0';
+    //$mailbackup =  ; // = $request->yourmail
+    $yourPassword = $correo_busqueda->password;
+    $sendto = $request->get('remitente') ;
+    $titulo = "Envio de Factura Automatico";
+    $mensaje = $mensaje_con_firma;
+    $bakcup=    $correo_busqueda->email_backup ;
 
-        // $file = $request->archivo;
-        $pdf=$archivo;
-        // $carpet =$request->get('redict');
-        $pdfile = public_path().'/archivos/'.$especif;
+    // $file = $request->archivo;
+    $pdf=$archivo;
+    // $carpet =$request->get('redict');
+    $pdfile = public_path().'/archivos/'.$especif;
 
-        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
-        $mailer =new \Swift_Mailer($transport);
+    $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+    $mailer =new \Swift_Mailer($transport);
 
-        $newfile = $request->file('archivos');
-        if($request->hasfile('archivos')){
-          foreach ($newfile as $file) {
+    $newfile = $request->file('archivos');
+    if($request->hasfile('archivos')){
+        foreach ($newfile as $file) {
             $nombre =  $file->getClientOriginalName();
             $especif = $carbon_sp.$nombre;
             \Storage::disk('mailbox')->put( $especif ,  \File::get($file));
@@ -1572,54 +1601,51 @@ public function facturar_store(Request $request)
             $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
             $message->attach(\Swift_Attachment::fromPath($pdfile));
             foreach ($news as $attachment) {
-              $message->attach(\Swift_Attachment::fromPath($attachment));
+                $message->attach(\Swift_Attachment::fromPath($attachment));
             }
-          }
-        }else{
-          $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
-          $message->attach(\Swift_Attachment::fromPath($pdfile));
         }
-        if($mailer->send($message)){
-          $mensaje =$request->get('mensaje') ;
-          $texto= strip_tags($mensaje);
-          $mail = new EmailBandejaEnvios;
-          $mail->id_usuario =auth()->user()->id;
-          $mail->destinatario =$correo;
-          $mail->remitente =$request->get('remitente') ;
-          $mail->asunto =$titulo;
-          $mail->mensaje =$mensaje_con_firma;
-          $mail->mensaje_sin_html =$texto ;
-          $mail->estado= $estado;
-          $mail->fecha_hora =Carbon::now() ;
-          $mail-> save();
-
-          $newfile2 = $request->file('archivos');
-          if($request->hasfile('archivos')){
+    }else{
+        $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
+        $message->attach(\Swift_Attachment::fromPath($pdfile));
+    }
+    if($mailer->send($message)){
+        $mensaje =$request->get('mensaje') ;
+        $texto= strip_tags($mensaje);
+        $mail = new EmailBandejaEnvios;
+        $mail->id_usuario =auth()->user()->id;
+        $mail->destinatario =$correo;
+        $mail->remitente =$request->get('remitente') ;
+        $mail->asunto =$titulo;
+        $mail->mensaje =$mensaje_con_firma;
+        $mail->mensaje_sin_html =$texto ;
+        $mail->estado= $estado;
+        $mail->fecha_hora =Carbon::now() ;
+        $mail-> save();
+        $newfile2 = $request->file('archivos');
+        if($request->hasfile('archivos')){
             foreach ($newfile2 as $file2) {
-              $guardar_email_archivo=new EmailBandejaEnviosArchivos;
-              $guardar_email_archivo->id_bandeja_envios=$mail->id;
-              $guardar_email_archivo->archivo= $file2->getClientOriginalName();
-              $guardar_email_archivo->fecha_hora= $carbon_sp;
-              $guardar_email_archivo->save();
+                $guardar_email_archivo=new EmailBandejaEnviosArchivos;
+                $guardar_email_archivo->id_bandeja_envios=$mail->id;
+                $guardar_email_archivo->archivo= $file2->getClientOriginalName();
+                $guardar_email_archivo->fecha_hora= $carbon_sp;
+                $guardar_email_archivo->save();
             }
-          }
-          $archivo_pdf = new EmailBandejaEnviosArchivos;
-          $archivo_pdf->id_bandeja_envios=$mail->id;
-          $archivo_pdf->archivo=$pdf;
-          $archivo_pdf->fecha_hora= $especif;
-          $archivo_pdf->save();
-          // $id_cotizador=$request->get('id_cotizador');
-          // $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
-          // $cotizacion->estado=1;
-          // $cotizacion->save();
-
-                return redirect()->route('facturacion.show',$facturar->id);
-        }else{
-            return "Something went wrong :(";
         }
+        $archivo_pdf = new EmailBandejaEnviosArchivos;
+        $archivo_pdf->id_bandeja_envios=$mail->id;
+        $archivo_pdf->archivo=$pdf;
+        $archivo_pdf->fecha_hora= $especif;
+        $archivo_pdf->save();
+        return redirect()->route('facturacion.show',$facturar->id);
+    }else{
+        return "Something went wrong :(";
+    }
+    }else{
+        return redirect()->route('facturacion.show',$facturar->id);
+    }
 }
 
-public function boletear($id)
+public function boletear(Request $request,$id)
 {
     $cotizacion=Cotizacion::where('id',$id)->first();
     $cotizacion_moneda=$cotizacion->moneda_id;
@@ -1703,7 +1729,31 @@ public function boletear($id)
     $sum=0;
     $igv=Igv::first();
     $sub_total=0;
-    $cod_bol='- - -';
+       $almacen=$request->get('almacen');
+
+    //obtencion del almacen
+    $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
+
+    $factura_cod_bol=$sucursal->cod_bol;
+    if (is_numeric($factura_cod_bol)) {
+        // exprecion del numero de fatura
+        $factura_cod_bol++;
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $boleta_nr=str_pad($factura_cod_bol, 8, "0", STR_PAD_LEFT);
+    }else{
+        // exprecion del numero de fatura
+        // GENERACION DE NUMERO DE FACTURA
+        $ultima_boleta=Boleta::latest()->first();
+        $boleta_num=$ultima_boleta->codigo_boleta;
+        $boleta_num_string_porcion= explode("-", $boleta_num);
+        $boleta_num_string=$boleta_num_string_porcion[1];
+        $boleta_num=(int)$boleta_num_string;
+        $boleta_num++;
+        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+        $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
+    }
+
+    $cod_bol="F".$sucursal_nr."-".$boleta_nr;
 
     return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','productos','sum','igv',"array","sub_total",'moneda' ,'cod_bol','validor','array_cantidad'));
 }
@@ -1719,7 +1769,7 @@ public function boletear_store(Request $request)
     if(!$cambio){
         return "error por no hacer el cambio diario";
     }
-
+    $tipo_cambio=TipoCambio::latest('created_at')->first();
     // cambio de Estado Cotizador
     $id_cotizador=$request->get('id_cotizador');
     $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
@@ -1730,7 +1780,7 @@ public function boletear_store(Request $request)
     $almacen=$cotizacion->almacen_id;
     //obtencion del almacen
     $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-    $boleta_cod_fac=$sucursal->cod_fac;
+    $boleta_cod_fac=$sucursal->cod_bol;
     if (is_numeric($boleta_cod_fac)) {
         // exprecion del numero de fatura
         $boleta_cod_fac++;
@@ -1739,8 +1789,8 @@ public function boletear_store(Request $request)
     }else{
         // exprecion del numero de fatura
         // GENERACION DE NUMERO DE FACTURA
-        $ultima_factura=Facturacion::latest()->first();
-        $boleta_num=$ultima_factura->codigo_fac;
+        $ultima_factura=Boleta::latest()->first();
+        $boleta_num=$ultima_factura->codigo_boleta;
         $boleta_num_string_porcion= explode("-", $boleta_num);
         $boleta_num_string=$boleta_num_string_porcion[1];
         $boleta_num=(int)$boleta_num_string;
@@ -1972,158 +2022,163 @@ public function boletear_store(Request $request)
      $comisionista->observacion='Viene del Cotizador';
      $comisionista->save();
     }
-    $name = $request->get('name');
-    $banco=Banco::where('estado','0')->get();
-    $banco_count=Banco::where('estado','0')->count();
-    $cotizacion=Cotizacion::find($id);
-    $regla=$cotizacion->tipo;
-    $sub_total=0;
-    $igv=Igv::first();
-    /*registros boleta y factura*/
-    if($regla=='factura'){
-      $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
-      }elseif($regla=='boleta'){
-          $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
-      }
-      /* FIN registros boleta y factura*/
-      /*de numeros a Letras*/
-      foreach($cotizacion_registro as $cotizacion_registros){
-          $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
-          $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
-          if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
-      }
-      /* Finde numeros a Letras*/
-      $empresa=Empresa::first();
-      $sum=0;
-      $i=1;
-      $regla=$cotizacion->tipo;
-
-        $archivo=$name.'_'.$id.".pdf";
-        $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
-        $content = $pdf->download();
-        $especif = $carbon_sp.$archivo;
-        Storage::disk('mailbox')->put($especif,$content);
-        $date = $carbon_sp;
-
-        $id_usuario=auth()->user()->id;
-        $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
-        $correo=$correo_busqueda->email;
-
-        $firma=$correo_busqueda->firma;
-        $mensaje_html = $request->get('mensaje');
-        if($firma == null){
-          $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-          <script>
-          $(document).ready(function(){
-              $("table").removeClass("table table-bordered").addClass("css");
-          });
-          </script>
-          <style>
-         .css,table,tr,td{
-          padding: 15px;
-          border: 1px solid black;
-          border-collapse: collapse;
-            }
-          table{
-            width:100%;
+    $validacion = $request->get('validacion');
+    if($validacion==1){
+        $name = $request->get('name');
+        $banco=Banco::where('estado','0')->get();
+        $banco_count=Banco::where('estado','0')->count();
+        $cotizacion=Cotizacion::find($id);
+        $regla=$cotizacion->tipo;
+        $sub_total=0;
+        $igv=Igv::first();
+        /*registros boleta y factura*/
+        if($regla=='factura'){
+          $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+          }elseif($regla=='boleta'){
+              $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
           }
-          </style>'.$mensaje_html.'</body>';
-        }else{
-          $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-          <script>
-          $(document).ready(function(){
-              $("table").removeClass("table table-bordered").addClass("css");
-          });
-          </script>
-          <style>
-          .css,table,tr,td{
-          padding: 15px;
-          border: 1px solid black;
-          border-collapse: collapse;
-            }
-          table{
-            width:100%;
+          /* FIN registros boleta y factura*/
+          /*de numeros a Letras*/
+          foreach($cotizacion_registro as $cotizacion_registros){
+              $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
+              $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+              if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
           }
-          </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
-        }
-        /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
-        $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
-        $port = $correo_busqueda->port;
-        $encryption = $correo_busqueda->encryption;
-        $yourEmail = $correo;
-        $estado = '0';
-        //$mailbackup =  ; // = $request->yourmail
-        $yourPassword = $correo_busqueda->password;
-        $sendto = $request->get('remitente') ;
-        $titulo = "Envio de Factura Automatico";
-        $mensaje = $mensaje_con_firma;
-        $bakcup=    $correo_busqueda->email_backup ;
+          /* Finde numeros a Letras*/
+          $empresa=Empresa::first();
+          $sum=0;
+          $i=1;
+          $regla=$cotizacion->tipo;
 
-        // $file = $request->archivo;
-        $pdf=$archivo;
-        // $carpet =$request->get('redict');
-        $pdfile = public_path().'/archivos/'.$especif;
+            $archivo=$name.'_'.$id.".pdf";
+            $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
+            $content = $pdf->download();
+            $especif = $carbon_sp.$archivo;
+            Storage::disk('mailbox')->put($especif,$content);
+            $date = $carbon_sp;
 
-        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
-        $mailer =new \Swift_Mailer($transport);
+            $id_usuario=auth()->user()->id;
+            $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
+            $correo=$correo_busqueda->email;
 
-        $newfile = $request->file('archivos');
-        if($request->hasfile('archivos')){
-          foreach ($newfile as $file) {
-            $nombre =  $file->getClientOriginalName();
-            $especif = $carbon_sp.$nombre;
-            \Storage::disk('mailbox')->put( $especif ,  \File::get($file));
-
-            $news[] = public_path().'/archivos/'.$especif;
-            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
-            $message->attach(\Swift_Attachment::fromPath($pdfile));
-            foreach ($news as $attachment) {
-              $message->attach(\Swift_Attachment::fromPath($attachment));
+            $firma=$correo_busqueda->firma;
+            $mensaje_html = $request->get('mensaje');
+            if($firma == null){
+              $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+              <script>
+              $(document).ready(function(){
+                  $("table").removeClass("table table-bordered").addClass("css");
+              });
+              </script>
+              <style>
+             .css,table,tr,td{
+              padding: 15px;
+              border: 1px solid black;
+              border-collapse: collapse;
+                }
+              table{
+                width:100%;
+              }
+              </style>'.$mensaje_html.'</body>';
+            }else{
+              $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+              <script>
+              $(document).ready(function(){
+                  $("table").removeClass("table table-bordered").addClass("css");
+              });
+              </script>
+              <style>
+              .css,table,tr,td{
+              padding: 15px;
+              border: 1px solid black;
+              border-collapse: collapse;
+                }
+              table{
+                width:100%;
+              }
+              </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
             }
-          }
-        }else{
-          $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
-          $message->attach(\Swift_Attachment::fromPath($pdfile));
-        }
-        if($mailer->send($message)){
-          $mensaje =$request->get('mensaje') ;
-          $texto= strip_tags($mensaje);
-          $mail = new EmailBandejaEnvios;
-          $mail->id_usuario =auth()->user()->id;
-          $mail->destinatario =$correo;
-          $mail->remitente =$request->get('remitente') ;
-          $mail->asunto =$titulo;
-          $mail->mensaje =$mensaje_con_firma;
-          $mail->mensaje_sin_html =$texto ;
-          $mail->estado= $estado;
-          $mail->fecha_hora =Carbon::now() ;
-          $mail-> save();
+            /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
+            $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
+            $port = $correo_busqueda->port;
+            $encryption = $correo_busqueda->encryption;
+            $yourEmail = $correo;
+            $estado = '0';
+            //$mailbackup =  ; // = $request->yourmail
+            $yourPassword = $correo_busqueda->password;
+            $sendto = $request->get('remitente') ;
+            $titulo = "Envio de Factura Automatico";
+            $mensaje = $mensaje_con_firma;
+            $bakcup=    $correo_busqueda->email_backup ;
 
-          $newfile2 = $request->file('archivos');
-          if($request->hasfile('archivos')){
-            foreach ($newfile2 as $file2) {
-              $guardar_email_archivo=new EmailBandejaEnviosArchivos;
-              $guardar_email_archivo->id_bandeja_envios=$mail->id;
-              $guardar_email_archivo->archivo= $file2->getClientOriginalName();
-              $guardar_email_archivo->fecha_hora= $carbon_sp;
-              $guardar_email_archivo->save();
+            // $file = $request->archivo;
+            $pdf=$archivo;
+            // $carpet =$request->get('redict');
+            $pdfile = public_path().'/archivos/'.$especif;
+
+            $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
+            $mailer =new \Swift_Mailer($transport);
+
+            $newfile = $request->file('archivos');
+            if($request->hasfile('archivos')){
+              foreach ($newfile as $file) {
+                $nombre =  $file->getClientOriginalName();
+                $especif = $carbon_sp.$nombre;
+                \Storage::disk('mailbox')->put( $especif ,  \File::get($file));
+
+                $news[] = public_path().'/archivos/'.$especif;
+                $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
+                $message->attach(\Swift_Attachment::fromPath($pdfile));
+                foreach ($news as $attachment) {
+                  $message->attach(\Swift_Attachment::fromPath($attachment));
+                }
+              }
+            }else{
+              $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
+              $message->attach(\Swift_Attachment::fromPath($pdfile));
             }
-          }
-          $archivo_pdf = new EmailBandejaEnviosArchivos;
-          $archivo_pdf->id_bandeja_envios=$mail->id;
-          $archivo_pdf->archivo=$pdf;
-          $archivo_pdf->fecha_hora= $especif;
-          $archivo_pdf->save();
-          // $id_cotizador=$request->get('id_cotizador');
-          // $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
-          // $cotizacion->estado=1;
-          // $cotizacion->save();
+            if($mailer->send($message)){
+              $mensaje =$request->get('mensaje') ;
+              $texto= strip_tags($mensaje);
+              $mail = new EmailBandejaEnvios;
+              $mail->id_usuario =auth()->user()->id;
+              $mail->destinatario =$correo;
+              $mail->remitente =$request->get('remitente') ;
+              $mail->asunto =$titulo;
+              $mail->mensaje =$mensaje_con_firma;
+              $mail->mensaje_sin_html =$texto ;
+              $mail->estado= $estado;
+              $mail->fecha_hora =Carbon::now() ;
+              $mail-> save();
 
+              $newfile2 = $request->file('archivos');
+              if($request->hasfile('archivos')){
+                foreach ($newfile2 as $file2) {
+                  $guardar_email_archivo=new EmailBandejaEnviosArchivos;
+                  $guardar_email_archivo->id_bandeja_envios=$mail->id;
+                  $guardar_email_archivo->archivo= $file2->getClientOriginalName();
+                  $guardar_email_archivo->fecha_hora= $carbon_sp;
+                  $guardar_email_archivo->save();
+                }
+              }
+              $archivo_pdf = new EmailBandejaEnviosArchivos;
+              $archivo_pdf->id_bandeja_envios=$mail->id;
+              $archivo_pdf->archivo=$pdf;
+              $archivo_pdf->fecha_hora= $especif;
+              $archivo_pdf->save();
+              // $id_cotizador=$request->get('id_cotizador');
+              // $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
+              // $cotizacion->estado=1;
+              // $cotizacion->save();
+
+             return redirect()->route('boleta.show',$boletear->id);
+            }else{
+                return "Something went wrong :(";
+            }
+    }else{
          return redirect()->route('boleta.show',$boletear->id);
-        }else{
-            return "Something went wrong :(";
-        }
     }
+}
 
 public function aprobar(Request $request, $id)
 {

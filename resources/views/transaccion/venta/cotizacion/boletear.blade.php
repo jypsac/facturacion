@@ -164,9 +164,17 @@
                      <div class="row" align="center" >
                         <div class="col-sm-4">
                         </div>
+                         @if(auth()->user()->email_creado == 1)
                         <div class="  col-sm-6 alert alert-info" >
-                            <p style="margin-bottom: 0px">!Al momento de Boletear se le enviará una copia al correo del cliente!</p>
+                            <input type="hidden" name="verificacion" value="1" id="">
+                            <p style="margin-bottom: 0px">!Al momento de Facturar se le enviará una copia al correo del cliente!</p>
                         </div>
+                        @else
+                        <div class="  col-sm-6 alert alert-info" >
+                            <input type="hidden" name="verificacion" value="0" id="">
+                            <p style="margin-bottom: 0px">!Solo se guardará la factura!</p>
+                        </div>
+                        @endif
                         <div class="col-sm-2" align="center" >
                             <button class="btn btn-primary " style="margin-top: 5px" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true">Guardar</i></button>&nbsp;
                         </div>
