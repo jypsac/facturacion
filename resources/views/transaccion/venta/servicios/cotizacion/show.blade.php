@@ -188,7 +188,7 @@
                                 <tr>
                                     <td>{{$i}}</td>
                                     <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
-                                    <td>{{$cotizacion_registros->servicio->nombre}} <span style="font-size: 10px">{{$cotizacion_registros->servicio->descripcion}}</span></td>
+                                    <td>{{$cotizacion_registros->servicio->nombre}} / {{$cotizacion_registros->servicio->descripcion}}</td>
                                     <td>{{$cotizacion_registros->cantidad}}</td>
                                     <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
                                     <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
@@ -206,7 +206,7 @@
                                 <tr>
                                     <td>{{$i}} </td>
                                     <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
-                                    <td>{{$cotizacion_registros->servicio->nombre}} <span style="font-size: 10px">{{$cotizacion_registros->servicio->descripcion}}</span></td>
+                                    <td>{{$cotizacion_registros->servicio->nombre}}/{{$cotizacion_registros->servicio->descripcion}}</td>
                                     <td>{{$cotizacion_registros->cantidad}}</td>
                                     <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
                                     <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}} </td>

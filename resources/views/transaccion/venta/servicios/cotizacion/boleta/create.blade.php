@@ -233,7 +233,7 @@
                                 <td>Cliente</td>
                                 <td>:</td>
                                 <td>
-                                    <input list="browsersc1" class="form-control m-b" name="cliente" required="required" value="{{ old('nombre')}}" autocomplete="off">
+                                    <input list="browsersc1" class="form-control m-b" name="cliente" required="required"  autocomplete="off">
                                     <datalist id="browsersc1" >
                                         @foreach($clientes as $cliente)
                                             <option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
@@ -381,24 +381,7 @@
 
                                                     </tbody><br>
                                                     <tbody>
-                                                        {{-- <tr style="background-color: #f5f5f500;" align="center">
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>Subtotal :</td>
-                                                            <td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
-                                                        </tr>
-                                                        <tr style="background-color: #f5f5f500;" align="center">
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td></td>
-                                                            <td>IGV :</td>
-                                                            <td><input id='igv'  disabled="disabled" class="form-control" required /></td>
-                                                        </tr> --}}
+
                                                         <tr  align="center">
                                                             <td></td>
                                                             <td></td>
@@ -414,7 +397,7 @@
 
                                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                                                <a onclick="print()"><button class="btn btn-warning" ><i class="fa fa-cloud" aria-hidden="true">Imprimir</i></button></a>
+
                                                 <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
 
 

@@ -26,12 +26,12 @@
                                 <form action="{{ route('cotizacion_servicio.create_factura')}}" enctype="multipart/form-data" method="post">
                                     @csrf
                                     <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
-                                    <input class="btn btn-sm btn-info"  type="submit" value="Crear una cotizacion factura" >
+                                    <input class="btn btn-sm btn-info"  type="submit" value="Cotizacion factura" >
                                 </form>
                                 @else
                                 @if($user_login->name=='Administrador')
                                 <div class="dropdown">
-                                  <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Factura</button>
+                                  <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cotizacion factura</button>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                     <form action="{{ route('cotizacion_servicio.create_factura')}}"enctype="multipart/form-data" method="post">
                                         @csrf
@@ -56,12 +56,12 @@
                             <form action="{{ route('cotizacion_servicio.create_boleta')}}" enctype="multipart/form-data"  method="post">
                                 @csrf
                                 <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
-                                <input class="btn btn-sm btn-info"  type="submit" value="Crear cotizacion boleta" >
+                                <input class="btn btn-sm btn-info"  type="submit" value="Cotizacion boleta" >
                             </form>
                             @else
                             @if($user_login->name=='Administrador')
                             <div class="dropdown">
-                              <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Boleta</button>
+                              <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Cotizacion boleta</button>
                               <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
                                 <form action="{{ route('cotizacion_servicio.create_boleta')}}"enctype="multipart/form-data" method="post">
                                     @csrf

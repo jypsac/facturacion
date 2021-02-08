@@ -113,8 +113,7 @@
                                      <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                      <td>{{$cotizacion_registros->cantidad}}</td>
                                      <td>
-                                         {{$cotizacion_registros->producto->nombre}}
-                                         <span style="font-size: 10px">{{$cotizacion_registros->producto->descripcion}}</span>
+                                         {{$cotizacion_registros->producto->nombre}} / {{$cotizacion_registros->producto->descripcion}}
                                          <input type="text" class="form-control col-sm-4" name="numero_serie[{{$index}}]" placeholder="N° Serie">
                                      </td>
                                      <td>{{$array_cantidad[$index]}}</td>

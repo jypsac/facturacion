@@ -112,7 +112,7 @@ class BoletaController extends Controller
         }
 
         $forma_pagos=Forma_pago::all();
-        $clientes=Cliente::where('documento_identificacion','dni')->get();
+        $clientes=Cliente::all();
         $moneda=Moneda::where('principal','1')->first();
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
@@ -132,8 +132,8 @@ class BoletaController extends Controller
         }else{
             // exprecion del numero de fatura
             // GENERACION DE NUMERO DE FACTURA
-            $ultima_factura=Facturacion::latest()->first();
-            $boleta_num=$ultima_factura->codigo_fac;
+            $ultima_boleta=Boleta::latest()->first();
+            $boleta_num=$ultima_boleta->codigo_boleta;
             $boleta_num_string_porcion= explode("-", $boleta_num);
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
@@ -338,7 +338,7 @@ class BoletaController extends Controller
         $almacen=$request->get('almacen');
         //obtencion del almacen
         $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-        $boleta_cod_fac=$sucursal->cod_fac;
+        $boleta_cod_fac=$sucursal->cod_bol;
         if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
             $boleta_cod_fac++;
@@ -347,8 +347,8 @@ class BoletaController extends Controller
         }else{
             // exprecion del numero de fatura
             // GENERACION DE NUMERO DE FACTURA
-            $ultima_factura=Facturacion::latest()->first();
-            $boleta_num=$ultima_factura->codigo_fac;
+            $ultima_boleta=Boleta::latest()->first();
+            $boleta_num=$ultima_boleta->codigo_boleta;
             $boleta_num_string_porcion= explode("-", $boleta_num);
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
@@ -357,6 +357,7 @@ class BoletaController extends Controller
             $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
+
 
         //calculo para el stock del producto
         $almacen_producto_validacion=$request->get('almacen');
