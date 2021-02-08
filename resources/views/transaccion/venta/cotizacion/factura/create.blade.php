@@ -378,7 +378,7 @@
                                                         <input  style="width: 76px" type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
                                                     </td>
                                                     <td>
-                                                        <input style="width: 76px" type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
+                                                        <input style="width: 76px" type='number' id='cantidad0' name='cantidad[]' max="{{$array_cantidad[$index]}}" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
                                                     </td>
                                                     <td>
                                                         <input style="width: 76px" type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
@@ -493,7 +493,7 @@
                         <input type='text' style="width: 76px"  id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
                         </td>
                         <td>
-                        <input type='text' style="width: 76px"  id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+                        <input type='number' style="width: 76px"  id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off" max="{{$array_cantidad[$index]}}"/>
                         </td>
                         <td>
                         <input type='text' style="width: 76px"  id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
