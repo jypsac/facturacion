@@ -26,6 +26,7 @@ class CreateEmailConfiguracionesTable extends Migration
             $table->string('firma')->nullable();
             $table->string('ancho_firma')->nullable();
             $table->string('alto_firma')->nullable();
+            $table->string('firma_digital')->nullable();
             $table->timestamps();
         });
     }

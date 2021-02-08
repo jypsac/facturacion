@@ -37,8 +37,8 @@
  </div>
 @endif
 {{-- Modal Configuracion --}}
-<div class="modal fade" id="configu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+<div class="modal fade bd-example-modal-lg" id="configu" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
 
@@ -50,17 +50,17 @@
                     <form action="{{route('email.configstore')}}"  enctype="multipart/form-data" method="post">
                         @csrf
                         <div class="row">
-                            <fieldset >
+                            <fieldset style="width: 100%">
                                 <legend> Agregar Configuracion </legend>
                                 {{-- <div> --}}
                                     <div class="panel-body" align="left">
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Email:</label>
-                                            <div class="col-sm-10"><input type="text" class="form-control" name="email">
+                                            <div class="col-sm-4"><input type="text" class="form-control" name="email">
                                             </div>
 
-                                            <label class="col-sm-2 col-form-label">Contraseña:</label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-2 col-form-label" style="width: 50%">Contraseña:</label>
+                                            <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <input type="password" class="form-control" name="password" id="txtPassword" required="">
                                                     <div class="input-group-prepend">
@@ -72,19 +72,19 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-2 col-form-label">SMPT:</label>
-                                            <div class="col-sm-4">
+                                            <label class="col-sm-1 col-form-label">SMPT:</label>
+                                            <div class="col-sm-3">
                                                 <input type="text" class="form-control" name="smtp" placeholder="smtp.gmail.com" required="">
                                             </div>
 
-                                            <label class="col-sm-2 col-form-label">PORT:</label>
-                                            <div class="col-sm-4">
+                                            <label class="col-sm-1 col-form-label">PORT:</label>
+                                            <div class="col-sm-2">
                                                 <input type="text" class="form-control" name="port" value="110 " >
                                             </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-sm-2 col-form-label">Encryption:</label>
-                                            <div class="col-sm-4">
+                                        {{-- </div> --}}
+                                        {{-- <div class="row"> --}}
+                                            <label class="col-sm-2 col-form-label" >Encryption:</label>
+                                            <div class="col-sm-3">
                                                 <select class="form-control" name="encryp" >
                                                     <option value="">Ninguno</option>
                                                     <option value="SSL">SSL</option>
@@ -92,24 +92,54 @@
                                                 </select>
                                             </div>
                                         </div><br>
+                                        <div class="row" align="center">
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label" style="text-align: center;">
+                                                    Firma para envios de Email.
+                                                </label>  
+                                            </div>
+                                
+                                            <div class="col-sm-6">
+                                                <label class="col-form-label" style="text-align: center;">
+                                                    Firma digital para documentos.
+                                                </label>  
+                                            </div>
+
+                                        </div>
                                         <div class="row">
-                                            <label class="col-sm-2 col-form-label">Firma (opcional):</label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-1 col-form-label">Firma (opcional):</label>
+                                            <div class="col-sm-5">
                                                 <input type="file" id="archivoInput" name="firma" onchange="return validarExt()"  />
                                                 <span id="visorArchivo">
                                                     <!--Aqui se desplegará el fichero-->
-                                                    <img name="firma"  src="" width="390px" height="200px" />
+                                                    <img name="firma"  src="" width="300px" height="120px" />
+                                                </span>
+                                            </div>
+                                            <label class="col-sm-1 col-form-label">Firma Digital:</label>
+                                            <div class="col-sm-5">
+                                                <input type="file" id="archivoInputF" name="firma_digital" onchange="return validarExtF()"  />
+                                                <span id="visorArchivoF">
+                                                    <!--Aqui se desplegará el fichero-->
+                                                    <img name="firma_digital"  src="" width="300px" height="120px" />
                                                 </span>
                                             </div>
 
                                         </div>
                                          <div class="row">
-                                            <label class="col-sm-2 col-form-label">Ancho(px)</label>
-                                                <div class="col-sm-4">
+                                            <label class="col-sm-1 col-form-label">Ancho(px)</label>
+                                                <div class="col-sm-2">
                                                     <input type="number" class="form-control" name="ancho_firma">
                                                 </div>
-                                            <label class="col-sm-2 col-form-label" >Alto(px)</label>
-                                                <div class="col-sm-4">
+                                            <label class="col-sm-1 col-form-label" >Alto(px)</label>
+                                                <div class="col-sm-2">
+                                                    <input type="number" class="form-control" name="alto_firma">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label">Ancho(px)</label>
+                                                <div class="col-sm-2">
+                                                    <input type="number" class="form-control" name="ancho_firma">
+                                                </div>
+                                            <label class="col-sm-1 col-form-label" >Alto(px)</label>
+                                                <div class="col-sm-2">
                                                     <input type="number" class="form-control" name="alto_firma">
                                                 </div>
                                         </div>
@@ -521,6 +551,16 @@ span.fileinput-filename{
         height:100%;
         opacity: 0  ;
     }
+    input#archivoInputF{
+        position:absolute;
+        top:0px;
+        left:0px;
+        right:0px;
+        bottom:0px;
+        width:100%;
+        height:100%;
+        opacity: 0  ;
+    }
 </style>
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -596,7 +636,29 @@ function validarExt(){
             visor.onload = function(e)
             {
                 document.getElementById('visorArchivo').innerHTML =
-                '<img name="firma" src="'+e.target.result+'"width="390px" height="200px" />';
+                '<img name="firma" src="'+e.target.result+'"width="300px" height="120px" />';
+            };
+            visor.readAsDataURL(archivoInput.files[0]);
+        }
+    }
+}
+function validarExtF(){
+    var archivoInput = document.getElementById('archivoInputF');
+    var archivoRuta = archivoInput.value;
+    var extPermitidas = /(.jpg|.png|.jfif)$/i;
+    if(!extPermitidas.exec(archivoRuta)){
+        alert('Asegurese de haber seleccionado una Imagen');
+        archivoInput.value = '';
+        return false;
+    }else{
+        //PRevio del PDF
+        if (archivoInput.files && archivoInput.files[0])
+        {
+            var visor = new FileReader();
+            visor.onload = function(e)
+            {
+                document.getElementById('visorArchivoF').innerHTML =
+                '<img name="firma_digital" src="'+e.target.result+'"width="300px" height="120px" />';
             };
             visor.readAsDataURL(archivoInput.files[0]);
         }
