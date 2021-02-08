@@ -96,13 +96,13 @@
                                             <div class="col-sm-6">
                                                 <label class="col-form-label" style="text-align: center;">
                                                     Firma para envios de Email.
-                                                </label>  
+                                                </label>
                                             </div>
-                                
+
                                             <div class="col-sm-6">
                                                 <label class="col-form-label" style="text-align: center;">
                                                     Firma digital para documentos.
-                                                </label>  
+                                                </label>
                                             </div>
 
                                         </div>
@@ -136,11 +136,11 @@
                                                 </div>
                                                 <label class="col-sm-1 col-form-label">Ancho(px)</label>
                                                 <div class="col-sm-2">
-                                                    <input type="number" class="form-control" name="ancho_firma">
+                                                    <input type="number" class="form-control" name="ancho_firma" value="100px" readonly="">
                                                 </div>
                                             <label class="col-sm-1 col-form-label" >Alto(px)</label>
                                                 <div class="col-sm-2">
-                                                    <input type="number" class="form-control" name="alto_firma">
+                                                    <input type="number" class="form-control" name="alto_firma" value="100px" readonly="">
                                                 </div>
                                         </div>
                                         <br>
@@ -161,7 +161,7 @@
 {{-- Modal Editar Configuracion --}}
 @foreach($config_email as $config_emails)
 <div class="modal fade" id="edits" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog modal-lg" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel"> Editar Correo</h5>
@@ -177,16 +177,16 @@
                         @csrf
 
                         <div class="row">
-                            <fieldset>
+                            <fieldset style="width: 100%">
                                 <legend> Configuracion </legend>
                                     <div class="panel-body" align="left">
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Email:</label>
-                                            <div class="col-sm-10"><input type="text" class="form-control" name="email" value="{{$config_emails->email}}">
+                                            <div class="col-sm-4"><input type="text" class="form-control" name="email" value="{{$config_emails->email}}">
                                             </div>
 
                                             <label class="col-sm-2 col-form-label">Contraseña:</label>
-                                            <div class="col-sm-10">
+                                            <div class="col-sm-4">
                                                 <div class="input-group m-b">
                                                     <input type="password" class="form-control" value="{{$config_emails->password}}" name="password" id="txtPassword{{$config_emails->id}}">
                                                     <div class="input-group-prepend">
@@ -198,20 +198,20 @@
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-2 col-form-label">SMPT:</label>
-                                            <div class="col-sm-4">
+                                            <label class="col-sm-1 col-form-label">SMPT:</label>
+                                            <div class="col-sm-3">
 
                                                 <input type="text" class="form-control" name="smtp" value="{{$config_emails->smtp}}">
                                             </div>
 
-                                            <label class="col-sm-2 col-form-label">PORT:</label>
-                                            <div class="col-sm-4">
+                                            <label class="col-sm-1 col-form-label">PORT:</label>
+                                            <div class="col-sm-2">
                                                 <input type="text" class="form-control" name="port" value="{{$config_emails->port}} " >
                                             </div>
-                                        </div>
-                                        <div class="row">
+                                        {{-- </div>
+                                        <div class="row"> --}}
                                             <label class="col-sm-2 col-form-label">Encryption:</label>
-                                            <div class="col-sm-4">
+                                            <div class="col-sm-3">
                                                 <select class="form-control" name="encryp">
                                                     <option value="{{$config_emails->encryption}}">{{$config_emails->encryption}}</option>
                                                     <option value="">Ninguno</option>
@@ -221,24 +221,41 @@
                                             </div>
                                         </div><br>
                                         <div class="row">
-                                            <label class="col-sm-2 col-form-label">Firma (opcional):</label>
-                                            <div class="col-sm-10">
+                                            <label class="col-sm-1 col-form-label">Firma (opcional):</label>
+                                            <div class="col-sm-5">
                                                 <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0 ;" id="archivoInput{{$config_emails->id}}" name="firma" onchange="return validarExt{{$config_emails->id}}()"  />
                                                 <span id="visorArchivo{{$config_emails->id}}">
                                                     <!--Aqui se desplegará el fichero-->
-                                                    <img name="firma" src="{{asset('/archivos/imagenes/firmas/')}}/{{$config_emails->firma}}" width="390px" height="200px" />
+                                                    <img name="firma" src="{{asset('/archivos/imagenes/firmas/')}}/{{$config_emails->firma}}" width="300px" height="120px" />
                                                     <input type="text" name="firma_nombre" hidden="hidden" value="{{$config_emails->firma}}">
+                                                </span>
+                                            </div>
+                                            <label class="col-sm-1 col-form-label">Firma Digital</label>
+                                            <div class="col-sm-5">
+                                                <input type="file" style="position:absolute;top:0px;left:0px;right:0px;bottom:0px;width:100%;height:100%;opacity: 0 ;" id="archivoInputF{{$config_emails->id}}" name="firma_digital" onchange="return validarExtF{{$config_emails->id}}()"  />
+                                                <span id="visorArchivoF{{$config_emails->id}}">
+                                                    <!--Aqui se desplegará el fichero-->
+                                                    <img name="firma_digital" src="{{asset('/archivos/imagenes/firma_digital/')}}/{{$config_emails->firma_digital}}" width="300px" height="120px" />
+                                                    <input type="text" name="firma_digital_nombre" hidden="hidden" value="{{$config_emails->firma_digitals}}">
                                                 </span>
                                             </div>
                                         </div>
                                         <div class="row">
-                                            <label class="col-sm-2 col-form-label">Ancho(px)</label>
-                                                <div class="col-sm-4">
+                                            <label class="col-sm-1 col-form-label">Ancho(px)</label>
+                                                <div class="col-sm-2">
                                                     <input type="text" class="form-control" name="ancho_firma" value="{{$config_emails->ancho_firma}}">
                                                 </div>
-                                            <label class="col-sm-2 col-form-label" >Alto(px)</label>
-                                                <div class="col-sm-4">
+                                            <label class="col-sm-1 col-form-label" >Alto(px)</label>
+                                                <div class="col-sm-2">
                                                     <input type="text" class="form-control" name="alto_firma" value="{{$config_emails->alto_firma}}">
+                                                </div>
+                                                <label class="col-sm-1 col-form-label">Ancho(px)</label>
+                                                <div class="col-sm-2">
+                                                    <input type="text" class="form-control" name="ancho_firma" value="100px" readonly="">
+                                                </div>
+                                            <label class="col-sm-1 col-form-label" >Alto(px)</label>
+                                                <div class="col-sm-2">
+                                                    <input type="text" class="form-control" name="alto_firma" value="100px" readonly="">
                                                 </div>
                                         </div>
                                     <br>
@@ -269,6 +286,34 @@
                             {
                                 document.getElementById('visorArchivo{{$config_emails->id}}').innerHTML =
                                 '<img name="firma" src="'+e.target.result+'"width="390px" height="200px" />';
+                            };
+                            visor.readAsDataURL(archivoInput{{$config_emails->id}}.files[0]);
+                        }
+                        }
+                        }
+                        </script>
+                        <script type="text/javascript">
+                        function validarExtF{{$config_emails->id}}()
+                        {
+                        var archivoInput{{$config_emails->id}} = document.getElementById('archivoInputF{{$config_emails->id}}');
+                        var archivoRuta = archivoInput{{$config_emails->id}}.value;
+                        var extPermitidas = /(.jpg|.png|.jfif)$/i;
+                        if(!extPermitidas.exec(archivoRuta)){
+                            alert('Asegurese de haber seleccionado una Imagen');
+                            archivoInput{{$config_emails->id}}.value = '';
+                            return false;
+                        }
+
+                        else
+                        {
+                        //PRevio del PDF
+                        if (archivoInput{{$config_emails->id}}.files && archivoInput{{$config_emails->id}}.files[0])
+                        {
+                            var visor = new FileReader();
+                            visor.onload = function(e)
+                            {
+                                document.getElementById('visorArchivoF{{$config_emails->id}}').innerHTML =
+                                '<img name="firma_digital" src="'+e.target.result+'"width="300px" height="120px" />';
                             };
                             visor.readAsDataURL(archivoInput{{$config_emails->id}}.files[0]);
                         }

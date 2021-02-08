@@ -236,6 +236,11 @@
             <div class="col-sm-3"></div>
             <div class="col-sm-3"></div>
             <div class="col-sm-3"><br><br>
+                @if(empty($firma))
+
+                @else
+                <center><img src="{{asset('archivos/imagenes/firma_digital/'.$firma)}}" style="" width="150px" height="100px"></center>
+                @endif
                 <hr>
                 <center>{{$cotizacion->user_personal->personal->nombres }}</center>
             </div>

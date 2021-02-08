@@ -1041,7 +1041,7 @@ public function show($id)
         if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
     }
     /* Finde numeros a Letras*/
-
+    $firma= EmailConfiguraciones::where('id_usuario',$cotizacion->user_id)->pluck('firma_digital')->first();
         // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
     $empresa=Empresa::first();
     $sum=0;
@@ -1051,7 +1051,8 @@ public function show($id)
     $almacen=auth()->user()->almacen_id;
     $nueva_cot='cotizacion.create_'.$regla;
 
-    return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','end','igv_p','almacen','nueva_cot','banco_count','i','boleta','factura'));
+    return view('transaccion.venta.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"sub_total","regla",'banco','end','igv_p','almacen','nueva_cot','banco_count','i','boleta','factura','firma'));
+    // return $firma;
 }
 
 public function print($id){

@@ -582,15 +582,14 @@ class EmailBandejaEnviosController extends Controller
         return back() ;
     }
     public function configstore(Request $request){
-
-      $this->validate($request,[
+        $this->validate($request,[
             'email' => ['required','email','unique:email_configuraciones,email'],
         ],[
             'email.unique' => 'El correo ya existe',
         ]);
 
         $correo = $request->get('email');
-        // $firma=$request->get('firma') ;
+        // firna para outlook
         if($request->hasfile('firma')){
             $image1 =$request->file('firma');
             $name =time().$image1->getClientOriginalName();
@@ -599,12 +598,25 @@ class EmailBandejaEnviosController extends Controller
         }else{
             $name="";
         }
+
         $ancho=$request->get('ancho_firma');
         $alto =$request->get('alto_firma');
+
         if( $ancho == "" || $alto  == ""){
             $ancho = '150';
             $alto = '100';
+
         }
+
+        if($request->hasfile('firma_digital')){
+            $image2 =$request->file('firma_digital');
+            $firma_d=time().$image2->getClientOriginalName();
+            $destinationPath = public_path('/archivos/imagenes/firma_digital/');
+            $image2->move($destinationPath,$firma_d);
+        }else{
+            $firma_d="";
+        }
+
         $id_usuario=auth()->user()->id;
         $configmail = new EmailConfiguraciones;
         $configmail->id_usuario =auth()->user()->id;
@@ -617,12 +629,13 @@ class EmailBandejaEnviosController extends Controller
         $configmail->ancho_firma= $ancho;
         $configmail->alto_firma= $alto;
         $configmail->encryption= $request->get('encryp') ;
+        $configmail->firma_digital = $firma_d;
         $configmail-> save();
 
         $user=User::find($id_usuario);
         $user->email_creado='1';
         $user->save();
-        return redirect()->route('email.index');
+        return back();
     }
 
 
@@ -643,12 +656,15 @@ class EmailBandejaEnviosController extends Controller
         }else{
             $name=$request->get('firma_nombre') ;
         }
-        // $ancho=$request->get('ancho_firma');
-        // $alto =$request->get('alto_firma');
-        // if( $ancho == "" || $alto  == ""){
-        //     $ancho = '150px';
-        //     $alto = '100px';
-        // }
+        if($request->hasfile('firma_digital')){
+            $image2 =$request->file('firma_digital');
+            $firma_d =time().$image2->getClientOriginalName();
+            $destinationPath = public_path('/archivos/imagenes/firma_digital/');
+            $image2->move($destinationPath,$firma_d);
+        }else{
+            $firma_digital=$request->file('firma_digital');;
+        }
+
         $configmail=EmailConfiguraciones::find($id);
         $configmail->email = $correo ;
         $configmail->password = $request->get('password') ;
@@ -658,6 +674,7 @@ class EmailBandejaEnviosController extends Controller
         $configmail->firma = $name;
         $configmail->ancho_firma=$request->get('ancho_firma');
         $configmail->alto_firma =$request->get('alto_firma');
+        $configmail->firma_digital = $firma_d;
         $configmail->save();
         return redirect()->route('email.index');
     }

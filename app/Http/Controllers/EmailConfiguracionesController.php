@@ -61,23 +61,25 @@ class EmailConfiguracionesController extends Controller
         }else{
             $name="";
         }
-        
+
         $ancho=$request->get('ancho_firma');
         $alto =$request->get('alto_firma');
-        
+
         if( $ancho == "" || $alto  == ""){
             $ancho = '150';
             $alto = '100';
-        
+
         }
+
         if($request->hasfile('firma_digital')){
             $image2 =$request->file('firma_digital');
-            $firma_digital =time().$image1->getClientOriginalName();
-            $destinationPath = public_path('/archivos/imagenes/firmas_digitales/');
-            $image2->move($destinationPath,$firma_digital);
+            $firma_d=time().$image2->getClientOriginalName();
+            $destinationPath = public_path('/archivos/imagenes/firma_digital/');
+            $image2->move($destinationPath,$firma_d);
         }else{
-            $firma_digital="";
+            $firma_d="";
         }
+
         $id_usuario=auth()->user()->id;
         $configmail = new EmailConfiguraciones;
         $configmail->id_usuario =auth()->user()->id;
@@ -90,7 +92,7 @@ class EmailConfiguracionesController extends Controller
         $configmail->ancho_firma= $ancho;
         $configmail->alto_firma= $alto;
         $configmail->encryption= $request->get('encryp') ;
-        $configmail->firma_digital = $firmas_digital;
+        $configmail->firma_digital = $firma_d;
         $configmail-> save();
 
         $user=User::find($id_usuario);
@@ -163,7 +165,7 @@ class EmailConfiguracionesController extends Controller
         }
         $ancho=$request->get('ancho_firma');
         $alto =$request->get('alto_firma');
-        
+
         if($request->hasfile('firma_digital')){
             $image2 =$request->file('firma_digital');
             $firma_digital =time().$image1->getClientOriginalName();
@@ -183,7 +185,7 @@ class EmailConfiguracionesController extends Controller
         $configmail->firma = $name;
         $configmail->ancho_firma= $ancho;
         $configmail->alto_firma= $alto;
-
+        $configmail->firma_digital = $firma_digital;
         $configmail->save();
         return redirect()->route('configuracion_email.index');
     }
