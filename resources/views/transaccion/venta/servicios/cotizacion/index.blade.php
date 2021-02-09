@@ -121,9 +121,9 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>N° Cotizacion</th>
                                     <th>Ruc/DNI</th>
                                     <th>Cliente</sth>
-                                    <th>N° Cotizacion</th>
                                     <th>Fecha</th>
                                     <th>Ver</th>
                                     <th>Estado</th>
@@ -134,9 +134,9 @@
                                   @foreach($cotizaciones_servicios as $cotizacion_servicio)
                                     <tr class="gradeX">
                                       <td>{{$cotizacion_servicio->id}}</td>
+                                      <td>{{$cotizacion_servicio->cod_cotizacion}}</td>
                                       <td>{{$cotizacion_servicio->cliente->numero_documento}}</td>
                                       <td>{{$cotizacion_servicio->cliente->nombre}}</td>
-                                      <td>{{$cotizacion_servicio->cod_cotizacion}}</td>
                                       <td>{{$cotizacion_servicio->created_at}}</td>
                                       <td><center><a href="{{route('cotizacion_servicio.show',$cotizacion_servicio->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                       <td>

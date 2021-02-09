@@ -901,138 +901,7 @@ if(isset($id_comi)){
  $comisionista->save();
 }
 
-$name = $request->get('name');
-$empresa=Empresa::first();
-$facturacion=Facturacion::find($facturar->id);
-$facturacion_registro=Facturacion_registro::where('facturacion_id',$facturacion_registro->id)->get();
-$sum=0;
-$igv=Igv::first();
-$sub_total=0;
-$banco=Banco::where('estado',0)->get();
-$banco_count=Banco::where('estado','0')->count();
-$i = 1;
-
-$archivo=$name.'_'.$id.".pdf";
-$pdf=PDF::loadView('transaccion.venta.facturacion.pdf', compact('facturacion','empresa','facturacion_registro','sum','igv','sub_total','banco','banco_count','i'));
-$content = $pdf->download();
-$especif = $carbon_sp.$archivo;
-Storage::disk('mailbox')->put($especif,$content);
-$date = $carbon_sp;
-
-$id_usuario=auth()->user()->id;
-$correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
-$correo=$correo_busqueda->email;
-
-$firma=$correo_busqueda->firma;
-$mensaje_html = $request->get('mensaje');
-if($firma == null){
-  $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-  $(document).ready(function(){
-      $("table").removeClass("table table-bordered").addClass("css");
-      });
-      </script>
-      <style>
-      .css,table,tr,td{
-          padding: 15px;
-          border: 1px solid black;
-          border-collapse: collapse;
-      }
-      table{
-        width:100%;
-    }
-    </style>'.$mensaje_html.'</body>';
-}else{
-  $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script>
-  $(document).ready(function(){
-      $("table").removeClass("table table-bordered").addClass("css");
-      });
-      </script>
-      <style>
-      .css,table,tr,td{
-          padding: 15px;
-          border: 1px solid black;
-          border-collapse: collapse;
-      }
-      table{
-        width:100%;
-    }
-    </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
-}
-        /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
-        $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
-        $port = $correo_busqueda->port;
-        $encryption = $correo_busqueda->encryption;
-        $yourEmail = $correo;
-        $estado = '0';
-        //$mailbackup =  ; // = $request->yourmail
-        $yourPassword = $correo_busqueda->password;
-        $sendto = $request->get('remitente') ;
-        $titulo = "Envio de Factura Automatico";
-        $mensaje = $mensaje_con_firma;
-        $bakcup=    $correo_busqueda->email_backup ;
-
-        // $file = $request->archivo;
-        $pdf=$archivo;
-        // $carpet =$request->get('redict');
-        $pdfile = public_path().'/archivos/'.$especif;
-
-        $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
-        $mailer =new \Swift_Mailer($transport);
-
-        $newfile = $request->file('archivos');
-        if($request->hasfile('archivos')){
-          foreach ($newfile as $file) {
-            $nombre =  $file->getClientOriginalName();
-            $especif = $carbon_sp.$nombre;
-            \Storage::disk('mailbox')->put( $especif ,  \File::get($file));
-
-            $news[] = public_path().'/archivos/'.$especif;
-            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup])->setBody($mensaje, 'text/html');
-            $message->attach(\Swift_Attachment::fromPath($pdfile));
-            foreach ($news as $attachment) {
-              $message->attach(\Swift_Attachment::fromPath($attachment));
-          }
-      }
-  }else{
-      $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto,$bakcup ])->setBody($mensaje, 'text/html');
-      $message->attach(\Swift_Attachment::fromPath($pdfile));
-  }
-  if($mailer->send($message)){
-      $mensaje =$request->get('mensaje') ;
-      $texto= strip_tags($mensaje);
-      $mail = new EmailBandejaEnvios;
-      $mail->id_usuario =auth()->user()->id;
-      $mail->destinatario =$correo;
-      $mail->remitente =$request->get('remitente') ;
-      $mail->asunto =$titulo;
-      $mail->mensaje =$mensaje_con_firma;
-      $mail->mensaje_sin_html =$texto ;
-      $mail->estado= $estado;
-      $mail->fecha_hora =Carbon::now() ;
-      $mail-> save();
-
-      $newfile2 = $request->file('archivos');
-      if($request->hasfile('archivos')){
-        foreach ($newfile2 as $file2) {
-          $guardar_email_archivo=new EmailBandejaEnviosArchivos;
-          $guardar_email_archivo->id_bandeja_envios=$mail->id;
-          $guardar_email_archivo->archivo= $file2->getClientOriginalName();
-          $guardar_email_archivo->fecha_hora= $carbon_sp;
-          $guardar_email_archivo->save();
-      }
-  }
-  $archivo_pdf = new EmailBandejaEnviosArchivos;
-  $archivo_pdf->id_bandeja_envios=$mail->id;
-  $archivo_pdf->archivo=$pdf;
-  $archivo_pdf->fecha_hora= $especif;
-  $archivo_pdf->save();
-
   return redirect()->route('facturacion_servicio.show',$facturar->id);
-}else{
-    return "Something went wrong :(";
-}
 }
 
 //ENVIO DE BOLETEAR A VISTA
@@ -1055,7 +924,7 @@ public function boletear($id){
     // $boleta_codigo='BO-0000'.$suma;
 
         // obtencion de la sucursal
-    $cotizacion_almacen=Cotizacion::where('id',$id)->first();
+    $cotizacion_almacen=Cotizacion_Servicios::where('id',$id)->first();
     $almacen=$cotizacion_almacen->almacen_id;
         //obtencion del almacen
     $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
@@ -1102,7 +971,7 @@ public function boletear_store(Request $request){
     $cotizacion->save();
 
       // obtencion de la sucursal
-    $cotizacion_almacen=Cotizacion::where('id',$id)->first();
+    $cotizacion_almacen=Cotizacion_Servicios::where('id',$id)->first();
     $almacen=$cotizacion_almacen->almacen_id;
         //obtencion del almacen
     $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
