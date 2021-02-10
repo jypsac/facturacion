@@ -189,7 +189,7 @@ class KardexSalidaController extends Controller
                                 $cantidad_mayor=$p->cantidad;
                                 $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
                                 $p->cantidad=$cantidad_final;
-                                if($cantidad_final==0){
+                                if($cantidad_final<=0){
                                     $p->estado=0;
                                     $p->save();
                                 }else{

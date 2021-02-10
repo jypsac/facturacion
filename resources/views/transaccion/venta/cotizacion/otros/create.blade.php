@@ -192,7 +192,6 @@
                             {{-- <input type="submit" name="pdf" class="btn btn-primary float-right" value="" > --}}
 
                             @if(Auth::user()->email_creado == 0)
-                            <button type="button" class="btn btn-secondary float-right" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
                             @else
                             <button type="submit" name="name" value="correo" formtarget="_blank"  class="btn btn-secondary float-right"><i class="fa fa-envelope fa-lg " ></i>  </button>
                             @endif

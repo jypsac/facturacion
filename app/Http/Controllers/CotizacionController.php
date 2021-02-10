@@ -157,6 +157,8 @@ class CotizacionController extends Controller
         $cotizacion_numero="COTPF ".$sucursal_nr."-".$cotizacion_nr;
 
         return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','cotizacion_numero','sucursal'));
+        // return array_sum($array_cantidad);
+        // return $array_cantidad;
     }
 
     //create factura modensa secundaruia
