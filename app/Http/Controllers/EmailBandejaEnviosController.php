@@ -217,6 +217,7 @@ class EmailBandejaEnviosController extends Controller
         if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
     }
     /* Finde numeros a Letras*/
+    $firma= EmailConfiguraciones::where('id_usuario',$cotizacion->user_id)->pluck('firma_digital')->first();
     $empresa=Empresa::first();
     $sum=0;
     $i=1;
@@ -224,7 +225,7 @@ class EmailBandejaEnviosController extends Controller
     $cotizacion_factura = ' ';
      // return $cotizacion;
     $archivo=$cotizacion->cod_cotizacion.".pdf";
-    $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
+    $pdf=PDF::loadView($rutapdf,compact($redic,'cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count','firma'));
     $content = $pdf->download();
     $especif = $carbon_sp.$archivo;
     Storage::disk('mailbox')->put($especif,$content);

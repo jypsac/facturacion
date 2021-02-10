@@ -1108,14 +1108,23 @@ public function pdf(Request $request,$id){
       $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
       if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
   }
+
+
   /* Finde numeros a Letras*/
   $empresa=Empresa::first();
   $sum=0;
   $i=1;
   $regla=$cotizacion->tipo;
   $archivo=$name.$regla.$id.".pdf";
-  $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
+
+  if($request->get('firma') == "0"){
+    $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
   return $pdf->download('Cotizacion - '.$archivo.'.pdf');
+  }else{
+    $firma= EmailConfiguraciones::where('id_usuario',$cotizacion->user_id)->pluck('firma_digital')->first();
+    $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count','firma'));
+  return $pdf->download('Cotizacion - '.$archivo.'.pdf');
+  }
 }
     //envio hacia facturar cambiar en caso incluya algo
 public function facturar(Request $request,$id){
