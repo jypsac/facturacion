@@ -1753,7 +1753,7 @@ public function boletear(Request $request,$id)
         $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
     }
 
-    $cod_bol="F".$sucursal_nr."-".$boleta_nr;
+    $cod_bol="B".$sucursal_nr."-".$boleta_nr;
 
     return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','productos','sum','igv',"array","sub_total",'moneda' ,'cod_bol','validor','array_cantidad'));
 }
