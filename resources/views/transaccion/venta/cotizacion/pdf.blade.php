@@ -196,8 +196,12 @@
             <br>
             <br>
             <br>
+            @if(isset($firma))
+            <center><img src="{{asset('archivos/imagenes/firma_digital/'.$firma)}}" style="" width="150px" height="100px"></center>
+            @else
             <br>
             <br>
+            @endif
             <hr>
             <center>{{$cotizacion->user_personal->personal->nombres }}</center>
         </td>
