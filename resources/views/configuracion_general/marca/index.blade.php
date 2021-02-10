@@ -98,6 +98,17 @@
 <!-- / Modal Create  -->
 
 <div class="wrapper wrapper-content animated fadeInRight">
+        @if($errors->any())
+    <div style="padding-top: 10px">
+          <div class="alert alert-danger">
+                <a class="alert-link" href="#">
+                  @foreach ($errors->all() as $error)
+                  <li style="color: red">{{ $error }}</li>
+                  @endforeach
+                </a>
+          </div>
+     </div>
+    @endif
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
@@ -176,7 +187,7 @@
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Abreviatura:</label>
                                                                             <div class="col-sm-10">
-                                                                                <input required="required" type="text" class="form-control" value="{{$marca->abreviatura}}" name="abreviatura">
+                                                                                <input required="required" type="text" class="form-control" value="{{$marca->abreviatura}}" name="abreviatura" readonly="">
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Empresa:</label>
                                                                             <div class="col-sm-10">

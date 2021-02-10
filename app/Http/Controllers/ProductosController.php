@@ -52,13 +52,11 @@ class ProductosController extends Controller
      */
     public function store(Request $request )
     {
-
-        // $this->validate($request,[
-        //     'codigo_original' => ['required','unique:productos,codigo_original'],
-        // ]
-        // );
-
-
+        $this->validate($request,[
+            'codigo_original' => ['required','unique:productos,codigo_original'],
+        ],[
+            'codigo_original.unique' => 'El codigo alternativo ya existe',
+        ]);
 
         $id_producto=$request->get('marca_id');
         $marca= Marca::where("id","=",$id_producto)->first();
@@ -161,6 +159,12 @@ class ProductosController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+            'codigo_original' => ['required','unique:productos,codigo_original,'.$id],
+        ],[
+            'codigo_original.unique' => 'El codigo alternativo ya existe',
+        ]);
+
      if($request->hasfile('foto')){
         $image1 =$request->file('foto');
         $name =time().$image1->getClientOriginalName();
