@@ -37,6 +37,12 @@ class MarcaController extends Controller
      */
     public function store(Request $request)
     {
+
+        $this->validate($request,[
+            'abreviatura' => ['required','unique:marcas,abreviatura'],
+        ],[
+            'abreviatura.unique' => 'La abreviatura insertada en el Producto ya existe',
+        ]);
         if($request->hasfile('imagen')){
             $imagen =$request->file('imagen');
             $nombre_imagen = time().$imagen->getClientOriginalName();
@@ -62,7 +68,7 @@ class MarcaController extends Controller
         $marca->imagen=$nombre_imagen;
         $marca->save();
 
-        return redirect()->route('marca.index');
+        return back();
     }
 
     /**
@@ -109,7 +115,7 @@ class MarcaController extends Controller
 
         $marca=Marca::find($id);
         $marca->nombre=strtoupper($request->get('nombre'));
-        $marca->abreviatura=strtoupper($request->get('abreviatura'));
+        // $marca->abreviatura=strtoupper($request->get('abreviatura'));
         $marca->nombre_empresa=strtoupper($request->get('nombre_empresa'));
         $marca->telefono=strtoupper($request->get('telefono'));
         $marca->descripcion=$request->get('descripcion');
