@@ -42,7 +42,7 @@
                     <div class="col-sm-4 ">
                         <div class="form-control ruc" style="height: 125px">
                             <center>
-                                <h3 style="padding-top:10px ">RUC:202020202</h3>
+                                <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
                                 <h2>FACTURA ELECTRONICA</h2>
                                 <input type="text" value="{{$cotizacion->id}}" name="id_cotizador" hidden="hidden">
                                 <p>{{$cod_fac}}</p>
@@ -119,7 +119,7 @@
                                     </td>
                                     <td>{{$array_cantidad[$index]}}</td>
                                     {{-- MODIFICAR ESTA PARTE CON LOGICA DE REPROGRAMACION PARA UN NUEVO PRODUCTO DIRECTAMENTE DESDE KARDEX --}}
-                                    <td>S/.{{$array[$index]}}</td>
+                                    <td>{{$cotizacion->moneda->simbolo}}.{{$array[$index]}}</td>
                                     <td>{{$array[$index]*$cotizacion_registros->cantidad}}</td>
 
 
@@ -152,18 +152,18 @@
                                     <td></td>
                                     <td>Sub Total</td>
                                     <td>
-                                        S/.{{round($sub_total, 2)}}
+                                        {{$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>IGV</td>
-                                    <td>S/.{{round($igv_p, 2)}}</td>
+                                    <td>{{$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}}</td>
                                 </tr>
                                 <tr>
                                     <td></td>
                                     <td>Importe Total</td>
-                                    <td>S/.{{$end}}</td>
+                                    <td>{{$cotizacion->moneda->simbolo}}.{{$end}}</td>
                                 </tr>
                                 <tr></tr>
                             </tbody>

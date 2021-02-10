@@ -91,9 +91,10 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
+                                    <th>Codigo de Boleta</th>
                                     <th>Cliente </th> {{-- <th>Cliente ID</th> --}}
-                                    <th>Forma de pago</th>
-                                    <th>Fecha de emision</th>
+                                    <th>Ruc/DNI</th>
+                                    {{-- <th>Fecha de emision</th> --}}
                                     <th>Fecha Vencimiento</th>
                                     <th>Ver</th>
                                     {{-- <th>ANULAR</th> --}}
@@ -103,9 +104,17 @@
                                 @foreach($boletas as $boleta)
                                 <tr class="gradeX">
                                     <td>{{$boleta->id}}</td>
-                                    {{-- <td>{{$boleta->cliente_id}}</td> --}} <td>{{$boleta->cliente->nombre}}</td>
-                                    {{-- <td>{{$boleta->forma_pago_id}}</td> --}} <td>{{$boleta->forma_pago->nombre}}</td>
-                                    <td>{{$boleta->fecha_emision}}</td>
+                                    <td>{{$boleta->codigo_boleta}}</td>
+                                    @if(isset($boleta->cliente_id)) <!-- Nombre del cliente -->
+                                        <td>{{$boleta->cliente->nombre}}</td>
+                                        @else
+                                        <td>{{$boleta->cotizacion->cliente->nombre}}</td>
+                                    @endif
+                                   @if(isset($boleta->cliente_id))<!-- documento del cliente -->
+                                        <td>{{$boleta->cliente->numero_documento}}</td>
+                                        @else
+                                        <td>{{$boleta->cotizacion->cliente->numero_documento}}</td>
+                                        @endif
                                     <td>{{$boleta->fecha_vencimiento }}</td>
                                     <td><center>
                                         @if($boleta->tipo=='servicio')

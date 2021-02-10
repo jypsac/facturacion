@@ -42,7 +42,7 @@
                      <div class="col-sm-4 ">
                          <div class="form-control ruc" style="height: 125px">
                              <center>
-                                 <h3 style="padding-top:10px ">RUC:202020202</h3>
+                                 <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
                                  <h2>BOLETA ELECTRONICA</h2>
                                  <input type="text" value="{{$cotizacion->id}}" name="id_cotizador" hidden="hidden">
                                  <p>{{$cod_bol}}</p>
@@ -118,7 +118,7 @@
                                      </td>
                                      <td>{{$array_cantidad[$index]}}</td>
                                      {{-- MODIFICAR ESTA PARTE CON LOGICA DE REPROGRAMACION PARA UN NUEVO PRODUCTO DIRECTAMENTE DESDE KARDEX --}}
-                                     <td>S/.{{$array[$index]}}</td>
+                                     <td>{{$cotizacion->moneda->simbolo}}.{{$array[$index]}}</td>
                                      <td>{{$array[$index]*$cotizacion_registros->cantidad}}</td>
 
 
@@ -150,7 +150,7 @@
                                      <td></td>
                                      <td>Total</td>
                                      <td>
-                                         S/.{{round($sub_total, 2)}}
+                                         {{$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
                                      </td>
                                  </tr>
                                  <tr></tr>
@@ -163,10 +163,10 @@
                      <div class="row" align="center" >
                         <div class="col-sm-4">
                         </div>
-                         @if(auth()->user()->email_creado == 1)
+                         @if(auth()->user()->email_creado == 1 )
                         <div class="  col-sm-6 alert alert-info" >
                             <input type="hidden" name="verificacion" value="1" id="">
-                            <p style="margin-bottom: 0px">!Al momento de Facturar se le enviará una copia al correo del cliente!</p>
+                            <p style="margin-bottom: 0px">!Al momento de Boletear se le enviará una copia al correo del cliente!</p>
                         </div>
                         @else
                         <div class="  col-sm-6 alert alert-info" >

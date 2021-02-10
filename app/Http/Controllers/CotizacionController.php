@@ -1247,8 +1247,13 @@ public function facturar(Request $request,$id){
     $cod_fac="F".$sucursal_nr."-".$factura_nr;
 
     // $cod_fac='- - -';
+    if ($cotizacion->estado==0) {
+         return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','sum','igv',"array","sub_total","moneda",'cod_fac','productos','array_cantidad','validor'));
+     }
+     elseif ($cotizacion->estado==1) {
+        return redirect()->route('cotizacion.show',$cotizacion->id);
+    }
 
-    return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','sum','igv',"array","sub_total","moneda",'cod_fac','productos','array_cantidad','validor'));
 }
 
 
@@ -1766,7 +1771,13 @@ public function boletear(Request $request,$id)
 
     $cod_bol="B".$sucursal_nr."-".$boleta_nr;
 
-    return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','productos','sum','igv',"array","sub_total",'moneda' ,'cod_bol','validor','array_cantidad'));
+    if ($cotizacion->estado==0) {
+        return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','productos','sum','igv',"array","sub_total",'moneda' ,'cod_bol','validor','array_cantidad'));
+     }
+     elseif ($cotizacion->estado==1) {
+        return redirect()->route('cotizacion.show',$cotizacion->id);
+    }
+
 }
 
 public function boletear_store(Request $request)
