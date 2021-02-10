@@ -81,7 +81,7 @@ class KardexEntradaController extends Controller
       $almacenes=Almacen::where('estado','0')->get();
       $motivos=Motivo::all();
       $categorias=Categoria::all();
-      $moneda=Moneda::all();
+      $moneda=Moneda::orderBy('principal','DESC')->get();
       $user_login =auth()->user()->id;
       $usuario=User::where('id',$user_login)->first();
 
