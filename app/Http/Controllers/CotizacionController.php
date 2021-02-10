@@ -602,7 +602,7 @@ class CotizacionController extends Controller
 
 
         $forma_pagos=Forma_pago::all();
-        $clientes=Cliente::where('documento_identificacion','dni')->get();
+        $clientes=Cliente::all();
         $moneda=Moneda::where('principal','1')->first();
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();

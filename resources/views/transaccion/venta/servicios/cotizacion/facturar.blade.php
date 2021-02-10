@@ -111,8 +111,7 @@
                                     <td>{{$cotizacion_registros->servicio->codigo_servicio}}</td>
                                     <td>{{$cotizacion_registros->cantidad}}</td>
                                     <td>
-                                        {{$cotizacion_registros->servicio->nombre}}
-                                        <span style="font-size: 10px">{{$cotizacion_registros->servicio->descripcion}}</span>
+                                        {{$cotizacion_registros->servicio->nombre}} / {{$cotizacion_registros->servicio->descripcion}}</span>
 
                                     </td>
                                     <td>S/.{{$cotizacion_registros->precio}}</td>
