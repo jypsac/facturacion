@@ -53,7 +53,7 @@ class ProductosController extends Controller
     public function store(Request $request )
     {
         $this->validate($request,[
-            'codigo_original' => ['required','unique:productos,codigo_original'],
+            'codigo_original' => ['unique:productos,codigo_original'],
         ],[
             'codigo_original.unique' => 'El codigo alternativo ya existe',
         ]);
