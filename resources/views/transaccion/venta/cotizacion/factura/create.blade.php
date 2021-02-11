@@ -577,14 +577,14 @@
                                 });
                     }
                 </script>
-                <script>
+                {{-- <script>
                     //obtencion de los articulos , para la validacion de no duplicarse
                     function validacion(){
                         // var x=getElementById('articulo').length;
                         // alert(x);
                         return true;
                     }
-                </script>
+                </script> --}}
 
                 <script>
                     function comision(){
