@@ -100,9 +100,9 @@ class CotizacionServiciosController extends Controller
          //CODIGO COTIZACION
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
-        $ultima_factura=Cotizacion_Servicios::latest()->first();
+        $ultima_factura=Cotizacion_Servicios::where('almacen_id',$sucursal->id)->where('tipo','factura')->count();
         if($ultima_factura){
-            $code=$ultima_factura->id;
+            $code=$ultima_factura;
             $code++;
         }else{
             $code=1;
@@ -110,6 +110,8 @@ class CotizacionServiciosController extends Controller
         $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
         $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
         $cotizacion_numero="COTSF ".$sucursal_nr."-".$cotizacion_nr;
+
+        // return $cotizacion_numero;
 
         return view('transaccion.venta.servicios.cotizacion.factura.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','empresa','sucursal','cotizacion_numero'));
 
@@ -148,12 +150,12 @@ class CotizacionServiciosController extends Controller
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
         $empresa  = Empresa::first();
-         //CODIGO COTIZACION
+          //CODIGO COTIZACION
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
-        $ultima_factura=Cotizacion_Servicios::latest()->first();
+        $ultima_factura=Cotizacion_Servicios::where('almacen_id',$sucursal->id)->where('tipo','factura')->count();
         if($ultima_factura){
-            $code=$ultima_factura->id;
+            $code=$ultima_factura;
             $code++;
         }else{
             $code=1;
@@ -276,10 +278,12 @@ class CotizacionServiciosController extends Controller
         }
 
 
-        $sucursal=Almacen::where('id',$almacen)->first();
-        $ultima_factura=Cotizacion_Servicios::latest()->first();
+         //CODIGO COTIZACION
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        $ultima_factura=Cotizacion_Servicios::where('almacen_id',$sucursal->id)->where('tipo','factura')->count();
         if($ultima_factura){
-            $code=$ultima_factura->id;
+            $code=$ultima_factura;
             $code++;
         }else{
             $code=1;
@@ -433,12 +437,13 @@ class CotizacionServiciosController extends Controller
         }
 
         $empresa  = Empresa::first();
-         //CODIGO COTIZACION
+
+        //CODIGO COTIZACION
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
-        $ultima_factura=Cotizacion_Servicios::latest()->first();
-        if($ultima_factura){
-            $code=$ultima_factura->id;
+        $ultima_boleta=Cotizacion_Servicios::where('almacen_id',$sucursal->id)->where('tipo','boleta')->count();
+        if($ultima_boleta){
+            $code=$ultima_boleta;
             $code++;
         }else{
             $code=1;
@@ -446,6 +451,9 @@ class CotizacionServiciosController extends Controller
         $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
         $cotizacion_nr=str_pad($code, 8, "0", STR_PAD_LEFT);
         $cotizacion_numero="COTSB ".$sucursal_nr."-".$cotizacion_nr;
+
+
+
 
         return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','empresa','sucursal','cotizacion_numero'));
     }
@@ -492,9 +500,9 @@ class CotizacionServiciosController extends Controller
          //CODIGO COTIZACION
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
-        $ultima_factura=Cotizacion_Servicios::latest()->first();
-        if($ultima_factura){
-            $code=$ultima_factura->id;
+        $ultima_boleta=Cotizacion_Servicios::where('almacen_id',$sucursal->id)->where('tipo','boleta')->count();
+        if($ultima_boleta){
+            $code=$ultima_boleta;
             $code++;
         }else{
             $code=1;
@@ -619,11 +627,12 @@ class CotizacionServiciosController extends Controller
             $almacen=$almacen_seleccionado->id;
         }
 
-
-        $sucursal=Almacen::where('id',$almacen)->first();
-        $ultima_factura=Cotizacion_Servicios::latest()->first();
-        if($ultima_factura){
-            $code=$ultima_factura->id;
+ //CODIGO COTIZACION
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        $ultima_boleta=Cotizacion_Servicios::where('almacen_id',$sucursal->id)->where('tipo','boleta')->count();
+        if($ultima_boleta){
+            $code=$ultima_boleta;
             $code++;
         }else{
             $code=1;
