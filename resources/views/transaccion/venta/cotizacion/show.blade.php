@@ -11,7 +11,7 @@
 
 <form action="{{ route($nueva_cot)}}"enctype="multipart/form-data" method="post" id="nueva_cot">
     @csrf
-    <input type="text"  hidden="hidden" name="almacen"  value="{{$almacen}}">
+    <input type="text"  hidden="hidden" name="almacen"  value="{{$cotizacion->almacen_id}}">
     <input  hidden="hidden" type="submit"  >
 </form>
 
