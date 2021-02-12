@@ -89,8 +89,6 @@
 </div>
 {{-- fimodal --}}
 
-
-
 <div class="wrapper wrapper-content animated fadeInRight">
   <div class="row">
     <div class="col-lg-12">
@@ -126,8 +124,8 @@
                   <th>Cliente</sth>
                     <th>Fecha</th>
                     <th>Ver</th>
-                    <th>Estado</th>
-                    <th>Estado</th>
+                    <th>Facturado/Boleteado</th>
+                    <th>Aprobado G.Remision</th>
                     <th>Creado por</th>
                   </tr>
                 </thead>
@@ -148,10 +146,10 @@
                       @endif
                     </td>
                     <td>
-                      @if($cotizacion_servicio->estado =='0')
-                      <button type="button" class="btn btn-w-m btn-info">En Proceso</button>
+                      @if($cotizacion_servicio->estado_aprobar =='0')
+                      <button type="button" class="btn btn-w-m btn-info">Aprobar</button>
                       @else
-                      <button type="button" class="btn btn-w-m btn-default">Procesado</button>
+                      <button type="button" class="btn btn-w-m btn-default">Aprobado</button>
                       @endif
                     </td>
                     <td>
@@ -171,11 +169,6 @@
       </div>
     </div>
   </div>
-
-
-
-
-
 
   <!-- Mainly scripts -->
   <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
