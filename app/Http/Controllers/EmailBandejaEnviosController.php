@@ -663,7 +663,7 @@ class EmailBandejaEnviosController extends Controller
             $destinationPath = public_path('/archivos/imagenes/firma_digital/');
             $image2->move($destinationPath,$firma_d);
         }else{
-            $firma_digital=$request->file('firma_digital');;
+            $firma_d=$request->file('firma_digital');;
         }
 
         $configmail=EmailConfiguraciones::find($id);

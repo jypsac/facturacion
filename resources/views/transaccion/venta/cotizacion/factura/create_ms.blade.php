@@ -217,7 +217,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('cotizacion.store_factura',$moneda->id)}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('cotizacion.store_factura',$moneda->id)}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
                         @csrf
                         @method('put')
                         {{-- Cabecera --}}
@@ -435,7 +435,7 @@
                                             </div>
                                             <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                             <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                                            <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
+                                            <button class="btn btn-primary float-right"  id="boton" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
 
                                         </form>
 
@@ -460,7 +460,18 @@
                     <!-- Custom and plugin javascript -->
                     <script src="{{ asset('js/inspinia.js') }}"></script>
                     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-
+                    {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+            <script>
+                function valida(f) {
+                    var boton=document.getElementById("boton");
+                    var completo = true;
+                    var incompleto = false;
+                    if( f.elements[0].value == "" )
+                       { alert(incompleto); }
+                   else{boton.type = 'button';}
+               }
+           </script>
+           {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
                     <script>
                         var i = 2;
                         $(".addmore").on('click', function () {

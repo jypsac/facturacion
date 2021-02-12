@@ -88,6 +88,17 @@
 {{-- fimodal --}}
 
 <div class="wrapper wrapper-content animated fadeInRight">
+    @if($errors->any())
+    <div style="">
+       <div class="alert alert-danger">
+            <a class="alert-link" href="#">
+            @foreach ($errors->all() as $error)
+                <li class="error">{{ $error }}</li>
+            @endforeach
+            </a>
+        </div>
+    </div>
+    @endif
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
