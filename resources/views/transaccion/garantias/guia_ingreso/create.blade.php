@@ -224,7 +224,7 @@
 	            <div class="ibox-content" style="padding-bottom: 0px">
 	            	<div class="row">
 						<div class="col-lg-12">
-   							<form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" 	method="post">
+   							<form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" 	method="post" onsubmit="return valida(this)">
 							@csrf
 								<div class="ibox-content" style="" align="center">
 								    <div class="row">
@@ -362,7 +362,7 @@
 											</div>
 										</fieldset>
 										<br>
-									 	<button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
+									 	<button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit" id="boton"><strong>Grabar</strong></button>
 							    	</div>
 								</div>
 							 </form>
@@ -387,6 +387,18 @@
 	})
 	})
 </script>
+{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script>
+    function valida(f) {
+        var boton=document.getElementById("boton");
+        var completo = true;
+        var incompleto = false;
+        if( f.elements[0].value == "" )
+           { alert(incompleto); }
+       else{boton.type = 'button';}
+   }
+</script>
+{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 {{-- <script type="text/javascript">
 	$.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script> --}}

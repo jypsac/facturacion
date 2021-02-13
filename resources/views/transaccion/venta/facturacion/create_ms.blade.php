@@ -157,7 +157,7 @@
         </div>
     </div>
 </div>
-<form action="{{ route('facturacion.create')}}" enctype="multipart/form-data" id="almacen-form" method="POST">
+<form action="{{ route('facturacion.create')}}" enctype="multipart/form-data" id="almacen-form" method="POST" >
     @csrf
     <input type="text" value="{{$sucursal->id}}" hidden="hidden" name="almacen">
     <input class="btn btn-sm btn-info" hidden="hidden" type="submit" value="cambiar" >
@@ -188,7 +188,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('facturacion.store',$moneda->id)}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('facturacion.store',$moneda->id)}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
                         @csrf
                         @method('put')
                         {{-- Cabecera --}}
@@ -399,7 +399,7 @@
                                             </div>
                                             <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                             <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                                            <button class="btn btn-primary float-right" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
+                                            <button class="btn btn-primary float-right" type="submit" id="boton"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
                                         </form>
 
                                     </div>
@@ -419,7 +419,18 @@
                     <script src="{{ asset('js/bootstrap.js') }}"></script>
                     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
                     <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
+                    {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+                    <script>
+                        function valida(f) {
+                            var boton=document.getElementById("boton");
+                            var completo = true;
+                            var incompleto = false;
+                            if( f.elements[0].value == "" )
+                               { alert(incompleto); }
+                           else{boton.type = 'button';}
+                       }
+                   </script>
+                    {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
                     <!-- Custom and plugin javascript -->
                     <script src="{{ asset('js/inspinia.js') }}"></script>
                     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
