@@ -1315,6 +1315,7 @@ class CotizacionController extends Controller
         }
 
             // Creacion de Ventas Registros del Comisinista
+        //NO LLAMA A LA ID DE FACTURACION 
         $cotizador=$request->get('id_cotizador');
         $id_comisionista=$request->get('id_comisionista');
         $comisionista=Cotizacion::where('id',$cotizador)->first();
@@ -1322,6 +1323,7 @@ class CotizacionController extends Controller
         if(isset($id_comi)){
          $comisionista=new Ventas_registro;
          $comisionista->id_facturacion=$request->get('fac_id');
+         // $comisionista->id_facturacion= $facturar->id ;
          $comisionista->comisionista=$request->get('id_comisionista');
          $comisionista->estado_aprobado='0';
          $comisionista->pago_efectuado='0';
