@@ -17,9 +17,12 @@ class PersonalVentaController extends Controller
      */
     public function index()
     {
-        $vendedores=Personal_venta::all();
-        return view('planilla.vendedores.index', compact('vendedores'));
-    }
+      // $personal=Personal_venta::find($id);
+      $lista=Ventas_registro::all();
+      $vendedores=Personal_venta::all();
+       $personal=Personal_venta::all();
+      return view('planilla.vendedores.index', compact('vendedores','lista'));
+  }
 
     /**
      * Show the form for creating a new resource.
@@ -27,7 +30,7 @@ class PersonalVentaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create()
-    {   
+    {
 
         $personal_contador= Personal_venta::all()->count();
         $suma=$personal_contador+1;
@@ -42,12 +45,12 @@ class PersonalVentaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
-    {    
+    {
         $this->validate($request,[
             'id_personal' => ['required','unique:personal_ventas,id_personal'],
         ],[
             'id_personal.unique' => 'El vendedor ya ha sido registrado',
-           
+
         ]);
 
       // Personal::create(request()->all());
@@ -57,10 +60,10 @@ class PersonalVentaController extends Controller
         $personal_venta->tipo_comision=$request->get('tipo_comision');
         $personal_venta->comision=$request->get('comision');
         $personal_venta->estado=0;
-        
+
 
         $personal_venta->save();
-        return redirect()->route('vendedores.show', $personal_venta->id); 
+        return redirect()->route('vendedores.show', $personal_venta->id);
     }
 
     /**
@@ -70,8 +73,8 @@ class PersonalVentaController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function show($id)
-     {
-        
+    {
+
         $personal=Personal_venta::find($id);
         $lista=Ventas_registro::where('comisionista',$id)->where('estado_fac','0')->get();
 
@@ -86,9 +89,9 @@ class PersonalVentaController extends Controller
      */
     public function edit($id)
     {
-          $personal=Personal_venta::find($id);
-        return view('planilla.vendedores.edit',compact('personal'));
-    }
+      $personal=Personal_venta::find($id);
+      return view('planilla.vendedores.edit',compact('personal'));
+  }
 
     /**
      * Update the specified resource in storage.
@@ -105,7 +108,7 @@ class PersonalVentaController extends Controller
         $personal->save();
 
         // return redirect()->route('personal-datos-laborales.index');
-        return redirect()->route('vendedores.show', $personal->id); 
+        return redirect()->route('vendedores.index');
 
 
     }
@@ -118,37 +121,37 @@ class PersonalVentaController extends Controller
      */
     public function destroy($id)
     {
-        
+
     }
-   public function aprobar(Request $request, $id)
+    public function aprobar(Request $request, $id)
     {
-       
-         $registro=Ventas_registro::find($id);
+
+       $registro=Ventas_registro::find($id);
          // return $registro;
-        $registro->estado_aprobado='1';
-        $registro->save();
-        
-        return redirect()->route('vendedores.show', $registro->comisionista); 
+       $registro->estado_aprobado='1';
+       $registro->save();
+
+       return redirect()->route('vendedores.show', $registro->comisionista);
         // return redirect()->route('productos.index');
 
 
-    }
-    public function procesado(Request $request, $id)
-    {
-       
-        $registro=Ventas_registro::find($id);
-        $registro->pago_efectuado='1';
-        $registro->save();
-        return redirect()->route('vendedores.show', $registro->comisionista); 
+   }
+   public function procesado(Request $request, $id)
+   {
 
-    }
-     public function estado(Request $request, $id)
-    {
-       
-        $personal_venta=Personal_venta::find($id);
-        $personal_venta->estado=$request->get('numero');
-        $personal_venta->save();
-        return redirect()->route('vendedores.index'); 
+    $registro=Ventas_registro::find($id);
+    $registro->pago_efectuado='1';
+    $registro->save();
+    return redirect()->route('vendedores.show', $registro->comisionista);
 
-    }
+}
+public function estado(Request $request, $id)
+{
+
+    $personal_venta=Personal_venta::find($id);
+    $personal_venta->estado=$request->get('numero');
+    $personal_venta->save();
+    return redirect()->route('vendedores.index');
+
+}
 }

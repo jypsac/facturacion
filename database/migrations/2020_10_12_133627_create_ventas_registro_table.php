@@ -17,13 +17,13 @@ class CreateVentasRegistroTable extends Migration
             $table->bigIncrements('id');
             // $table->string('numero_cotizacion');
             // $table->string('tipo');
-            $table->boolean('estado_aprobado');
-            $table->boolean('pago_efectuado');
-            $table->string('observacion');
-            $table->string('comisionista');
+            $table->boolean('estado_aprobado')->nullable();
+            $table->boolean('estado_pagado')->nullable();/*Fue pagado el monto de las guias*/
+            $table->string('observacion')->nullable();
+            $table->string('monto_final_fac_bol')->nullable();/*Costo final por cada Guia de boleta o Factura*/
 
             // estado anulado o activo de la factura
-            $table->string('estado_fac');
+            $table->string('estado_anular_fac_bol')->nullable();
 
             // $table->timestamps();
         });

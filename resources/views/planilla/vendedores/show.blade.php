@@ -10,14 +10,14 @@
 
 <div style="padding-top: 20px;">
 <div class="container" style=" padding-top: 30px; background: white;">
-     
+
  <div class="ibox-title">
     <a class="btn btn-lg btn-success" href="{{ route('vendedores.edit', $personal->id) }}" style="background-color: #1ab394; border-color: #1ab394"> <i class="fa fa-edit"></i></a>
  </div>
       <div class="row marketing">
         <div class="col-lg-6">
           <h4>Codigo Vendedor</h4>
-          
+
           <p class="form-control" >
           {{ $personal->cod_vendedor }}</p>
         </div>
@@ -25,35 +25,35 @@
         <div class="col-lg-6">
           <h4>Nombre Vendedor:</h4>
           <p class="form-control" >
-          {{ $personal->personal->personal_l->nombres}} - 
+          {{ $personal->personal->personal_l->nombres}} -
           {{ $personal->personal->tipo_trabajador}}</p>
-           
+
 
         </div>
-       
+
         <div class="col-lg-6">
-         
+
           <h4>Tipo de Comision</h4>
            <p class="form-control" >
-          {{ $personal->tipo_comision }}</p> 
+          {{ $personal->tipo_comision }}</p>
 
-         
-          
+
+
         </div>
          <div class="col-lg-6">
-         
+
 
           <h4> Comision</h4>
-         
+
            <p class="form-control" >
-          {{ $personal->comision }}</p> 
+          {{ $personal->comision }}</p>
         </div>
 
       </div>
 
 
-    </div> 
-    </div> 
+    </div>
+    </div>
      <div class="wrapper wrapper-content animated fadeInRight">
                     <div class="row">
                         <div class="col-lg-12">
@@ -77,7 +77,7 @@
                                         <i class="fa fa-times"></i>
                                     </a>
                                 </div>
-                              
+
                             </div>
                             <div class="ibox-content">
                                 <div class="table-responsive">
@@ -120,27 +120,27 @@
                                                      <div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">
                                                <div class="modal-content" >
                                                    <div class="modal-body" style="padding: 0px;">
-                                                       
+
                                                         <div class="ibox-content float-e-margins">
-                        
+
                                                <h3 class="font-bold col-lg-12" align="center">
                                               ¿Esta Seguro que Desea Aprobar la Comision:"{{$listas->facturacion->codigo_fac}}".?<br>
                                              <h4 align="center"> <strong>Nota: Una vez Aprobada no hay opcion de deshacer cambios</strong></h4>
                                                </h3>
                                                <p align="center">
                                                    <form action="{{ route('vendedores.aprobar', $listas->id)}}" method="POST">
-                                                  @csrf 
+                                                  @csrf
                                                   @method('put')
                                                    <center>
                                                    <button type="submit" class="btn btn-w-m btn-info">Aprobar</button>
                                               </form>
-                                                    
+
                                                </p>
                                               </div>
 
                                                     </div>
                                                   </div>
-                                             </div> 
+                                             </div>
                                                     </div>
 
                                            @elseif($listas->estado_aprobado == 1)
@@ -148,7 +148,7 @@
                                             <button type="button" class="btn btn-info" data-toggle="modal" data-target="#modal123">Aprobado</button></center>
 
                                            @endif
-                                    
+
                                               </td>
 
                                               <td>
@@ -163,27 +163,27 @@
                                                      <div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">
                                                <div class="modal-content" >
                                                    <div class="modal-body" style="padding: 0px;">
-                                                       
+
                                                         <div class="ibox-content float-e-margins">
-                        
+
                                                <h3 class="font-bold col-lg-12" align="center">
                                               ¿Esta Seguro que Desea Procesar con el pago a la Comision:"{{$listas->facturacion->codigo_fac}}".?<br>
                                              <h4 align="center"> <strong>Nota: Una vez Aprobada no hay opcion de deshacer cambios</strong></h4>
                                                </h3>
                                                <p align="center">
                                                   <form action="{{ route('vendedores.procesado', $listas->id)}}" method="POST">
-                                                  @csrf 
+                                                  @csrf
                                                   @method('put')
                                                    <center>
                                                    <button type="submit" class="btn btn-s-m btn-warning">Procesar</button>
                                               </form>
-                                                    
+
                                                </p>
                                               </div>
 
                                                     </div>
                                                   </div>
-                                             </div> 
+                                             </div>
                                                     </div>
 
                                            @elseif($listas->pago_efectuado == 1)
@@ -191,16 +191,16 @@
                                             <button type="button" class="btn btn-info"  data-toggle="modal" data-target="#modal123">Procesado</button></center>
 
                                            @endif
-                                    
+
                                               </td>
-                                               
-                                                <td><form> 
+
+                                                <td><form>
                                                   <div class="row">
                                                     <div class="col-lg-9">
                                                   <textarea rows="1" class="form-control">{{$listas->observacion}}</textarea></div><input class="btn btn-info" type="submit">
                                                   </div>
                                                 </form></td>
-                                            
+
 
 
                                         @endforeach
@@ -237,23 +237,18 @@
                     {extend: 'csv'},
                     {extend: 'excel', title: 'ExampleFile'},
                     {extend: 'pdf', title: 'ExampleFile'},
-
                     {extend: 'print',
                      customize: function (win){
                             $(win.document.body).addClass('white-bg');
                             $(win.document.body).css('font-size', '10px');
-
                             $(win.document.body).find('table')
                                     .addClass('compact')
                                     .css('font-size', 'inherit');
                     }
                     }
                 ]
-
             });
-
         });
-
     </script>
 
     <style type="text/css">
@@ -262,7 +257,7 @@
         color:black;
         }
         a{color: #4a58bdd1}
-                
+
   input#archivoInput{
     position:absolute;
     top:25%;
@@ -274,4 +269,3 @@
   }
 </style>
 @stop
-  
