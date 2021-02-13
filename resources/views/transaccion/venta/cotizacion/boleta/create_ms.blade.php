@@ -190,7 +190,7 @@
     </div>
 </div>
 </div>
-<form action="{{ route('cotizacion.create_boleta')}}" enctype="multipart/form-data" id="almacen-form" method="POST">
+<form action="{{ route('cotizacion.create_boleta')}}" enctype="multipart/form-data" id="almacen-form" method="POST" >
     @csrf
     <input type="text" value="{{$sucursal->id}}" hidden="hidden" name="almacen">
     <input class="btn btn-sm btn-info" hidden="hidden" type="submit" value="cambiar" >

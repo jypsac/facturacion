@@ -8,7 +8,7 @@
 
 @section('content')
 
- <form action="{{route('garantia_guia_egreso.store')}}"  enctype="multipart/form-data" method="post">
+ <form action="{{route('garantia_guia_egreso.store')}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
 									 	@csrf
 									 	<div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
 
@@ -191,7 +191,7 @@
 
 
 		</fieldset>
-		 <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
+		 <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit" id="boton"><strong>Grabar</strong></button>
 
 
 
@@ -238,5 +238,16 @@
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-
+ {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+        <script>
+            function valida(f) {
+                var boton=document.getElementById("boton");
+                var completo = true;
+                var incompleto = false;
+                if( f.elements[0].value == "" )
+                   { alert(incompleto); }
+               else{boton.type = 'button';}
+           }
+       </script>
+       {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 @stop

@@ -7,7 +7,7 @@
 @section('value_accion', 'Atras')
 @section('content')
 
- <form action="{{route('garantia_informe_tecnico.store')}}"  enctype="multipart/form-data" method="post" >
+ <form action="{{route('garantia_informe_tecnico.store')}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
  	@csrf
  	<div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
     <div class="row">
@@ -153,7 +153,7 @@
           </div>
         </div>
       </fieldset>
-	    <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit">
+	    <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit" id="boton">
         <strong>Grabar</strong>
       </button>
     </div>
@@ -216,6 +216,18 @@ $(document).ready(function() {
      }
 });
 </script>
+{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+  <script>
+      function valida(f) {
+          var boton=document.getElementById("boton");
+          var completo = true;
+          var incompleto = false;
+          if( f.elements[0].value == "" )
+             { alert(incompleto); }
+         else{boton.type = 'button';}
+     }
+ </script>
+ {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 <style>
 p#texto{
 	text-align: center;

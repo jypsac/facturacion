@@ -26,7 +26,7 @@
     </script>
 </head>
 <div class="wrapper wrapper-content animated fadeInRight">
-   <form action="{{route('cotizacion.facturar_store')}}"  enctype="multipart/form-data" method="post">
+   <form action="{{route('cotizacion.facturar_store')}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
     @csrf
     <div class="row">
         <div class="col-lg-12">
@@ -187,7 +187,7 @@
                         </div>
                         @endif
                         <div class="col-sm-2" align="center" >
-                            <button class="btn btn-primary " style="margin-top: 5px" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true">Guardar</i></button>&nbsp;
+                            <button class="btn btn-primary " style="margin-top: 5px" type="submit"  id="boton"><i class="fa fa-cloud-upload" aria-hidden="true" >Guardar</i></button>&nbsp;
                         </div>
                     </div>
                 </div>
@@ -214,6 +214,17 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-
+ {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script>
+    function valida(f) {
+        var boton=document.getElementById("boton");
+        var completo = true;
+        var incompleto = false;
+        if( f.elements[0].value == "" )
+           { alert(incompleto); }
+       else{boton.type = 'button';}
+   }
+</script>
+{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 
 @endsection
