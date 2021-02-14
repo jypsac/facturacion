@@ -23,7 +23,7 @@
                 {{-- ccccccccccccccccc --}}
                 <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
 
-                    <form action="{{ route('categoria.store') }}"  enctype="multipart/form-data" method="post">
+                    <form action="{{ route('categoria.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
                         @csrf
                         <fieldset >
                             <div>
@@ -39,7 +39,7 @@
                             </div>
 
                         </fieldset>
-                        <button class="btn btn-primary" type="submit">Grabar</button>
+                        <button class="btn btn-primary" type="submit" id="boton">Grabar</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </form>
                 </div>
@@ -146,7 +146,7 @@
                                                                 </div>
 
                                                             </fieldset>
-                                                            <button class="btn btn-primary" type="submit">Grabar</button>
+                                                            <button class="btn btn-primary" type="submit" >Grabar</button>
                                                             <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                                                         </form>
                                                     </div>
@@ -230,5 +230,17 @@
         transform: translateX(1rem);
     }
 </style>
+{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script>
+    function valida(f) {
+        var boton=document.getElementById("boton");
+        var completo = true;
+        var incompleto = false;
+        if( f.elements[0].value == "" )
+           { alert(incompleto); }
+       else{boton.type = 'button';}
+   }
+</script>
+{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 @endsection
 

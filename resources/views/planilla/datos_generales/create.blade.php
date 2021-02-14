@@ -8,7 +8,7 @@
 
 @section('content')
 
-<form action="{{ route('personal.store') }}"  enctype="multipart/form-data" method="post">
+<form action="{{ route('personal.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
 						@csrf
 <div style="padding-top: 20px;padding-bottom: 50px">
 <div class="container" style=" padding-top: 30px; background: white;">
@@ -18,15 +18,15 @@
                 <th width="100% ">
                 		<div class="row marketing">
                 		<div class="col-lg-4">
-                		<input style="font-size: 20px; text-align: center;" type="text" class="form-control" name="nombres" value="" placeholder="Nombres">
+                		<input style="font-size: 20px; text-align: center;" type="text" class="form-control" name="nombres" value="" placeholder="Nombres" required="">
                 		</div>
                 		<div class="col-lg-4">
-                		<input style="font-size: 20px; text-align: center;"  type="text" class="form-control" name="apellidos" value="" placeholder="Apellidos">
+                		<input style="font-size: 20px; text-align: center;"  type="text" class="form-control" name="apellidos" value="" placeholder="Apellidos" required="">
                 		</div>
                 		</div>
                 		 <br>
                         <div class="col-lg-4">
-                          <select class="form-control m-b" name="nacionalidad">
+                          <select class="form-control m-b" name="nacionalidad" required="">
                             <option value="">Seleccione Pais</option>
                             <option disabled="disabled">------------------------</option>
                             @foreach($paises as $pais)
@@ -55,26 +55,27 @@
       <div class="row marketing">
         <div class="col-lg-6">
           <h4>Fecha Nacimiento</h4>
-          <p><input type="date" class="form-control" name="fecha_nacimiento" value=""></p>
+          <p><input type="date" class="form-control" name="fecha_nacimiento" value="" required=""></p>
                                                 
 
           <h4>Celular</h4>
-          <p><input type="text" class="form-control" name="celular"  value=""></p>    
+          <p><input type="text" class="form-control" name="celular"  value="" required=""></p>    
 
 
           <h4>Genero</h4>
           <p>
-          <select class="form-control m-b" name="genero">
-            <option value="femenino">Selecione Genero</option>
-            <option value="masculino">masculino</option>
-            <option value="femenino">femenino</option>
+          <select class="form-control m-b" name="genero" required="">
+            <option value="">Selecione Genero</option>
+            <option value="femenino" disabled="">--------------</option>
+            <option value="masculino">Masculino</option>
+            <option value="femenino">Femenino</option>
           </select>
          </p>
         </div>
 
         <div class="col-lg-6">
           <h4>Correo</h4>
-          <p><input type="email" class="form-control" name="email" value=""></p>  
+          <p><input type="email" class="form-control" name="email" value="" required=""></p>  
 
             <h4>Nivel Educativo</h4>
           <p>
@@ -106,7 +107,7 @@
 
           <h4>Documento Identificacion</h4>
           <p>
-          <select class="form-control m-b" name="documento_identificacion">
+          <select class="form-control m-b" name="documento_identificacion" required="">
             <option value="">Selecione Documento</option>
             <option value="Pasaporte">Pasaporte</option>
               <option value="DNI">DNI</option>
@@ -127,16 +128,16 @@
         </div>
         <div class="col-lg-6">
          <h4>Numero Documento</h4>
-          <p><input type="text" class="form-control" name="numero_documento" value=""></p> 
+          <p><input type="text" class="form-control" name="numero_documento" value="" required=""></p> 
           
 
           <h4>Direccion Domiciliaria</h4>
-          <p><input type="text" class="form-control" name="direccion" value=""></p>   
+          <p><input type="text" class="form-control" name="direccion" value="" required=""></p>   
 
           
         </div>
         <div class="col-lg-6">
-        <button class="btn btn-primary" type="submit">Grabar</button>
+        <button class="btn btn-primary" type="submit" id="boton">Grabar</button>
       </div>
       </div>
 
@@ -156,7 +157,18 @@
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-
+    {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+      <script>
+          function valida(f) {
+              var boton=document.getElementById("boton");
+              var completo = true;
+              var incompleto = false;
+              if( f.elements[0].value == "" )
+                 { alert(incompleto); }
+             else{boton.type = 'button';}
+         }
+     </script>
+     {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
     <script type="text/javascript">
 		function validarExt()
 {

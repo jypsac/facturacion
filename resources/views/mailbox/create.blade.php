@@ -11,7 +11,7 @@
 <br/>
     <div class="col-lg-10 container animated fadeInRight" >
         <div class="mail-box">
-            <form action ="{{route('email.send')}}" method="POST" enctype="multipart/form-data" >
+            <form action ="{{route('email.send')}}" method="POST" enctype="multipart/form-data" onsubmit="return valida(this)" >
                 <input type="text" hidden=""  name="dates" value="{{$date}}" id="">
                 <input type="text" hidden="" name="redict" value="{{$redic}}">
                 @csrf
@@ -67,7 +67,7 @@
                     </div>
                 </div>
                 <div class="mail-body text-right tooltip-demo">
-                    <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"   onclick="doAction(this, 'i', 'Loading')">
+                    <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"   onclick="doAction(this, 'i', 'Loading')" id="boton">
                         <i class="fa fa-reply"></i> Enviar
                     </button>
                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -112,6 +112,18 @@
 
   });
 </script>
+{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script>
+    function valida(f) {
+        var boton=document.getElementById("boton");
+        var completo = true;
+        var incompleto = false;
+        if( f.elements[0].value == "" )
+           { alert(incompleto); }
+       else{boton.type = 'button';}
+   }
+</script>
+{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 <link href="{{asset('css/plugins/summernote/summernote-bs4.css')}}" rel="stylesheet">
 
 <link href="{{asset('css/plugins/jasny/jasny-bootstrap.min.css')}}" rel="stylesheet">

@@ -23,7 +23,8 @@
                 {{-- ccccccccccccccccc --}}
                 <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
 
-                    <form action="{{ route('vehiculo.store') }}"  enctype="multipart/form-data" method="post">
+                    <form action="{{ route('vehiculo.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)"
+>
                         @csrf
                         <fieldset >
                             <legend> Agregar Vehiculo </legend>
@@ -34,24 +35,24 @@
                                     </div>
                                     <div class="form-group  row">
                                         <label class="col-sm-2 col-form-label">Placa:</label>
-                                        <div class="col-sm-4"><input type="text" class="form-control" name="placa" placeholder="AT4-234"></div>
+                                        <div class="col-sm-4"><input type="text" class="form-control" name="placa" required="" placeholder="AT4-234"></div>
                                         <label class="col-sm-2 col-form-label">Marca:</label>
-                                        <div class="col-sm-4"><input type="text" class="form-control" name="marca" placeholder="Toyota"></div>
+                                        <div class="col-sm-4"><input type="text" class="form-control" name="marca"  required="" placeholder="Toyota"></div>
 
                                     </div>
 
                                     <div class="form-group  row">
                                         <label class="col-sm-2 col-form-label">Modelo:</label>
-                                        <div class="col-sm-4"><input type="text" class="form-control" name="modelo" placeholder="RAV4"></div>
+                                        <div class="col-sm-4"><input type="text" class="form-control" required="" name="modelo" placeholder="RAV4"></div>
 
                                         <label class="col-sm-2 col-form-label">Año:</label>
-                                        <div class="col-sm-4"><input type="text" class="form-control" name="año" placeholder="2020"></div>
+                                        <div class="col-sm-4"><input type="text" class="form-control" required="" name="año" placeholder="2020"></div>
                                     </div>
                                 </div>
                             </div>
 
                         </fieldset>
-                        <button class="btn btn-primary" type="submit">Grabar</button>
+                        <button class="btn btn-primary" type="submit" id="boton">Grabar</button>
                         <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
                     </form>
                 </div>
@@ -195,7 +196,18 @@
 
 </div>
 
-
+{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+            <script>
+                function valida(f) {
+                    var boton=document.getElementById("boton");
+                    var completo = true;
+                    var incompleto = false;
+                    if( f.elements[0].value == "" )
+                       { alert(incompleto); }
+                   else{boton.type = 'button';}
+               }
+           </script>
+           {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 
 <!-- Mainly scripts -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

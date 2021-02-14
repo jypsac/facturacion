@@ -41,7 +41,7 @@
      </table>
       </div>
       
-     <form action="{{ route('personal-datos-laborales.store') }}"  enctype="multipart/form-data" method="post">
+     <form action="{{ route('personal-datos-laborales.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
 					 	@csrf
          <input type="text" class="form-control" value="{{$personales->id}}" name="personal_id" hidden="hidden">
       <div class="row marketing">
@@ -216,7 +216,7 @@
         </div>
 
       </div>
-				    	<button class="btn btn-primary" type="submit">Guardar</button>
+				    	<button class="btn btn-primary" type="submit" id="boton">Guardar</button>
 
       	
       </form>
@@ -240,5 +240,16 @@
 
     <!-- blueimp gallery -->
     <script src="{{ asset('js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
-  
+    {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+      <script>
+          function valida(f) {
+              var boton=document.getElementById("boton");
+              var completo = true;
+              var incompleto = false;
+              if( f.elements[0].value == "" )
+                 { alert(incompleto); }
+             else{boton.type = 'button';}
+         }
+     </script>
+     {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 @endsection

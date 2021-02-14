@@ -23,7 +23,7 @@
 
 <div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
 
- <form action="{{ route('servicios.store') }}"  enctype="multipart/form-data" method="post">
+ <form action="{{ route('servicios.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
    @csrf
    <div class="row">
 
@@ -139,7 +139,7 @@
 
 </div>
 
-<button class="btn btn-primary" type="submit">Guardar</button>
+<button class="btn btn-primary" type="submit" id="boton">Guardar</button>
 
 
 </form>
@@ -227,4 +227,16 @@ legend
       }
     }
   </script>
+  {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+      <script>
+          function valida(f) {
+              var boton=document.getElementById("boton");
+              var completo = true;
+              var incompleto = false;
+              if( f.elements[0].value == "" )
+                 { alert(incompleto); }
+             else{boton.type = 'button';}
+         }
+     </script>
+   {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
   @endsection

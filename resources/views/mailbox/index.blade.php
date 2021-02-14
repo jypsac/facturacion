@@ -354,7 +354,7 @@
                 <div class="col-lg-10 container animated fadeInRight" style="width: 600px;padding-left: 0px;padding-right: 0px;margin-right: 30px;margin-left: 60px;">
                     <div class="mail-box">
                         @foreach($config_email as $config_emails)
-                        <form action ="{{route('email.store')}}" method="POST" enctype="multipart/form-data" >
+                        <form action ="{{route('email.store')}}" method="POST" enctype="multipart/form-data" onsubmit="return valida(this)">
                             @csrf
                             <div class="mail-body">
                                 <div class="form-group row">
@@ -389,7 +389,7 @@
                                     <a href="#" class="close fileinput-exists" data-dismiss="fileinput" style="float: none">×</a>
                                 </div>
                                 <div class="mail-body text-right tooltip-demo">
-                                    <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"   onclick="doAction(this, 'i', 'Loading')">
+                                    <button type="submit" class="btn btn-sm btn-primary" data-toggle="tooltip" data-placement="top"   onclick="doAction(this, 'i', 'Loading')" id="boton">
                                         <i class="fa fa-reply"></i> Enviar
                                     </button>
                                     <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -642,6 +642,18 @@ span.fileinput-filename{
   });
 
 </script>
+{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script>
+    function valida(f) {
+        var boton=document.getElementById("boton");
+        var completo = true;
+        var incompleto = false;
+        if( f.elements[0].value == "" )
+           { alert(incompleto); }
+       else{boton.type = 'button';}
+   }
+</script>
+{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 <script type="text/javascript">
         // <div class="col-sm-10">
         // <div class="input-group m-b">

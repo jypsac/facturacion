@@ -32,7 +32,7 @@
                     </div>
 				</div>
 				<div class="ibox-content">
-					<form action="{{ route('periodo-consulta.store') }}"  enctype="multipart/form-data" method="post">
+					<form action="{{ route('periodo-consulta.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
                          @csrf
 
 
@@ -94,7 +94,7 @@
                             </div>
                         </div>
 
-						<button class="btn btn-primary" type="submit">Guardar</button>
+						<button class="btn btn-primary" type="submit" id="boton">Guardar</button>
 
 					</form>
 
@@ -112,7 +112,18 @@
 
     <script src="{{ asset('js/inspinia.js') }}"></script>
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-
+     {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+    <script>
+        function valida(f) {
+            var boton=document.getElementById("boton");
+            var completo = true;
+            var incompleto = false;
+            if( f.elements[0].value == "" )
+               { alert(incompleto); }
+           else{boton.type = 'button';}
+       }
+   </script>
+   {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 
 
 

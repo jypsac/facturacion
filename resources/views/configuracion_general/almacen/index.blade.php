@@ -37,7 +37,7 @@
             </div>
             <div style="padding-left: 15px;padding-right: 15px;">
                 {{-- ccccccccccccccccc --}}
-                <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
+                <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center" onsubmit="return valida(this)">
 
                     <form action="{{route('almacen.store')}}"  enctype="multipart/form-data" method="post">
                         @csrf
@@ -92,7 +92,7 @@
                         </div>
                     </div>
 
-                    <button class="btn btn-primary" type="submit" name="action">Guardar</button>
+                    <button class="btn btn-primary" type="submit" name="action" id="boton">Guardar</button>
 
                 </form>
             </div>
@@ -344,4 +344,16 @@
     });
 
 </script>
+ {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script>
+    function valida(f) {
+        var boton=document.getElementById("boton");
+        var completo = true;
+        var incompleto = false;
+        if( f.elements[0].value == "" )
+           { alert(incompleto); }
+       else{boton.type = 'button';}
+   }
+</script>
+{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 @endsection

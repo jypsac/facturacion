@@ -115,7 +115,7 @@
 
 <div style="padding-top: 20px;padding-bottom: 50px">
 <div class="container" style="padding-top: 30px;padding-bottom: 30px; background: white;">
- <form action="{{ route('provedor.store') }}"  enctype="multipart/form-data" method="post">
+ <form action="{{ route('provedor.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
                              @csrf
 
       <div class="jumbotron" style="height: 60px;padding:10px">
@@ -155,7 +155,7 @@
           <p><textarea name="observacion"  class="form-control"></textarea></p>
     </div>
 
-<button class="btn btn-primary" type="submit">Grabar</button>
+<button class="btn btn-primary" type="submit" id="boton">Grabar</button>
 </form>
 </div>
 </div>
@@ -174,4 +174,17 @@
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script>
+    function valida(f) {
+        var boton=document.getElementById("boton");
+        var completo = true;
+        var incompleto = false;
+        if( f.elements[0].value == "" )
+           { alert(incompleto); }
+       else{boton.type = 'button';}
+   }
+</script>
+{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 @stop

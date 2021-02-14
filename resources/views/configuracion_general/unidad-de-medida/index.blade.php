@@ -23,7 +23,7 @@
                 {{-- ccccccccccccccccc --}}
                 <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
 
-                    <form action="{{ route('unidad-medida.store') }}"  enctype="multipart/form-data" method="post">
+                    <form action="{{ route('unidad-medida.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
                         @csrf
                         <fieldset >
                             <div>
@@ -43,7 +43,7 @@
                                             <input type="text" class="form-control" name="unidad" placeholder="12.00">
                                         </div>
                                         <div class="col-sm-3">
-                                         <button class="btn btn-primary" type="submit">Grabar</button>
+                                         <button class="btn btn-primary" type="submit" id="boton">Grabar</button>
                                      </div>
                                      <div class="col-sm-2">
                                          <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -223,4 +223,16 @@
     });
 
 </script>
+{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script>
+    function valida(f) {
+        var boton=document.getElementById("boton");
+        var completo = true;
+        var incompleto = false;
+        if( f.elements[0].value == "" )
+           { alert(incompleto); }
+       else{boton.type = 'button';}
+   }
+</script>
+{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 @endsection
