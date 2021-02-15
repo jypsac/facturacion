@@ -1031,7 +1031,17 @@ public function facturar(Request $request,$id)
             }
         }
     }
-
+    $comisionista=$cotizacion->comisionista_id;
+    if($comisionista!="" and $comisionista!="Sin comision - 0"){
+        $numero = strstr($comisionista, '-',true);
+        $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
+        $id_personal=$cod_vendedor->id;
+        $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
+                //Comision segun comisionista
+        $comi=$comisionista_buscador->comision;
+    }else{
+        $comi=0;
+    }
     $forma_pagos=Forma_pago::all();
     $clientes=Cliente::where('documento_identificacion','ruc')->get();
     $personales=Personal::all();
@@ -1078,7 +1088,7 @@ public function facturar(Request $request,$id)
 
 
     if ($cotizacion->estado==0) {
-        return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','sum','igv',"array","sub_total","moneda",'cod_fac','productos','array_cantidad','validor'));
+        return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','sum','igv',"array","sub_total","moneda",'cod_fac','productos','array_cantidad','validor','comi'));
     }
     elseif ($cotizacion->estado==1) {
         return redirect()->route('cotizacion.show',$cotizacion->id);
@@ -1316,14 +1326,8 @@ public function facturar_store(Request $request)
 
             // Creacion de Ventas Registros del Comisinista
         //NO LLAMA A LA ID DE FACTURACION
-
-
-    $tipo_moneda=$request->get('tipo_moneda');/*Moneda $ S/.*/
-    $precio_sin_igv=$request->get('precio_sin_igv');/*Precio para calcular su porsentaje de comision*/ //PENDIENTE*
-    $precio_final_igv=$request->get('precio_final_igv');/*precio final que se a facturado*/
     $cotizador=$request->get('id_cotizador');
-    $id_comisionista=$request->get('id_comisionista');/*id comisionista o vendedor*/
-    $porsentaje_comision=Personal_venta::where('id',$id_comisionista)->first();
+    $id_comisionista=$request->get('id_comisionista');
     $comisionista=Cotizacion::where('id',$cotizador)->first();
     $id_comi=$comisionista->comisionista_id;
     if(isset($id_comi)){
@@ -1333,10 +1337,8 @@ public function facturar_store(Request $request)
        $comisionista->comisionista=$request->get('id_comisionista');
        $comisionista->estado_aprobado='0';
        $comisionista->estado_pagado='0';
-       $comisionista->monto_comision=$precio_sin_igv*$porsentaje_comision->comision/100;
-       $comisionista->tipo_moneda=$tipo_moneda;
        $comisionista->estado_anular_fac_bol='0';
-       $comisionista->monto_final_fac_bol=$precio_final_igv;
+       $comisionista->monto_final_fac_bol='0';
        $comisionista->id_coti_produc=$cotizador;
        // $comisionista->id_coti_servicio='0';
        $comisionista->id_fac=$facturar->id;
@@ -1552,7 +1554,17 @@ public function facturar_store(Request $request)
                 }
             }
         }
-
+        $comisionista=$cotizacion->comisionista_id;
+        if($comisionista!="" and $comisionista!="Sin comision - 0"){
+            $numero = strstr($comisionista, '-',true);
+            $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
+            $id_personal=$cod_vendedor->id;
+            $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
+                    //Comision segun comisionista
+            $comi=$comisionista_buscador->comision;
+        }else{
+            $comi=0;
+        }
         $empresa=Empresa::first();
         $sum=0;
         $igv=Igv::first();
@@ -1584,7 +1596,7 @@ public function facturar_store(Request $request)
         $cod_bol="B".$sucursal_nr."-".$boleta_nr;
 
         if ($cotizacion->estado==0) {
-            return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','productos','sum','igv',"array","sub_total",'moneda' ,'cod_bol','validor','array_cantidad'));
+            return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','productos','sum','igv',"array","sub_total",'moneda' ,'cod_bol','validor','array_cantidad','comi'));
         }
         elseif ($cotizacion->estado==1) {
             return redirect()->route('cotizacion.show',$cotizacion->id);
@@ -1828,20 +1840,28 @@ public function facturar_store(Request $request)
         }
 
         // Creacion de Ventas Registros del Comisinista
+
         $cotizador=$request->get('id_cotizador');
-        $id_comisionista=$request->get('id_comisionista');
-        $comisionista=Cotizacion::where('id',$cotizador)->first();
-        $id_comi=$comisionista->comisionista_id;
-        if(isset($id_comi)){
-            $comisionista=new Ventas_registro;
-            $comisionista->id_facturacion=$request->get('fac_id');
-            $comisionista->comisionista=$request->get('id_comisionista');
-            $comisionista->estado_aprobado='0';
-            $comisionista->pago_efectuado='0';
-            $comisionista->estado_fac='0';
-            $comisionista->observacion='Viene del Cotizador';
-            $comisionista->save();
-        }
+    $id_comisionista=$request->get('id_comisionista');
+    $comisionista=Cotizacion::where('id',$cotizador)->first();
+    $id_comi=$comisionista->comisionista_id;
+    if(isset($id_comi)){
+       $comisionista=new Ventas_registro;
+       // $comisionista->id_facturacion=$request->get('fac_id');
+         // $comisionista->id_facturacion= $facturar->id ;
+       $comisionista->comisionista=$request->get('id_comisionista');
+       $comisionista->estado_aprobado='0';
+       $comisionista->estado_pagado='0';
+       $comisionista->estado_anular_fac_bol='0';
+       $comisionista->monto_final_fac_bol='0';
+       $comisionista->id_coti_produc=$cotizador;
+       // $comisionista->id_coti_servicio='0';
+       $comisionista->id_bol=$boletear->id;
+       // $comisionista->id_fac='0';
+       $comisionista->observacion='Viene del Cotizador';
+       $comisionista->save();
+
+   }
         $validacion = $request->get('validacion');
         if($validacion==1){
             $name = $request->get('name');
