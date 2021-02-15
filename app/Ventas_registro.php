@@ -18,7 +18,7 @@ class Ventas_registro extends Model
 		return $this->belongsTo(Cotizacion::class,'id_coti_produc');
 	}
 	public function cotizacion_servi(){
-		return $this->belongsTo(Cotizacion_servicio::class,'id_coti_servicio');
+		return $this->belongsTo(Cotizacion_Servicios::class,'id_coti_servicio');
 	}
 	public function id_facturacion(){
 		return $this->belongsTo(Facturacion::class,'id_fac');

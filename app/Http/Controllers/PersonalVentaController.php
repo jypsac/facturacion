@@ -2,11 +2,12 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Moneda;
+use App\Personal;
+use App\Personal_datos_laborales;
 use App\Personal_venta;
 use App\Ventas_registro;
-use App\Personal_datos_laborales;
-use App\Personal;
+use Illuminate\Http\Request;
 
 class PersonalVentaController extends Controller
 {
@@ -18,9 +19,16 @@ class PersonalVentaController extends Controller
     public function index()
     {
       // $personal=Personal_venta::find($id);
+      $moneda_nacional=Moneda::where('id',1)->first();
+      $moneda_extranjera=Moneda::where('id',2)->first();
       $lista=Ventas_registro::all();
+
+      $personal_contador= Personal_venta::all()->count();
+      $suma=$personal_contador+1;
+
+      $personal=Personal_datos_laborales::where('estado_trabajador','Activo')->get();
       $vendedores=Personal_venta::all();
-      return view('planilla.vendedores.index', compact('vendedores','lista'));
+      return view('planilla.vendedores.index', compact('vendedores','lista','moneda_nacional','moneda_extranjera','suma','personal'));
   }
 
     /**
@@ -57,9 +65,10 @@ class PersonalVentaController extends Controller
         $personal_venta->cod_vendedor=$request->get('cod_vendedor');
         $personal_venta->id_personal=$request->get('id_personal');
         $personal_venta->comision=$request->get('comision');
+        $personal_venta->tipo_comision="Porcentaje de Venta";
         $personal_venta->estado=0;
         $personal_venta->save();
-        return redirect()->route('vendedores.show', $personal_venta->id);
+        return redirect()->route('vendedores.index');
     }
 
     /**
@@ -122,18 +131,18 @@ class PersonalVentaController extends Controller
     public function aprobar(Request $request, $id)
     {
 
-       $registro=Ventas_registro::find($id);
+     $registro=Ventas_registro::find($id);
          // return $registro;
-       $registro->estado_aprobado='1';
-       $registro->save();
+     $registro->estado_aprobado='1';
+     $registro->save();
 
-       return redirect()->route('vendedores.show', $registro->comisionista);
+     return redirect()->route('vendedores.show', $registro->comisionista);
         // return redirect()->route('productos.index');
 
 
-   }
-   public function procesado(Request $request, $id)
-   {
+ }
+ public function procesado(Request $request, $id)
+ {
 
     $registro=Ventas_registro::find($id);
     $registro->pago_efectuado='1';
