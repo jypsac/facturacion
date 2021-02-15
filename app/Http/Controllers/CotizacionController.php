@@ -1316,8 +1316,14 @@ public function facturar_store(Request $request)
 
             // Creacion de Ventas Registros del Comisinista
         //NO LLAMA A LA ID DE FACTURACION
+
+
+    $tipo_moneda=$request->get('tipo_moneda');/*Moneda $ S/.*/
+    $precio_sin_igv=$request->get('precio_sin_igv');/*Precio para calcular su porsentaje de comision*/ //PENDIENTE*
+    $precio_final_igv=$request->get('precio_final_igv');/*precio final que se a facturado*/
     $cotizador=$request->get('id_cotizador');
-    $id_comisionista=$request->get('id_comisionista');
+    $id_comisionista=$request->get('id_comisionista');/*id comisionista o vendedor*/
+    $porsentaje_comision=Personal_venta::where('id',$id_comisionista)->first();
     $comisionista=Cotizacion::where('id',$cotizador)->first();
     $id_comi=$comisionista->comisionista_id;
     if(isset($id_comi)){
@@ -1327,8 +1333,10 @@ public function facturar_store(Request $request)
        $comisionista->comisionista=$request->get('id_comisionista');
        $comisionista->estado_aprobado='0';
        $comisionista->estado_pagado='0';
+       $comisionista->monto_comision=$precio_sin_igv*$porsentaje_comision->comision/100;
+       $comisionista->tipo_moneda=$tipo_moneda;
        $comisionista->estado_anular_fac_bol='0';
-       $comisionista->monto_final_fac_bol='0';
+       $comisionista->monto_final_fac_bol=$precio_final_igv;
        $comisionista->id_coti_produc=$cotizador;
        // $comisionista->id_coti_servicio='0';
        $comisionista->id_fac=$facturar->id;

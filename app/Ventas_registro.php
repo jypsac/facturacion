@@ -26,6 +26,9 @@ class Ventas_registro extends Model
 	public function id_boleta(){
 		return $this->belongsTo(Boleta::class,'id_bol');
 	}
+	public function moneda(){
+		return $this->belongsTo(Moneda::class,'tipo_moneda');
+	}
  //    public function forma_pago(){
  //        return $this->belongsTo(forma_pago::class,'forma_pago_id');
  //    }

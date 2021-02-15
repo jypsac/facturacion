@@ -20,7 +20,6 @@ class PersonalVentaController extends Controller
       // $personal=Personal_venta::find($id);
       $lista=Ventas_registro::all();
       $vendedores=Personal_venta::all();
-       $personal=Personal_venta::all();
       return view('planilla.vendedores.index', compact('vendedores','lista'));
   }
 
@@ -57,11 +56,8 @@ class PersonalVentaController extends Controller
         $personal_venta=new Personal_venta;
         $personal_venta->cod_vendedor=$request->get('cod_vendedor');
         $personal_venta->id_personal=$request->get('id_personal');
-        $personal_venta->tipo_comision=$request->get('tipo_comision');
         $personal_venta->comision=$request->get('comision');
         $personal_venta->estado=0;
-
-
         $personal_venta->save();
         return redirect()->route('vendedores.show', $personal_venta->id);
     }
@@ -103,7 +99,7 @@ class PersonalVentaController extends Controller
     public function update(Request $request, $id)
     {
         $personal=Personal_venta::find($id);
-        $personal->tipo_comision=$request->get('tipo_comision');
+        $personal->estado=$request->get('estado');
         $personal->comision=$request->get('comision');
         $personal->save();
 

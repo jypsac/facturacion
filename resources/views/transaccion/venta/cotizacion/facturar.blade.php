@@ -89,7 +89,7 @@
                                 <td style="width: 3px">:</td>
                                 <td style="width: 200px"><input type="text" class="form-control"  name="fecha_vencimiento" value="{{$cotizacion->fecha_vencimiento }}" readonly="readonly"></td>
                                 <td><b>Tipo Moneda</b></td>
-                                <td style="width: 3px">:</td><td><input type="text" class="form-control" value="{{$cotizacion->moneda->nombre }}" readonly="readonly" ></td>
+                                <td style="width: 3px">:</td><td><input type="text" class="form-control" value="{{$cotizacion->moneda->nombre }}" readonly="readonly" ><input type="text" name="tipo_moneda" value="{{$cotizacion->moneda->id }}" hidden="hidden"></td>
                             </tr>
                         </thead>
                     </table>
@@ -163,7 +163,9 @@
                                 <tr>
                                     <td></td>
                                     <td>Importe Total</td>
-                                    <td>{{$cotizacion->moneda->simbolo}}.{{$end}}</td>
+                                    <td>{{$cotizacion->moneda->simbolo}}.{{$end}}
+                                        <input type="text" value="{{$end}}" hidden="hidden" name="precio_final_igv">
+                                    </td>
                                 </tr>
                                 <tr></tr>
                             </tbody>

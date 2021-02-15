@@ -51,6 +51,7 @@
                   <div class="row tooltip-demo">
 
                    <div class="col-sm-6" >
+
                     <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  >20$</a>
                     <a class="btn btn-default procesado" style="color: inherit !important; width: 100px; transition: 1s"  >Ver Factura</a>
                   </div>
@@ -82,25 +83,31 @@
                                   </div>
                                   <div class="col-lg-6">
                                     <h4>Nombre Vendedor:</h4>
-                                    <input type="text" name="nombre" class="form-control" value=" {{$vendedor->personal->personal_l->nombres}} - {{$vendedor->personal->tipo_trabajador}}" readonly="readonly">
+                                    <input type="text" name="nombre" class="form-control" value=" {{$vendedor->personal->personal_l->nombres}} - {{$vendedor->personal->tipo_trabajador}}" disabled="">
                                   </div>
                                   <div class="col-lg-6">
                                     <h4>Tipo de Comision</h4>
-                                    <select class="form-control" name="tipo_comision" required="required">
-                                      <option value="{{$vendedor->tipo_comision }}"> {{$vendedor->tipo_comision }}</option>
-                                      @if($vendedor->tipo_comision == 'Porcentaje de Venta' )
-                                      <option value="Monto Fijo">Monto Fijo</option>
-                                      @elseif($vendedor->tipo_comision == 'Monto Fijo')
-                                      <option value="Porcentaje de Venta">Porcentaje de Venta</option>
-                                      @endif
-                                    </select>
+                                    <input type="text" class="form-control" value=" {{$vendedor->tipo_comision }}" disabled="disabled">
                                   </div>
                                   <div class="col-lg-6">
                                     <h4> Comision</h4>
-                                    <input type="text" class="form-control" name="comision" value="{{ $vendedor->comision }}">
-                                  </div><br>
-                                  <div  style="padding-top: 20px;" align="center">
-                                    <button  class="btn btn-primary" type="submit">Grabar</button>
+                                    <input type="text" class="form-control" name="comision" value="{{$vendedor->comision }}">
+                                  </div>
+                                  <div class="col-lg-6">
+                                    <h4> Estado </h4>
+                                    <select name="estado" class="form-control">
+                                      @if($vendedor->estado==0)
+                                      <option value="0">Activo</option>
+                                      <option value="1">Desactivo</option>
+                                      @elseif($vendedor->estado==1)
+                                      <option value="1">Desactivo</option>
+                                      <option value="0">Activo</option>
+                                      @endif
+                                    </select>
+                                  </div>
+                                  <div class="col-lg-6" >
+                                    <h4 style="color: white">Grabar</h4>
+                                    <button  class="btn btn-primary"  type="submit">Grabar</button>
                                   </div>
                                 </div>
                               </div>
@@ -128,9 +135,10 @@
                       <th>Cod Cotizador</th>
                       <th>Cod Boleta/Factura</th>
                       <th>Estado de Boleta/factura</th>
-                      <th>Observacion</th>
                       <th>Costo Total</th>
+                      <th>Comision</th>
                       <th>Liquidacion</th>
+                      <th>Observacion</th>
 
                     </tr>
                   </thead>
@@ -156,13 +164,16 @@
                        @elseif($listas->estado_anular_fac_bol==1)Anulado
                        @endif
                      </td>
-                     <td>{{$listas->observacion}}</td>
-                     <td>{{$listas->monto_final_fac_bol}}</td>
+                     <td>{{$listas->moneda->simbolo}}{{$listas->monto_final_fac_bol}}</td>
+                     <td>{{$listas->moneda->simbolo}}{{$listas->monto_comision}}
+
+                     </td>{{$lista->where('comisionista','=',$listas->comisionista)->where('tipo_moneda','=',2)->where('estado_pagado','=',0)->sum('monto_comision')}}
                      <td>
                        @if($listas->estado_pagado==0)Pagar
                        @elseif($listas->estado_pagado==1)Guia Pagada
                        @endif
                      </td>
+                     <td>{{$listas->observacion}}</td>
                    </tr>
                    @endif
                    @endforeach
