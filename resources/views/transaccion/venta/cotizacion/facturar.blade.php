@@ -153,6 +153,7 @@
                                     <td>Sub Total</td>
                                     <td>
                                         {{$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
+                                        <input type="text" name="sub_total_sin_igv" value="{{round($sub_total, 2)}}" >
                                     </td>
                                 </tr>
                                 <tr>
