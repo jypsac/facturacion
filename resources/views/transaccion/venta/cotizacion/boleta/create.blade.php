@@ -607,9 +607,9 @@
             var cantidad = document.querySelector(`#cantidad${a}`).value;
             var promedio_origina_descuento1=document.querySelector(`#precio_unitario_descuento${a}`).value;
             var promedio_original2=document.querySelector(`#promedio_original${a}`).value;
-
-            if (checkBox.checked == true){
-                var descuento = document.querySelector(`#descuento${a}`).value;
+            var descuento = document.querySelector(`#descuento${a}`).value;
+            if (checkBox.checked == true && descuento > 0){
+                
                 var precio = document.querySelector(`#precio${a}`).value;
                 var promedio_original=document.querySelector(`#promedio_original${a}`).value;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;

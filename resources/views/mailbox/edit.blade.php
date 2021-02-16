@@ -3,13 +3,13 @@
 @section('title', 'Email Backup')
 @section('breadcrumb', 'Email Backup')
 @section('breadcrumb2', 'Email Backup')
-@if($config->email_backup == null)
-	@section('href_accion', '#')
-	@section('value_accion', '#')
-@else
+@if(isset($config->email_backup))
 	@section('data-toggle', 'modal')
 	@section('href_accion', '#exampleModal')
-	@section('value_accion', 'Editar')
+	@section('value_accion', 'Editar')	
+@else
+	@section('href_accion', '#')
+	@section('value_accion', '#')
 @endif
 
 @section('content')
@@ -28,22 +28,31 @@
 			</div>
 		</div>
 		<div class="row">
-			<div class=" col-sm-4">
-			</div>
-			<div class="col-sm-4">
-				@if($config->email_backup == null)
-				<div class="alert alert-danger" role="alert"  style="text-align: center;">
-				  Un usuario debe registrar su correo en el apartado de Correo para configurar este aspecto
-				</div>
+				@if(isset($config->email_backup))
+					<div class=" col-sm-4">
+					</div>
+					<div class="col-sm-4">
+						<div class="alert alert-danger" role="alert"  style="text-align: center;">
+						 {{$config->email_backup}}
+						 </div>
+					</div>
+					<div class=" col-sm-4">
+					</div>
 				@else
-
-				<div class="alert alert-primary" role="alert"  style="text-align: center;">
-				  {{$config->email_backup}}
+				<div class="col-sm-3">
+					
 				</div>
+				<div class="col-sm-6">
+					<div class="alert alert-primary" role="alert"  style="text-align: center;">
+				   Un usuario debe registrar su correo en el apartado de Correo para configurar este aspecto
+				</div>
+				</div>
+				<div class="col-sm-3">
+					
+				</div>
+				
 				@endif
-			</div>
-			<div class=" col-sm-4">
-			</div>
+			
 		</div>
 		</div>
 	</div>

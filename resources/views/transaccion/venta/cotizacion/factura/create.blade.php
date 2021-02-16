@@ -623,9 +623,10 @@
             var cantidad = document.querySelector(`#cantidad${a}`).value;
             var promedio_origina_descuento1=document.querySelector(`#precio_unitario_descuento${a}`).value;
             var promedio_original2=document.querySelector(`#promedio_original${a}`).value;
-
-            if (checkBox.checked == true){
-                var descuento = document.querySelector(`#descuento${a}`).value;
+            var cantidad_desc = document.getElementById(`check_descuento0${a}`)
+            var descuento = document.querySelector(`#descuento${a}`).value;
+            if (checkBox.checked == true && descuento > 0 ){
+                
                 var precio = document.querySelector(`#precio${a}`).value;
                 var promedio_original=document.querySelector(`#promedio_original${a}`).value;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
@@ -633,7 +634,7 @@
                 var precio_uni=precio-(promedio_original*descuento/100);
                 var precio_uni_dec=Math.round(precio_uni * multiplier) / multiplier;
 
-                document.getElementById(`check_descuento${a}`).value = descuento;
+                // document.getElementById(`check_descuento${a}`).value = descuento;
                 document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
 
                 var comisiones9=precio_uni_dec+(promedio_original*comision_porcentaje/100);

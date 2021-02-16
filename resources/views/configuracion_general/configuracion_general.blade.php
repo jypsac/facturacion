@@ -99,7 +99,7 @@
                                     <td><a class="btn btn-primary" href="{{route('tipo_cambio.index')}}"><i class="fa fa-gear"></i></a></td>
                                 </tr>
                                 <tr class="gradeX">
-                                    <td><img src="https://www.flaticon.es/premium-icon/icons/svg/2460/2460831.svg" width="16px" alt=""></td>
+                                    <td><img src="https://www.flaticon.es/svg/vstatic/svg/2258/2258570.svg?token=exp=1613494083~hmac=56e9eab5374d72a11c591632de6be24f" width="16px" alt=""></td>
                                     <td>Backup de Email</td>
                                     <td><a class="btn btn-primary" href="{{route('email_backup')}}"><i class="fa fa-gear"></i></a></td>
                                 </tr>
