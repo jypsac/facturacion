@@ -127,9 +127,16 @@
                          <h3>Condiciones Generales</h3>
                          <div align="left">
                             <strong>Forma De Pago:</strong> &nbsp;{{$cotizacion->forma_pago->nombre }}<br>
-                            <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}<br>
+                            <strong>Validez :</strong> &nbsp;{{$cotizacion->validez}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&#09;&Tab;&Tab;&#8287;
                             <strong>Garantia:</strong> &nbsp;{{$cotizacion->garantia }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                             <strong>Tipo de Moneda:</strong> &nbsp;{{$cotizacion->moneda->nombre }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                            <strong>Comisionista:</strong> &nbsp;
+                            @if(isset($cotizacion->comisionista->cod_vendedor))
+                            {{$cotizacion->comisionista->cod_vendedor}} - {{$cotizacion->comisionista->personal->personal_l->nombres}} - {{$cotizacion->comisionista->comision}}% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                            @else
+                            Sin Comsionista - 0
+                            @endif
+
                         </div>
                     </div>
                 </div>
@@ -150,7 +157,10 @@
                     <th>Codigo </th>
                     <th>Descripcion</th>
                     <th>Cantidad</th>
-                    <th>P.Unitario</th>
+                    <th>Comision</th>
+                    <th>Descuento</th>
+                    <th>P.Unitario Desc.</th>
+                    <th>P.Unitario Com.</th>
                     <th>Total <span hidden="hidden">{{$simbologia=$cotizacion->moneda->simbolo}}</span></th>
                 </tr>
             </thead>
@@ -161,6 +171,9 @@
                 <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                 <td>{{$cotizacion_registros->producto->nombre}}  <br>{{$cotizacion_registros->producto->descripcion}}</span></td>
                 <td>{{$cotizacion_registros->cantidad}}</td>
+                <td>{{$cotizacion_registros->comision}}%</td>
+                <td>{{$cotizacion_registros->comision}}%</td>
+                <td>{{$cotizacion_registros->precio_unitario_desc}}</td>
                 <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
                 <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
             </tr>
