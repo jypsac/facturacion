@@ -228,7 +228,7 @@
                        @endif
                      </td>
                      <td>{{$listas->moneda->simbolo}}{{$listas->monto_final_fac_bol}}</td>
-                     <td>{{$listas->moneda->simbolo}}{{$listas->monto_comision}}
+                     <td>{{$listas->moneda->simbolo}}{{round($listas->monto_comision, 2)}}
                      </td>
                      <td>
                        @if($listas->estado_pagado==0)Pagar
@@ -241,6 +241,11 @@
                    <span hidden="hidden">{{$monto_moneda_extranjera=$lista->where('comisionista','=',$listas->comisionista)->where('tipo_moneda','=',2)->where('estado_pagado','=',0)->sum('monto_comision')}} </span>
 
                    <span hidden="hidden">{{$monto_moneda_nacional=$lista->where('comisionista','=',$listas->comisionista)->where('tipo_moneda','=',1)->where('estado_pagado','=',0)->sum('monto_comision')}} </span>
+                   <script>
+                    function myFunction{{$vendedor->id}}() {
+                      document.getElementById("extranjera{{$vendedor->id}}").innerHTML ="{{$moneda_extranjera->simbolo}}{{ round($monto_moneda_extranjera, 1)}}";
+                      document.getElementById("nacional{{$vendedor->id}}").innerHTML ="{{$moneda_nacional->simbolo}}{{ round($monto_moneda_nacional,1)}}";}
+                    </script>
                    {{-- Calculo de precios de comisiones --}}
                    @endif
                    @endforeach
@@ -254,11 +259,7 @@
    </div>
    {{-- fin de tabla vendedor --}}
  </div>
- <script>
-  function myFunction{{$vendedor->id}}() {
-    document.getElementById("extranjera{{$vendedor->id}}").innerHTML ="{{$moneda_extranjera->simbolo}}{{$monto_moneda_extranjera}}";
-    document.getElementById("nacional{{$vendedor->id}}").innerHTML ="{{$moneda_nacional->simbolo}}{{$monto_moneda_nacional}}";}
-  </script>
+
   @endforeach
 </div>
 <h1></h1>

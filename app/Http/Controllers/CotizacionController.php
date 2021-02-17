@@ -1325,7 +1325,6 @@ public function facturar_store(Request $request)
     }
 
             // Creacion de Ventas Registros del Comisinista
-        //NO LLAMA A LA ID DE FACTURACION
     $cotizador=$request->get('id_cotizador');
     $precio_final_igv=$request->get('precio_final_igv');
     $sub_total_sin_igv=$request->get('sub_total_sin_igv');
@@ -1344,7 +1343,9 @@ public function facturar_store(Request $request)
        $comisionista->estado_pagado='0';
        $comisionista->estado_anular_fac_bol='0';
        $comisionista->monto_final_fac_bol=$precio_final_igv;
-       $comisionista->monto_comision=$sub_total_sin_igv*$comisionista_porcentaje->comision/100;
+       $porcentaje=100+$comisionista_porcentaje->comision;
+       $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
+       // $comisionista->monto_comision=$sub_total_sin_igv*$comisionista_porcentaje->comision/100;
        $comisionista->id_coti_produc=$cotizador;
        // $comisionista->id_coti_servicio='0';
        $comisionista->id_fac=$facturar->id;
@@ -1846,84 +1847,92 @@ public function facturar_store(Request $request)
         }
 
         // Creacion de Ventas Registros del Comisinista
-
         $cotizador=$request->get('id_cotizador');
-    $id_comisionista=$request->get('id_comisionista');
-    $comisionista=Cotizacion::where('id',$cotizador)->first();
-    $id_comi=$comisionista->comisionista_id;
-    if(isset($id_comi)){
-       $comisionista=new Ventas_registro;
+        $precio_final_igv=$request->get('precio_final_igv');
+        $sub_total_sin_igv=$request->get('sub_total_sin_igv');
+        $tipo_moneda=$request->get('tipo_moneda');
+        $id_comisionista=$request->get('id_comisionista');
+        $comisionista=Cotizacion::where('id',$cotizador)->first();
+        $comisionista_porcentaje=Personal_venta::where('id',$id_comisionista)->first();
+        $id_comi=$comisionista->comisionista_id;
+        if(isset($id_comi)){
+           $comisionista=new Ventas_registro;
        // $comisionista->id_facturacion=$request->get('fac_id');
          // $comisionista->id_facturacion= $facturar->id ;
-       $comisionista->comisionista=$request->get('id_comisionista');
-       $comisionista->estado_aprobado='0';
-       $comisionista->estado_pagado='0';
-       $comisionista->estado_anular_fac_bol='0';
-       $comisionista->monto_final_fac_bol='0';
-       $comisionista->id_coti_produc=$cotizador;
+           $comisionista->comisionista=$request->get('id_comisionista');
+           $comisionista->tipo_moneda=$tipo_moneda;
+           $comisionista->estado_aprobado='0';
+           $comisionista->estado_pagado='0';
+           $comisionista->estado_anular_fac_bol='0';
+           $comisionista->monto_final_fac_bol=$precio_final_igv;
+           $porcentaje=100+$comisionista_porcentaje->comision;
+           $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
+       // $comisionista->monto_comision=$sub_total_sin_igv*$comisionista_porcentaje->comision/100;
+           $comisionista->id_coti_produc=$cotizador;
        // $comisionista->id_coti_servicio='0';
-       $comisionista->id_bol=$boletear->id;
-       // $comisionista->id_fac='0';
-       $comisionista->observacion='Viene del Cotizador';
-       $comisionista->save();
+         // $comisionista->id_fac=$facturar->id;
+           $comisionista->id_bol=$boletear->id;
+           $comisionista->observacion='Viene del Cotizador';
+           $comisionista->save();
 
-   }
-        $validacion = $request->get('validacion');
-        if($validacion==1){
-            $name = $request->get('name');
-            $banco=Banco::where('estado','0')->get();
-            $banco_count=Banco::where('estado','0')->count();
-            $cotizacion=Cotizacion::find($id);
-            $regla=$cotizacion->tipo;
-            $sub_total=0;
-            $igv=Igv::first();
-            /*registros boleta y factura*/
-            if($regla=='factura'){
-                $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
-            }elseif($regla=='boleta'){
-                $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+       }
+
+       $validacion = $request->get('validacion');
+       if($validacion==1){
+        $name = $request->get('name');
+        $banco=Banco::where('estado','0')->get();
+        $banco_count=Banco::where('estado','0')->count();
+        $cotizacion=Cotizacion::find($id);
+        $regla=$cotizacion->tipo;
+        $sub_total=0;
+        $igv=Igv::first();
+        /*registros boleta y factura*/
+        if($regla=='factura'){
+            $cotizacion_registro=Cotizacion_factura_registro::where('cotizacion_id',$id)->get();
+        }elseif($regla=='boleta'){
+            $cotizacion_registro=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
+        }
+        /* FIN registros boleta y factura*/
+        /*de numeros a Letras*/
+        foreach($cotizacion_registro as $cotizacion_registros){
+            $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
+            $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+            if ($regla=='factura') {
+                $end=round($sub_total, 2)+round($igv_p, 2);
+            } elseif ($regla=='boleta') {
+                $end=round($sub_total, 2);
             }
-            /* FIN registros boleta y factura*/
-            /*de numeros a Letras*/
-            foreach($cotizacion_registro as $cotizacion_registros){
-                $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
-                $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
-                if ($regla=='factura') {
-                    $end=round($sub_total, 2)+round($igv_p, 2);
-                } elseif ($regla=='boleta') {
-                    $end=round($sub_total, 2);
-                }
-            }
-            /* Finde numeros a Letras*/
-            $empresa=Empresa::first();
-            $sum=0;
-            $i=1;
-            $regla=$cotizacion->tipo;
-            $archivo=$name.'_'.$id.".pdf";
-            $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
-            $content = $pdf->download();
-            $especif = $carbon_sp.$archivo;
-            Storage::disk('mailbox')->put($especif,$content);
-            $date = $carbon_sp;
+        }
+        /* Finde numeros a Letras*/
+        $empresa=Empresa::first();
+        $sum=0;
+        $i=1;
+        $regla=$cotizacion->tipo;
+        $archivo=$name.'_'.$id.".pdf";
+        $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
+        $content = $pdf->download();
+        $especif = $carbon_sp.$archivo;
+        Storage::disk('mailbox')->put($especif,$content);
+        $date = $carbon_sp;
 
-            $id_usuario=auth()->user()->id;
-            $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
-            $correo=$correo_busqueda->email;
+        $id_usuario=auth()->user()->id;
+        $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
+        $correo=$correo_busqueda->email;
 
-            $firma=$correo_busqueda->firma;
-            $mensaje_html = $request->get('mensaje');
+        $firma=$correo_busqueda->firma;
+        $mensaje_html = $request->get('mensaje');
             //CONDICIONAL DE FIRMA
-            if($firma == null){
-                $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script> $(document).ready(function(){ $("table").removeClass("table table-bordered").addClass("css"); }); </script>
-                <style> .css,table,tr,td{ padding: 15px; border: 1px solid black; border-collapse: collapse; } table{ width:100%; }
-                </style>'.$mensaje_html.'</body>';
-            }else{
-                $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-                <script>$(document).ready(function(){$("table").removeClass("table table-bordered").addClass("css");});</script>
-                <style>.css,table,tr,td{padding: 15px; border: 1px solid black; border-collapse: collapse; }table{ width:100%;}
-                </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
-            }
+        if($firma == null){
+            $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script> $(document).ready(function(){ $("table").removeClass("table table-bordered").addClass("css"); }); </script>
+            <style> .css,table,tr,td{ padding: 15px; border: 1px solid black; border-collapse: collapse; } table{ width:100%; }
+            </style>'.$mensaje_html.'</body>';
+        }else{
+            $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+            <script>$(document).ready(function(){$("table").removeClass("table table-bordered").addClass("css");});</script>
+            <style>.css,table,tr,td{padding: 15px; border: 1px solid black; border-collapse: collapse; }table{ width:100%;}
+            </style>'.$mensaje_html.'</body><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="550px" height="auto" /></footer>';
+        }
             /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
             $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
             $port = $correo_busqueda->port;
