@@ -134,7 +134,7 @@
                             @if(isset($cotizacion->comisionista->cod_vendedor))
                             {{$cotizacion->comisionista->cod_vendedor}} - {{$cotizacion->comisionista->personal->personal_l->nombres}} - {{$cotizacion->comisionista->comision}}% &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                             @else
-                            Sin Comsionista - 0
+                            Sin Comisionista - 0
                             @endif
 
                         </div>
