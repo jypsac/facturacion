@@ -7,8 +7,8 @@
  @section('value_accion', 'Atras')
 
  @section('content')
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<head>
+ <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+ <head>
     <script type="text/javascript">
         $(document).ready(function() {
 
@@ -89,7 +89,8 @@
                                  <td style="width: 3px">:</td>
                                  <td style="width: 200px"><input type="text" class="form-control"  name="fecha_vencimiento" value="{{$cotizacion->fecha_vencimiento }}" readonly="readonly"></td>
                                  <td><b>Tipo Moneda</b></td>
-                                 <td style="width: 3px">:</td><td><input type="text" class="form-control" value="{{$cotizacion->moneda->nombre }}" readonly="readonly" ></td>
+                                 <td style="width: 3px">:</td><td><input type="text" class="form-control" value="{{$cotizacion->moneda->nombre }}" readonly="readonly" > <input type="text" name="tipo_moneda" hidden="hidden" value="{{$cotizacion->moneda->id }}" > </td>
+
                              </tr>
                          </thead>
                      </table>
@@ -151,6 +152,9 @@
                                      <td>Total</td>
                                      <td>
                                          {{$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
+
+                                         <input type="text" name="total" hidden="hidden" value="{{round($sub_total, 2)}}" >
+
                                      </td>
                                  </tr>
                                  <tr></tr>
@@ -158,12 +162,12 @@
                          </table>
                      </div>
                      <input type="text" name="name" maxlength="50" hidden="" value="{{$cotizacion->cod_cotizacion}}"  >
-                    <input type="text" name="id" maxlength="50" hidden="" value="{{$cotizacion->id}}"  >
-                    <input type="text" name="remitente" hidden=""  value="{{$cotizacion->cliente->email}}"  >
+                     <input type="text" name="id" maxlength="50" hidden="" value="{{$cotizacion->id}}"  >
+                     <input type="text" name="remitente" hidden=""  value="{{$cotizacion->cliente->email}}"  >
                      <div class="row" align="center" >
                         <div class="col-sm-4">
                         </div>
-                         @if(auth()->user()->email_creado == 1 )
+                        @if(auth()->user()->email_creado == 1 )
                         <div class="  col-sm-6 alert alert-info" >
                             <input type="hidden" name="verificacion" value="1" id="">
                             <p style="margin-bottom: 0px">!Al momento de Boletear se le enviará una copia al correo del cliente!</p>
@@ -178,30 +182,30 @@
                             <button class="btn btn-primary" id="boton" style="margin-top: 5px" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true">Guardar</i></button>&nbsp;
                         </div>
                     </div>
-                 </div>
-             </div>
-         </div>
-     </form>
- </div>
+                </div>
+            </div>
+        </div>
+    </form>
+</div>
 
 
- <style type="text/css">
-     .ruc{border-radius: 10px; height: 150px;}
-     .form-control{border-radius: 10px;}
- </style>
+<style type="text/css">
+ .ruc{border-radius: 10px; height: 150px;}
+ .form-control{border-radius: 10px;}
+</style>
 
- <!-- Mainly scripts -->
- <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
- <script src="{{ asset('js/popper.min.js') }}"></script>
- <script src="{{ asset('js/bootstrap.js') }}"></script>
- <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
- <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+<!-- Mainly scripts -->
+<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
- <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
- <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
- <!-- Custom and plugin javascript -->
- <script src="{{ asset('js/inspinia.js') }}"></script>
- <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+<!-- Custom and plugin javascript -->
+<script src="{{ asset('js/inspinia.js') }}"></script>
+<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
 {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 <script>
@@ -215,4 +219,4 @@
    }
 </script>
 {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
- @endsection
+@endsection

@@ -173,13 +173,13 @@ class CotizacionController extends Controller
         }
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
-         return back()->withErrors(['No hay productos en el Almacen con nombre: '.$sucursal->nombre.'']);
-     }
+           return back()->withErrors(['No hay productos en el Almacen con nombre: '.$sucursal->nombre.'']);
+       }
 
         //LLAMAMIENTO DE PRODUCTOS
-     $lista=array_values(array_unique($prod));
-     $lista_count=count($lista);
-     for($x=0;$x<$lista_count;$x++){
+       $lista=array_values(array_unique($prod));
+       $lista_count=count($lista);
+       for($x=0;$x<$lista_count;$x++){
         $validacion[$x]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         if(!$validacion[$x]==NULL){
             $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
@@ -348,27 +348,27 @@ class CotizacionController extends Controller
         $cotizacion->cambio=$cambio->paralelo;
         $cotizacion->observacion=$request->get('observacion');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
-         $cotizacion->comisionista_id= $comisionista_buscador->id;
-     }
-     $cotizacion->user_id =auth()->user()->id;
-     $cotizacion->estado='0';
-     $cotizacion->estado_vigente='0';
-     $cotizacion->tipo='factura';
-     $cotizacion->save();
+           $cotizacion->comisionista_id= $comisionista_buscador->id;
+       }
+       $cotizacion->user_id =auth()->user()->id;
+       $cotizacion->estado='0';
+       $cotizacion->estado_vigente='0';
+       $cotizacion->tipo='factura';
+       $cotizacion->save();
 
         //contador de valores de cantidad
-     $cantidad = $request->input('cantidad');
-     $count_cantidad=count($cantidad);
+       $cantidad = $request->input('cantidad');
+       $count_cantidad=count($cantidad);
 
         //contador de valores del check descuento
-     $check = $request->input('check_descuento');
-     $count_check=count($check);
+       $check = $request->input('check_descuento');
+       $count_check=count($check);
 
         //validacion dependiendo de la amoneda escogida
-     $moneda=Moneda::where('principal',1)->first();
-     $moneda_registrada=$cotizacion->moneda_id;
+       $moneda=Moneda::where('principal',1)->first();
+       $moneda_registrada=$cotizacion->moneda_id;
 
-     if($count_articulo = $count_cantidad  = $count_check){
+       if($count_articulo = $count_cantidad  = $count_check){
         for($i=0;$i<$count_articulo;$i++){
             $cotizacion_registro=new Cotizacion_factura_registro;
             $cotizacion_registro->cotizacion_id=$cotizacion->id;
@@ -484,13 +484,13 @@ class CotizacionController extends Controller
 
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
-         return back()->withErrors(['No hay productos en el Almacen con nombre: '.$sucursal->nombre.'']);
-     }
+           return back()->withErrors(['No hay productos en el Almacen con nombre: '.$sucursal->nombre.'']);
+       }
 
         //LLAMADO DE PRODUCTOS
-     $lista=array_values(array_unique($prod));
-     $lista_count=count($lista);
-     for($x=0;$x<$lista_count;$x++){
+       $lista=array_values(array_unique($prod));
+       $lista_count=count($lista);
+       for($x=0;$x<$lista_count;$x++){
         $validacion[$x]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         if(!$validacion[$x]==NULL){
             $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
@@ -668,28 +668,28 @@ public function create_boleta_ms(Request $request)
         $nombre = strstr($cliente_nombre, '-',true);
         $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
         if(!$cliente_buscador){
-         return 'NO hay';
-     }
+           return 'NO hay';
+       }
 
 
-     $personal_contador= Cotizacion::all()->count();
-     $suma=$personal_contador+1;
-     $cod_comision='COBOL-0000'.$suma;
+       $personal_contador= Cotizacion::all()->count();
+       $suma=$personal_contador+1;
+       $cod_comision='COBOL-0000'.$suma;
 
 
-     $forma_pago_id=$request->get('forma_pago');
-     $formapago= Forma_pago::find($forma_pago_id);
-     $dias= $formapago->dias;
-     /*Fecha vencimiento*/
-     $fecha =date("d-m-Y");
-     $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
-     $nuevafechas = date("d-m-Y", $nuevafecha );
+       $forma_pago_id=$request->get('forma_pago');
+       $formapago= Forma_pago::find($forma_pago_id);
+       $dias= $formapago->dias;
+       /*Fecha vencimiento*/
+       $fecha =date("d-m-Y");
+       $nuevafecha = strtotime ( '+'.$dias.' day' , strtotime ( $fecha ) ) ;
+       $nuevafechas = date("d-m-Y", $nuevafecha );
 
         //CODIGO COTIZACION
-     $sucursal=$request->get('almacen');
-     $sucursal=Almacen::where('id',$sucursal)->first();
-     $ultima_factura=Cotizacion::where('almacen_id',$sucursal->id)->where('tipo','boleta')->count();
-     if($ultima_factura){
+       $sucursal=$request->get('almacen');
+       $sucursal=Almacen::where('id',$sucursal)->first();
+       $ultima_factura=Cotizacion::where('almacen_id',$sucursal->id)->where('tipo','boleta')->count();
+       if($ultima_factura){
         $code=$ultima_factura;
         $code++;
     }else{
@@ -1098,28 +1098,23 @@ public function facturar(Request $request,$id)
 public function facturar_store(Request $request)
 {
     $id = $request->get('id');
-
-        //LLAMDO AL DIA ACTUAL Y CONVERSION DE SIMBOLOS
+    //LLAMDO AL DIA ACTUAL Y CONVERSION DE SIMBOLOS
     $date_sp = Carbon::now();
     $data_g = str_replace(' ', '_',$date_sp);
     $carbon_sp = str_replace(':','-',$data_g);
-
-        //buscador al cambio
+    //buscador al cambio
     $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
-    if(!$cambio){
-        return "error por no hacer el cambio diario";
-    }
-    $tipo_cambio=TipoCambio::latest('created_at')->first();
+    // if(!$cambio){return "error por no hacer el cambio diario"; }
 
+    $tipo_cambio=TipoCambio::latest('created_at')->first();
         // cambio de Estado Cotizador
     $id_cotizador=$request->get('id_cotizador');
     $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
     $cotizacion->estado=1;
     $cotizacion->save();
-
-        //CODIGO DE LA FACTURA
+    //CODIGO DE LA FACTURA
     $almacen=$cotizacion->almacen_id;
-       //obtencion del almacen
+    //obtencion del almacen
     $sucursal=Almacen::where('id', $almacen)->first();
 
     $factura_cod_fac=$sucursal->cod_fac;
@@ -1154,7 +1149,6 @@ public function facturar_store(Request $request)
     }else{
         $comi=0;
     }
-
             // Creacion de Facturacion
     $facturar=new Facturacion;
     $facturar->codigo_fac=$factura_numero;
@@ -1175,10 +1169,7 @@ public function facturar_store(Request $request)
     $facturar->tipo='producto';
     $facturar->save();
 
-            // modificacion para que se cierre el codigo en almacen
-            // obtencion de la sucursal
-         // $sucursal=Almacen::where('id',);
-            //obtencion del almacen
+    // modificacion para que se cierre el codigo en almacen
     $factura_primera=Almacen::where('id', $sucursal->id)->first();
     $factura_primera->cod_fac='NN';
     $factura_primera->save();
@@ -1324,7 +1315,7 @@ public function facturar_store(Request $request)
         }
     }
 
-            // Creacion de Ventas Registros del Comisinista
+     // Creacion de Ventas Registros del Comisinista
     $cotizador=$request->get('id_cotizador');
     $precio_final_igv=$request->get('precio_final_igv');
     $sub_total_sin_igv=$request->get('sub_total_sin_igv');
@@ -1334,30 +1325,23 @@ public function facturar_store(Request $request)
     $comisionista_porcentaje=Personal_venta::where('id',$id_comisionista)->first();
     $id_comi=$comisionista->comisionista_id;
     if(isset($id_comi)){
-       $comisionista=new Ventas_registro;
-       // $comisionista->id_facturacion=$request->get('fac_id');
-         // $comisionista->id_facturacion= $facturar->id ;
-       $comisionista->comisionista=$request->get('id_comisionista');
-       $comisionista->tipo_moneda=$tipo_moneda;
-       $comisionista->estado_aprobado='0';
-       $comisionista->estado_pagado='0';
-       $comisionista->estado_anular_fac_bol='0';
-       $comisionista->monto_final_fac_bol=$precio_final_igv;
-       $porcentaje=100+$comisionista_porcentaje->comision;
-       $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
-       // $comisionista->monto_comision=$sub_total_sin_igv*$comisionista_porcentaje->comision/100;
-       $comisionista->id_coti_produc=$cotizador;
-       // $comisionista->id_coti_servicio='0';
-       $comisionista->id_fac=$facturar->id;
-       // $comisionista->id_bol='0';
-       $comisionista->observacion='Viene del Cotizador';
-       $comisionista->save();
-
-   }
-
+     $comisionista=new Ventas_registro;
+     $comisionista->comisionista=$request->get('id_comisionista');
+     $comisionista->tipo_moneda=$tipo_moneda;
+     $comisionista->estado_aprobado='0';
+     $comisionista->estado_pagado='0';
+     $comisionista->estado_anular_fac_bol='0';
+     $comisionista->monto_final_fac_bol=$precio_final_igv;
+     $porcentaje=100+$comisionista_porcentaje->comision;
+     $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
+     $comisionista->id_coti_produc=$cotizador;
+     $comisionista->id_fac=$facturar->id;
+     $comisionista->observacion='Viene del Cotizador';
+     $comisionista->save();
+ }
         //CONDICIONAL PARA ENVIO DE CORREO
-   $validacion = $request->get('validacion');
-   if($validacion==1){
+ $validacion = $request->get('validacion');
+ if($validacion==1){
             //pdf request
     $name = $request->get('name');
     $banco=Banco::where('estado','0')->get();
@@ -1485,6 +1469,8 @@ public function facturar_store(Request $request)
 
     public function boletear(Request $request,$id)
     {
+        $igv=Igv::where('id','1')->first();
+
         $cotizacion=Cotizacion::where('id',$id)->first();
         $cotizacion_moneda=$cotizacion->moneda_id;
 
@@ -1496,8 +1482,6 @@ public function facturar_store(Request $request)
         foreach($productos as $lista){
             $produc[]=Producto::where('estado_id','!=',2)->where('id',$lista->producto_id)->first();
         }
-
-        $igv=Igv::where('id','1')->first();
 
         if($cotizacion_moneda==$moneda1->id){
 
@@ -1621,13 +1605,10 @@ public function facturar_store(Request $request)
 
         //buscador al cambio
         $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
-        if(!$cambio){
-            return "error por no hacer el cambio diario";
-        }
         $tipo_cambio=TipoCambio::latest('created_at')->first();
 
-        // cambio de Estado Cotizador
         $id_cotizador=$request->get('id_cotizador');
+
         $cotizacion=Cotizacion::where('id',$id_cotizador)->first();
         $cotizacion->estado=1;
         $cotizacion->save();
@@ -1690,8 +1671,6 @@ public function facturar_store(Request $request)
         $boletear->save();
 
         // modificacion para que se cierre el codigo en almacen
-        // obtencion de la sucursal
-        //obtencion del almacen
         $factura_primera=Almacen::where('id', $sucursal->id)->first();
         $factura_primera->cod_bol='NN';
         $factura_primera->save();
@@ -1848,37 +1827,32 @@ public function facturar_store(Request $request)
 
         // Creacion de Ventas Registros del Comisinista
         $cotizador=$request->get('id_cotizador');
-        $precio_final_igv=$request->get('precio_final_igv');
-        $sub_total_sin_igv=$request->get('sub_total_sin_igv');
+        $total=$request->get('total');
         $tipo_moneda=$request->get('tipo_moneda');
         $id_comisionista=$request->get('id_comisionista');
         $comisionista=Cotizacion::where('id',$cotizador)->first();
+        $igv=Igv::first();
         $comisionista_porcentaje=Personal_venta::where('id',$id_comisionista)->first();
         $id_comi=$comisionista->comisionista_id;
         if(isset($id_comi)){
-           $comisionista=new Ventas_registro;
-       // $comisionista->id_facturacion=$request->get('fac_id');
-         // $comisionista->id_facturacion= $facturar->id ;
-           $comisionista->comisionista=$request->get('id_comisionista');
-           $comisionista->tipo_moneda=$tipo_moneda;
-           $comisionista->estado_aprobado='0';
-           $comisionista->estado_pagado='0';
-           $comisionista->estado_anular_fac_bol='0';
-           $comisionista->monto_final_fac_bol=$precio_final_igv;
-           $porcentaje=100+$comisionista_porcentaje->comision;
-           $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
-       // $comisionista->monto_comision=$sub_total_sin_igv*$comisionista_porcentaje->comision/100;
-           $comisionista->id_coti_produc=$cotizador;
-       // $comisionista->id_coti_servicio='0';
-         // $comisionista->id_fac=$facturar->id;
-           $comisionista->id_bol=$boletear->id;
-           $comisionista->observacion='Viene del Cotizador';
-           $comisionista->save();
+         $comisionista=new Ventas_registro;
+         $comisionista->comisionista=$request->get('id_comisionista');
+         $comisionista->tipo_moneda=$tipo_moneda;
+         $comisionista->estado_aprobado='0';
+         $comisionista->estado_pagado='0';
+         $comisionista->estado_anular_fac_bol='0';
+         $comisionista->monto_final_fac_bol=$total;
+         $porcentaje_igv=100+$igv->igv_total;
+         $porcentaje=100+$comisionista_porcentaje->comision;
+         $comisionista->monto_comision=((100*$total/$porcentaje_igv)*100/$porcentaje)*$comisionista_porcentaje->comision/100;
+         $comisionista->id_coti_produc=$cotizador;
+         $comisionista->id_bol=$boletear->id;
+         $comisionista->observacion='Viene del Cotizador';
+         $comisionista->save();
+     }
 
-       }
-
-       $validacion = $request->get('validacion');
-       if($validacion==1){
+     $validacion = $request->get('validacion');
+     if($validacion==1){
         $name = $request->get('name');
         $banco=Banco::where('estado','0')->get();
         $banco_count=Banco::where('estado','0')->count();
@@ -2004,12 +1978,12 @@ public function facturar_store(Request $request)
                 return "Something went wrong :(";
             }
         }else{
-           return redirect()->route('boleta.show',$boletear->id);
-       }
-   }
+         return redirect()->route('boleta.show',$boletear->id);
+     }
+ }
 
-   public function aprobar(Request $request, $id)
-   {
+ public function aprobar(Request $request, $id)
+ {
     $cotizacion=Cotizacion::find($id);
     $cotizacion->estado_aprovar='1';
     if (!isset($cotizacion->aprobado_por)) {
