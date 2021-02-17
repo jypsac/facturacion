@@ -157,9 +157,9 @@
                     <th>Codigo </th>
                     <th>Descripcion</th>
                     <th>Cantidad</th>
-                    <th>Comision</th>
                     <th>Descuento</th>
                     <th>P.Unitario Desc.</th>
+                    <th>Comision</th>
                     <th>P.Unitario Com.</th>
                     <th>Total <span hidden="hidden">{{$simbologia=$cotizacion->moneda->simbolo}}</span></th>
                 </tr>
@@ -171,9 +171,9 @@
                 <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                 <td>{{$cotizacion_registros->producto->nombre}}  <br>{{$cotizacion_registros->producto->descripcion}}</span></td>
                 <td>{{$cotizacion_registros->cantidad}}</td>
-                <td>{{$cotizacion_registros->comision}}%</td>
-                <td>{{$cotizacion_registros->comision}}%</td>
+                <td>{{$cotizacion_registros->descuento}}%</td>
                 <td>{{$cotizacion_registros->precio_unitario_desc}}</td>
+                <td>{{$cotizacion_registros->comision}}%</td>
                 <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
                 <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
             </tr>
