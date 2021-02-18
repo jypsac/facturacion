@@ -70,8 +70,11 @@ class ClienteController extends Controller
 
         $this->storecontact($data);
 
+
         // return view('auxiliar.cliente.contacto.cliente_new');
-        return redirect()->route('cliente.index');
+        // return redirect()->route('cliente.index');
+        return back();
+
     }
 
     public function storecontact($data)

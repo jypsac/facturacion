@@ -24,16 +24,16 @@
 
 </head>
 <style type="text/css">
-   body {font:@yield('tamano_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);}
-   .spans{color:@yield('color_nombre', auth()->user()->config->color_nombre) !important;
-   font-size: @yield('tamano_letra_perfil', auth()->user()->config->tamano_letra_perfil);
-   text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_sombra_nombre);}
+ body {font:@yield('tamano_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);}
+ .spans{color:@yield('color_nombre', auth()->user()->config->color_nombre) !important;
+ font-size: @yield('tamano_letra_perfil', auth()->user()->config->tamano_letra_perfil);
+ text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_sombra_nombre);}
 
-   .nav-header {
-      background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
-  }
+ .nav-header {
+  background-image: url("{{ asset('/css/patterns/')}}/@yield('1', auth()->user()->config->fondo_perfil)");
+}
 
-  .btn-primary {
+.btn-primary {
     color: #fff;
     background-color: #1a5eb3;
     border-color: #1a3bb3;
@@ -51,94 +51,300 @@
 </style>
 
 <body class="">
-    <div id="wrapper">
-        <nav class="navbar-default navbar-static-side" role="navigation">
-            <div class="sidebar-collapse">
-                <ul class="nav metismenu" id="side-menu">
-                    <li class="nav-header">
-                        <div class="dropdown profile-element" style="left: 10% ">
-                            <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)" style="width: 150px;height: 150px" />
-                            <a data-toggle="dropdown" class="dropdown-toggle" href="#">
-                                <span class="block m-t-xs font-bold spans">@yield('nombre',auth()->user()->personal->nombres)</span>
-                                <span class="block m-t-xs  spans ">@yield('area',auth()->user()->name) </span>
-                            </a>
-                        </div>
-                        <div class="logo-element">
-                            ---
-                        </div>
-                    </li>
-                    <!-- MENU DESPELEGABLE -->
-                    @can('inicio')
-                    <li><a href="{{route('inicio')}}"><i class="fa fa-magic"></i> <span class="nav-label">Inicio</span></a></li>
-                    @endcan
+    {{-- Modal Cliente --}}
+    <!-- Modal -->
+    <div class="modal fade" id="ModalCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document" style="margin-left: 22%;">
+        <div class="modal-content" style="width: 880px;">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Agregar Cliente</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+          </button>
+      </div>
+      <div>
 
-                    @can('transacciones')
-                    <li>
-                        <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Transacciones</span></a>
-                        <ul class="nav nav-second-level collapse">
-                            @can('transacciones-ventas')
-                            <li>
-                                <a href="#">Ventas</a>
-                                <ul class="nav nav-third-level">
-                                    @can('transacciones-ventas-cotizaciones.index')
-                                    {{-- <li><a href="{{route('cotizacion.index')}}">Cotizaciones</a></li> --}}
-                                    <li><a href="#"><span  class="nav-label">Cotizaciones</span></a>
-                                        <ul class="nav nav-second-level collapse">
-                                            <li><a href="{{route('cotizacion.index')}}"  style="padding-left: 80px;">C.Productos</a></li>
-                                            <li><a href="{{route('cotizacion_servicio.index')}}"  style="padding-left: 80px;">C.Servicios</a></li>
-                                             <li><a href="{{route('otros.index')}}"  style="padding-left: 80px;">C.Manual</a></li>
-                                        </ul></li>
-                                        @endcan
-                                        @can('transacciones-ventas-facturacion.index')
-                                        <li><a href="{{route('facturacion.index')}}">Facturacion</a></li>
-                                        @endcan
-                                        @can('transacciones-ventas-boleta.index')
-                                        <li><a href="{{route('boleta.index')}}">Boleta</a></li>
-                                        @endcan
-                                        @can('transacciones-ventas-guia_remision.index')
-                                        <li><a href="{{route('guia_remision.index')}}">Guia Remision</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endcan
-                                {{-- <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li> --}}
-                                @can('transacciones-garantias')
-                                <li>
-                                    <a href="#">Garantias</a>
-                                    <ul class="nav nav-third-level">
-                                        @can('transacciones-garantias-guias_ingreso.index')
-                                        <li><a href="{{route('garantia_guia_ingreso.index')}}">Guias Ingreso</a></li>
-                                        @endcan
-                                        @can('transacciones-garantias-guias_egreso.index')
-                                        <li><a href="{{route('garantia_guia_egreso.index')}}">Guia Egreso</a></li>
-                                        @endcan
-                                        @can('transacciones-garantias-informe_tecnico.index')
-                                        <li><a href="{{route('garantia_informe_tecnico.index')}}">Informe Tecnico</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endcan
-                            </ul>
-                        </li>
-                        @endcan
-                        @can('inventario')
+        {{--  --}}
+        <div class="ibox-content" >
+            <form>
+                {{ csrf_field() }}
+                <div class="form-group  row"><label class="col-sm-2 col-form-label">Introducir Ruc (Inestable):</label>
+                    <div class="col-sm-10">
+                        <input type="text" class="form-control" class="ruc" id="ruc" name="ruc" required="required">
+                    </div>
+                </div>
+                <button class="btn btn-primary" id="botoncito" name="btn" value="cliente" class="botoncito"><i class="fa fa-search"></i> Buscar</button>
+            </form><script>
+                $(function(){
+                    $('#botoncito').on('click', function(){
+                        var ruc = $('#ruc').val();
+                        var url = "{{ url('provedorruc') }}";
+                        $('.ajaxgif').removeClass('hide');
+                        $.ajax({
+                            type:'GET',
+                            url:url,
+                            data:'ruc='+ruc,
+                            success: function(datos_dni){
+                                $('.ajaxgif').addClass('hide');
+                                var datos = eval(datos_dni);
+                                var nada ='nada';
+                                if(datos[0]==nada){
+                                    alert('DNI o RUC no válido o no registrado');
+                                }else{
+                                    $('#numero_ruc').val(datos[0]);
+                                    $('#razon_social').val(datos[1]);
+                                    $('#direccion').val(datos[2]);
+                                    $('#ciudad').val(datos[3]);
+                                    $('#fechaInscripcion').val(datos[4]);
+                                    $('#departamento').val(datos[5]);
+                                }
+                            }
+                        });
+                        return false;
+                    });
+                });
+            </script>
+        </div>
+
+        <div class="wrapper wrapper-content animated fadeInRight">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div >
+                        <div >
+                            <form action=" @yield('form', route('cliente.store'))"  enctype="multipart/form-data" id="form" class="wizard-big" method="post"> {{-- Yiel form- es para colocar una ruta alterna  --}}
+                                @csrf
+                                <h1>Datos Personales</h1>
+                                <fieldset>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Documento Identificacion *</label>
+                                                <select class="form-control m-b" name="documento_identificacion" >
+                                                    <option value="DNI">DNI</option>
+                                                    <option value="pasaporte">Pasaporte</option>
+                                                    <option value="RUC">Ruc</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Nombre *</label>
+                                                <input type="text" class="form-control" name="nombre" class="form-control required" id="razon_social" required="required">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Numero de Documento *</label>
+                                                <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required  autocomplete="off" type="text">
+                                               {{--  <datalist id="browserdoc" >
+                                                    @foreach($clientes as $cliente)
+                                                    <option id="a">{{$cliente->numero_documento}} - existente</option>
+                                                    @endforeach
+                                                </datalist> --}}
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Direccion *</label>
+                                                <input type="text" class="form-control" name="direccion" id="direccion" class="form-control required" required="required">
+                                            </div>
+                                        </div>
+                                        <!--  -->
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="form-group col-lg-6 ">
+                                                    <label>Correo *</label>
+                                                    <input  name="email" value="sincorreo@gmail.com" type="text" class="form-control required " required="required">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label>Ciudad *</label>
+                                                    <input type="text" class="form-control" name="ciudad" id="ciudad" class="form-control required" required="required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <h1>Informacion</h1>
+                                <fieldset>
+                                    <div class="row" >
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="form-group col-lg-6 ">
+                                                    <label>Telefono *</label>
+                                                    <input value="00000" type="number" class="form-control" name="telefono" class="form-control required">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label>Departamento *</label>
+                                                    <input value="Lima" type="text" class="form-control" name="departamento" id="departamento" class="form-control required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-12">
+                                            <div class="row">
+                                                <div class="form-group col-lg-6 ">
+                                                    <label>Celular *</label>
+                                                    <input value="0000000" type="number" class="form-control" name="celular" class="form-control required">
+                                                </div>
+                                                <div class="form-group col-lg-6">
+                                                    <label>Pais *</label>
+                                                    <input value="Perú" type="text" class="form-control" name="pais" class="form-control required">
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Tipo Cliente *</label>
+                                                <select class="form-control" name="tipo_cliente">
+                                                    <option value="Cliente Frecuente">Cliente Frecuente</option>
+                                                    <option value="Cliente Revendedor">Cliente Revendedor</option>
+                                                    <option value="Cliente VIP">Cliente VIP</option>
+                                                </select>
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Aniversario *</label>
+                                                <input value="2020-07-22" type="date" class="form-control" name="aniversario" class="form-control required">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Codigo Postal *</label>
+                                                <input value="01" name="cod_postal" type="text" class="form-control required ">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Fecha Registro *</label>
+                                                <input  type="text" class="form-control" id="fechaInscripcion" name="fecha_registro" class="form-control required">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </fieldset>
+                                <h1>Contacto</h1>
+                                <fieldset>
+                                    <h2>Informacion I</h2>
+                                    <div class="row">
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label>Nombre *</label>
+                                                <input id="name" name="nombre_contacto" type="text" class="form-control required" value="Contacto">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Cargo *</label>
+                                                <input id="surname" name="cargo_contacto" type="text" class="form-control required" value="Cargo">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label> Telefono *</label>
+                                                <input id="email" name="telefono_contacto" type="text" class="form-control required" value="0050000">
+                                            </div>
+                                            <div class="form-group">
+                                                <label>Celular *</label>
+                                                <input id="address" name="celular_contacto" type="text" class="form-control required" value="951000000">
+                                            </div>
+                                        </div>
+                                        <div class="col-lg-6">
+                                            <div class="form-group">
+                                                <label> Correo *</label>
+                                                <input id="email" name="email_contacto" type="text" class="form-control required email" value="correo@contanto.com">
+                                            </div>
+                                        </div>
+                                        {{-- <input type="text" class="dropdown-item" name="almacen"  value="1"> --}}
+                                    </div>
+                                </fieldset>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+</div>
+{{-- Fin Modal Cliente --}}
+<div id="wrapper">
+    <nav class="navbar-default navbar-static-side" role="navigation">
+        <div class="sidebar-collapse">
+            <ul class="nav metismenu" id="side-menu">
+                <li class="nav-header">
+                    <div class="dropdown profile-element" style="left: 10% ">
+                        <img alt="image" class="rounded-circle" src=" {{ asset('/profile/images/')}}/@yield('foto', auth()->user()->personal->foto)" style="width: 150px;height: 150px" />
+                        <a data-toggle="dropdown" class="dropdown-toggle" href="#">
+                            <span class="block m-t-xs font-bold spans">@yield('nombre',auth()->user()->personal->nombres)</span>
+                            <span class="block m-t-xs  spans ">@yield('area',auth()->user()->name) </span>
+                        </a>
+                    </div>
+                    <div class="logo-element">
+                        ---
+                    </div>
+                </li>
+                <!-- MENU DESPELEGABLE -->
+                @can('inicio')
+                <li><a href="{{route('inicio')}}"><i class="fa fa-magic"></i> <span class="nav-label">Inicio</span></a></li>
+                @endcan
+
+                @can('transacciones')
+                <li>
+                    <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Transacciones</span></a>
+                    <ul class="nav nav-second-level collapse">
+                        @can('transacciones-ventas')
                         <li>
-                            <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Inventario</span></a>
-                            <ul class="nav nav-second-level collapse">
-                                @can('inventario-productos_kardex')
-                                <li>
-                                    <a href="#">Productos Kardex</a>
-                                    <ul class="nav nav-third-level">
-                                        @can('inventario-productos_kardex-entrada_producto.index')
-                                        <li><a href="{{route('kardex-entrada.index')}}">Entrada Producto</a></li>
-                                        @endcan
-                                        @can('inventario-productos_kardex-salida_producto.index')
-                                        <li><a href="{{route('kardex-salida.index')}}">Salida Producto</a></li>
-                                        @endcan
-                                    </ul>
-                                </li>
-                                @endcan
-                                {{-- <li><a href="{{route('pagados.index')}}">Pagados</a></li> --}}
+                            <a href="#">Ventas</a>
+                            <ul class="nav nav-third-level">
+                                @can('transacciones-ventas-cotizaciones.index')
+                                {{-- <li><a href="{{route('cotizacion.index')}}">Cotizaciones</a></li> --}}
+                                <li><a href="#"><span  class="nav-label">Cotizaciones</span></a>
+                                    <ul class="nav nav-second-level collapse">
+                                        <li><a href="{{route('cotizacion.index')}}"  style="padding-left: 80px;">C.Productos</a></li>
+                                        <li><a href="{{route('cotizacion_servicio.index')}}"  style="padding-left: 80px;">C.Servicios</a></li>
+                                        <li><a href="{{route('otros.index')}}"  style="padding-left: 80px;">C.Manual</a></li>
+                                    </ul></li>
+                                    @endcan
+                                    @can('transacciones-ventas-facturacion.index')
+                                    <li><a href="{{route('facturacion.index')}}">Facturacion</a></li>
+                                    @endcan
+                                    @can('transacciones-ventas-boleta.index')
+                                    <li><a href="{{route('boleta.index')}}">Boleta</a></li>
+                                    @endcan
+                                    @can('transacciones-ventas-guia_remision.index')
+                                    <li><a href="{{route('guia_remision.index')}}">Guia Remision</a></li>
+                                    @endcan
+                                </ul>
+                            </li>
+                            @endcan
+                            {{-- <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li> --}}
+                            @can('transacciones-garantias')
+                            <li>
+                                <a href="#">Garantias</a>
+                                <ul class="nav nav-third-level">
+                                    @can('transacciones-garantias-guias_ingreso.index')
+                                    <li><a href="{{route('garantia_guia_ingreso.index')}}">Guias Ingreso</a></li>
+                                    @endcan
+                                    @can('transacciones-garantias-guias_egreso.index')
+                                    <li><a href="{{route('garantia_guia_egreso.index')}}">Guia Egreso</a></li>
+                                    @endcan
+                                    @can('transacciones-garantias-informe_tecnico.index')
+                                    <li><a href="{{route('garantia_informe_tecnico.index')}}">Informe Tecnico</a></li>
+                                    @endcan
+                                </ul>
+                            </li>
+                            @endcan
+                        </ul>
+                    </li>
+                    @endcan
+                    @can('inventario')
+                    <li>
+                        <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Inventario</span></a>
+                        <ul class="nav nav-second-level collapse">
+                            @can('inventario-productos_kardex')
+                            <li>
+                                <a href="#">Productos Kardex</a>
+                                <ul class="nav nav-third-level">
+                                    @can('inventario-productos_kardex-entrada_producto.index')
+                                    <li><a href="{{route('kardex-entrada.index')}}">Entrada Producto</a></li>
+                                    @endcan
+                                    @can('inventario-productos_kardex-salida_producto.index')
+                                    <li><a href="{{route('kardex-salida.index')}}">Salida Producto</a></li>
+                                    @endcan
+                                </ul>
+                            </li>
+                            @endcan
+                            {{-- <li><a href="{{route('pagados.index')}}">Pagados</a></li> --}}
                                 {{-- @can('inventario-productos-inventario_inicial.index')
                                 <li><a href="{{route('inventario-inicial.index')}}">Inventario Inicial</a></li>
                                 @endcan --}}
@@ -228,23 +434,23 @@
                         <li>
                             <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">Configuracion General</span></a>
                             <ul class="nav nav-second-level collapse">
-                             @can('maestro-catalogo-clasificacion')
-                             <li><a href="{{route('Configuracion')}}">Configuracion del Sistema</a></li>
-                             @endcan
-                             @can('maestro-configuracion_general.mi_empresa.index')
-                             <li><a href="{{route('empresa.index')}}">Mi Empresa</a></li>
-                             @endcan
-                         </ul>
-                     </li>
+                               @can('maestro-catalogo-clasificacion')
+                               <li><a href="{{route('Configuracion')}}">Configuracion del Sistema</a></li>
+                               @endcan
+                               @can('maestro-configuracion_general.mi_empresa.index')
+                               <li><a href="{{route('empresa.index')}}">Mi Empresa</a></li>
+                               @endcan
+                           </ul>
+                       </li>
 
-                     @endcan
+                       @endcan
 
-                     <!-- MENU DESPELEGABLE -->
-                 </ul>
-             </div>
-         </nav>
-         {{-- Menu Superior --}}
-         <div id="page-wrapper" class="gray-bg">
+                       <!-- MENU DESPELEGABLE -->
+                   </ul>
+               </div>
+           </nav>
+           {{-- Menu Superior --}}
+           <div id="page-wrapper" class="gray-bg">
             <div class="row border-bottom">
                 <nav class="navbar navbar-static-top  " role="navigation" style="margin-bottom: 0">
                     <div class="navbar-header">

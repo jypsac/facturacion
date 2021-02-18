@@ -65,7 +65,7 @@ class AgregadoRapidoController extends Controller
 
 //FUNCION PARA CREAR CLIENTE Y CONTACTO CON PARAMETROS POR DEFECTO
     public function cliente_cotizado(Request $request){
-        // return "hola";
+        return "hola";
         $this->validate($request,[
             'nombre' => ['required','unique:clientes,nombre'],
             'numero_documento' => ['required','unique:clientes,numero_documento'],
@@ -101,6 +101,8 @@ class AgregadoRapidoController extends Controller
         $contacto->email="correo@contacto.com";
         $contacto->clientes_id=$idCliente;
         $contacto->save();
+        return redirect()->route('cotizacion.index');
+
 
 
 
