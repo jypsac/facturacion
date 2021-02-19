@@ -590,7 +590,7 @@
                 var precio = document.querySelector(`#precio${a}`).value;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var final= cantidad*precio;
-                var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
+                var end9=parseFloat(precio)+(parseFloat(promedio_original2)*parseInt(comision_porcentaje)/100);
 
                 var end =Math.round(end9 * multiplier) / multiplier;
                 var final2=cantidad*end;

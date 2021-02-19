@@ -622,10 +622,12 @@
             var checkBox = document.getElementById(`check${a}`);
             var cantidad = document.querySelector(`#cantidad${a}`).value;
             var promedio_origina_descuento1=document.querySelector(`#precio_unitario_descuento${a}`).value;
+
             var promedio_original2=document.querySelector(`#promedio_original${a}`).value;
+
             var descuento = document.querySelector(`#descuento${a}`).value;
             if (checkBox.checked == true && descuento > 0){
-                
+
                 var precio = document.querySelector(`#precio${a}`).value;
                 var promedio_original=document.querySelector(`#promedio_original${a}`).value;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
@@ -636,13 +638,13 @@
                 document.getElementById(`check_descuento${a}`).value = descuento;
                 document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
 
-                var comisiones9=precio_uni_dec+(promedio_original*comision_porcentaje/100);
-                var comisiones=Math.round(comisiones9*multiplier)/multiplier;
+                var comisiones9=precio_uni_dec+(promedio_original2*comision_porcentaje/100);
+                var comisiones=(comisiones9*multiplier)/multiplier;
                 document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
 
                 var final=comisiones*cantidad;
                 var final_decimal = Math.round(final * multiplier) / multiplier;
-                console.log(final_decimal);
+                // console.log(final_decimal);
                 document.getElementById(`total${a}`).value = final_decimal;
             } else {
                 var multiplier = 100;
@@ -650,7 +652,7 @@
                 var precio = document.querySelector(`#precio${a}`).value;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var final= cantidad*precio;
-                var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
+                var end9=parseFloat(precio)+(parseFloat(promedio_original2)*parseInt(comision_porcentaje)/100);
 
                 var end =Math.round(end9 * multiplier) / multiplier;
                 var final2=cantidad*end;

@@ -195,6 +195,7 @@ class CotizacionController extends Controller
             $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo;
             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
             $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+            // return ($producto->utilidad-$producto->descuento1)/100;
         }
     }else{
         foreach ($productos as $index => $producto) {
@@ -217,6 +218,7 @@ class CotizacionController extends Controller
     $categoria='producto';
 
     return view('transaccion.venta.cotizacion.factura.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','cotizacion_numero','sucursal'));
+    // return $utilidad;
 }
 
     /**
@@ -427,15 +429,15 @@ class CotizacionController extends Controller
                  //precio unitario descuento ----------------------------------------
             $desc_comprobacion=$request->get('check_descuento')[$i];
             if($desc_comprobacion <> 0){
-                $cotizacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
+                $cotizacion_registro->precio_unitario_desc=$array-($array2*$desc_comprobacion/100);
             }else{
                 $cotizacion_registro->precio_unitario_desc=$array;
             }
                 //precio unitario comision ----------------------------------------
             if($desc_comprobacion <> 0){
-                $cotizacion_registro->precio_unitario_comi=($array-($array*$desc_comprobacion/100))+($array*$comi/100);
+                $cotizacion_registro->precio_unitario_comi=($array-($array2*$desc_comprobacion/100))+($array2*$comi/100);
             }else{
-                $cotizacion_registro->precio_unitario_comi=$array+($array*$comi/100);
+                $cotizacion_registro->precio_unitario_comi=$array+($array2*$comi/100);
             }
             $cotizacion_registro->save();
         }
