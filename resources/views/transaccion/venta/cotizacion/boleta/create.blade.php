@@ -401,7 +401,7 @@
                 <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i});ajax(${i})" autocomplete="off">
                 <datalist id="browsers" >
                 @foreach($productos as $index => $producto)
-                <option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento1}} {{$array[$index]}}" >
+                <option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}" >
                 @endforeach
                 </datalist>
                 <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
@@ -540,6 +540,7 @@
             var promedio_origina_descuento1=document.querySelector(`#precio_unitario_descuento${a}`).value;
             var promedio_original2=document.querySelector(`#promedio_original${a}`).value;
             var descuento = document.querySelector(`#descuento${a}`).value;
+            var igv = {{$igv->renta}};
             if (checkBox.checked == true && descuento > 0){
 
                 var precio = document.querySelector(`#precio${a}`).value;
@@ -547,12 +548,12 @@
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var multiplier = 100;
                 var precio_uni=precio-(promedio_original*descuento/100);
-                var precio_uni_dec=Math.round(precio_uni * multiplier) / multiplier;
+                var precio_uni_dec=(Math.round(precio_uni * multiplier) / multiplier)+(precio_uni*igv/100);
 
                 document.getElementById(`check_descuento${a}`).value = descuento;
                 document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
 
-                var comisiones9=precio_uni_dec+(promedio_original*comision_porcentaje/100);
+                var comisiones9=precio_uni_dec+(precio*comision_porcentaje/100);
                 var comisiones=Math.round(comisiones9*multiplier)/multiplier;
                 document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
 
@@ -568,7 +569,7 @@
                 var final= cantidad*precio;
                 var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
 
-                var end =Math.round(end9 * multiplier) / multiplier;
+                var end =(Math.round(end9 * multiplier) / multiplier)+(end9*igv/100);
                 var final2=cantidad*end;
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
 
