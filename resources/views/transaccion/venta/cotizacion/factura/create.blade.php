@@ -573,7 +573,7 @@
                 var precio_uni=precio-(promedio_original*descuento/100);
                 var precio_uni_dec=Math.round(precio_uni * multiplier) / multiplier;
 
-                // document.getElementById(`check_descuento${a}`).value = descuento;
+                document.getElementById(`check_descuento${a}`).value = descuento;
                 document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
 
                 var comisiones9=precio_uni_dec+(promedio_original*comision_porcentaje/100);

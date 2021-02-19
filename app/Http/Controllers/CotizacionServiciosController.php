@@ -73,11 +73,13 @@ class CotizacionServiciosController extends Controller
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
                 $array[]=round($servicio->precio_nacional+$utilidad[$index],2);
+                $array_promedio[]=($servicio->precio_nacional);
             }
         }else{
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
                 $array[]=round($servicio->precio_extranjero+$utilidad[$index],2);
+                $array_promedio[]=($servicio->precio_nacional);
             }
         }
 
@@ -113,7 +115,7 @@ class CotizacionServiciosController extends Controller
 
         // return $cotizacion_numero;
 
-        return view('transaccion.venta.servicios.cotizacion.factura.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','empresa','sucursal','cotizacion_numero'));
+        return view('transaccion.venta.servicios.cotizacion.factura.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','empresa','sucursal','cotizacion_numero','array_promedio'));
 
 
     }
