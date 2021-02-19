@@ -45,7 +45,7 @@
 
 {{-- Boton para modal de Clientes --}}
 @section('form_action_modal_cliente',  route('agregado_rapido.cliente_cotizado'))
-@section('ruta_retorno', 'cotizacion'))
+@section('ruta_retorno', 'cotizacion')
 <div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target="#ModalCliente"><i class="fa fa-user-o" aria-hidden="true"></i>cliente </a>
 </div>

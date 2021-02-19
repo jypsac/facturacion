@@ -30,12 +30,18 @@
 @endif
 {{-- Boton para modal de Clientes --}}
 @section('form_action_modal_cliente',  route('agregado_rapido.cliente_cotizado'))
-@section('ruta_retorno', 'cotizacion'))
+@section('ruta_retorno', 'cotizacion')
 <div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target="#ModalCliente"><i class="fa fa-user-o" aria-hidden="true"></i>cliente </a>
 </div>
 {{--Fin Boton para modal de Clientes --}}
-
+{{-- Formulario para ir a Moneda Secundaria --}}
+<form action="{{ route('cotizacion.create_boleta_ms')}}" enctype="multipart/form-data" id="almacen-form" method="POST">
+    @csrf
+    <input type="text" value="{{$sucursal->id}}" hidden="hidden" name="almacen">
+    <input class="btn btn-sm btn-info" hidden="hidden" type="submit" value="cambiar" >
+</form>
+{{-- fin Formulario para ir a Moneda Secundaria --}}
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -552,15 +558,17 @@
                 var precio_uni_dec=(Math.round(precio_uni * multiplier) / multiplier)+(precio_uni*igv/100);
 
                 document.getElementById(`check_descuento${a}`).value = descuento;
-                document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
 
-                var comisiones9=precio_uni_dec+(precio*comision_porcentaje/100);
-                var comisiones=Math.round(comisiones9*multiplier)/multiplier;
-                document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
+
+                var comisiones9=precio_uni+(precio*comision_porcentaje/100);
+                var comisiones=(Math.round(comisiones9*multiplier)/multiplier+(comisiones9*igv/100));
+
 
                 var final=comisiones*cantidad;
                 var final_decimal = Math.round(final * multiplier) / multiplier;
                 console.log(final_decimal);
+                 document.getElementById(`precio_unitario_descuento${a}`).value = final_decimal;
+                document.getElementById(`precio_unitario_comision${a}`).value = final_decimal;
                 document.getElementById(`total${a}`).value = final_decimal;
             } else {
                 var multiplier = 100;
@@ -581,7 +589,7 @@
 
                 document.getElementById(`check_descuento${a}`).value = 0;
                 document.getElementById(`total${a}`).value = final_decimal;
-                document.getElementById(`precio_unitario_descuento${a}`).value = precio;
+                document.getElementById(`precio_unitario_descuento${a}`).value = end;
                 document.getElementById(`precio_unitario_comision${a}`).value = end;
             }
 
