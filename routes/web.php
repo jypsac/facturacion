@@ -221,6 +221,7 @@ Route::group(
 
 		//Agregado Rapido
 		Route::get('provedorruc', 'ProvedorController@ruc');
+		Route::get('clienteruc', 'ClienteController@ruc');
 		Route::resource('/provedor','ProvedorController');
 
 		Route::resource('/servicios','ServiciosController');

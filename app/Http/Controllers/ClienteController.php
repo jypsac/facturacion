@@ -68,7 +68,7 @@ class ClienteController extends Controller
 
         $cliente->save();
 
-        $this->storecontact($data);
+        $this->storecontact($data,$cliente);
 
 
         // return view('auxiliar.cliente.contacto.cliente_new');
@@ -79,19 +79,6 @@ class ClienteController extends Controller
 
     public function storecontact($data)
     {
-        $contador=Cliente::count();
-
-        // $contacto=new Contacto;
-        // $contacto->nombre=$request->get('nombre_contacto');
-        // $contacto->cargo=$request->get('cargo_contacto');
-        // $contacto->telefono=$request->get('telefono_contacto');
-        // $contacto->celular=$request->get('celular_contacto');
-        // $contacto->email=$request->get('email_contacto');
-        // $contacto->clientes_id=$contador;
-        // $contacto->save();
-
-        // return back();
-
         $contacto=new Contacto;
         $contacto->nombre=$data['nombre_contacto'];
         $contacto->primer_contacto=1;
@@ -99,7 +86,7 @@ class ClienteController extends Controller
         $contacto->telefono=$data['telefono_contacto'];
         $contacto->celular=$data['celular_contacto'];
         $contacto->email=$data['email_contacto'];
-        $contacto->clientes_id=$contador;
+        $contacto->clientes_id=$cliente->id;
         $contacto->save();
     }
 
@@ -159,11 +146,40 @@ class ClienteController extends Controller
      */
     public function destroy($id)
     {
-        $cliente=Cliente::findOrFail($id);
-        $cliente->delete();
-
-        return redirect()->route('cliente.index');
     }
+
+    function ruc(Request $request){
+        $ruc=$request->get('ruc');
+        $btn=$request->get('btn');
+
+        $data = file_get_contents("https://dniruc.apisperu.com/api/v1/ruc/".$ruc."?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRlc2Fycm9sbG9Aanlwc2FjLmNvbSJ9.1Pt1A4PEFAGmFySlfVeFKZKuVCC-u_ZEW-KYQq-P57k");
+        $info = json_decode($data, true);
+
+        $clientes=Cliente::where('numero_documento',array($info['ruc']))->first();
+        if (isset($clientes)) {
+            $ruc_view=$clientes->numero_documento;
+         }
+        else{
+        $ruc_view=array($info['ruc']);
+        }
+
+    if($data==='[]' || $info['fechaInscripcion']==='--'){
+        $datos = array(0 => 'nada');
+        echo json_encode($datos);
+    }else{
+        $datos = array(
+            // 0 => $info['ruc'],
+            0 => $ruc_view,
+            1 => $info['razonSocial'],
+            2 => $info['direccion'],
+            3 => $info['departamento'].' - '.$info['provincia'].' - '.$info['distrito'],
+            4 => date("d/m/Y", strtotime($info['fechaInscripcion'])),
+            5 => $info['departamento']
+        );
+        return json_encode($datos);
+    }
+
+}
 
     // public function consulta(Request $request){
     //     $nombre=$request->get('nombre');

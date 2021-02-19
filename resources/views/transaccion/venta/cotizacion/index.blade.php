@@ -9,6 +9,15 @@
 @section('content')
 
 <!-- modal -->
+@if($errors->any())
+       <div class="alert alert-danger" style="margin-top: 10px;margin-bottom: 0px;">
+            <a class="alert-link" href="#">
+            @foreach ($errors->all() as $error)
+                <li class="error" style="color: red">{{ $error }}</li>
+            @endforeach
+            </a>
+        </div>
+    @endif
 <div class="row">
     <div class="col-lg-12">
         <div id="modal-form" class="modal fade" aria-hidden="true">
@@ -88,17 +97,7 @@
 {{-- fimodal --}}
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    @if($errors->any())
-    <div style="">
-       <div class="alert alert-danger">
-            <a class="alert-link" href="#">
-            @foreach ($errors->all() as $error)
-                <li class="error">{{ $error }}</li>
-            @endforeach
-            </a>
-        </div>
-    </div>
-    @endif
+
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">

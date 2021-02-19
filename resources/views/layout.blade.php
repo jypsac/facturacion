@@ -52,7 +52,6 @@
 
 <body class="">
     {{-- Modal Cliente --}}
-    <!-- Modal -->
     <div class="modal fade" id="ModalCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document" style="margin-left: 22%;">
         <div class="modal-content" style="width: 880px;">
@@ -63,22 +62,21 @@
           </button>
       </div>
       <div>
-
-        {{--  --}}
-        <div class="ibox-content" >
+        <div class="ibox-content" style="padding-bottom: 0px;">
             <form>
                 {{ csrf_field() }}
-                <div class="form-group  row"><label class="col-sm-2 col-form-label">Introducir Ruc (Inestable):</label>
-                    <div class="col-sm-10">
+                <div class="form-group  row"><label class="col-sm-3 col-form-label">Introducir Ruc (Inestable):</label>
+                    <div class="col-sm-7">
                         <input type="text" class="form-control" class="ruc" id="ruc" name="ruc" required="required">
                     </div>
+                    <div class="col-sm-2"> <button class="btn btn-primary" id="botoncito" name="btn" value="cliente" class="botoncito"><i class="fa fa-search"></i> Buscar</button></div>
                 </div>
-                <button class="btn btn-primary" id="botoncito" name="btn" value="cliente" class="botoncito"><i class="fa fa-search"></i> Buscar</button>
+
             </form><script>
                 $(function(){
                     $('#botoncito').on('click', function(){
                         var ruc = $('#ruc').val();
-                        var url = "{{ url('provedorruc') }}";
+                        var url = "{{ url('clienteruc') }}";
                         $('.ajaxgif').removeClass('hide');
                         $.ajax({
                             type:'GET',
@@ -106,12 +104,12 @@
             </script>
         </div>
 
-        <div class="wrapper wrapper-content animated fadeInRight">
+        <div class="wrapper wrapper-content animated fadeInRight" style="padding-bottom: 0px">
             <div class="row">
                 <div class="col-lg-12">
                     <div >
                         <div >
-                            <form action=" @yield('form', route('cliente.store'))"  enctype="multipart/form-data" id="form" class="wizard-big" method="post"> {{-- Yiel form- es para colocar una ruta alterna  --}}
+                            <form action=" @yield('form_action_modal_cliente', route('cliente.store'))"  enctype="multipart/form-data" id="form" class="wizard-big" method="post"> {{-- Yiel form- es para colocar una ruta alterna  --}}
                                 @csrf
                                 <h1>Datos Personales</h1>
                                 <fieldset>
@@ -120,9 +118,9 @@
                                             <div class="form-group">
                                                 <label>Documento Identificacion *</label>
                                                 <select class="form-control m-b" name="documento_identificacion" >
+                                                    <option value="RUC">RUC</option>
                                                     <option value="DNI">DNI</option>
                                                     <option value="pasaporte">Pasaporte</option>
-                                                    <option value="RUC">Ruc</option>
                                                 </select>
                                             </div>
                                             <div class="form-group">
@@ -134,11 +132,13 @@
                                             <div class="form-group">
                                                 <label>Numero de Documento *</label>
                                                 <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required  autocomplete="off" type="text">
-                                               {{--  <datalist id="browserdoc" >
+                                                <datalist id="browserdoc" >
+                                                    <?php use  App\Cliente; ?>
+                                                    <?php $clientes=Cliente::all();?>
                                                     @foreach($clientes as $cliente)
                                                     <option id="a">{{$cliente->numero_documento}} - existente</option>
                                                     @endforeach
-                                                </datalist> --}}
+                                                </datalist>
                                             </div>
                                             <div class="form-group">
                                                 <label>Direccion *</label>
@@ -243,7 +243,6 @@
                                                 <input id="email" name="email_contacto" type="text" class="form-control required email" value="correo@contanto.com">
                                             </div>
                                         </div>
-                                        {{-- <input type="text" class="dropdown-item" name="almacen"  value="1"> --}}
                                     </div>
                                 </fieldset>
                             </form>
@@ -257,6 +256,7 @@
 </div>
 </div>
 {{-- Fin Modal Cliente --}}
+
 <div id="wrapper">
     <nav class="navbar-default navbar-static-side" role="navigation">
         <div class="sidebar-collapse">
