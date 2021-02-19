@@ -48,11 +48,13 @@
 </div>
 @endif
 
-{{-- Boton para el Modal Cliente--}}
+{{-- Boton para modal de Clientes --}}
+@section('form_action_modal_cliente',  route('agregado_rapido.cliente_cotizado'))
+@section('ruta_retorno', 'cotizacion_servicio'))
 <div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span></a>
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target="#ModalCliente"><i class="fa fa-user-o" aria-hidden="true"></i>cliente </a>
 </div>
-{{-- Fin Boton para el Modal Cliente--}}
+{{--Fin Boton para modal de Clientes --}}
 
 <form action="{{ route('cotizacion_servicio.create_factura_ms')}}" enctype="multipart/form-data" id="almacen-form" method="POST">
     @csrf
@@ -314,15 +316,107 @@
                 .check:checked {background: #0375bd6b;}
             </style>
 
-            <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-            <script src="{{ asset('js/popper.min.js') }}"></script>
-            <script src="{{ asset('js/bootstrap.js') }}"></script>
-            <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-            <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-            <!-- Custom and plugin javascript -->
-            <script src="{{ asset('js/inspinia.js') }}"></script>
-            <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+                <!-- Mainly scripts -->
+                <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+                <script src="{{ asset('js/popper.min.js') }}"></script>
+                <script src="{{ asset('js/bootstrap.js') }}"></script>
+                <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+                <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+                <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+                <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+                <!-- Custom and plugin javascript -->
+                <script src="{{ asset('js/inspinia.js') }}"></script>
+                <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+                <!-- Jquery Validate -->
+                <script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
+
+                <!-- Steps -->
+                <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
+                {{-- scritp de modal agregar --}}
+                <script>
+                    $(document).ready(function(){
+                        $("#wizard").steps();
+                        $("#form").steps({
+                            bodyTag: "fieldset",
+                            onStepChanging: function (event, currentIndex, newIndex)
+                            {
+                    // ¡Siempre permita retroceder incluso si el paso actual contiene campos no válidos!
+                    if (currentIndex > newIndex)
+                    {
+                        return true;
+                    }
+
+                    // Prohibir suprimir el paso "Advertencia" si el usuario es demasiado joven
+                    if (newIndex === 3 && Number($("#age").val()) < 18)
+                    {
+                        return false;
+                    }
+
+                    var form = $(this);
+
+                    // Limpie si el usuario retrocedió antes
+                    if (currentIndex < newIndex)
+                    {
+                        // Para eliminar estilos de error
+                        $(".body:eq(" + newIndex + ") label.error", form).remove();
+                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                    }
+
+                    // Deshabilite la validación en los campos que están deshabilitados u ocultos.
+                    form.validate().settings.ignore = ":disabled,:hidden";
+
+                    // Iniciar validación; Evite avanzar si es falso
+                    return form.valid();
+                },
+                onStepChanged: function (event, currentIndex, priorIndex)
+                {
+                    // Suprima (omita) el paso "Advertencia" si el usuario tiene edad suficiente.
+                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
+                    {
+                        $(this).steps("next");
+                    }
+
+                    // Suprima (omita) el paso "Advertencia" si el usuario tiene la edad suficiente y quiere el paso anterior.
+                    if (currentIndex === 2 && priorIndex === 3)
+                    {
+                        $(this).steps("previous");
+                    }
+                },
+                onFinishing: function (event, currentIndex)
+                {
+                    var form = $(this);
+
+                    // Deshabilita la validación en los campos que están deshabilitados.
+                    // En este punto, se recomienda hacer una verificación general (significa ignorar solo los campos deshabilitados)
+                    form.validate().settings.ignore = ":disabled";
+
+                    // Iniciar validación; Evitar el envío del formulario si es falso
+                    return form.valid();
+                },
+                onFinished: function (event, currentIndex)
+                {
+                    var form = $(this);
+
+                    // Enviar entrada de formulario
+                    form.submit();
+                }
+            }).validate({
+                errorPlacement: function (error, element)
+                {
+                    element.before(error);
+                },
+                rules: {
+                    confirm: {
+                        equalTo: "#password"
+                    }
+                }
+            });
+        });
+    </script>
+    {{-- / --}}
             {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
             <script>
                 function valida(f) {

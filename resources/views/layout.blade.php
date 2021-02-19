@@ -243,6 +243,9 @@
                                                 <input id="email" name="email_contacto" type="text" class="form-control required email" value="correo@contanto.com">
                                             </div>
                                         </div>
+                                        {{--  --}}
+                                        <input type="text" name="ruta_retorno" hidden="hidden" value="@yield('ruta_retorno','cotizacion')">
+                                        {{--  --}}
                                     </div>
                                 </fieldset>
                             </form>
