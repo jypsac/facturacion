@@ -233,9 +233,9 @@
                                                     <td>
                                                         <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
                                                     </td>
-                                                    
+
                                                         <input type="text" hidden="" id='prom_ori0' name='prom_ori[]' onclick="multi(0)">
-                                                    
+
                                                     <td>
                                                         <input type='text' id='cantidad0' name='cantidad[]' class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
                                                         </td>
