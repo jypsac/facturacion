@@ -578,7 +578,7 @@
                 document.getElementById(`check_descuento${a}`).value = descuento;
                 document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
 
-                var comisiones9=precio_uni_dec+(precio*comision_porcentaje/100);
+                var comisiones9=precio_uni_dec+(precio_uni_dec*comision_porcentaje/100);
                 var comisiones=Math.round(comisiones9*multiplier)/multiplier;
                 document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
 
