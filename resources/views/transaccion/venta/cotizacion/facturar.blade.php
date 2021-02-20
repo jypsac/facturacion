@@ -139,13 +139,6 @@
                                             <div class="col-lg-10" align="center">
                                                 <h3>
                                                     <?php $v=new CifrasEnLetras() ;
-                                                    
-                                                    {{$sub_total=($cotizacion_registros->cantidad*$array2)-($cotizacion_registros->cantidad*$array2*$cotizacion_registros->descuento/100)+$sub_total}};
-                                                    
-                                                    {{$igv_p=round($sub_total, 2)*$igv->igv_total/100}};
-
-                                                    {{$end=round($sub_total, 2)+round($igv_p, 2)}};
-
                                                     $letra=($v->convertirEurosEnLetras($end));
                                                     $letra_final = strstr($letra, 'soles',true);
                                                     $end_final=strstr($end, '.');
