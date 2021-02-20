@@ -137,14 +137,14 @@
                                                 <img src="https://www.codigos-qr.com/qr/php/qr_img.php?d=https%3A%2F%2Fwww.jypsac.com%2F&s=6&e=m" alt="Generador de Códigos QR Codes" height="150px" />
                                             </div>
                                             <div class="col-lg-10" align="center">
-                                                <h3>
+                                             {{--    <h3>
                                                     <?php $v=new CifrasEnLetras() ;
                                                     $letra=($v->convertirEurosEnLetras($end));
                                                     $letra_final = strstr($letra, 'soles',true);
                                                     $end_final=strstr($end, '.');
                                                     ?>
                                                     {{$letra_final}} {{$end_final}}/100 {{$cotizacion->moneda->nombre }}
-                                                </h3>
+                                                </h3> --}}
                                                 Representacion impresa de la Factura electrónica Puede ser <br>consultada en https://cloud.horizontcpe.com/ConsultaComprobanteE/<br> Autorizado mediante la Resolución de intendencia N° <br>0340050001931/SUNAT/SUNAT
                                             </div>
                                         </div>
