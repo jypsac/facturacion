@@ -255,7 +255,8 @@
                                                         <input type='text' id='descuento_unitario0' name='descuento_unitario[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
                                                     </td>
                                                     <td>
-                                                        <input type='text' id='comision0' name='comision[]' readonly="readonly" class="form-control" required  autocomplete="off" />
+                                                        <input type='text' id='precio_unitario_comision0'  style="width: 76px"  name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+                                                        <input type='text' id='comision0' hidden="" name='comision[]' readonly="readonly" class="form-control" required  autocomplete="off" />
                                                     </td>
                                                     <td>
                                                         <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
@@ -471,7 +472,9 @@
 
 
                 <td>
-                <input type='text' id='comision${i}' name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+                <input type='text' id='precio_unitario_comision${i}'  style="width: 76px"  name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+                </td>
+                <input type='text' hidden id='comision${i}' name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
                 </td>
 
                 <td>
@@ -578,39 +581,52 @@
             });
             total = (change)? total:0;
 
-            var precio = document.querySelector(`#precio${a}`).value;
-            var comision=document.querySelector(`#comision${a}`).value;
-            var descuento=document.querySelector(`#descuento${a}`).value;
+            var checkBox = document.getElementById(`check${a}`);
+            var cantidad = document.querySelector(`#cantidad${a}`).value;
+            var promedio_origina_descuento1=document.querySelector(`#descuento_unitario${a}`).value;
+            var cantidad_desc = document.getElementById(`check_descuento${a}`);
+            var descuento = document.querySelector(`#descuento${a}`).value;
+
             var prom_ori = document.querySelector(`#prom_ori${a}`).value;
 
-            var checkBox = document.getElementById(`check${a}`);
-            var cantidad = document.getElementById(`cantidad${a}`).value;
-            var multiplier = 100;
-
-
             if (checkBox.checked == true){
-                precio = precio-(prom_ori*descuento/100);
-                document.getElementById(`descuento_unitario${a}`).value = precio;
-                var descuento_p=prom_ori*comision/100;
-                var precio_final=parseFloat(descuento_p)+parseFloat(precio) ;
-                var precio_final_redondeado=Math.round(precio_final * multiplier) / multiplier;
-                var final_end=precio_final_redondeado*parseFloat(cantidad);
+                var precio = document.querySelector(`#precio${a}`).value;
+                var promedio_original=document.querySelector(`#prom_ori${a}`).value;
+                var comision_porcentaje=document.querySelector(`#comision${a}`).value;
+                var multiplier = 100;
+                var precio_uni = precio-(promedio_original*descuento/100);
+                var precio_uni_dec=Math.round(precio_uni * multiplier) / multiplier;
 
-                document.getElementById(`comision${a}`).value = descuento_p;
-
-                document.getElementById(`total${a}`).value = final_end;
                 document.getElementById(`check_descuento${a}`).value = descuento;
+                document.getElementById(`descuento_unitario${a}`).value = precio_uni_dec;
+
+                var comisiones9=precio_uni_dec+(precio_uni_dec*comision_porcentaje/100);
+                var comisiones=Math.round(comisiones9*multiplier)/multiplier;
+                document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
+
+                var final=comisiones*cantidad;
+                var final_decimal = Math.round(final * multiplier) / multiplier;
+
+                document.getElementById(`total${a}`).value = final_decimal;
+
             }else{
-                document.getElementById(`descuento_unitario${a}`).value = precio;
-                var descuento_p=prom_ori*comision/100;
-                var precio_final=parseFloat(descuento_p)+parseFloat(precio) ;
+                var multiplier = 100;
+                var descuento = 0;
+                
+                var precio = document.querySelector(`#precio${a}`).value;
+                var comision_porcentaje=document.querySelector(`#comision${a}`).value;
+                var final= cantidad*precio;
+                var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
 
-                document.getElementById(`comision${a}`).value = descuento_p;
+                var end =Math.round(end9 * multiplier) / multiplier;
+                var final2=cantidad*end;
+                var final_decimal = Math.round(final2 * multiplier) / multiplier;
 
-                var precio_final_redondeado=Math.round(precio_final * multiplier) / multiplier;
-                var final_end=precio_final_redondeado*parseFloat(cantidad);
                 document.getElementById(`check_descuento${a}`).value = 0;
-                document.getElementById(`total${a}`).value = final_end;
+                document.getElementById(`total${a}`).value = final_decimal;
+                document.getElementById(`descuento_unitario${a}`).value = precio;
+                document.getElementById(`precio_unitario_comision${a}`).value = end;
+
             }
 
 
