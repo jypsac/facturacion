@@ -1100,7 +1100,7 @@ public function facturar(Request $request,$id)
 
 
     if ($cotizacion->estado==0) {
-        return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','sum','igv',"array","sub_total","moneda",'cod_fac','productos','array_cantidad','validor','comi'));
+        return view('transaccion.venta.cotizacion.facturar', compact('cotizacion','empresa','sum','igv',"array","sub_total",'cod_fac','productos','array_cantidad','validor','comi'));
     }
     elseif ($cotizacion->estado==1) {
         return redirect()->route('cotizacion.show',$cotizacion->id);
