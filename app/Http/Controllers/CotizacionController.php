@@ -429,13 +429,14 @@ class CotizacionController extends Controller
                  //precio unitario descuento ----------------------------------------
             $desc_comprobacion=$request->get('check_descuento')[$i];
             if($desc_comprobacion <> 0){
-                $cotizacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
+                $cotizacion_registro->precio_unitario_desc=$array-($array2*$desc_comprobacion/100);
             }else{
                 $cotizacion_registro->precio_unitario_desc=$array;
             }
                 //precio unitario comision ----------------------------------------
             if($desc_comprobacion <> 0){
-                $cotizacion_registro->precio_unitario_comi=($array-($array*$desc_comprobacion/100))+($array*$comi/100);
+                $prec_uni_des=$array-($array2*$desc_comprobacion/100);
+                $cotizacion_registro->precio_unitario_comi=($prec_uni_des+($prec_uni_des*$comi/100));
             }else{
                 $cotizacion_registro->precio_unitario_comi=$array+($array*$comi/100);
             }

@@ -332,30 +332,26 @@ class CotizacionServiciosController extends Controller
                 }
 
                 $cotizacion_registro->cantidad=$request->get('cantidad')[$i];
-
                 //descuento
-                $descuento_verificacion=$request->get('check_descuento')[$i];
-                if($descuento_verificacion <> 0){
-                    $cotizacion_registro->descuento=$servicio->descuento;
-                    $desc_comprobacion=$servicio->descuento;
-                }else{
-                    $cotizacion_registro->descuento=0;
-                    $desc_comprobacion=0;
-                }
-                //precio unitario descuento
-                if($desc_comprobacion <> 0){
-                    $cotizacion_registro->precio_unitario_desc=$array-($array2*$desc_comprobacion/100);
-                    $precio_unitario_desc=$array-($array2*$desc_comprobacion/100);
-                }else{
-                    $cotizacion_registro->precio_unitario_desc=$array;
-                    $precio_unitario_desc=$array;
-                }
+                $desc_comprobacion=$request->get('check_descuento')[$i];
 
                 $cotizacion_registro->comision=$comi;
-                $cotizacion_registro->precio_unitario_comi=$precio_unitario_desc+($array2*$comi/100);
 
+                $cotizacion_registro->descuento = $desc_comprobacion;   
+            if($desc_comprobacion <> 0){
+                $cotizacion_registro->precio_unitario_desc=$array-($array2*$desc_comprobacion/100);
+            }else{
+                $cotizacion_registro->precio_unitario_desc=$array;
+            }
+                //precio unitario comision ----------------------------------------
+            if($desc_comprobacion <> 0){
+                $prec_uni_des=$array-($array2*$desc_comprobacion/100);
+                $cotizacion_registro->precio_unitario_comi=($prec_uni_des+($prec_uni_des*$comi/100));
+            }else{
+                $cotizacion_registro->precio_unitario_comi=$array+($array*$comi/100);
+            }
+            $cotizacion_registro->save();
 
-                $cotizacion_registro->save();
             }
         }else {
             return redirect()->route('cotizacion_servicio.create_factura')->with('campo', 'Falto introducir un campo de la tabla productos');
