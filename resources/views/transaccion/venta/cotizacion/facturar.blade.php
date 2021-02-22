@@ -108,7 +108,7 @@
                             </thead>
                             <tbody>
                                 @foreach($productos as $index => $cotizacion_registros)
-                                @if($validor[$index]==1)
+                                {{-- @if($validor[$index]==1) --}}
                                 <tr>
                                     <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
                                     <td>{{$cotizacion_registros->cantidad}}</td>
@@ -128,7 +128,7 @@
                                         {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                     </td>
                                 </tr>
-                                @endif
+                                {{-- @endif --}}
                                 @endforeach
                                 <tr>
                                     <td colspan="3" rowspan="4">

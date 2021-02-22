@@ -337,7 +337,7 @@ class CotizacionServiciosController extends Controller
 
                 $cotizacion_registro->comision=$comi;
 
-                $cotizacion_registro->descuento = $desc_comprobacion;   
+                $cotizacion_registro->descuento = $desc_comprobacion;
             if($desc_comprobacion <> 0){
                 $cotizacion_registro->precio_unitario_desc=$array-($array2*$desc_comprobacion/100);
             }else{
@@ -378,16 +378,17 @@ class CotizacionServiciosController extends Controller
         if($moneda->tipo =='nacional'){
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
-                $igv_precio[]=$servicio->precio_nacional+$utilidad[$index];
-                $igv[]=$igv_precio[$index]*$igv_total/100;
-                $array[]=$servicio->precio_nacional+$utilidad[$index]+$igv[$index];
+                $igv_precio[]=$servicio->precio_nacional;
+                $igv[]=$igv_precio[$index];
+                $array[]=$servicio->precio_nacional+$utilidad[$index];
+
             }
         }else{
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
-                $igv_precio[]=$servicio->precio_extranjero+$utilidad[$index];
-                $igv[]=$igv_precio[$index]*$igv_total/100;
-                $array[]=$servicio->precio_extranjero+$utilidad[$index]+$igv[$index];
+                $igv_precio[]=$servicio->precio_extranjero;
+                $igv[]=$igv_precio[$index];
+                $array[]=$servicio->precio_extranjero+$utilidad[$index];
             }
         }
 
@@ -425,7 +426,7 @@ class CotizacionServiciosController extends Controller
 
 
 
-        return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','empresa','sucursal','cotizacion_numero'));
+        return view('transaccion.venta.servicios.cotizacion.boleta.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','empresa','sucursal','cotizacion_numero','igv_precio'));
     }
 
     public function create_boleta_ms(Request $request)

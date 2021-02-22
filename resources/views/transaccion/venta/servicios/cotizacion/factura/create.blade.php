@@ -612,7 +612,7 @@
             }else{
                 var multiplier = 100;
                 var descuento = 0;
-                
+
                 var precio = document.querySelector(`#precio${a}`).value;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var final= cantidad*precio;
