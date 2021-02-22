@@ -554,7 +554,7 @@
             var descuento=document.querySelector(`#descuento${a}`).value;
             var checkBox = document.getElementById(`check${a}`);
             var cantidad = document.getElementById(`cantidad${a}`).value;
-            var prom_ori = document.querySelector(`prom_ori${a}`).value;
+            var prom_ori = document.querySelector(`#prom_ori${a}`).value;
             var multiplier = 100;
             var igv = {{$igv->renta}};
 
@@ -567,9 +567,9 @@
                 var precio_uni=precio-(promedio_original*descuento/100);
                 var precio_uni_dec=(Math.round(precio_uni * multiplier) / multiplier)+(precio_uni*igv/100);
 
-                // document.getElementById(`descuento_unitario${a}`).value = descuento;
+                document.getElementById(`check_descuento${a}`).value = descuento;
 
-                var comisiones9=precio_uni+(precio*comision_porcentaje/100);
+                var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
                 var comisiones=(Math.round(comisiones9*multiplier)/multiplier+(comisiones9*igv/100));
 
 
@@ -581,24 +581,7 @@
                 document.getElementById(`precio_unitario_comision${a}`).value = final_decimal;
                 document.getElementById(`total${a}`).value = final_decimal;
 
-                // precio=precio - (prom_ori*descuento/100);
-                // document.getElementById(`descuento_unitario${a}`).value = precio;
-                // var descuento_p=precio*comision/100;
-                // var precio_final=parseFloat(descuento_p)+parseFloat(precio) ;
-                // var precio_final_redondeado=Math.round(precio_final * multiplier) / multiplier;
-                // var final_end=precio_final_redondeado*parseFloat(cantidad);
-
-                // document.getElementById(`total${a}`).value = final_end;
-                // document.getElementById(`check_descuento${a}`).value = descuento;
             }else{
-                // document.getElementById(`descuento_unitario${a}`).value = precio;
-                // var descuento_p=precio*comision/100;
-                // var precio_final=parseFloat(descuento_p)+parseFloat(precio) ;
-
-                // var precio_final_redondeado=Math.round(precio_final * multiplier) / multiplier;
-                // var final_end=precio_final_redondeado*parseFloat(cantidad);
-                // document.getElementById(`check_descuento${a}`).value = precio;
-                // document.getElementById(`total${a}`).value = final_end;
 
                 var multiplier = 100;
                 var descuento = 0;
@@ -610,11 +593,11 @@
                 var end =(Math.round(end9 * multiplier) / multiplier)+(end9*igv/100);
                 var final2=cantidad*end;
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
-
-                document.getElementById(`check_descuento${a}`).value = 0;
-                document.getElementById(`total${a}`).value = final_decimal;
                 document.getElementById(`descuento_unitario${a}`).value = end;
                 document.getElementById(`precio_unitario_comision${a}`).value = end;
+                document.getElementById(`check_descuento${a}`).value = 0;
+                document.getElementById(`total${a}`).value = final_decimal;
+
             }
 
 

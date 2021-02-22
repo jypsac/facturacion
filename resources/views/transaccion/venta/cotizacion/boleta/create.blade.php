@@ -560,7 +560,7 @@
                 document.getElementById(`check_descuento${a}`).value = descuento;
 
 
-                var comisiones9=precio_uni+(precio*comision_porcentaje/100);
+                var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
                 var comisiones=(Math.round(comisiones9*multiplier)/multiplier+(comisiones9*igv/100));
 
 
