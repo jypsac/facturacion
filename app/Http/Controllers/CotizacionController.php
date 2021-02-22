@@ -1600,7 +1600,7 @@ public function facturar_store(Request $request)
         $cod_bol="B".$sucursal_nr."-".$boleta_nr;
 
         if ($cotizacion->estado==0) {
-            return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','productos','sum','igv',"array","sub_total",'moneda' ,'cod_bol','validor','array_cantidad','comi'));
+            return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','productos','sum','igv',"array","sub_total" ,'cod_bol','validor','array_cantidad','comi'));
         }
         elseif ($cotizacion->estado==1) {
             return redirect()->route('cotizacion.show',$cotizacion->id);
