@@ -17,8 +17,16 @@ class CreateServiciosTable extends Migration
             $table->bigIncrements('id');
             $table->string('codigo_servicio');
             $table->string('codigo_original')->unique();
+
+            $table->unsignedBigInteger('familia_id')->default(1);
+            $table->foreign('familia_id')->references('id')->on('familias')->onDelete('cascade');
+
+            $table->unsignedBigInteger('marca_id')->default(1);
+            $table->foreign('marca_id')->references('id')->on('marcas')->onDelete('cascade');
+
             $table->unsignedBigInteger('moneda_id');
             $table->foreign('moneda_id')->references('id')->on('monedas')->onDelete('cascade');
+
             $table->string('nombre');
             $table->string('categoria');
             $table->string('precio_nacional');
