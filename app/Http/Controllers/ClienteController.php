@@ -38,57 +38,50 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-         $this->validate($request,[
-            'nombre' => ['required','unique:clientes,nombre'],
-            'numero_documento' => ['required','unique:clientes,numero_documento'],
-        ],[
-            'nombre.unique' => 'El Cliente ya ha sido registrado',
-            'nombre.numero_documento' => 'El numero de documentacion ya ha sido registrado',
-        ]);
+     $this->validate($request,[
+        'nombre' => ['required','unique:clientes,nombre'],
+        'numero_documento' => ['required','unique:clientes,numero_documento'],
+    ],[
+        'nombre.unique' => 'El Cliente ya ha sido registrado',
+        'nombre.numero_documento' => 'El numero de documentacion ya ha sido registrado',
+    ]);
 
-        $data = $request->all();
+     $data = $request->all();
 
-        $cliente= new Cliente;
-        $cliente->nombre=$request->get('nombre');
-        $cliente->direccion=$request->get('direccion');
-        $cliente->email=$request->get('email');
-        $cliente->telefono=$request->get('telefono');
-        $cliente->celular=$request->get('celular');
-        // $cliente->empresa=$request->get('empresa');
-        $cliente->documento_identificacion=$request->get('documento_identificacion');
-        $cliente->numero_documento=$request->get('numero_documento');
+     $cliente= new Cliente;
+     $cliente->nombre=$request->get('nombre');
+     $cliente->direccion=$request->get('direccion');
+     $cliente->email=$request->get('email');
+     $cliente->telefono=$request->get('telefono');
+     $cliente->celular=$request->get('celular');
+     $cliente->documento_identificacion=$request->get('documento_identificacion');
+     $cliente->numero_documento=$request->get('numero_documento');
+     $cliente->ciudad=$request->get('ciudad');
+     $cliente->departamento=$request->get('departamento');
+     $cliente->pais=$request->get('pais');
+     $cliente->tipo_cliente=$request->get('tipo_cliente');
+     $cliente->aniversario=$request->get('aniversario');
+     $cliente->cod_postal=$request->get('cod_postal');
+     $cliente->fecha_registro=$request->get('fecha_registro');
+     $cliente->save();
 
-        $cliente->ciudad=$request->get('ciudad');
-        $cliente->departamento=$request->get('departamento');
-        $cliente->pais=$request->get('pais');
-        $cliente->tipo_cliente=$request->get('tipo_cliente');
-        $cliente->aniversario=$request->get('aniversario');
-        $cliente->cod_postal=$request->get('cod_postal');
-        $cliente->fecha_registro=$request->get('fecha_registro');
+     $contacto=new Contacto;
+     $contacto->nombre=$request->get('nombre_contacto');
+     $contacto->primer_contacto=1;
+     $contacto->cargo=$request->get('cargo_contacto');
+     $contacto->telefono=$request->get('telefono_contacto');
+     $contacto->celular=$request->get('celular_contacto');
+     $contacto->email=$request->get('email_contacto');
+     $contacto->clientes_id=$cliente->id;
+     $contacto->save();
+     return redirect()->route('cliente.show',$cliente->id);
+ }
 
-        $cliente->save();
+ public function storecontact($data)
+ {
 
-        $this->storecontact($data,$cliente);
 
-
-        // return view('auxiliar.cliente.contacto.cliente_new');
-        // return redirect()->route('cliente.index');
-        return back();
-
-    }
-
-    public function storecontact($data)
-    {
-        $contacto=new Contacto;
-        $contacto->nombre=$data['nombre_contacto'];
-        $contacto->primer_contacto=1;
-        $contacto->cargo=$data['cargo_contacto'];
-        $contacto->telefono=$data['telefono_contacto'];
-        $contacto->celular=$data['celular_contacto'];
-        $contacto->email=$data['email_contacto'];
-        $contacto->clientes_id=$cliente->id;
-        $contacto->save();
-    }
+ }
 
     /**
      * Display the specified resource.
@@ -158,38 +151,25 @@ class ClienteController extends Controller
         $clientes=Cliente::where('numero_documento',array($info['ruc']))->first();
         if (isset($clientes)) {
             $ruc_view=$clientes->numero_documento;
-         }
+        }
         else{
-        $ruc_view=array($info['ruc']);
+            $ruc_view=array($info['ruc']);
         }
 
-    if($data==='[]' || $info['fechaInscripcion']==='--'){
-        $datos = array(0 => 'nada');
-        echo json_encode($datos);
-    }else{
-        $datos = array(
-            // 0 => $info['ruc'],
-            0 => $ruc_view,
-            1 => $info['razonSocial'],
-            2 => $info['direccion'],
-            3 => $info['departamento'].' - '.$info['provincia'].' - '.$info['distrito'],
-            4 => date("d/m/Y", strtotime($info['fechaInscripcion'])),
-            5 => $info['departamento']
-        );
-        return json_encode($datos);
+        if($data==='[]' || $info['fechaInscripcion']==='--'){
+            $datos = array(0 => 'nada');
+            echo json_encode($datos);
+        }else{
+            $datos = array(
+                0 => $ruc_view,
+                1 => $info['razonSocial'],
+                2 => $info['direccion'],
+                3 => $info['departamento'].' - '.$info['provincia'].' - '.$info['distrito'],
+                4 => date("d/m/Y", strtotime($info['fechaInscripcion'])),
+                5 => $info['departamento']
+            );
+            return json_encode($datos);
+        }
+
     }
-
-}
-
-    // public function consulta(Request $request){
-    //     $nombre=$request->get('nombre');
-    //     $validar= Cliente::where("nombre","=",$nombre)->get();
-
-    //     if ($nombre == $validar){
-    //         $si=true;
-    //     }else{
-    //         $si=false;
-    //     }
-    //     return $si;
-    // }
 }
