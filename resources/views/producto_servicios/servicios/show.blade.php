@@ -33,8 +33,15 @@
           <label class="col-sm-2 col-form-label">Moneda:</label>
           <div class="col-sm-4">
             <input type="text" class="form-control"  required="required" value="{{$servicios->moneda->nombre}}" readonly="readonly">
-
-          </div> 
+          </div>
+           <label class="col-sm-2 col-form-label">Familia:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control"  required="required" value="{{ $servicios->familia->descripcion}}" readonly="readonly">
+          </div>
+           <label class="col-sm-2 col-form-label">Marca:</label>
+          <div class="col-sm-4">
+            <input type="text" class="form-control"  required="required" value="{{ $servicios->marca->nombre}}" readonly="readonly">
+          </div>
         </div>
 
       </div>
@@ -90,7 +97,7 @@
   <label class="col-sm-2 col-form-label">Precio N:</label>
   <div class="col-sm-4"><div class="input-group m-b">
     <div class="input-group-prepend">
-      <span class="input-group-addon">S/.</span>
+      <span class="input-group-addon">{{$moneda_nacional->simbolo}}</span>
     </div>
     <input type="text" class="form-control" name="precio" required="required"  value="{{$servicios->precio_nacional}}" readonly="">
   </div>
@@ -98,7 +105,7 @@
 <label class="col-sm-2 col-form-label">Precio E:</label>
 <div class="col-sm-4"><div class="input-group m-b">
     <div class="input-group-prepend">
-      <span class="input-group-addon">$/.</span>
+      <span class="input-group-addon">{{$moneda_extranjera->simbolo}}</span>
     </div>
     <input type="text" class="form-control" name="precio" required="required"  value="{{$servicios->precio_extranjero}}" readonly="">
   </div>

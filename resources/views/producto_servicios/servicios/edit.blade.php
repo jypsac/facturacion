@@ -8,9 +8,9 @@
 
 @section('content')
 
-  @if ($servicios->estado_anular=='1')
-    @include("maestro.catalogo.servicios.show");
-  @endif
+@if ($servicios->estado_anular=='1')
+@include("maestro.catalogo.servicios.show");
+@endif
 
 
 <div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
@@ -32,38 +32,55 @@
           <div class="col-sm-4">
             <input type="text" class="form-control m-b" readonly="readonly" value="{{$servicios->categoria}}" >
           </div>
+
           <label class="col-sm-2 col-form-label">Codigo Automatico:</label>
           <div class="col-sm-4"><input type="text" class="form-control"  required="required" value="{{$servicios->codigo_servicio}}" readonly="readonly"></div>
-          <label class="col-sm-2 col-form-label">Moneda:</label>
+
+          <label class="col-sm-2 col-form-label">Marca:</label>
           <div class="col-sm-4">
-            <select class="form-control" name="moneda">
-              @foreach($monedas as $moneda)
-              <option value="{{$moneda->id}}">{{$moneda->nombre}}</option>
-              @endforeach
-            </select>
-          </div>  
-        </div>
+            <select class="form-control m-b" name="marca_id" required="required">
+             <option value="{{ $servicios->marca->id }}">{{ $servicios->marca->nombre}}</option>
+             <option disabled="">---------------------</option>
+             @foreach($marcas as $marca)
+             <option value="{{ $marca->id }}">{{ $marca->nombre}}</option>
+             @endforeach
+           </select>
+         </div>
 
-      </div>
-      <br>
-    </div>
+         <label class="col-sm-2 col-form-label">Familia:</label>
+         <div class="col-sm-4">
+          <select class="form-control m-b" name="familia_id" required="required">
+           <option value="{{ $servicios->familia->id }}">{{ $servicios->familia->descripcion}}</option>
+           <option disabled="">---------------------</option>
+           @foreach($familias as $familia)
+           <option value="{{ $familia->id }}">{{ $familia->descripcion}}</option>
+           @endforeach
+         </select>
+       </div>
 
-  </fieldset>
 
-  <fieldset class="col-sm-6">
-   <legend>Datos del <br>Servicios </legend>
+     </div>
 
-   <div class="panel panel-default">
-    <div class="panel-body" align="left">
-     <div class="row">
-      <label class="col-sm-2 col-form-label">Nombre:</label>
-      <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto" required="required" value="{{$servicios->nombre}}" ></div>
+   </div>
+   <br>
+ </div>
 
-      <label class="col-sm-2 col-form-label">Descripcion:</label>
-      <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" required="required" >{{$servicios->descripcion}}</textarea ></div>
-    </div>
+</fieldset>
 
+<fieldset class="col-sm-6">
+ <legend>Datos del <br>Servicios </legend>
+
+ <div class="panel panel-default">
+  <div class="panel-body" align="left">
+   <div class="row">
+    <label class="col-sm-2 col-form-label">Nombre:</label>
+    <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto" required="required" value="{{$servicios->nombre}}" ></div>
+
+    <label class="col-sm-2 col-form-label">Descripcion:</label>
+    <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" required="required" >{{$servicios->descripcion}}</textarea ></div>
   </div>
+
+</div>
 </div>
 
 </fieldset>
@@ -106,6 +123,17 @@
     @endif
   </div>
 </div>
+<label class="col-sm-2 col-form-label">Moneda:</label>
+<div class="col-sm-4">
+  <select class="form-control" name="moneda">
+    <option value="{{$servicios->moneda->id}}">{{$servicios->moneda->nombre}}</option>
+    <option disabled="">---------------------</option>
+    @foreach($monedas as $moneda)
+    <option value="{{$moneda->id}}">{{$moneda->nombre}}</option>
+    @endforeach
+  </select>
+</div>
+
 </div>
 <div class="row">
 </div>

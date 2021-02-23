@@ -1,9 +1,11 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Familia;
+use App\Marca;
+use App\Moneda;
 use App\Servicios;
 use App\TipoCambio;
-use App\Moneda;
 use Illuminate\Http\Request;
 
 class ServiciosController extends Controller
@@ -26,8 +28,10 @@ class ServiciosController extends Controller
      */
     public function create()
     {
+        $marcas=Marca::all();
+        $familias=Familia::all();
         $monedas=Moneda::all();
-        return view('producto_servicios.servicios.create',compact('monedas'));
+        return view('producto_servicios.servicios.create',compact('monedas','marcas','familias'));
         //
     }
 
@@ -39,10 +43,6 @@ class ServiciosController extends Controller
      */
     public function store(Request $request)
     {
-        $this->validate($request,[
-            'codigo_original' => ['required','unique:servicios,codigo_original'],
-        ]
-    );
         if($request->hasfile('foto')){
             $image1 =$request->file('foto');
             $name =time().$image1->getClientOriginalName();
@@ -68,15 +68,23 @@ class ServiciosController extends Controller
         if($moneda_principal_id==$moneda_id){
             $precio_nacional=$request->get('precio');
             $precio_extranjero=$precio_nacional/$cambio->paralelo;
-          }else{
+        }else{
             $precio_extranjero=$request->get('precio');
             $precio_nacional=$precio_extranjero*$cambio->paralelo;
-          }
+        }
+        $codigo_original=$request->get('codigo_original');
 
         $servicios=new Servicios;
         $servicios->codigo_servicio=$codigo_servicio;
-        $servicios->codigo_original=$request->get('codigo_original');
+
+        if (isset($codigo_original)) {
+        $servicios->codigo_original=$request->get('codigo_original');}
+        else{
+        $servicios->codigo_original=$codigo_servicio; }
+
         $servicios->moneda_id=$moneda_id;
+        $servicios->marca_id=$request->get('marca_id');
+        $servicios->familia_id=$request->get('familia_id');
         $servicios->nombre=$request->get('nombre');
         $servicios->categoria=$request->get('categoria');
         $servicios->precio_nacional=round($precio_nacional,2);
@@ -102,7 +110,9 @@ class ServiciosController extends Controller
     {
         $servicios=Servicios::find($id);
         $monedas=Moneda::all();
-        return view('producto_servicios.servicios.show',compact('servicios','monedas'));
+        $moneda_nacional=Moneda::where('tipo','nacional')->first();
+        $moneda_extranjera=Moneda::where('tipo','extranjera')->first();
+        return view('producto_servicios.servicios.show',compact('servicios','monedas','moneda_nacional','moneda_extranjera'));
     }
 
     /**
@@ -113,14 +123,16 @@ class ServiciosController extends Controller
      */
     public function edit($id)
     {
-        $moneda_principal=Moneda::where('tipo','nacional')->first();
-        $moneda_principal_id=$moneda_principal->id;
+       $marcas=Marca::all();
+       $familias=Familia::all();
+       $moneda_principal=Moneda::where('tipo','nacional')->first();
+       $moneda_principal_id=$moneda_principal->id;
         // $moneda_id=$request->get('moneda');
 
-        $monedas=Moneda::all();
-        $servicios=Servicios::find($id);
-        return view('producto_servicios.servicios.edit',compact('servicios','monedas','moneda_principal_id'));
-    }
+       $monedas=Moneda::all();
+       $servicios=Servicios::find($id);
+       return view('producto_servicios.servicios.edit',compact('servicios','monedas','moneda_principal_id','marcas','familias'));
+   }
 
     /**
      * Update the specified resource in storage.
@@ -133,12 +145,12 @@ class ServiciosController extends Controller
     {
         $boton=$request->get('actualizar');
         if ($boton=='anular') {
-         $servicio= Servicios::find($id);
-         $servicio->estado_anular='1';
-         $servicio->save();
-         return redirect()->route('servicios.index');
-     }
-     elseif ($boton=='edit_servicio') {
+           $servicio= Servicios::find($id);
+           $servicio->estado_anular='1';
+           $servicio->save();
+           return redirect()->route('servicios.index');
+       }
+       elseif ($boton=='edit_servicio') {
         if($request->hasfile('foto')){
             $image1 =$request->file('foto');
             $name =time().$image1->getClientOriginalName();

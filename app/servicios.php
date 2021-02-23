@@ -13,4 +13,10 @@ class Servicios extends Model
 	 public function moneda(){
         return $this->belongsTo(Moneda::class,'moneda_id');
     }
+     public function familia(){
+        return $this->belongsTo(Familia::class,'familia_id');
+    }
+     public function marca(){
+        return $this->belongsTo(Marca::class,'marca_id');
+    }
 }

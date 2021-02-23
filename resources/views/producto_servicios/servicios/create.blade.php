@@ -35,7 +35,7 @@
         <div class="row">
           <label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
           <div class="col-sm-4">
-            <input type="text" class="form-control" name="codigo_original" required="required">
+            <input type="text" class="form-control" name="codigo_original" >
           </div>
 
 
@@ -44,37 +44,49 @@
             <input type="text" class="form-control m-b" readonly="readonly" value="Servicios" name="categoria">
           </div>
 
-          <label class="col-sm-2 col-form-label">Moneda:</label>
+          <label class="col-sm-2 col-form-label">Marca:</label>
           <div class="col-sm-4">
-            <select class="form-control" name="moneda">
-              @foreach($monedas as $moneda)
-              <option value="{{$moneda->id}}">{{$moneda->nombre}}</option>
-              @endforeach
-            </select>
-          </div>
+            <select class="form-control m-b" name="marca_id" required="required">
+             {{-- <option>Seleccione una Marca</option> --}}
+             @foreach($marcas as $marca)
+             <option value="{{ $marca->id }}">{{ $marca->nombre}}</option>
+             @endforeach
+           </select>
+         </div>
 
-        </div>
+         <label class="col-sm-2 col-form-label">Familia:</label>
+         <div class="col-sm-4">
+          <select class="form-control m-b" name="familia_id" required="required">
+           {{-- <option>Seleccione una Familia</option> --}}
+           @foreach($familias as $familia)
+           <option value="{{ $familia->id }}">{{ $familia->descripcion}}</option>
+           @endforeach
+         </select>
+       </div>
 
-      </div>
-      <br>
-    </div>
 
-  </fieldset>
+     </div>
 
-  <fieldset class="col-sm-6">
-   <legend>Datos del <br>Servicios </legend>
+   </div>
+   <br>
+ </div>
 
-   <div class="panel panel-default">
-    <div class="panel-body" align="left">
-     <div class="row">
-      <label class="col-sm-2 col-form-label">Nombre:</label>
-      <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto" required="required"></div>
+</fieldset>
 
-      <label class="col-sm-2 col-form-label">Descripcion:</label>
-      <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" required="required" ></textarea ></div>
-    </div>
+<fieldset class="col-sm-6">
+ <legend>Datos del <br>Servicios </legend>
 
+ <div class="panel panel-default">
+  <div class="panel-body" align="left">
+   <div class="row">
+    <label class="col-sm-2 col-form-label">Nombre:</label>
+    <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto" required="required"></div>
+
+    <label class="col-sm-2 col-form-label">Descripcion:</label>
+    <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" required="required" ></textarea ></div>
   </div>
+
+</div>
 </div>
 
 </fieldset>
@@ -108,12 +120,22 @@
   <label class="col-sm-2 col-form-label">Precio:</label>
   <div class="col-sm-4"><div class="input-group m-b">
     <div class="input-group-prepend">
-      <span class="input-group-addon">S/.</span>
+      <span class="input-group-addon">$$</span>
     </div>
     <input type="text" class="form-control" name="precio" required="required" value="0">
   </div>
 </div>
+<label class="col-sm-2 col-form-label">Moneda:</label>
+<div class="col-sm-4">
+  <select class="form-control" name="moneda">
+    @foreach($monedas as $moneda)
+    <option value="{{$moneda->id}}">{{$moneda->nombre}}</option>
+    @endforeach
+  </select>
 </div>
+
+</div>
+
 <div class="row">
 </div>
 </div>
@@ -228,15 +250,15 @@ legend
     }
   </script>
   {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
-      <script>
-          function valida(f) {
-              var boton=document.getElementById("boton");
-              var completo = true;
-              var incompleto = false;
-              if( f.elements[0].value == "" )
-                 { alert(incompleto); }
-             else{boton.type = 'button';}
-         }
-     </script>
-   {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
-  @endsection
+  <script>
+    function valida(f) {
+      var boton=document.getElementById("boton");
+      var completo = true;
+      var incompleto = false;
+      if( f.elements[0].value == "" )
+       { alert(incompleto); }
+     else{boton.type = 'button';}
+   }
+ </script>
+ {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+ @endsection
