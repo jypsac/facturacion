@@ -119,13 +119,15 @@
                                      </td>
                                      <td>{{$array_cantidad[$index]}}</td>
                                      {{-- MODIFICAR ESTA PARTE CON LOGICA DE REPROGRAMACION PARA UN NUEVO PRODUCTO DIRECTAMENTE DESDE KARDEX --}}
-                                     <td>{{$cotizacion->moneda->simbolo}}.{{$array2=$array[$index]+($array[$index]*($comi/100))}}</td>
-                                     <td>{{$cotizacion->moneda->simbolo}}.{{$array2*$cotizacion_registros->cantidad}}</td>
+                                      <td style="display: none;">
+                                        {{$desc_array=$array[$index]-($array_promedio[$index]*$cotizacion_registros->descuento/100)}}
+                                        {{$comis_array= $desc_array+($desc_array*($comi/100))}}
+                                    </td>
+                                    <td>{{$cotizacion->moneda->simbolo}}. {{round($comis_array,2)+($comis_array)*($igv->igv_total/100)}}</td>
+                                    <td>{{$cotizacion->moneda->simbolo}}. {{round($comis_array*$cotizacion_registros->cantidad,2)+($comis_array)*($igv->igv_total/100)}}</td>
 
-
-                                     <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$array2)-($cotizacion_registros->cantidad*$array2*$cotizacion_registros->descuento/100)+$sub_total}}
-
-                                     </td>
+                                    <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$comis_array)+$sub_total+($comis_array)*($igv->igv_total/100)}}
+                                    </td>
                                  </tr>
                                  {{-- @endif --}}
                                  @endforeach

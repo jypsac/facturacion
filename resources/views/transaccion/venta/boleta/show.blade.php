@@ -162,10 +162,10 @@
                                 <td>{{$boleta_registros->precio}}</td>
                                 <td>{{$boleta_registros->descuento}}%</td>
                                 <td>{{$boleta_registros->precio_unitario_desc}}</td>
-                                <td>{{$boleta_registros->precio_unitario_desc * $boleta_registros->cantidad }}</td>
-                                <td style="display: none">{{$sub_total=($boleta_registros->cantidad*$boleta_registros->precio)-($boleta_registros->cantidad*$boleta_registros->precio*$boleta_registros->descuento/100)+$sub_total}}
+                                <td>{{$boleta_registros->precio_unitario_comi * $boleta_registros->cantidad }}</td>
+                                <td style="display: none">
+                                    {{$sub_total=($boleta_registros->precio_unitario_comi+$sub_total)}}
                                         S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
-                                        {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                     </td>
                             </tr>
                             <span hidden="hidden">{{$i++}}</span>

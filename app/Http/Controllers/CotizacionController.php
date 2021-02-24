@@ -844,7 +844,7 @@ public function create_boleta_ms(Request $request)
                 //precio unitario comision ----------------------------------------
             if($desc_comprobacion <> 0){
                  $precio_uni = $array - ($array2*$desc_comprobacion/100);
-                 $precio_comi = $precio_uni+($array*($comi/100));
+                 $precio_comi = $precio_uni+($precio_uni*($comi/100));
                  $cotizacion_registro->precio_unitario_comi=$precio_comi+($precio_comi*($igv->igv_total/100));
             }else{
                 $precio_comi = $array+($array*($comi/100));
@@ -1314,13 +1314,14 @@ public function facturar_store(Request $request)
             $desc_comprobacion=$cotizacion_facturacion->descuento;
 
             if($desc_comprobacion <> 0){
-                $facturacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
+                $facturacion_registro->precio_unitario_desc=$array-($array2*$desc_comprobacion/100);
             }else{
                 $facturacion_registro->precio_unitario_desc=$array;
             }
                     //precio unitario comision ----------------------------------------
             if($desc_comprobacion <> 0){
-                $facturacion_registro->precio_unitario_comi=($array-($array*$desc_comprobacion/100))+($array*$comi/100);
+                $array_desc= ($array-($array2*$desc_comprobacion/100));
+                $facturacion_registro->precio_unitario_comi=$array_desc+($array_desc*$comi/100);
             }else{
                 $facturacion_registro->precio_unitario_comi=$array+($array*$comi/100);
             }
@@ -1502,8 +1503,8 @@ public function facturar_store(Request $request)
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
                     $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
-                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])*($igv->igv_total/100);
-                    $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]+$igv_p[$index];
+                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]);
+                    $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
                     if($array_cantidad[$index]>=$producto->producto_id){
@@ -1516,8 +1517,8 @@ public function facturar_store(Request $request)
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
                     $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
-                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*($igv->igv_total/100);
-                    $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]+$igv_p[$index];
+                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]);
+                    $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
                     if($array_cantidad[$index]>=$producto->producto_id){
@@ -1532,8 +1533,8 @@ public function facturar_store(Request $request)
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
                     $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
-                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])*($igv->igv_total/100);
-                    $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]+$igv_p[$index])/$tipo_cambio->paralelo;
+                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]);
+                    $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo;
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
                     if($array_cantidad[$index]>=$producto->producto_id){
@@ -1546,8 +1547,8 @@ public function facturar_store(Request $request)
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
                     $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
-                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*($igv->igv_total/100);
-                    $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]+$igv_p[$index])*$tipo_cambio->paralelo;
+                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]);
+                    $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo;
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
                     if($array_cantidad[$index]>=$producto->producto_id){
@@ -1600,7 +1601,7 @@ public function facturar_store(Request $request)
         $cod_bol="B".$sucursal_nr."-".$boleta_nr;
 
         if ($cotizacion->estado==0) {
-            return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','productos','sum','igv',"array","sub_total" ,'cod_bol','validor','array_cantidad','comi'));
+            return view('transaccion.venta.cotizacion.boletear', compact('cotizacion','empresa','productos','sum','igv',"array","sub_total" ,'cod_bol','validor','array_cantidad','comi','array_promedio'));
         }
         elseif ($cotizacion->estado==1) {
             return redirect()->route('cotizacion.show',$cotizacion->id);
@@ -1707,8 +1708,8 @@ public function facturar_store(Request $request)
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
                     $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
-                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])*($igv->igv_total/100);
-                    $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]+$igv_p[$index];
+                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]);
+                    $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
                     if($array_cantidad[$index]>=$producto->producto_id){
@@ -1721,8 +1722,8 @@ public function facturar_store(Request $request)
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
                     $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
-                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*($igv->igv_total/100);
-                    $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]+$igv_p[$index];
+                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]);
+                    $array[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
                     if($array_cantidad[$index]>=$producto->producto_id){
@@ -1737,8 +1738,8 @@ public function facturar_store(Request $request)
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
                     $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
-                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])*($igv->igv_total/100);
-                    $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]+$igv_p[$index])/$tipo_cambio->paralelo;
+                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]);
+                    $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo;
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_nacional');
                     if($array_cantidad[$index]>=$producto->producto_id){
@@ -1751,8 +1752,8 @@ public function facturar_store(Request $request)
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
                     $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
-                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*($igv->igv_total/100);
-                    $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]+$igv_p[$index])*$tipo_cambio->paralelo;
+                    $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]);
+                    $array[]=(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo;
                     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
                     $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero');
                     if($array_cantidad[$index]>=$producto->producto_id){
@@ -1783,8 +1784,8 @@ public function facturar_store(Request $request)
                         $boleta_registro->promedio_original=$array2;
                         // respectividad de la moneda deacurdo al id
                         $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-                        $igv_p=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad)*($igv->igv_total/100);
-                        $array=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad+$igv_p;
+                        $igv_p=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad);
+                        $array=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad;
                         $boleta_registro->precio=$array;
                     }else {
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
@@ -1792,8 +1793,8 @@ public function facturar_store(Request $request)
                         $boleta_registro->promedio_original=$array2;
                         // validacion para la otra moneda con igv paralelo
                         $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-                        $igv_p=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad)*($igv->igv_total/100);
-                        $array=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad+$igv_p;
+                        $igv_p=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad);
+                        $array=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad;
                         $boleta_registro->precio=$array;
                     }
                 }else{
@@ -1803,8 +1804,8 @@ public function facturar_store(Request $request)
                         $boleta_registro->promedio_original=$array2;
                         // respectividad de la moneda deacuerdo al id
                         $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-                        $igv_p=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad)*($igv->igv_total/100);
-                        $array=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad+$igv_p)*$cambio->paralelo;
+                        $igv_p=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad);
+                        $array=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_extranjero')+$utilidad)*$cambio->paralelo;
                         $boleta_registro->precio=$array;
                     }else{
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
@@ -1812,8 +1813,8 @@ public function facturar_store(Request $request)
                         $boleta_registro->promedio_original=$array2;
                         // validacion para la otra moneda con igv paralelo
                         $utilidad=kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-                        $igv_p=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad)*($igv->igv_total/100);
-                        $array=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad+$igv_p)/$cambio->paralelo;
+                        $igv_p=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad);
+                        $array=(kardex_entrada_registro::where('producto_id',$p[$index])->where('estado',1)->avg('precio_nacional')+$utilidad)/$cambio->paralelo;
                         $boleta_registro->precio=$array;
                     }
                 }
@@ -1824,17 +1825,22 @@ public function facturar_store(Request $request)
                 //precio unitario descuento ----------------------------------------
                 $desc_comprobacion=$cotizacion_boleta->descuento;
                 if($desc_comprobacion <> 0){
-                    $boleta_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
+                    $array_desc = ($array-($array2*$desc_comprobacion/100));
+                    $boleta_registro->precio_unitario_desc=$array_desc+($array_desc*$igv->igv_total/100);
                 }else{
-                    $boleta_registro->precio_unitario_desc=$array;
+                    $boleta_registro->precio_unitario_desc=$array+($array*$igv->igv_total/100);
                 }
                 //precio unitario comision ----------------------------------------
                 if($desc_comprobacion <> 0){
-                    $boleta_registro->precio_unitario_comi=($array-($array*$desc_comprobacion/100))+($array*$comi/100);
+                    $array_desc = ($array-($array2*$desc_comprobacion/100));
+                    $array_comi = $array_desc+($array_desc*$comi/100);
+                    $boleta_registro->precio_unitario_comi=$array_comi+($array_comi*$igv->igv_total/100);
                 }else{
-                    $boleta_registro->precio_unitario_comi=$array+($array*$comi/100);
+                    $array_comi = $array+($array*$comi/100);
+                    $boleta_registro->precio_unitario_comi=$array_comi+($array_comi*$igv->igv_total/100);
                 }
                 $boleta_registro->save();
+                // return $array_desc;
             }
         }
 
