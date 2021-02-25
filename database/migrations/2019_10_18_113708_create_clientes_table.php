@@ -41,9 +41,10 @@ class CreateClientesTable extends Migration
             $table->boolean('primer_contacto')->default('0');
             $table->string('nombre');
             $table->string('cargo');
-            $table->string('telefono');
-            $table->string('celular');
-            $table->string('email');
+            $table->string('telefono')->default('000000');
+            $table->string('celular')->default('00000');
+            $table->string('email')->default('sincorreo@gmail.com');
+            $table->string('estado')->default('0');;
             $table->unsignedBigInteger('clientes_id');
             $table->foreign('clientes_id')->references('id')->on('clientes')->onDelete('cascade');
             $table->timestamps();

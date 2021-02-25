@@ -92,10 +92,10 @@ class ClienteController extends Controller
 
     public function show($id)
     {
-
         $cliente_show=Cliente::find($id);
         $contacto_show=Contacto::where('clientes_id','=',$id)->orderBy('primer_contacto','DESC')->get();
-        return view('auxiliar.cliente.show',compact('cliente_show','contacto_show'));
+        $contacto_cantidad=Contacto::where('clientes_id',$id)->count();
+        return view('auxiliar.cliente.show',compact('cliente_show','contacto_show','contacto_cantidad'));
     }
 
     /**
