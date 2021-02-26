@@ -450,10 +450,9 @@
 
                 <td>
                 <input type='text' id='precio_unitario_comision${i}'  style="width: 76px"  name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
-                </td>
+
                 <input type='hidden'  id='comision${i}' name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
                 </td>
-                
 
                 <td>
                 <input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
@@ -591,7 +590,7 @@
             }else{
                 var multiplier = 100;
                 var descuento = 0;
-                
+
                 var precio = document.querySelector(`#precio${a}`).value;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var final= cantidad*precio;

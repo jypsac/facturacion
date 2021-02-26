@@ -204,13 +204,14 @@
                                                                 <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)" onclick="Clear(this);" autocomplete="off">
                                                                 <datalist id="browsers2" >
                                                                     @foreach($servicios as $index => $servicio)
-                                                                    <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 0 0 {{$servicio->descuento}} {{$array[$index]}}">
+                                                                    <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$precio_prom[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
                                                                     @endforeach
                                                                 </datalist>
                                                             </td>
                                                             <td>
                                                                 <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
                                                             </td>
+                                                                <input type="text" hidden="" id='prom_ori0' name='prom_ori[]' onclick="multi(0)">
                                                             <td>
                                                                 <input type='text' id='cantidad0' name='cantidad[]' class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
                                                             </td>
@@ -227,7 +228,8 @@
                                                                 <input type='text' id='descuento_unitario0' name='descuento_unitario[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
                                                             </td>
                                                             <td>
-                                                                <input type='text' id='comision0' name='comision[]' readonly="readonly" class="form-control" required  autocomplete="off" />
+                                                                <input type='text' id='precio_unitario_comision0'  style="width: 76px"  name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+                                                                <input type='text' id='comision0' hidden="" name='comision[]' readonly="readonly" class="form-control" required     autocomplete="off" />
                                                             </td>
                                                             <td>
                                                                 <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
@@ -273,7 +275,6 @@
 
                                                 <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                                                <a onclick="print()"><button class="btn btn-warning" ><i class="fa fa-cloud" aria-hidden="true">Imprimir</i></button></a>
                                                 <button class="btn btn-primary float-right" type="submit" id="boton"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
 
 
@@ -324,13 +325,14 @@
                                 <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i})" onclick="Clear(this);" autocomplete="off" >
                                 <datalist id="browsers" >
                                 @foreach($servicios as $index => $servicio)
-                                <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp 0 0 {{$servicio->descuento}} {{$array[$index]}}">
+                                <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$precio_prom[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
                                 @endforeach
                                 </datalist>
                                 </td>
                                 <td>
                                     <input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
                                 </td>
+                                <input type="hidden" hidden="" id="prom_ori${i}" name="prom_ori[]" onclick="multi(${i})">
                                 <td>
                                     <input type='text' id='cantidad${i}' name='cantidad[]' class="monto0 form-control" onkeyup="multi(${i})" required  autocomplete="off" />
                                 </td>
@@ -351,7 +353,9 @@
 
 
                                 <td>
-                                <input type='text' id='comision${i}' name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+                                <input type='text' id='precio_unitario_comision${i}'  style="width: 76px"  name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+
+                                <input type='text' hidden="" id='comision${i}' name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
                                 </td>
 
                                 <td>
@@ -425,29 +429,46 @@
             var descuento=document.querySelector(`#descuento${a}`).value;
             var checkBox = document.getElementById(`check${a}`);
             var cantidad = document.getElementById(`cantidad${a}`).value;
-
+            var prom_ori = document.querySelector(`#prom_ori${a}`).value;
             var multiplier = 100;
 
 
             if (checkBox.checked == true){
-                precio=precio-(precio*descuento/100);
-                document.getElementById(`descuento_unitario${a}`).value = precio;
-                var descuento_p=precio*comision/100;
-                var precio_final=parseFloat(descuento_p)+parseFloat(precio) ;
-                var precio_final_redondeado=Math.round(precio_final * multiplier) / multiplier;
-                var final_end=precio_final_redondeado*parseFloat(cantidad);
+                var precio = document.querySelector(`#precio${a}`).value;
+                var promedio_original=document.querySelector(`#prom_ori${a}`).value;
+                var comision_porcentaje=document.querySelector(`#comision${a}`).value;
+                var multiplier = 100;
+                var precio_uni = precio-(promedio_original*descuento/100);
+                var precio_uni_dec=Math.round(precio_uni * multiplier) / multiplier;
 
-                document.getElementById(`total${a}`).value = final_end;
                 document.getElementById(`check_descuento${a}`).value = descuento;
-            }else{
-                document.getElementById(`descuento_unitario${a}`).value = precio;
-                var descuento_p=precio*comision/100;
-                var precio_final=parseFloat(descuento_p)+parseFloat(precio) ;
+                document.getElementById(`descuento_unitario${a}`).value = precio_uni_dec;
 
-                var precio_final_redondeado=Math.round(precio_final * multiplier) / multiplier;
-                var final_end=precio_final_redondeado*parseFloat(cantidad);
+                var comisiones9=precio_uni_dec+(precio_uni_dec*comision_porcentaje/100);
+                var comisiones=Math.round(comisiones9*multiplier)/multiplier;
+                document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
+
+                var final=comisiones*cantidad;
+                var final_decimal = Math.round(final * multiplier) / multiplier;
+
+                document.getElementById(`total${a}`).value = final_decimal;
+            }else{
+                var multiplier = 100;
+                var descuento = 0;
+
+                var precio = document.querySelector(`#precio${a}`).value;
+                var comision_porcentaje=document.querySelector(`#comision${a}`).value;
+                var final= cantidad*precio;
+                var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
+
+                var end =Math.round(end9 * multiplier) / multiplier;
+                var final2=cantidad*end;
+                var final_decimal = Math.round(final2 * multiplier) / multiplier;
+
                 document.getElementById(`check_descuento${a}`).value = 0;
-                document.getElementById(`total${a}`).value = final_end;
+                document.getElementById(`total${a}`).value = final_decimal;
+                document.getElementById(`descuento_unitario${a}`).value = precio;
+                document.getElementById(`precio_unitario_comision${a}`).value = end;
             }
 
 
@@ -506,7 +527,22 @@
             var descuento_v_r=reverse2.split(separador,1);////obtiene el descuento del objeto [0] al revez
             var descuento_r=descuento_v_r[0];//obtiene el descuento del objeto [0] al revez
             var descuento_v =reverseString(descuento_v_r[0]);//convierte el descuento al revez a la normalidad
+            var caracteres_space_2=reverse2.replace(descuento_r,"");//obtiene la cadena articulo sin precio,descuento,con un espacio en blanco
 
+            var reverse3=caracteres_space_2.slice(1);//elimina el espacion en blanco de la cadena articulo sin precio
+            //para stock
+            var stock_v_r=reverse3.split(separador,1);
+            var stock_r=stock_v_r[0];
+            var stock_v =reverseString(stock_v_r[0]);
+
+            var caracteres_space_3=reverse3.replace(stock_r,"");//obtiene la cadena articulo sin precio,descuento,con un espacio en blanco
+            var reverse4=caracteres_space_3.slice(1);//elimina el espacion en blanco de la cadena articulo sin precio
+            //para promedio_original
+            var prom_v_r=reverse4.split(separador,1);
+            var prom_r=prom_v_r[0];
+            var prom_v =reverseString(prom_v_r[0]);
+
+            document.getElementById(`prom_ori${a}`).value = prom_v;
             document.getElementById(`precio${a}`).value = precio_v;
             document.getElementById(`descuento${a}`).value = descuento_v;
             document.getElementById(`cantidad${a}`).value = 1;

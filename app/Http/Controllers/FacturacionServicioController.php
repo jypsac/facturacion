@@ -56,11 +56,13 @@ class FacturacionServicioController extends Controller
 
         if($moneda->tipo =='nacional'){
             foreach ($servicios as $index => $servicio) {
+                $precio_prom[]=$servicio->precio_nacional;
                 $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
                 $array[]=round($servicio->precio_nacional+$utilidad[$index],2);
             }
         }else{
             foreach ($servicios as $index => $servicio) {
+                $precio_prom[]=$servicio->precio_extranjero;
                 $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
                 $array[]=round($servicio->precio_extranjero+$utilidad[$index],2);
             }
@@ -81,7 +83,7 @@ class FacturacionServicioController extends Controller
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
 
-        return view('transaccion.venta.servicios.facturacion.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
+        return view('transaccion.venta.servicios.facturacion.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','precio_prom'));
     }
 
     public function create_ms()
@@ -105,13 +107,15 @@ class FacturacionServicioController extends Controller
 
         if($moneda->tipo =='extranjera'){
             foreach ($servicios as $index => $servicio) {
+                $precio_prom[]=round($servicio->precio_nacional/$tipo_cambio->paralelo,2);
                 $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
                 $array[]=round(($servicio->precio_nacional+$utilidad[$index])/$tipo_cambio->paralelo,2);
             }
         }else{
             foreach ($servicios as $index => $servicio) {
+                $precio_prom[]=round($servicio->precio_extranjero*$tipo_cambio->paralelo,2);
                 $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
-                $array[]=round(($servicio->precio_extranjero+$utilidad[$index])/$tipo_cambio->paralelo,2);
+                $array[]=round(($servicio->precio_extranjero+$utilidad[$index])*$tipo_cambio->paralelo,2);
             }
         }
 
@@ -129,7 +133,7 @@ class FacturacionServicioController extends Controller
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
 
-        return view('transaccion.venta.servicios.facturacion.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes'));
+        return view('transaccion.venta.servicios.facturacion.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','precio_prom'));
     }
 
     /**

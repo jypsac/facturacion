@@ -105,6 +105,7 @@ class ContactoController extends Controller
         $contacto->telefono=$request->get('telefono');
         $contacto->celular=$request->get('celular');
         $contacto->email=$request->get('email');
+        $contacto->estado=$request->get('estado');
         $contacto->save();
         return redirect()->route('cliente.show', $id_cliente);
 
