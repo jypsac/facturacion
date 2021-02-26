@@ -113,11 +113,15 @@
                                             <td>
                                                 {{$cotizacion_registros->servicio->nombre}} / {{$cotizacion_registros->servicio->descripcion}}
                                             </td>
-                                            <td>S/.{{$cotizacion_registros->precio}}</td>
-                                            <td>{{($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)}}</td>
-                                            <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio)-($cotizacion_registros->cantidad*$cotizacion_registros->precio*$cotizacion_registros->descuento/100)+$sub_total}}
-                                                S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
-                                                {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                            <td style="display: none">
+                                                {{$precio_array = ($cotizacion_registros->precio-($cotizacion_registros->promedio_original*($cotizacion_registros->descuento/100)))}}
+                                                {{$precio_array_comi = $precio_array+($precio_array*($cotizacion_registros->comision/100))}}
+                                                {{$precio_array_comi_igv = $precio_array_comi+($precio_array_comi*($igv->igv_total/100))}}
+                                            </td>
+                                            <td>{{$moneda->simbolo}}. {{$precio_array_comi_igv}}</td>
+                                            <td>{{$moneda->simbolo}}. {{$precio_array_comi_igv*$cotizacion_registros->cantidad}}</td>
+                                            <td style="display: none">
+                                                {{$sub_total=($precio_array_comi_igv)+$sub_total}}
                                             </td>
                                         </tr>
                                         <span hidden="hidden">{{$i++}}</span>

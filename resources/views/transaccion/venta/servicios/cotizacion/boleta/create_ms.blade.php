@@ -54,7 +54,7 @@
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target="#ModalCliente"><i class="fa fa-user-o" aria-hidden="true"></i>cliente </a>
 </div>
 {{--Fin Boton para modal de Clientes --}}
-<form action="{{ route('cotizacion_servicio.create_boleta')}}" enctype="multipart/form-data" id="almacen-form" method="POST" onsubmit="return valida(this)">
+<form action="{{ route('cotizacion_servicio.create_boleta')}}" enctype="multipart/form-data" id="almacen-form" method="POST" >
     @csrf
     <input type="text" value="{{$sucursal->id}}" hidden="hidden" name="almacen">
     <input class="btn btn-sm btn-info" hidden="hidden" type="submit" value="cambiar" >
@@ -65,7 +65,7 @@
         <div class="col-lg-12">
             <div class="ibox">
                 <div class="ibox-content">
-                    <form action="{{route('cotizacion_servicio.store_boleta',$moneda->id)}}"  enctype="multipart/form-data" method="post">
+                    <form action="{{route('cotizacion_servicio.store_boleta',$moneda->id)}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
                        @csrf
                        @method('put')
                        {{-- Cabecera --}}
@@ -438,7 +438,7 @@
             <td>
                 <input type='text' id='precio_unitario_comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
             </td>
-            
+
             <td>
             <input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
             </td>
@@ -565,7 +565,7 @@
                 document.getElementById(`check_descuento${a}`).value = descuento;
 
                 var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
-                var comisiones=(Math.round(comisiones9*multiplier)/multiplier+(comisiones9*igv/100));
+                var comisiones=Math.round(comisiones9*multiplier)/multiplier+(comisiones9*igv/100);
 
 
                 var final=comisiones*cantidad;
@@ -583,11 +583,11 @@
                 var final= cantidad*precio;
                 var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
 
-                var end =Math.round(end9)+(end9*igv/100)* multiplier / multiplier;
-                var final2=cantidad*end;
+                // var end =Math.round(end9)+(end9*igv/100)* multiplier / multiplier;
+                var final2=end9+(end9*igv/100)*cantidad;
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
-                document.getElementById(`descuento_unitario${a}`).value = end;
-                document.getElementById(`precio_unitario_comision${a}`).value = end;
+                document.getElementById(`descuento_unitario${a}`).value = final_decimal;
+                document.getElementById(`precio_unitario_comision${a}`).value = final_decimal;
                 document.getElementById(`check_descuento${a}`).value = 0;
                 document.getElementById(`total${a}`).value = final_decimal;
             }
