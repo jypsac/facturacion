@@ -23,21 +23,22 @@
             </span>
           </div>
           <div class="clients-list">
-            <span class="float-right small text-muted">1406 Elementos</span>
+            <span class="float-right small text-muted">{{$contacto_cantidad}} Elementos</span>
             <ul class="nav nav-tabs">
-              <li><a class="nav-link active" data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> Contacts</a></li>
+              <li><a class="nav-link active" data-toggle="tab" href="#tab-1"><i class="fa fa-user"></i> Contactos</a></li>
               <li><a class="nav-link" data-toggle="tab" href="#tab-2"><i class="fa fa-plus"></i> Agregar Contacto</a></li>
             </ul>
             <div class="tab-content">
+              {{-- Contactos --}}
               <div id="tab-1" class="tab-pane active">
                 <div class="full-height-scroll">
                   <div class="table-responsive">
                     <table class="table table-striped table-hover" style="font-size: 13px">
                       <tbody>
                         @foreach($contacto_show as $contacto)
-                        <tr>
+                        <tr data-toggle="modal" data-target="#exampleModal{{$contacto->id}}" >
                           <td class="client-avatar"><img src="https://www.flaticon.es/premium-icon/icons/svg/3772/3772240.svg"> </td>
-                          <td><a href="#contact-1" class="client-link">{{$contacto->nombre}}</a></td>
+                          <td>{{$contacto->nombre}}</td>
                           <td>{{$contacto->cargo}}</td>
                           <td class="contact-type"><i class="fa fa-envelope"> </i></td>
                           <td> {{$contacto->email}}</td>
@@ -45,15 +46,63 @@
                           <td>{{$contacto->telefono}} </td>
                           <td class="contact-type"><i class="fa fa-phone"> </i></td>
                           <td>{{$contacto->celular}}</td>
+                          @if($contacto->estado==0)
                           <td class="client-status"><span class="label label-primary">Activo</span></td>
-                          {{-- <td class="client-status"><span class="label label-warning">desactivo</span></td> --}}
+                          @elseif($contacto->estado==1)
+                          <td class="client-status"><span class="label label-warning">desactivo</span></td>
+                          @endif
                         </tr>
+                        <!-- Modal -->
+                        <div class="modal fade" id="exampleModal{{$contacto->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                          <div class="modal-dialog" role="document" style="margin-left: 490px;">
+                            <div class="modal-content" style="width: 702px;">
+                              <div class="modal-body" style="padding-top: 0px;">
+                                <div>
+                                  <div >
+                                    <form action="{{ route('contacto.update',$contacto->id) }}"  enctype="multipart/form-data" method="post">
+                                      @csrf
+                                      @method('PATCH')
+                                      <div >
+                                       <div class="client-avatar"><img src="https://www.flaticon.es/premium-icon/icons/svg/3772/3772240.svg"> </div>
+                                       <div class="row marketing">
+                                        <div class="col-lg-6">
+                                          <h4>Nombre del Contacto:</h4>
+                                          <input class="form-control" type="text" value="{{$contacto->nombre}}" name="nombre" >
+                                          <h4>Cargo:</h4>
+                                          <p><input class="form-control " type="text" value="{{$contacto->cargo}}" name="cargo" >
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <h4>Telefono/Celular:</h4>
+                                            <div class="row" style="padding-left: 15px">
+                                              <input class="form-control col-sm-5" name="telefono" type="text" placeholder="Telefono" value="{{$contacto->telefono}}"> &nbsp; -  &nbsp;<input class="form-control col-sm-5" name="celular" type="text" placeholder="Celular" value="{{$contacto->celular}}" >
+                                            </div>
+                                            <h4>Email:</h4>
+                                            <input class="form-control" name="email" type="text" value="{{$contacto->email}}"  >
+                                            <input class="form-control" name="clientes_id" type="hidden" value="{{$cliente_show->id}}"  >
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <input class="btn btn-primary" type="submit" value="Grabar">
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </form>
+                                  </div>
+                                </div>
+
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                        <!-- / Modal -->
                         @endforeach
                       </tbody>
                     </table>
                   </div>
                 </div>
               </div>
+              {{-- FIN Contactos --}}
+
+              {{-- Agregar Contactos --}}
               <div id="tab-2" class="tab-pane">
                 <div class="full-height-scroll">
                   <div>
@@ -65,17 +114,16 @@
                           <h4>Nombre del Contacto:</h4>
                           <input class="form-control" type="text" name="nombre" >
                           <h4>Cargo:</h4>
-                          <p><input class="form-control " type="text" name="cargo" >
+                          <p><input class="form-control " type="text" name="cargo" value="Empleado">
                           </div>
                           <div class="col-lg-6">
                             <h4>Telefono/Celular:</h4>
                             <div class="row" style="padding-left: 15px">
-                              <input class="form-control col-sm-5" name="telefono" type="text" placeholder="Telefono"> &nbsp; -  &nbsp;<input class="form-control col-sm-5" name="celular" type="text" placeholder="Celular" >
+                              <input class="form-control col-sm-5" name="telefono" type="text" placeholder="Telefono" value="000000"> &nbsp; -  &nbsp;<input class="form-control col-sm-5" name="celular" type="text" placeholder="Celular"  value="0000">
                             </div>
                             <h4>Email:</h4>
-                            <input class="form-control" name="email" type="text" >
+                            <input class="form-control" name="email" type="text"  value="sincorreo@gmail.com" >
                             <input type="hidden" name="clientes_id" value="{{$cliente_show->id}}">
-
                           </div>
                           <div class="col-lg-6">
                             <p><input class="btn btn-primary" type="submit" value="Grabar"></p>
@@ -87,19 +135,30 @@
                   </div>
                 </div>
               </div>
+              {{--FIN Agregar Contactos --}}
             </div>
+
           </div>
         </div>
       </div>
     </div>
+
+    {{-- Cliente  --}}
     <div class="col-sm-4">
       <div class="ibox selected">
         <div class="ibox-content">
           <div class="tab-content">
             <div id="contact-1" class="tab-pane active">
               <div class="row m-b-lg">
-                <div class="col-lg-12 text-center">
-                  <h2>{{$cliente_show->nombre}}</h2>
+                <div class="col-lg-4 text-center">
+                  <h3>{{$cliente_show->nombre}}</h3>
+                </div>
+                <div class="col-lg-8" align="left">
+                  <ul>
+                    <li>{{$cliente_show->documento_identificacion}}: {{$cliente_show->numero_documento}}</li>
+                    <li>{{$cliente_show->tipo_cliente}}</li>
+                    <li>Fecha Rigistrada: {{$cliente_show->fecha_registro}}</li>
+                  </ul>
                 </div>
                 <div class="col-lg-12">
                   <button type="button" class="btn btn-primary btn-sm btn-block"><i
@@ -110,50 +169,44 @@
               <div class="client-detail">
                 <div class="full-height-scroll">
 
-                    <table class="table table-striped table-hover" style="font-size: 13px">
-                      <tbody>
-                        <tr>
-                          <td class="client-avatar"><img src="https://www.flaticon.es/premium-icon/icons/svg/3772/3772240.svg"> </td>
-                          <td><a href="#contact-1" class="client-link">{{$contacto->nombre}}</a></td>
-                          <td>a</td>
-                          <td class="contact-type"><i class="fa fa-envelope"> </i></td>
-                          <td> a</td>
-                          <td class="contact-type"><i class="fa fa-phone"> </i></td>
-                          <td>a</td>
-                          <td class="contact-type"><i class="fa fa-phone"> </i></td>
-                          <td>a</td>
-                          <td class="client-status"><span class="label label-primary">Activo</span></td>
-                        </tr>
-                      </tbody>
-                    </table>
-
-
-                <hr/>
-                <strong>Timeline activity</strong>
-                <div id="vertical-timeline" class="vertical-container dark-timeline">
-
-                  <div class="vertical-timeline-block">
-                    <div class="vertical-timeline-icon gray-bg">
-                      <i class="fa fa-bolt"></i>
-                    </div>
-                    <div class="vertical-timeline-content">
-                      <p>There are many variations of passages of Lorem Ipsum available.
-                      </p>
-                      <span class="vertical-date small text-muted"> 06:10 pm - 11.03.2014 </span>
-                    </div>
-                  </div>
-
+                  <table class="table table-striped table-hover" style="font-size: 13px" id="table_clientes" hidden="">
+                    <tbody>
+                      <tr>
+                        <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/2747/2747481.svg?token=exp=1614275896~hmac=55115ae15c46a9408bd5bc1274a63c3e"> </td>
+                        <td>{{$cliente_show->direccion}}</td>
+                      </tr>
+                      <tr>
+                        <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/1789/1789333.svg?token=exp=1614275988~hmac=6eba7b70e81f72fe9dcb9bf5810aef61"> </td>
+                        <td>{{$cliente_show->email}}</td>
+                      </tr>
+                      <tr>
+                        <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/2947/2947656.svg?token=exp=1614276118~hmac=342c75ecfd6e01826c6239203b8ab4ff"> </td>
+                        <td><input type="button" value="{{$cliente_show->pais}}">  / {{$cliente_show->departamento}}</td>
+                      </tr>
+                      <tr>
+                        <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/817/817173.svg?token=exp=1614276714~hmac=5212dd1bfdb27795816743401bd5b32f"> </td>
+                        <td>{{$cliente_show->aniversario}}</td>
+                      </tr>
+                      <tr>
+                        <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/890/890542.svg?token=exp=1614282096~hmac=41d590ee587d47e2685b047483dff84c"> </td>
+                        <td>{{$cliente_show->telefono}} </td>
+                      </tr>
+                      <tr>
+                        <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/561/561253.svg?token=exp=1614282205~hmac=da3e54e77a10eedfe5abc7339de102f5"> </td>
+                        <td>{{$cliente_show->celular}}</td>
+                      </tr>
+                    </tbody>
+                  </table>
+                  <hr/>
                 </div>
               </div>
             </div>
           </div>
-
-
         </div>
       </div>
     </div>
+    {{-- Fin Cliente --}}
   </div>
-</div>
 </div>
 <style>
   .form-control{border-radius: 5px}

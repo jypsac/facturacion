@@ -19,7 +19,7 @@ class ContactoController extends Controller
     }
 
     public function index_id($id)
-    {   
+    {
         $contactos=Contacto::where("clientes_id","=",$id)->get();
         return view('auxiliar.cliente.contacto.index',compact('contactos','id'));
     }
@@ -59,7 +59,7 @@ class ContactoController extends Controller
         $contacto->save();
 
        return redirect()->route('cliente.show', $id);
-        
+
     }
 
     /**
@@ -86,7 +86,7 @@ class ContactoController extends Controller
     {
         $contacto=Contacto::where("id","=",$id_cliente)->first();
         return view('auxiliar.cliente.contacto.edit',compact('contacto'));
-        
+
     }
 
     /**
@@ -97,18 +97,17 @@ class ContactoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function update(Request $request, $id)
-    {   
+    {
+        $id_cliente=$request->get('clientes_id');
         $contacto= Contacto::find($id);
-        $id=$request->get('clientes_id');
         $contacto->nombre=$request->get('nombre');
         $contacto->cargo=$request->get('cargo');
         $contacto->telefono=$request->get('telefono');
         $contacto->celular=$request->get('celular');
         $contacto->email=$request->get('email');
         $contacto->save();
+        return redirect()->route('cliente.show', $id_cliente);
 
-        return redirect()->route('cliente.show', $id);
-        
     }
 
     /**
@@ -122,7 +121,7 @@ class ContactoController extends Controller
         $contacto=Contacto::findOrFail($id);
         $contacto->delete();
         $id_cli=$request->get('id_cli');
-        
+
         return redirect()->route('cliente.show', $id_cli);
         // return redirect()->route('cliente.index');
     }
