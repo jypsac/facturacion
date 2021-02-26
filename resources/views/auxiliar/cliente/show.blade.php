@@ -81,21 +81,34 @@
                                             <input class="form-control" name="clientes_id" type="hidden" value="{{$cliente_show->id}}"  >
                                           </div>
 
-                                           <div class="col-lg-6">
-                                          <h4>Estado</h4>
-                                          <select name="estado" id="" class="form-control">
-                                            @if($contacto->estado==0)
-                                            <option value="0"> Activo</option>
-                                            <option value="1"> Desactivo</option>
-                                            @elseif($contacto->estado==1)
-                                            <option value="1"> Desactivo</option>
-                                            <option value="0"> Activo</option>
-                                            @endif
-                                          </select>
-                                          </div>
-
                                           <div class="col-lg-6">
-                                          <h4 style="color: white">Grabar</h4>
+                                            <h4>Estado</h4>
+                                            @if($contacto_cantidad_estado==1)
+                                                  @if($contacto->estado==0)
+                                                      <select name="estado" id="" class="form-control" disabled="">
+                                                        <option value="0"> Activo</option>
+                                                        <option value="1"> Desactivo</option>
+                                                      </select>
+                                                  @elseif($contacto->estado==1)
+                                                      <select name="estado" id="" class="form-control" >
+                                                        <option value="1"> Desactivo</option>
+                                                        <option value="0"> Activo</option>
+                                                      </select>
+                                                  @endif
+                                            @else
+                                                <select name="estado" id="" class="form-control" >
+                                                      @if($contacto->estado==0)
+                                                      <option value="0"> Activo</option>
+                                                      <option value="1"> Desactivo</option>
+                                                      @elseif($contacto->estado==1)
+                                                      <option value="1"> Desactivo</option>
+                                                      <option value="0"> Activo</option>
+                                                      @endif
+                                                  </select>
+                                            @endif
+                                          </div>
+                                          <div class="col-lg-6">
+                                            <h4 style="color: white">Grabar</h4>
                                             <input class="btn btn-primary" type="submit" value="Grabar">
                                           </div>
                                         </div>
@@ -239,9 +252,9 @@
                   <table class="table table-striped table-hover" style="font-size: 13px" id="form_cliente" hidden="" >
                     <tbody>
                       <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/1251/1251457.svg?token=exp=1614374295~hmac=892d7c2e2915c1a5d9f90831f9b513b7"> </td>
-                      <td colspan="2"><input type="text" name="nombre" class="form-control" value="{{$cliente_show->nombre}}"></td>
-                    </tr>
+                        <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/1251/1251457.svg?token=exp=1614374295~hmac=892d7c2e2915c1a5d9f90831f9b513b7"> </td>
+                        <td colspan="2"><input type="text" name="nombre" class="form-control" value="{{$cliente_show->nombre}}"></td>
+                      </tr>
                       <tr>
                         <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/1598/1598350.svg?token=exp=1614371573~hmac=92918656676cf9fdb37e34131c6e581f"> </td>
                         <td><select class="form-control m-b" name="documento_identificacion" >

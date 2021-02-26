@@ -25,6 +25,7 @@
         {{ session('campo') }}
     </div>
 @endif
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
@@ -57,19 +58,28 @@
 					 	<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >motivos:</label>
 								<div class="col-sm-4">
-									<select class="form-control" name="motivo">
+									<select class="form-control" name="motivo" id="seleccion_motivo" onchange="seleccionado()">
 										@foreach($motivos as $motivo)
-										<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
+										<option value="{{$motivo->id}}">{{$motivo->nombre}}</option>
 										@endforeach
 									</select>
 								</div>
-
-
 
 							<label class="col-sm-2 col-form-label">Almacen:</label>
 								<div class="col-sm-4">
 								<input type="text" class="form-control" name="almacen" value="{{$almacen_nombre}}" disabled>
 							    </div>
+						</div>
+
+						<div class="form-group row" id="almacen_trasladar" style="display:none;">
+							<label class="col-sm-2 col-form-label">Almacen a trasladar:</label>
+							<div class="col-sm-10">
+								<select class="form-control" name="motivo">
+									@foreach($almacenes as $almacen)
+									<option value="{{$almacen->id}}" >{{$almacen->nombre}}</option>
+									@endforeach
+								</select>
+							</div>
 						</div>
 
 						<div class="form-group row ">
@@ -236,6 +246,16 @@
 				}
 			});
 		}
+
+		function seleccionado(){
+			var opt = $('#seleccion_motivo').val();
+			if(opt=="6"){
+				$('#almacen_trasladar').show();
+			}else{
+				$('#almacen_trasladar').hide();
+			}
+		}
+
 	</script>
 
 

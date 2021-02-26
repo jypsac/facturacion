@@ -16,6 +16,7 @@ use App\User;
 use App\kardex_entrada_registro;
 use Carbon\Carbon;
 use DB;
+use App\Stock_producto;
 use Illuminate\Http\Request;
 
 class KardexEntradaController extends Controller
@@ -202,7 +203,7 @@ class KardexEntradaController extends Controller
           $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
           $kardex_entrada_registro->producto_id=$producto_id[$i];
           $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
-                    //monedas
+              //monedas
           if($moneda_principal_id==$kardex_entrada_moneda_id){
             $kardex_entrada_registro->precio_nacional=$request->get('precio')[$i];
             $precio_nacional=$request->get('precio')[$i];
@@ -217,6 +218,20 @@ class KardexEntradaController extends Controller
           $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
           $kardex_entrada_registro->estado=1;
           $kardex_entrada_registro->save();
+
+          //buscador de producto en la tabla stock productos
+          $producto_stock=Stock_producto::where('producto_id',$producto_id[$i])->first();
+          if($producto_stock){
+            $stock_productos=Stock_producto::find($producto_stock->id);
+            $stock_productos->stock=$request->get('cantidad')[$i]+$producto_stock->stock;
+            $stock_productos->save();
+          }else{
+            //Agregado de cantidades para la tabla stock productos
+            $stock_productos=new Stock_producto();
+            $stock_productos->producto_id=$producto_id[$i];
+            $stock_productos->stock=$request->get('cantidad')[$i];
+            $stock_productos->save();
+          }
         }
       }else {
         return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');
