@@ -434,17 +434,14 @@
             </td>
 
             <td>
-            <input type='text' id='descuento_unitario${i}' name='descuento_unitario[]' readonly="readonly" class="descuento_unitario${i} form-control"  required  autocomplete="off" />
+            <input type='text' id='descuento_unitario${i}' name='descuento_unitario[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
             </td>
 
-
-
-
-            <input type='text' id='comision${i}' hidden name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+            <input type='hidden' name="comision[]" id='comision${i}'  style="width: 76px"  readonly="readonly" class="form-control"  required  autocomplete="off" />
 
             <td>
-                <input type='text' id='precio_unitario_comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
-                </td>
+                <input type='text' id='precio_unitario_comision${i}' name="precio_unitario_comision[]" disabled="disabled" class="form-control"  required  autocomplete="off" />
+            </td>
             <td>
             <input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
             </td>
@@ -675,6 +672,7 @@
             document.getElementById(`precio${a}`).value = precio_v;
             document.getElementById(`descuento${a}`).value = descuento_v;
             document.getElementById(`cantidad${a}`).value = 1;
+            //comision
             //comision
             var comision=document.querySelector(`#comisionista`).value;
             //revirtiendo la cadena

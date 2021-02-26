@@ -444,16 +444,16 @@
                 </td>
 
                 <td>
-                <input type='text' id='descuento_unitario${i}' name='descuento_unitario[]' readonly="readonly" class="descuento_unitario${i} form-control"  required  autocomplete="off" />
+                <input type='text' id='descuento_unitario${i}' name='descuento_unitario[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
                 </td>
 
 
                 <td>
                 <input type='text' id='precio_unitario_comision${i}'  style="width: 76px"  name='precio_unitario_comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
                 </td>
-                <input type='text' hidden id='comision${i}' name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+                <input type='hidden'  id='comision${i}' name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
                 </td>
-                </td>
+                
 
                 <td>
                 <input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>

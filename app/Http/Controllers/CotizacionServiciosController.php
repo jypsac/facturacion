@@ -623,40 +623,28 @@ class CotizacionServiciosController extends Controller
                         $array2=$servicio->precio_nacional;
                         $cotizacion_registro->promedio_original=$servicio->precio_nacional;
                         $utilidad=$servicio->precio_nacional*$servicio->utilidad/100;
-                        $igv_precio=$servicio->precio_nacional+$utilidad;
-                        $igv_p=$igv_precio*$igv_total/100;
                         $array=$servicio->precio_nacional+$utilidad;
-                        $array_pre_prom=$array+($array*($igv->igv_total/100));
-                        $cotizacion_registro->precio = $array_pre_prom;
+                        $cotizacion_registro->precio = $array;
                     }else{
                         $array2=$servicio->precio_extranjero;
                         $cotizacion_registro->promedio_original=$servicio->precio_extranjero;
                         $utilidad=$servicio->precio_extranjero*$servicio->utilidad/100;
-                        $igv_precio=$servicio->precio_extranjero+$utilidad;
-                        $igv_p=$igv_precio*$igv_total/100;
-                        $array=$servicio->precio_nacional+$utilidad;
-                        $array_pre_prom=$array+($array*($igv->igv_total/100));
-                        $cotizacion_registro->precio = $array_pre_prom;
+                        $array=$servicio->precio_extranjero+$utilidad;
+                        $cotizacion_registro->precio = $array;
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera') {
-                        $array2=$servicio->precio_extranjero;
-                        $cotizacion_registro->promedio_original=$servicio->precio_extranjero;
-                        $utilidad=$servicio->precio_extranjero*$servicio->utilidad/100;
-                        $igv_precio=$servicio->precio_extranjero+$utilidad;
-                        $igv_p=$igv_precio*$igv_total/100;
-                        $array=$servicio->precio_nacional+$utilidad;
-                        $array_pre_prom=($array*$cambio->paralelo)+($array*($igv->igv_total/100));
-                        $cotizacion_registro->precio = $array_pre_prom;
+                        $array2=$servicio->precio_extranjero*$cambio->paralelo;
+                        $cotizacion_registro->promedio_original=$array2;
+                        $utilidad=$servicio->precio_extranjero*($servicio->utilidad/100);
+                        $array=($servicio->precio_extranjero+$utilidad)*$tipo_cambio->paralelo;
+                        $cotizacion_registro->precio = $array;
                     }else{
-                        $array2=$servicio->precio_nacional;
-                        $cotizacion_registro->promedio_original=$servicio->precio_nacional;
-                        $utilidad=$servicio->precio_nacional*$servicio->utilidad/100;
-                        $igv_precio=$servicio->precio_nacional+$utilidad;
-                        $igv_p=$igv_precio*$igv_total/100;
-                        $array=$servicio->precio_nacional+$utilidad;
-                        $array_pre_prom=($array/$cambio->paralelo)+($array*($igv->igv_total/100));
-                        $cotizacion_registro->precio = $array_pre_prom;
+                        $array2=$servicio->precio_nacional/$cambio->paralelo;
+                        $cotizacion_registro->promedio_original=$array2;
+                        $utilidad=$servicio->precio_nacional*($servicio->utilidad/100);
+                        $array=($servicio->precio_nacional+$utilidad)/$cambio->paralelo;
+                        $cotizacion_registro->precio = $array;
                     }
                 }
 
@@ -670,9 +658,11 @@ class CotizacionServiciosController extends Controller
                 $cotizacion_registro->precio_unitario_desc=$precio_uni+($precio_uni*($igv->igv_total/100));
                 // return $array*($igv->igv_total/100);
             }else{
-                $cotizacion_registro->precio_unitario_desc=$array+($array*($igv->igv_total/100));
+                $precio_uni = $array + ($array*($igv->igv_total/100));
+                $cotizacion_registro->precio_unitario_desc=$precio_uni;
                 // return $array_pre_prom;
             }
+            return $precio_uni;
                 //precio unitario comision ----------------------------------------
             if($desc_comprobacion <> 0){
                  $precio_uni = $array - ($array2*$desc_comprobacion/100);
@@ -685,6 +675,7 @@ class CotizacionServiciosController extends Controller
             $cotizacion_registro->save();
             }
         }else {
+
             return redirect()->route('cotizacion_servicio.create_boleta')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
         return redirect()->route('cotizacion_servicio.show',$cotizacion->id);

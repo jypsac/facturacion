@@ -428,18 +428,17 @@
             </td>
 
             <td>
-            <input type='text' id='descuento_unitario${i}' name='descuento_unitario[]' readonly="readonly" class="descuento_unitario${i} form-control"  required  autocomplete="off" />
+            <input type='text' id='descuento_unitario${i}' name='descuento_unitario[]' readonly="readonly" class=" form-control"  required  autocomplete="off" />
             </td>
 
 
 
-            <input type='text' id='comision${i}' hidden name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+            <input type='hidden' id='comision${i}'  name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
 
             <td>
                 <input type='text' id='precio_unitario_comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
-                </td>
-            <td>
-
+            </td>
+            
             <td>
             <input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
             </td>
@@ -584,7 +583,7 @@
                 var final= cantidad*precio;
                 var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
 
-                var end =(Math.round(end9 * multiplier) / multiplier)+(end9*igv/100);
+                var end =Math.round(end9)+(end9*igv/100)* multiplier / multiplier;
                 var final2=cantidad*end;
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
                 document.getElementById(`descuento_unitario${a}`).value = end;
