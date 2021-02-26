@@ -162,11 +162,9 @@
                                 <td>{{$boleta_registros->servicio->nombre}} <br>
                                 <td>{{$boleta_registros->precio}}</td>
                                 <td>{{$boleta_registros->descuento}}%</td>
-                                <td>{{$boleta_registros->precio_unitario_desc}}</td>
-                                <td>{{$boleta_registros->precio_unitario_desc * $boleta_registros->cantidad }}</td>
-                                <td style="display: none">{{$sub_total=($boleta_registros->cantidad*$boleta_registros->precio)-($boleta_registros->cantidad*$boleta_registros->precio*$boleta_registros->descuento/100)+$sub_total}}
-                                        S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
-                                        {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                                <td>{{$boleta_registros->precio_unitario_comi}}</td>
+                                <td>{{$boleta_registros->precio_unitario_comi * $boleta_registros->cantidad }}</td>
+                                <td style="display: none">{{$sub_total=$boleta_registros->precio_unitario_comi * $boleta_registros->cantidad +$sub_total}}
                                     </td>
                             </tr>
                             <span hidden="hidden">{{$i++}}</span>
@@ -234,7 +232,7 @@
 </div>
 
 <style type="text/css">
-    .ruc{border-radius: 10px; height: 150px;}
+    .ruc{border-radius: 10px; height: 125px;}
     .form-control{border-radius: 10px;}
     .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
 

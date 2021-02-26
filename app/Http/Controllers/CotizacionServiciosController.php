@@ -380,7 +380,7 @@ class CotizacionServiciosController extends Controller
                 $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
                 $igv_precio[]=$servicio->precio_nacional;
                 $igv[]=$igv_precio[$index];
-                $array[]=$servicio->precio_nacional+$utilidad[$index];
+                $array[]=round($servicio->precio_nacional+$utilidad[$index],2);
 
             }
         }else{
@@ -388,7 +388,7 @@ class CotizacionServiciosController extends Controller
                 $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
                 $igv_precio[]=$servicio->precio_extranjero;
                 $igv[]=$igv_precio[$index];
-                $array[]=$servicio->precio_extranjero+$utilidad[$index];
+                $array[]=round($servicio->precio_extranjero+$utilidad[$index],2);
             }
         }
 
@@ -440,16 +440,16 @@ class CotizacionServiciosController extends Controller
         if($moneda->tipo =='extranjera'){
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
-                $igv_precio[]=$servicio->precio_nacional/$tipo_cambio->paralelo;
+                $igv_precio[]=round($servicio->precio_nacional/$tipo_cambio->paralelo,2);
                 $igv[]=$igv_precio[$index];
-                $array[]=($servicio->precio_nacional+$utilidad[$index])/$tipo_cambio->paralelo;
+                $array[]=round(($servicio->precio_nacional+$utilidad[$index])/$tipo_cambio->paralelo,2);
             }
         }else{
             foreach ($servicios as $index => $servicio) {
                 $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
-                $igv_precio[]=$servicio->precio_extranjero*$tipo_cambio->paralelo;
+                $igv_precio[]=round($servicio->precio_extranjero*$tipo_cambio->paralelo,2);
                 $igv[]=$igv_precio[$index];
-                $array[]=($servicio->precio_extranjero+$utilidad[$index])*$tipo_cambio->paralelo;
+                $array[]=round(($servicio->precio_extranjero+$utilidad[$index])*$tipo_cambio->paralelo,2);
             }
         }
 
@@ -634,16 +634,16 @@ class CotizacionServiciosController extends Controller
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera') {
-                        $array2=$servicio->precio_extranjero*$cambio->paralelo;
+                        $array2=round($servicio->precio_extranjero*$cambio->paralelo,2);
                         $cotizacion_registro->promedio_original=$array2;
                         $utilidad=$servicio->precio_extranjero*($servicio->utilidad/100);
-                        $array=($servicio->precio_extranjero+$utilidad)*$tipo_cambio->paralelo;
+                        $array=round(($servicio->precio_extranjero+$utilidad)*$tipo_cambio->paralelo,2);
                         $cotizacion_registro->precio = $array;
                     }else{
-                        $array2=$servicio->precio_nacional/$cambio->paralelo;
+                        $array2=round($servicio->precio_nacional/$cambio->paralelo,2);
                         $cotizacion_registro->promedio_original=$array2;
                         $utilidad=$servicio->precio_nacional*($servicio->utilidad/100);
-                        $array=($servicio->precio_nacional+$utilidad)/$cambio->paralelo;
+                        $array=round(($servicio->precio_nacional+$utilidad)/$cambio->paralelo,2);
                         $cotizacion_registro->precio = $array;
                     }
                 }
@@ -662,7 +662,7 @@ class CotizacionServiciosController extends Controller
                 $cotizacion_registro->precio_unitario_desc=$precio_uni;
                 // return $array_pre_prom;
             }
-            return $precio_uni;
+            // return $precio_uni;
                 //precio unitario comision ----------------------------------------
             if($desc_comprobacion <> 0){
                  $precio_uni = $array - ($array2*$desc_comprobacion/100);
@@ -1058,16 +1058,16 @@ $id_comisionista=$request->get('id_comisionista');
 $comisionista=Cotizacion_Servicios::where('id',$cotizador)->first();
 $id_comi=$comisionista->comisionista_id;
 
-if(isset($id_comi)){
-   $comisionista=new Ventas_registro;
-   $comisionista->id_facturacion=$request->get('fac_id');
-   $comisionista->comisionista=$request->get('id_comisionista');
-   $comisionista->estado_aprobado='0';
-   $comisionista->pago_efectuado='0';
-   $comisionista->estado_fac='0';
-   $comisionista->observacion='Viene del Cotizador';
-   $comisionista->save();
-}
+// if(isset($id_comi)){
+//    $comisionista=new Ventas_registro;
+//    $comisionista->id_facturacion=$request->get('fac_id');
+//    $comisionista->comisionista=$request->get('id_comisionista');
+//    $comisionista->estado_aprobado='0';
+//    $comisionista->pago_efectuado='0';
+//    $comisionista->estado_fac='0';
+//    $comisionista->observacion='Viene del Cotizador';
+//    $comisionista->save();
+// }
 return redirect()->route('boleta_servicio.show',$boletear->id);
 
 }
