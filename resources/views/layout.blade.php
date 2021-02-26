@@ -92,9 +92,11 @@
                                     $('#numero_ruc').val(datos[0]);
                                     $('#razon_social').val(datos[1]);
                                     $('#direccion').val(datos[2]);
-                                    $('#ciudad').val(datos[3]);
-                                    $('#fechaInscripcion').val(datos[4]);
-                                    $('#departamento').val(datos[5]);
+                                    $('#departamento').val(datos[3]);
+                                    $('#provincia').val(datos[4]);
+                                    $('#distrito').val(datos[5]);
+                                    $('#fechaInscripcion').val(datos[6]);
+
                                 }
                             }
                         });
@@ -153,8 +155,8 @@
                                                     <input  name="email" value="sincorreo@gmail.com" type="text" class="form-control required " required="required">
                                                 </div>
                                                 <div class="form-group col-lg-6">
-                                                    <label>Ciudad *</label>
-                                                    <input type="text" class="form-control" name="ciudad" id="ciudad" class="form-control required" required="required">
+                                                    <label>Distrito *</label>
+                                                    <input type="text" class="form-control" name="ciudad" id="distrito" class="form-control required" required="required">
                                                 </div>
                                             </div>
                                         </div>
@@ -171,7 +173,7 @@
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Departamento *</label>
-                                                    <input value="Lima" type="text" class="form-control" name="departamento" id="departamento" class="form-control required">
+                                                    <input value="Lima" type="text" class="form-control" name="departamento" id="provincia" class="form-control required">
                                                 </div>
                                             </div>
                                         </div>
@@ -208,7 +210,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Fecha Registro *</label>
-                                                <input  type="text" class="form-control" id="fechaInscripcion" name="fecha_registro" class="form-control required">
+                                                <input  type="text" class="form-control" id="fechaInscripcion" name="fecha_registro" class="form-control required" value="2020-07-22">
                                             </div>
                                         </div>
                                     </div>
