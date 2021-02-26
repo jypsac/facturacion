@@ -68,14 +68,14 @@ class FacturacionServicioController extends Controller
             }
         }
 
-
+        $empresa = Empresa::first();
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
 
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
-
+        $sucursal= Almacen::first();
         $user_id =auth()->user();
         if($user_id->name=="Administrador"){
             $almacenes=Almacen::all();
@@ -83,7 +83,7 @@ class FacturacionServicioController extends Controller
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
 
-        return view('transaccion.venta.servicios.facturacion.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','precio_prom'));
+        return view('transaccion.venta.servicios.facturacion.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','precio_prom','empresa','sucursal'));
     }
 
     public function create_ms()

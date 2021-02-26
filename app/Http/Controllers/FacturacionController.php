@@ -132,7 +132,7 @@ class FacturacionController extends Controller
         $personal_contador= Facturacion::all()->count();
         $suma=$personal_contador+1;
         $categoria='producto';
-
+        // $empresa = Empresa::all();
         // obtencion de la sucursal
         $almacen=$request->get('almacen');
 
@@ -160,7 +160,7 @@ class FacturacionController extends Controller
 
         $factura_numero="F".$sucursal_nr."-".$factura_nr;
 
-        return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','factura_numero','sucursal'));
+        return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','factura_numero','sucursal','empresa'));
     }
 
     public function create_ms(Request $request){
