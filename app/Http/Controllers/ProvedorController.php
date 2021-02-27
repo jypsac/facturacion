@@ -103,6 +103,7 @@ class ProvedorController extends Controller
      */
     public function update(Request $request, $id)
     {
+
         $provedor=Provedor::find($id);
         $provedor->ruc=$request->get('ruc');
         $provedor->empresa=$request->get('empresa');
@@ -112,9 +113,9 @@ class ProvedorController extends Controller
         $provedor->contacto_provedor=$request->get('contacto_provedor');
         $provedor->celular_provedor=$request->get('celular_provedor');
         $provedor->email_provedor=$request->get('email_provedor');
-        $provedor->observacion=$request->get('observacion');
+        // $provedor->observacion=$request->get('observacion');
         $provedor->save();
-        return redirect()->route('provedor.show', $provedor->id);
+        return redirect()->route('provedor.index');
     }
 
     /**

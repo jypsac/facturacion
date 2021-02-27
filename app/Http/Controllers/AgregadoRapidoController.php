@@ -18,11 +18,9 @@ class AgregadoRapidoController extends Controller
     public function cliente_store(Request $request){
         //return "1";
         $this->validate($request,[
-            'nombre' => ['required','unique:clientes,nombre'],
             'numero_documento' => ['required','unique:clientes,numero_documento'],
-            'email' => ['required','email','unique:clientes,email'],
         ],[
-            'nombre.unique' => 'El Cliente ya ha sido registrado'
+            'numero_documento.unique' => 'El Cliente ya ha sido registrado'
         ]);
 
         $data = $request->all();

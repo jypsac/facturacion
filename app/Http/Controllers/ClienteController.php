@@ -38,16 +38,12 @@ class ClienteController extends Controller
      */
     public function store(Request $request)
     {
-       $this->validate($request,[
-        'nombre' => ['required','unique:clientes,nombre'],
-        'numero_documento' => ['required','unique:clientes,numero_documento'],
-    ],[
-        'nombre.unique' => 'El Cliente ya ha sido registrado',
-        'nombre.numero_documento' => 'El numero de documentacion ya ha sido registrado',
-    ]);
-
-       $data = $request->all();
-
+       $documento_identificacion=$request->get('numero_documento');
+       $cliente_existe=Cliente::where('numero_documento',$documento_identificacion)->count();
+       if ($cliente_existe==1) {
+          return redirect()->route('cliente.index')->withErrors(['Cliente ya Agregado!']);
+      }
+      else{
        $cliente= new Cliente;
        $cliente->nombre=$request->get('nombre');
        $cliente->direccion=$request->get('direccion');
@@ -76,12 +72,13 @@ class ClienteController extends Controller
        $contacto->save();
        return redirect()->route('cliente.show',$cliente->id);
    }
+}
 
-   public function storecontact($data)
-   {
+public function storecontact($data)
+{
 
 
-   }
+}
 
     /**
      * Display the specified resource.
