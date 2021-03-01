@@ -11,32 +11,32 @@ class KardexEntradaRegistroSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('kardex_entrada_registro')->insert([
-            'id' => 1 ,
-            'kardex_entrada_id' => 1,
-            'producto_id' => 1,
-            'cantidad_inicial' => 100,
-            'precio_nacional' => 50,
-            'precio_extranjero' =>14.90 ,
-            'cantidad' => 100,
-            'estado' => 1,
-            'cambio' => 3.36,
-            'created_at' => date('2020-08-01 00:00:00'),
-           	'updated_at' => date('2020-08-01 00:00:00')
-        ]);
-         DB::table('kardex_entrada_registro')->insert([
-            'id' =>2 ,
-            'kardex_entrada_id' => 1,
-            'producto_id' => 2,
-            'cantidad_inicial' => 100,
-            'precio_nacional' => 100,
-            'precio_extranjero' =>30 ,
-            'cantidad' => 100,
-            'estado' => 1,
-            'cambio' => 3.36,
-            'created_at' => date('2020-08-01 00:00:00'),
-            'updated_at' => date('2020-08-01 00:00:00')
-        ]);
+        // DB::table('kardex_entrada_registro')->insert([
+        //     'id' => 1 ,
+        //     'kardex_entrada_id' => 1,
+        //     'producto_id' => 1,
+        //     'cantidad_inicial' => 100,
+        //     'precio_nacional' => 50,
+        //     'precio_extranjero' =>14.90 ,
+        //     'cantidad' => 100,
+        //     'estado' => 1,
+        //     'cambio' => 3.36,
+        //     'created_at' => date('2020-08-01 00:00:00'),
+        //    	'updated_at' => date('2020-08-01 00:00:00')
+        // ]);
+        //  DB::table('kardex_entrada_registro')->insert([
+        //     'id' =>2 ,
+        //     'kardex_entrada_id' => 1,
+        //     'producto_id' => 2,
+        //     'cantidad_inicial' => 100,
+        //     'precio_nacional' => 100,
+        //     'precio_extranjero' =>30 ,
+        //     'cantidad' => 100,
+        //     'estado' => 1,
+        //     'cambio' => 3.36,
+        //     'created_at' => date('2020-08-01 00:00:00'),
+        //     'updated_at' => date('2020-08-01 00:00:00')
+        // ]);
         // DB::table('kardex_entrada_registro')->insert([
         //     'id' => 2 ,
         //     'kardex_entrada_id' => 2,

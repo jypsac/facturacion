@@ -74,7 +74,7 @@
 						<div class="form-group row" id="almacen_trasladar" style="display:none;">
 							<label class="col-sm-2 col-form-label">Almacen a trasladar:</label>
 							<div class="col-sm-10">
-								<select class="form-control" name="motivo">
+								<select class="form-control" name="almacen_trasladar">
 									@foreach($almacenes as $almacen)
 									<option value="{{$almacen->id}}" >{{$almacen->nombre}}</option>
 									@endforeach

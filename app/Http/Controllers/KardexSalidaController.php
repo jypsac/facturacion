@@ -10,6 +10,9 @@ use App\Producto;
 use App\kardex_entrada_registro;
 use App\kardex_salida;
 use App\kardex_salida_registro;
+use App\Stock_producto;
+use App\TipoCambio;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class KardexSalidaController extends Controller
@@ -133,7 +136,6 @@ class KardexSalidaController extends Controller
                         return redirect()->route('kardex-salida.create')->with('repite', 'Datos repetidos - No permitidos!');
                     }
                 }
-
             }
         }
 
@@ -146,6 +148,12 @@ class KardexSalidaController extends Controller
             if ($cantidad_c > $consulta_cantidad) {
                 return redirect()->route('kardex-salida.create')->with('cantidad', 'no hay cantidad deseada para el articulos');
             }
+        }
+
+        //buscador al cambio
+        $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+        if(!$cambio){
+            return "error por no hacer el cambio diario";
         }
 
         $articulo = $request->input('articulo');
@@ -182,31 +190,75 @@ class KardexSalidaController extends Controller
                     $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->get();
                     $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->sum('cantidad');
 
-                    if(isset($comparacion)){
-                        $var_cantidad_entrada=$kardex_salida_registro->cantidad;
-                        $contador=0;
-                        foreach ($comparacion as $p) {
-                            if($p->cantidad>=$var_cantidad_entrada){
-                                $cantidad_mayor=$p->cantidad;
-                                $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
-                                $p->cantidad=$cantidad_final;
-                                if($cantidad_final<=0){
+                    
+                    //Descontando en la tabla stock productos
+                    $producto_stock=Stock_producto::where('producto_id',$producto_id[$i])->first();
+                    
+                    //verificando si el motivo no es un traslado
+                    $motivo=$kardex_salida->motivo_id;
+                    $almacen_traslado=$request->input('almacen_trasladar');
+
+                    if($motivo==6){
+                        //Kardex Entrada Guardado
+                        $kardex_entrada=new Kardex_entrada();
+                        $kardex_entrada->motivo_id=$kardex_salida->motivo_id;
+                        $kardex_entrada->codigo_guia="TRASLADO";
+                        //CREAR UN PROVEDOR ESCLUSIVO PARA LOS TRASLADOS
+                        $kardex_entrada->provedor_id="1";
+                        $kardex_entrada->guia_remision="00000";
+                        $kardex_entrada->categoria_id='1';
+                        $kardex_entrada->factura="T00-00000";
+                        $kardex_entrada->almacen_id=$almacen_traslado;
+                        $kardex_entrada->moneda_id=1;
+                        $kardex_entrada->estado=1;
+                        $kardex_entrada->user_id=auth()->user()->id;
+                        $kardex_entrada->informacion=$request->get('informacion');
+                        $kardex_entrada->save();
+
+                        $kardex_entrada_registro=new kardex_entrada_registro();
+                        $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
+                        $kardex_entrada_registro->producto_id=$producto_id[$i];
+                        $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
+                        $kardex_entrada_registro->precio_nacional=0;
+                        $kardex_entrada_registro->precio_extranjero=0;
+                        $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
+                        $kardex_entrada_registro->cambio=$cambio->venta;
+                        $kardex_entrada_registro->estado=1;
+                        $kardex_entrada_registro->estado_devolucion=0;
+                        $kardex_entrada_registro->tipo_registro="traslado de almacen";
+                        $kardex_entrada_registro->save();
+                          
+                    }else{
+                        if(isset($comparacion)){
+                            $var_cantidad_entrada=$kardex_salida_registro->cantidad;
+                            $contador=0;
+                            foreach ($comparacion as $p) {
+                                if($p->cantidad>=$var_cantidad_entrada){
+                                    $cantidad_mayor=$p->cantidad;
+                                    $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                                    $p->cantidad=$cantidad_final;
+                                    if($cantidad_final<=0){
+                                        $p->estado=0;
+                                        $p->save();
+                                    }else{
+                                        $p->save();
+                                    }
+                                }else{
+                                    $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+                                    $p->cantidad=0;
                                     $p->estado=0;
                                     $p->save();
-                                }else{
-                                    $p->save();
                                 }
-                            }else{
-                                $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
-                                $p->cantidad=0;
-                                $p->estado=0;
-                                $p->save();
                             }
                         }
+                        //resta de cantidades de productos para la tabla stock productos
+                        $stock_productos=Stock_producto::find($producto_stock->id);
+                        $stock_productos->stock=$stock_productos->stock-$kardex_salida_registro->cantidad;
+                        $stock_productos->save();
                     }
-                }
-            }else {
-                return "Error fatal comunicarse con soporte inmediatamente";
+                }   
+            }else{
+                return "Error fatal: por favor comunicarse con soporte inmediatamente";
             }
         }else{
             return redirect()->route('kardex-salida.create')->with('campo', 'Falto introducir un campo de la tabla productos');
