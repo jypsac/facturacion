@@ -588,18 +588,18 @@ public function create_boleta_ms(Request $request)
         foreach ($productos as $index => $producto) {
             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
             $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index]);
-            $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo;
+            $array[]=round((kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo,2);
             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+            $array_promedio[]=round(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')/$tipo_cambio->paralelo,2);
         }
     }else{
         foreach ($productos as $index => $producto) {
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+            $utilidad[]=round(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100,2);
             $igv_p[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index]);
 
             $array[]=(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo;
             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
+            $array_promedio[]=round(kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*$tipo_cambio->paralelo,2);
         }
     }
 
@@ -810,21 +810,21 @@ public function create_boleta_ms(Request $request)
             }else{
                 if ($moneda->tipo == 'extranjera'){
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                    $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero');
+                    $array2=round(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*$paralelo,2);
                     $cotizacion_registro->promedio_original=$array2;
                     $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                     $igv_p=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad);
-                    $array=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad);
-                    $array_pre_prom=($array*$cambio->paralelo)+($array*($igv->igv_total/100));
+                    $array=round((kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_extranjero')+$utilidad)*$cambio->paralelo,2);
+                    $array_pre_prom=($array)+($array*($igv->igv_total/100));
                     $cotizacion_registro->precio = $array_pre_prom;
                 }else{
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                    $array2=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional');
+                    $array2=round(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')/$cambio->paralelo,2);
                     $cotizacion_registro->promedio_original=$array2;
                     $utilidad=kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                     $igv_p=(kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad);
-                    $array=((kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad));
-                    $array_pre_prom=($array/$cambio->paralelo)+($array*($igv->igv_total/100));
+                    $array=round(((kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('estado',1)->avg('precio_nacional')+$utilidad)/$cambio->paralelo),2);
+                    $array_pre_prom=($array)+($array*($igv->igv_total/100));
                     $cotizacion_registro->precio = $array_pre_prom;
                 }
             }

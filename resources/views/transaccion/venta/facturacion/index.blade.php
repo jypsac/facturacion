@@ -48,7 +48,16 @@
                             </div>
                             <!--Servicios-->
                             <div class="col-sm-6">
-                                <a href="{{ route('facturacion_servicio.create')}}"><button class="btn btn-sm btn-info" >Servicios</a>
+                                <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Servicios</button>
+                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <form action="{{ route('facturacion_servicio.create')}}"enctype="multipart/form-data" method="post">
+                                        @csrf
+                                        @foreach($almacen as $almacens)
+                                        <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
+                                        @endforeach
+                                    </form>
+                                </div>
+                                {{-- <a href=""><button class="btn btn-sm btn-info" >Servicios</a> --}}
                             </div>
                         </div>
                     </div>

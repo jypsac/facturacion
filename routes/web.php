@@ -73,8 +73,9 @@ Route::group(
 		Route::put('/cotizacion_servicio/store/{id_moneda}','CotizacionServiciosController@store')->name('cotizacion.store');
 
 //FACTURACION SERVICIOS
-		Route::get('/facturacion_servicio/create_ms','FacturacionServicioController@create_ms')->name('facturacion_servicio.create_ms');
-		Route::resource('/facturacion_servicio','FacturacionServicioController');
+		Route::post('/facturacion_servicio/create_ms','FacturacionServicioController@create_ms')->name('facturacion_servicio.create_ms');
+		Route::post('/facturacion_servicio/create','FacturacionServicioController@create')->name('facturacion_servicio.create');
+		Route::resource('/facturacion_servicio','FacturacionServicioController')->except(['create']);
 
 //BOLETA SERVICIOS
 		Route::get('/boleta_servicio/create_ms','BoletaServicioController@create_ms')->name('boleta_servicio.create_ms');

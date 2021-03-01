@@ -107,7 +107,7 @@
                             </tr>
                             </thead>
                             <tbody>
-                             @if ($regla=="factura")<span hidden="hidden">{{$i=1}} </span>
+                            @if ($regla=="factura")<span hidden="hidden">{{$i=1}} </span>
                             @foreach($cotizacion_registro as $cotizacion_registros)
                             <tr>
                                 <td>{{$i}} </td>

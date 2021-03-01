@@ -19,9 +19,8 @@
                     <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
                 </form>
                 <a class="btn btn-success" href="{{route('facturacion.print' , $facturacion->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i></a>
-                @if(Auth::user()->email_creado == 0)
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
-                @else
+
+                @if(Auth::user()->email_creado == 1)
                     <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
                         @csrf
                         <input type="text" hidden="hidden"  name="tipo" value="App\Facturacion"/>
@@ -240,95 +239,6 @@
   </div>
 
 </div>
-{{-- Modal Configuracion --}}
-<div class="modal fade" id="config" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-
-            </div>
-            <div style="padding-left: 15px;padding-right: 15px;">
-                {{-- ccccccccccccccccc --}}
-                <div class="ibox-content" style="padding-left: 0px;padding-right: 0px;" align="center">
-
-                    <form action="{{route('email.config')}}"  enctype="multipart/form-data" method="post">
-                        @csrf
-                        <div class="row">
-                            <fieldset >
-                                <legend> Agregar Configuracion </legend>
-                                {{-- <div> --}}
-                                    <div class="panel-body" align="left">
-                                        <div class="row">
-                                            <label class="col-sm-2 col-form-label">Email:</label>
-                                            <div class="col-sm-10">
-                                                <input type="text" class="form-control" style="width: 100%;height: 90%;margin-top: 5px; border-radius: 5px" name="email"/>
-                                            </div>
-
-                                            <label class="col-sm-2 col-form-label">Contraseña:</label>
-                                            <div class="col-sm-10" style="flex-wrap: none">
-                                                <div class="input-group m-b">
-                                                    <input type="password" class="form-control" name="password" id="txtPassword" required="" style="height: 90%;margin-top: 5px; border-radius: 5px">
-                                                    <div class="input-group-prepend">
-                                                        <span class="input-group-addon" style="height: 35.22222px;margin-top: 5px;">
-                                                            <i class="fa fa-eye-slash " id="ojo" onclick="mostrarPassword()"></i>
-                                                        </span>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-sm-2 col-form-label">SMPT:</label>
-                                            <div class="col-sm-4">
-                                                <input type="text" class="form-control" name="smtp" placeholder="smtp.gmail.com" required="" style="width: 100%;height: 90%;margin-top: 5px; border-radius: 5px">
-                                            </div>
-
-                                            <label class="col-sm-2 col-form-label">PORT:</label>
-                                            <div class="col-sm-4">
-                                                <input type="text" class="form-control" name="port" value="110 " style="height: 90%;margin-top: 5px; border-radius: 5px" >
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-sm-2 col-form-label">Encryption:</label>
-                                            <div class="col-sm-4">
-                                                <select class="form-control" name="encryp" >
-                                                    <option value="">Ninguno</option>
-                                                    <option value="SSL">SSL</option>
-                                                    <option value="TLS">TLS</option>
-                                                </select>
-                                            </div>
-                                        </div><br>
-                                        <div class="row">
-                                            <label class="col-sm-2 col-form-label">Firma (opcional):</label>
-                                            <div class="col-sm-10">
-                                                <input type="file" id="archivoInput" name="firma" onchange="return validarExt()"  />
-                                                <span id="visorArchivo">
-                                                    <!--Aqui se desplegará el fichero-->
-                                                    <img name="firma"  src="" width="390px" height="200px" />
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <div class="row">
-                                            <label class="col-sm-2 col-form-label">Ancho(px)</label>
-                                                <div class="col-sm-4">
-                                                    <input type="number" class="form-control" name="ancho_firma">
-                                                </div>
-                                            <label class="col-sm-2 col-form-label" >Alto(px)</label>
-                                                <div class="col-sm-4">
-                                                    <input type="number" class="form-control" name="alto_firma">
-                                                </div>
-                                        </div>
-                                        <br>
-                                    </div>
-                                </fieldset>
-                            </div>
-                            <button class="btn btn-primary" type="submit">Grabar</button>
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 <style>
     .form-control{margin-top: 5px; border-radius: 5px}
     p#texto{

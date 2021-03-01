@@ -36,8 +36,6 @@
                 </form>
                 <a class="btn btn-success" href="{{route('facturacion.print' , $facturacion->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i></a>
                 @if(Auth::user()->email_creado == 0)
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
-                @else
                     <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
                         @csrf
                         <input type="text" hidden="hidden"  name="tipo" value="App\Facturacion"/>

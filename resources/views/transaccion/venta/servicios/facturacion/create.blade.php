@@ -1,4 +1,4 @@
-@extends('layout')
+    @extends('layout')
 
 @section('title', 'Servicio - Factura')
 @section('breadcrumb', 'Servicio - Factura')
@@ -58,7 +58,7 @@
 
 <form action="{{ route('facturacion_servicio.create_ms')}}" enctype="multipart/form-data" id="almacen-form" method="POST">
     @csrf
-    <input type="text" value="{{-- {{$sucursal->id}} --}}" hidden="hidden" name="almacen">
+    <input type="text" value="{{$sucursal->id}}" hidden="hidden" name="almacen">
     <input class="btn btn-sm btn-info"type="submit" hidden="hidden" value="cambiar" >
 </form>
 
@@ -102,7 +102,7 @@
                                <div class="form-control" align="center" style="height: auto;">
                                 <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
                                 <h2 style="font-size: 19px">FACTURA ELECTRONICA</h2>
-                                <h5>{{-- {{$factura_numero}} --}}</h5>
+                                <h5>{{$factura_numero}}</h5>
                             </div>
                         </div>
                     </div>
@@ -180,8 +180,14 @@
                                                 </div>
 
                                                 <a class="col-sm-5" onclick="event.preventDefault();document.getElementById('almacen-form').submit();">
-                                                    <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>@if($moneda->tipo=='nacional')Dolares @elseif($moneda->tipo=='extranjera') Soles @endif</button></a>
-
+                                                    <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>
+                                                        @if($moneda->tipo=='nacional')
+                                                            {{$moneda->where('tipo','=','extranjera')->pluck('nombre')->first()}}
+                                                        @elseif($moneda->tipo=='extranjera')
+                                                            {{$moneda->where('tipo','=','nacional')->pluck('nombre')->first()}}
+                                                        @endif
+                                                    </button>
+                                                </a>
                                                 </div>
 
                                             </td>

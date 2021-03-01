@@ -573,12 +573,14 @@
             } else {
                 var multiplier = 100;
                 var descuento = 0;
+
                 var precio = document.querySelector(`#precio${a}`).value;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var final= cantidad*precio;
                 var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
 
                 var end =(Math.round(end9 * multiplier) / multiplier)+(end9*igv/100);
+                document.getElementById(`precio_unitario_descuento${a}`).value = end;
                 var final2=cantidad*end;
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
 
@@ -589,8 +591,8 @@
 
                 document.getElementById(`check_descuento${a}`).value = 0;
                 document.getElementById(`total${a}`).value = final_decimal;
-                document.getElementById(`precio_unitario_descuento${a}`).value = end;
-                document.getElementById(`precio_unitario_comision${a}`).value = end;
+
+                document.getElementById(`precio_unitario_comision${a}`).value = final_decimal;
             }
 
             var totalInp = $('[name="total"]');

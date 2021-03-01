@@ -475,8 +475,8 @@
 
                 <input type='text' hidden="" id='comision${i}' name='comision[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
                 </td>
-                
-                
+
+
 
                 <td>
                 <input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>

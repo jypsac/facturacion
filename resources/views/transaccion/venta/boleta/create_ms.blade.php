@@ -291,12 +291,12 @@
                                             <tr>
                                                 <td>Moneda</td>
                                                 <td>:</td>
-                                                <td>
-                                                    <input type="text" name="moneda" class="form-control" value="Moneda Principal {{$moneda->nombre}}" readonly="readonly">
-                                                    <br>
-                                                    <input type="hidden" name="almacen" class="form-control" value="{{$sucursal->id}}" readonly="readonly">
+                                                <td class="row" style="padding-left: 20px">
+                                                    <input type="text" name="moneda" class="form-control col-sm-8" value="{{$moneda->nombre}}" readonly="readonly">&nbsp;
+                                                    {{-- <br> --}}
+                                                    <input type="hidden" name="almacen" class="form-control col-sm-4" value="{{$sucursal->id}}" readonly="readonly">
                                                     <a onclick="event.preventDefault();
-                                                        document.getElementById('almacen-form').submit();">
+                                                        document.getElementById('almacen-form').submit(); " style="padding-left: 10px;padding-top: 5px ">
                                                         <button type="button" class='addmores btn btn-success'>Cambiar</button>
                                                     </a>
                                                 </td>
@@ -320,7 +320,7 @@
 
                                         <div class="div table-responsive">
 
-                                            <table   cellspacing="0" class="table tables  " style="width: 1280px">
+                                            <table   cellspacing="0" class="table tables  " >
                                                 <thead>
                                                     <tr>
                                                         <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
@@ -597,6 +597,7 @@
             var promedio_origina_descuento1=document.querySelector(`#precio_unitario_descuento${a}`).value;
             var promedio_original2=document.querySelector(`#promedio_original${a}`).value;
             var descuento = document.querySelector(`#descuento${a}`).value;
+            var igv = {{$igv->renta}};
             if (checkBox.checked == true && descuento > 0){
 
                 var precio = document.querySelector(`#precio${a}`).value;
@@ -604,28 +605,32 @@
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var multiplier = 100;
                 var precio_uni=precio-(promedio_original*descuento/100);
-                var precio_uni_dec=Math.round(precio_uni * multiplier) / multiplier;
+                var precio_uni_dec=(Math.round(precio_uni * multiplier) / multiplier)+(precio_uni*igv/100);
 
                 document.getElementById(`check_descuento${a}`).value = descuento;
-                document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
+                 document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
 
-                var comisiones9=precio_uni_dec+(promedio_original2*comision_porcentaje/100);
-                var comisiones=Math.round(comisiones9*multiplier)/multiplier;
+                var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
+                var comisiones=(Math.round(comisiones9*multiplier)/multiplier+(comisiones9*igv/100));
                 document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
 
                 var final=comisiones*cantidad;
                 var final_decimal = Math.round(final * multiplier) / multiplier;
                 console.log(final_decimal);
+
+
                 document.getElementById(`total${a}`).value = final_decimal;
             } else {
                 var multiplier = 100;
                 var descuento = 0;
                 var precio = document.querySelector(`#precio${a}`).value;
+                var precio_igv = (Math.round(precio * multiplier) / multiplier)+(precio*igv/100);
+                document.getElementById(`precio_unitario_descuento${a}`).value = precio_igv;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var final= cantidad*precio;
-                var end9=parseFloat(precio)+(parseFloat(promedio_original2)*parseInt(comision_porcentaje)/100);
+                var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
 
-                var end =Math.round(end9 * multiplier) / multiplier;
+                var end =(Math.round(end9 * multiplier) / multiplier)+(end9*igv/100);
                 var final2=cantidad*end;
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
 
@@ -636,7 +641,7 @@
 
                 document.getElementById(`check_descuento${a}`).value = 0;
                 document.getElementById(`total${a}`).value = final_decimal;
-                document.getElementById(`precio_unitario_descuento${a}`).value = precio;
+
                 document.getElementById(`precio_unitario_comision${a}`).value = end;
             }
 

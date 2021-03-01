@@ -35,7 +35,7 @@ class FacturacionServicioController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
 
         $servicios=Servicios::where('estado_anular',0)->get();
@@ -82,11 +82,35 @@ class FacturacionServicioController extends Controller
         }else{
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
+        $almacen=$request->get('almacen');
 
-        return view('transaccion.venta.servicios.facturacion.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','precio_prom','empresa','sucursal'));
+        //obtencion del almacen
+        $sucursal=Almacen::where('id', $almacen)->first();
+
+        $factura_cod_fac=$sucursal->cod_fac;
+        if (is_numeric($factura_cod_fac)) {
+            // exprecion del numero de fatura
+            $factura_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+        }else{
+            // exprecion del numero de fatura
+            // GENERACION DE NUMERO DE FACTURA
+            $ultima_factura=Facturacion::where('almacen_id',$sucursal->id)->latest()->first();
+            $factura_num=$ultima_factura->codigo_fac;
+            $factura_num_string_porcion= explode("-", $factura_num);
+            $factura_num_string=$factura_num_string_porcion[1];
+            $factura_num=(int)$factura_num_string;
+            $factura_num++;
+            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+        }
+
+        $factura_numero="F".$sucursal_nr."-".$factura_nr;
+        return view('transaccion.venta.servicios.facturacion.create',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','precio_prom','empresa','sucursal','factura_numero'));
     }
 
-    public function create_ms()
+    public function create_ms(Request $request)
     {
 
         $servicios=Servicios::where('estado_anular',0)->get();
@@ -125,15 +149,39 @@ class FacturacionServicioController extends Controller
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
         $igv=Igv::first();
-
+        $empresa = Empresa::first();
         $user_id =auth()->user();
         if($user_id->name=="Administrador"){
             $almacenes=Almacen::all();
         }else{
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
+        $almacen=$request->get('almacen');
 
-        return view('transaccion.venta.servicios.facturacion.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','precio_prom'));
+        //obtencion del almacen
+        $sucursal=Almacen::where('id', $almacen)->first();
+
+        $factura_cod_fac=$sucursal->cod_fac;
+        if (is_numeric($factura_cod_fac)) {
+            // exprecion del numero de fatura
+            $factura_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+        }else{
+            // exprecion del numero de fatura
+            // GENERACION DE NUMERO DE FACTURA
+            $ultima_factura=Facturacion::where('almacen_id',$sucursal->id)->latest()->first();
+            $factura_num=$ultima_factura->codigo_fac;
+            $factura_num_string_porcion= explode("-", $factura_num);
+            $factura_num_string=$factura_num_string_porcion[1];
+            $factura_num=(int)$factura_num_string;
+            $factura_num++;
+            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+        }
+
+        $factura_numero="F".$sucursal_nr."-".$factura_nr;
+        return view('transaccion.venta.servicios.facturacion.create_ms',compact('servicios','forma_pagos','clientes','personales','array','igv','moneda','p_venta','almacenes','precio_prom','factura_numero','empresa','sucursal'));
     }
 
     /**
@@ -177,7 +225,7 @@ class FacturacionServicioController extends Controller
 
         // Comisionista convertir id --------------------------------------------------------------------------------------------------
         $comisionista=$request->get('comisionista');
-        if($comisionista!="" and $comisionista!="Sin comision - 0"){
+        if($comisionista!="" and $comisionista!="Sin comision - 0 "){
             $numero = strstr($comisionista, '-',true);
             $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
             $id_personal=$cod_vendedor->id;
@@ -252,7 +300,7 @@ class FacturacionServicioController extends Controller
         $facturacion->cambio=$cambio->paralelo;
         $facturacion->observacion=$request->get('observacion');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
-            $facturacion->comisionista_id= $comisionista_buscador->id;
+            $facturacion->comisionista= $comisionista_buscador->id;
         }
         $facturacion->user_id =auth()->user()->id;
         $facturacion->estado='0';
@@ -276,53 +324,52 @@ class FacturacionServicioController extends Controller
                 //Precio -----------------------------------------------------------------------------------------
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional'){
-                        $facturacion_registro->promedio_original=$servicio->precio_nacional;
+                        $precio_prom = $servicio->precio_nacional;
+                        $facturacion_registro->promedio_original= $precio_prom;
                         $utilidad=$servicio->precio_nacional*($servicio->utilidad)/100;
                         $array=$servicio->precio_nacional+$utilidad;
                     }else{
-                        $facturacion_registro->promedio_original=$servicio->precio_extranjero;
+                        $precio_prom = $servicio->precio_extranjero;
+                        $facturacion_registro->promedio_original=$precio_prom;
                         $utilidad=$servicio->precio_extranjero*($servicio->utilidad)/100;
-                        $array=$servicio->precio_extranjero+$utilidad*$tipo_cambio->paralelo;
+                        $array=$servicio->precio_extranjero+$utilidad;
+                        return '1';
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera'){
-                        $facturacion_registro->promedio_original=$servicio->precio_extranjero;
+                        $precio_prom = $servicio->precio_extranjero*$tipo_cambio->paralelo;
+                        $facturacion_registro->promedio_original=$precio_prom;
                         $utilidad=$servicio->precio_extranjero*($servicio->utilidad)/100;
-                        $array=($servicio->precio_extranjero+$utilidad)/$tipo_cambio->paralelo;
+                        $array=round(($servicio->precio_extranjero+$utilidad)*$tipo_cambio->paralelo,2);
+                        return '2';
                     }else{
-                        $facturacion_registro->promedio_original=$servicio->precio_nacional;
+                        $precio_prom = $servicio->precio_nacional/$tipo_cambio->paralelo;
+                        $facturacion_registro->promedio_original=$precio_prom;
                         $utilidad=$servicio->precio_nacional*($servicio->utilidad)/100;
-                        $array=$servicio->precio_nacional+$utilidad;
+                        $array=round(($servicio->precio_nacional+$utilidad)/$tipo_cambio->paralelo,2);
+                        // return $array;
                     }
                 }
 
 
                 $facturacion_registro->precio=$array;
                 $facturacion_registro->cantidad=$request->get('cantidad')[$i];
-
-                //descuento
+                $facturacion_registro->comision=$comi;
                 $descuento_verificacion=$request->get('check_descuento')[$i];
-                if($descuento_verificacion <> 0){
-                    $facturacion_registro->descuento=$servicio->descuento;
-                    $desc_comprobacion=$servicio->descuento;
-                }else{
-                    $facturacion_registro->descuento=0;
-                    $desc_comprobacion=0;
-                }
+                $facturacion_registro->descuento=$descuento_verificacion;
 
-                //precio unitario descuento
-                if($desc_comprobacion <> 0){
-                    $facturacion_registro->precio_unitario_desc=$array-($array*$desc_comprobacion/100);
-                    $precio_unitario_desc=$array-($array*$desc_comprobacion/100);
+                if($descuento_verificacion <> 0){
+                $facturacion_registro->precio_unitario_desc=$array-($precio_prom*$descuento_verificacion/100);
                 }else{
                     $facturacion_registro->precio_unitario_desc=$array;
-                    $precio_unitario_desc=$array;
                 }
-
-                $facturacion_registro->comision=$comi;
-                $facturacion_registro->precio_unitario_comi=$precio_unitario_desc+($precio_unitario_desc*$comi/100);
-
-
+                    //precio unitario comision ----------------------------------------
+                if($descuento_verificacion <> 0){
+                    $prec_uni_des=$array-($precio_prom*$descuento_verificacion/100);
+                    $facturacion_registro->precio_unitario_comi=($prec_uni_des+($prec_uni_des*$comi/100));
+                }else{
+                    $facturacion_registro->precio_unitario_comi=$array+($array*$comi/100);
+                }
                 $facturacion_registro->save();
             }
         }else {
