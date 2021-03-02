@@ -1,94 +1,80 @@
 @extends('layout')
-
 @section('title', 'Provedor')
 @section('breadcrumb', 'Provedor')
 @section('breadcrumb2', 'Provedor')
 @section('href_accion', route('provedor.create'))
 @section('value_accion', 'Agregar')
-
 @section('content')
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
-                <div class="ibox-title">
-                    <h5>Ver</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#" class="dropdown-item">Config option 1</a>
-                            </li>
-                            <li><a href="#" class="dropdown-item">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
                 <div class="ibox-content">
                     <div class="table-responsive">
-                       <table class="footable table table-stripped toggle-arrow-tiny">
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>RUC</th>
-                                <th>Empresa</th>
-                                <th>Direccion</th>
-                                <th>Telefonos</th>
-                                <th>Correo</th>
-                                <th>editar</th>
-                                <th data-hide="all">RUC / Nombre Empresa / Direccion</th>
-                                <th data-hide="all">Telefono / Email</th>
-                                <th></th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            @foreach($provedores as $provedor)
-                            <form action="{{ route('provedor.update',$provedor->id) }}"  enctype="multipart/form-data" method="post">
-                                @csrf
-                                @method('PATCH')
-                                <tr class="gradeX">
+                        <table class="table table-striped table-bordered table-hover dataTables-example" >
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>RUC</th>
+                                    <th>Empresa</th>
+                                    <th>Direccion</th>
+                                    <th>Telefonos</th>
+                                    <th>Correo</th>
+                                    <th>-</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($provedores as $provedor)
+                                <tr class="gradeX"  id="vista{{$provedor->id}}">
                                     <td>{{$provedor->id}}</td>
                                     <td>{{$provedor->ruc}}</td>
                                     <td>{{$provedor->empresa}}</td>
                                     <td>{{$provedor->direccion}}</td>
                                     <td>{{$provedor->telefonos}}</td>
                                     <td>{{$provedor->email_provedor}}</td>
-                                    <td><center><a href="{{ route('provedor.show', $provedor->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
-
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-lg-4"><input class="form-control" name="ruc" value="{{$provedor->ruc}}" type="text"></div>
-                                            <div class="col-lg-4"><input class="form-control" name="empresa" value="{{$provedor->empresa}}" type="text"></div>
-                                            <div class="col-lg-4"><input class="form-control" name="direccion" value="{{$provedor->direccion}}" type="text"></div>
-                                        </div>
-                                    </td>
-                                    <td>
-                                        <div class="row">
-                                            <div class="col-lg-4"><input class="form-control" name="telefonos" value="{{$provedor->telefonos}}" type="text"></div>
-                                            <div class="col-lg-4"><input class="form-control" name="email_provedor" value="{{$provedor->email_provedor}}" type="text"></div>
-                                            <div class="col-lg-4"><input type="submit" value="enviar"><button type="submit" class="btn btn-primary">Enviar</button></div>
-                                        </div>
-                                    </td>
-                                    <td><input type="submit"></td>
+                                    <td><div id="auto" style="box-shadow: none;" onclick="divAuto{{$provedor->id}}()">
+                                        <a class="btn  btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-edit" style="color: white"></i>  </a>
+                                    </div></td>
                                 </tr>
-                                {{-- <button type="submit" class="btn btn-primary">Enviar</button> --}}
-                            </form>
-                            @endforeach
-                        </tbody>
-                    </table>
+                                <tr hidden="" id="form{{$provedor->id}}">
+                                    <form action="{{ route('provedor.update',$provedor->id) }}"  enctype="multipart/form-data" method="post">
+                                        @csrf
+                                        @method('PATCH')
+                                        <td>{{$provedor->id}}</td>
+                                        <td><input class="form-control" name="ruc" value="{{$provedor->ruc}}" type="text"></td>
+                                        <td><input class="form-control" name="empresa" value="{{$provedor->empresa}}" type="text"></td>
+                                        <td><input class="form-control" name="direccion" value="{{$provedor->direccion}}" type="text"></td>
+                                        <td><input class="form-control" name="telefonos" value="{{$provedor->telefonos}}" type="text"></td>
+                                        <td><input class="form-control" name="email_provedor" value="{{$provedor->email_provedor}}" type="text"></td>
+                                        <td >{{--  <div id="auto" style="box-shadow: none;" onclick="divAuto{{$provedor->id}}()">
+                                                <a class="btn  btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-edit" style="color: white"></i></a>
+                                            </div>  --}}<input class="btn  btn-success" type="submit"></td>
+                                        </form>
+                                    </tr>
+                                    <script>
+                                        var clic = 1;
+                                        function divAuto{{$provedor->id}}(){
+                                           if(clic==1){
+                                             // document.getElementById("div-mostrar").style.height = "50px";
+                                             document.getElementById("vista{{$provedor->id}}").setAttribute("hidden", "");
+                                             document.getElementById("form{{$provedor->id}}").removeAttribute("hidden", "");
+                                             clic = clic + 1;
+                                         } else{
+                                            // document.getElementById("div-mostrar").style.height = "0px";
+                                            document.getElementById("vista{{$provedor->id}}").removeAttribute("hidden", "");
+                                            document.getElementById("form{{$provedor->id}}").setAttribute("hidden", "");
+                                            clic = 1;
+                                        }
+                                    }
+                                </script>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
 </div>
 
 
@@ -111,19 +97,6 @@
 <!-- Custom and plugin javascript -->
 <script src="js/inspinia.js"></script>
 <script src="js/plugins/pace/pace.min.js"></script>
-
-<!-- Page-Level Scripts -->
-<script>
-    $(document).ready(function() {
-
-        $('.footable').footable();
-        $('.footable2').footable();
-
-    });
-
-</script>
-
-
 <!-- Page-Level Scripts -->
 <script>
     $(document).ready(function(){
@@ -148,11 +121,7 @@
             }
         }
         ]
-
     });
-
     });
-
 </script>
-
 @endsection
