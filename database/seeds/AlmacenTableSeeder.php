@@ -23,6 +23,7 @@ class AlmacenTableSeeder extends Seeder
       'cod_bol' => '0',
       'cod_guia' => '0',
       'estado' => '0',
+      'principal' => '1',
       'created_at' => date('2019-08-01 00:00:00'),
       'updated_at' => date('2019-08-01 00:00:00')
       ]);
@@ -38,6 +39,7 @@ class AlmacenTableSeeder extends Seeder
       'cod_bol' => '21',
       'cod_guia' => '23',
       'estado' => '0',
+      'principal' => '0',
       'created_at' => date('2019-08-01 00:00:00'),
       'updated_at' => date('2019-08-01 00:00:00')
       ]);
@@ -53,6 +55,7 @@ class AlmacenTableSeeder extends Seeder
       'cod_bol' => '21',
       'cod_guia' => '23',
       'estado' => '0',
+      'principal' => '0',
       'created_at' => date('2019-08-01 00:00:00'),
       'updated_at' => date('2019-08-01 00:00:00')
       ]);

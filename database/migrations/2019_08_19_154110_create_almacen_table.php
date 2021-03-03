@@ -26,6 +26,7 @@ class CreateAlmacenTable extends Migration
             $table->string('cod_bol');
             $table->string('cod_guia');
             $table->boolean('estado');
+            $table->boolean('principal');
             $table->unsignedBigInteger('responsable')->nullable();
             $table->foreign('responsable')->references('id')->on('personal')->onDelete('cascade');
 
