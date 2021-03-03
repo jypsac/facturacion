@@ -114,18 +114,18 @@
                                         {{$cotizacion_registros->servicio->nombre}} / {{$cotizacion_registros->servicio->descripcion}}</span>
 
                                     </td>
-                                    
+
                                     <td style="display: none">
-                                         {{$coti_dec = $cotizacion_registros->precio-($cotizacion_registros->promedio_original*$cotizacion_registros->descuento/100)}}
-                                        {{$coti_comi = $coti_dec+($coti_dec*$cotizacion_registros->comision/100)}}
+                                         {{$coti_dec = round($cotizacion_registros->precio-($cotizacion_registros->promedio_original*$cotizacion_registros->descuento/100),2)}}
+                                        {{$coti_comi = round($coti_dec+($coti_dec*$cotizacion_registros->comision/100),2)}}
                                     </td>
                                     <td>{{$moneda->simbolo}}. {{$coti_comi}}</td>
                                     <td>{{$moneda->simbolo}}. {{($coti_comi)*$cotizacion_registros->cantidad}}</td>
                                     <td style="display: none;">
-                                       
+
                                         <br>
-                                        {{$sub_total=($coti_dec+($coti_dec*$cotizacion_registros->comision/100)+$sub_total)*$cotizacion_registros->cantidad}}
-                                        S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                        {{$sub_total=($coti_comi+$sub_total)*$cotizacion_registros->cantidad}}
+                                        S/.{{$igv_p=round($sub_total*$igv->igv_total/100, 2)}}
                                         {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                     </td>
                                 </tr>

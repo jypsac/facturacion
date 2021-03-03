@@ -50,7 +50,17 @@
                             </div>
                             <!--Servicios-->
                             <div class="col-sm-6">
-                                <a href="{{ route('boleta_servicio.create')}}"><button class="btn btn-sm btn-info" >Servicios</a>
+                               <div class="dropdown">
+                                  <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Servicios</button>
+                                 <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <form action="{{ route('boleta_servicio.create')}}"enctype="multipart/form-data" method="post">
+                                        @csrf
+                                        @foreach($almacen as $almacens)
+                                        <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
+                                        @endforeach
+                                    </form>
+                                 </div>
+                                </div>
                             </div>
                         </div>
                     </div>

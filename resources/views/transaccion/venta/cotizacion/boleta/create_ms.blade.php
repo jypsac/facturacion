@@ -185,7 +185,7 @@
 
                                 <div class="div table-responsive">
 
-                                    <table   cellspacing="0" class="table tables  " style="width: 1280px">
+                                    <table   cellspacing="0" class="table tables  " >
                                         <thead>
                                             <tr>
                                                 <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
@@ -438,7 +438,7 @@
         <input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
         </td>
         <td>
-        <input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
+        <input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="form-control"  required  autocomplete="off" />
         </td>
 
         <input type='hidden' name'${i}' id='comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
@@ -557,30 +557,32 @@
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var multiplier = 100;
                 var precio_uni=precio-(promedio_original*descuento/100);
-                var precio_uni_dec=(Math.round(precio_uni * multiplier) / multiplier)+(precio_uni*igv/100);
-
+                var precio_uni_dec = Math.round((precio_uni + (precio_uni * igv/100))*multiplier)/multiplier;
                 document.getElementById(`check_descuento${a}`).value = descuento;
 
 
-                var comisiones9=precio_uni+(precio*comision_porcentaje/100);
-                var comisiones=(Math.round(comisiones9*multiplier)/multiplier+(comisiones9*igv/100));
+                var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
+                var comisiones = Math.round((comisiones9+(comisiones9*igv/100))*multiplier)/multiplier;
 
 
                 var final=comisiones*cantidad;
                 var final_decimal = Math.round(final * multiplier) / multiplier;
-                console.log(final_decimal);
-                 document.getElementById(`precio_unitario_descuento${a}`).value = final_decimal;
-                 document.getElementById(`precio_unitario_comision${a}`).value = final_decimal;
+
+                document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
+                document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
                 document.getElementById(`total${a}`).value = final_decimal;
             } else {
                 var multiplier = 100;
                 var descuento = 0;
                 var precio = document.querySelector(`#precio${a}`).value;
+                var precio_igv = parseFloat(precio) + (parseFloat(precio)*igv/100);
+                var precio_igv_view = Math.round(precio_igv*multiplier)/multiplier;
+
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var final= cantidad*precio;
                 var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
 
-                 var end =(Math.round(end9 * multiplier) / multiplier)+(end9*igv/100);
+                 var end =Math.round((end9+(end9*igv/100)) * multiplier) / multiplier;
                 var final2=cantidad*end;
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
 
@@ -591,7 +593,7 @@
 
                 document.getElementById(`check_descuento${a}`).value = 0;
                 document.getElementById(`total${a}`).value = final_decimal;
-                document.getElementById(`precio_unitario_descuento${a}`).value = end;
+                document.getElementById(`precio_unitario_descuento${a}`).value = precio_igv_view;
                 document.getElementById(`precio_unitario_comision${a}`).value = end;
             }
 

@@ -116,12 +116,12 @@
                                             <td style="display: none">
                                                 {{$precio_array = ($cotizacion_registros->precio-($cotizacion_registros->promedio_original*($cotizacion_registros->descuento/100)))}}
                                                 {{$precio_array_comi = $precio_array+($precio_array*($cotizacion_registros->comision/100))}}
-                                                {{$precio_array_comi_igv = $precio_array_comi+($precio_array_comi*($igv->igv_total/100))}}
+                                                {{$precio_array_comi_igv = round($precio_array_comi+($precio_array_comi*($igv->igv_total/100)),2)}}
                                             </td>
                                             <td>{{$moneda->simbolo}}. {{$precio_array_comi_igv}}</td>
                                             <td>{{$moneda->simbolo}}. {{$precio_array_comi_igv*$cotizacion_registros->cantidad}}</td>
                                             <td style="display: none">
-                                                {{$sub_total=($precio_array_comi_igv)+$sub_total}}
+                                                {{$sub_total=($precio_array_comi_igv*$cotizacion_registros->cantidad)+$sub_total}}
                                             </td>
                                         </tr>
                                         <span hidden="hidden">{{$i++}}</span>

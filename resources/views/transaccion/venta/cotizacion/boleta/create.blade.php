@@ -434,7 +434,7 @@
                 <input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
                 </td>
                 <td>
-                <input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
+                <input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="form-control"  required  autocomplete="off" />
                 </td>
 
                 <input type='hidden' name'${i}' id='comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
@@ -567,8 +567,8 @@
                 var final=comisiones*cantidad;
                 var final_decimal = Math.round(final * multiplier) / multiplier;
                 console.log(final_decimal);
-                 document.getElementById(`precio_unitario_descuento${a}`).value = final_decimal;
-                document.getElementById(`precio_unitario_comision${a}`).value = final_decimal;
+                 document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
+                document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
                 document.getElementById(`total${a}`).value = final_decimal;
             } else {
                 var multiplier = 100;

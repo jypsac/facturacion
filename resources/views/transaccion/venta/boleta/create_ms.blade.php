@@ -485,7 +485,7 @@
                             <input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
                             </td>
                             <td>
-                            <input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="precio_unitario_descuento${i} form-control"  required  autocomplete="off" />
+                            <input type='text' id='precio_unitario_descuento${i}' name='precio_unitario_descuento[]' disabled="disabled" class="form-control"  required  autocomplete="off" />
                             </td>
 
                             <input type='hidden' name'${i}' id='comision${i}' disabled="disabled" class="form-control"  required  autocomplete="off" />
@@ -598,6 +598,7 @@
             var promedio_original2=document.querySelector(`#promedio_original${a}`).value;
             var descuento = document.querySelector(`#descuento${a}`).value;
             var igv = {{$igv->renta}};
+            console.log (igv);
             if (checkBox.checked == true && descuento > 0){
 
                 var precio = document.querySelector(`#precio${a}`).value;
@@ -605,13 +606,13 @@
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var multiplier = 100;
                 var precio_uni=precio-(promedio_original*descuento/100);
-                var precio_uni_dec=(Math.round(precio_uni * multiplier) / multiplier)+(precio_uni*igv/100);
+                var precio_uni_dec = Math.round((precio_uni+(precio_uni*(igv/100))) * multiplier) / multiplier;
 
                 document.getElementById(`check_descuento${a}`).value = descuento;
                  document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
 
                 var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
-                var comisiones=(Math.round(comisiones9*multiplier)/multiplier+(comisiones9*igv/100));
+                var comisiones = Math.round((comisiones9+(comisiones9*(igv/100))) * multiplier) / multiplier;
                 document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
 
                 var final=comisiones*cantidad;
@@ -624,13 +625,13 @@
                 var multiplier = 100;
                 var descuento = 0;
                 var precio = document.querySelector(`#precio${a}`).value;
-                var precio_igv = (Math.round(precio * multiplier) / multiplier)+(precio*igv/100);
-                document.getElementById(`precio_unitario_descuento${a}`).value = precio_igv;
+                // var precio_igv = (Math.round(precio * multiplier) / multiplier)+(precio*igv/100);
+                var precio_igv = Math.round((parseFloat(precio)+(precio*(igv/100)))*multiplier)/multiplier;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var final= cantidad*precio;
-                var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
+                var end9=parseFloat(precio)+((parseFloat(precio)*parseInt(comision_porcentaje)/100));
 
-                var end =(Math.round(end9 * multiplier) / multiplier)+(end9*igv/100);
+                var end = Math.round((end9+(end9*(igv/100)))*multiplier)/multiplier;
                 var final2=cantidad*end;
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
 
@@ -641,7 +642,7 @@
 
                 document.getElementById(`check_descuento${a}`).value = 0;
                 document.getElementById(`total${a}`).value = final_decimal;
-
+                document.getElementById(`precio_unitario_descuento${a}`).value = precio_igv;
                 document.getElementById(`precio_unitario_comision${a}`).value = end;
             }
 

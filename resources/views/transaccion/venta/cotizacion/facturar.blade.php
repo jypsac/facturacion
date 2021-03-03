@@ -120,8 +120,8 @@
                                     <td>{{$array_cantidad[$index]}}</td>
                                     {{-- MODIFICAR ESTA PARTE CON LOGICA DE REPROGRAMACION PARA UN NUEVO PRODUCTO DIRECTAMENTE DESDE KARDEX --}}
                                     <td style="display: none;">
-                                        {{$desc_array=$array[$index]-($array_promedio[$index]*$cotizacion_registros->descuento/100)}}
-                                        {{$comis_array= $desc_array+($desc_array*($comi/100))}}
+                                        {{$desc_array=round($array[$index]-($array_promedio[$index]*$cotizacion_registros->descuento/100),2)}}
+                                        {{$comis_array= round($desc_array+($desc_array*($comi/100)),2)}}
                                     </td>
                                     <td>{{$cotizacion->moneda->simbolo}}. {{round($comis_array,2)}}</td>
                                     <td>{{$cotizacion->moneda->simbolo}}. {{round($comis_array*$cotizacion_registros->cantidad,2)}}</td>

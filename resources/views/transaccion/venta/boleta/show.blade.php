@@ -5,8 +5,14 @@
  @section('breadcrumb2', 'Boleta')
  @section('href_accion', route('boleta.index'))
  @section('value_accion', 'Atras')
-
+@section('button2', 'Nueva Boleta')
+@section('onclick',"event.preventDefault();document.getElementById('nueva_cots').submit();")
  @section('content')
+ <form action="{{ route('boleta.create')}}"enctype="multipart/form-data" method="post" id="nueva_cots">
+    @csrf
+    <input type="text"  hidden="hidden" name="almacen"  value="{{$boleta->almacen_id}}">
+    <input  hidden="hidden" type="submit"  />
+</form>
  <div class="wrapper wrapper-content animated fadeInRight">
 <div class="ibox-title" style="padding-right: 3.1%">
         <div class="row tooltip-demo">
@@ -18,9 +24,7 @@
                     <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
                 </form>
                 <a class="btn btn-success" href="{{route('boleta.print',$boleta->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i></a>
-                @if(Auth::user()->email_creado == 0)
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
-                @else
+                @if(Auth::user()->email_creado == 1)
                     <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
                         @csrf
                         <input type="text" hidden="hidden"  name="tipo" value="App\Boleta"/>
@@ -161,11 +165,10 @@
                                 <td>{{$boleta_registros->producto->nombre}} <br><strong>N/S:</strong> {{$boleta_registros->numero_serie}}</td>
                                 <td>{{$boleta_registros->precio}}</td>
                                 <td>{{$boleta_registros->descuento}}%</td>
-                                <td>{{$boleta_registros->precio_unitario_desc}}</td>
+                                <td>{{$boleta_registros->precio_unitario_comi}}</td>
                                 <td>{{$boleta_registros->precio_unitario_comi * $boleta_registros->cantidad }}</td>
                                 <td style="display: none">
-                                    {{$sub_total=($boleta_registros->precio_unitario_comi+$sub_total)}}
-                                        S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                    {{$sub_total=(($boleta_registros->precio_unitario_comi * $boleta_registros->cantidad)+$sub_total)}}
                                     </td>
                             </tr>
                             <span hidden="hidden">{{$i++}}</span>

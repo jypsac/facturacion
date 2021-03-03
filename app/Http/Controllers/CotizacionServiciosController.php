@@ -317,16 +317,16 @@ class CotizacionServiciosController extends Controller
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera') {
-                        $array2 = $servicio->precio_extranjero*$tipo_cambio->paralelo;
+                        $array2 = round($servicio->precio_extranjero*$tipo_cambio->paralelo,2);
                         $cotizacion_registro->promedio_original=$array2;
                         $utilidad=$servicio->precio_extranjero*($servicio->utilidad/100);
-                        $array=($servicio->precio_extranjero+$utilidad)*$tipo_cambio->paralelo;
+                        $array=round(($servicio->precio_extranjero+$utilidad)*$tipo_cambio->paralelo,2);
                         $cotizacion_registro->precio=$array;
                     }else{
-                        $array2 = $servicio->precio_nacional/$tipo_cambio->paralelo;
+                        $array2 = round( $servicio->precio_nacional/$tipo_cambio->paralelo,2);
                         $cotizacion_registro->promedio_original=$array2;
                         $utilidad=$servicio->precio_nacional*($servicio->utilidad/100);
-                        $array=($servicio->precio_nacional+$utilidad)/$tipo_cambio->paralelo;
+                        $array=round(($servicio->precio_nacional+$utilidad)/$tipo_cambio->paralelo,2);
                         $cotizacion_registro->precio=$array;
                     }
                 }

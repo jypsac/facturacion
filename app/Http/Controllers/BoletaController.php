@@ -150,7 +150,38 @@ class BoletaController extends Controller
     public function create_ms(Request $request)
     {
 
-        $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        $almacen_p=$request->get('almacen');
+        $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
+        $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
+
+
+        foreach($kardex_entrada as $kardex_entradas){
+            $kadex_entrada_id[]=$kardex_entradas->id;
+        }
+
+        for($x=0;$x<$kardex_entrada_count;$x++){
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
+                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
+                foreach( $nueva as $nuevas){
+                    $prod[]=$nuevas->producto_id;
+                }
+            }
+        }
+        //validar almacen con prodcutos vacios
+        if(!isset($prod)){
+            return "no hay prodcutos en el almacen seleccionado";
+        }
+
+        $lista=array_values(array_unique($prod));
+        $lista_count=count($lista);
+
+       for($x=0;$x<$lista_count;$x++){
+           $validacion[$x]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            if(!$validacion[$x]==NULL){
+                $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            }
+            // $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+        }
         $moneda=Moneda::where('principal','0')->first();
         $igv=Igv::first();
         $tipo_cambio=TipoCambio::latest('created_at')->first();

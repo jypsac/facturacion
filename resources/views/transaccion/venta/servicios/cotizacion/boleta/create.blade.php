@@ -574,8 +574,8 @@
                 var final_decimal = Math.round(final * multiplier) / multiplier;
                 console.log(final_decimal);
 
-                document.getElementById(`descuento_unitario${a}`).value = final_decimal;
-                document.getElementById(`precio_unitario_comision${a}`).value = final_decimal;
+                document.getElementById(`descuento_unitario${a}`).value = precio_uni_dec;
+                document.getElementById(`precio_unitario_comision${a}`).value = final;
                 document.getElementById(`total${a}`).value = final_decimal;
 
             }else{

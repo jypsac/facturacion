@@ -7,14 +7,14 @@
  @section('value_accion', 'Atras')
 
 @section('button2', 'Nueva Facturacion')
-@section('onclick',"event.preventDefault();document.getElementById('nueva_cot').submit();")
+@section('onclick',"event.preventDefault();document.getElementById('nueva_cots').submit();")
 
 @section('content')
 
-<form action="{{ route('facturacion.create')}}"enctype="multipart/form-data" method="post" id="nueva_cot">
+<form action="{{ route('facturacion.create')}}"enctype="multipart/form-data" method="post" id="nueva_cots">
     @csrf
     <input type="text"  hidden="hidden" name="almacen"  value="{{$facturacion->almacen_id}}">
-    <input  hidden="hidden" type="submit"  >
+    <input  hidden="hidden" type="submit"  />
 </form>
 <style type="text/css">
     .procesado:before {
@@ -35,7 +35,7 @@
                     <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
                 </form>
                 <a class="btn btn-success" href="{{route('facturacion.print' , $facturacion->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i></a>
-                @if(Auth::user()->email_creado == 0)
+                @if(Auth::user()->email_creado == 1)
                     <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
                         @csrf
                         <input type="text" hidden="hidden"  name="tipo" value="App\Facturacion"/>

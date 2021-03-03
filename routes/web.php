@@ -78,8 +78,9 @@ Route::group(
 		Route::resource('/facturacion_servicio','FacturacionServicioController')->except(['create']);
 
 //BOLETA SERVICIOS
-		Route::get('/boleta_servicio/create_ms','BoletaServicioController@create_ms')->name('boleta_servicio.create_ms');
-		Route::resource('/boleta_servicio','BoletaServicioController');
+		Route::post('/boleta_servicio/create_ms','BoletaServicioController@create_ms')->name('boleta_servicio.create_ms');
+		Route::post('/boleta_servicio/create','BoletaServicioController@create')->name('boleta_servicio.create');
+		Route::resource('/boleta_servicio','BoletaServicioController')->except(['create']);
 
 //FACTURACION ELECTRONICA
 
