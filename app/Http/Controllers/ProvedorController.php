@@ -133,35 +133,25 @@ class ProvedorController extends Controller
     }
 
     function ruc(Request $request){
-        $ruc=$request->get('ruc');
-        $btn=$request->get('btn');
+      $ruc=$request->get('ruc');
 
-        $data = file_get_contents("https://dniruc.apisperu.com/api/v1/ruc/".$ruc."?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRlc2Fycm9sbG9Aanlwc2FjLmNvbSJ9.1Pt1A4PEFAGmFySlfVeFKZKuVCC-u_ZEW-KYQq-P57k");
-        $info = json_decode($data, true);
+      $data = file_get_contents("https://dniruc.apisperu.com/api/v1/ruc/".$ruc."?token=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJlbWFpbCI6ImRlc2Fycm9sbG9Aanlwc2FjLmNvbSJ9.1Pt1A4PEFAGmFySlfVeFKZKuVCC-u_ZEW-KYQq-P57k");
+      $info = json_decode($data, true);
 
-        $clientes=Cliente::where('numero_documento',array($info['ruc']))->first();
-        if (isset($clientes)) {
-            $ruc_view=$clientes->numero_documento.'- existente';
-         }
-        else{
+      $clientes=Cliente::where('numero_documento',array($info['ruc']))->first();
+      if (isset($clientes)) {
+        $ruc_view=$clientes->numero_documento;
+        $ifexiste='1';/*Existe*/}
+    else{
         $ruc_view=array($info['ruc']);
-        }
+        $ifexiste='0';/*No Existe*/ }
 
-    if($data==='[]' || $info['fechaInscripcion']==='--'){
-        $datos = array(0 => 'nada');
-        echo json_encode($datos);
-    }else{
-        $datos = array(
-            // 0 => $info['ruc'],
-            0 => $ruc_view,
-            1 => $info['razonSocial'],
-            2 => $info['direccion'],
-            3 => $info['departamento'].' - '.$info['provincia'].' - '.$info['distrito'],
-            4 => date("d/m/Y", strtotime($info['fechaInscripcion'])),
-            5 => $info['departamento']
-        );
-        return json_encode($datos);
-    }
+    $datos = array(
+        0 => $ruc_view,
+        1 => $info['razonSocial'],
+        2 => $info['direccion'],
+    );
+    return json_encode($datos);
 
 }
 }

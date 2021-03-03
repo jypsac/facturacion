@@ -72,40 +72,32 @@
                     <div class="col-sm-2"> <button class="btn btn-primary" id="botoncito" name="btn" value="cliente" class="botoncito"><i class="fa fa-search"></i> Buscar</button></div>
                 </div>
 
-            </form><script>
-                $(function(){
-                    $('#botoncito').on('click', function(){
-                        var ruc = $('#ruc').val();
-                        var url = "{{ url('clienteruc') }}";
-                        $('.ajaxgif').removeClass('hide');
-                        $.ajax({
-                            type:'GET',
-                            url:url,
-                            data:'ruc='+ruc,
-                            success: function(datos_dni){
-                                $('.ajaxgif').addClass('hide');
-                                var datos = eval(datos_dni);
-                                var nada ='nada';
-                                if(datos[0]==nada){
-                                    alert('DNI o RUC no válido o no registrado');
-                                }else{
-                                    $('#numero_ruc').val(datos[0]);
-                                    $('#razon_social').val(datos[1]);
-                                    $('#direccion').val(datos[2]);
-                                    $('#departamento').val(datos[3]);
-                                    $('#provincia').val(datos[4]);
-                                    $('#distrito').val(datos[5]);
-                                    $('#fechaInscripcion').val(datos[6]);
-
-                                }
-                            }
-                        });
-                        return false;
-                    });
-                });
-            </script>
+            </form>
         </div>
-
+        <script>
+            $(function(){
+                $('#botoncito').on('click', function(){
+                    var ruc = $('#ruc').val();
+                    var url = "{{ url('clienteruc') }}";
+                    $.ajax({
+                        type:'GET',
+                        url:url,
+                        data:'ruc='+ruc,
+                        success: function(datos_dni){
+                            var datos = eval(datos_dni);
+                            $('#numero_ruc_cli').val(datos[0]);
+                            $('#razon_social_cli').val(datos[1]);
+                            $('#direccion_cli').val(datos[2]);
+                            $('#departamento').val(datos[3]);
+                            $('#provincia_cli').val(datos[4]);
+                            $('#distrito_cli').val(datos[5]);
+                            $('#fechaInscripcion_cli').val(datos[6]);
+                        }
+                    });
+                    return false;
+                });
+            });
+        </script>
         <div class="wrapper wrapper-content animated fadeInRight" style="padding-bottom: 0px">
             <div class="row">
                 <div class="col-lg-12">
@@ -127,13 +119,13 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Nombre *</label>
-                                                <input type="text" class="form-control" name="nombre" class="form-control required" id="razon_social" required="required">
+                                                <input type="text" class="form-control" name="nombre" class="form-control required" id="razon_social_cli" required="required">
                                             </div>
                                         </div>
                                         <div class="col-lg-6">
                                             <div class="form-group">
                                                 <label>Numero de Documento *</label>
-                                                <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required  autocomplete="off" type="text">
+                                                <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc_cli" required  autocomplete="off" type="text">
                                                 <datalist id="browserdoc" >
                                                     <?php use  App\Cliente; ?>
                                                     <?php $clientes=Cliente::all();?>
@@ -144,7 +136,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Direccion *</label>
-                                                <input type="text" class="form-control" name="direccion" id="direccion" class="form-control required" required="required">
+                                                <input type="text" class="form-control" name="direccion" id="direccion_cli" class="form-control required" required="required">
                                             </div>
                                         </div>
                                         <!--  -->
@@ -156,7 +148,7 @@
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Distrito *</label>
-                                                    <input type="text" class="form-control" name="ciudad" id="distrito" class="form-control required" required="required">
+                                                    <input type="text" class="form-control" name="ciudad" id="distrito_cli" class="form-control required" required="required">
                                                 </div>
                                             </div>
                                         </div>
@@ -173,7 +165,7 @@
                                                 </div>
                                                 <div class="form-group col-lg-6">
                                                     <label>Departamento *</label>
-                                                    <input value="Lima" type="text" class="form-control" name="departamento" id="provincia" class="form-control required">
+                                                    <input value="Lima" type="text" class="form-control" name="departamento" id="provincia_cli" class="form-control required">
                                                 </div>
                                             </div>
                                         </div>
@@ -210,7 +202,7 @@
                                             </div>
                                             <div class="form-group">
                                                 <label>Fecha Registro *</label>
-                                                <input  type="text" class="form-control" id="fechaInscripcion" name="fecha_registro" class="form-control required" value="2020-07-22">
+                                                <input  type="text" class="form-control" id="fechaInscripcion_cli" name="fecha_registro" class="form-control required" value="2020-07-22">
                                             </div>
                                         </div>
                                     </div>
