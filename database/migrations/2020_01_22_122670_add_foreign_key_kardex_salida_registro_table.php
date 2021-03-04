@@ -34,6 +34,8 @@ class AddForeignKeyKardexSalidaRegistroTable extends Migration
      */
     public function down()
     {
+        
         Schema::dropIfExists('kardex_salida_registro');
+        
     }
 }
