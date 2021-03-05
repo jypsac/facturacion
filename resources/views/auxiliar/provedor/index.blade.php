@@ -7,111 +7,19 @@
 @section('href_accion', '#ModalProvedor')
 @section('value_accion', 'Agregar')
 
-
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 @section('content')
-{{-- Modal Provedor --}}
-<div class="modal fade" id="ModalProvedor" tabindex="-1" role="dialog" aria-labelledby="Provedor" aria-hidden="true">
-  <div class="modal-dialog" role="document" style="margin-left: 22%;">
-    <div class="modal-content" style="width: 880px;">
-      <div class="modal-header">
-        <h5 class="modal-title" id="Provedor">Agregar Provedor</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-          <span aria-hidden="true">&times;</span>
-      </button>
-  </div>
-  <div>
-     <div class="ibox-content" style="padding-bottom: 0px;">
-        <form>
-            {{ csrf_field() }}
-            <div class="form-group  row"><label class="col-sm-3 col-form-label">Introducir Ruc (Inestable):</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" class="ruc" id="ruc" name="ruc" required="required">
-                </div>
-                <div class="col-sm-2"> <button class="btn btn-primary" id="boton" class="botoncito"><i class="fa fa-search"></i> Buscar</button></div>
-            </div>
-
-        </form><script>
-            $(function(){
-                $('#boton').on('click', function(){
-                    var ruc = $('#ruc').val();
-                    var url = "{{ url('provedorruc') }}";
-                    $.ajax({
-                        type:'GET',
-                        url:url,
-                        data:'ruc='+ruc,
-                        success: function(datos_dni){
-                            var datos = eval(datos_dni);
-                            $('#numero_ruc').val(datos[0]);
-                            $('#razon_social').val(datos[1]);
-                            $('#direccion').val(datos[2]);
-                        }
-                    });
-                        return false;
-                });
-            });
-        </script>
-    </div>
-
-    <div class="wrapper wrapper-content animated fadeInRight" style="padding-bottom: 0px">
-        <div class="row">
-            <div class="col-lg-12">
-                <div >
-                    <div >
-                        <form action=""  enctype="multipart/form-data" id="form" class="wizard-big" method="post"> {{-- Yiel form- es para colocar una ruta alterna  --}}
-                            @csrf
-                            <h1>Datos Personales</h1>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Documento Identificacion *</label>
-                                            <select class="form-control m-b" name="documento_identificacion" >
-                                                <option value="RUC">RUC</option>
-                                                <option value="DNI">DNI</option>
-                                                <option value="pasaporte">Pasaporte</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Nombre *</label>
-                                            <input type="text" class="form-control" name="nombre" class="form-control required" id="razon_social" required="required">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Numero de Documento *</label>
-                                            <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required  autocomplete="off" type="text">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Direccion *</label>
-                                            <input type="text" class="form-control" name="direccion" id="direccion" class="form-control required" required="required">
-                                        </div>
-                                    </div>
-                                    <!--  -->
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="form-group col-lg-6 ">
-                                                <label>Correo *</label>
-                                                <input  name="email" value="sincorreo@gmail.com" type="text" class="form-control required " required="required">
-                                            </div>
-                                            <div class="form-group col-lg-6">
-                                                <label>Distrito *</label>
-                                                <input type="text" class="form-control" name="ciudad" id="distrito" class="form-control required" required="required">
-                                                <input type="submit" >
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
-        </div>
+@if($errors->any())
+<div style="padding-top: 20px;">
+    <div class="alert alert-danger">
+        <a class="alert-link" href="#">
+            @foreach ($errors->all() as $error)
+            <li style="color: red">{{ $error }}</li>
+            @endforeach
+        </a>
     </div>
 </div>
-</div>
-</div>
-</div>
-{{-- Fin Modal Cliente --}}
+@endif
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -120,14 +28,14 @@
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example" style="font-size: 13px" >
                             <thead>
-                                <tr>
+                                <tr >
                                     <th>ID</th>
                                     <th>RUC</th>
                                     <th>Empresa</th>
                                     <th>Direccion</th>
                                     <th>Telefonos</th>
                                     <th>Correo</th>
-                                    <th>-</th>
+                                    <th style="width: 50px;">Editar</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -138,12 +46,12 @@
                                     <td>{{$provedor->empresa}}</td>
                                     <td>{{$provedor->direccion}}</td>
                                     <td>{{$provedor->telefonos}}</td>
-                                    <td>{{$provedor->email_provedor}}</td>
-                                    <td><div id="auto" style="box-shadow: none;" onclick="divAuto{{$provedor->id}}()">
+                                    <td>{{$provedor->email}}</td>
+                                    <td><div style="box-shadow: none;" onclick="divAuto{{$provedor->id}}()">
                                         <a class="btn  btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-edit" style="color: white"></i>  </a>
                                     </div></td>
                                 </tr>
-                                <tr hidden="" id="form{{$provedor->id}}">
+                                <tr hidden id="forma{{$provedor->id}}">
                                     <form action="{{ route('provedor.update',$provedor->id) }}"  enctype="multipart/form-data" method="post">
                                         @csrf
                                         @method('PATCH')
@@ -152,24 +60,24 @@
                                         <td><input class="form-control" name="empresa" value="{{$provedor->empresa}}" type="text"></td>
                                         <td><input class="form-control" name="direccion" value="{{$provedor->direccion}}" type="text"></td>
                                         <td><input class="form-control" name="telefonos" value="{{$provedor->telefonos}}" type="text"></td>
-                                        <td><input class="form-control" name="email_provedor" value="{{$provedor->email_provedor}}" type="text"></td>
-                                        <td >{{--  <div id="auto" style="box-shadow: none;" onclick="divAuto{{$provedor->id}}()">
-                                                <a class="btn  btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-edit" style="color: white"></i></a>
-                                            </div>  --}}<input class="btn  btn-success" type="submit"></td>
-                                        </form>
-                                    </tr>
-                                    <script>
-                                        var clic = 1;
-                                        function divAuto{{$provedor->id}}(){
-                                           if(clic==1){
+                                        <td><input class="form-control" name="correo_provedor" value="{{$provedor->email}}" type="text"></td>
+                                        <td > {{-- <div  style="box-shadow: none;" onclick="divAuto{{$provedor->id}}()">
+                                            <a class="btn  btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-edit" style="color: white"></i></a>
+                                        </div> --}} <input class="btn  btn-success" type="submit"> </td>
+                                    </form>
+                                </tr>
+                                <script>
+                                    var clic = 1;
+                                    function divAuto{{$provedor->id}}(){
+                                        if(clic==1){
                                              // document.getElementById("div-mostrar").style.height = "50px";
+                                             document.getElementById("forma{{$provedor->id}}").removeAttribute("hidden", "");
                                              document.getElementById("vista{{$provedor->id}}").setAttribute("hidden", "");
-                                             document.getElementById("form{{$provedor->id}}").removeAttribute("hidden", "");
                                              clic = clic + 1;
                                          } else{
                                             // document.getElementById("div-mostrar").style.height = "0px";
                                             document.getElementById("vista{{$provedor->id}}").removeAttribute("hidden", "");
-                                            document.getElementById("form{{$provedor->id}}").setAttribute("hidden", "");
+                                            document.getElementById("forma{{$provedor->id}}").setAttribute("hidden", "");
                                             clic = 1;
                                         }
                                     }
@@ -203,32 +111,118 @@
 
 <!-- Steps -->
 <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
-
-<!-- Page-Level Scripts -->
+{{-- scritp de modal agregar --}}
 <script>
     $(document).ready(function(){
-        $('.dataTables-example').DataTable({
-            pageLength: 25,
-            responsive: true,
-            dom: '<"html5buttons"B>lTfgitp',
-            buttons: [
-            { extend: 'copy'},
-            {extend: 'csv'},
-            {extend: 'excel', title: 'ExampleFile'},
-            {extend: 'pdf', title: 'ExampleFile'},
+        $("#wizard").steps();
+        $("#form1").steps({
+            bodyTag: "fieldset",
+            onStepChanging: function (event, currentIndex, newIndex)
+            {
+                    // ¡Siempre permita retroceder incluso si el paso actual contiene campos no válidos!
+                    if (currentIndex > newIndex)
+                    {
+                        return true;
+                    }
 
-            {extend: 'print',
-            customize: function (win){
-                $(win.document.body).addClass('white-bg');
-                $(win.document.body).css('font-size', '10px');
+                    // Prohibir suprimir el paso "Advertencia" si el usuario es demasiado joven
+                    if (newIndex === 3 && Number($("#age").val()) < 18)
+                    {
+                        return false;
+                    }
 
-                $(win.document.body).find('table')
-                .addClass('compact')
-                .css('font-size', 'inherit');
+                    var form = $(this);
+
+                    // Limpie si el usuario retrocedió antes
+                    if (currentIndex < newIndex)
+                    {
+                        // Para eliminar estilos de error
+                        $(".body:eq(" + newIndex + ") label.error", form).remove();
+                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
+                    }
+
+                    // Deshabilite la validación en los campos que están deshabilitados u ocultos.
+                    form.validate().settings.ignore = ":disabled,:hidden";
+
+                    // Iniciar validación; Evite avanzar si es falso
+                    return form.valid();
+                },
+                onStepChanged: function (event, currentIndex, priorIndex)
+                {
+                    // Suprima (omita) el paso "Advertencia" si el usuario tiene edad suficiente.
+                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
+                    {
+                        $(this).steps("next");
+                    }
+
+                    // Suprima (omita) el paso "Advertencia" si el usuario tiene la edad suficiente y quiere el paso anterior.
+                    if (currentIndex === 2 && priorIndex === 3)
+                    {
+                        $(this).steps("previous");
+                    }
+                },
+                onFinishing: function (event, currentIndex)
+                {
+                    var form = $(this);
+
+                    // Deshabilita la validación en los campos que están deshabilitados.
+                    // En este punto, se recomienda hacer una verificación general (significa ignorar solo los campos deshabilitados)
+                    form.validate().settings.ignore = ":disabled";
+
+                    // Iniciar validación; Evitar el envío del formulario si es falso
+                    return form.valid();
+                },
+                onFinished: function (event, currentIndex)
+                {
+                    var form = $(this);
+
+                    // Enviar entrada de formulario
+                    form.submit();
+                }
+            }).validate({
+                errorPlacement: function (error, element)
+                {
+                    element.before(error);
+                },
+                rules: {
+                    confirm: {
+                        equalTo: "#password"
+                    }
+                }
+            });
+        });
+    </script>
+    {{-- / --}}
+
+    <!-- Page-Level Scripts -->
+    <script>
+        $(document).ready(function(){
+            $('.dataTables-example').DataTable({
+                pageLength: 25,
+                responsive: true,
+                dom: '<"html5buttons"B>lTfgitp',
+                buttons: [
+                { extend: 'copy'},
+                {extend: 'csv'},
+                {extend: 'excel', title: 'ExampleFile'},
+                {extend: 'pdf', title: 'ExampleFile'},
+
+                {extend: 'print',
+                customize: function (win){
+                    $(win.document.body).addClass('white-bg');
+                    $(win.document.body).css('font-size', '10px');
+
+                    $(win.document.body).find('table')
+                    .addClass('compact')
+                    .css('font-size', 'inherit');
+                }
             }
-        }
-        ]
-    });
-    });
-</script>
-@endsection
+            ]
+
+        });
+
+        });
+
+    </script>
+
+    @endsection
