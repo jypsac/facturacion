@@ -12,6 +12,7 @@ use App\kardex_salida;
 use App\kardex_salida_registro;
 use App\Stock_producto;
 use App\TipoCambio;
+use App\Tipo_Registro;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -156,6 +157,19 @@ class KardexSalidaController extends Controller
             return "error por no hacer el cambio diario";
         }
 
+        //validando si los almacenes no son los mismos y el motivo
+        $motivo=$request->get('motivo');
+
+        if($motivo==6){
+            $almacen_traslado=$request->input('almacen_trasladar');
+            $almacen_nombre=$request->input('almacen');
+            $almacen=Almacen::where('nombre',$almacen_nombre)->first();
+            if ($almacen_traslado=$almacen->nombre){
+                return "Error: Usted no puede enviar trasladar al mismo almacen";
+            }
+        }
+        
+
         $articulo = $request->input('articulo');
         $count_articulo=count($articulo);
 
@@ -194,9 +208,19 @@ class KardexSalidaController extends Controller
                     //Descontando en la tabla stock productos
                     $producto_stock=Stock_producto::where('producto_id',$producto_id[$i])->first();
                     
-                    //verificando si el motivo no es un traslado
+                    //verificando si el motivo no es un traslado y decidiendo el tipo de registro
                     $motivo=$kardex_salida->motivo_id;
-                    $almacen_traslado=$request->input('almacen_trasladar');
+                    if($almacen->id !=1 && $almacen_traslado = 1){
+                        $tipo_registro=2;
+                        $devolucion=1;
+                    }else if($almacen_traslado!=1 && $almacen->id=1){
+                        $tipo_registro=3;
+                        $devolucion=0;
+                    } else if($almacen->id !=1 && $almacen_traslado != 1){
+                        $tipo_registro=2;
+                        $devolucion=0;
+
+                    }
 
                     if($motivo==6){
                         //Kardex Entrada Guardado
@@ -215,6 +239,7 @@ class KardexSalidaController extends Controller
                         $kardex_entrada->informacion=$request->get('informacion');
                         $kardex_entrada->save();
 
+                        
                         $kardex_entrada_registro=new kardex_entrada_registro();
                         $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
                         $kardex_entrada_registro->producto_id=$producto_id[$i];
@@ -224,8 +249,8 @@ class KardexSalidaController extends Controller
                         $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
                         $kardex_entrada_registro->cambio=$cambio->venta;
                         $kardex_entrada_registro->estado=1;
-                        $kardex_entrada_registro->estado_devolucion=0;
-                        $kardex_entrada_registro->tipo_registro="traslado de almacen";
+                        $kardex_entrada_registro->estado_devolucion=$devolucion;
+                        $kardex_entrada_registro->tipo_registro_id=$tipo_registro;
                         $kardex_entrada_registro->save();
                           
                     }else{

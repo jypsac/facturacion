@@ -67,7 +67,7 @@
 
 							<label class="col-sm-2 col-form-label">Almacen:</label>
 								<div class="col-sm-4">
-								<input type="text" class="form-control" name="almacen" value="{{$almacen_nombre}}" disabled>
+								<input type="text" class="form-control" name="almacen" value="{{$almacen_nombre}}" readonly >
 							    </div>
 						</div>
 
