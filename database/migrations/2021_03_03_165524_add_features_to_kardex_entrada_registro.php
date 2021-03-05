@@ -26,7 +26,8 @@ class AddFeaturesToKardexEntradaRegistro extends Migration
     public function down()
     {
         Schema::table('kardex_entrada_registro', function (Blueprint $table) {
-            //
+            $table->dropForeign('kardex_entrada_registro_tipo_registro_id_foreign');
+            $table->dropColumn('tipo_registro_id');
         });
     }
 }

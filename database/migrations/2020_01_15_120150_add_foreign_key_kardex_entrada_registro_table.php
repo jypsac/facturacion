@@ -28,7 +28,7 @@ class AddForeignKeyKardexEntradaRegistroTable extends Migration
             $table->double('cambio',10,2);
             $table->string('estado');
             $table->string('estado_devolucion')->nullable();
-            $table->unsignedBigInteger('tipo_registro_id');
+            $table->unsignedBigInteger('tipo_registro_id')->nullable();
 
             $table->timestamps();
         });
@@ -40,7 +40,9 @@ class AddForeignKeyKardexEntradaRegistroTable extends Migration
      * @return void
      */
     public function down()
-    {
+    {   
+        
         Schema::dropIfExists('kardex_entrada_registro');
+        
     }
 }
