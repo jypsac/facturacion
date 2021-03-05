@@ -84,27 +84,27 @@
                                           <div class="col-lg-6">
                                             <h4>Estado</h4>
                                             @if($contacto_cantidad_estado==1)
-                                                  @if($contacto->estado==0)
-                                                      <select name="estado" id="" class="form-control" disabled="">
-                                                        <option value="0"> Activo</option>
-                                                        <option value="1"> Desactivo</option>
-                                                      </select>
-                                                  @elseif($contacto->estado==1)
-                                                      <select name="estado" id="" class="form-control" >
-                                                        <option value="1"> Desactivo</option>
-                                                        <option value="0"> Activo</option>
-                                                      </select>
-                                                  @endif
+                                            @if($contacto->estado==0)
+                                            <select name="estado" id="" class="form-control" disabled="">
+                                              <option value="0"> Activo</option>
+                                              <option value="1"> Desactivo</option>
+                                            </select>
+                                            @elseif($contacto->estado==1)
+                                            <select name="estado" id="" class="form-control" >
+                                              <option value="1"> Desactivo</option>
+                                              <option value="0"> Activo</option>
+                                            </select>
+                                            @endif
                                             @else
-                                                <select name="estado" id="" class="form-control" >
-                                                      @if($contacto->estado==0)
-                                                      <option value="0"> Activo</option>
-                                                      <option value="1"> Desactivo</option>
-                                                      @elseif($contacto->estado==1)
-                                                      <option value="1"> Desactivo</option>
-                                                      <option value="0"> Activo</option>
-                                                      @endif
-                                                  </select>
+                                            <select name="estado" id="" class="form-control" >
+                                              @if($contacto->estado==0)
+                                              <option value="0"> Activo</option>
+                                              <option value="1"> Desactivo</option>
+                                              @elseif($contacto->estado==1)
+                                              <option value="1"> Desactivo</option>
+                                              <option value="0"> Activo</option>
+                                              @endif
+                                            </select>
                                             @endif
                                           </div>
                                           <div class="col-lg-6">
@@ -220,27 +220,27 @@
                 <table class="table table-striped table-hover" style="font-size: 13px" id="table_clientes" >
                   <tbody>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/2747/2747481.svg?token=exp=1614275896~hmac=55115ae15c46a9408bd5bc1274a63c3e"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/direccion.svg')}}"> </td>
                       <td><textarea  readonly="" disabled="" class="form-control">{{$cliente_show->direccion}} </textarea></td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/1789/1789333.svg?token=exp=1614275988~hmac=6eba7b70e81f72fe9dcb9bf5810aef61"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/correo.svg')}}"> </td>
                       <td><input type="text" value="{{$cliente_show->email}}" readonly="" disabled="" class="form-control"></td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/2947/2947656.svg?token=exp=1614276118~hmac=342c75ecfd6e01826c6239203b8ab4ff"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/ubicacion.svg')}}"> </td>
                       <td><input type="text" value="{{$cliente_show->pais}} / {{$cliente_show->departamento}}" readonly="" disabled="" class="form-control"></td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/817/817173.svg?token=exp=1614276714~hmac=5212dd1bfdb27795816743401bd5b32f"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/aniversario.svg')}}"> </td>
                       <td><input type="text" value="{{$cliente_show->aniversario}}" readonly="" disabled="" class="form-control"></td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/890/890542.svg?token=exp=1614282096~hmac=41d590ee587d47e2685b047483dff84c"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/telefono.svg')}}"> </td>
                       <td><input type="text" value="{{$cliente_show->telefono}} " readonly="" disabled="" class="form-control"></td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/561/561253.svg?token=exp=1614282205~hmac=da3e54e77a10eedfe5abc7339de102f5"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/llamadas.svg')}}"> </td>
                       <td> <input type="text" value=" {{$cliente_show->celular}}" readonly="" disabled="" class="form-control"></td>
                     </tr>
                   </tbody>
@@ -252,11 +252,11 @@
                   <table class="table table-striped table-hover" style="font-size: 13px" id="form_cliente" hidden="" >
                     <tbody>
                       <tr>
-                        <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/1251/1251457.svg?token=exp=1614374295~hmac=892d7c2e2915c1a5d9f90831f9b513b7"> </td>
+                        <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/ruc.svg')}}"> </td>
                         <td colspan="2"><input type="text" name="nombre" class="form-control" value="{{$cliente_show->nombre}}"></td>
                       </tr>
                       <tr>
-                        <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/1598/1598350.svg?token=exp=1614371573~hmac=92918656676cf9fdb37e34131c6e581f"> </td>
+                        <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/ruc.svg')}}"> </td>
                         <td><select class="form-control m-b" name="documento_identificacion" >
                           <option value="{{$cliente_show->documento_identificacion}}">{{$cliente_show->documento_identificacion}}</option>
                           <option disabled="">----------------</option>
@@ -268,21 +268,21 @@
                       <td><input type="text"  name="numero_documento" value="{{$cliente_show->numero_documento}}" class="form-control"></td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/2747/2747481.svg?token=exp=1614275896~hmac=55115ae15c46a9408bd5bc1274a63c3e"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/direccion.svg')}}"> </td>
                       <td colspan="2"><textarea  name="direccion" class="form-control">{{$cliente_show->direccion}} </textarea></td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/1789/1789333.svg?token=exp=1614275988~hmac=6eba7b70e81f72fe9dcb9bf5810aef61"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/correo.svg')}}"> </td>
                       <td colspan="2"><input type="text"  name="email" value="{{$cliente_show->email}}" class="form-control"></td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/2947/2947656.svg?token=exp=1614276118~hmac=342c75ecfd6e01826c6239203b8ab4ff"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/ubicacion.svg')}}"> </td>
                       <td><input type="text"  name="pais" value="{{$cliente_show->pais}} " class="form-control">
                       </td><td><input type="text" name="departamento" value="{{$cliente_show->departamento}}"  class="form-control">
                       </td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/2947/2947656.svg?token=exp=1614276118~hmac=342c75ecfd6e01826c6239203b8ab4ff"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/ubicacion.svg')}}"> </td>
                       <td><input type="text"  name="ciudad" value="{{$cliente_show->ciudad}}" class="form-control">
                         <td> <select class="form-control" name="tipo_cliente">
                           <option value="{{$cliente_show->tipo_cliente}}">{{$cliente_show->tipo_cliente}}</option>
@@ -294,12 +294,12 @@
                       </td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/890/890542.svg?token=exp=1614282096~hmac=41d590ee587d47e2685b047483dff84c"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/telefono.svg')}}"> </td>
                       <td><input type="text"  name="telefono" value="{{$cliente_show->telefono}} " class="form-control"></td>
                       <td><input type="text"  name="celular" value="{{$cliente_show->celular}}" class="form-control"></td>
                     </tr>
                     <tr>
-                      <td class="client-avatar"><img src="https://www.flaticon.es/svg/vstatic/svg/817/817173.svg?token=exp=1614276714~hmac=5212dd1bfdb27795816743401bd5b32f"> </td>
+                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/aniversario.svg')}}"> </td>
                       <td><input type="text"  name="aniversario" value="{{$cliente_show->aniversario}}" class="form-control"></td>
                       <td><input type="text"  name="fecha_registro" value="{{$cliente_show->fecha_registro}}" class="form-control"></td>
                     </tr>

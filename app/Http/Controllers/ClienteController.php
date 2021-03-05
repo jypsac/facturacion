@@ -166,10 +166,9 @@ class ClienteController extends Controller
         0 => $ruc_view,
         1 => $info['razonSocial'],
         2 => $info['direccion'],
-        3 => $info['departamento'],
-        4 => $info['provincia'],
-        5 => $info['distrito'],
-        6 => $info['fechaInscripcion'],
+        3 => $info['provincia'],
+        4 => $info['distrito'],
+        5 => $info['fechaInscripcion'],
       );
       return json_encode($datos);
 

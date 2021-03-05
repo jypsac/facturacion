@@ -36,34 +36,30 @@ class ProvedorController extends Controller
      */
     public function store(Request $request)
     {
+        $numero_documento=$request->get('numero_documento');
+        $repetido=Provedor::where('ruc',$numero_documento)->first();
+        if (isset($repetido)) {
+          return redirect()->route('provedor.index')->withErrors(['Provedor ya Agregado!']);
+
+      }else{
         $provedor=new Provedor;
-        $provedor->ruc=$request->get('ruc');
-        $provedor->empresa=$request->get('empresa');
+        $provedor->ruc=$request->get('numero_documento');
+        $provedor->empresa=$request->get('nombre');
         $provedor->direccion=$request->get('direccion');
-        $provedor->telefonos=$request->get('telefonos');
-        $provedor->email=$request->get('email');
-        $provedor->contacto_provedor=$request->get('contacto_provedor');
-        $provedor->celular_provedor=$request->get('celular_provedor');
-        $provedor->email_provedor=$request->get('email_provedor');
-        $provedor->observacion=$request->get('observacion');
+        $provedor->telefonos=$request->get('telefono');
+        $provedor->email=$request->get('correo');
         $provedor->save();
-        return redirect()->route('provedor.show',$provedor->id );
-
-
+        return redirect()->route('provedor.index');}
     }
 
     public function store_kardex(Request $request)
     {
         $provedor=new Provedor;
-        $provedor->ruc=$request->get('ruc');
-        $provedor->empresa=$request->get('empresa');
+        $provedor->ruc=$request->get('numero_documento');
+        $provedor->empresa=$request->get('nombre');
         $provedor->direccion=$request->get('direccion');
-        $provedor->telefonos=$request->get('telefonos');
-        $provedor->email=$request->get('email');
-        $provedor->contacto_provedor=$request->get('contacto_provedor');
-        $provedor->celular_provedor=$request->get('celular_provedor');
-        $provedor->email_provedor=$request->get('email_provedor');
-        $provedor->observacion=$request->get('observacion');
+        $provedor->telefonos=$request->get('telefono');
+        $provedor->email=$request->get('correo_provedor');
         $provedor->save();
         return redirect()->route('kardex-entrada.create');
 
@@ -103,20 +99,22 @@ class ProvedorController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $numero_documento=$request->get('ruc');
+        $repetido=Provedor::where('ruc',$numero_documento)->first();
+        if (isset($repetido)) {
+          return redirect()->route('provedor.index')->withErrors(['Provedor ya Agregado!']);
 
+      }else{
         $provedor=Provedor::find($id);
         $provedor->ruc=$request->get('ruc');
         $provedor->empresa=$request->get('empresa');
         $provedor->direccion=$request->get('direccion');
         $provedor->telefonos=$request->get('telefonos');
-        $provedor->email=$request->get('email');
-        $provedor->contacto_provedor=$request->get('contacto_provedor');
-        $provedor->celular_provedor=$request->get('celular_provedor');
-        $provedor->email_provedor=$request->get('email_provedor');
-        // $provedor->observacion=$request->get('observacion');
+        $provedor->email=$request->get('correo_provedor');
         $provedor->save();
         return redirect()->route('provedor.index');
     }
+}
 
     /**
      * Remove the specified resource from storage.
@@ -141,10 +139,10 @@ class ProvedorController extends Controller
       $clientes=Cliente::where('numero_documento',array($info['ruc']))->first();
       if (isset($clientes)) {
         $ruc_view=$clientes->numero_documento;
-        $ifexiste='1';/*Existe*/}
+    $ifexiste='1';/*Existe*/}
     else{
         $ruc_view=array($info['ruc']);
-        $ifexiste='0';/*No Existe*/ }
+    $ifexiste='0';/*No Existe*/ }
 
     $datos = array(
         0 => $ruc_view,
