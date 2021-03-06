@@ -101,10 +101,9 @@ class ProvedorController extends Controller
     {
         $numero_documento=$request->get('ruc');
         $repetido=Provedor::where('ruc',$numero_documento)->first();
-        if (isset($repetido)) {
-          return redirect()->route('provedor.index')->withErrors(['Provedor ya Agregado!']);
 
-      }else{
+        // return redirect()->route('provedor.index')->withErrors(['Provedor ya Agregado!']);
+
         $provedor=Provedor::find($id);
         $provedor->ruc=$request->get('ruc');
         $provedor->empresa=$request->get('empresa');
@@ -113,8 +112,8 @@ class ProvedorController extends Controller
         $provedor->email=$request->get('correo_provedor');
         $provedor->save();
         return redirect()->route('provedor.index');
+
     }
-}
 
     /**
      * Remove the specified resource from storage.
