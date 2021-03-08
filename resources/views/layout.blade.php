@@ -411,6 +411,8 @@
                                     @can('inventario-productos_kardex-entrada_producto.index')
                                     <li><a href="{{route('kardex-entrada.index')}}">Entrada Producto</a></li>
                                     @endcan
+                                    <li><a href="{{route('kardex.distribucion')}}">Distribucion Producto</a></li>
+                                    <li><a href="{{route('kardex-entrada.index')}}">Transalado de Almacen </a></li>
                                     @can('inventario-productos_kardex-salida_producto.index')
                                     <li><a href="{{route('kardex-salida.index')}}">Salida Producto</a></li>
                                     @endcan

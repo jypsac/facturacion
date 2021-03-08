@@ -237,11 +237,6 @@ class KardexEntradaController extends Controller
         return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');
       }
       return redirect()->route('kardex-entrada.index');
-
-
-
-
-
     }
 
     /**
@@ -315,50 +310,43 @@ class KardexEntradaController extends Controller
 
     }
 
-    function fetch(Request $request)
+ //    function fetch(Request $request)
+ //    {
+ //     if($request->get('query'))
+ //     {
+ //      $query = $request->get('query');
+ //      $data = DB::table('productos')
+ //      ->where('nombre', 'LIKE', "%{$query}%")
+ //      ->get();
+ //      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
+ //      foreach($data as $row)
+ //      {
+ //       $output .= '
+ //       <li><a href="#">'.$row->country_name.'</a></li>
+ //       ';
+ //     }
+ //     $output .= '</ul>';
+ //     echo $output;
+ //   }
+ // }
+    public function create_distribucion()
     {
-     if($request->get('query'))
-     {
-      $query = $request->get('query');
-      $data = DB::table('productos')
-      ->where('nombre', 'LIKE', "%{$query}%")
-      ->get();
-      $output = '<ul class="dropdown-menu" style="display:block; position:relative">';
-      foreach($data as $row)
-      {
-       $output .= '
-       <li><a href="#">'.$row->country_name.'</a></li>
-       ';
-     }
-     $output .= '</ul>';
-     echo $output;
-   }
- }
+      // return 'xd';
+      $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+      $provedores=Provedor::all();
+      $almacenes=Almacen::where('estado','0')->get();
+      $motivos=Motivo::all();
+      $categorias=Categoria::all();
+      $moneda=Moneda::orderBy('principal','DESC')->get();
+      $user_login =auth()->user()->id;
+      $usuario=User::where('id',$user_login)->first();
 
-    // public function search(Request $request)
+      return view('inventario.kardex.entrada.create_distribucion',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
+    }
+
+    // public function create_traslado()
     // {
-    //       $search = $request->get('term');
-
-    //       $result = Producto::where('nombre', 'LIKE', '%'. $search. '%')->get();
-
-    //       return response()->json($result);
-
     // }
 
-    //  function productos(Request $request){
-    //     $ruc=$request->get('ruc');
-    //     $datos = array(
-    //         0 => "1",
-    //         1 => "2",
-    //         2 => "3",
-    //         3 => "4",
-    //         4 => "5",
-    //         5 => "6",
-    //         6 => "7",
-    //         7 => "8",
-    //         8 => "9"
-    //     );
-    //         echo json_encode($datos);
 
-    // }
-}
+  }

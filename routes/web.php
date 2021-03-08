@@ -198,10 +198,12 @@ Route::group(
 		//Inventarios
 		Route::resource('/inventario-inicial','InventarioInicialController');
 
-		Route::post('/autocomplete/fetch', 'KardexEntradaController@fetch')->name('autocomplete.fetch');
-		Route::get('autocomplete', 'KardexEntradaController@search');
-		Route::get('kardex_entrada_productos','KardexEntradaController@productos');
+		// Route::post('/autocomplete/fetch', 'KardexEntradaController@fetch')->name('autocomplete.fetch');
+		// Route::get('autocomplete', 'KardexEntradaController@search');
+		// Route::get('kardex_entrada_productos','KardexEntradaController@productos');
+		Route::get('/kardex-entrada/create-distribucion', 'KardexEntradaController@create_distribucion')->name('kardex.distribucion');
 		Route::resource('/kardex-entrada','KardexEntradaController');
+
 		Route::post('/kardex-salida/create' , 'KardexSalidaController@create')->name('kardex-salida.create');
 		Route::resource('/kardex-salida','KardexSalidaController')->except(['create']);
 		Route::resource('/periodo-consulta','PeriodoConsultaController');
@@ -248,8 +250,8 @@ Route::group(
 
 
 		//Ajax
-		Route::get('/inventario.kardex.entrada.create', 'KardexEntradaController@index');
-		Route::post('/inventario.kardex.entrada.create/fetcha', 'KardexEntradaController@fetcha')->name('autocomplete.fetcha');
+		// Route::get('/inventario.kardex.entrada.create', 'KardexEntradaController@index');
+		// Route::post('/inventario.kardex.entrada.create/fetcha', 'KardexEntradaController@fetcha')->name('autocomplete.fetcha');
 
 	});
 Auth::routes();

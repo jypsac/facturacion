@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'kardex_entrada')
+@section('title', 'kardex_entrada-Distribucion')
 @section('href_accion', route('kardex-entrada.index') )
 @section('value_accion', 'Atras')
 
