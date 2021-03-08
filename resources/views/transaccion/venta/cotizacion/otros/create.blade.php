@@ -146,6 +146,10 @@
                                         @foreach($productos as $index)
                                         <option>{{$index->nombre}} / {{$index->descripcion}}</option>
                                         @endforeach
+                                        {{-- Cotizacion de Servicios si es que se agrega en el mismo listado --}}
+                                        {{-- @foreach($servicios as $index)
+                                        <option>{{$index->nombre}} / {{$index->descripcion}}</option>
+                                        @endforeach --}}
                                     </td>
                                     <td>
                                         <input style="width: 76px" type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
@@ -319,6 +323,10 @@
         @foreach($productos as $index)
         <option>{{$index->nombre}} / {{$index->descripcion}}</option>
         @endforeach
+        {{-- Cotizacion de Servicios si es que se agrega en el mismo listado --}}
+        {{-- @foreach($servicios as $index)
+        <option>{{$index->nombre}} / {{$index->descripcion}}</option>
+        @endforeach --}}
         </td>
         <td>
         <input type='text' style="width: 76px"  id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>

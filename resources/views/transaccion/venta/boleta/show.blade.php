@@ -67,7 +67,7 @@
                 <div class="col-sm-4 ">
                     <div class="form-control ruc" >
                         <center>
-                            <h3 style="padding-top:10px ">RUC : {{$empresa->ruc}}</h3>
+                            <h3 style="padding-top:10px ">R.U.C : {{$empresa->ruc}}</h3>
                             <h2>BOLETA ELECTRONICA</h2>
                             <h5> {{$boleta->codigo_boleta}}</h5>
 

@@ -297,6 +297,14 @@
                     .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
                     .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
                     .check:checked {background: #0375bd6b;}
+
+                    input[type=number]::-webkit-inner-spin-button,
+                    input[type=number]::-webkit-outer-spin-button {
+                    -webkit-appearance: none;
+                    margin: 0;
+                    }
+
+                    input[type=number] { -moz-appearance:textfield; }
                 </style>
 
                 <!-- Mainly scripts -->

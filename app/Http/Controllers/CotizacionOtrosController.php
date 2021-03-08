@@ -12,6 +12,7 @@ use App\Moneda;
 use App\Personal;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Producto;
+use App\Servicios;
 use App\TipoCambio;
 use App\Unidad_medida;
 use Carbon\Carbon;
@@ -32,9 +33,11 @@ class CotizacionOtrosController extends Controller
         $moneda=Moneda::all();
         $forma_pagos= Forma_pago::all();
         $igv=Igv::first();
+        $servicios = Servicios::all();
         $productos=Producto::all();
+
         $empresa=Empresa::first();
-        return view('transaccion.venta.cotizacion.otros.create',compact('igv','empresa','clientes','forma_pagos','moneda','productos'));
+        return view('transaccion.venta.cotizacion.otros.create',compact('igv','empresa','clientes','forma_pagos','moneda','productos','servicios'));
 
     }
 

@@ -174,7 +174,7 @@
 </div>
 </div>
 <!-- Fin Modal Clieb¿nte -->
-<form action="{{ route('boleta.create')}}" enctype="multipart/form-data" id="almacen-form" method="POST">>
+<form action="{{ route('boleta.create')}}" enctype="multipart/form-data" id="almacen-form" method="POST">
     @csrf
     <input type="text" value="{{$sucursal->id}}" hidden="hidden" name="almacen">
     <input class="btn btn-sm btn-info" hidden="hidden" type="submit" value="cambiar" >
@@ -222,7 +222,7 @@
                             <div class="col-sm-4 ">
                                 <div class="form-control ruc" style="height: 125px">
                                     <center>
-                                        <h3 style="padding-top:10px ">{{$empresa->ruc}}</h3>
+                                        <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
                                         <h2>BOLETA ELECTRONICA</h2>
                                         <h5>{{$boleta_numero}}</h5>
                                     </center>
@@ -357,7 +357,7 @@
                                                             <input type='text' id='stock0' disabled="disabled" name='stock[]' class="form-control" required  autocomplete="off"/>
                                                         </td>
                                                         <td>
-                                                            <input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
+                                                            <input type='number' id='cantidad0' name='cantidad[]' max="{{$array_cantidad[$index]}}" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
                                                         </td>
                                                         <td>
                                                             <input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
@@ -422,6 +422,13 @@
                         .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
                         .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
                         .check:checked {background: #0375bd6b;}
+                        input[type=number]::-webkit-inner-spin-button,
+                        input[type=number]::-webkit-outer-spin-button {
+                        -webkit-appearance: none;
+                        margin: 0;
+                        }
+
+                        input[type=number] { -moz-appearance:textfield; }
                     </style>
 
                     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
