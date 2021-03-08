@@ -225,7 +225,7 @@ class FacturacionServicioController extends Controller
 
         // Comisionista convertir id --------------------------------------------------------------------------------------------------
         $comisionista=$request->get('comisionista');
-        if($comisionista!="" and $comisionista!="Sin comision - 0 "){
+        if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $numero = strstr($comisionista, '-',true);
             $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
             $id_personal=$cod_vendedor->id;

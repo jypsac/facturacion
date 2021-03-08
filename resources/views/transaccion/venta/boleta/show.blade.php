@@ -180,19 +180,19 @@
             <div class="row">
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Sub Total</p>
-                    <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                    <p class="form-control a"> {{$boleta->moneda->simbolo }}.{{round($sub_total, 2)}}</p>
                 </div>
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Op. Agravada</p>
-                    <p class="form-control a"> S/.00</p>
+                    <p class="form-control a"> {{$boleta->moneda->simbolo }}.00</p>
                 </div>
                 <div class="col-sm-3 ">
                     <p class="form-control a"> IGV</p>
-                    <p class="form-control a"> S/.00</p>
+                    <p class="form-control a">{{$boleta->moneda->simbolo }}.00</p>
                 </div>
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Importe Total</p>
-                    <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                    <p class="form-control a"> {{$boleta->moneda->simbolo }}.{{round($sub_total, 2)}}</p>
                 </div>
             </div><br>
             <div class="row">
@@ -434,7 +434,7 @@
     }
 </script>
 <style type="text/css">
-    .ruc{border-radius: 10px; height: 150px;}
+    .ruc{border-radius: 10px; height: 125px;}
     .form-control{border-radius: 10px;}
     .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
 
