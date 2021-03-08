@@ -118,8 +118,8 @@
                                                 {{$precio_array_comi = $precio_array+($precio_array*($cotizacion_registros->comision/100))}}
                                                 {{$precio_array_comi_igv = round($precio_array_comi+($precio_array_comi*($igv->igv_total/100)),2)}}
                                             </td>
-                                            <td>{{$moneda->simbolo}}. {{$precio_array_comi_igv}}</td>
-                                            <td>{{$moneda->simbolo}}. {{$precio_array_comi_igv*$cotizacion_registros->cantidad}}</td>
+                                            <td>{{$cotizacion->moneda->simbolo }}. {{$precio_array_comi_igv}}</td>
+                                            <td>{{$cotizacion->moneda->simbolo }}. {{$precio_array_comi_igv*$cotizacion_registros->cantidad}}</td>
                                             <td style="display: none">
                                                 {{$sub_total=($precio_array_comi_igv*$cotizacion_registros->cantidad)+$sub_total}}
                                             </td>
@@ -134,19 +134,19 @@
                             <div class="row">
                                 <div class="col-sm-3 ">
                                     <p class="form-control a"> Sub Total</p>
-                                    <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                                    <p class="form-control a"> {{$cotizacion->moneda->simbolo }}.{{round($sub_total, 2)}}</p>
                                 </div>
                                 <div class="col-sm-3 ">
                                     <p class="form-control a"> Op. Agravada</p>
-                                    <p class="form-control a"> S/.00</p>
+                                    <p class="form-control a"> {{$cotizacion->moneda->simbolo }}.00</p>
                                 </div>
                                 <div class="col-sm-3 ">
                                     <p class="form-control a"> IGV</p>
-                                    <p class="form-control a"> S/.0.0</p>
+                                    <p class="form-control a"> {{$cotizacion->moneda->simbolo }}.0.0</p>
                                 </div>
                                 <div class="col-sm-3 ">
                                     <p class="form-control a"> Importe Total</p>
-                                    <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                                    <p class="form-control a"> {{$cotizacion->moneda->simbolo }}.{{round($sub_total, 2)}}</p>
                                 </div>
                             </div> <br>
                             <div class="row">

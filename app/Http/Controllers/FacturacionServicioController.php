@@ -57,13 +57,13 @@ class FacturacionServicioController extends Controller
         if($moneda->tipo =='nacional'){
             foreach ($servicios as $index => $servicio) {
                 $precio_prom[]=$servicio->precio_nacional;
-                $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
+                $utilidad[]=$servicio->precio_nacional*($servicio->utilidad/100);
                 $array[]=round($servicio->precio_nacional+$utilidad[$index],2);
             }
         }else{
             foreach ($servicios as $index => $servicio) {
                 $precio_prom[]=$servicio->precio_extranjero;
-                $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
+                $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad/100);
                 $array[]=round($servicio->precio_extranjero+$utilidad[$index],2);
             }
         }

@@ -24,9 +24,7 @@
                     <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
                 </form>
                 <a class="btn btn-success" href="{{route('boleta.print',$boleta->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i></a>
-                @if(Auth::user()->email_creado == 0)
-                    <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
-                @else
+                @if(Auth::user()->email_creado == 1)
                     <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
                         @csrf
                         <input type="text" hidden="hidden"  name="tipo" value="App\Boleta"/>
@@ -181,19 +179,19 @@
             <div class="row">
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Sub Total</p>
-                    <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                    <p class="form-control a"> {{$boleta->moneda->simbolo }}.{{round($sub_total, 2)}}</p>
                 </div>
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Op. Agravada</p>
-                    <p class="form-control a"> S/.00</p>
+                    <p class="form-control a">{{$boleta->moneda->simbolo }}.00</p>
                 </div>
                 <div class="col-sm-3 ">
                     <p class="form-control a"> IGV</p>
-                    <p class="form-control a"> S/.00</p>
+                    <p class="form-control a"> {{$boleta->moneda->simbolo }}.00</p>
                 </div>
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Importe Total</p>
-                    <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                    <p class="form-control a"> {{$boleta->moneda->simbolo }}.{{round($sub_total, 2)}}</p>
                 </div>
             </div><br>
             <div class="row">

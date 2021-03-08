@@ -1249,7 +1249,7 @@ public function facturar_store(Request $request)
                 $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
                 $array[]=round((kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo,2);
                 $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->sum('cantidad');
-                $array_promedio[]=round(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero'),2);
+                $array_promedio[]=round(kardex_entrada_registro::where('producto_id',$producto->producto_id)->where('estado',1)->avg('precio_extranjero')*$tipo_cambio->paralelo,2);
                 if($array_cantidad[$index]>=$producto->producto_id){
                     $validor[]=1;
                 }else{

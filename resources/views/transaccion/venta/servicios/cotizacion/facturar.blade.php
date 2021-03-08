@@ -119,13 +119,13 @@
                                          {{$coti_dec = round($cotizacion_registros->precio-($cotizacion_registros->promedio_original*$cotizacion_registros->descuento/100),2)}}
                                         {{$coti_comi = round($coti_dec+($coti_dec*$cotizacion_registros->comision/100),2)}}
                                     </td>
-                                    <td>{{$moneda->simbolo}}. {{$coti_comi}}</td>
-                                    <td>{{$moneda->simbolo}}. {{($coti_comi)*$cotizacion_registros->cantidad}}</td>
+                                    <td>{{$cotizacion->moneda->simbolo }}. {{$coti_comi}}</td>
+                                    <td>{{$cotizacion->moneda->simbolo }}. {{($coti_comi)*$cotizacion_registros->cantidad}}</td>
                                     <td style="display: none;">
 
                                         <br>
                                         {{$sub_total=($coti_comi+$sub_total)*$cotizacion_registros->cantidad}}
-                                        S/.{{$igv_p=round($sub_total*$igv->igv_total/100, 2)}}
+                                        {{$cotizacion->moneda->simbolo }}.{{$igv_p=round($sub_total*$igv->igv_total/100, 2)}}
                                         {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                     </td>
                                 </tr>
@@ -151,16 +151,16 @@
                                     </td>
                                     <td>Sub Total</td>
                                     <td>
-                                        {{$moneda->simbolo}}. {{round($sub_total, 2)}} <input type="text" hidden="" name="sub_total_sin_igv" value="{{round($sub_total, 2)}}">
+                                        {{$cotizacion->moneda->simbolo }}. {{round($sub_total, 2)}} <input type="text" hidden="" name="sub_total_sin_igv" value="{{round($sub_total, 2)}}">
                                     </td>
                                 </tr>
                                 <tr>
                                     <td>IGV</td>
-                                    <td>{{$moneda->simbolo}}. {{round($igv_p, 2)}}</td>
+                                    <td>{{$cotizacion->moneda->simbolo }}. {{round($igv_p, 2)}}</td>
                                 </tr>
                                 <tr>
                                     <td>Importe Total</td>
-                                    <td>{{$moneda->simbolo}}. {{$end}} <input type="text" name="precio_final_igv" hidden="" value="{{$end}}" ></td>
+                                    <td>{{$cotizacion->moneda->simbolo }}. {{$end}} <input type="text" name="precio_final_igv" hidden="" value="{{$end}}" ></td>
                                 </tr>
                                 <tr></tr>
                             </tbody>

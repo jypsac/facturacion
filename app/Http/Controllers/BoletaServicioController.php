@@ -371,7 +371,7 @@ class BoletaServicioController extends Controller
                         $pre_prome=round($servicio->precio_nacional/$tipo_cambio->paralelo,2);
                         $boleta_registro->promedio_original=$pre_prome;
                         // $igv=$igv_precio*$igv_total/100;
-                        $array=round((($servicio->precio_nacional+$utilidad+$igv)/$tipo_cambio->paralelo),2);
+                        $array=round((($servicio->precio_nacional+$utilidad)/$tipo_cambio->paralelo),2);
                         $boleta_registro->precio=$array;
                         // return 4;
 

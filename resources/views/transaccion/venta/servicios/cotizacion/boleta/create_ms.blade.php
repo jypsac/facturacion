@@ -579,13 +579,14 @@
                 var multiplier = 100;
                 var descuento = 0;
                 var precio = document.querySelector(`#precio${a}`).value;
+                var precio_igv = Math.round((parseFloat(precio)+(parseFloat(precio)*(igv/100)))*multiplier) /multiplier;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
                 var end_igv = Math.round((end9+(end9*(igv/100)))*multiplier)/ multiplier;
                 // var end =Math.round(end9)+(end9*igv/100)* multiplier / multiplier;
                 var final2=(end9+(end9*igv/100))*cantidad;
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
-                document.getElementById(`descuento_unitario${a}`).value = end_igv;
+                document.getElementById(`descuento_unitario${a}`).value = precio_igv;
                 document.getElementById(`precio_unitario_comision${a}`).value = end_igv;
                 document.getElementById(`check_descuento${a}`).value = 0;
                 document.getElementById(`total${a}`).value = final_decimal;
