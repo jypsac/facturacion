@@ -1,10 +1,12 @@
 @extends('layout')
 
-@section('title', 'productos')
-@section('breadcrumb', 'productos')
-@section('breadcrumb2', 'productos')
-@section('href_accion', route('productos.create'))
-@section('value_accion', 'Nuevo Producto')
+@section('title', 'Productos')
+@section('breadcrumb', 'Productos')
+@section('breadcrumb2', 'Productos')
+@section('href_accion', route('productos.index'))
+@section('value_accion', 'Atras')
+@section('button2', 'Nuevo Producto')
+@section('config',route('productos.create'))
 
 @section('content')
 

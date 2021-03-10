@@ -55,62 +55,59 @@
                 </div>
             </div><br>
 
-            <table class="table ">
-                <tbody>
+            <div class="row" align="center" style="padding-bottom: 5px">
+                        <div class="col-sm-6" align="center">
+                            <div class="form-control">
+                                <h3> Datos Generales</h3>
+                                <div align="left">
+                                    <strong>Cliente:</strong>
+                                        @if(isset($boleta->cliente_id)){{$boleta->cliente->nombre}}
+                                        @else{{$boleta->cotizacion->cliente->nombre}}
+                                        @endif <br>
+                                    <strong>R.U.C:</strong>
+                                        @if(isset($boleta->cliente_id)){{$boleta->cliente->numero_documento}}
+                                        @else{{$boleta->cotizacion->cliente->numero_documento}}
+                                        @endif <br>
+                                    <strong>Direccion:</strong>
+                                        @if(isset($boleta->cliente_id)){{$boleta->cliente->direccion}}
+                                        @else{{$boleta->cotizacion->cliente->direccion}}
+                                        @endif <br>
+                                    <strong>Condiciones de Pago:</strong>
+                                        @if(isset($boleta->cliente_id)){{$boleta->forma_pago->nombre }}
+                                        @else{{$boleta->cotizacion->forma_pago->nombre }}
+                                        @endif  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Tipo de Moneda:</strong>
+                                        @if(isset($boleta->cliente_id)){{$boleta->moneda->nombre }}
+                                        @else{{$boleta->cotizacion->moneda->nombre }}
+                                        @endif <br>
 
-                    <tr>
-                        <td ><b>Señor(es)</b></td><td style="width: 3px">:</td>
-                        <td  colspan="3">
-                            @if(isset($boleta->cliente_id)){{$boleta->cliente->nombre}}
-                            @else{{$boleta->cotizacion->cliente->nombre}}
-                            @endif
-                        </td>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="col-sm-6" align="center">
+                         <div class="form-control" >
+                             <h3>Condiciones Generales</h3>
+                             <div align="left">
+                                <strong>Orden de Compra:</strong>
+                                    {{$boleta->orden_compra}} <br>
+                                <strong>Guia de Remision:</strong>
+                                    {{$boleta->guia_remision}} <br>
+                                <strong>Fecha Emision:</strong>
+                                    {{$boleta->fecha_emision}} <br>
+                                <strong>Fecha de Vencimiento:</strong>
+                                    {{$boleta->fecha_vencimiento }} <br>
 
-                        <td><b>RUC</b></td><td style="width: 3px">:</td>
-                        <td colspan="4" >
-                            @if(isset($boleta->cliente_id)){{$boleta->cliente->numero_documento}}
-                            @else{{$boleta->cotizacion->cliente->numero_documento}}
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Direccion</b></td><td style="width: 3px">:</td>
-                        <td colspan="3">
-                            @if(isset($boleta->cliente_id)){{$boleta->cliente->direccion}}
-                            @else{{$boleta->cotizacion->cliente->direccion}}
-                            @endif
-                        </td>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-12" align="center">
+                     <div class="form-control" style="border: none;height: auto" >
+                         <div align="left">
 
-                        <td><b>Orden de Compra</b></td><td>:</td>
-                        <td colspan="4" >
-                        {{$boleta->orden_compra}}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td>
-                        <td colspan="3">
-                            @if(isset($boleta->cliente_id)){{$boleta->forma_pago->nombre }}
-                            @else{{$boleta->cotizacion->forma_pago->nombre }}
-                            @endif
-                        </td>
+                        </div>
+                    </div>
+                </div>
 
-                        <td><b>Guia Remision</b></td><td style="width: 3px">:</td>
-                        <td> {{$boleta->guia_remision}}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Fecha Emision</b></td><td style="width: 3px">:</td>
-                        <td colspan="3">{{$boleta->fecha_emision}}</td>
-
-                        <td ><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td>
-                        <td >{{$boleta->fecha_vencimiento }}</td>
-
-                        <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td>
-                        <td>@if(isset($boleta->cliente_id)){{$boleta->moneda->nombre }}
-                            @else{{$boleta->cotizacion->moneda->nombre }}
-                            @endif
-                        </td>
-                    </tr>
-                </tbody>
-            </table>
+            </div>
             <br>
 @if($boleta->tipo=="producto")
             <div class="table-responsive">

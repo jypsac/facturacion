@@ -4,6 +4,7 @@
 @section('breadcrumb2', 'Cotizacion')
 @section('href_accion', route('cotizacion.index'))
 @section('value_accion', 'Atras')
+
 @section('button2', 'Nueva cotizacion')
 @section('onclick',"event.preventDefault();document.getElementById('nueva_cot').submit();")
 
