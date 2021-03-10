@@ -201,7 +201,8 @@ Route::group(
 		// Route::post('/autocomplete/fetch', 'KardexEntradaController@fetch')->name('autocomplete.fetch');
 		// Route::get('autocomplete', 'KardexEntradaController@search');
 		// Route::get('kardex_entrada_productos','KardexEntradaController@productos');
-		Route::get('/kardex-entrada/create-distribucion', 'KardexEntradaController@create_distribucion')->name('kardex.distribucion');
+
+		Route::resource('/kardex-entrada-Distribucion','KardexEntradaDistribucionController');
 		Route::resource('/kardex-entrada','KardexEntradaController');
 
 		Route::post('/kardex-salida/create' , 'KardexSalidaController@create')->name('kardex-salida.create');

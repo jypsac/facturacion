@@ -86,7 +86,7 @@ class KardexEntradaController extends Controller
       $user_login =auth()->user()->id;
       $usuario=User::where('id',$user_login)->first();
 
-      return view('inventario.kardex.entrada.create',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
+      return view('inventario.kardex.entrada.entrada_producto.create',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
     }
 
     /**
@@ -252,7 +252,7 @@ class KardexEntradaController extends Controller
       $moneda_extranjera=Moneda::where('id','2')->first();
       $kardex_entradas=Kardex_entrada::find($id);
       $kardex_entradas_registros=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
-      return view('inventario.kardex.entrada.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera'));
+      return view('inventario.kardex.entrada.entrada_producto.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera'));
     }
 
     /**
@@ -264,7 +264,7 @@ class KardexEntradaController extends Controller
     public function edit($id)
     {
       $kardex_entrada=Kardex_entrada::find($id);
-      return view('inventario.kardex.entrada.edit' ,compact('kardex_entrada'));
+      return view('inventario.kardex.entrada.entrada_producto.edit' ,compact('kardex_entrada'));
     }
 
     /**
