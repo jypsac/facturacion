@@ -562,13 +562,12 @@
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var multiplier = 100;
                 var precio_uni=precio-(promedio_original*descuento/100);
-                var precio_uni_dec=(Math.round(precio_uni * multiplier) / multiplier)+(precio_uni*igv/100);
+                var precio_uni_dec= Math.round((precio_uni+(precio_uni*(igv/100)))* multiplier) / multiplier;
 
                 document.getElementById(`check_descuento${a}`).value = descuento;
 
                 var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
-                var comisiones=(Math.round(comisiones9*multiplier)/multiplier+(comisiones9*igv/100));
-
+                var comisiones = Math.round((comisiones9+(comisiones9*(igv/100)))* multiplier) / multiplier;
 
                 var final=comisiones*cantidad;
                 var final_decimal = Math.round(final * multiplier) / multiplier;
@@ -587,7 +586,7 @@
                 var final= cantidad*precio;
                 var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
 
-                var end =(Math.round(end9 * multiplier) / multiplier)+(end9*igv/100);
+                var end = Math.round((end9+(end9*(igv/100))) * multiplier) / multiplier;
                 var final2=cantidad*end;
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
                 document.getElementById(`descuento_unitario${a}`).value = end;

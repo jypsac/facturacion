@@ -64,7 +64,7 @@ class BoletaServicioController extends Controller
                 $utilidad[]=$servicio->precio_nacional*($servicio->utilidad)/100;
                 $igv_precio[]=$servicio->precio_nacional;
                 $igv[]=$igv_precio[$index]*$igv_total/100;
-                $array[]=$servicio->precio_nacional+$utilidad[$index];
+                $array[]=round(($servicio->precio_nacional+$utilidad[$index]),2);
 
             }
         }else{
@@ -72,7 +72,7 @@ class BoletaServicioController extends Controller
                 $utilidad[]=$servicio->precio_extranjero*($servicio->utilidad)/100;
                 $igv_precio[]=$servicio->precio_extranjero;
                 $igv[]=$igv_precio[$index]*$igv_total/100;
-                $array[]=$servicio->precio_extranjero+$utilidad[$index];
+                $array[]=round($servicio->precio_extranjero+$utilidad[$index],2);
 
             }
         }
