@@ -402,11 +402,11 @@
                     @endcan
                     @can('inventario')
                     <li>
-                        <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Inventario</span></a>
+                        <a href="#"><i class="fa fa-cube"></i> <span class="nav-label">Inventario</span></a>
                         <ul class="nav nav-second-level collapse">
                             @can('inventario-productos_kardex')
                             <li>
-                                <a href="#">Productos Kardex</a>
+                                <a href="#">Kardex-Producto</a>
                                 <ul class="nav nav-third-level">
                                     @can('inventario-productos_kardex-entrada_producto.index')
                                     <li><a href="{{route('kardex-entrada.index')}}">Entrada Producto</a></li>

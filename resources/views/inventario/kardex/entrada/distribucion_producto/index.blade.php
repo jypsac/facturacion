@@ -16,24 +16,19 @@
                                 <tr>
                                     <th>ID</th>
                                     <th>Codigo</th>
-                                    <th>Motivo</th>
-                                    <th>Provedor</th>
                                     <th>Almacen</th>
-                                    <th>Guia Remision</th>
-                                    <th>Factura</th>
-
+                                    <th>Ver</th>
+                                    <th>Anular</th>
                                 </tr>
                             </thead>
                             <tbody><span hidden="hidden">{{$i=0}}</span>
-                               @foreach($kardex_distribucion as $kardex_entrada)
-                               <tr class="gradeX">
+                             @foreach($kardex_distribucion as $kardex_distribuciones)
+                             <tr class="gradeX">
                                 <td> {{$i=$i+1}}</td>
-                                <td>{{$kardex_entrada->motivo->nombre}}</td>
-                                <td>{{$kardex_entrada->codigo_guia}}</td>
-                                <td>{{$kardex_entrada->provedor->empresa}}</td>
-                                <td>{{$kardex_entrada->almacen->nombre}}</td>
-                                <td>{{$kardex_entrada->guia_remision}}</td>
-                                <td>{{$kardex_entrada->factura}}</td>
+                                <td>{{$kardex_distribuciones->codigo_guia}}</td>
+                                <td>{{$kardex_distribuciones->almacen->nombre}}</td>
+                                <td><a href="{{ route('kardex-entrada-Distribucion.show', $kardex_distribuciones->id) }}"><button type="button" class="btn btn-s-m btn-info">VER</button></a></td>
+                                <td><button class="btn btn-secondary">Anular</button></td>
                             </tr>
                             @endforeach
                         </tbody>

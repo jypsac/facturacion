@@ -41,15 +41,12 @@ class KardexEntradaDistribucionController extends Controller
     public function create()
     {
       $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-      $provedores=Provedor::all();
       $almacenes=Almacen::where('estado','0')->where('id','!=',1)->get();
-      $motivos=Motivo::all();
       $categorias=Categoria::all();
-      $moneda=Moneda::orderBy('principal','DESC')->get();
       $user_login =auth()->user()->id;
       $usuario=User::where('id',$user_login)->first();
 
-      return view('inventario.kardex.entrada.distribucion_producto.create',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
+      return view('inventario.kardex.entrada.distribucion_producto.create',compact('almacenes','productos','categorias','usuario'));
     }
 
     /**
@@ -76,7 +73,7 @@ class KardexEntradaDistribucionController extends Controller
       $moneda_extranjera=Moneda::where('id','2')->first();
       $kardex_entradas=Kardex_entrada::find($id);
       $kardex_entradas_registros=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
-      return view('inventario.kardex.entrada.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera'));
+      return view('inventario.kardex.entrada.distribucion_producto.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera'));
     }
 
     /**
@@ -110,12 +107,6 @@ class KardexEntradaDistribucionController extends Controller
     public function destroy(Request $request, $id)
     {
 
-
-    }
-
-    public function create_distribucion()
-    {
-      // return 'xd';
 
     }
 

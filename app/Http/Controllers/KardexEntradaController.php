@@ -32,7 +32,8 @@ class KardexEntradaController extends Controller
       $almacenes=Almacen::all();
       $clasificaciones=Categoria::all();
       if ($user_login->name== 'Administrador') {
-        $kardex_entradas=Kardex_entrada::all();
+        $kardex_entradas=Kardex_entrada::where('tipo_registro_id',1)->get();
+        /* numero '1' es igual a Entrada de productos*/
       }else{ $kardex_entradas=Kardex_entrada::where('almacen_id',$user_login->almacen_id)->get();}
 
       foreach ($kardex_entradas as $value => $kardex_entrada) {
@@ -49,7 +50,7 @@ class KardexEntradaController extends Controller
         }
         $array_final[$value]=$validador;
       }
-      return view('inventario.kardex.entrada.index' ,compact('kardex_entradas','almacenes','clasificaciones','array_final'));
+      return view('inventario.kardex.entrada.entrada_producto.index' ,compact('kardex_entradas','almacenes','clasificaciones','array_final'));
 
     }
 
@@ -79,7 +80,7 @@ class KardexEntradaController extends Controller
     {
       $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
       $provedores=Provedor::all();
-      $almacenes=Almacen::where('estado','0')->get();
+      $almacenes=Almacen::where('estado','0')->where('id',1)->get();
       $motivos=Motivo::all();
       $categorias=Categoria::all();
       $moneda=Moneda::orderBy('principal','DESC')->get();
@@ -175,6 +176,7 @@ class KardexEntradaController extends Controller
       $kardex_entrada->factura=$request->get('factura');
       $kardex_entrada->almacen_id=$request->get('almacen');
       $kardex_entrada->moneda_id=$request->get('moneda');
+      $kardex_entrada->tipo_registro_id=1;
       $kardex_entrada->estado=1;
       $kardex_entrada->user_id=auth()->user()->id;
       $kardex_entrada->informacion=$request->get('informacion');
@@ -329,24 +331,5 @@ class KardexEntradaController extends Controller
  //     echo $output;
  //   }
  // }
-    public function create_distribucion()
-    {
-      // return 'xd';
-      $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-      $provedores=Provedor::all();
-      $almacenes=Almacen::where('estado','0')->get();
-      $motivos=Motivo::all();
-      $categorias=Categoria::all();
-      $moneda=Moneda::orderBy('principal','DESC')->get();
-      $user_login =auth()->user()->id;
-      $usuario=User::where('id',$user_login)->first();
-
-      return view('inventario.kardex.entrada.create_distribucion',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
-    }
-
-    // public function create_traslado()
-    // {
-    // }
-
 
   }
