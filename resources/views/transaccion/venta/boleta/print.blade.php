@@ -56,59 +56,59 @@
             </div><br>
 
             <div class="row" align="center" style="padding-bottom: 5px">
-                        <div class="col-sm-6" align="center">
-                            <div class="form-control">
-                                <h3> Datos Generales</h3>
-                                <div align="left">
-                                    <strong>Cliente:</strong>
-                                        @if(isset($boleta->cliente_id)){{$boleta->cliente->nombre}}
-                                        @else{{$boleta->cotizacion->cliente->nombre}}
-                                        @endif <br>
-                                    <strong>R.U.C:</strong>
-                                        @if(isset($boleta->cliente_id)){{$boleta->cliente->numero_documento}}
-                                        @else{{$boleta->cotizacion->cliente->numero_documento}}
-                                        @endif <br>
-                                    <strong>Direccion:</strong>
-                                        @if(isset($boleta->cliente_id)){{$boleta->cliente->direccion}}
-                                        @else{{$boleta->cotizacion->cliente->direccion}}
-                                        @endif <br>
-                                    <strong>Condiciones de Pago:</strong>
-                                        @if(isset($boleta->cliente_id)){{$boleta->forma_pago->nombre }}
-                                        @else{{$boleta->cotizacion->forma_pago->nombre }}
-                                        @endif  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Tipo de Moneda:</strong>
-                                        @if(isset($boleta->cliente_id)){{$boleta->moneda->nombre }}
-                                        @else{{$boleta->cotizacion->moneda->nombre }}
-                                        @endif <br>
-
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-sm-6" align="center">
-                         <div class="form-control" >
-                             <h3>Condiciones Generales</h3>
-                             <div align="left">
-                                <strong>Orden de Compra:</strong>
-                                    {{$boleta->orden_compra}} <br>
-                                <strong>Guia de Remision:</strong>
-                                    {{$boleta->guia_remision}} <br>
-                                <strong>Fecha Emision:</strong>
-                                    {{$boleta->fecha_emision}} <br>
-                                <strong>Fecha de Vencimiento:</strong>
-                                    {{$boleta->fecha_vencimiento }} <br>
-
-                            </div>
-                        </div>
-                    </div>
-                    <div class="col-sm-12" align="center">
-                     <div class="form-control" style="border: none;height: auto" >
-                         <div align="left">
+                <div class="col-sm-6" align="center">
+                    <div class="form-control">
+                        <h3> Datos Generales</h3>
+                        <div align="left">
+                            <strong>Cliente:</strong>
+                                @if(isset($boleta->cliente_id)){{$boleta->cliente->nombre}}
+                                @else{{$boleta->cotizacion->cliente->nombre}}
+                                @endif <br>
+                            <strong>R.U.C:</strong>
+                                @if(isset($boleta->cliente_id)){{$boleta->cliente->numero_documento}}
+                                @else{{$boleta->cotizacion->cliente->numero_documento}}
+                                @endif <br>
+                            <strong>Direccion:</strong>
+                                @if(isset($boleta->cliente_id)){{$boleta->cliente->direccion}}
+                                @else{{$boleta->cotizacion->cliente->direccion}}
+                                @endif <br>
+                            <strong>Condiciones de Pago:</strong>
+                                @if(isset($boleta->cliente_id)){{$boleta->forma_pago->nombre }}
+                                @else{{$boleta->cotizacion->forma_pago->nombre }}
+                                @endif  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Tipo de Moneda:</strong>
+                                @if(isset($boleta->cliente_id)){{$boleta->moneda->nombre }}
+                                @else{{$boleta->cotizacion->moneda->nombre }}
+                                @endif <br>
 
                         </div>
                     </div>
                 </div>
+                <div class="col-sm-6" align="center">
+                 <div class="form-control" >
+                     <h3>Condiciones Generales</h3>
+                     <div align="left">
+                        <strong>Orden de Compra:</strong>
+                            {{$boleta->orden_compra}} <br>
+                        <strong>Guia de Remision:</strong>
+                            {{$boleta->guia_remision}} <br>
+                        <strong>Fecha Emision:</strong>
+                            {{$boleta->fecha_emision}} <br>
+                        <strong>Fecha de Vencimiento:</strong>
+                            {{$boleta->fecha_vencimiento }} <br>
 
+                    </div>
+                </div>
             </div>
-            <br>
+            <div class="col-sm-12" align="center">
+             <div class="form-control" style="border: none;height: auto" >
+                 <div align="left">
+
+                </div>
+            </div>
+        </div>
+
+    </div>
+    <br>
 @if($boleta->tipo=="producto")
             <div class="table-responsive">
                 <table class="table ">

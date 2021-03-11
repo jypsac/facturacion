@@ -107,7 +107,8 @@
                                 <strong>Condiciones de Pago:</strong>
                                     @if(isset($facturacion->cliente_id)){{$facturacion->forma_pago->nombre }}
                                     @else{{$facturacion->cotizacion->forma_pago->nombre }}
-                                    @endif  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Tipo de Moneda:</strong>
+                                    @endif  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+                                    <strong>Tipo de Moneda:</strong>
                                     @if(isset($facturacion->cliente_id)){{$facturacion->moneda->nombre }}
                                     @else{{$facturacion->cotizacion->moneda->nombre }}
                                     @endif <br>
@@ -152,8 +153,10 @@
                             <th>Descripción</th>
                             <th>Valor Unitario</th>
                             <th>Dscto.%</th>
-                            <th>Precio Unitario</th>
-                            <th>Valor Venta </th>
+                            <th>P. Unitario Desc</th>
+                            <th>Comision</th>
+                            <th>P. Unitario Com.</th>
+                            <th>Valor Venta</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -170,8 +173,11 @@
                                 <td>{{$facturacion_registros->producto->nombre}} <br><strong>N/S:</strong> {{$facturacion_registros->numero_serie}}</td>
                                 <td>{{$facturacion_registros->precio}}</td>
                                 <td>{{$facturacion_registros->descuento}}%</td>
+                                <td>{{$facturacion_registros->precio_unitario_desc}}</td>
+                                <td>{{$facturacion_registros->comision}}%</td>
                                 <td>{{$facturacion_registros->precio_unitario_comi}}</td>
                                 <td>{{$facturacion_registros->precio_unitario_comi* $facturacion_registros->cantidad }}</td>
+
                                 <td style="display: none">
                                     {{$sub_total=($facturacion_registros->cantidad*$facturacion_registros->precio_unitario_comi)+$sub_total}}
                                     {{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
