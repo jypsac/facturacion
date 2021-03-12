@@ -18,7 +18,8 @@ class CreateStockProductosTable extends Migration
             $table->unsignedBigInteger('producto_id')->nullable();
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->integer('stock')->nullable();
-            $table->string('precio')->nullable();
+            $table->string('precio_nacional')->nullable();
+            $table->string('precio_extranjero')->nullable();
             $table->timestamps();
         });
     }

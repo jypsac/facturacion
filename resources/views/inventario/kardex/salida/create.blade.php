@@ -67,7 +67,7 @@
 
 							<label class="col-sm-2 col-form-label">Almacen:</label>
 								<div class="col-sm-4">
-								<input type="text" class="form-control" name="almacen" value="{{$almacen_nombre}}" readonly >
+								<input type="text" class="form-control" name="almacen" value="{{$almacen_nombre}}" id="almacen" readonly >
 							    </div>
 						</div>
 
@@ -213,13 +213,16 @@
 			e.preventDefault();
 
 			var articulo = $('[id="articulo"]').val();
+			var almacen = $(`[id='almacen']`).val();
+
 			// var data={articulo:articulo,_token:token};
 				$.ajax({
 					type: "post",
 					url: "{{ route('stock_ajax') }}",
 					data: {
 						'_token': $('input[name=_token]').val(),
-						'articulo': articulo
+						'articulo': articulo,
+						'almacen' : almacen
 						},
 					success: function (msg) {
 						// console.log(msg);
@@ -232,12 +235,14 @@
 
 		function ajax (a){
 			var articulo2 = $(`[id='articulo${a}']`).val();
+			var almacen = $(`[id='almacen']`).val();
 			$.ajax({
 				type: "post",
 				url: "{{ route('stock_ajax') }}",
 				data: {
 					'_token': $('input[name=_token]').val(),
-					'articulo': articulo2
+					'articulo': articulo2,
+					'almacen' : almacen
 					},
 				success: function (msg) {
 					// console.log(msg);
