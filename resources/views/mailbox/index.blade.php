@@ -56,7 +56,7 @@
                                     <div class="panel-body" align="left">
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Email:</label>
-                                            <div class="col-sm-4"><input type="text" class="form-control" name="email">
+                                            <div class="col-sm-4"><input type="email" class="form-control" name="email" required="">
                                             </div>
 
                                             <label class="col-sm-2 col-form-label" style="width: 50%">Contraseña:</label>
