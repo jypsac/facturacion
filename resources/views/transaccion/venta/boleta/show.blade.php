@@ -142,7 +142,9 @@
                             <th>Descripción</th>
                             <th>Valor Unitario</th>
                             <th>Dscto.%</th>
-                            <th>Precio Unitario</th>
+                            <th>P. Unitario Desc.</th>
+                            <th>Comision</th>
+                            <th>P. Unitario Com.</th>
                             <th>Valor Venta </th>
                         </tr>
                     </thead>
@@ -160,6 +162,8 @@
                                 <td>{{$boleta_registros->producto->nombre}} <br><strong>N/S:</strong> {{$boleta_registros->numero_serie}}</td>
                                 <td>{{$boleta_registros->precio}}</td>
                                 <td>{{$boleta_registros->descuento}}%</td>
+                                <td>{{$boleta_registros->precio_unitario_desc}}</td>
+                                <td>{{$boleta_registros->comision}}%</td>
                                 <td>{{$boleta_registros->precio_unitario_comi}}</td>
                                 <td>{{$boleta_registros->precio_unitario_comi * $boleta_registros->cantidad }}</td>
                                 <td style="display: none">

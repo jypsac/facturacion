@@ -55,60 +55,59 @@
                 </div>
             </div><br>
 
-            <table class="table ">
-                <thead>
+            <div class="row" align="center" style="padding-bottom: 5px">
+                    <div class="col-sm-6" align="center">
+                        <div class="form-control">
+                            <h3> Datos Generales</h3>
+                            <div align="left">
+                                <strong>Cliente:</strong>
+                                    @if(isset($facturacion->cliente_id)){{$facturacion->cliente->nombre}}
+                                    @else{{$facturacion->cotizacion->cliente->nombre}}
+                                    @endif <br>
+                                <strong>R.U.C:</strong>
+                                    @if(isset($facturacion->cliente_id)){{$facturacion->cliente->numero_documento}}
+                                    @else{{$facturacion->cotizacion->cliente->numero_documento}}
+                                    @endif <br>
+                                <strong>Direccion:</strong>
+                                    @if(isset($facturacion->cliente_id)){{$facturacion->cliente->direccion}}
+                                    @else{{$facturacion->cotizacion->cliente->direccion}}
+                                    @endif <br>
+                                <strong>Condiciones de Pago:</strong>
+                                    @if(isset($facturacion->cliente_id)){{$facturacion->forma_pago->nombre }}
+                                    @else{{$facturacion->cotizacion->forma_pago->nombre }}
+                                    @endif  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; <strong>Tipo de Moneda:</strong>
+                                    @if(isset($facturacion->cliente_id)){{$facturacion->moneda->nombre }}
+                                    @else{{$facturacion->cotizacion->moneda->nombre }}
+                                    @endif <br>
 
-                    <tr>
-                        <td style="width: 170px"><b>Señor(es)</b></td><td style="width: 3px">:</td>
-                        <td  colspan="4">
-                            @if(isset($facturacion->cliente_id)){{$facturacion->cliente->nombre}}
-                            @else{{$facturacion->cotizacion->cliente->nombre}}
-                            @endif
-                        </td>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-sm-6" align="center">
+                     <div class="form-control" >
+                         <h3>Condiciones Generales</h3>
+                         <div align="left">
+                            <strong>Orden de Compra:</strong>
+                                {{$facturacion->orden_compra}} <br>
+                            <strong>Guia de Remision:</strong>
+                                {{$facturacion->guia_remision}} <br>
+                            <strong>Fecha Emision:</strong>
+                                {{$facturacion->fecha_emision}} <br>
+                            <strong>Fecha de Vencimiento:</strong>
+                                {{$facturacion->fecha_vencimiento }} <br>
 
-                        <td style="width: 100px"><b>RUC</b></td><td style="width: 3px">:</td><td  style="width: 150px">
-                            @if(isset($facturacion->cliente_id)){{$facturacion->cliente->numero_documento}}
-                            @else{{$facturacion->cotizacion->cliente->numero_documento}}
-                            @endif
-                        </td>
-                    </tr>
-                    <tr>
-                        <td><b>Direccion</b></td><td style="width: 3px">:</td>
-                        <td colspan="4">
-                            @if(isset($facturacion->cliente_id)){{$facturacion->cliente->direccion}}
-                            @else{{$facturacion->cotizacion->cliente->direccion}}
-                            @endif
-                        </td>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-12" align="center">
+                 <div class="form-control" style="border: none;height: auto" >
+                     <div align="left">
 
-                        <td><b>Orden de Compra</b></td><td>:</td>
-                        <td> {{$facturacion->orden_compra}}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td>
-                        <td colspan="4">
-                            @if(isset($facturacion->cliente_id)){{$facturacion->forma_pago->nombre }}
-                            @else{{$facturacion->cotizacion->forma_pago->nombre }}
-                            @endif
-                        </td>
+                    </div>
+                </div>
+            </div>
 
-                        <td><b>Guia Remision</b></td><td style="width: 3px">:</td>
-                        <td> {{$facturacion->guia_remision}}</td>
-                    </tr>
-                    <tr>
-                        <td><b>Fecha Emision</b></td><td style="width: 3px">:</td>
-                        <td>{{$facturacion->fecha_emision}}</td>
-
-                        <td ><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td>
-                        <td >{{$facturacion->fecha_vencimiento }}</td>
-
-                        <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td>
-                        <td>@if(isset($facturacion->cliente_id)){{$facturacion->moneda->nombre }}
-                            @else{{$facturacion->cotizacion->moneda->nombre }}
-                            @endif
-                        </td>
-                    </tr>
-                </thead>
-            </table>
+        </div>
 
             <br>
 @if($facturacion->tipo=="producto")

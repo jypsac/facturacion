@@ -140,17 +140,18 @@
                             <th>ITEM</th>
                             <th>Codigo Producto</th>
                             <th>Cantidad</th>
-
                             <th>Descripción</th>
                             <th>Valor Unitario</th>
                             <th>Dscto.%</th>
-                            <th>Precio Unitario</th>
+                            <th>P. Unitario Desc.</th>
+                            <th>Comision %</th>
+                            <th>P. Unitario Com.</th>
                             <th>Valor Venta </th>
                         </tr>
                     </thead>
                     <tbody>
 
-
+  
                         <tr>
                             @foreach($boleta_registro as $boleta_registros)
                             <span hidden="hidden">{{$i=1}} </span>
@@ -158,10 +159,11 @@
                                 <td>{{$i}} </td>
                                 <td>{{$boleta_registros->servicio->codigo_servicio}}</td>
                                 <td>{{$boleta_registros->cantidad}}</td>
-
                                 <td>{{$boleta_registros->servicio->nombre}} <br>
                                 <td>{{$boleta_registros->precio}}</td>
                                 <td>{{$boleta_registros->descuento}}%</td>
+                                <td>{{$boleta_registros->precio_unitario_desc}}</td>
+                                <td>{{$boleta_registros->comision }}</td>
                                 <td>{{$boleta_registros->precio_unitario_comi}}</td>
                                 <td>{{$boleta_registros->precio_unitario_comi * $boleta_registros->cantidad }}</td>
                                 <td style="display: none">{{$sub_total=$boleta_registros->precio_unitario_comi * $boleta_registros->cantidad +$sub_total}}

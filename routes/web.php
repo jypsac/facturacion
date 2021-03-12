@@ -203,6 +203,7 @@ Route::group(
 		// Route::get('kardex_entrada_productos','KardexEntradaController@productos');
 
 		Route::resource('/kardex-entrada-Distribucion','KardexEntradaDistribucionController');
+		Route::resource('/kardex-entrada-Traslado-almacen','KardexEntradaTrasladoAlmacenController');
 		Route::resource('/kardex-entrada','KardexEntradaController');
 
 		Route::post('/kardex-salida/create' , 'KardexSalidaController@create')->name('kardex-salida.create');

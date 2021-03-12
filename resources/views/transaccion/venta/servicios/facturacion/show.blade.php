@@ -153,11 +153,12 @@
                             <th>ITEM</th>
                             <th>Codigo Producto</th>
                             <th>Cantidad</th>
-
                             <th>Descripción</th>
                             <th>Valor Unitario</th>
                             <th>Dscto.%</th>
-                            <th>Precio Unitario</th>
+                            <th>P. Unitario Desc.</th>
+                            <th>Comsion %</th>
+                            <th>P. Unitario Com.</th>
                             <th>Valor Venta </th>
                         </tr>
                     </thead>
@@ -171,10 +172,11 @@
                                 <td>{{$i}} </td>
                                 <td>{{$facturacion_registros->servicio->codigo_servicio}}</td>
                                 <td>{{$facturacion_registros->cantidad}}</td>
-
                                 <td>{{$facturacion_registros->servicio->nombre}}
                                 <td>{{$facturacion_registros->precio}}</td>
                                 <td>{{$facturacion_registros->descuento}}%</td>
+                                <td>{{$facturacion_registros->precio_unitario_desc}}</td>
+                                <td>{{$facturacion_registros->comision}}%</td>
                                 <td>{{$facturacion_registros->precio_unitario_comi}}</td>
                                 <td>{{$facturacion_registros->precio_unitario_comi * $facturacion_registros->cantidad }}</td>
                                 <td style="display: none">
