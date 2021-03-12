@@ -1,82 +1,58 @@
 @extends('layout')
-
-@section('title', 'Ver')
-@section('breadcrumb', 'kardex_entradas-Ver')
-@section('breadcrumb2', 'kardex_entradas-Ver')
-@section('href_accion', route('kardex-entrada.index') )
+@section('title', 'Kardex Traslado Alamacen')
+@section('href_accion', route('kardex-entrada-Traslado-almacen.index'))
 @section('value_accion', 'Atras')
-
 @section('content')
-
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox-content p-xl">
                 <div class="row">
                     <div class="col-sm-6">
-                       <div style="height:  140px"></div>
-                        <address class="col-sm-6">
-                            <h5>De:</h5>
-                            <i class=" fa fa-user">:</i><strong > {{$kardex_entradas->provedor->empresa}}</strong><br>
-                            <i class=" fa fa-building">:</i> {{$kardex_entradas->provedor->direccion}}<br>
-                            <i class="fa fa-phone">:</i> {{$kardex_entradas->provedor->celular_provedor}}
-                        </address>
-                    </div>
-                    <div class="col-sm-3">
-                    </div>
+                     <address class="col-sm-6">
+                        <h5>Traslado de:</h5>
+                        <i class=" fa fa-user">:</i><strong > {{$mi_empresa->nombre}}</strong><br>
+                    Alamacen Emisor:</i> {{$kardex_entradas->almacen->nombre}}<br>
+                Alamacen Receptor:</i> {{$kardex_entradas->almacen->nombre}}<br>
+                <strong><i class="fa fa-clock-o" aria-hidden="true"></i></strong> {{$kardex_entradas->provedor->created_at}}</span>
 
-                    <div class="col-sm-3 text-right">
-                        <div class="form-control ruc" >
-                            <center>
-                                <h3 style="padding-top:10px ">RUC : {{$mi_empresa->ruc}}</h3>
-                                <h2>GUIA DE ENTRADA </h2>
-                                <h4 class="text-navy">{{$kardex_entradas->codigo_guia}}</h4>
-                            </center>
-                        </div><br>
-                        <address>
-                            <img src="https://www.flaticon.es/svg/static/icons/svg/2897/2897818.svg" width="13px" alt="">:<strong>{{$kardex_entradas->almacen->nombre}} - {{$kardex_entradas->almacen->abreviatura}}</strong><br>
-                            <i class=" fa fa-building">:</i>{{$kardex_entradas->almacen->direccion}}<br>
-                            <i class="fa fa-phone">:</i> {{$mi_empresa->telefono}} / {{$mi_empresa->movil}} <br>
-                            <strong><i class="fa fa-clock-o" aria-hidden="true"></i></strong> {{$kardex_entradas->provedor->created_at}}</span>
-                        </address>
-                    </div>
-                </div>
-
-                <div class="table-responsive m-t">
-                    <table class="table invoice-table" >
-                        <thead>
-                            <tr>
-                                <th>Codigo</th>
-                                <th style="text-align: left;">Nombre/Descripcion</th>
-                                <th>Cantidad</th>
-                                <th>Precio {{$moneda_nacional->nombre}}</th>
-                                <th style="background: #f3f3f4">Precio Total {{$moneda_nacional->nombre}}</th>
-                                <th>Precio {{$moneda_extranjera->nombre}}</th>
-                                <th style="background: #f3f3f4">Precio Total {{$moneda_extranjera->nombre}}</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                         @foreach($kardex_entradas_registros as $kardex_entradas_registro)
-                         <tr>
-                            <td>  {{$kardex_entradas_registro->producto->codigo_producto}}</td>
-                            <td style="text-align: left;">
-                              {{$kardex_entradas_registro->producto->nombre}}/{{$kardex_entradas_registro->producto->codigo_original}}<br>{{$kardex_entradas_registro->producto->descripcion}}
-                            </td>
-                            <td>{{$kardex_entradas_registro->cantidad_inicial}}</td>
-                            <td>{{$moneda_nacional->simbolo}} {{$kardex_entradas_registro->precio_nacional}}</td>
-                            <td style="background: #f3f3f4">{{$moneda_nacional->simbolo}}.{{$kardex_entradas_registro->precio_nacional * $kardex_entradas_registro->cantidad_inicial}}</td>
-
-                            <td>{{$moneda_extranjera->simbolo}} {{$kardex_entradas_registro->precio_extranjero}}</td>
-                            <td style="background: #f3f3f4">{{$moneda_extranjera->simbolo}}{{$moneda_nacional->precio_extranjero}}{{$kardex_entradas_registro->precio_extranjero * $kardex_entradas_registro->cantidad_inicial}}</td>
-                        </tr>
-                        @endforeach
-                    </tbody>
-                </table><p aling="right"><b>Nota:</b> Guia Emitada en {{$kardex_entradas->moneda->nombre}}</p>
+            </address></div>
+            <div class="2" style="width: 200px"></div>
+            <div class="col-sm-4" align="right">
+                <div class="form-control ruc" >
+                    <center>
+                        <h3 style="padding-top:10px ">RUC : {{$mi_empresa->ruc}}</h3>
+                        <h2>GUIA DE TRASLADO </h2>
+                        <h4 class="text-navy">{{$kardex_entradas->codigo_guia}}</h4>
+                    </center>
+                </div></div>
             </div>
-
-
+            <div class="table-responsive m-t">
+                <table class="table invoice-table" >
+                    <thead>
+                        <tr>
+                            <th>Codigo</th>
+                            <th style="text-align: left;">Nombre/Descripcion</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                     @foreach($kardex_entradas_registros as $kardex_entradas_registro)
+                     <tr>
+                        <td>  {{$kardex_entradas_registro->producto->codigo_producto}}</td>
+                        <td style="text-align: left;">
+                            {{$kardex_entradas_registro->producto->nombre}}/{{$kardex_entradas_registro->producto->codigo_original}} {{$kardex_entradas_registro->producto->descripcion}}
+                        </td>
+                        <td>{{$kardex_entradas_registro->cantidad_inicial}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+            </table>
         </div>
+
+
     </div>
+</div>
 </div>
 </div>
 
