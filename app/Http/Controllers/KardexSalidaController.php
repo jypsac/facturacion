@@ -270,12 +270,13 @@ class KardexSalidaController extends Controller
                                 $p->estado=0;
                                 $p->save();
                             }
+                            
                         }
                     }
                     //resta de cantidades de productos para la tabla stock productos
-                    // $stock_productos=Stock_producto::find($producto_stock->id);
-                    // $stock_productos->stock=$stock_productos->stock-$kardex_salida_registro->cantidad;
-                    // $stock_productos->save();
+                    $stock_productos=Stock_producto::find($producto_id[$i]);
+                    $stock_productos->stock=$stock_productos->stock-$kardex_salida_registro->cantidad;
+                    $stock_productos->save();
                     
                 }   
             }else{

@@ -36,8 +36,12 @@ class AddForeignKeyKardexEntradaTable extends Migration
             $table->string('informacion');
             $table->string('estado');
 
+            $table->unsignedBigInteger('tipo_registro_id')->nullable();
+            
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
+
+            
 
             $table->timestamps();
         });
