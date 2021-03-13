@@ -29,7 +29,7 @@ class EmpresaSeeder extends Seeder
 			'descripcion' => 'Descripcion',
 			'pagina_web' => 'https://jypsac.com/',
 			'foto' => 'logo.png',
-			'background' => 'https://images2.alphacoders.com/361/thumb-1920-36170.jpg',
+			'background' => 'https://images4.alphacoders.com/113/thumb-1920-1133047.jpg',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
 		]);

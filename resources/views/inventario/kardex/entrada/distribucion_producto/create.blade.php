@@ -19,7 +19,7 @@
 		<div class="col-lg-12">
 			<div class="ibox">
 				<div class="ibox-content">
-					<form action="{{ route('kardex-entrada.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
+					<form action="{{ route('kardex-entrada-Distribucion.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
 						@csrf
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Motivo:</label>
@@ -45,7 +45,8 @@
 							<thead>
 								<tr>
 									<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()"  /></th>
-									<th style="width: auto">Producto  </th>
+									<th style="width: auto">Producto</th>
+									<th style="width: auto">Stock</th>
 									<th style="width: 100px">Cantidad</th>
 								</tr>
 							</thead>
@@ -59,6 +60,9 @@
 											<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
 												@endforeach
 											</datalist>
+										</td>
+										<td>
+											<input type='text' id='stock0' name='stock[]' class="stock0 form-control" required/>
 										</td>
 										<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/>
 										</td>
@@ -117,6 +121,7 @@
 			@endforeach
 			</datalist>
 			</td>
+			<td><input type='text' id='stock${i}' name='stock[]' class="stock${i} form-control"  required/></td>
 			<td>
 			<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
 			</td>
@@ -184,6 +189,43 @@
 		function Clear(elem)
 		{
 			elem.value='';
+		}
+
+		$('#articulo').change(function(e){
+			e.preventDefault();
+
+			var articulo = $('[id="articulo"]').val();
+
+			// var data={articulo:articulo,_token:token};
+				$.ajax({
+					type: "post",
+					url: "{{ route('stock_ajax_distribucion') }}",
+					data: {
+						'_token': $('input[name=_token]').val(),
+						'articulo': articulo
+						},
+					success: function (msg) {
+						// console.log(msg);
+						$('#stock0').val(msg);
+					}
+				});
+			});
+
+
+		function ajax (a){
+			var articulo2 = $(`[id='articulo${a}']`).val();
+			$.ajax({
+				type: "post",
+				url: "{{ route('stock_ajax_distribucion') }}",
+				data: {
+					'_token': $('input[name=_token]').val(),
+					'articulo': articulo2
+					},
+				success: function (msg) {
+					// console.log(msg);
+					$(`#stock${a}`).val(msg);
+				}
+			});
 		}
 	</script>
 
