@@ -26,9 +26,10 @@ class KardexEntradaTrasladoAlmacenController extends Controller
      */
     public function index()
     {
+    	$almacen=Almacen::where('estado',0)->where('id','!=',1)->get();
     	$kardex_distribucion=Kardex_entrada::where('tipo_registro_id',2)->get();
 
-    	return view('inventario.kardex.entrada.traslado_almacen.index',compact('kardex_distribucion'));
+    	return view('inventario.kardex.entrada.traslado_almacen.index',compact('kardex_distribucion','almacen'));
     }
 
     /**
@@ -36,15 +37,17 @@ class KardexEntradaTrasladoAlmacenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
+    	$id_almacen_emisor=$request->get('almacen');
+    	$almacen_emison=Almacen::where('id',$id_almacen_emisor)->first();
     	$productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-    	$almacenes=Almacen::where('estado','0')->where('id','!=',1)->get();
+    	$almacenes=Almacen::where('estado','0')->where('id','!=',$id_almacen_emisor)->get();
     	$categorias=Categoria::all();
     	$user_login =auth()->user()->id;
     	$usuario=User::where('id',$user_login)->first();
 
-    	return view('inventario.kardex.entrada.traslado_almacen.create',compact('almacenes','productos','categorias','usuario'));
+    	return view('inventario.kardex.entrada.traslado_almacen.create',compact('almacenes','productos','categorias','usuario','almacen_emison'));
     }
 
     /**

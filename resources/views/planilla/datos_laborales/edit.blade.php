@@ -11,7 +11,7 @@
 
 <div style="padding-top: 20px;padding-bottom: 50px">
 <div class="container" style=" padding-top: 30px; background: white;">
-      <div class="jumbotron" 
+      <div class="jumbotron"
       style="padding: 10px 40px ;
       background-image: url('https://www.iwantwallpaper.co.uk/images/muriva-bluff-embossed-brick-effect-wallpaper-j30309-p711-1303_image.jpg'); background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;"
        >
@@ -35,7 +35,7 @@
                             </div>
 
                  </th>
-                
+
              </tr>
 
      </table>
@@ -79,7 +79,7 @@
               <option value="Administrativo">Administrativo</option>
               <option value="Ejecutivo">Ejecutivo</option>
             </select></p>
-          
+
             <h4>Estado Del Trbajador</h4>
           <p><select class="form-control" name="estado_trabajador">
               <option value="{{$personales->estado_trabajador}}">{{$personales->estado_trabajador}}</option>
@@ -92,7 +92,7 @@
 
         </div>
         <div class="col-lg-6">
-         
+
 
           <h4>Sede</h4>
           <p><input type="text" class="form-control" name="sede" value="{{$personales->sede}}"></p>
@@ -106,7 +106,7 @@
               <option value="Noche">Noche</option>
             </select></p>
 
-        
+
         </div>
         <div class="col-lg-6">
          <h4>Departamento Area</h4>
@@ -124,7 +124,7 @@
               <option value="Recursos Humanos">Recursos Humanos</option>
               <option value="otros">otros</option>
             </select></p>
-          
+
 
           <h4>Cargo</h4>
           <p>
@@ -139,11 +139,11 @@
               <option value="Gerente">Gerente</option>
             </select></p>
 
-          
+
         </div>
 
         <div class="col-lg-6">
-         
+
 
           <h4>Tipo Trabajador</h4>
           <p>
@@ -167,7 +167,7 @@
               <option value="Nacional">Nacional</option>
               <option value="Sin Regimen">Sin Regimen</option>
             </select></p>
-        
+
         </div>
         <div class="col-lg-6">
          <h4>Seguro de Salud</h4>
@@ -180,7 +180,7 @@
               <option value="Sin Seguro">Sin Seguro</option>
 
             </select></p>
-          
+
 
           <h4>Banco Abonado</h4>
           <p>
@@ -193,12 +193,12 @@
               <option value="Scotiabank">Scotiabank</option>
             </select></p>
 
-          
+
         </div>
         <div class="col-lg-6">
          <h4>Numero Cuenta</h4>
           <p><input type="text" class="form-control" name="numero_cuenta" value="{{$personales->numero_cuenta}}"></p>
-          
+
         </div>
         <div class="col-lg-6">
 
@@ -216,20 +216,20 @@
               <option value="Obra o Labor">Obra o Labor</option>
               <option value="Sin Contrato">Sin Contrato</option>
             </select></p>
-          
+
         </div>
 
       </div>
 				    	<button class="btn btn-primary" type="submit">Guardar</button>
 
-      	
+
       </form>
 
 
 
-    </div> 
-    </div> 
-            
+    </div>
+    </div>
+
             <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -244,5 +244,5 @@
 
     <!-- blueimp gallery -->
     <script src="{{ asset('js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
-  
+
 @endsection

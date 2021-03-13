@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Personal') 
+@section('title', 'Personal')
 @section('breadcrumb', 'Personal-Agregar')
 @section('breadcrumb2', 'Personal-Agregar')
 @section('href_accion', route('personal.show', $personales->id) )
@@ -11,7 +11,7 @@
 
 <div style="padding-top: 20px;padding-bottom: 50px">
 <div class="container" style=" padding-top: 30px; background: white;">
-      <div class="jumbotron" 
+      <div class="jumbotron"
       style="padding: 10px 40px ;
       background-image: url('https://www.iwantwallpaper.co.uk/images/muriva-bluff-embossed-brick-effect-wallpaper-j30309-p711-1303_image.jpg'); background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;"
        >
@@ -35,12 +35,12 @@
                             </div>
 
                  </th>
-                
+
              </tr>
 
      </table>
       </div>
-      
+
      <form action="{{ route('personal-datos-laborales.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
 					 	@csrf
          <input type="text" class="form-control" value="{{$personales->id}}" name="personal_id" hidden="hidden">
@@ -48,15 +48,15 @@
         <div class="col-lg-6">
 
           <h4>Fecha Viculacion</h4>
-          <p><input type="date" class="form-control" name="fecha_vinculacion" ></p>
+          <p><input type="date" class="form-control" name="fecha_vinculacion" required="" ></p>
 
           <h4>Fecha Retiro</h4>
-          <p><input type="date" class="form-control" name="fecha_retiro" ></p>
+          <p><input type="date" class="form-control" name="fecha_retiro" required="" ></p>
 
 
           <h4>Forma Pago</h4>
-          <p>        
-              <select class="form-control" name="forma_pago">
+          <p>
+              <select class="form-control" name="forma_pago" required="">
               <option value="Semanal">Semanal</option>
               <option value="Quincenal">Quincenal</option>
               <option value="Mensual">Mensual</option>
@@ -67,11 +67,11 @@
 
         <div class="col-lg-6">
           <h4>Salario</h4>
-          <p><input type="text" class="form-control" name="salario" > </p>
+          <p><input type="text" class="form-control" name="salario" required=""> </p>
 
             <h4>Categoria Ocupacional</h4>
           <p>
-            <select class="form-control" name="categoria_ocupacional">
+            <select class="form-control" name="categoria_ocupacional" required="">
               <option value="Obrero">Obrero</option>
               <option value="Empleado">Empleado</option>
               <option value="Administrativo">Administrativo</option>
@@ -80,7 +80,7 @@
           </p>
             <h4>Tipo Contrato</h4>
           <p>
-          <select class="form-control" name="tipo_contrato">
+          <select class="form-control" name="tipo_contrato" required="">
               <option value="Idefinido">Indefinido</option>
               <option value="Fijo">Fijo</option>
               <option value="Temporal">Temporal</option>
@@ -101,14 +101,14 @@
 
         </div>
         <div class="col-lg-6">
-         
+
 
           <h4>Sede</h4>
-          <p><input type="text" class="form-control" name="sede" ></p>
+          <p><input type="text" class="form-control" name="sede" required=""></p>
 
           <h4>Turno</h4>
           <p>
-           <select class="form-control" name="turno">
+           <select class="form-control" name="turno" required="">
               <option value="Mañana">Mañana</option>
               <option value="Tarde">Tarde</option>
               <option value="Noche">Noche</option>
@@ -118,7 +118,7 @@
         <div class="col-lg-6">
          <h4>Departamento Area</h4>
           <p>
-            <select class="form-control" name="departamento_area">
+            <select class="form-control" name="departamento_area" required="">
               <option value="Aministracion">Administracion</option>
               <option value="Almacen">Almacen</option>
               <option value="Compras">Compras</option>
@@ -130,11 +130,11 @@
               <option value="Recursos Humanos">Recursos Humanos</option>
               <option value="otros">otros</option>
             </select></p>
-          
+
 
           <h4>Cargo</h4>
           <p>
-           <select class="form-control" name="cargo">
+           <select class="form-control" name="cargo" required="">
               <option value="vendedor">vendedor</option>
               <option value="Obrero">Obrero</option>
               <option value="Empleado">Empleado</option>
@@ -148,11 +148,11 @@
         </div>
 
         <div class="col-lg-6">
-         
+
 
           <h4>Tipo Trabajador</h4>
           <p>
-           <select class="form-control" name="tipo_trabajador">
+           <select class="form-control" name="tipo_trabajador" required="">
               <option value="Interno">Interno</option>
               <option value="Externo">Externo</option>
               <option value="Temporal">Temporal</option>
@@ -161,41 +161,41 @@
 
           <h4>Regimen Pensionario</h4>
           <p>
-           <select class="form-control" name="regimen_pensionario">
+           <select class="form-control" name="regimen_pensionario" required="">
               <option value="Privado">Privado</option>
               <option value="Nacional">Nacional</option>
               <option value="Sin Regimen">Sin Regimen</option>
             </select></p>
-        
+
 
         </div>
         <div class="col-lg-6">
          <h4>Seguro de Salud</h4>
           <p>
-              <select class="form-control" name="afiliacion_salud">
+              <select class="form-control" name="afiliacion_salud" required="">
               <option value="AFP Integra">AFP Integra</option>
               <option value="AFP Horizonte">AFP Horizonte</option>
               <option value="ONP">ONP</option>
               <option value="Sin Seguro">Sin Seguro</option>
 
             </select></p>
-          
+
 
           <h4>Banco Abonado</h4>
           <p>
-            <select class="form-control" name="banco_renumeracion">
+            <select class="form-control" name="banco_renumeracion" required="">
               <option value="BCP">BCP</option>
               <option value="BN">BN</option>
               <option value="Interbank">Interbank</option>
               <option value="Continental">Continental</option>
               <option value="Scotiabank">Scotiabank</option>
             </select></p>
-          
+
         </div>
         <div class="col-lg-6">
          <h4>Numero Cuenta</h4>
-          <p><input type="text" class="form-control" name="numero_cuenta" ></p>
-          
+          <p><input type="text" class="form-control" name="numero_cuenta" required="" ></p>
+
         </div>
         <div class="col-lg-6">
 
@@ -218,14 +218,14 @@
       </div>
 				    	<button class="btn btn-primary" type="submit" id="boton">Guardar</button>
 
-      	
+
       </form>
 
 
 
-    </div> 
-    </div> 
-            
+    </div>
+    </div>
+
             <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>

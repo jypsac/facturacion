@@ -21,9 +21,7 @@
 
 
 
-           @if(Auth::user()->email_creado == 0)
-                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
-            @else
+           @if(Auth::user()->email_creado == 1)
                 <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
                     @csrf
                     <input type="text" hidden="hidden" name="tipo" value="App\Guia_remision"/>

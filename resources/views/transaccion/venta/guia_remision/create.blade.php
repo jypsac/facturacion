@@ -152,7 +152,7 @@
                                     <input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"   required  autocomplete="off" />
                                 </td>
                                 <td>
-                                    <textarea name="series[]" id="series0" class="form-control" placeholder="escanear N/S"></textarea>
+                                    <textarea name="series[]" id="series0" required="" class="form-control" placeholder="escanear N/S"></textarea>
                                 </td>
                                 <td>
                                     <input id='peso0' name='peso[]' type="text" class="form-control" value="0" readonly="readonly">
@@ -192,7 +192,7 @@
 
     <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script> 
+    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
     {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
     <script>
         function valida(f) {
@@ -229,7 +229,7 @@
             <input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control"  required  autocomplete="off"/>
             </td>
             <td>
-            <textarea  id='series${i}' name='series[]' class="form-control" placeholder="escanear N/S"></textarea>
+            <textarea  id='series${i}' name='series[]' class="form-control" required placeholder="escanear N/S"></textarea>
             </td>
             <td>
             <input id='peso${i}' name='peso[]' type="text" class="form-control" value="0"  readonly="readonly">

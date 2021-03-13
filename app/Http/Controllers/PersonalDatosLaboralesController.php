@@ -106,8 +106,9 @@ class PersonalDatosLaboralesController extends Controller
      */
     public function edit($id)
     {
-        $persona=Personal::where('id',$id)->first();
+
         $personales=Personal_datos_laborales::find($id);
+        $persona=Personal::where('id',$personales->personal_id)->first();
         return view('planilla.datos_laborales.edit',compact('personales','persona'));
     }
 

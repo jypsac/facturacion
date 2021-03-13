@@ -47,60 +47,41 @@
     </table>
 
 <div class="wrapper wrapper-content animated fadeIn" style="margin-top: -10px ">
-<table class="table " width="100%" style="border-collapse: collapse;">
-    <tbody>
-        <tr>
-            <td style="width: 170px"><b>Señor(es)</b></td><td style="width: 3px">:</td>
-            <td  colspan="4">
+
+<table style="width: 100%;border-collapse:separate;margin-top: -20px">
+    <tr >
+        <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 8px;width: auto" >
+            <center><strong style="align-content: center;margin: 5px">Datos Generales </strong></center><br>
+            <strong>Señor(es)</strong>&nbsp;
                 @if(isset($facturacion->cliente_id)){{$facturacion->cliente->nombre}}
                 @else{{$facturacion->cotizacion->cliente->nombre}}
-                @endif
-            </td>
-
-            <td style="width: 100px"><b>RUC</b></td><td style="width: 3px">:</td><td  style="width: 150px">
+                @endif<br>
+            <strong>R.U.C :</strong>&nbsp;
                 @if(isset($facturacion->cliente_id)){{$facturacion->cliente->numero_documento}}
                 @else{{$facturacion->cotizacion->cliente->numero_documento}}
-                @endif
-            </td>
-        </tr>
-        <tr>
-            <td><b>Direccion</b></td><td style="width: 3px">:</td>
-            <td colspan="4">
-                @if(isset($facturacion->cliente_id)){{$facturacion->cliente->direccion}}
+                @endif&nbsp;&nbsp;<br>
+            <strong>Direccion:</strong>&nbsp;
+            @if(isset($facturacion->cliente_id)){{$facturacion->cliente->direccion}}
                 @else{{$facturacion->cotizacion->cliente->direccion}}
-                @endif
-            </td>
-
-            <td><b>Orden de Compra</b></td><td>:</td>
-            <td> {{$facturacion->orden_compra}}</td>
-        </tr>
-        <tr>
-            <td><b>Condiciones de Pago</b></td><td style="width: 3px">:</td>
-            <td colspan="4">
-                @if(isset($facturacion->cliente_id)){{$facturacion->forma_pago->nombre }}
+                @endif<br>
+            <strong>Condiciones de Pago:</strong>&nbsp;@if(isset($facturacion->cliente_id)){{$facturacion->forma_pago->nombre }}
                 @else{{$facturacion->cotizacion->forma_pago->nombre }}
-                @endif
-            </td>
-
-            <td><b>Guia Remision</b></td><td style="width: 3px">:</td>
-            <td> {{$facturacion->guia_remision}}</td>
-        </tr>
-        <tr>
-            <td><b>Fecha Emision</b></td><td style="width: 3px">:</td>
-            <td>{{$facturacion->fecha_emision}}</td>
-
-            <td ><b>Fecha de Vencimiento</b></td><td style="width: 3px">:</td>
-            <td >{{$facturacion->fecha_vencimiento }}</td>
-
-            <td><b>Tipo Moneda</b></td><td style="width: 3px">:</td>
-            <td>@if(isset($facturacion->cliente_id)){{$facturacion->moneda->nombre }}
+                @endif&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <strong>Tipo de Moneda:</strong>&nbsp;
+                @if(isset($facturacion->cliente_id)){{$facturacion->moneda->nombre }}
                 @else{{$facturacion->cotizacion->moneda->nombre }}
-                @endif
-            </td>
-        </tr>
-    </tbody>
+                @endif<br>
+        </td>
+        <th style="width: 5%;border-color: white"></th>
+        <td colspan="2" style="border: 1px #e5e6e7 solid;border-radius: 8px;width: auto">
+            <center><strong style="align-content: center;margin: 5px">Condiciones Generales </strong></center><br>
+            <strong>Orden de Compra:</strong>&nbsp;{{$facturacion->orden_compra}}<br>
+            <strong>Guia de Remision:</strong> &nbsp;{{$facturacion->guia_remision}}<br>
+            <strong>Fecha de Emision:</strong> &nbsp;{{$facturacion->fecha_emision}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+            <strong>Fecha de Vencimiento:</strong> &nbsp;{{$facturacion->fecha_vencimiento }}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+        </td>
+    </tr>
 </table>
-
 <div class="form-control" style="border: none;height: auto" >
     <div align="left">
 
