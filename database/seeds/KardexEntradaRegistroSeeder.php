@@ -32,7 +32,7 @@ class KardexEntradaRegistroSeeder extends Seeder
             'producto_id' => 2,
             'cantidad_inicial' => 100,
             'precio_nacional' => 20.00,
-            'precio_extranjero' =>5.42 ,
+            'precio_extranjero' =>5.42,
             'cantidad' => 100,
             'cambio' => 3.69,
             'estado' => 1,

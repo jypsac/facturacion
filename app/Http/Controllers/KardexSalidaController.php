@@ -288,6 +288,42 @@ class KardexSalidaController extends Controller
         return redirect()->route('kardex-salida.index');
     }
 
+    // if(isset($comparacion)){
+    //     $var_cantidad_entrada=$kardex_salida_registro->cantidad;
+    //     $contador=0;
+    //     foreach ($comparacion as $p) {
+    //         if($p->cantidad>$var_cantidad_entrada){
+    //             $cantidad_mayor=$p->cantidad;
+    //             $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+    //             $p->cantidad=$cantidad_final;
+    //             if($cantidad_final==0){
+    //                 $p->estado=0;
+    //                 $p->save();
+    //                 break;
+    //             }else{
+    //                 $p->save();
+    //                 break;
+    //             }
+    //         }elseif($p->cantidad==$var_cantidad_entrada){
+    //             $p->cantidad=0;
+    //             $p->estado=0;
+    //             $p->save();
+    //             break;
+    //         }
+    //         else{
+    //             $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+    //             $p->cantidad=0;
+    //             $p->estado=0;
+    //             $p->save();
+    //         }
+            
+    //     }
+    // }
+    // //resta de cantidades de productos para la tabla stock productos
+    // $stock_productos=Stock_producto::find($producto_id[$i]);
+    // $stock_productos->stock=$stock_productos->stock-$kardex_salida_registro->cantidad;
+    // $stock_productos->save();
+
     /**
      * Display the specified resource.
      *
