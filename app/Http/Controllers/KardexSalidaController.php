@@ -59,7 +59,6 @@ class KardexSalidaController extends Controller
             }
         }
         $stock=Kardex_entrada_registro::whereIn('id',$id_kardex_entrada_registro)->where('estado',1)->sum('cantidad');
-        // $stock = DB::table('items')->whereIn('id', [1, 2, 3])->get();
         
         return $stock;
     }
@@ -108,16 +107,11 @@ class KardexSalidaController extends Controller
             if(!$validacion[$x]==NULL){
                 $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
             }
-            // $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         }
-        // foreach ($productos as  $producto) {
-        //     $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-        // }
-
+        
         $motivos=Motivo::all();
         $almacenes=Almacen::all();
 
-        // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         return view('inventario.kardex.salida.create',compact('motivos','productos','almacen_nombre','almacenes'));
     }
     /**
@@ -288,41 +282,6 @@ class KardexSalidaController extends Controller
         return redirect()->route('kardex-salida.index');
     }
 
-    // if(isset($comparacion)){
-    //     $var_cantidad_entrada=$kardex_salida_registro->cantidad;
-    //     $contador=0;
-    //     foreach ($comparacion as $p) {
-    //         if($p->cantidad>$var_cantidad_entrada){
-    //             $cantidad_mayor=$p->cantidad;
-    //             $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
-    //             $p->cantidad=$cantidad_final;
-    //             if($cantidad_final==0){
-    //                 $p->estado=0;
-    //                 $p->save();
-    //                 break;
-    //             }else{
-    //                 $p->save();
-    //                 break;
-    //             }
-    //         }elseif($p->cantidad==$var_cantidad_entrada){
-    //             $p->cantidad=0;
-    //             $p->estado=0;
-    //             $p->save();
-    //             break;
-    //         }
-    //         else{
-    //             $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
-    //             $p->cantidad=0;
-    //             $p->estado=0;
-    //             $p->save();
-    //         }
-            
-    //     }
-    // }
-    // //resta de cantidades de productos para la tabla stock productos
-    // $stock_productos=Stock_producto::find($producto_id[$i]);
-    // $stock_productos->stock=$stock_productos->stock-$kardex_salida_registro->cantidad;
-    // $stock_productos->save();
 
     /**
      * Display the specified resource.
