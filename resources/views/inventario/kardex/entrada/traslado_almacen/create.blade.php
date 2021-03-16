@@ -1,5 +1,5 @@
 @extends('layout')
-@section('title', 'kardex Distribucion')
+@section('title', 'kardex Traslado de almacen')
 @section('href_accion', route('kardex-entrada-Traslado-almacen.index'))
 @section('value_accion', 'Atras')
 @section('content')
@@ -19,12 +19,12 @@
 		<div class="col-lg-12">
 			<div class="ibox">
 				<div class="ibox-content">
-					<form action="{{ route('kardex-entrada.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
+					<form action="{{ route('kardex-entrada-Traslado-almacen.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
 						@csrf
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Almacen Emisor:</label>
 							<div class="col-sm-4">
-								<input type="text" value="{{$almacen_emison->nombre}}" readonly="" class="form-control" required="required">
+								<input type="text" value="{{$almacen_emison->nombre}}" readonly="" class="form-control" required="required" name="almacen_emisor" id="almacen_emisor">
 							</div>
 							<label class="col-sm-2 col-form-label" >Almacen:</label>
 							<div class="col-sm-4">
@@ -65,7 +65,8 @@
 												@endforeach
 											</datalist>
 										</td>
-										<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/>
+										<td>
+											<input type='text' id='stock0' name='stock[]' class="stock0 form-control" required/>
 										</td>
 										<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/>
 										</td>
@@ -124,6 +125,7 @@
 			@endforeach
 			</datalist>
 			</td>
+			<td><input type='text' id='stock${i}' name='stock[]' class="stock${i} form-control"  required/></td>
 			<td>
 			<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
 			</td>
@@ -192,6 +194,46 @@
 		{
 			elem.value='';
 		}
+
+
+		$('#articulo').change(function(e){
+			e.preventDefault();
+
+			var articulo = $('[id="articulo"]').val();
+			
+			var almacen_emisor = $('[id="almacen_emisor"]').val();
+				$.ajax({
+					type: "post",
+					url: "{{ route('stock_ajax_traslado') }}",
+					data: {
+						'_token': $('input[name=_token]').val(),
+						'articulo': articulo,
+					'almacen_emisor':almacen_emisor
+						},
+					success: function (msg) {
+						$('#stock0').val(msg);
+					}
+				});
+			});
+
+
+		function ajax (a){
+			var articulo2 = $(`[id='articulo${a}']`).val();
+			var almacen_emisor = $('[id="almacen_emisor"]').val();
+			$.ajax({
+				type: "post",
+				url: "{{ route('stock_ajax_traslado') }}",
+				data: {
+					'_token': $('input[name=_token]').val(),
+					'articulo': articulo2,
+					'almacen_emisor':almacen_emisor
+					},
+				success: function (msg) {
+					$(`#stock${a}`).val(msg);
+				}
+			});
+		}
+
 	</script>
 
 	@endsection

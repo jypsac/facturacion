@@ -47,6 +47,7 @@ class KardexEntradaDistribucionController extends Controller
       $usuario=User::where('id',$user_login)->first();
 
       return view('inventario.kardex.entrada.distribucion_producto.create',compact('almacenes','productos','categorias','usuario'));
+    //   manipulacion de la vista create para kardex dependiendo de los productos
     }
 
     public function stock_ajax_distribucion(Request $request){

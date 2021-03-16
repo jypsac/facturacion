@@ -37,6 +37,35 @@ class KardexEntradaTrasladoAlmacenController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
+    public function stock_ajax_traslado(Request $request){
+        // return $request;
+        $articulo=$request->get('articulo');
+        $almacen=$request->get('almacen_emisor');
+        $id=explode(" ",$articulo);
+
+        $almacen_encontrado=Almacen::where('nombre',$almacen)->first();
+
+        // //buscador del almacen perteneciente kardex_entrada
+        $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_encontrado->id)->get();
+        $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_encontrado->id)->count();
+
+        foreach($kardex_entrada as $kardex_entradas){
+            $kadex_entrada_id[]=$kardex_entradas->id;
+        }
+
+        for($x=0;$x<$kardex_entrada_count;$x++){
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
+                    $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->where('producto_id',$id[0])->get();
+                    foreach( $nueva as $nuevas){
+                        $id_kardex_entrada_registro[]=$nuevas->id;
+                    }
+            }
+        }
+        $stock=Kardex_entrada_registro::whereIn('id',$id_kardex_entrada_registro)->where('estado',1)->sum('cantidad');
+        return $stock;
+    }
+
     public function create(Request $request)
     {
     	$id_almacen_emisor=$request->get('almacen');
@@ -48,6 +77,8 @@ class KardexEntradaTrasladoAlmacenController extends Controller
     	$usuario=User::where('id',$user_login)->first();
 
     	return view('inventario.kardex.entrada.traslado_almacen.create',compact('almacenes','productos','categorias','usuario','almacen_emison'));
+
+        // arreglamiento de los controladores a doble,llevando diferentes productos
     }
 
     /**
