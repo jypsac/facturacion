@@ -28,9 +28,9 @@ class KardexEntradaDistribucionController extends Controller
      */
     public function index()
     {
-      $kardex_distribucion=Kardex_entrada::where('tipo_registro_id',3)->get();
+        $kardex_distribucion=Kardex_entrada::where('tipo_registro_id',3)->get();
 
-      return view('inventario.kardex.entrada.distribucion_producto.index',compact('kardex_distribucion'));
+        return view('inventario.kardex.entrada.distribucion_producto.index',compact('kardex_distribucion'));
     }
 
     /**
@@ -40,14 +40,47 @@ class KardexEntradaDistribucionController extends Controller
      */
     public function create()
     {
-      $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-      $almacenes=Almacen::where('estado','0')->where('id','!=',1)->get();
-      $categorias=Categoria::all();
-      $user_login =auth()->user()->id;
-      $usuario=User::where('id',$user_login)->first();
+        $kardex_entrada=Kardex_entrada::where('almacen_id',1)->get();
+        $kardex_entrada_count=Kardex_entrada::where('almacen_id',1)->count();
 
-      return view('inventario.kardex.entrada.distribucion_producto.create',compact('almacenes','productos','categorias','usuario'));
-    //   manipulacion de la vista create para kardex dependiendo de los productos
+        foreach($kardex_entrada as $kardex_entradas){
+            $kadex_entrada_id[]=$kardex_entradas->id;
+        }
+
+        for($x=0;$x<$kardex_entrada_count;$x++){
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
+                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
+                foreach( $nueva as $nuevas){
+                    $prod[]=$nuevas->producto_id;
+                }
+            }
+        }
+        
+        //validacion si hay prductos en el almacen
+        if(!isset($prod)){
+            return "no hay prodcutos en el almacen seleccionado";
+        }
+
+        $lista=array_values(array_unique($prod));
+        $lista_count=count($lista);
+
+        for($x=0;$x<$lista_count;$x++){
+           $validacion[$x]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            if(!$validacion[$x]==NULL){
+                $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            }
+        }
+
+        // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+
+        $almacenes=Almacen::where('estado','0')->where('id','!=',1)->get();
+
+        $categorias=Categoria::all();
+        $user_login =auth()->user()->id;
+        $usuario=User::where('id',$user_login)->first();
+
+        return view('inventario.kardex.entrada.distribucion_producto.create',compact('almacenes','productos','categorias','usuario'));
+        //   manipulacion de la vista create para kardex dependiendo de los productosgit pushgit
     }
 
     public function stock_ajax_distribucion(Request $request){

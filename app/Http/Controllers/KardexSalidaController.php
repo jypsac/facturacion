@@ -79,7 +79,6 @@ class KardexSalidaController extends Controller
         $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
         $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
 
-        //return $kardex_entrada;
         foreach($kardex_entrada as $kardex_entradas){
             $kadex_entrada_id[]=$kardex_entradas->id;
         }
@@ -92,15 +91,14 @@ class KardexSalidaController extends Controller
                 }
             }
         }
+        
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
             return "no hay prodcutos en el almacen seleccionado";
         }
 
-        // return $nueva;
         $lista=array_values(array_unique($prod));
         $lista_count=count($lista);
-        // return $lista_count;
 
         for($x=0;$x<$lista_count;$x++){
            $validacion[$x]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
