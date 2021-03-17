@@ -129,7 +129,72 @@ class KardexEntradaTrasladoAlmacenController extends Controller
      */
     public function store(Request $request)
     {
+        //ALMACEN
+      $almacen_input=$request->input('almacen');
+      
+      $almacen_json=Almacen::where('id',$almacen_input)->first();
 
+        $cantidad_p = $request->input('cantidad');
+        $count_cantidad_p=count($cantidad_p);
+
+        $articulo_p = $request->input('articulo');
+        $articulo_p=count($articulo_p);
+
+        for($i=0 ; $i<$count_cantidad_p;$i++){
+            $articulos[$i]= $request->input('articulo')[$i];
+            $producto_id[$i]=strstr($articulos[$i], ' ', true);
+        }
+
+        // Validacion para ver si la cantidad es suficiente con lo requerido
+
+        //Primer verificacion de articulos en validacion del if
+        $articulo1 = $request->input('articulo');
+        $count_articulo1=count($articulo1);
+
+        $cantidad1 = $request->input('cantidad');
+        $count_cantidad1=count($cantidad1);
+
+        //validacion para la no incersion de dobles articulos
+        for ($e=0; $e < $count_articulo1; $e++){
+            $articulo_comparacion_inicial=$request->get('articulo')[$e];
+            for ($a=0; $a< $count_articulo1 ; $a++) {
+                if ($a==$e) {
+                    $a++;
+                }else {
+                    $articulo_comparacion=$request->get('articulo')[$a];
+                    if ($articulo_comparacion_inicial=$articulo_comparacion) {
+                        return redirect()->route('kardex-salida.create')->with('repite', 'Datos repetidos - No permitidos!');
+                    }
+                }
+            }
+        }
+
+        //Validacion para cantidad
+        for ($i=0; $i < $count_articulo1; $i++){
+            $articulo_c=$producto_id[$i];
+            $cantidad_c=$request->get('cantidad')[$i];
+            $consulta_cantidad=kardex_entrada_registro::where('producto_id',$articulo_c)->where('estado','1')->sum('cantidad');
+            if ($cantidad_c > $consulta_cantidad) {
+                return redirect()->route('kardex-salida.create')->with('cantidad', 'no hay cantidad deseada para el articulos');
+            }
+        }
+
+        //buscador al cambio
+        $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+        if(!$cambio){
+            return "error por no hacer el cambio diario";
+        }
+        
+
+        $articulo = $request->input('articulo');
+        $count_articulo=count($articulo);
+
+        $cantidad= $request->input('cantidad');
+        $count_cantidad=count($cantidad);
+
+        //creacion del codigo guia
+        
+        // modificacion para la nueva store para los 2 apartados de traslado de almacen
     }
 
     /**
