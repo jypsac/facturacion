@@ -56,24 +56,24 @@
       <div class="row marketing">
         <div class="col-lg-6">
           <h4>Fecha Viculacion</h4>
-          <p>{{$persona->fecha_vinculacion}} </p><hr>
+          <p>{{$persona->fecha_vinculacion}} </p><hr>ddddddddddddddddddddd
 
           <h4>Fecha Retiro</h4>
-          <p>{{$persona->fecha_retiro}} </p><hr>
+          <p>{{$persona->fecha_retiro}} </p><hr>eeeeeeeeeeeeeeeee
 
 
           <h4>Forma Pago</h4>
-          <p>{{$persona->forma_pago}} </p><hr>
+          <p>{{$persona->forma_pago}} </p><hr>sssssssssssssssssss
         </div>
 
         <div class="col-lg-6">
           <h4>Salario</h4>
-          <p>{{$persona->salario}} </p><hr>
+          <p>{{$persona->salario}} </p><hr>vvvvvvvvvvvvvvvv
 
             <h4>Categoria Ocupacional</h4>
-          <p>{{$persona->categoria_ocupacional}} </p><hr>
-
-            <h4>Estado Del Trbajador</h4>
+          <p>{{$persona->categoria_ocupacional}} </p><hr>sssssssssss
+s
+            <h4>Estado Del Trbajador</h4>ssssssssssssssssssssssss
           <p>{{$persona->estado_trabajador}} </p><hr>
 
 
@@ -81,22 +81,22 @@
         <div class="col-lg-6">
 
 
-          <h4>Sede</h4>
-          <p>{{$persona->sede}} </p><hr>
+          <h4>Sede</h4>d
+          <p>{{$persona->sede}} </p><hr>ddd
 
           <h4>Turno</h4>
-          <p>{{$persona->turno}} </p><hr>
+          <p>{{$persona->turno}} </p><hr>ddd
 
 
         </div>
         <div class="col-lg-6">
          <h4>Departamento Area</h4>
-          <p>{{$persona->departamento_area}} </p><hr>
+          <p>{{$persona->departamento_area}} </p><hr>a
 
 
           <h4>Cargo</h4>
-          <p>{{$persona->cargo}} </p><hr>
-
+          <p>{{$persona->cargo}} </p><hr>dddd
+d
 
         </div>
 
@@ -104,35 +104,35 @@
 
 
           <h4>Tipo Trbajador</h4>
-          <p>{{$persona->tipo_trabajador}} </p><hr>
-
-          <h4>Regimen Pensionario</h4>
+          <p>{{$persona->tipo_trabajador}} </p><hr>rdddddddddddd
+d
+          <h4>Regimen Pensionario</h4>eeeeeeeeeeeeeeeeeeeeeee
           <p>{{$persona->regimen_pensionario}} </p><hr>
 
 
         </div>
         <div class="col-lg-6">
          <h4>Seguro de Salud</h4>
-          <p>{{$persona->afiliacion_salud}} </p><hr>
+          <p>{{$persona->afiliacion_salud}} </p><hr>qqqqqqqq
 
 
           <h4>Banco Abonado</h4>
-          <p>{{$persona->banco_renumeracion}} </p><hr>
+          <p>{{$persona->banco_renumeracion}} </p><hr>dddddddddddddddd
 
 
         </div>
         <div class="col-lg-6">
          <h4>Numero Cuenta</h4>
-          <p>{{$persona->numero_cuenta}} </p><hr>
+          <p>{{$persona->numero_cuenta}} </p><hr>dddddddddddddd
 
         </div>
         <div class="col-lg-6">
 
           <h4>Notas</h4>
           <p>{{$persona->notas}} </p><hr>
-
+qqqqqq
            <h4>Tipo Contrato</h4>
-          <p>{{$persona->tipo_contrato}}</p><hr>
+          <p>{{$persona->tipo_contrato}}</p><hr>qqqqqqqqqqqqq
         </div>
 
       </div>

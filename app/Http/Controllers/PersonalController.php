@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Pais;
 use App\Personal;
+use App\Personal_datos_laborales;
 use Illuminate\Http\Request;
 
 class PersonalController extends Controller
@@ -39,6 +40,22 @@ class PersonalController extends Controller
 
     public function store(Request $request)
     {
+//         departamento_area
+// cargo
+// tipo_trabajador
+// sede
+// turno
+// salario
+// fecha_vinculacion
+// fecha_retiro
+// forma_pago
+// banco_renumeracion
+// numero_cuenta
+// afiliacion_salud
+// tipo_contrato
+// notas
+// regimen_pensionario
+// estado_trabajador
         if($request->hasfile('foto')){
             $image =$request->file('foto');
             $nr_documento= $request->get('numero_documento');
@@ -82,7 +99,8 @@ class PersonalController extends Controller
     public function show($id)
     {
         $personales=Personal::find($id);
-        return view('planilla.datos_generales.show',compact('personales'));
+        $persona=Personal_datos_laborales::where('personal_id',$personales->id)->first();
+        return view('planilla.datos_generales.show',compact('personales','persona'));
     }
 
     /**
@@ -107,6 +125,8 @@ class PersonalController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $is=$request->file('fotow');
+        return $is;
 
         $personal=Personal::find($id);
         if($request->hasfile('foto')){
