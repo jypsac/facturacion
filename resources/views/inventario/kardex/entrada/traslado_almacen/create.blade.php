@@ -42,7 +42,7 @@
 							</div>
 							<label class="col-sm-2 col-form-label" >Motivo:</label>
 							<div class="col-sm-4">
-								<input type="text" value="Distribucion a Sucursales" readonly="" class="form-control" name="motivo" required="required">
+								<input type="text" value="Traslado de almacen" readonly="" class="form-control" name="motivo" required="required">
 							</div>
 						</div>
 						<table cellspacing="0" class="table table-striped " width="100%">
