@@ -55,14 +55,13 @@ class KardexEntradaDistribucionController extends Controller
                 }
             }
         }
-        // return $nueva;
-
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
             return "no hay prodcutos en el almacen seleccionado";
         }
 
         $lista=array_values(array_unique($prod));
+        sort($lista, SORT_NUMERIC);
         $lista_count=count($lista);
 
         for($x=0;$x<$lista_count;$x++){
@@ -71,6 +70,7 @@ class KardexEntradaDistribucionController extends Controller
                 $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
             }
         }
+        // return $productos;
 
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
 
