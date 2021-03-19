@@ -30,7 +30,7 @@ class KardexEntradaDistribucionController extends Controller
     {
         $kardex_distribucion=Kardex_entrada::where('tipo_registro_id',3)->get();
 
-        return view('inventario.kardex.entrada.distribucion_producto.index',compact('kardex_distribucion'));
+        return view('inventario.kardex.entrada.distribucion_producto.index',compact('kardex_distribucion','almacen'));
     }
 
     /**
@@ -48,14 +48,15 @@ class KardexEntradaDistribucionController extends Controller
         }
 
         for($x=0;$x<$kardex_entrada_count;$x++){
-            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
-                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','!=','0')->get()){
+                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','!=','0')->get();
                 foreach( $nueva as $nuevas){
                     $prod[]=$nuevas->producto_id;
                 }
             }
         }
-        
+        // return $nueva;
+
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
             return "no hay prodcutos en el almacen seleccionado";
@@ -105,7 +106,7 @@ class KardexEntradaDistribucionController extends Controller
             }
         }
         $stock=Kardex_entrada_registro::whereIn('id',$id_kardex_entrada_registro)->where('estado',1)->sum('cantidad');
-        
+
         return $stock;
     }
 
@@ -119,7 +120,7 @@ class KardexEntradaDistribucionController extends Controller
     {
       //ALMACEN
       $almacen_input=$request->input('almacen');
-      
+
       $almacen_json=Almacen::where('id',$almacen_input)->first();
 
         $cantidad_p = $request->input('cantidad');
@@ -172,7 +173,7 @@ class KardexEntradaDistribucionController extends Controller
         if(!$cambio){
             return "error por no hacer el cambio diario";
         }
-        
+
 
         $articulo = $request->input('articulo');
         $count_articulo=count($articulo);
@@ -182,9 +183,9 @@ class KardexEntradaDistribucionController extends Controller
 
         //creacion del codigo guia
         // $codigo_guia="GD-00000002";
-        $ultima_entrada = Kardex_entrada::where('tipo_registro_id','=','3')->first();
+        $ultima_entrada = Kardex_entrada::where('tipo_registro_id','=','3')->orderby('created_aT','DESC')->first();
         // return $ultima_entrada;
-        
+
         if(isset($ultima_entrada)){
           $numero = substr(strstr($ultima_entrada->codigo_guia, '-'), 1);
           $numero++;
@@ -195,7 +196,7 @@ class KardexEntradaDistribucionController extends Controller
           $codigo_guia='GD'.'-'.$cantidad_registro;
         }
 
-        
+
         //fin codigo guia
 
         if($count_articulo = $count_cantidad){
@@ -242,7 +243,7 @@ class KardexEntradaDistribucionController extends Controller
 
               $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->get();
               $cantidad=kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->sum('cantidad');
-              
+
               $almacen=$almacen_json->id;
               $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
               $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
@@ -251,7 +252,7 @@ class KardexEntradaDistribucionController extends Controller
               foreach($kardex_entrada as $kardex_entradas){
                   $kadex_entrada_id[]=$kardex_entradas->id;
               }
-              
+
               for($x=0;$x<$kardex_entrada_count;$x++){
                   if(Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first()){
                       $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('producto_id',$comparacion)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
@@ -263,7 +264,7 @@ class KardexEntradaDistribucionController extends Controller
               foreach($comparacion as $comparaciones){
                   $cantidad=$comparaciones->cantidad+$cantidad;
               }
-              
+
               if(isset($comparacion)){
                   $var_cantidad_entrada=$kardex_entrada_registro->cantidad;
 
@@ -293,7 +294,7 @@ class KardexEntradaDistribucionController extends Controller
                           $p->estado=0;
                           $p->save();
                       }
-                      
+
                   }
               }
               // return $comparacion;
@@ -301,8 +302,8 @@ class KardexEntradaDistribucionController extends Controller
               $stock_productos=Stock_producto::find($producto_id[$i]);
               $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
               $stock_productos->save();
-        
-            }   
+
+            }
             // return $comparacion;
           }else{
               return "Error fatal: por favor comunicarse con soporte inmediatamente";
@@ -326,7 +327,8 @@ class KardexEntradaDistribucionController extends Controller
       $moneda_extranjera=Moneda::where('id','2')->first();
       $kardex_entradas=Kardex_entrada::find($id);
       $kardex_entradas_registros=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
-      return view('inventario.kardex.entrada.distribucion_producto.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera'));
+      $almacen = Almacen::where('principal','1')->first();
+      return view('inventario.kardex.entrada.distribucion_producto.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera','almacen'));
     }
 
     /**

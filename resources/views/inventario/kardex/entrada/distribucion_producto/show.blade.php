@@ -12,10 +12,10 @@
                      <address class="col-sm-8">
                         <h5>Distribuido:</h5>
                         <i class=" fa fa-user">:</i><strong > {{$mi_empresa->nombre}}</strong><br>
-                        De:</i> {{$kardex_entradas->almacen->nombre}}<br>
+                        De:</i> {{$almacen->nombre}}<br>
                        Al:</i> {{$kardex_entradas->almacen->nombre}}
                     </address></div>
-                    
+
                     <div class="col-sm-4" align="right">
                         <div class="form-control ruc" >
                             <center>
@@ -41,7 +41,7 @@
                                 <td style="text-align: left;">
                                     {{$kardex_entradas_registro->producto->nombre}}/{{$kardex_entradas_registro->producto->codigo_original}} {{$kardex_entradas_registro->producto->descripcion}}
                                 </td>
-                                <td>{{$kardex_entradas_registro->cantidad_inicial}}</td>
+                                <td >{{$kardex_entradas_registro->cantidad_inicial}}</td>
                             </tr>
                             @endforeach
                         </tbody>

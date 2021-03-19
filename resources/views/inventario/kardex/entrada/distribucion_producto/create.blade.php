@@ -47,7 +47,7 @@
 									<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()"  /></th>
 									<th style="width: auto">Producto</th>
 									<th style="width: auto">Stock</th>
-									<th style="width: 100px">Cantidad</th>
+									<th style="width: 300px">Cantidad</th>
 								</tr>
 							</thead>
 							<tbody>
