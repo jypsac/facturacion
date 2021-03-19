@@ -56,7 +56,7 @@ class KardexEntradaSeeder extends Seeder
             'motivo_id' => 1,
             'provedor_id' => 1,
             'categoria_id' => 2,
-            'almacen_id' => 1,
+            'almacen_id' => 2,
             'moneda_id' => 1,
             'guia_remision' => "0",
             'factura' => "0",
