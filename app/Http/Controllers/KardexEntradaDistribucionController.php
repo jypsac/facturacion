@@ -181,7 +181,22 @@ class KardexEntradaDistribucionController extends Controller
         $count_cantidad=count($cantidad);
 
         //creacion del codigo guia
-        $codigo_guia="GD-00000002";
+        // $codigo_guia="GD-00000002";
+        $ultima_entrada = Kardex_entrada::where('tipo_registro_id','=','3')->first();
+        // return $ultima_entrada;
+        
+        if(isset($ultima_entrada)){
+          $numero = substr(strstr($ultima_entrada->codigo_guia, '-'), 1);
+          $numero++;
+          $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
+          $codigo_guia='GD'.'-'.$cantidad_registro;
+        }else{
+          $cantidad_registro=str_pad('1', 8, "0", STR_PAD_LEFT);
+          $codigo_guia='GD'.'-'.$cantidad_registro;
+        }
+
+        
+        //fin codigo guia
 
         if($count_articulo = $count_cantidad){
           $cantidad = $request->input('cantidad');
@@ -221,6 +236,8 @@ class KardexEntradaDistribucionController extends Controller
               $kardex_entrada_registro->cambio=$cambio->compra;
               $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
               $kardex_entrada_registro->estado=1;
+              // $kardex_entrada_registro->estado_devolucion;
+              $kardex_entrada_registro->tipo_registro_id=3;
               $kardex_entrada_registro->save();
 
               $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->get();
@@ -230,17 +247,17 @@ class KardexEntradaDistribucionController extends Controller
               $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
               $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
 
-              //return $kardex_entrada;
+              // return $kardex_entrada;
               foreach($kardex_entrada as $kardex_entradas){
                   $kadex_entrada_id[]=$kardex_entradas->id;
               }
-              // return $kardex_entrada;
+              
               for($x=0;$x<$kardex_entrada_count;$x++){
                   if(Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first()){
-                      $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
+                      $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('producto_id',$comparacion)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
                   }
               }
-              $comparacion=$nueva;
+              // return $comparacion;
               //buble para la cantidad
               $cantidad=0;
               foreach($comparacion as $comparaciones){
@@ -249,6 +266,7 @@ class KardexEntradaDistribucionController extends Controller
               
               if(isset($comparacion)){
                   $var_cantidad_entrada=$kardex_entrada_registro->cantidad;
+
                   $contador=0;
                   foreach ($comparacion as $p) {
                       if($p->cantidad>$var_cantidad_entrada){
@@ -278,19 +296,21 @@ class KardexEntradaDistribucionController extends Controller
                       
                   }
               }
+              // return $comparacion;
               //resta de cantidades de productos para la tabla stock productos
               $stock_productos=Stock_producto::find($producto_id[$i]);
               $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
               $stock_productos->save();
         
             }   
+            // return $comparacion;
           }else{
               return "Error fatal: por favor comunicarse con soporte inmediatamente";
           }
       }else{
-          return redirect()->route('kardex-salida.create')->with('campo', 'Falto introducir un campo de la tabla productos');
+          return redirect()->route('kardex-entrada-Distribucion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
       }
-      return redirect()->route('kardex-salida.index');
+      return redirect()->route('kardex-entrada-Distribucion.index');
   }
 
     /**

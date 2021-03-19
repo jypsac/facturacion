@@ -8,14 +8,14 @@
         <div class="col-lg-12">
             <div class="ibox-content p-xl">
                 <div class="row">
-                    <div class="col-sm-6">
-                     <address class="col-sm-6">
+                    <div class="col-sm-8">
+                     <address class="col-sm-8">
                         <h5>Distribuido:</h5>
                         <i class=" fa fa-user">:</i><strong > {{$mi_empresa->nombre}}</strong><br>
                         De:</i> {{$kardex_entradas->almacen->nombre}}<br>
                        Al:</i> {{$kardex_entradas->almacen->nombre}}
                     </address></div>
-                    <div class="2" style="width: 200px"></div>
+                    
                     <div class="col-sm-4" align="right">
                         <div class="form-control ruc" >
                             <center>
