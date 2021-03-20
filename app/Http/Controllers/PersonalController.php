@@ -40,22 +40,6 @@ class PersonalController extends Controller
 
     public function store(Request $request)
     {
-//         departamento_area
-// cargo
-// tipo_trabajador
-// sede
-// turno
-// salario
-// fecha_vinculacion
-// fecha_retiro
-// forma_pago
-// banco_renumeracion
-// numero_cuenta
-// afiliacion_salud
-// tipo_contrato
-// notas
-// regimen_pensionario
-// estado_trabajador
         if($request->hasfile('foto')){
             $image =$request->file('foto');
             $nr_documento= $request->get('numero_documento');
@@ -71,7 +55,7 @@ class PersonalController extends Controller
         $personal->apellidos=$request->get('apellidos');
         $personal->fecha_nacimiento=$request->get('fecha_nacimiento');
         $personal->celular=$request->get('celular');
-        // $personal->telefono=$request->get('telefono');
+        $personal->telefono=$request->get('telefono');
         $personal->email=$request->get('email');
         $personal->genero=$request->get('genero');
         $personal->documento_identificacion=$request->get('documento_identificacion');
@@ -86,6 +70,29 @@ class PersonalController extends Controller
         $personal->estado_trabajador_laboral='Activo';
         $personal->foto=$name;
         $personal->save();
+
+
+
+        $personal_dl=new Personal_datos_laborales;
+        $personal_dl->personal_id=$personal->id;
+        $personal_dl->fecha_vinculacion=$request->get('fecha_vinculacion');
+        $personal_dl->fecha_retiro=$request->get('fecha_retiro');
+        $personal_dl->forma_pago=$request->get('forma_pago');
+        $personal_dl->salario=$request->get('salario');
+        $personal_dl->categoria_ocupacional=$request->get('categoria_ocupacional');
+        $personal_dl->estado_trabajador='Activo';
+        $personal_dl->sede=$request->get('sede');
+        $personal_dl->turno=$request->get('turno');
+        $personal_dl->departamento_area=$request->get('departamento_area');
+        $personal_dl->cargo=$request->get('cargo');
+        $personal_dl->tipo_trabajador=$request->get('tipo_trabajador');
+        $personal_dl->tipo_contrato=$request->get('tipo_contrato');
+        $personal_dl->regimen_pensionario=$request->get('regimen_pensionario');
+        $personal_dl->afiliacion_salud=$request->get('afiliacion_salud');
+        $personal_dl->banco_renumeracion=$request->get('banco_renumeracion');
+        $personal_dl->numero_cuenta=$request->get('numero_cuenta');
+        $personal_dl->notas=$request->get('notas');
+        $personal_dl->save();
         return redirect()->route('personal.show', $personal->id);
 
     }

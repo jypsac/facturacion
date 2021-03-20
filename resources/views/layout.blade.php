@@ -126,6 +126,8 @@
                                             <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc_cli" required  autocomplete="off" type="text">
                                             <datalist id="browserdoc" >
                                                 <?php use  App\Cliente; ?>
+
+use App\Personal;
                                                 <?php $clientes=Cliente::all();?>
                                                 @foreach($clientes as $cliente)
                                                 <option id="a">{{$cliente->numero_documento}} - existente</option>
@@ -348,12 +350,12 @@
                 </li>
                 <!-- MENU DESPELEGABLE -->
                 @can('inicio')
-                <li><a href="{{route('inicio')}}"><i class="fa fa-magic"></i> <span class="nav-label">Inicio</span></a></li>
+                <li><a href="{{route('inicio')}}"><img src="{{ asset('/archivos/imagenes/layout/inicio.svg')}}" class="iconos"> <span class="nav-label">Inicio</span></a></li>
                 @endcan
 
                 @can('transacciones')
                 <li>
-                    <a href="#"><i class="fa fa-user-circle"></i> <span class="nav-label">Transacciones</span></a>
+                    <a href="#"><img src="{{ asset('/archivos/imagenes/layout/comercializacion.svg')}}" class="iconos"> <span class="nav-label">Comercialización</span></a>
                     <ul class="nav nav-second-level collapse">
                         @can('transacciones-ventas')
                         <li>
@@ -402,7 +404,7 @@
                     @endcan
                     @can('inventario')
                     <li>
-                        <a href="#"><i class="fa fa-cube"></i> <span class="nav-label">Inventario</span></a>
+                        <a href="#"><img src="{{ asset('/archivos/imagenes/layout/inventario.svg')}}" class="iconos">  <span class="nav-label">Inventario</span></a>
                         <ul class="nav nav-second-level collapse">
                             @can('inventario-productos_kardex')
                             <li>
@@ -429,12 +431,13 @@
                             </ul>
                         </li>
                         @endcan
+                        <style>.iconos{width: 20px;border-radius: 0px;margin-right: 10px}</style>
                         @can('planilla')
                         <li>
-                            <a href="#"><i class="fa fa-file-archive-o"></i> <span class="nav-label">Planilla</span></a>
+                            <a href="#"><img src="{{ asset('/archivos/imagenes/layout/planilla.svg')}}" class="iconos"> <span class="nav-label">Planilla</span></a>
                             <ul class="nav nav-second-level collapse">
                                 @can('planilla-datos_generales.index')
-                                <li><a href="{{route('personal.index')}}">Datos Generales</a></li>
+                                <li><a href="{{route('personal.index')}}">Personal</a></li>
                                 @endcan
                                 @can('planilla-vendedores.index')
                                 <li><a href="{{route('vendedores.index')}}">Vendedores</a></li>
@@ -446,7 +449,7 @@
                         @endcan
                         @can('consultas')
                         <li>
-                            <a href="#"><i class="fa fa-inbox"></i> <span class="nav-label">Consultas</span></a>
+                            <a href="#"><img src="{{ asset('/archivos/imagenes/layout/consultas.svg')}}" class="iconos"><span class="nav-label">Consultas</span></a>
                             <ul class="nav nav-second-level collapse">
                                 @can('consultas-garantias')
                                 <li>
@@ -468,7 +471,7 @@
                         </li>
                         @endcan
                         <li>
-                            <a href="#"><i class="fa fa-bolt"></i> <span class="nav-label">facturacion Electronica </span></a>
+                            <a href="#"><img src="{{ asset('/archivos/imagenes/layout/facturacion_electronica.svg')}}" class="iconos"> <span class="nav-label">Fac.Electronica </span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li><a href="{{route('facturacion_electronica.index')}}">Facturas</a></li>
                                 <li><a href="#">Boletas</a></li>
@@ -476,7 +479,7 @@
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-envelope"></i> <span class="nav-label">Correo </span></a>
+                            <a href="#"><img src="{{ asset('/archivos/imagenes/layout/correo.svg')}}" class="iconos"> <span class="nav-label">Correo </span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li><a href="{{route('email.index')}}">Bandeja de Entrada</a></li>
                                 {{-- <li><a href="{{route('configuracion_email.index')}}">Configuracion</a></li> --}}
@@ -486,7 +489,7 @@
                         </li>
                         @can('auxiliares')
                         <li>
-                            <a href="#"><i class="fa fa-address-card  "></i> <span class="nav-label">Auxiliares</span></a>
+                            <a href="#"><img src="{{ asset('/archivos/imagenes/layout/auxiliar.svg')}}" class="iconos"><span class="nav-label">Auxiliares</span></a>
                             <ul class="nav nav-second-level collapse">
                                 @can('auxiliares-clientes.index')
                                 <li><a href="{{route('cliente.index')}}">Clientes</a></li>
@@ -500,14 +503,14 @@
 
                         @can('maestro')
                         <li>
-                            <a href="#"><i class="fa fa-archive" aria-hidden="true"></i><span class="nav-label">Produtos y Servicios</span></a>
+                            <a href="#"><img src="{{ asset('/archivos/imagenes/layout/productos.svg')}}" class="iconos"><span class="nav-label">Produtos y Servicios</span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li><a href="{{route('productos.index')}}">Productos</a></li>
                                 <li><a href="{{route('servicios.index')}}">Servicios</a></li>
                             </ul>
                         </li>
                         <li>
-                            <a href="#"><i class="fa fa-gear"></i> <span class="nav-label">Configuracion General</span></a>
+                            <a href="#"><img src="{{ asset('/archivos/imagenes/layout/configuracion.svg')}}" class="iconos"><span class="nav-label">Configuracion </span></a>
                             <ul class="nav nav-second-level collapse">
                              @can('maestro-catalogo-clasificacion')
                              <li><a href="{{route('Configuracion')}}">Configuracion del Sistema</a></li>

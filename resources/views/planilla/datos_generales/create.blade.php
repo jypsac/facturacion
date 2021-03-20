@@ -1,333 +1,209 @@
 @extends('layout')
-
 @section('title', 'Personal')
-@section('breadcrumb', 'Personal-Agregar')
-@section('breadcrumb2', 'Personal-Agregar')
 @section('href_accion', route('personal.index') )
 @section('value_accion', 'Atras')
-
 @section('content')
 
-<form action="{{ route('personal.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
-						@csrf
-<div style="padding-top: 20px;padding-bottom: 50px">
-<div class="container" style=" padding-top: 30px; background: white;">
-      <div class="jumbotron"  style="padding: 10px 40px ; background-image: url('https://www.iwantwallpaper.co.uk/images/muriva-bluff-embossed-brick-effect-wallpaper-j30309-p711-1303_image.jpg'); background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;">
-    <table>
-            <tr>
-                <th width="100% ">
-                		<div class="row marketing">
-                		<div class="col-lg-4">
-                		<input style="font-size: 20px; text-align: center;" type="text" class="form-control" name="nombres" value="" placeholder="Nombres" required="">
-                		</div>
-                		<div class="col-lg-4">
-                		<input style="font-size: 20px; text-align: center;"  type="text" class="form-control" name="apellidos" value="" placeholder="Apellidos" required="">
-                		</div>
-                		</div>
-                		 <br>
-                        <div class="col-lg-4">
-                          <select class="form-control m-b" name="nacionalidad" required="">
-                            <option value="">Seleccione Pais</option>
-                            <option disabled="disabled">------------------------</option>
-                            @foreach($paises as $pais)
-                            <option value="{{ $pais->nombre }}">{{ $pais->nombre }}</option>
-                            @endforeach
-                          </select>
-                        </div>
-                </th>
-                <th  width="100%" rowspan="2">
-					<input  type="file" id="archivoInput"  name="foto"   onchange="return validarExt()"  width="150px" height="150px" />
-										
-						<div id="visorArchivo">
-							<!--Aqui se desplegará el fichero-->
-						<center ><img name="foto" class="rounded-circle circle-border m-b-md"  src="{{asset('/profile/images/perfil.svg')}}" width="150px" height="150px"></center>
-						</div>
-													
-
-                 </th>
-                
-             </tr>
-
-     </table>
-                        
-      </div>
-
-      <div class="row marketing">
-        <div class="col-lg-6">
-          <h4>Fecha Nacimiento</h4>
-          <p><input type="date" class="form-control" name="fecha_nacimiento" value="" required=""></p>
-                                                
-
-          <h4>Celular</h4>
-          <p><input type="text" class="form-control" name="celular"  value="" required=""></p>    
-
-
-          <h4>Genero</h4>
-          <p>
-          <select class="form-control m-b" name="genero" required="">
-            <option value="">Selecione Genero</option>
-            <option value="femenino" disabled="">--------------</option>
-            <option value="masculino">Masculino</option>
-            <option value="femenino">Femenino</option>
-          </select>
-         </p>
-        </div>
-
-        <div class="col-lg-6">
-          <h4>Correo</h4>
-          <p><input type="email" class="form-control" name="email" value="" required=""></p>  
-
-            <h4>Nivel Educativo</h4>
-          <p>
-            <select class="form-control" name="nivel_educativo">
-              <option value="Primaria">Primaria</option>
-              <option value="Secundaria">Secundaria</option>
-              <option value="Tecnico">Tecnico</option>
-              <option value="universitaria">universitaria</option>
-            </select></p>  
-          
-            <h4>Carrera Profesional</h4>
-          <p>
-           <select class="form-control" name="profesion">
-              <option value="sin carrera">sin carrera</option>
-              <option value="Contabilidad">Contabilidad</option>
-              <option value="Administracion">Administracion</option>
-              <option value="Ingenieria">Ingenieria</option>
-              <option value="Ciencias de la comunicación">Ciencias de la comunicación</option>
-              <option value="Marketing y Mercadotecnia">Marketing y Mercadotecnia</option>
-              <option value="Economia">Economia</option>
-              <option value="Derecho">Derecho</option>
-              <option value="Medicina">Medicina</option>
-            </select></p>   
-
-
-        </div>
-        <div class="col-lg-6">
-         
-
-          <h4>Documento Identificacion</h4>
-          <p>
-          <select class="form-control m-b" name="documento_identificacion" required="">
-            <option value="">Selecione Documento</option>
-            <option value="Pasaporte">Pasaporte</option>
-              <option value="DNI">DNI</option>
-           </select></p>
-
-          <h4>Estado Civil</h4>
-          <p>
-              <select class="form-control m-b" name="estado_civil">
-                 <option value="Soltero">Soltero</option>
-                  <option value="Casado">Casado</option>
-                  <option value="Viudo con hijos">Viudo con hijos</option>
-                  <option value="Viudo sin hijos">Viudo sin hijos</option>
-               </select>
-          </p>  
-
-        
-
-        </div>
-        <div class="col-lg-6">
-         <h4>Numero Documento</h4>
-          <p><input type="text" class="form-control" name="numero_documento" value="" required=""></p> 
-          
-
-          <h4>Direccion Domiciliaria</h4>
-          <p><input type="text" class="form-control" name="direccion" value="" required=""></p>   
-
-          
-        </div>
-        <div class="col-lg-6">
-        <button class="btn btn-primary" type="submit" id="boton">Grabar</button>
-      </div>
-      </div>
-
-
-    </div> 
-    </div> 
-    </form> 
-                              
-        	<!-- Mainly scripts -->
-    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
-
-    <!-- Custom and plugin javascript -->
-    <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-
-    {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
-      <script>
-          function valida(f) {
-              var boton=document.getElementById("boton");
-              var completo = true;
-              var incompleto = false;
-              if( f.elements[0].value == "" )
-                 { alert(incompleto); }
-             else{boton.type = 'button';}
-         }
-     </script>
-     {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
-    <script type="text/javascript">
-		function validarExt()
-{
-    var archivoInput = document.getElementById('archivoInput');
-    var archivoRuta = archivoInput.value;
-    var extPermitidas = /(.jpg|.png|.jfif)$/i;
-    if(!extPermitidas.exec(archivoRuta)){
-        alert('Asegurese de haber seleccionado una Imagen');
-        archivoInput.value = '';
-        return false;
-    }
-
-    else
-    {
-        //PRevio del PDF
-        if (archivoInput.files && archivoInput.files[0]) 
-        {
-            var visor = new FileReader();
-            visor.onload = function(e) 
-            {
-                document.getElementById('visorArchivo').innerHTML = 
-                '<center><img name="foto" class="rounded-circle circle-border m-b-md"  src="'+e.target.result+'"  width="150px" height="150px" ></center>';
-            };
-            visor.readAsDataURL(archivoInput.files[0]);
-        }
-    }
-}
-	</script>
-
-	<script>
-			function readURL(input) {
-			  if (input.files && input.files[0]) {
-				var reader = new FileReader();
-				
-				reader.onload = function(e) {
-				  $('#blah').attr('src', e.target.result);
-				}
-				
-				reader.readAsDataURL(input.files[0]);
-			  }
-			}
-			
-			$("#imgInp").change(function() {
-			  readURL(this);
-			});
-			</script>
-			<script>
-		function readURL(input) {
-		  if (input.files && input.files[0]) {
-			var reader = new FileReader();
-			
-			reader.onload = function(e) {
-			  $('#blah').attr('src', e.target.result);
-			}
-			
-			reader.readAsDataURL(input.files[0]);
-		  }
-		}
-		
-		$("#imgInp").change(function() {
-		  readURL(this);
-		});
-		</script>
-
-    <script>
-        $(document).ready(function(){
-            $("#wizard").steps();
-            $("#form").steps({
-                bodyTag: "fieldset",
-                onStepChanging: function (event, currentIndex, newIndex)
-                {
-					// ¡Siempre permita retroceder incluso si el paso actual contiene campos no válidos!
-                    if (currentIndex > newIndex)
-                    {
-                        return true;
-                    }
-
-                    // Prohibir suprimir el paso "Advertencia" si el usuario es demasiado joven
-                    if (newIndex === 3 && Number($("#age").val()) < 18)
-                    {
-                        return false;
-                    }
-
-                    var form = $(this);
-
-                    // Limpie si el usuario retrocedió antes
-                    if (currentIndex < newIndex)
-                    {
-                        // Para eliminar estilos de error
-                        $(".body:eq(" + newIndex + ") label.error", form).remove();
-                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
-                    }
-
-                    // Deshabilite la validación en los campos que están deshabilitados u ocultos.
-                    form.validate().settings.ignore = ":disabled,:hidden";
-
-                    // Iniciar validación; Evite avanzar si es falso
-                    return form.valid();
-                },
-                onStepChanged: function (event, currentIndex, priorIndex)
-                {
-                    // Suprima (omita) el paso "Advertencia" si el usuario tiene edad suficiente.
-                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
-                    {
-                        $(this).steps("next");
-                    }
-
-                    // Suprima (omita) el paso "Advertencia" si el usuario tiene la edad suficiente y quiere el paso anterior.
-                    if (currentIndex === 2 && priorIndex === 3)
-                    {
-                        $(this).steps("previous");
-                    }
-                },
-                onFinishing: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-					// Deshabilita la validación en los campos que están deshabilitados.
-                    // En este punto, se recomienda hacer una verificación general (significa ignorar solo los campos deshabilitados)
-                    form.validate().settings.ignore = ":disabled";
-
-                    // Iniciar validación; Evitar el envío del formulario si es falso
-                    return form.valid();
-                },
-                onFinished: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Enviar entrada de formulario
-                    form.submit();
-                }
-            }).validate({
-                        errorPlacement: function (error, element)
-                        {
-                            element.before(error);
-                        },
-                        rules: {
-                            confirm: {
-                                equalTo: "#password"
-                            }
-                        }
-                    });
-       });
-    </script>
-    <style type="text/css">
-    	img{border-radius: 40px}
-	    p#texto{text-align: center;
-				color:black;
-				}
-								
-	input#archivoInput{
-		position:absolute;
-		top:25%;
-		left:80%;
-		right:0px;
-		bottom:58%;
-		width:15%;
-		opacity: 0	;
-	}
+<style>
+  .show{border-radius:5px;border:1px solid #e5e6e700;background: #ffffff61;color: white;font-size: 25px}
+  .form-control{ border-radius:5px; text-align: center }
+  .fondo_perfil{margin: 10px 40px;padding:20px 0 0 40px; background-image: url('https://cdn.pixabay.com/photo/2016/10/30/20/22/astronaut-1784245_960_720.jpg');background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;}
+  .fh-column{width: 50%;border-right: 2px #c7c7c7b3 solid; padding: 10px;text-align: center;}
+  .full-height{background: white;padding: 10px;text-align: center;}
+  .rounded-circle{width: 150px}
+  img{border-radius: 40px}
+  p#texto{text-align: center; color:black;}
+  #boton_datos_generales img{width: 40px; height: 40px; border-radius: 0px !important;  }
+  #boton_datos_generales{margin-top: 30px}
+  #boton_datos_laborables{margin-top: 30px}
+  #boton_datos_laborables img{width: 40px; height: 40px; border-radius: 0px !important;}
+  .client-avatar img {width:70px; height: 100px;}
 </style>
-@stop
-  
+
+
+<div>
+  <div class="jumbotron fondo_perfil">
+   {{-- Cabecera formulario --}}
+   <div class="row justify-content-md-center" id="superior_form_dg">
+    <div class="col-lg-3">
+      <div id="visorArchivo">
+        <img name="foto" class="rounded-circle circle-border m-b-md" src="{{asset('/profile/images/perfil.svg')}}" style="width: 150px;height: 150px;" >
+
+      </div>
+    </div>
+    <div class="col-lg-7" style="padding-top:10px">
+      <div class="row justify-content-md-center" align="center" >
+        <div class="col-lg-6" style="padding-top:10px"> <input class="form-control show" type="text" id="nombre1" placeholder="Nombres" onkeyup="PasarValor();"></div>
+        <div class="col-lg-6" style="padding-top:10px"> <input class="form-control show" type="text" id="apellido1" placeholder="Apellidos" onkeyup="PasarValor();"></div>
+        <div class="col col-lg-6" style="padding-top:10px"><input type="text" list="paises" id="nacionalidad1" class="form-control show" value="Perú" id="nacionalidad1" onkeyup="PasarValor();">
+          <datalist id="paises">
+           @foreach($paises as $pais)
+           <option >{{ $pais->nombre }}</option>
+           @endforeach
+         </datalist>
+       </div>
+     </div>
+   </div>
+ </div>
+ {{--Fin Cabecera formulario --}}
+</div>
+
+<div class="fh-column" >
+  {{-- Titulo D. Generales --}}
+  <div align="left">
+    <div class="row">
+      <div class="col-lg-2"><div class="client-avatar"><img src="{{ asset('/archivos/imagenes/personal/2620463.svg')}}"></div></div>
+      <div class="col-lg-10" style="margin-top: 10px"><h2>Datos Generales</h2></div>
+    </div>
+    <hr style="margin-top: -10px;">
+  </div>
+  {{--Fin Titulo D. Generales --}}
+  {{--  Datos Generales Formulario --}}
+  <form action="{{ route('personal.store') }}"  enctype="multipart/form-data" method="post">
+    @csrf
+    <div class="row"  id="form_datos_generales">
+      <input type="text" name="nombres" class="form-control" id="nombre2"  hidden="">{{-- recibido de scrips arriba --}}
+      <input type="text" name="apellidos" class="form-control"  id="apellido2"  hidden="">{{-- recibido de scrips arriba --}}
+      <input type="text" name="nacionalidad" class="form-control"  id="nacionalidad2"  hidden="">{{-- recibido de scrips arriba --}}
+      <div class="col-lg-4">
+        <h4>Documento </h4>
+        <select class="form-control m-b" name="documento_identificacion">
+          <option value="DNI">DNI</option>
+          <option value="Pasaporte">Pasaporte</option>
+        </select>
+        <hr>
+      </div>
+      <div class="col-lg-4"><h4>Numero Documento</h4><input type="text" name="numero_documento" class="form-control" ><hr></div>
+      <div class="col-lg-4"> <h4>Fecha Nacimiento</h4><input type="date" value="{{ date('Y-m-d') }}" name="fecha_nacimiento" class="form-control" ><hr></div>
+      <div class="col-lg-4">
+        <h4>Genero</h4>
+        <select class="form-control m-b" name="genero">
+          <option value="masculino">masculino</option>
+          <option value="femenino">femenino</option>
+        </select>
+        <hr>
+      </div>
+
+      <div class="col-lg-4"><h4>Celular</h4> <input type="text" name="celular" class="form-control" ><hr></div>
+      <div class="col-lg-4"><h4>Telefono</h4> <input type="text" name="telefono" value="0000000" class="form-control" ><hr></div>
+      <div class="col-lg-4"><h4>Correo</h4> <input type="text" name="email" value="sincorreo@gmmail.com" class="form-control" ><hr></div>
+      <div class="col-lg-4"><h4>Direccion</h4> <input type="text" name="direccion" class="form-control" ><hr></div>
+
+      <div class="col-lg-4">
+        <h4>Nivel Educativo</h4>
+        <select class="form-control" name="nivel_educativo">
+          <option value="Primaria">Primaria</option>
+          <option value="Secundaria">Secundaria</option>
+          <option value="Tecnico">Tecnico</option>
+          <option value="universitaria">universitaria</option>
+        </select>
+        <hr>
+      </div>
+      <div class="col-lg-4"><h4>Carrera Profesional</h4>
+        <select class="form-control" name="profesion">
+          <option value="sin carrera">sin carrera</option>
+          <option value="Contabilidad">Contabilidad</option>
+          <option value="Administracion">Administracion</option>
+          <option value="Ingenieria">Ingenieria</option>
+          <option value="Ciencias de la comunicación">Ciencias de la comunicación</option>
+          <option value="Marketing y Mercadotecnia">Marketing y Mercadotecnia</option>
+          <option value="Economia">Economia</option>
+          <option value="Derecho">Derecho</option>
+          <option value="Medicina">Medicina</option>
+        </select>
+        <hr></div>
+        <div class="col-lg-4"><h4>Estado Civil</h4>
+          <select class="form-control m-b" name="estado_civil">
+           <option value="Soltero">Soltero</option>
+           <option value="Casado">Casado</option>
+           <option value="Viudo con hijos">Viudo con hijos</option>
+           <option value="Viudo sin hijos">Viudo sin hijos</option>
+         </select><hr></div>
+         <div class="col-lg-4"><h4>Foto Perfil</h4><input style="display: none;"  type="file" id="archivoInput"  name="foto" onchange="return validarExt()"  /><label for="archivoInput" class="btn btn-info " style="display: inline-block;  cursor: pointer; ">Seleccionar Foto</label><hr></div>
+
+         {{-- <div class="col-lg-4"><h4>Guardar</h4> <input type="submit" name="" class="btn btn-success"  value="Guardar"><hr></div> --}}
+
+       </div>
+     {{-- </form> --}}
+     {{-- Fin  Datos Generales Formulario --}}
+   </div>
+
+   <div class="full-height">
+    {{-- Titulo --}}
+    <div align="left">
+      <div class="row">
+        <div class="col-lg-2">
+          <div class="client-avatar"><img src="{{ asset('/archivos/imagenes/personal/laborable.svg')}}"> </div>
+        </div>
+        <div class="col-lg-10" style="margin-top: 10px"><h2>Datos Laborables</h2> </div>
+      </div>
+      <hr style="margin-top: -10px;">
+    </div>
+    {{--Fin Titulo --}}
+
+    {{--Formulario de Datos Laborables --}}
+  {{--   <form action="{{ route('personal-datos-laborales.store') }}"  enctype="multipart/form-data" method="post">
+      @csrf
+      @method('PATCH') --}}
+      <input type="hidden" name="id_personal" >
+      <div class="row" style="margin-bottom: 50px;"   id="form_datos_laborables">
+        <div class="col-lg-4"> <h4>Area </h4> <input type="text" name="departamento_area" class="form-control"><hr></div>
+        <div class="col-lg-4"><h4>Cargo </h4> <input type="text" name="cargo" class="form-control"><hr></div>
+        <div class="col-lg-4"> <h4>Tipo Trbajador </h4> <input type="text" name="tipo_trabajador" class="form-control"><hr></div>
+        <div class="col-lg-4"> <h4>Sede</h4> <input type="text" name="sede" class="form-control"><hr></div>
+
+        <div class="col-lg-4"><h4>Turno</h4> <input type="text" name="turno" class="form-control"><hr></div>
+        <div class="col-lg-4"><h4>Salario</h4> <input type="text" name="salario" class="form-control"><hr></div>
+        <div class="col-lg-4"><h4>Fecha Viculacion</h4> <input type="text" name="fecha_vinculacion" class="form-control"><hr></div>
+        <div class="col-lg-4"><h4>Fecha Retiro</h4> <input type="text" name="fecha_retiro" class="form-control"><hr></div>
+
+        <div class="col-lg-4"><h4>Forma Pago</h4> <input type="text" name="forma_pago" class="form-control"><hr></div>
+        <div class="col-lg-4"><h4>Banco Abonado</h4> <input type="text" name="banco_renumeracion" class="form-control"><hr></div>
+        <div class="col-lg-4"><h4>Numero Cuenta</h4> <input type="text" name="numero_cuenta" class="form-control"><hr></div>
+        <div class="col-lg-4"><h4>Seguro de Salud</h4> <input type="text" name="afiliacion_salud" class="form-control"><hr></div>
+
+        <div class="col-lg-4"><h4>Tipo Contrato</h4> <input type="text" name="tipo_contrato" class="form-control"><hr></div>
+        <div class="col-lg-4"><h4>Notas</h4> <input type="text" name="notas" class="form-control"  ><hr></div>
+        <div class="col-lg-4"><h4>Regimen Pensionario</h4> <input type="text" name="regimen_pensionario" class="form-control"><hr></div>
+        <div class="col-lg-4"><h4>Estado Del Trbajador</h4> <input type="text" name="estado_trabajador" class="form-control" ><hr></div>
+        <div class="col-lg-4"><h4>Guardar</h4> <input type="submit" name="" class="btn btn-success"  value="Guardar"><hr></div>
+      </div>
+    </form>
+    {{-- Fin Formulario de Datos Laborables --}}
+  </div>
+</div>
+
+<!-- Mainly scripts -->
+<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+<!-- Custom and plugin javascript -->
+<script src="{{ asset('js/inspinia.js') }}"></script>
+<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+<!-- blueimp gallery -->
+<script src="{{ asset('js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+<script>
+ function validarExt()
+ {
+  var archivoInput = document.getElementById('archivoInput');
+  var archivoRuta = archivoInput.value;
+  var vista = document.getElementById('visorArchivo');
+  var visor = new FileReader();
+  visor.onload = function(e)
+  {vista.innerHTML ='<img name="foto" class="rounded-circle circle-border m-b-md"  src="'+e.target.result+'" style="width: 150px;height: 150px;" >';
+};
+visor.readAsDataURL(archivoInput.files[0]);
+}
+
+function PasarValor()
+{
+  document.getElementById("nombre2").value = document.getElementById("nombre1").value;
+  document.getElementById("apellido2").value = document.getElementById("apellido1").value;
+  document.getElementById("nacionalidad2").value = document.getElementById("nacionalidad1").value;
+}
+</script>
+@endsection
