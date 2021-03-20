@@ -91,7 +91,6 @@ class PersonalController extends Controller
         $personal_dl->afiliacion_salud=$request->get('afiliacion_salud');
         $personal_dl->banco_renumeracion=$request->get('banco_renumeracion');
         $personal_dl->numero_cuenta=$request->get('numero_cuenta');
-        $personal_dl->notas=$request->get('notas');
         $personal_dl->save();
         return redirect()->route('personal.show', $personal->id);
 

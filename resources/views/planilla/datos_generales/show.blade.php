@@ -190,7 +190,6 @@
     <div class="col-lg-4"><h4>Seguro de Salud</h4>{{$persona->afiliacion_salud}}<hr></div>
 
     <div class="col-lg-4"><h4>Tipo Contrato</h4>{{$persona->tipo_contrato}}<hr></div>
-    <div class="col-lg-4"><h4>Notas</h4>{{$persona->notas}}<hr></div>
     <div class="col-lg-4"><h4>Regimen Pensionario</h4>{{$persona->regimen_pensionario}}<hr></div>
     <div class="col-lg-4"><h4>Estado Del Trbajador</h4>{{$persona->estado_trabajador}}<hr></div>
   </div>
@@ -218,7 +217,6 @@
       <div class="col-lg-4"><h4>Seguro de Salud</h4> <input type="text" name="afiliacion_salud" class="form-control"  value="{{$persona->afiliacion_salud}}"><hr></div>
 
       <div class="col-lg-4"><h4>Tipo Contrato</h4> <input type="text" name="tipo_contrato" class="form-control"  value="{{$persona->tipo_contrato}}"><hr></div>
-      <div class="col-lg-4"><h4>Notas</h4> <input type="text" name="notas" class="form-control"  value="{{$persona->notas}}"><hr></div>
       <div class="col-lg-4"><h4>Regimen Pensionario</h4> <input type="text" name="regimen_pensionario" class="form-control"  value="{{$persona->regimen_pensionario}}"><hr></div>
       <div class="col-lg-4"><h4>Estado Del Trbajador</h4> <input type="text" name="estado_trabajador" class="form-control"  value="{{$persona->estado_trabajador}}"><hr></div>
       <div class="col-lg-4"><h4>Guardar</h4> <input type="submit" name="" class="btn btn-success"  value="Guardar"><hr></div>

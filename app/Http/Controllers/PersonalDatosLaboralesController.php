@@ -74,7 +74,6 @@ class PersonalDatosLaboralesController extends Controller
         $personal->afiliacion_salud=$request->get('afiliacion_salud');
         $personal->banco_renumeracion=$request->get('banco_renumeracion');
         $personal->numero_cuenta=$request->get('numero_cuenta');
-        $personal->notas=$request->get('notas');
         $personal->save();
         // return redirect()->route('personal-datos-laborales.index');
         return redirect()->route('personal-datos-laborales.show', $personal->personal_id);
