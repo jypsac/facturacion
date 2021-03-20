@@ -99,8 +99,9 @@ class PersonalController extends Controller
     public function show($id)
     {
         $personales=Personal::find($id);
+        $paises=Pais::all();
         $persona=Personal_datos_laborales::where('personal_id',$personales->id)->first();
-        return view('planilla.datos_generales.show',compact('personales','persona'));
+        return view('planilla.datos_generales.show',compact('personales','persona','paises'));
     }
 
     /**
@@ -125,9 +126,6 @@ class PersonalController extends Controller
      */
     public function update(Request $request, $id)
     {
-        $is=$request->file('fotow');
-        return $is;
-
         $personal=Personal::find($id);
         if($request->hasfile('foto')){
             $image =$request->file('foto');
