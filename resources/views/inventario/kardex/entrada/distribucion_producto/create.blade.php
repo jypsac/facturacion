@@ -66,6 +66,7 @@
 										</td>
 										<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/>
 										</td>
+										<span id="spTotal"></span>
 									</tr>
 								</tbody>
 							</table>
@@ -110,20 +111,22 @@
 		$(".addmore").on('click', function () {
 			var data = `[
 			<tr>
+				<td>
+					<input type='checkbox' class='case'/>
+				</td>";
 			<td>
-			<input type='checkbox' class='case'/>
-			</td>";
-			<td>
-			<input list="browsers" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
-			<datalist id="browsers" >
-			@foreach($productos as $producto)
-			<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
-			@endforeach
-			</datalist>
+				<input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' autocomplete="off" onkeyup="ajax(${i})">
+				<datalist id="browsers" >
+				@foreach($productos as $producto)
+					<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+				@endforeach
+				</datalist>
 			</td>
-			<td><input type='text' id='stock${i}' name='stock[]' class="stock${i} form-control"  required/></td>
 			<td>
-			<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
+				<input type='text' id='stock${i}' name='stock[]' class="stock${i} form-control"  required/>
+			</td>
+			<td>
+				<input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control"  required/>
 			</td>
 			</tr>`;
 			$('table').append(data);
@@ -175,11 +178,6 @@
 				radioClass: 'iradio_square-green',
 			});
 		});
-	</script>
-
-	<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
-
-	<script>
 		$(document).ready(function(){
 
 			$('.typeahead_1').typeahead({
@@ -190,7 +188,12 @@
 		{
 			elem.value='';
 		}
+	</script>
 
+	<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
+
+	<script>
+		
 		$('#articulo').change(function(e){
 			e.preventDefault();
 
@@ -214,15 +217,18 @@
 
 		function ajax (a){
 			var articulo2 = $(`[id='articulo${a}']`).val();
+			// var almacen = $(`[id='almacen']`).val();
 			$.ajax({
 				type: "post",
 				url: "{{ route('stock_ajax_distribucion') }}",
 				data: {
 					'_token': $('input[name=_token]').val(),
 					'articulo': articulo2
+					// 'almacen' : almacen
 					},
 				success: function (msg) {
 					// console.log(msg);
+
 					$(`#stock${a}`).val(msg);
 				}
 			});
