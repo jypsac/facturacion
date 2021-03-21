@@ -62,7 +62,7 @@
 											</datalist>
 										</td>
 										<td>
-											<input type='text' id='stock0' name='stock[]' class="stock0 form-control" required/>
+											<input type='text' id='stock0' disabled="" name='stock[]' class="stock0 form-control" required/>
 										</td>
 										<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/>
 										</td>
@@ -123,7 +123,7 @@
 				</datalist>
 			</td>
 			<td>
-				<input type='text' id='stock${i}' name='stock[]' class="stock${i} form-control"  required/>
+				<input type='text' id='stock${i}' disabled="" name='stock[]' class="stock${i} form-control"  required/>
 			</td>
 			<td>
 				<input type='text' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control"  required/>

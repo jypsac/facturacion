@@ -204,6 +204,7 @@ class KardexSalidaController extends Controller
 
             if($count_articulo = $count_cantidad ){
                 for($i=0;$i<$count_articulo;$i++){
+                    
                     $kardex_salida_registro=new kardex_salida_registro();
                     $kardex_salida_registro->kardex_salida_id=$kardex_salida->id;
                     $kardex_salida_registro->producto_id=$producto_id[$i];

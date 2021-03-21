@@ -153,7 +153,7 @@ class KardexEntradaDistribucionController extends Controller
         //         }else {
         //             $articulo_comparacion=$request->get('articulo')[$a];
         //             if ($articulo_comparacion_inicial=$articulo_comparacion) {
-        //                 return "dobles articulos error"
+        //                 return "dobles articulos error";
         //             }
         //         }
         //     }
@@ -262,7 +262,7 @@ class KardexEntradaDistribucionController extends Controller
               //         $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
               //     }
               // }
-              
+              //    $comparacion=$nueva;
               //buble para la cantidad
 
               $cantidad=0;
@@ -303,10 +303,10 @@ class KardexEntradaDistribucionController extends Controller
                   }
               }
               // return $comparacion;
-              //resta de cantidades de productos para la tabla stock productos
-              // $stock_productos=Stock_producto::find($producto_id[$i]);
-              // $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
-              // $stock_productos->save();
+              // resta de cantidades de productos para la tabla stock productos
+              $stock_productos=Stock_producto::find($producto_id[$i]);
+              $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
+              $stock_productos->save();
 
             }
             // return $comparacion;
