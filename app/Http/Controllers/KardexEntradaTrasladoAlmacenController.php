@@ -129,10 +129,14 @@ class KardexEntradaTrasladoAlmacenController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         //ALMACEN
-      $almacen_input=$request->input('almacen');
+        $almacen_emisor_input=$request->input('almacen_emisor');
+        $almacen_emisor_json=Almacen::where('nombre',$almacen_emisor_input)->first();
+
+        $almacen_input=$request->input('almacen');
       
-      $almacen_json=Almacen::where('id',$almacen_input)->first();
+        $almacen_json=Almacen::where('id',$almacen_input)->first();
 
         $cantidad_p = $request->input('cantidad');
         $count_cantidad_p=count($cantidad_p);
@@ -205,8 +209,6 @@ class KardexEntradaTrasladoAlmacenController extends Controller
           $codigo_guia='GTA'.'-'.$cantidad_registro;
         }
 
-        
-
         if($count_articulo = $count_cantidad){
           $cantidad = $request->input('cantidad');
           $count_cantidad=count($cantidad);
@@ -225,14 +227,19 @@ class KardexEntradaTrasladoAlmacenController extends Controller
           $kardex_entrada->user_id=auth()->user()->id;
           $kardex_entrada->informacion="0";
           $kardex_entrada->save();
+
+        //   return $kardex_entrada->almacen_id;
         }
 
         if($kardex_entrada->almacen_id==1){
+            
             //envio para el almacen principal
             //estado devvolucion=1
             // envio para otro almacen secundario
-            if($count_articulo = $count_cantidad ){
+            if($count_articulo == $count_cantidad ){
+                
                 for($i=0;$i<$count_articulo;$i++){
+                    // return $kardex_entrada->almacen_id;
                     //Creacion del nuevo registro de kardex entrada
                     $kardex_entrada_registro=new kardex_entrada_registro();
                     $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
@@ -250,11 +257,12 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     $cantidad=kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->sum('cantidad');
                     
                     $almacen=$almacen_json->id;
-                    $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
+                    $kardex_entrada_get=Kardex_entrada::where('almacen_id',$almacen)->get();
                     $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
         
+                    
                     //return $kardex_entrada;
-                    foreach($kardex_entrada as $kardex_entradas){
+                    foreach($kardex_entrada_get as $kardex_entradas){
                         $kadex_entrada_id[]=$kardex_entradas->id;
                     }
                     // return $kardex_entrada;
@@ -263,12 +271,14 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                             $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
                         }
                     }
+                    
                     $comparacion=array_reverse($nueva);
                     //buble para la cantidad
                       $cantidad_requerida=0;
                       foreach($comparacion as $comparaciones){
                           $cantidad_requerida=$comparaciones->cantidad+$cantidad_requerida;
                       }
+                      
                     // return $comparacion;
                     $cantidad=$request->get('cantidad')[$i];
                     $logica=$request->get('cantidad')[$i];
@@ -292,58 +302,58 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                         }
                     }
 
-                }
+                    $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_emisor_json->id)->get();
+                    $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_emisor_json->id)->count();
 
-                $kardex_entrada=Kardex_entrada::where('almacen_id',$kardex_entrada->almacen_id)->get();
-                $kardex_entrada_count=Kardex_entrada::where('almacen_id',$kardex_entrada->almacen_id)->count();
-
-                //return $kardex_entrada;
-                foreach($kardex_entrada as $kardex_entradas){
-                    $kadex_entrada_id[]=$kardex_entradas->id;
-                }
-                // return $kardex_entrada;
-                for($x=0;$x<$kardex_entrada_count;$x++){
-                    if(Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first()){
-                        $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
+                    //return $kardex_entrada;
+                    foreach($kardex_entrada as $kardex_entradas){
+                        $kardex_entrada_id[]=$kardex_entradas->id;
                     }
-                }
-
-                $comparacion=$nueva;
-                //buble para la cantidad
-                $cantidad=0;
-                foreach($comparacion as $comparaciones){
-                    $cantidad=$comparaciones->cantidad+$cantidad;
-                }
-                
-                if(isset($comparacion)){
-                    $var_cantidad_entrada=$kardex_entrada_registro->cantidad;
-                    $contador=0;
-                    foreach ($comparacion as $p) {
-                        if($p->cantidad>$var_cantidad_entrada){
-                            $cantidad_mayor=$p->cantidad;
-                            $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
-                            $p->cantidad=$cantidad_final;
-                            if($cantidad_final==0){
-                                $p->estado=0;
-                                $p->save();
-                                break;
-                            }else{
-                                $p->save();
+                    // return $kardex_entrada_id;
+                    // return $kardex_entrada_id[0];
+                    for($x=0;$x<$kardex_entrada_count;$x++){
+                        if(Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kardex_entrada_id[$x])->first()){
+                            $nueva2[]=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kardex_entrada_id[$x])->first();
+                        }
+                    }
+                    // return $nueva;
+                    $comparacion2=$nueva2;
+                    //buble para la cantidad
+                    $cantidad2=0;
+                    foreach($comparacion2 as $comparaciones2){
+                        $cantidad2=$comparaciones2->cantidad+$cantidad2;
+                    }
+                    
+                    if(isset($comparacion2)){
+                        $var_cantidad_entrada2=$request->get('cantidad')[$i];
+                        $contador=0;
+                        foreach ($comparacion2 as $e) {
+                            if($e->cantidad>$var_cantidad_entrada2){
+                                $cantidad_mayor2=$e->cantidad;
+                                $cantidad_final2=$cantidad_mayor2-$var_cantidad_entrada2;
+                                $e->cantidad=$cantidad_final2;
+                                if($cantidad_final2==0){
+                                    $e->estado=0;
+                                    $e->save();
+                                    break;
+                                }else{
+                                    $e->save();
+                                    break;
+                                }
+                            }elseif($e->cantidad==$var_cantidad_entrada2){
+                                $e->cantidad=0;
+                                $e->estado=0;
+                                $e->save();
                                 break;
                             }
-                        }elseif($p->cantidad==$var_cantidad_entrada){
-                            $p->cantidad=0;
-                            $p->estado=0;
-                            $p->save();
-                            break;
+                            else{
+                                $var_cantidad_entrada2=$var_cantidad_entrada2-$e->cantidad;
+                                $e->cantidad=0;
+                                $e->estado=0;
+                                $e->save();
+                            }
+                            
                         }
-                        else{
-                            $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
-                            $p->cantidad=0;
-                            $p->estado=0;
-                            $p->save();
-                        }
-                        
                     }
                 }
 
@@ -423,10 +433,10 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                           
                       }
                   }
-                //   //resta de cantidades de productos para la tabla stock productos
-                //   $stock_productos=Stock_producto::find($producto_id[$i]);
-                //   $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
-                //   $stock_productos->save();
+                    //   //resta de cantidades de productos para la tabla stock productos
+                    //   $stock_productos=Stock_producto::find($producto_id[$i]);
+                    //   $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
+                    //   $stock_productos->save();
                 }   
               }else{
                   return "Error fatal: por favor comunicarse con soporte inmediatamente";
