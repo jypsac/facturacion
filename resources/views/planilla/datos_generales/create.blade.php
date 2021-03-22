@@ -5,7 +5,7 @@
 @section('content')
 
 <style>
-  .show{border-radius:5px;border:1px solid #e5e6e700;background: #ffffff61;color: white;font-size: 25px}
+  .show{border-radius:5px;border:1px solid #e5e6e700;background: #ffffffcc;color: black;font-size: 25px}
   .form-control{ border-radius:5px; text-align: center }
   .fondo_perfil{margin: 10px 40px;padding:20px 0 0 40px; background-image: url('https://cdn.pixabay.com/photo/2016/10/30/20/22/astronaut-1784245_960_720.jpg');background-repeat: no-repeat;background-attachment: fixed;background-size: 100% 100%;}
   .fh-column{width: 50%;border-right: 2px #c7c7c7b3 solid; padding: 10px;text-align: center;}
@@ -33,9 +33,9 @@
     </div>
     <div class="col-lg-7" style="padding-top:10px">
       <div class="row justify-content-md-center" align="center" >
-        <div class="col-lg-6" style="padding-top:10px"> <input class="form-control show" type="text" id="nombre1" placeholder="Nombres" onkeyup="PasarValor();"></div>
-        <div class="col-lg-6" style="padding-top:10px"> <input class="form-control show" type="text" id="apellido1" placeholder="Apellidos" onkeyup="PasarValor();"></div>
-        <div class="col col-lg-6" style="padding-top:10px"><input type="text" list="paises" id="nacionalidad1" class="form-control show" value="Perú" id="nacionalidad1" onkeyup="PasarValor();">
+        <div class="col-lg-6" style="padding-top:10px"> <input  required class="form-control show" type="text" id="nombre1" placeholder="Nombres" onkeyup="PasarValor();"></div>
+        <div class="col-lg-6" style="padding-top:10px"> <input  required class="form-control show" type="text" id="apellido1" placeholder="Apellidos" onkeyup="PasarValor();"></div>
+        <div class="col col-lg-6" style="padding-top:10px"><input  required type="text" list="paises" id="nacionalidad1" class="form-control show" value="Perú" id="nacionalidad1" onkeyup="PasarValor();">
           <datalist id="paises">
            @foreach($paises as $pais)
            <option >{{ $pais->nombre }}</option>
@@ -62,9 +62,9 @@
   <form action="{{ route('personal.store') }}"  enctype="multipart/form-data" method="post">
     @csrf
     <div class="row"  id="form_datos_generales">
-      <input type="text" name="nombres" class="form-control" id="nombre2"  hidden="">{{-- recibido de scrips arriba --}}
-      <input type="text" name="apellidos" class="form-control"  id="apellido2"  hidden="">{{-- recibido de scrips arriba --}}
-      <input type="text" name="nacionalidad" class="form-control"  id="nacionalidad2"  hidden="">{{-- recibido de scrips arriba --}}
+      <input  required type="text" name="nombres" class="form-control" id="nombre2"  hidden="">{{-- recibido de scrips arriba --}}
+      <input  required type="text" name="apellidos" class="form-control"  id="apellido2"  hidden="">{{-- recibido de scrips arriba --}}
+      <input  required type="text" name="nacionalidad" class="form-control"  id="nacionalidad2"  hidden="">{{-- recibido de scrips arriba --}}
       <div class="col-lg-4">
         <h4>Documento </h4>
         <select class="form-control m-b" name="documento_identificacion">
@@ -73,8 +73,8 @@
         </select>
         <hr>
       </div>
-      <div class="col-lg-4"><h4>Numero Documento</h4><input type="text" name="numero_documento" class="form-control" ><hr></div>
-      <div class="col-lg-4"> <h4>Fecha Nacimiento</h4><input type="date" value="{{ date('Y-m-d') }}" name="fecha_nacimiento" class="form-control" ><hr></div>
+      <div class="col-lg-4"><h4>Numero Documento</h4><input  required type="text" name="numero_documento" class="form-control" ><hr></div>
+      <div class="col-lg-4"> <h4>Fecha Nacimiento</h4><input  required type="date" value="{{ date('Y-m-d') }}" name="fecha_nacimiento" class="form-control" ><hr></div>
       <div class="col-lg-4">
         <h4>Genero</h4>
         <select class="form-control m-b" name="genero">
@@ -84,10 +84,10 @@
         <hr>
       </div>
 
-      <div class="col-lg-4"><h4>Celular</h4> <input type="text" name="celular" class="form-control" ><hr></div>
-      <div class="col-lg-4"><h4>Telefono</h4> <input type="text" name="telefono" value="0000000" class="form-control" ><hr></div>
-      <div class="col-lg-4"><h4>Correo</h4> <input type="text" name="email" value="sincorreo@gmmail.com" class="form-control" ><hr></div>
-      <div class="col-lg-4"><h4>Direccion</h4> <input type="text" name="direccion" class="form-control" ><hr></div>
+      <div class="col-lg-4"><h4>Celular</h4> <input  required type="text" name="celular" class="form-control" ><hr></div>
+      <div class="col-lg-4"><h4>Telefono</h4> <input  required type="text" name="telefono" value="0000000" class="form-control" ><hr></div>
+      <div class="col-lg-4"><h4>Correo</h4> <input  required type="text" name="email" value="sincorreo@gmmail.com" class="form-control" ><hr></div>
+      <div class="col-lg-4"><h4>Direccion</h4> <input  required type="text" name="direccion" class="form-control" ><hr></div>
 
       <div class="col-lg-4">
         <h4>Nivel Educativo</h4>
@@ -119,7 +119,7 @@
            <option value="Viudo con hijos">Viudo con hijos</option>
            <option value="Viudo sin hijos">Viudo sin hijos</option>
          </select><hr></div>
-         <div class="col-lg-4"><h4>Foto Perfil</h4><input style="display: none;"  type="file" id="archivoInput"  name="foto" onchange="return validarExt()"  /><label for="archivoInput" class="btn btn-info " style="display: inline-block;  cursor: pointer; ">Seleccionar Foto</label><hr></div>
+         <div class="col-lg-4"><h4>Foto Perfil</h4><input  style="display: none;"  type="file" id="archivoInput"  name="foto" onchange="return validarExt()"  /><label for="archivoInput" class="btn btn-info " style="display: inline-block;  cursor: pointer; ">Seleccionar Foto</label><hr></div>
        </div>
        {{-- Fin  Datos Generales Formulario --}}
      </div>
@@ -175,7 +175,7 @@
             <option value="Noche">Noche</option>
           </select>
           <hr></div>
-          <div class="col-lg-4"><h4>Salario</h4> <input type="text" name="salario" value="Sin salario" class="form-control"><hr></div>
+          <div class="col-lg-4"><h4>Salario</h4> <input type="number" name="salario" value="0" class="form-control"><hr></div>
           <div class="col-lg-4"><h4>Fecha Viculacion</h4> <input type="date" name="fecha_vinculacion"  class="form-control"><hr></div>
           <div class="col-lg-4"><h4>Fecha Retiro</h4> <input type="date" name="fecha_retiro"  class="form-control"><hr></div>
 

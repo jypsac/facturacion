@@ -201,119 +201,203 @@
     @method('PATCH')
     <input type="hidden" name="id_personal" value="{{$persona->personal_id}}">
     <div class="row" style="margin-bottom: 50px;"  hidden=""  id="form_datos_laborables">
-      <div class="col-lg-4"> <h4>Area </h4> <input type="text" name="departamento_area" class="form-control"  value="{{$persona->departamento_area}}"><hr></div>
-      <div class="col-lg-4"><h4>Cargo </h4> <input type="text" name="cargo" class="form-control"  value="{{$persona->cargo}}"><hr></div>
-      <div class="col-lg-4"> <h4>Tipo Trbajador </h4> <input type="text" name="tipo_trabajador" class="form-control"  value="{{$persona->tipo_trabajador}}"><hr></div>
+      <div class="col-lg-4"> <h4>Area </h4>
+       <select class="form-control" name="departamento_area" required="">
+        <option value="{{$persona->departamento_area}}">{{$persona->departamento_area}}</option>
+        <option disabled="">------------------------</option>
+        <option value="Aministracion">Administracion</option>
+        <option value="Almacen">Almacen</option>
+        <option value="Compras">Compras</option>
+        <option value="Recursos Humanos">Recursos Humanos</option>
+        <option value="otros">otros</option>
+      </select>
+      <hr></div>
+      <div class="col-lg-4"><h4>Cargo </h4>
+       <select class="form-control" name="cargo" required="">
+        <option value="{{$persona->cargo}}">{{$persona->cargo}}</option>
+        <option disabled="">------------------------</option>
+        <option value="vendedor">vendedor</option>
+        <option value="Obrero">Obrero</option>
+        <option value="Empleado">Empleado</option>
+      </select>
+      <hr></div>
+      <div class="col-lg-4"> <h4>Tipo Trbajador </h4>
+       <select class="form-control" name="tipo_trabajador" required="">
+        <option value="{{$persona->tipo_trabajador}}">{{$persona->tipo_trabajador}}</option>
+        <option disabled="">------------------------</option>
+        <option value="Interno">Interno</option>
+        <option value="Externo">Externo</option>
+        <option value="Temporal">Temporal</option>
+      </select>
+      <hr></div>
       <div class="col-lg-4"> <h4>Sede</h4> <input type="text" name="sede" class="form-control"  value="{{$persona->sede}}"><hr></div>
 
-      <div class="col-lg-4"><h4>Turno</h4> <input type="text" name="turno" class="form-control"  value="{{$persona->turno}}"><hr></div>
-      <div class="col-lg-4"><h4>Salario</h4> <input type="text" name="salario" class="form-control"  value="{{$persona->salario}}"><hr></div>
-      <div class="col-lg-4"><h4>Fecha Viculacion</h4> <input type="text" name="fecha_vinculacion" class="form-control"  value="{{$persona->fecha_vinculacion}}"><hr></div>
-      <div class="col-lg-4"><h4>Fecha Retiro</h4> <input type="text" name="fecha_retiro" class="form-control"  value="{{$persona->fecha_retiro}}"><hr></div>
+      <div class="col-lg-4"><h4>Turno</h4>
+       <select class="form-control" name="turno" required="">
+        <option value="{{$persona->turno}}">{{$persona->turno}}</option>
+        <option disabled="">------------------------</option>
+        <option value="Mañana">Mañana</option>
+        <option value="Tarde">Tarde</option>
+        <option value="Noche">Noche</option>
+      </select>
+      <hr></div>
+      <div class="col-lg-4"><h4>Salario</h4> <input type="nmber" name="salario" class="form-control"  value="{{$persona->salario}}"><hr></div>
+      <div class="col-lg-4"><h4>Fecha Viculacion</h4> <input type="date" name="fecha_vinculacion" class="form-control"  value="{{$persona->fecha_vinculacion}}"><hr></div>
+      <div class="col-lg-4"><h4>Fecha Retiro</h4> <input type="date" name="fecha_retiro" class="form-control"  value="{{$persona->fecha_retiro}}"><hr></div>
 
-      <div class="col-lg-4"><h4>Forma Pago</h4> <input type="text" name="forma_pago" class="form-control"  value="{{$persona->forma_pago}}"><hr></div>
-      <div class="col-lg-4"><h4>Banco Abonado</h4> <input type="text" name="banco_renumeracion" class="form-control"  value="{{$persona->banco_renumeracion}}"><hr></div>
-      <div class="col-lg-4"><h4>Numero Cuenta</h4> <input type="text" name="numero_cuenta" class="form-control"  value="{{$persona->numero_cuenta}}"><hr></div>
-      <div class="col-lg-4"><h4>Seguro de Salud</h4> <input type="text" name="afiliacion_salud" class="form-control"  value="{{$persona->afiliacion_salud}}"><hr></div>
+      <div class="col-lg-4"><h4>Forma Pago</h4>
+        <select class="form-control" name="forma_pago" required="">
+          <option value="{{$persona->forma_pago}}">{{$persona->forma_pago}}</option>
+          <option disabled="">------------------------</option>
+          <option value="Semanal">Semanal</option>
+          <option value="Quincenal">Quincenal</option>
+          <option value="Mensual">Mensual</option>
+        </select>
+        <hr></div>
+        <div class="col-lg-4"><h4>Banco Abonado</h4>
+         <select class="form-control" name="banco_renumeracion" required="">
+          <option value="{{$persona->banco_renumeracion}}">{{$persona->banco_renumeracion}}</option>
+          <option disabled="">------------------------</option>
+          <option value="BCP">BCP</option>
+          <option value="BN">BN</option>
+          <option value="Interbank">Interbank</option>
+          <option value="Continental">Continental</option>
+          <option value="Scotiabank">Scotiabank</option>
+        </select>
+        <hr></div>
+        <div class="col-lg-4"><h4>Numero Cuenta</h4> <input type="text" name="numero_cuenta" class="form-control"  value="{{$persona->numero_cuenta}}"><hr></div>
+        <div class="col-lg-4"><h4>Seguro de Salud</h4>
+         <select class="form-control" name="afiliacion_salud" required="">
+          <option value=" {{$persona->afiliacion_salud}}"> {{$persona->afiliacion_salud}}</option>
+          <option disabled="">------------------------</option>
+          <option value="Sin Seguro">Sin Seguro</option>
+          <option value="AFP Integra">AFP Integra</option>
+          <option value="AFP Horizonte">AFP Horizonte</option>
+          <option value="ONP">ONP</option>
+        </select>
+        <hr></div>
 
-      <div class="col-lg-4"><h4>Tipo Contrato</h4> <input type="text" name="tipo_contrato" class="form-control"  value="{{$persona->tipo_contrato}}"><hr></div>
-      <div class="col-lg-4"><h4>Regimen Pensionario</h4> <input type="text" name="regimen_pensionario" class="form-control"  value="{{$persona->regimen_pensionario}}"><hr></div>
-      <div class="col-lg-4"><h4>Estado Del Trbajador</h4> <input type="text" name="estado_trabajador" class="form-control"  value="{{$persona->estado_trabajador}}"><hr></div>
-      <div class="col-lg-4"><h4>Guardar</h4> <input type="submit" name="" class="btn btn-success"  value="Guardar"><hr></div>
+        <div class="col-lg-4"><h4>Tipo Contrato</h4>
+          <select class="form-control" name="tipo_contrato" required="">
+            <option value="{{$persona->tipo_contrato}}">{{$persona->tipo_contrato}}</option>
+            <option disabled="">------------------------</option>
+            <option value="Idefinido">Indefinido</option>
+            <option value="Fijo">Fijo</option>
+            <option value="Temporal">Temporal</option>
+          </select>
+          <hr></div>
+          <div class="col-lg-4"><h4>Regimen Pensionario</h4>
+            <select class="form-control" name="regimen_pensionario" required="">
+              <option value="{{$persona->regimen_pensionario}}">{{$persona->regimen_pensionario}}</option>
+              <option disabled="">------------------------</option>
+              <option value="Sin Regimen">Sin Regimen</option>
+              <option value="Privado">Privado</option>
+              <option value="Nacional">Nacional</option>
+            </select>
+            <hr></div>
+            <div class="col-lg-4"><h4>Estado Del Trbajador</h4>
+              <select class="form-control" name="estado_trabajador" required="">
+              <option value="{{$persona->estado_trabajador}}">{{$persona->estado_trabajador}}</option>
+              <option disabled="">------------------------</option>
+              <option value="Activo">Activo</option>
+              <option value="Desactivo">Desactivo</option>
+            </select>
+            <hr></div>
+            <div class="col-lg-4"><h4>Guardar</h4> <input type="submit" name="" class="btn btn-success"  value="Guardar"><hr></div>
+          </div>
+        </form>
+        {{-- Fin Formulario de Datos Laborables --}}
+        @endif
+      </div>
     </div>
-  </form>
-  {{-- Fin Formulario de Datos Laborables --}}
-  @endif
-</div>
-</div>
 
-<!-- Mainly scripts -->
-<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-<script src="{{ asset('js/popper.min.js') }}"></script>
-<script src="{{ asset('js/bootstrap.js') }}"></script>
-<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <!-- Mainly scripts -->
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-<!-- Custom and plugin javascript -->
-<script src="{{ asset('js/inspinia.js') }}"></script>
-<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="{{ asset('js/inspinia.js') }}"></script>
+    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-<!-- blueimp gallery -->
-<script src="{{ asset('js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
-<script>
- function validarExt()
- {
-  var archivoInput = document.getElementById('archivoInput');
-  var archivoRuta = archivoInput.value;
-  var vista = document.getElementById('visorArchivo');
-  var visor = new FileReader();
-  visor.onload = function(e)
-  {vista.innerHTML ='<img name="foto" class="rounded-circle circle-border m-b-md"  src="'+e.target.result+'" style="width: 150px;height: 150px;" >';
-};
-visor.readAsDataURL(archivoInput.files[0]);
-}
+    <!-- blueimp gallery -->
+    <script src="{{ asset('js/plugins/blueimp/jquery.blueimp-gallery.min.js') }}"></script>
+    <script>
+     function validarExt()
+     {
+      var archivoInput = document.getElementById('archivoInput');
+      var archivoRuta = archivoInput.value;
+      var vista = document.getElementById('visorArchivo');
+      var visor = new FileReader();
+      visor.onload = function(e)
+      {vista.innerHTML ='<img name="foto" class="rounded-circle circle-border m-b-md"  src="'+e.target.result+'" style="width: 150px;height: 150px;" >';
+    };
+    visor.readAsDataURL(archivoInput.files[0]);
+  }
 
-function PasarValor()
-{
-  document.getElementById("nombre2").value = document.getElementById("nombre1").value;
-  document.getElementById("apellido2").value = document.getElementById("apellido1").value;
-  document.getElementById("nacionalidad2").value = document.getElementById("nacionalidad1").value;
-}
-function editar_datos_generales() {
-  var datos_generales_vista = document.getElementById("datos_generales_vista");
-  var form_datos_generales = document.getElementById("form_datos_generales");
-  var boton_datos_generales= document.getElementById("boton_datos_generales");
-
-  var superior_vista_dg= document.getElementById("superior_vista_dg");
-  var superior_form_dg= document.getElementById("superior_form_dg");
-
-  var vista_datos_laborables= document.getElementById("vista_datos_laborables");
-  var form_datos_laborables= document.getElementById("form_datos_laborables");
-
-  if( datos_generales_vista.hasAttribute("hidden") )
+  function PasarValor()
   {
-    datos_generales_vista.removeAttribute("hidden", "");
-    superior_vista_dg.removeAttribute("hidden", "");
-
-    boton_datos_generales.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/editar.svg')}}"> ';
-
-    form_datos_generales.setAttribute("hidden", "");
-    superior_form_dg.setAttribute("hidden", "");
+    document.getElementById("nombre2").value = document.getElementById("nombre1").value;
+    document.getElementById("apellido2").value = document.getElementById("apellido1").value;
+    document.getElementById("nacionalidad2").value = document.getElementById("nacionalidad1").value;
   }
-  else{
-    datos_generales_vista.setAttribute("hidden", "");
-    superior_vista_dg.setAttribute("hidden", "");
-    vista_datos_laborables.removeAttribute("hidden", "");/*Remueve los formularios abiertos*/
+  function editar_datos_generales() {
+    var datos_generales_vista = document.getElementById("datos_generales_vista");
+    var form_datos_generales = document.getElementById("form_datos_generales");
+    var boton_datos_generales= document.getElementById("boton_datos_generales");
 
-    boton_datos_generales.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/cancelar.svg')}}"> ';
-    boton_datos_laborables.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/editar.svg')}}"> ';
+    var superior_vista_dg= document.getElementById("superior_vista_dg");
+    var superior_form_dg= document.getElementById("superior_form_dg");
 
-    form_datos_generales.removeAttribute("hidden", "");
-    superior_form_dg.removeAttribute("hidden", "");
-    form_datos_laborables.setAttribute("hidden", "");
+    var vista_datos_laborables= document.getElementById("vista_datos_laborables");
+    var form_datos_laborables= document.getElementById("form_datos_laborables");
+
+    if( datos_generales_vista.hasAttribute("hidden") )
+    {
+      datos_generales_vista.removeAttribute("hidden", "");
+      superior_vista_dg.removeAttribute("hidden", "");
+
+      boton_datos_generales.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/editar.svg')}}"> ';
+
+      form_datos_generales.setAttribute("hidden", "");
+      superior_form_dg.setAttribute("hidden", "");
+    }
+    else{
+      datos_generales_vista.setAttribute("hidden", "");
+      superior_vista_dg.setAttribute("hidden", "");
+      vista_datos_laborables.removeAttribute("hidden", "");/*Remueve los formularios abiertos*/
+
+      boton_datos_generales.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/cancelar.svg')}}"> ';
+      boton_datos_laborables.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/editar.svg')}}"> ';
+
+      form_datos_generales.removeAttribute("hidden", "");
+      superior_form_dg.removeAttribute("hidden", "");
+      form_datos_laborables.setAttribute("hidden", "");
+    }
   }
-}
-function editar_datos_laborables() {
-  if( vista_datos_laborables.hasAttribute("hidden") )
-  {
-    vista_datos_laborables.removeAttribute("hidden", "");
+  function editar_datos_laborables() {
+    if( vista_datos_laborables.hasAttribute("hidden") )
+    {
+      vista_datos_laborables.removeAttribute("hidden", "");
 
-    boton_datos_laborables.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/editar.svg')}}"> ';
+      boton_datos_laborables.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/editar.svg')}}"> ';
 
-    form_datos_laborables.setAttribute("hidden", "");
+      form_datos_laborables.setAttribute("hidden", "");
+    }
+    else{
+      vista_datos_laborables.setAttribute("hidden", "");
+      datos_generales_vista.removeAttribute("hidden", "");/*Remueve los formularios abiertos*/
+      superior_vista_dg.removeAttribute("hidden", "");
+
+      boton_datos_laborables.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/cancelar.svg')}}"> ';
+      boton_datos_generales.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/editar.svg')}}"> ';
+
+      form_datos_laborables.removeAttribute("hidden", "");
+      form_datos_generales.setAttribute("hidden", "");
+      superior_form_dg.setAttribute("hidden", "");
+    }
   }
-  else{
-    vista_datos_laborables.setAttribute("hidden", "");
-    datos_generales_vista.removeAttribute("hidden", "");/*Remueve los formularios abiertos*/
-    superior_vista_dg.removeAttribute("hidden", "");
-
-    boton_datos_laborables.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/cancelar.svg')}}"> ';
-    boton_datos_generales.innerHTML='<img src="{{ asset('/archivos/imagenes/personal/editar.svg')}}"> ';
-
-    form_datos_laborables.removeAttribute("hidden", "");
-    form_datos_generales.setAttribute("hidden", "");
-    superior_form_dg.setAttribute("hidden", "");
-  }
-}
 </script>
 @endsection
