@@ -52,7 +52,7 @@
 							</thead>
 							<tbody>
 								<tr>
-									<td><input type='checkbox' class="case"></td>
+									<td><input type='checkbox' class="case" id="form_distribucion"></td>
 									<td>
 										<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
 										<datalist id="browsers2" >
@@ -62,10 +62,11 @@
 											</datalist>
 										</td>
 										<td>
-											<input type='text' id='stock0' name='stock[]' class="stock0 form-control" required/>
+											<input type='text' id='stock0' disabled="" name='stock[]' class="stock0 form-control" required/>
 										</td>
-										<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/>
+										<td><input type='number' id='cantidad' name='cantidad[]' class="monto0 form-control"    required/>
 										</td>
+										<span id="spTotal"></span>
 									</tr>
 								</tbody>
 							</table>
@@ -80,6 +81,11 @@
 	</div>
 	<style type="text/css">
 		.form-control{border-radius: 5px;}
+		input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
 	</style>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 	<script src="{{ asset('js/popper.min.js') }}"></script>
@@ -110,20 +116,22 @@
 		$(".addmore").on('click', function () {
 			var data = `[
 			<tr>
+				<td>
+					<input type='checkbox' class='case'/>
+				</td>";
 			<td>
-			<input type='checkbox' class='case'/>
-			</td>";
-			<td>
-			<input list="browsers" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
-			<datalist id="browsers" >
-			@foreach($productos as $producto)
-			<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
-			@endforeach
-			</datalist>
+				<input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' autocomplete="off" onkeyup="ajax(${i})" onclick="Clear(this);">
+				<datalist id="browsers" >
+				@foreach($productos as $producto)
+					<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+				@endforeach
+				</datalist>
 			</td>
-			<td><input type='text' id='stock${i}' name='stock[]' class="stock${i} form-control"  required/></td>
 			<td>
-			<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
+				<input type='text' id='stock${i}' disabled="" name='stock[]' class="stock${i} form-control"  required/>
+			</td>
+			<td>
+				<input type='number' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control"  required/>
 			</td>
 			</tr>`;
 			$('table').append(data);
@@ -175,11 +183,6 @@
 				radioClass: 'iradio_square-green',
 			});
 		});
-	</script>
-
-	<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
-
-	<script>
 		$(document).ready(function(){
 
 			$('.typeahead_1').typeahead({
@@ -190,12 +193,17 @@
 		{
 			elem.value='';
 		}
+	</script>
+
+	<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
+
+	<script>
 
 		$('#articulo').change(function(e){
 			e.preventDefault();
 
 			var articulo = $('[id="articulo"]').val();
-
+			var input_cantidad = document.getElementById('cantidad');
 			// var data={articulo:articulo,_token:token};
 				$.ajax({
 					type: "post",
@@ -206,7 +214,10 @@
 						},
 					success: function (msg) {
 						// console.log(msg);
-						$('#stock0').val(msg);
+						$('#stock0').val(msg)
+						var msg2 = parseInt(msg) ;
+						$('#cantidad').attr('max', msg2 );
+
 					}
 				});
 			});
@@ -214,16 +225,21 @@
 
 		function ajax (a){
 			var articulo2 = $(`[id='articulo${a}']`).val();
+			// var almacen = $(`[id='almacen']`).val();
 			$.ajax({
 				type: "post",
 				url: "{{ route('stock_ajax_distribucion') }}",
 				data: {
 					'_token': $('input[name=_token]').val(),
 					'articulo': articulo2
+					// 'almacen' : almacen
 					},
 				success: function (msg) {
 					// console.log(msg);
+
 					$(`#stock${a}`).val(msg);
+					var msg2 = parseInt(msg) ;
+					$(`#cantidad${a}`).attr('max', msg2 );
 				}
 			});
 		}

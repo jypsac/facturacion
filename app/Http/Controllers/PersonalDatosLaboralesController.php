@@ -74,7 +74,6 @@ class PersonalDatosLaboralesController extends Controller
         $personal->afiliacion_salud=$request->get('afiliacion_salud');
         $personal->banco_renumeracion=$request->get('banco_renumeracion');
         $personal->numero_cuenta=$request->get('numero_cuenta');
-        $personal->notas=$request->get('notas');
         $personal->save();
         // return redirect()->route('personal-datos-laborales.index');
         return redirect()->route('personal-datos-laborales.show', $personal->personal_id);
@@ -123,18 +122,15 @@ class PersonalDatosLaboralesController extends Controller
     {
          // //Personal Estado
         $id_personal_estado=$request->get('id_personal');
-
         $personal_estado=Personal::find($id_personal_estado);
         $personal_estado->estado_trabajador_laboral=$request->get('estado_trabajador');
         $personal_estado->save();
 
         $personal=Personal_datos_laborales::find($id);
-        $id_personal=$request->get('id_personal');
         $personal->fecha_vinculacion=$request->get('fecha_vinculacion');
         $personal->fecha_retiro=$request->get('fecha_retiro');
         $personal->forma_pago=$request->get('forma_pago');
         $personal->salario=$request->get('salario');
-        $personal->categoria_ocupacional=$request->get('categoria_ocupacional');
         $personal->estado_trabajador=$request->get('estado_trabajador');
         $personal->sede=$request->get('sede');
         $personal->turno=$request->get('turno');
@@ -149,10 +145,7 @@ class PersonalDatosLaboralesController extends Controller
         $personal->notas=$request->get('notas');
         $personal->save();
 
-        // return redirect()->route('personal-datos-laborales.index');
-        return redirect()->route('personal-datos-laborales.show', $id_personal);
-        // return $id_personal;
-
+        return redirect()->route('personal.show', $id_personal_estado);
 
     }
 

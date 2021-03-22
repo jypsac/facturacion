@@ -15,12 +15,12 @@ class CreatePersonalTable extends Migration
     {
         Schema::create('personal', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->string('nombres')->unique();
+            $table->string('nombres');
             $table->string('apellidos');
             $table->date('fecha_nacimiento');
-            $table->string('celular');
+            $table->string('celular')->nullable();
             $table->string('telefono')->nullable();
-            $table->string('email')->unique();
+            $table->string('email');
             $table->string('genero');
             $table->string('documento_identificacion');
             $table->string('numero_documento');
@@ -38,6 +38,7 @@ class CreatePersonalTable extends Migration
 
         Schema::create('personal_datos_laborales', function (Blueprint $table) {
             $table->bigIncrements('id');
+
             $table->unsignedBigInteger('personal_id');
             $table->foreign('personal_id')->references('id')->on('personal')->onDelete('cascade');
 

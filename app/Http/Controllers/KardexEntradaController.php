@@ -205,6 +205,7 @@ class KardexEntradaController extends Controller
           $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
           $kardex_entrada_registro->producto_id=$producto_id[$i];
           $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
+          $kardex_entrada_registro->tipo_registro_id = 1;
               //monedas
           if($moneda_principal_id==$kardex_entrada_moneda_id){
             $kardex_entrada_registro->precio_nacional=$request->get('precio')[$i];
