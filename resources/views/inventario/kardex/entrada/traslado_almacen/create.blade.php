@@ -118,7 +118,7 @@
 			<input type='checkbox' class='case'/>
 			</td>";
 			<td>
-			<input list="browsers" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
+			<input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onclick="Clear(this);" autocomplete="off" onkeyup="ajax(${i})">
 			<datalist id="browsers" >
 			@foreach($productos as $producto)
 			<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">

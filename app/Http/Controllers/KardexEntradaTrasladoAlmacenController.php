@@ -158,28 +158,40 @@ class KardexEntradaTrasladoAlmacenController extends Controller
         $cantidad1 = $request->input('cantidad');
         $count_cantidad1=count($cantidad1);
 
-        //validacion para la no incersion de dobles articulos
-        for ($e=0; $e < $count_articulo1; $e++){
-            $articulo_comparacion_inicial=$request->get('articulo')[$e];
-            for ($a=0; $a< $count_articulo1 ; $a++) {
-                if ($a==$e) {
-                    $a++;
-                }else {
-                    $articulo_comparacion=$request->get('articulo')[$a];
-                    if ($articulo_comparacion_inicial=$articulo_comparacion) {
-                        return redirect()->route('kardex-salida.create')->with('repite', 'Datos repetidos - No permitidos!');
-                    }
-                }
-            }
-        }
+        //validacion para la no incersion de dobles articulos (LOADING)
+        // for ($e=0; $e < $count_articulo1; $e++){
+        //     $articulo_comparacion_inicial=$request->get('articulo')[$e];
+        //     for ($a=0; $a< $count_articulo1 ; $a++) {
+        //         if ($a==$e) {
+        //             $a++;
+        //         }else {
+        //             $articulo_comparacion=$request->get('articulo')[$a];
+        //             if ($articulo_comparacion_inicial=$articulo_comparacion) {
+        //                 return "falla";
+        //                 return redirect()->route('kardex-salida.create')->with('repite', 'Datos repetidos - No permitidos!');
+        //             }
+        //         }
+        //     }
+        // }
 
-        //Validacion para cantidad (DAÑADO)
+        //Validacion para cantidad
         for ($i=0; $i < $count_articulo1; $i++){
             $articulo_c=$producto_id[$i];
             $cantidad_c=$request->get('cantidad')[$i];
-            $consulta_cantidad=kardex_entrada_registro::where('producto_id',$articulo_c)->where('estado','1')->sum('cantidad');
+            $almacen_emisor_validacion=$almacen_emisor_json->id;
+
+            $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_emisor_json->id)->get();
+            $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_emisor_json->id)->count();
+            
+            foreach($kardex_entrada as $kardex_entradas){
+                $kardex_entrada_id[]=$kardex_entradas->id;
+            }
+
+            $consulta_cantidad=kardex_entrada_registro::where('producto_id',$articulo_c)->where('estado','1')->whereIn('kardex_entrada_id',$kardex_entrada_id)->sum('cantidad');
+
             if ($cantidad_c > $consulta_cantidad) {
-                return redirect()->route('kardex-salida.create')->with('cantidad', 'no hay cantidad deseada para el articulos');
+                // return "redirect()->route('kardex-salida.create')->with('cantidad', 'no hay cantidad deseada para el articulos');"
+                return "LA CANTIDAD REQUERIDA EXCEDE AL STOCK";
             }
         }
 
@@ -438,6 +450,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     //   $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
                     //   $stock_productos->save();
                 }   
+                //aqui va el observer
               }else{
                   return "Error fatal: por favor comunicarse con soporte inmediatamente";
               }
