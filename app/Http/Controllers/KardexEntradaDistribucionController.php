@@ -145,19 +145,19 @@ class KardexEntradaDistribucionController extends Controller
         $count_cantidad1=count($cantidad1);
 
         //validacion para la no incersion de dobles articulos
-        // for ($e=0; $e < $count_articulo1; $e++){
-        //     $articulo_comparacion_inicial=$request->get('articulo')[$e];
-        //     for ($a=0; $a< $count_articulo1 ; $a++) {
-        //         if ($a==$e) {
-        //             $a++;
-        //         }else {
-        //             $articulo_comparacion=$request->get('articulo')[$a];
-        //             if ($articulo_comparacion_inicial=$articulo_comparacion) {
-        //                 return "dobles articulos error";
-        //             }
-        //         }
-        //     }
-        // }
+        for ($e=0; $e < $count_articulo1; $e++){
+            $articulo_comparacion_inicial=$request->get('articulo')[$e];
+            for ($a=0; $a< $count_articulo1 ; $a++) {
+                if ($a==$e) {
+                    $a++;
+                }else {
+                    $articulo_comparacion=$request->get('articulo')[$a];
+                    if ($articulo_comparacion_inicial==$articulo_comparacion) {
+                        return "dobles articulos error";
+                    }
+                }
+            }
+        }
 
 
         //Validacion para cantidad
