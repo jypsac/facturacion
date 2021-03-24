@@ -43,7 +43,7 @@ class DatabaseSeeder extends Seeder
         $this->call(FacturacionTableSeeder::class);     //innecesario
         $this->call(GarantiaTableSeeder::class);        //innecesario
         $this->call(FormaPagoSeeder::class);        //innecesario
-        // $this->call(TipoRegistroSeeder::class);        
+                
 
     }
 }
