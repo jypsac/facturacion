@@ -225,9 +225,7 @@ class KardexEntradaController extends Controller
           //buscador de producto en la tabla stock productos
           $producto_stock=Stock_producto::where('producto_id',$producto_id[$i])->first();
           if($producto_stock){
-            $stock_productos=Stock_producto::find($producto_stock->id);
-            $stock_productos->stock=$request->get('cantidad')[$i]+$producto_stock->stock;
-            $stock_productos->save();
+
           }else{
             //Agregado de cantidades para la tabla stock productos
             $stock_productos=new Stock_producto();
