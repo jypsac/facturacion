@@ -124,6 +124,9 @@ class ProductosController extends Controller
     public function show($id)
     {
         $producto=Producto::find($id);
+        if ($producto== null) {
+            return response()->view("errors.404_registros_no_foud",[],404);
+        }
         return view('producto_servicios.productos.show',compact('producto'));
     }
 
