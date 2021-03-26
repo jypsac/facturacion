@@ -89,8 +89,8 @@ class KardexEntradaTrasladoAlmacenController extends Controller
         }
 
         for($x=0;$x<$kardex_entrada_count;$x++){
-            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
-                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->get()){
+                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->get();
                 foreach( $nueva as $nuevas){
                     $prod[]=$nuevas->producto_id;
                 }
@@ -262,6 +262,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     $kardex_entrada_registro->cantidad=0;
                     $kardex_entrada_registro->estado_devolucion=1;
                     $kardex_entrada_registro->estado=0;
+                    $kardex_entrada_registro->tipo_registro_id=2;
                     $kardex_entrada_registro->save();
 
                     $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->get();
@@ -276,12 +277,14 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     }
                     
                     for($x=0;$x<$kardex_entrada_count;$x++){
-                        if(Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first()){
-                            $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
+                        if(Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('tipo_registro_id',1)->first()){
+                            $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('tipo_registro_id',1)->first();
                         }
                     }
                     
                     $comparacion=array_reverse($nueva);
+
+                    // return $comparacion;
                     //buble para la cantidad
                     $cantidad_requerida=0;
                         foreach($comparacion as $comparaciones){
@@ -294,9 +297,9 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                         $var_cantidad_entrada=$request->get('cantidad')[$i];
                         $contador=0;
                         foreach ($comparacion as $p) {
-                            if($p->id == $kardex_entrada_registro->id){
-                                continue;
-                            }
+                            // if($p->id == $kardex_entrada_registro->id || $p->tipo_registro_id== 2 || $p->tipo_registro_id== 3){
+                            //     continue;
+                            // }
                             if($p->cantidad+$cantidad<=$p->cantidad_inicial){
                                 $p->cantidad=$logica;
                                 $p->save();

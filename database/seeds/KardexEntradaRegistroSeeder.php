@@ -22,7 +22,7 @@ class KardexEntradaRegistroSeeder extends Seeder
             'cambio' => 3.69,
             'estado' => 1,
             'estado_devolucion' => NULL,
-            'tipo_registro_id' => NULL,
+            'tipo_registro_id' => 1,
             'created_at' => date('2021-03-08 17:05:26'),
            	'updated_at' => date('2021-03-08 17:05:26')
         ]);
@@ -37,7 +37,7 @@ class KardexEntradaRegistroSeeder extends Seeder
             'cambio' => 3.69,
             'estado' => 1,
             'estado_devolucion' => NULL,
-            'tipo_registro_id' => NULL,
+            'tipo_registro_id' => 1,
             'created_at' => date('2021-03-08 17:05:26'),
            	'updated_at' => date('2021-03-08 17:05:26')
         ]);
@@ -52,7 +52,7 @@ class KardexEntradaRegistroSeeder extends Seeder
             'cambio' => 3.69,
             'estado' => 1,
             'estado_devolucion' => NULL,
-            'tipo_registro_id' => NULL,
+            'tipo_registro_id' => 1,
             'created_at' => date('2021-03-08 17:05:51'),
            	'updated_at' => date('2021-03-08 17:05:51')
         ]);
@@ -67,7 +67,7 @@ class KardexEntradaRegistroSeeder extends Seeder
             'cambio' => 3.69,
             'estado' => 1,
             'estado_devolucion' => NULL,
-            'tipo_registro_id' => NULL,
+            'tipo_registro_id' => 1,
             'created_at' => date('2021-03-08 17:05:51'),
            	'updated_at' => date('2021-03-08 17:05:51')
         ]);
@@ -76,13 +76,13 @@ class KardexEntradaRegistroSeeder extends Seeder
             'kardex_entrada_id' => 3,
             'producto_id' => 1,
             'cantidad_inicial' => 100,
-            'precio_nacional' => 50.00,
-            'precio_extranjero' => 13.55,
+            'precio_nacional' => 0,
+            'precio_extranjero' => 0,
             'cantidad' => 100,
             'cambio' => 3.69,
             'estado' => 1,
             'estado_devolucion' => NULL,
-            'tipo_registro_id' => NULL,
+            'tipo_registro_id' => 2,
             'created_at' => date('2021-03-08 17:06:24'),
            	'updated_at' => date('2021-03-08 17:06:24')
         ]);
@@ -97,7 +97,7 @@ class KardexEntradaRegistroSeeder extends Seeder
             'cambio' => 3.69,
             'estado' => 1,
             'estado_devolucion' => NULL,
-            'tipo_registro_id' => NULL,
+            'tipo_registro_id' => 2,
             'created_at' => date('2021-03-08 17:06:24'),
            	'updated_at' => date('2021-03-08 17:06:24')
         ]);
