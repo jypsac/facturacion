@@ -15,6 +15,7 @@ use App\kardex_entrada_registro;
 use Carbon\Carbon;
 use DB;
 use App\Stock_producto;
+use App\Observers\KardexEntradaRegistroObserver;
 use Illuminate\Http\Request;
 
 class KardexEntradaTrasladoAlmacenController extends Controller
@@ -297,16 +298,15 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                         $var_cantidad_entrada=$request->get('cantidad')[$i];
                         $contador=0;
                         foreach ($comparacion as $p) {
-                            // if($p->id == $kardex_entrada_registro->id || $p->tipo_registro_id== 2 || $p->tipo_registro_id== 3){
-                            //     continue;
-                            // }
                             if($p->cantidad+$cantidad<=$p->cantidad_inicial){
                                 $p->cantidad=$logica;
+                                $p->estado=1;
                                 $p->save();
                                 break;
                             }else{
                                 $logica=$logica-$p->cantidad_inicial+$p->cantidad;
                                 $p->cantidad=$p->cantidad_inicial;
+                                $p->estado=1;
                                 $p->save();
                                 continue;
                             }
@@ -448,8 +448,13 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     //   $stock_productos=Stock_producto::find($producto_id[$i]);
                     //   $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
                     //   $stock_productos->save();
+                    $stock_productos=Stock_producto::find($producto_id[$i]);
+                    $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
+                    $stock_productos->save();
                 }   
                 //aqui va el observer
+                // kardex_entrada_registro::observe(KardexEntradaRegistroObserver::class);
+                   
               }else{
                   return "Error fatal: por favor comunicarse con soporte inmediatamente";
               }

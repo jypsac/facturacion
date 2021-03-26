@@ -14,6 +14,7 @@ class KardexEntradaRegistroObserver
      */
     public function created(kardex_entrada_registro $kardexEntradaRegistro)
     {
+        
         // Tipo de cambio -------------------------------------------------------------------------------------
         $stock_productos=Stock_producto::get();
         foreach($stock_productos as $stock_producto){
@@ -36,7 +37,17 @@ class KardexEntradaRegistroObserver
      */
     public function updated(kardex_entrada_registro $kardexEntradaRegistro)
     {
-        //
+         // Tipo de cambio -------------------------------------------------------------------------------------
+         $stock_productos=Stock_producto::get();
+         foreach($stock_productos as $stock_producto){
+             $kardex_entrada_registros_pn=kardex_entrada_registro::where('estado',1)->where('tipo_registro_id',1)->where('producto_id',$stock_producto->producto_id)->avg('precio_nacional');
+             $kardex_entrada_registros_ex=kardex_entrada_registro::where('estado',1)->where('tipo_registro_id',1)->where('producto_id',$stock_producto->producto_id)->avg('precio_extranjero');
+             $kardex_entrada_registros_stock=kardex_entrada_registro::where('estado',1)->where('producto_id',$stock_producto->producto_id)->sum('cantidad');
+             $stock_producto->stock=$kardex_entrada_registros_stock;
+             $stock_producto->precio_nacional=$kardex_entrada_registros_pn;
+             $stock_producto->precio_extranjero=$kardex_entrada_registros_ex;
+             $stock_producto->save();
+         }
     }
 
     /**
