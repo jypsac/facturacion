@@ -291,8 +291,12 @@ class KardexEntradaDistribucionController extends Controller
               // return $comparacion;
               //resta de cantidades de productos para la tabla stock productos
               $stock_productos=Stock_producto::find($producto_id[$i]);
-              $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
-              $stock_productos->save();
+              if(isset($stock_productos)){
+                $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
+                $stock_productos->save();
+              }else{
+
+              }
 
             }
             // return $comparacion;
