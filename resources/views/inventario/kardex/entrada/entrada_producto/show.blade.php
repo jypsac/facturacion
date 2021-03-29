@@ -5,6 +5,8 @@
 @section('breadcrumb2', 'kardex_entradas-Ver')
 @section('href_accion', route('kardex-entrada.index') )
 @section('value_accion', 'Atras')
+@section('button2', 'Nueva Entrada')
+@section('config',route('kardex-entrada.create'))
 
 @section('content')
 

@@ -47,7 +47,7 @@
                                     <td>{{$cliente->numero_documento}}</td>
                                     <td>{{$cliente->email}}</td>
                                     <td>{{$cliente->celular}}</td>
-                                    <td><center><a href="{{ route('cliente.show', $cliente->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
+                                    <td><center><a href="{{ route('cliente.show', $cliente->id) }}" target="_blank"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 </tr>
 
                                 @endforeach

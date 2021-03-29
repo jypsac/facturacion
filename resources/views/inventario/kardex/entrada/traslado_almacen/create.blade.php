@@ -2,6 +2,8 @@
 @section('title', 'kardex Traslado de almacen')
 @section('href_accion', route('kardex-entrada-Traslado-almacen.index'))
 @section('value_accion', 'Atras')
+@section('button2', 'Nuevo Traslado')
+@section('config',route('kardex-entrada-Traslado-almacen.create'))
 @section('content')
 @if($errors->any())
 <div style="padding-top: 20px;">
@@ -200,7 +202,7 @@
 			e.preventDefault();
 
 			var articulo = $('[id="articulo"]').val();
-			
+
 			var almacen_emisor = $('[id="almacen_emisor"]').val();
 				$.ajax({
 					type: "post",

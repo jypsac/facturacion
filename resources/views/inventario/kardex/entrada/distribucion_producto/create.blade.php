@@ -2,6 +2,8 @@
 @section('title', 'kardex Distribucion')
 @section('href_accion', route('kardex-entrada-Distribucion.index'))
 @section('value_accion', 'Atras')
+@section('button2', 'Nueva Distribucion')
+@section('config',route('kardex-entrada-Distribucion.create'))
 @section('content')
 @if($errors->any())
 <div style="padding-top: 20px;">

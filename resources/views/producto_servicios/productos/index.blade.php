@@ -112,7 +112,7 @@
                                 <td><img src="
                                     {{ asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" style="width: 45px;">
                                 </td>
-                                <td><center><a href="{{ route('productos.show', $producto->id) }}"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
+                                <td><center><a href="{{ route('productos.show', $producto->id) }}" target="_blank"><button type="button" class="btn btn-s-m btn-primary">VER</button></a></center></td>
                                 {{-- <td><center><a href="{{ route('productos.edit', $producto->id) }}" ><button type="button" class="btn btn-s-m btn-success">Editar</button></a></center></td> --}}
                                 <td>
                                   @if($producto->estado_anular == '1')
