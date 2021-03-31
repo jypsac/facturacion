@@ -10,6 +10,8 @@ use App\Estado;
 use App\Familia;
 use App\kardex_entrada_registro;
 use App\Moneda;
+use App\Stock_almacen;
+use App\Stock_producto;
 use Illuminate\Http\Request;
 
 class ProductosController extends Controller
@@ -110,6 +112,10 @@ class ProductosController extends Controller
     $producto->foto=$name;
     $producto->estado_anular='1';
     $producto->save();
+
+    Stock_almacen::new($producto->id);
+    Stock_producto::new($producto->id);
+
     return redirect()->route('productos.show',$producto->id);
 
 
