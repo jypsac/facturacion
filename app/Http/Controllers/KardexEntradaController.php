@@ -17,6 +17,7 @@ use App\kardex_entrada_registro;
 use Carbon\Carbon;
 use DB;
 use App\Stock_producto;
+use App\Stock_almacen;
 use Illuminate\Http\Request;
 
 class KardexEntradaController extends Controller
@@ -233,6 +234,7 @@ class KardexEntradaController extends Controller
             $stock_productos->stock=$request->get('cantidad')[$i];
             $stock_productos->save();
           }
+          Stock_almacen::ingreso($almacen,$producto_id[$i],$kardex_entrada_registro->cantidad);
         }
       }else {
         return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');

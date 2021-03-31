@@ -17,6 +17,7 @@ use App\kardex_entrada_registro;
 use Carbon\Carbon;
 use DB;
 use App\Stock_producto;
+use App\Stock_almacen;
 use Illuminate\Http\Request;
 
 class KardexEntradaDistribucionController extends Controller
@@ -290,14 +291,23 @@ class KardexEntradaDistribucionController extends Controller
               }
               // return $comparacion;
               //resta de cantidades de productos para la tabla stock productos
-              $stock_productos=Stock_producto::find($producto_id[$i]);
-              if(isset($stock_productos)){
-                $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
-                $stock_productos->save();
+              $producto_stock=Stock_producto::where('producto_id',$producto_id[$i])->first();
+              if($producto_stock){
+
               }else{
-
+                //Agregado de cantidades para la tabla stock productos
+                $stock_productos=new Stock_producto();
+                $stock_productos->producto_id=$producto_id[$i];
+                $stock_productos->stock=$request->get('cantidad')[$i];
+                $stock_productos->save();
               }
-
+              //$almacen_json = Almacen saliente
+              $almacen_principal = Almacen::where('principal','1')->first();
+              // return $almacen_principal->id;
+              //suma de cantidades a la tabla por alamacen secundario elegido
+              Stock_almacen::ingreso($almacen_json->id,$producto_id[$i],$kardex_entrada_registro->cantidad);
+              //resta de cantidades a la tabla principal
+              Stock_almacen::egreso($almacen_principal->id,$producto_id[$i],$kardex_entrada_registro->cantidad);
             }
             // return $comparacion;
           }else{
