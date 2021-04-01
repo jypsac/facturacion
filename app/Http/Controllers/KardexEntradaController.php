@@ -300,13 +300,15 @@ class KardexEntradaController extends Controller
      */
     public function destroy(Request $request, $id)
     {
-      $bucador_registro_kardex=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
-      foreach ($bucador_registro_kardex as $registro => $ids) {
-        kardex_entrada_registro::whereIn('id', [$ids->id])->update(['estado' => 'ANULADO']);
-      }
       $Kardex_entrada=Kardex_entrada::find($id);
+        $bucador_registro_kardex=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
+        foreach ($bucador_registro_kardex as $registro => $ids) {
+          kardex_entrada_registro::whereIn('id', [$ids->id])->update(['estado' => 'ANULADO']);
+          Stock_almacen::egreso($Kardex_entrada->almacen_id,$ids->producto_id,$ids->cantidad);
+        }
       $Kardex_entrada->estado='ANULADO';
       $Kardex_entrada->save();
+
 
 
       return redirect()->route('kardex-entrada.index');

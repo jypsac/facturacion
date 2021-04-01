@@ -18,7 +18,7 @@
                                     <th>Codigo</th>
                                     <th>Almacen</th>
                                     <th>Ver</th>
-                                    <th>Anular</th>
+                                    {{-- <th>Anular</th> --}}
                                 </tr>
                             </thead>
                             <tbody><span hidden="hidden">{{$i=0}}</span>
@@ -28,7 +28,7 @@
                                 <td>{{$kardex_distribuciones->codigo_guia}}</td>
                                 <td>{{$kardex_distribuciones->almacen->nombre}}</td>
                                 <td><a href="{{ route('kardex-entrada-Distribucion.show', $kardex_distribuciones->id) }}"><button type="button" class="btn btn-s-m btn-info">VER</button></a></td>
-                                <td><button class="btn btn-secondary">Anular</button></td>
+                                {{-- <td><button class="btn btn-secondary">Anular</button></td> --}}
                             </tr>
                             @endforeach
                         </tbody>

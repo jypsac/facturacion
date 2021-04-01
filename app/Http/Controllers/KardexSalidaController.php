@@ -14,6 +14,7 @@ use App\Stock_producto;
 use App\TipoCambio;
 use App\Tipo_Registro;
 use Carbon\Carbon;
+use App\Stock_almacen;
 use Illuminate\Http\Request;
 
 class KardexSalidaController extends Controller
@@ -211,8 +212,8 @@ class KardexSalidaController extends Controller
                     $kardex_salida_registro->cantidad=$request->get('cantidad')[$i];
                     $kardex_salida_registro->save();
 
-                    $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->get();
-                    $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->sum('cantidad');
+                    $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('estado','1')->get();
+                    $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('estado','1')->sum('cantidad');
                     
                     $almacen=$almacen_json->id;
                     $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
@@ -224,8 +225,8 @@ class KardexSalidaController extends Controller
                     }
                     // return $kardex_entrada;
                     for($x=0;$x<$kardex_entrada_count;$x++){
-                        if(Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first()){
-                            $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->first();
+                        if(Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','1')->first()){
+                            $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','1')->first();
                         }
                     }
                     $comparacion=$nueva;
@@ -270,6 +271,9 @@ class KardexSalidaController extends Controller
                     $stock_productos=Stock_producto::find($producto_id[$i]);
                     $stock_productos->stock=$stock_productos->stock-$kardex_salida_registro->cantidad;
                     $stock_productos->save();
+                    // return $kardex_salida_registro->cantidad;
+                    //Resta de stock a productos en Stock Almacen
+                    Stock_almacen::egreso($almacen,$producto_id[$i],$kardex_salida_registro->cantidad);
                     
                 }   
             }else{
