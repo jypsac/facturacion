@@ -2,6 +2,7 @@
 
 namespace App;
 use App\Almacen;
+use App\Producto;
 use Illuminate\Database\Eloquent\Model;
 
 class Stock_almacen extends Model
@@ -23,13 +24,30 @@ class Stock_almacen extends Model
     }
 
     public static function new($producto){
+        $stock_almacen_vacio=Stock_almacen::get();
+        $productos= Producto::get();
         $almacenes=Almacen::get();
-        foreach($almacenes as $almacen){
-            $stock_almacen=new Stock_almacen;
-            $stock_almacen->producto_id=$producto;
-            $stock_almacen->almacen_id=$almacen->id;
-            $stock_almacen->stock=0;
-            $stock_almacen->save();
+
+        if(count($stock_almacen_vacio) == 0){
+            foreach($almacenes as $almacen){
+                foreach($productos as $producto){
+                    $stock_almacen=new Stock_almacen;
+                    $stock_almacen->producto_id=$producto->id;
+                    $stock_almacen->almacen_id=$almacen->id;
+                    $stock_almacen->stock=0;
+                    $stock_almacen->save();
+                } 
+            }
+        }else{
+            foreach($almacenes as $almacen){
+                $stock_almacen=new Stock_almacen;
+                $stock_almacen->producto_id=$producto;
+                $stock_almacen->almacen_id=$almacen->id;
+                $stock_almacen->stock=0;
+                $stock_almacen->save();
+            }
         }
+        
+
     }
 }
