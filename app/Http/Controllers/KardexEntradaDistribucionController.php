@@ -291,16 +291,16 @@ class KardexEntradaDistribucionController extends Controller
               }
               // return $comparacion;
               //resta de cantidades de productos para la tabla stock productos
-              $producto_stock=Stock_producto::where('producto_id',$producto_id[$i])->first();
-              if($producto_stock){
+              // $producto_stock=Stock_producto::where('producto_id',$producto_id[$i])->first();
+              // if($producto_stock){
 
-              }else{
-                //Agregado de cantidades para la tabla stock productos
-                $stock_productos=new Stock_producto();
-                $stock_productos->producto_id=$producto_id[$i];
-                $stock_productos->stock=$request->get('cantidad')[$i];
-                $stock_productos->save();
-              }
+              // }else{
+              //   //Agregado de cantidades para la tabla stock productos
+              //   $stock_productos=new Stock_producto();
+              //   $stock_productos->producto_id=$producto_id[$i];
+              //   $stock_productos->stock=$request->get('cantidad')[$i];
+              //   $stock_productos->save();
+              // }
               //$almacen_json = Almacen saliente
               $almacen_principal = Almacen::where('principal','1')->first();
               // return $almacen_principal->id;
