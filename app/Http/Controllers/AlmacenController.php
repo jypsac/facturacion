@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 use App\Almacen;
 use App\Personal;
+use App\Stock_producto;
+use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
 
 class AlmacenController extends Controller
@@ -49,6 +51,45 @@ class AlmacenController extends Controller
     public function store(Request $request)
     {
 
+        // Tipo de cambio -------------------------------------------------------------------------------------
+        $stock_productos=Stock_producto::get();
+        $stocks_activos = kardex_entrada_registro::where('estado',1)->get();
+        
+        foreach ($stocks_activos as $stocks_activo) {
+           $productos[]=$stocks_activo->producto->id;
+        }
+        $prod=array_unique($productos, SORT_REGULAR);
+        $count_cantidad=count($prod);
+        
+        for($x=0;$x<$count_cantidad;$x++){
+            $cantidad[] = kardex_entrada_registro::where('producto_id',$prod[$x])->sum('cantidad');
+        }
+
+        return $prod;
+        $comparacion= kardex_entrada_registro::where('estado',1)->get();
+        $cantidad=$request->get('cantidad')[$i];
+        $logica=$request->get('cantidad')[$i];
+        if(isset($comparacion)){
+            $var_cantidad_entrada=$request->get('cantidad')[$i];
+            $contador=0;
+            foreach ($comparacion as $p) {
+                if($p->cantidad+$cantidad<=$p->cantidad_inicial){
+                    $p->cantidad=$logica;
+                    $p->estado=1;
+                    $p->save();
+                    break;
+                }else{
+                    $logica=$logica-$p->cantidad_inicial+$p->cantidad;
+                    $p->cantidad=$p->cantidad_inicial;
+                    $p->estado=1;
+                    $p->save();
+                    continue;
+                }
+            }
+        }
+
+
+
         $this->validate($request,[
             'nombre' => ['required'],
             'abreviatura' => ['required'],
@@ -72,6 +113,7 @@ class AlmacenController extends Controller
         $almacen->cod_guia=$request->get('cod_guia');
         $almacen->codigo_sunat=$request->get('codigo_sunat');
         $almacen->estado='0';
+        $almacen->principal='0';
         $almacen->save();
 
         return redirect()->route('almacen.index');

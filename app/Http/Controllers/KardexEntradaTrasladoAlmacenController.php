@@ -448,9 +448,9 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     //   $stock_productos=Stock_producto::find($producto_id[$i]);
                     //   $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
                     //   $stock_productos->save();
-                    $stock_productos=Stock_producto::find($producto_id[$i]);
-                    $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
-                    $stock_productos->save();
+                    // $stock_productos=Stock_producto::where('producto_id',$producto_id[$i]);
+                    // $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
+                    // $stock_productos->save();
                 }   
                 //aqui va el observer
                 // kardex_entrada_registro::observe(KardexEntradaRegistroObserver::class);

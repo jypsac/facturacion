@@ -30,15 +30,15 @@ class DatabaseSeeder extends Seeder
         $this->call(FamiliasTableSeeder::class);        //innecesario
         $this->call(MarcasTableSeeder::class);          //inncesario
         $this->call(ServicioSeeder::class); //innecesario
-        $this->call(ProductosTableSeeder::class);       //inncesario
+        // $this->call(ProductosTableSeeder::class);       //inncesario
         $this->call(ConfigFacturacionElectronicaSeeder::class); //innecesario
         $this->call(MotivoTableSeeder::class);          //innecesario
         $this->call(MotivoTrasladoSeeder::class);   //innecesario
         $this->call(VehiculostableSeeder::class); //innecesario
         $this->call(VentasRegistroTableSeeder::class);  //innecesario
         $this->call(TipoRegistroSeeder::class);   
-        $this->call(KardexEntradaSeeder::class);    //inncesario
-        $this->call(KardexEntradaRegistroSeeder::class);    //innceario
+        // $this->call(KardexEntradaSeeder::class);    //inncesario
+        // $this->call(KardexEntradaRegistroSeeder::class);    //innceario
         $this->call(ClientesSeeder::class);             //innesa
         $this->call(FacturacionTableSeeder::class);     //innecesario
         $this->call(GarantiaTableSeeder::class);        //innecesario

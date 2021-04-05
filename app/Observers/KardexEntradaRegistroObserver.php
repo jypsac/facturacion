@@ -40,10 +40,17 @@ class KardexEntradaRegistroObserver
          // Tipo de cambio -------------------------------------------------------------------------------------
          $stock_productos=Stock_producto::get();
          $stocks_activos = kardex_entrada_registro::where('estado',1)->get();
-         foreach ($stocks_activos as $stocks_activo) {
-             $array[] = array("producto"=>$stocks_activo->producto_id,"cantidad"=>$stocks_activo->cantidad);
+         foreach ($stocks_activos as $num => $stocks_activo) {
+            $clave = array_search('verde', $array_producto);
+            if($clave){
+                $array_producto[] = array("producto"=>$stocks_activo->producto_id,"cantidad"=>$stocks_activo->cantidad);
+            }else{
+                $array_producto[] = array("producto"=>$stocks_activo->producto_id,"cantidad"=>$stocks_activo->cantidad);
+            }
+            
          }
          json_encode($array);
+
          $stocks_p=stocks_activo::get();
          $array2[] = array("producto"=>$stocks_activo->producto_id,"cantidad"=>$stocks_activo->cantidad);
 
