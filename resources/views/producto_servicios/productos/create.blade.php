@@ -38,7 +38,7 @@
               </div> -->
 
               <label class="col-sm-2 col-form-label">Codigo Alernativo:</label>
-              <div class="col-sm-4"><input type="text" class="form-control" name="codigo_original" ></div>
+              <div class="col-sm-4"><input type="text" class="form-control" name="codigo_original" autocomplete="off"></div>
 
               <label class="col-sm-2 col-form-label">Categoria:</label>
               <div class="col-sm-4">
@@ -85,7 +85,7 @@
               <div class="panel-body" align="left">
                <div class="row">
                 <label class="col-sm-2 col-form-label">Nombre:</label>
-                <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto" required="required"></div>
+                <div class="col-sm-10"><input type="text" class="form-control" name="nombre" placeholder="Nombre del Producto" required="required" autocomplete="off"></div>
 
                 <label class="col-sm-2 col-form-label">Descripcion:</label>
                 <div class="col-sm-10"><textarea type="text" class="form-control" name="descripcion" rows="2" required="required" ></textarea ></div>
@@ -129,7 +129,7 @@
             <div class="input-group-prepend">
               <span class="input-group-addon">%</span>
             </div>
-            <input type="text" class="form-control" name="descuento1" required="required" value="0">
+            <input type="text" class="form-control" name="descuento1" required="required" value="0" autocomplete="off">
           </div>
         </div>
 
@@ -139,7 +139,7 @@
            <div class="input-group-prepend">
              <span class="input-group-addon">%</span>
            </div>
-           <input type="text" class="form-control" name="descuento2" required="required" value="0">
+           <input type="text" class="form-control" name="descuento2" required="required" value="0" autocomplete="off">
          </div>
        </div>
 
@@ -150,7 +150,7 @@
         <div class="input-group-prepend">
           <span class="input-group-addon">%</span>
         </div>
-        <input type="text" class="form-control" name="descuento_maximo" required="required" value="0">
+        <input type="text" class="form-control" name="descuento_maximo" required="required" value="0" autocomplete="off">
       </div>
     </div>
 
@@ -159,7 +159,7 @@
       <div class="input-group-prepend">
         <span class="input-group-addon">%</span>
       </div>
-      <input type="text" class="form-control" name="utilidad" required="required" value="0">
+      <input type="text" class="form-control" name="utilidad" required="required" value="0" autocomplete="off">
     </div>
 
   </div>
@@ -179,7 +179,7 @@
 <label class="col-sm-2 col-form-label">Peso:</label>
 <div class="col-sm-2">
   <div class="input-group m-b">
-   <input type="number" class="form-control" name="peso" required="required" value="0">
+   <input type="number" class="form-control" name="peso" required="required" value="0" autocomplete="off">
  </div>
 </div>
 <div class="col-sm-2">
@@ -209,10 +209,10 @@
  </div>
 
  <label class="col-sm-2 col-form-label">Stok Minimo:</label>
- <div class="col-sm-4"><input type="text" class="form-control" name="stock_minimo" required="" value="0">
+ <div class="col-sm-4"><input type="text" class="form-control" name="stock_minimo" required="" value="0" autocomplete="off">
  </div>
  <label class="col-sm-2 col-form-label">Stock Maximo:</label>
- <div class="col-sm-4"><input type="text" class="form-control" name="stock_maximo" required="" value="0" >
+ <div class="col-sm-4"><input type="text" class="form-control" name="stock_maximo" required="" value="0" autocomplete="off" >
  </div>
 
 </div>

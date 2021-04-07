@@ -50,6 +50,9 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
+
+
+        
         // return "limite";
         $this->validate($request,[
             'nombre' => ['required'],
