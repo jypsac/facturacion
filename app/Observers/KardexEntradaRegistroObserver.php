@@ -37,7 +37,7 @@ class KardexEntradaRegistroObserver
         // $array_registros[]=3;
         for($x=0;$x<$count_cantidad;$x++){
             while($cantidad[$x] > $contador){
-                $kardex_almacen_principal_desc= kardex_entrada_registro::where('producto_id',$prod[$x])->where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->whereNotIn('id',$array_registros)->get()->first();
+                $kardex_almacen_principal_desc= kardex_entrada_registro::where('producto_id',$prod[$x])->where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->whereNotIn('id',$array_registros)->first();
                 $contador=$contador+$kardex_almacen_principal_desc->cantidad_inicial;
                 $array_registros[]=$kardex_almacen_principal_desc->id;
             }
