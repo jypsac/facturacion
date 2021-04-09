@@ -15,6 +15,8 @@ class AddFeaturesToKardexEntrada extends Migration
     {
         Schema::table('kardex_entrada', function (Blueprint $table) {
             $table->foreign('tipo_registro_id')->references('id')->on('tipo_registro')->onDelete('cascade');
+            $table->foreign('almacen_emisor_id')->references('id')->on('almacen')->onDelete('cascade');
+            $table->foreign('almacen_receptor_id')->references('id')->on('almacen')->onDelete('cascade');
         });
     }
 
@@ -28,6 +30,12 @@ class AddFeaturesToKardexEntrada extends Migration
         Schema::table('kardex_entrada', function (Blueprint $table) {
             $table->dropForeign('kardex_entrada_tipo_registro_id_foreign');
             $table->dropColumn('tipo_registro_id');
+
+            $table->dropForeign('kardex_entrada_almacen_emisor_id_foreign');
+            $table->dropColumn('almacen_emisor_id');
+
+            $table->dropForeign('kardex_entrada_almacen_receptor_id_foreign');
+            $table->dropColumn('almacen_receptor_id');
         });
     }
 }

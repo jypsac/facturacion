@@ -222,23 +222,25 @@ class KardexEntradaTrasladoAlmacenController extends Controller
         }
 
         if($count_articulo = $count_cantidad){
-          $cantidad = $request->input('cantidad');
-          $count_cantidad=count($cantidad);
+            $cantidad = $request->input('cantidad');
+            $count_cantidad=count($cantidad);
 
-          $kardex_entrada=new Kardex_entrada();
-          $kardex_entrada->motivo_id=1;
-          $kardex_entrada->codigo_guia=$codigo_guia;
-          $kardex_entrada->provedor_id=1;
-          $kardex_entrada->guia_remision="NN";
-          $kardex_entrada->categoria_id='1';
-          $kardex_entrada->factura="0";
-          $kardex_entrada->almacen_id=$almacen_json->id;
-          $kardex_entrada->moneda_id=1;
-          $kardex_entrada->tipo_registro_id=2;
-          $kardex_entrada->estado=1;
-          $kardex_entrada->user_id=auth()->user()->id;
-          $kardex_entrada->informacion="0";
-          $kardex_entrada->save();
+            $kardex_entrada=new Kardex_entrada();
+            $kardex_entrada->motivo_id=1;
+            $kardex_entrada->codigo_guia=$codigo_guia;
+            $kardex_entrada->provedor_id=1;
+            $kardex_entrada->guia_remision="NN";
+            $kardex_entrada->categoria_id='1';
+            $kardex_entrada->factura="0";
+            $kardex_entrada->almacen_id=$almacen_json->id;
+            $kardex_entrada->almacen_emisor_id=$almacen_emisor_json->id;
+            $kardex_entrada->almacen_receptor_id=$almacen_json->id;
+            $kardex_entrada->moneda_id=1;
+            $kardex_entrada->tipo_registro_id=2;
+            $kardex_entrada->estado=1;
+            $kardex_entrada->user_id=auth()->user()->id;
+            $kardex_entrada->informacion="0";
+            $kardex_entrada->save();
 
         
         }
@@ -364,6 +366,13 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                             
                         }
                     }
+
+                    //suma de cantidades a la tabla por alamacen secundario elegido
+                    // Stock_almacen::ingreso(1,$producto_id[$i],$kardex_entrada_registro->cantidad);
+                    // //resta de cantidades a la tabla principal
+                    // Stock_almacen::egreso(1,$producto_id[$i],$kardex_entrada_registro->cantidad);
+                Stock_almacen::ingreso(1,$producto_id[$i],$kardex_entrada_registro->cantidad);
+                Stock_almacen::egreso($almacen_emisor_json->id,$producto_id[$i],$kardex_entrada_registro->cantidad);
                 }
 
             }else{
@@ -451,10 +460,10 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     // $stock_productos=Stock_producto::where('producto_id',$producto_id[$i]);
                     // $stock_productos->stock=$stock_productos->stock-$kardex_entrada_registro->cantidad;
                     // $stock_productos->save();
+                    Stock_almacen::ingreso($almacen_json->id,$producto_id[$i],$kardex_entrada_registro->cantidad);
+                    Stock_almacen::egreso($almacen_emisor_json->id,$producto_id[$i],$kardex_entrada_registro->cantidad);
                 }   
-                //aqui va el observer
-                // kardex_entrada_registro::observe(KardexEntradaRegistroObserver::class);
-                   
+            
               }else{
                   return "Error fatal: por favor comunicarse con soporte inmediatamente";
               }

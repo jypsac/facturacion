@@ -28,6 +28,9 @@ class AddForeignKeyKardexEntradaTable extends Migration
             $table->unsignedBigInteger('almacen_id');
             $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
 
+            $table->unsignedBigInteger('almacen_emisor_id');
+            $table->unsignedBigInteger('almacen_receptor_id');
+
             $table->unsignedBigInteger('moneda_id');
             $table->foreign('moneda_id')->references('id')->on('monedas')->onDelete('cascade');
 

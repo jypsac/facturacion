@@ -176,6 +176,8 @@ class KardexEntradaController extends Controller
       $kardex_entrada->categoria_id='2';
       $kardex_entrada->factura=$request->get('factura');
       $kardex_entrada->almacen_id=$request->get('almacen');
+      $kardex_entrada->almacen_emisor_id=$request->get('almacen');
+      $kardex_entrada->almacen_receptor_id=$request->get('almacen');
       $kardex_entrada->moneda_id=$request->get('moneda');
       $kardex_entrada->tipo_registro_id=1;
       $kardex_entrada->estado=1;

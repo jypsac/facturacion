@@ -215,6 +215,8 @@ class KardexEntradaDistribucionController extends Controller
           $kardex_entrada->categoria_id='1';
           $kardex_entrada->factura="0";
           $kardex_entrada->almacen_id=$almacen_json->id;
+          $kardex_entrada->almacen_emisor_id=1;
+          $kardex_entrada->almacen_receptor_id=$almacen_json->id;
           $kardex_entrada->moneda_id=1;
           $kardex_entrada->tipo_registro_id=3;
           $kardex_entrada->estado=1;

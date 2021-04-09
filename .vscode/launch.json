@@ -4,6 +4,42 @@
     // Para más información, visite: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+    {
+        "name": "(gdb) Adjuntar",
+        "type": "cppdbg",
+        "request": "attach",
+        "program": "Escriba el nombre del programa; por ejemplo, ${workspaceFolder}/a.exe.",
+        "processId": "${command:pickProcess}",
+        "MIMode": "gdb",
+        "miDebuggerPath": "/path/to/gdb",
+        "setupCommands": [
+            {
+                "description": "Habilitar la impresión con sangría para gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+            }
+        ]
+    },
+    {
+        "name": "(gdb) Iniciar",
+        "type": "cppdbg",
+        "request": "launch",
+        "program": "Escriba el nombre del programa; por ejemplo, ${workspaceFolder}/a.exe.",
+        "args": [],
+        "stopAtEntry": false,
+        "cwd": "${workspaceFolder}",
+        "environment": [],
+        "externalConsole": false,
+        "MIMode": "gdb",
+        "miDebuggerPath": "/path/to/gdb",
+        "setupCommands": [
+            {
+                "description": "Habilitar la impresión con sangría para gdb",
+                "text": "-enable-pretty-printing",
+                "ignoreFailures": true
+            }
+        ]
+    },
         {
             "name": "Listen for Xdebug",
             "type": "php",
