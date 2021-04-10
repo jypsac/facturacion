@@ -238,6 +238,7 @@ class KardexEntradaController extends Controller
           }
           Stock_almacen::ingreso($almacen,$producto_id[$i],$kardex_entrada_registro->cantidad);
         }
+        kardex_entrada_registro::stock_producto_precio();
       }else {
         return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');
       }

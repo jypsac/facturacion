@@ -52,7 +52,7 @@
 								<tr>
 									<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()"  /></th>
 									<th style="width: auto">Producto  </th>
-									<th style="width: 100px">Stok</th>
+									<th style="width: 100px">Stock</th>
 									<th style="width: 100px">Cantidad</th>
 								</tr>
 							</thead>
@@ -68,9 +68,9 @@
 											</datalist>
 										</td>
 										<td>
-											<input type='text' id='stock0' name='stock[]' class="stock0 form-control" required/>
+											<input type='text' id='stock0' name='stock[]' class="stock0 form-control" readonly="" required/>
 										</td>
-										<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/>
+										<td><input type='number' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/>
 										</td>
 									</tr>
 								</tbody>
@@ -86,6 +86,10 @@
 	</div>
 	<style type="text/css">
 		.form-control{border-radius: 5px;}
+		input[type=number]::-webkit-inner-spin-button,
+        input[type=number]::-webkit-outer-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
 	</style>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 	<script src="{{ asset('js/popper.min.js') }}"></script>
@@ -214,6 +218,8 @@
 						},
 					success: function (msg) {
 						$('#stock0').val(msg);
+						var msg2 = parseInt(msg) ;
+						$('#cantidad').attr('max', msg2 );
 					}
 				});
 			});
@@ -232,6 +238,8 @@
 					},
 				success: function (msg) {
 					$(`#stock${a}`).val(msg);
+					var msg2 = parseInt(msg) ;
+					$(`#cantidad${a}`).attr('max', msg2 );
 				}
 			});
 		}

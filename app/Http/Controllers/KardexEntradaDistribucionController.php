@@ -311,7 +311,7 @@ class KardexEntradaDistribucionController extends Controller
               //resta de cantidades a la tabla principal
               Stock_almacen::egreso($almacen_principal->id,$producto_id[$i],$kardex_entrada_registro->cantidad);
             }
-            // return $comparacion;
+            kardex_entrada_registro::stock_producto_precio();
           }else{
               return "Error fatal: por favor comunicarse con soporte inmediatamente";
           }

@@ -14,6 +14,7 @@ use App\User;
 use App\kardex_entrada_registro;
 use Carbon\Carbon;
 use DB;
+use App\Stock_almacen;
 use App\Stock_producto;
 use App\Observers\KardexEntradaRegistroObserver;
 use Illuminate\Http\Request;
@@ -374,7 +375,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                 Stock_almacen::ingreso(1,$producto_id[$i],$kardex_entrada_registro->cantidad);
                 Stock_almacen::egreso($almacen_emisor_json->id,$producto_id[$i],$kardex_entrada_registro->cantidad);
                 }
-
+                kardex_entrada_registro::stock_producto_precio();
             }else{
                 return "Error fatal: por favor comunicarse con soporte inmediatamente";
             }
@@ -463,7 +464,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     Stock_almacen::ingreso($almacen_json->id,$producto_id[$i],$kardex_entrada_registro->cantidad);
                     Stock_almacen::egreso($almacen_emisor_json->id,$producto_id[$i],$kardex_entrada_registro->cantidad);
                 }   
-            
+            kardex_entrada_registro::stock_producto_precio();
               }else{
                   return "Error fatal: por favor comunicarse con soporte inmediatamente";
               }
