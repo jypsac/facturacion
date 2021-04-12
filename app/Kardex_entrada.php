@@ -23,6 +23,8 @@ class Kardex_entrada extends Model
     public function moneda(){
         return $this->belongsTo(Moneda::class,'moneda_id');
     }
-
+    public function kardex_entrada_id(){
+        return $this->belongsTo(kardex_entrada_registro::class,'kardex_entrada_id');
+    }
 
 }

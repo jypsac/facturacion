@@ -511,11 +511,13 @@ class FacturacionController extends Controller
                 }
                 // return $kardex_entrada;
                 for($x=0;$x<$kardex_entrada_count;$x++){
-                    if(Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first()){
-                        $nueva[]=Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first();
+                    if(Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first()){
+                        $nueva[]=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first();
                     }
                 }
-
+                // $kardex_e_r= Kardex_entrada_registro::first();
+                // $kardex_entrada_reg =Kardex_entrada_registro::where('producto_id',1)->where('kardex_entrada_id',$kardex_e_r->kardex_entrada_reg_id->id)->first();
+                // return $kardex_entrada_reg;
                 // return $nueva;
                 $comparacion=$nueva;
                 //buble para la cantidad
@@ -553,9 +555,6 @@ class FacturacionController extends Controller
                             }
                         }
                     }
-                    $stock_productos=Stock_producto::find($producto_id[$i]);
-                    $stock_productos->stock=$stock_productos->stock-$facturacion_registro->cantidad;
-                    $stock_productos->save();
                     //Resta en la tabla stock almacen
                     Stock_almacen::egreso($facturacion->almacen_id,$producto_id[$i],$facturacion_registro->cantidad);
             }

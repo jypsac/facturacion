@@ -9,11 +9,13 @@ class kardex_entrada_registro extends Model
     protected $table = 'kardex_entrada_registro';
 
     protected $guarded = [];
-    
+
      public function producto(){
         return $this->belongsTo(Producto::class,'producto_id');
-    } 
-    
+    }
+    public function kardex_entrada_reg_id(){
+        return $this->belongsTo(Kardex_entrada::class,'kardex_entrada_id');
+    }
     public static function stock_producto_precio(){
 
         $stock_productos=Stock_producto::get();
