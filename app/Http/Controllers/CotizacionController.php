@@ -1277,6 +1277,7 @@ public function facturar_store(Request $request)
             $stock=Stock_almacen::where('producto_id',$p[$index])->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
             $facturacion_registro->stock=$stock;
                 //precio --------------------------------------------------------
+
             if($moneda->id == $moneda_registrada){
                 if ($moneda->tipo == 'nacional') {
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
@@ -1333,6 +1334,63 @@ public function facturar_store(Request $request)
                 $facturacion_registro->precio_unitario_comi=$array+($array*$comi/100);
             }
             $facturacion_registro->save();
+
+            $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
+            $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
+
+            //return $kardex_entrada;
+            foreach($kardex_entrada as $kardex_entradas){
+                $kadex_entrada_id[]=$kardex_entradas->id;
+            }
+            // return $kardex_entrada;
+            for($x=0;$x<$kardex_entrada_count;$x++){
+                if(Kardex_entrada_registro::where('producto_id',$p[$index])->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first()){
+                    $nueva[]=Kardex_entrada_registro::where('producto_id',$p[$index])->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first();
+                }
+            }
+            // return $nueva;
+            // return $nueva;
+            $comparacion=$nueva;
+            //buble para la cantidad
+            $cantidad=0;
+            foreach($comparacion as $comparaciones){
+                $cantidad=$comparaciones->cantidad+$cantidad;
+            }
+            if(isset($comparacion)){
+                $var_cantidad_entrada=$facturacion_registro->cantidad;
+                $contador=0;
+                foreach ($comparacion as $p_com) {
+                    if($p_com->cantidad>$var_cantidad_entrada){
+                        $cantidad_mayor=$p_com->cantidad;
+                        $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                        $p_com->cantidad=$cantidad_final;
+                        if($cantidad_final==0){
+                            $p_com->estado=0;
+                            $p_com->save();
+                            break;
+                        }else{
+                            $p_com->save();
+                            break;
+                        }
+                    }elseif($p_com->cantidad==$var_cantidad_entrada){
+                        $p_com->cantidad=0;
+                        $p_com->estado=0;
+                        $p_com->save();
+                        break;
+                    }
+                    else{
+                        $var_cantidad_entrada=$var_cantidad_entrada-$p_com->cantidad;
+                        $p_com->cantidad=0;
+                        $p_com->estado=0;
+                        $p_com->save();
+                    }
+                }
+            }
+            $stock_productos=Stock_producto::find($p[$index]);
+            $stock_productos->stock=$stock_productos->stock-$facturacion_registro->cantidad;
+            $stock_productos->save();
+            //Resta en la tabla stock almacen
+            Stock_almacen::egreso($cotizacion->almacen_id,$p[$index],$facturacion_registro->cantidad);
         }
     }
 

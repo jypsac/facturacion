@@ -60,7 +60,7 @@ class KardexSalidaController extends Controller
             }
         }
         $stock=Kardex_entrada_registro::whereIn('id',$id_kardex_entrada_registro)->where('estado',1)->sum('cantidad');
-        
+
         return $stock;
     }
 
@@ -75,7 +75,7 @@ class KardexSalidaController extends Controller
         $id=explode(" ",$almacen_p);
         $almacen_buscar=Almacen::where('id',$id[0])->first();
         $almacen_nombre=$almacen_buscar->nombre;
-        
+
         $almacen_p=$id[0];
         $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
         $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
@@ -92,7 +92,7 @@ class KardexSalidaController extends Controller
                 }
             }
         }
-        
+
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
             return "no hay prodcutos en el almacen seleccionado";
@@ -107,7 +107,7 @@ class KardexSalidaController extends Controller
                 $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
             }
         }
-        
+
         $motivos=Motivo::all();
         $almacenes=Almacen::all();
 
@@ -178,7 +178,7 @@ class KardexSalidaController extends Controller
         if(!$cambio){
             return "error por no hacer el cambio diario";
         }
-        
+
 
         $articulo = $request->input('articulo');
         $count_articulo=count($articulo);
@@ -205,7 +205,7 @@ class KardexSalidaController extends Controller
 
             if($count_articulo = $count_cantidad ){
                 for($i=0;$i<$count_articulo;$i++){
-                    
+
                     $kardex_salida_registro=new kardex_salida_registro();
                     $kardex_salida_registro->kardex_salida_id=$kardex_salida->id;
                     $kardex_salida_registro->producto_id=$producto_id[$i];
@@ -214,7 +214,7 @@ class KardexSalidaController extends Controller
 
                     $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('estado','1')->get();
                     $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('estado','1')->sum('cantidad');
-                    
+
                     $almacen=$almacen_json->id;
                     $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
                     $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
@@ -235,7 +235,7 @@ class KardexSalidaController extends Controller
                     foreach($comparacion as $comparaciones){
                         $cantidad=$comparaciones->cantidad+$cantidad;
                     }
-                    
+
                     if(isset($comparacion)){
                         $var_cantidad_entrada=$kardex_salida_registro->cantidad;
                         $contador=0;
@@ -264,7 +264,7 @@ class KardexSalidaController extends Controller
                                 $p->estado=0;
                                 $p->save();
                             }
-                            
+
                         }
                     }
                     //resta de cantidades de productos para la tabla stock productos
@@ -274,8 +274,8 @@ class KardexSalidaController extends Controller
                     // return $kardex_salida_registro->cantidad;
                     //Resta de stock a productos en Stock Almacen
                     Stock_almacen::egreso($almacen,$producto_id[$i],$kardex_salida_registro->cantidad);
-                    
-                }   
+
+                }
             }else{
                 return "Error fatal: por favor comunicarse con soporte inmediatamente";
             }
