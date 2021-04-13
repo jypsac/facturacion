@@ -221,6 +221,7 @@ class KardexEntradaController extends Controller
             $kardex_entrada_registro->precio_nacional=$precio_extranjero*$cambio->venta;
             $kardex_entrada_registro->cambio=$cambio->venta;
           }
+          $kardex_entrada_registro->almacen_id=$kardex_entrada->almacen_id;
           $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
           $kardex_entrada_registro->estado=1;
           $kardex_entrada_registro->save();

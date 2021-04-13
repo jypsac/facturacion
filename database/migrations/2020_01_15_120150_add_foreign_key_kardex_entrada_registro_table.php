@@ -28,6 +28,8 @@ class AddForeignKeyKardexEntradaRegistroTable extends Migration
             $table->double('cambio',10,2);
             $table->string('estado');
             $table->string('estado_devolucion')->nullable();
+            $table->unsignedBigInteger('almacen_id');
+            $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
             $table->unsignedBigInteger('tipo_registro_id')->nullable();
 
             $table->timestamps();

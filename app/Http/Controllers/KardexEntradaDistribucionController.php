@@ -245,6 +245,7 @@ class KardexEntradaDistribucionController extends Controller
               $kardex_entrada_registro->estado=1;
               // $kardex_entrada_registro->estado_devolucion;
               $kardex_entrada_registro->tipo_registro_id=3;
+              $kardex_entrada_registro->almacen_id=$kardex_entrada->almacen_id;
               $kardex_entrada_registro->save();
 
               $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_entrada_registro->producto_id)->where('tipo_registro_id','=',1)->get();

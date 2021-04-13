@@ -265,6 +265,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     $kardex_entrada_registro->cambio=$cambio->compra;
                     $kardex_entrada_registro->cantidad=0;
                     $kardex_entrada_registro->estado_devolucion=1;
+                    $kardex_entrada_registro->almacen_id=$kardex_entrada->almacen_id;
                     $kardex_entrada_registro->estado=0;
                     $kardex_entrada_registro->tipo_registro_id=2;
                     $kardex_entrada_registro->save();
@@ -388,6 +389,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     $kardex_entrada_registro->precio_extranjero=0;
                     $kardex_entrada_registro->cambio=$cambio->compra;
                     $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
+                    $kardex_entrada_registro->almacen_id=$kardex_entrada->almacen_id;
                     $kardex_entrada_registro->estado_devolucion=0;
                     $kardex_entrada_registro->estado=1;
                     $kardex_entrada_registro->save();

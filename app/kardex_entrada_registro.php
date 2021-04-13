@@ -16,6 +16,7 @@ class kardex_entrada_registro extends Model
     public function kardex_entrada_reg_id(){
         return $this->belongsTo(Kardex_entrada::class,'kardex_entrada_id');
     }
+    
     public static function stock_producto_precio(){
 
         $stock_productos=Stock_producto::get();

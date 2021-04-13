@@ -501,6 +501,8 @@ class FacturacionController extends Controller
                 }
                 $facturacion_registro->save();
 
+                //empieza la busqueda total
+
                 $almacen=$facturacion->almacen_id;
                 $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
                 $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
@@ -515,10 +517,15 @@ class FacturacionController extends Controller
                         $nueva[]=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first();
                     }
                 }
+
+                
                 // $kardex_e_r= Kardex_entrada_registro::first();
-                // $kardex_entrada_reg =Kardex_entrada_registro::where('producto_id',1)->where('kardex_entrada_id',$kardex_e_r->kardex_entrada_reg_id->id)->first();
+                // $kardex_entrada_reg =Kardex_entrada_registro::where('producto_id',1)->whereIn('kardex_entrada_id',$kardex_e_r->kardex_entrada_reg_id->id)->get();
                 // return $kardex_entrada_reg;
                 // return $nueva;
+
+                // dd($kardex_entrada_reg);
+                // return "nue";
                 $comparacion=$nueva;
                 //buble para la cantidad
                 $cantidad=0;
