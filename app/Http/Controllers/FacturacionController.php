@@ -504,66 +504,62 @@ class FacturacionController extends Controller
                 //empieza la busqueda total
 
                 $almacen=$facturacion->almacen_id;
-                $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
-                $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
 
-                //return $kardex_entrada;
-                foreach($kardex_entrada as $kardex_entradas){
-                    $kadex_entrada_id[]=$kardex_entradas->id;
-                }
-                // return $kardex_entrada;
-                for($x=0;$x<$kardex_entrada_count;$x++){
-                    if(Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first()){
-                        $nueva[]=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first();
-                    }
-                }
+                // $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
+                // $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
 
-                
-                // $kardex_e_r= Kardex_entrada_registro::first();
-                // $kardex_entrada_reg =Kardex_entrada_registro::where('producto_id',1)->whereIn('kardex_entrada_id',$kardex_e_r->kardex_entrada_reg_id->id)->get();
-                // return $kardex_entrada_reg;
-                // return $nueva;
+                // //return $kardex_entrada;
+                // foreach($kardex_entrada as $kardex_entradas){
+                //     $kadex_entrada_id[]=$kardex_entradas->id;
+                // }
+                // // return $kardex_entrada;
+                // for($x=0;$x<$kardex_entrada_count;$x++){
+                //     if(Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first()){
+                //         $nueva[]=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first();
+                //     }
+                // }
 
-                // dd($kardex_entrada_reg);
-                // return "nue";
+                $nueva=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('almacen_id',$almacen)->where('estado',1)->get();
+
+
                 $comparacion=$nueva;
                 //buble para la cantidad
                 $cantidad=0;
                 foreach($comparacion as $comparaciones){
                     $cantidad=$comparaciones->cantidad+$cantidad;
                 }
-                    if(isset($comparacion)){
-                        $var_cantidad_entrada=$facturacion_registro->cantidad;
-                        $contador=0;
-                        foreach ($comparacion as $p) {
-                            if($p->cantidad>$var_cantidad_entrada){
-                                $cantidad_mayor=$p->cantidad;
-                                $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
-                                $p->cantidad=$cantidad_final;
-                                if($cantidad_final==0){
-                                    $p->estado=0;
-                                    $p->save();
-                                    break;
-                                }else{
-                                    $p->save();
-                                    break;
-                                }
-                            }elseif($p->cantidad==$var_cantidad_entrada){
-                                $p->cantidad=0;
+                if(isset($comparacion)){
+                    $var_cantidad_entrada=$facturacion_registro->cantidad;
+                    $contador=0;
+                    foreach ($comparacion as $p) {
+                        if($p->cantidad>$var_cantidad_entrada){
+                            $cantidad_mayor=$p->cantidad;
+                            $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                            $p->cantidad=$cantidad_final;
+                            if($cantidad_final==0){
                                 $p->estado=0;
                                 $p->save();
                                 break;
-                            }
-                            else{
-                                $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
-                                $p->cantidad=0;
-                                $p->estado=0;
+                            }else{
                                 $p->save();
+                                break;
                             }
+                        }elseif($p->cantidad==$var_cantidad_entrada){
+                            $p->cantidad=0;
+                            $p->estado=0;
+                            $p->save();
+                            break;
+                        }
+                        else{
+                            $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+                            $p->cantidad=0;
+                            $p->estado=0;
+                            $p->save();
                         }
                     }
-                    //Resta en la tabla stock almacen
-                    Stock_almacen::egreso($facturacion->almacen_id,$producto_id[$i],$facturacion_registro->cantidad);
+                }
+                //Resta en la tabla stock almacen
+                Stock_almacen::egreso($facturacion->almacen_id,$producto_id[$i],$facturacion_registro->cantidad);
             }
         }else {
             return redirect()->route('facturacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
