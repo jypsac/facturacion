@@ -372,7 +372,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     Stock_almacen::ingreso(1,$producto_id[$i],$cant);
                     Stock_almacen::egreso($almacen_emisor_json->id,$producto_id[$i],$cant);
                 }
-                kardex_entrada_registro::stock_producto_precio();
+                // kardex_entrada_registro::stock_producto_precio();
             }else{
                 return "Error fatal: por favor comunicarse con soporte inmediatamente";
             }
@@ -456,7 +456,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     Stock_almacen::ingreso($almacen_json->id,$producto_id[$i],$cant);
                     Stock_almacen::egreso($almacen_emisor_json->id,$producto_id[$i],$cant);
                 }
-            kardex_entrada_registro::stock_producto_precio();
+            // kardex_entrada_registro::stock_producto_precio();
               }else{
                   return "Error fatal: por favor comunicarse con soporte inmediatamente";
               }

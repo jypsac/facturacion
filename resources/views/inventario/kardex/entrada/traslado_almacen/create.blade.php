@@ -131,9 +131,9 @@
 			@endforeach
 			</datalist>
 			</td>
-			<td><input type='text' id='stock${i}' name='stock[]' class="stock${i} form-control"  required/></td>
+			<td><input type='text' id='stock${i}' name='stock[]' class="stock${i} form-control" readonly=""  required/></td>
 			<td>
-			<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
+			<input type='number' id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
 			</td>
 			</tr>`;
 			$('table').append(data);

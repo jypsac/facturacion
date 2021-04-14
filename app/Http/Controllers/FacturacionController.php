@@ -505,22 +505,7 @@ class FacturacionController extends Controller
 
                 $almacen=$facturacion->almacen_id;
 
-                // $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
-                // $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
-
-                // //return $kardex_entrada;
-                // foreach($kardex_entrada as $kardex_entradas){
-                //     $kadex_entrada_id[]=$kardex_entradas->id;
-                // }
-                // // return $kardex_entrada;
-                // for($x=0;$x<$kardex_entrada_count;$x++){
-                //     if(Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first()){
-                //         $nueva[]=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first();
-                //     }
-                // }
-
                 $nueva=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('almacen_id',$almacen)->where('estado',1)->get();
-
 
                 $comparacion=$nueva;
                 //buble para la cantidad
@@ -560,7 +545,12 @@ class FacturacionController extends Controller
                 }
                 //Resta en la tabla stock almacen
                 Stock_almacen::egreso($facturacion->almacen_id,$producto_id[$i],$facturacion_registro->cantidad);
+                //resta de cantidades de productos para la tabla stock productos
+                    $stock_productos=Stock_producto::where('producto_id',$producto_id[$i])->first();
+                    $stock_productos->stock=$stock_productos->stock-$facturacion_registro->cantidad;
+                    $stock_productos->save();
             }
+            Kardex_entrada_registro::stock_producto_precio();
         }else {
             return redirect()->route('facturacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }

@@ -212,24 +212,9 @@ class KardexSalidaController extends Controller
                     $kardex_salida_registro->cantidad=$request->get('cantidad')[$i];
                     $kardex_salida_registro->save();
 
-                    // $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('estado','1')->get();
-                    // $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('estado','1')->sum('cantidad');
-
                     $almacen=$almacen_json->id;
-                    // $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
-                    // $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
 
-                    // //return $kardex_entrada;
-                    // foreach($kardex_entrada as $kardex_entradas){
-                    //     $kadex_entrada_id[]=$kardex_entradas->id;
-                    // }
-                    // // return $kardex_entrada;
-                    // for($x=0;$x<$kardex_entrada_count;$x++){
-                    //     if(Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','1')->first()){
-                    //         $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','1')->first();
-                    //     }
-                    // }
-                    $nueva=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('almacen_id',$almacen)->where('estado',1)->get();
+                    $nueva=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('almacen_id',$almacen)->where('estado',1)->get();
 
                     $comparacion=$nueva;
                     //buble para la cantidad
@@ -270,7 +255,7 @@ class KardexSalidaController extends Controller
                         }
                     }
                     //resta de cantidades de productos para la tabla stock productos
-                    $stock_productos=Stock_producto::find($producto_id[$i]);
+                    $stock_productos=Stock_producto::where('producto_id',$producto_id[$i])->first();
                     $stock_productos->stock=$stock_productos->stock-$kardex_salida_registro->cantidad;
                     $stock_productos->save();
                     // return $kardex_salida_registro->cantidad;
@@ -278,9 +263,11 @@ class KardexSalidaController extends Controller
                     Stock_almacen::egreso($almacen,$producto_id[$i],$kardex_salida_registro->cantidad);
 
                 }
+
             }else{
                 return "Error fatal: por favor comunicarse con soporte inmediatamente";
             }
+            kardex_entrada_registro::stock_producto_precio();
         }else{
             return redirect()->route('kardex-salida.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }

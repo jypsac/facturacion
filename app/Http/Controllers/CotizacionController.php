@@ -1335,19 +1335,7 @@ public function facturar_store(Request $request)
             }
             $facturacion_registro->save();
 
-            $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
-            $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
-
-            //return $kardex_entrada;
-            foreach($kardex_entrada as $kardex_entradas){
-                $kadex_entrada_id[]=$kardex_entradas->id;
-            }
-            // return $kardex_entrada;
-            for($x=0;$x<$kardex_entrada_count;$x++){
-                if(Kardex_entrada_registro::where('producto_id',$p[$index])->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first()){
-                    $nueva[]=Kardex_entrada_registro::where('producto_id',$p[$index])->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado',1)->first();
-                }
-            }
+            $nueva=Kardex_entrada_registro::where('producto_id',$facturacion_registro->producto_id)->where('almacen_id',$almacen)->where('estado',1)->get();
             // return $nueva;
             // return $nueva;
             $comparacion=$nueva;
@@ -1392,6 +1380,7 @@ public function facturar_store(Request $request)
             //Resta en la tabla stock almacen
             Stock_almacen::egreso($cotizacion->almacen_id,$p[$index],$facturacion_registro->cantidad);
         }
+        Kardex_entrada_registro::stock_producto_precio();
     }
 
      // Creacion de Ventas Registros del Comisinista
@@ -1904,8 +1893,53 @@ public function facturar_store(Request $request)
                     $boleta_registro->precio_unitario_comi=$array_comi+($array_comi*$igv->igv_total/100);
                 }
                 $boleta_registro->save();
-                // return $array_desc;
+
+                $nueva=Kardex_entrada_registro::where('producto_id',$boleta_registro->producto_id)->where('almacen_id',$almacen)->where('estado',1)->get();
+            // return $nueva;
+            // return $nueva;
+            $comparacion=$nueva;
+            //buble para la cantidad
+            $cantidad=0;
+            foreach($comparacion as $comparaciones){
+                $cantidad=$comparaciones->cantidad+$cantidad;
             }
+            if(isset($comparacion)){
+                $var_cantidad_entrada=$boleta_registro->cantidad;
+                $contador=0;
+                foreach ($comparacion as $p_com) {
+                    if($p_com->cantidad>$var_cantidad_entrada){
+                        $cantidad_mayor=$p_com->cantidad;
+                        $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                        $p_com->cantidad=$cantidad_final;
+                        if($cantidad_final==0){
+                            $p_com->estado=0;
+                            $p_com->save();
+                            break;
+                        }else{
+                            $p_com->save();
+                            break;
+                        }
+                    }elseif($p_com->cantidad==$var_cantidad_entrada){
+                        $p_com->cantidad=0;
+                        $p_com->estado=0;
+                        $p_com->save();
+                        break;
+                    }
+                    else{
+                        $var_cantidad_entrada=$var_cantidad_entrada-$p_com->cantidad;
+                        $p_com->cantidad=0;
+                        $p_com->estado=0;
+                        $p_com->save();
+                    }
+                }
+            }
+            $stock_productos=Stock_producto::where('producto_id',$p[$index])->first();
+            $stock_productos->stock=$stock_productos->stock-$boleta_registro->cantidad;
+            $stock_productos->save();
+            //Resta en la tabla stock almacen
+            Stock_almacen::egreso($cotizacion->almacen_id,$p[$index],$boleta_registro->cantidad);
+            }
+            Kardex_entrada_registro::stock_producto_precio();
         }
 
         // Creacion de Ventas Registros del Comisinista
