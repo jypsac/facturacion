@@ -156,7 +156,7 @@ class KardexSalidaController extends Controller
                     $a++;
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
-                    if ($articulo_comparacion_inicial=$articulo_comparacion) {
+                    if ($articulo_comparacion_inicial==$articulo_comparacion) {
                         return redirect()->route('kardex-salida.create')->with('repite', 'Datos repetidos - No permitidos!');
                     }
                 }
@@ -212,23 +212,25 @@ class KardexSalidaController extends Controller
                     $kardex_salida_registro->cantidad=$request->get('cantidad')[$i];
                     $kardex_salida_registro->save();
 
-                    $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('estado','1')->get();
-                    $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('estado','1')->sum('cantidad');
+                    // $comparacion=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('estado','1')->get();
+                    // $cantidad=kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('estado','1')->sum('cantidad');
 
                     $almacen=$almacen_json->id;
-                    $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
-                    $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
+                    // $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen)->get();
+                    // $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen)->count();
 
-                    //return $kardex_entrada;
-                    foreach($kardex_entrada as $kardex_entradas){
-                        $kadex_entrada_id[]=$kardex_entradas->id;
-                    }
-                    // return $kardex_entrada;
-                    for($x=0;$x<$kardex_entrada_count;$x++){
-                        if(Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','1')->first()){
-                            $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','1')->first();
-                        }
-                    }
+                    // //return $kardex_entrada;
+                    // foreach($kardex_entrada as $kardex_entradas){
+                    //     $kadex_entrada_id[]=$kardex_entradas->id;
+                    // }
+                    // // return $kardex_entrada;
+                    // for($x=0;$x<$kardex_entrada_count;$x++){
+                    //     if(Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','1')->first()){
+                    //         $nueva[]=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','1')->first();
+                    //     }
+                    // }
+                    $nueva=Kardex_entrada_registro::where('producto_id',$kardex_salida_registro->producto_id)->where('almacen_id',$almacen)->where('estado',1)->get();
+
                     $comparacion=$nueva;
                     //buble para la cantidad
                     $cantidad=0;
