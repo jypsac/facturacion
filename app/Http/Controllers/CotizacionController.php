@@ -1380,9 +1380,9 @@ public function facturar_store(Request $request)
             //Resta en la tabla stock almacen
             Stock_almacen::egreso($cotizacion->almacen_id,$p[$index],$facturacion_registro->cantidad);
         }
-
+        kardex_entrada_registro::stock_producto_precio();
     }
-    kardex_entrada_registro::stock_producto_precio();
+
      // Creacion de Ventas Registros del Comisinista
     $cotizador=$request->get('id_cotizador');
     $precio_final_igv=$request->get('precio_final_igv');
@@ -1939,9 +1939,9 @@ public function facturar_store(Request $request)
             //Resta en la tabla stock almacen
             Stock_almacen::egreso($cotizacion->almacen_id,$p[$index],$boleta_registro->cantidad);
             }
-
+            Kardex_entrada_registro::stock_producto_precio();
         }
-        Kardex_entrada_registro::stock_producto_precio();
+
         // Creacion de Ventas Registros del Comisinista
         $cotizador=$request->get('id_cotizador');
         $total=$request->get('total');

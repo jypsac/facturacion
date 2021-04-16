@@ -26,6 +26,10 @@ class kardex_entrada_registro extends Model
            $productos[]=$stocks_activo->producto->id;
         }
         $prod=array_unique($productos, SORT_REGULAR);
+
+
+        //ordena valores(?) funciona asi we
+        $prod = array_values($prod);
         $count_cantidad=count($prod);
 
         for($x=0;$x<$count_cantidad;$x++){
