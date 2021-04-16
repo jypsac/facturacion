@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 use App\Almacen;
 use App\Personal;
 use App\Stock_producto;
+use App\Stock_almacen;
+use App\Producto;
 use App\kardex_entrada_registro;
 use Illuminate\Http\Request;
 
@@ -26,7 +28,6 @@ class AlmacenController extends Controller
      */
     public function index()
     {
-
         $almacenes=Almacen::all();
         $conteo_almacen=Almacen::where('estado',0)->count();
         $personal=Personal::where('estado',1)->get();
@@ -51,49 +52,6 @@ class AlmacenController extends Controller
      */
     public function store(Request $request)
     {
-        // Tipo de cambio -------------------------------------------------------------------------------------
-        $stock_productos=Stock_producto::get();
-        $stocks_activos = kardex_entrada_registro::where('estado',1)->get();
-
-        foreach ($stocks_activos as $stocks_activo) {
-           $productos[]=$stocks_activo->producto->id;
-        }
-        $prod=array_unique($productos, SORT_REGULAR);
-        $count_cantidad=count($prod);
-
-        for($x=0;$x<$count_cantidad;$x++){
-            $cantidad[] = intval(kardex_entrada_registro::where('producto_id',$prod[$x])->sum('cantidad'));
-        }
-        //$prod -> los productos en orden
-        //$cantidad -> obtiene el stock en orden al producto
-
-        $kardex_almacen_principal_desc= kardex_entrada_registro::where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->get();
-        $contador=0;
-        $array_registros[]=0;
-        // $array_registros[]=3;
-        for($x=0;$x<$count_cantidad;$x++){
-            while($cantidad[0] > $contador){
-                $kardex_almacen_principal_desc= kardex_entrada_registro::where('producto_id',$prod[$x])->where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->whereNotIn('id',$array_registros)->first();
-                $contador=$contador+$kardex_almacen_principal_desc->cantidad_inicial;
-                $array_registros[]=$kardex_almacen_principal_desc->id;
-            }
-            //llamar los kardex_registros que tengan los id
-            $precio_nacional= kardex_entrada_registro::where('producto_id',$prod[$x])->where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->whereIn('id',$array_registros)->avg('precio_nacional');
-            $precio_extranjero= kardex_entrada_registro::where('producto_id',$prod[$x])->where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->whereIn('id',$array_registros)->avg('precio_extranjero');
-            //guardar en sotck_productos
-
-            $kardex_entrada_registros_stock=kardex_entrada_registro::where('estado',1)->where('producto_id',$prod[$x])->sum('cantidad');
-            $stock_producto=Stock_producto::where('producto_id',$prod[$x])->first();
-            $stock_producto->stock=$kardex_entrada_registros_stock;
-            $stock_producto->precio_nacional=$precio_nacional;
-            $stock_producto->precio_extranjero=$precio_extranjero;
-            $stock_producto->save();
-            unset($array_registros);
-            unset($contador);
-            $array_registros[]=0;
-            $contador=0;
-        }
-
 
         // return "limite";
         $this->validate($request,[
@@ -122,6 +80,14 @@ class AlmacenController extends Controller
         $almacen->principal='0';
         $almacen->save();
 
+        $productos= Producto::get();
+        foreach($productos as $producto){
+            $stock_almacen=new Stock_almacen;
+            $stock_almacen->producto_id=$producto->id;
+            $stock_almacen->almacen_id=$almacen->id;
+            $stock_almacen->stock=0;
+            $stock_almacen->save();
+        }
         return redirect()->route('almacen.index');
     }
 

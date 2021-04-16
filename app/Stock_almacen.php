@@ -36,7 +36,7 @@ class Stock_almacen extends Model
                     $stock_almacen->almacen_id=$almacen->id;
                     $stock_almacen->stock=0;
                     $stock_almacen->save();
-                } 
+                }
             }
         }else{
             foreach($almacenes as $almacen){
@@ -47,7 +47,7 @@ class Stock_almacen extends Model
                 $stock_almacen->save();
             }
         }
-        
+
 
     }
 }
