@@ -378,7 +378,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
             }
         }else{
             // envio para otro almacen secundario
-            if($count_articulo = $count_cantidad ){
+            if($count_articulo == $count_cantidad ){
                 for($i=0;$i<$count_articulo;$i++){
                     //Creacion del nuevo registro de kardex entrada
                     $kardex_entrada_registro=new kardex_entrada_registro();
