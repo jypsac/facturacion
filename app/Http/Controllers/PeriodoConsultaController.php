@@ -42,6 +42,9 @@ class PeriodoConsultaController extends Controller
      */
     public function store(Request $request)
     {
+
+        return $request;
+
         // $registro=new PeriodoConsulta;
         // $registro->nombre=$request->input('nombre');
         // // $registro->nombre='consulta';
