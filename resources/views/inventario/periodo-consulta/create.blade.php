@@ -50,11 +50,20 @@
                                     </div>
                                     <div class="col-sm-6">
                                             <div class="row">
-                                            <label class="col-sm-2 col-form-label" >Fecha:</label>
+                                            <label class="col-sm-2 col-form-label" >Fecha Inicio:</label>
                                              <div class="col-sm-10">
-                                                 <input type="date" class="form-control" name="fecha" value="{{date("Y-m-d")}}">
+                                                 <input type="datetime-local" class="form-control" name="fecha" value="{{date("Y-m-d")}}">
                                              </div>
                                             </div>
+                                    </div>
+
+                                    <div class="col-sm-6">
+                                        <div class="row">
+                                        <label class="col-sm-2 col-form-label" >Fecha Final:</label>
+                                         <div class="col-sm-10">
+                                             <input type="datetime-local" class="form-control" name="fecha" value="{{date("Y-m-d")}}">
+                                         </div>
+                                        </div>
                                     </div>
                                     <div class="col-sm-6" style="margin-top: 5px">
                                             <div class="row">
@@ -112,6 +121,23 @@
 
     <script src="{{ asset('js/inspinia.js') }}"></script>
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+    
+    {{-- <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+    <script src="{{ asset('js/inspinia.js') }}"></script>
+	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+
+    <script src="{{ asset('js/inspinia.js') }}"></script>
+	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script> --}}
      {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
     <script>
         function valida(f) {

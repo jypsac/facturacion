@@ -42,33 +42,33 @@ class PeriodoConsultaController extends Controller
      */
     public function store(Request $request)
     {
-        $registro=new PeriodoConsulta;
-        $registro->nombre=$request->input('nombre');
-        // $registro->nombre='consulta';
-        $registro->fecha=$request->input('fecha');
-        $registro->almacen_id=$request->input('almacen');
-        $registro->categoria_id=$request->input('categoria');
-        $registro->informacion=$request->input('informacion');
-        $registro->save();
+        // $registro=new PeriodoConsulta;
+        // $registro->nombre=$request->input('nombre');
+        // // $registro->nombre='consulta';
+        // $registro->fecha=$request->input('fecha');
+        // $registro->almacen_id=$request->input('almacen');
+        // $registro->categoria_id=$request->input('categoria');
+        // $registro->informacion=$request->input('informacion');
+        // $registro->save();
 
-        //Ubicacion de alamacen
-        $kardex_entrada_almacen=kardex_entrada::where('almacen_id',$registro->almacen_id)->where('categoria_id',$registro->categoria_id)->get();
+        // //Ubicacion de alamacen
+        // $kardex_entrada_almacen=kardex_entrada::where('almacen_id',$registro->almacen_id)->where('categoria_id',$registro->categoria_id)->get();
 
-        foreach($kardex_entrada_almacen as $kardex_entrada_alm){
-            $periodo_registro=kardex_entrada_registro::where('estado','1')->where('kardex_entrada_id',$kardex_entrada_alm->id)->get();
-                foreach ($periodo_registro as $periodo) {
-                $register=new PeriodoConsulta_registro;
-                $register->periodo_consulta_id=$registro->id;
-                $register->producto_id=$periodo->producto_id;
-                $register->cantidad_inicial=$periodo->cantidad_inicial;
-                $register->precio_nacional=$periodo->precio_nacional;
-                $register->precio_extranjero=$periodo->precio_extranjero;
-                $register->cantidad=$periodo->cantidad;
-                $register->save();
-            }
-        }
+        // foreach($kardex_entrada_almacen as $kardex_entrada_alm){
+        //     $periodo_registro=kardex_entrada_registro::where('estado','1')->where('kardex_entrada_id',$kardex_entrada_alm->id)->get();
+        //         foreach ($periodo_registro as $periodo) {
+        //         $register=new PeriodoConsulta_registro;
+        //         $register->periodo_consulta_id=$registro->id;
+        //         $register->producto_id=$periodo->producto_id;
+        //         $register->cantidad_inicial=$periodo->cantidad_inicial;
+        //         $register->precio_nacional=$periodo->precio_nacional;
+        //         $register->precio_extranjero=$periodo->precio_extranjero;
+        //         $register->cantidad=$periodo->cantidad;
+        //         $register->save();
+        //     }
+        // }
 
-        return redirect()->route('periodo-consulta.index');
+        // return redirect()->route('periodo-consulta.index');
     }
 
     /**
