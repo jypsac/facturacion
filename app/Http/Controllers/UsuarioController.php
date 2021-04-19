@@ -7,7 +7,15 @@ use App\Config;
 use App\Permiso;
 use App\Personal;
 use App\User;
+use App\Empresa;
 use Auth;
+use Swift_Attachment;
+use Swift_MailTransport;
+use Swift_Mailer;
+use Swift_Message;
+use Swift_Preferences;
+use Swift_SmtpTransport;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class UsuarioController extends Controller
@@ -108,27 +116,26 @@ class UsuarioController extends Controller
             $user->estado=0;
             $user->email_creado=0;
             $user->save();
-
+            $empresa= Empresa::first();
+            $empresa_name= Empresa::pluck('nombre')->first();
             $user=Personal::find($id);
             $user->usuario_registrado=1;
             $user->save();
-            $usuario_hora=User::where('id',$id)->first();
+            $usuario_hora=Carbon::now()->format('Y-m-d');
 
-            $nombre_personal=Personal::where('id',$id)->first();
+            $nombre_personal=Personal::where('id',$id)->pluck('nombres')->first();
             $codigo_mensaje=$numero_validacion;
             $codigo_1 = substr($codigo_mensaje, 0, 3);
             $codigo_2 = substr($codigo_mensaje, 3, 3);
             $codigo_3 = substr($codigo_mensaje, 6, 3);
             $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
-            $cuerpo_mensaje=$codigo_unidos.' es tu código de Validación para confirmar el usuario al sistema. Esta clave es confidencial,<br> no la compartas con nadie. Solo ingrésala en el Sistema para continuar con tu confirmacion.<br><br>
-            Titular: '.$nombre_personal->nombres.'<br>
-            Fecha y hora:  '.$usuario_hora->updated_at.'<br><br>
-            Si no has realizado esta operación o tienes cualquier duda respecto al Código de Validación,<br> puedes comunicarte con nuestro correo de soporte desarrollo@jypsac.com. ';
+            $cuerpo_mensaje  = view('email_html.email_cod_confirmacion',compact('codigo_unidos','nombre_personal','usuario_hora','empresa'));
+
             /* envio*/
             /* Confi*/
             $smtpAddress = 'mail.grupojypsac.com';
-            $port = '465';
-            $encryption = 'SSL';
+            $port = '25';
+            $encryption = '';
             $yourEmail = 'informes@grupojypsac.com';
             $yourPassword = 'vP8JzoYs5Inu';
             $sendto = $email;
@@ -138,7 +145,7 @@ class UsuarioController extends Controller
             /*Fin Confi*/
             $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
             $mailer =new \Swift_Mailer($transport);
-            $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto])->setBody($mensaje, 'text/html');
+            $message = (new \Swift_Message($titulo)) ->setFrom([ $yourEmail => $empresa->nombre ])->setTo([$sendto])->setBody($mensaje, 'text/html');
             if($mailer->send($message)){
                 return redirect()->route('usuario.index');
             }else{

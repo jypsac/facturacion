@@ -56,7 +56,7 @@
                                         @csrf
                                         @method('PATCH')
                                         <td>{{$provedor->id}}</td>
-                                        <td><input class="form-control" name="ruc" value="{{$provedor->ruc}}" type="text"></td>
+                                        <td><input class="form-control" name="" value="{{$provedor->ruc}}" readonly=""  type="text"></td>
                                         <td><input class="form-control" name="empresa" value="{{$provedor->empresa}}" type="text"></td>
                                         <td><input class="form-control" name="direccion" value="{{$provedor->direccion}}" type="text"></td>
                                         <td><input class="form-control" name="telefonos" value="{{$provedor->telefonos}}" type="text"></td>

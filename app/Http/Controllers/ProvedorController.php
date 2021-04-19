@@ -105,7 +105,6 @@ class ProvedorController extends Controller
         // return redirect()->route('provedor.index')->withErrors(['Provedor ya Agregado!']);
 
         $provedor=Provedor::find($id);
-        $provedor->ruc=$request->get('ruc');
         $provedor->empresa=$request->get('empresa');
         $provedor->direccion=$request->get('direccion');
         $provedor->telefonos=$request->get('telefonos');
