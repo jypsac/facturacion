@@ -130,12 +130,11 @@ class UsuarioController extends Controller
             $codigo_3 = substr($codigo_mensaje, 6, 3);
             $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
             $cuerpo_mensaje  = view('email_html.email_cod_confirmacion',compact('codigo_unidos','nombre_personal','usuario_hora','empresa'));
-
             /* envio*/
             /* Confi*/
             $smtpAddress = 'mail.grupojypsac.com';
-            $port = '25';
-            $encryption = '';
+            $port = '465';
+            $encryption = 'ssl';
             $yourEmail = 'informes@grupojypsac.com';
             $yourPassword = 'vP8JzoYs5Inu';
             $sendto = $email;
@@ -231,20 +230,18 @@ class UsuarioController extends Controller
                 $user->password=$password;
                 $user->save();
                 $codigo_mensaje=$numero_validacion;
+                $usuario_hora =Carbon::now()->format('Y-m-d');
                 $codigo_1 = substr($codigo_mensaje, 0, 3);
                 $codigo_2 = substr($codigo_mensaje, 3, 3);
                 $codigo_3 = substr($codigo_mensaje, 6, 3);
                 $codigo_unidos=$codigo_1.'-'.$codigo_2.'-'.$codigo_3;/*Codigo unido */
-                $cuerpo_mensaje=$codigo_unidos.' es tu código de Validación para confirmar el usuario al sistema. Esta clave es confidencial,<br> no la compartas con nadie. Solo ingrésala en el Sistema para continuar con tu confirmacion.<br><br>
-                Usuario: '.$nombre_personal->nombres.'<br>
-                Fecha y hora: '.$usuario_id->updated_at.'<br><br>
-                Si no has realizado esta operación o tienes cualquier duda respecto al Código de Validación,<br> puedes comunicarte con nuestro correo de soporte desarrollo@jypsac.com. ';
+                $cuerpo_mensaje = view('email_html.email_cod_confirmacion',compact('codigo_unidos','nombre_personal','usuario_hora','empresa'));
 
-                $smtpAddress = 'mail.grupojypsac.com';
+                $smtpAddress = 'mail.jypsac.com';
                 $port = '465';
                 $encryption = 'SSL';
-                $yourEmail = 'informes@grupojypsac.com';
-                $yourPassword = 'vP8JzoYs5Inu';
+                $yourEmail = 'desarrollo@jypsac.com';
+                $yourPassword = '=+WQyq73%cC"';
                 $sendto = $correo_new;
                 $titulo = 'Sistema-Codigo Confirmacion';
                 $mensaje = $cuerpo_mensaje;
@@ -290,7 +287,7 @@ class UsuarioController extends Controller
     {
         /*Configuracion Correo*/
         $smtpAddress = 'mail.grupojypsac.com';
-        $port = '465';
+        $port = '25';
         $encryption = 'SSL';
         $yourEmail = 'informes@grupojypsac.com';
         $yourPassword = 'vP8JzoYs5Inu';
