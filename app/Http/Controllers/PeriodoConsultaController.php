@@ -7,6 +7,7 @@ use App\kardex_entrada;
 use App\kardex_entrada_registro;
 use App\Almacen;
 use App\Categoria;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 class PeriodoConsultaController extends Controller
@@ -40,9 +41,34 @@ class PeriodoConsultaController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
+    public function ajax_periodo(Request $request){
+        // consultas
+        // 1 = Compra 
+        // 2 = Venta 
+        // 3 = Compara y venta
+        $almacen=$request->almacen;
+        $fecha_inicio=Carbon::createFromFormat('Y-m-d\TH:i',$request->fecha_inicio);
+        $fecha_final=Carbon::createFromFormat('Y-m-d\TH:i',$request->fecha_final);
+        $categoria=$request->categoria;
+        if($categoria=="1"){
+            // falta validacion si $request->consulta_p es un numero del 1 al 3
+            $consulta=$request->consulta_p;
+        }elseif($categoria=="2"){
+            $consulta=2;
+        }else{
+            return "categoria incorrecta";
+        }
+        
+        $kardex_entrada_registro=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+        
+        return response(json_encode($kardex_entrada_registro),200)->header('content-type','text/plain');
+
+
+    }
+
     public function store(Request $request)
     {
-
+        return "hola123";
         return $request;
 
         // $registro=new PeriodoConsulta;

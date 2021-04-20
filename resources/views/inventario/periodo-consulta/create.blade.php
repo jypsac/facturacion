@@ -7,12 +7,13 @@
 @section('value_accion', 'Atras')
 
 @section('content')
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <div class="wrapper wrapper-content animated fadeInRight">
 	<div class="row">
 		<div class="col-lg-12">
             <div class="ibox">
 				<div class="ibox-title">
-                    <h5>Nueva Entrada</h5>
+                    <h5>Nueva Entradas</h5>
                     <div class="ibox-tools">
                         <a class="collapse-link">
                             <i class="fa fa-chevron-up"></i>
@@ -32,18 +33,17 @@
                     </div>
 				</div>
 				<div class="ibox-content">
-					<form action="{{ route('periodo-consulta.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
-                         @csrf
-
+					<form enctype="multipart/form-data"  id="formulario">
+                        @csrf
                         <div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Fecha Inicio:</label>
 								<div class="col-sm-4">
-									<input type="datetime-local" class="form-control" name="fecha" value="{{date("Y-m-d")}}">
+									<input type="datetime-local" class="form-control" name="fecha_inicio" >
 								</div>
 
 							<label class="col-sm-2 col-form-label">Fecha Final:</label>
 								<div class="col-sm-4">
-                                    <input type="datetime-local" class="form-control" name="fecha" value="{{date("Y-m-d")}}">
+                                    <input type="datetime-local" class="form-control" name="fecha_final" >
 							    </div>
 						</div>
 
@@ -86,17 +86,62 @@
                                     </select>
 								</div>
 						</div>
-
-						<button class="btn btn-primary" type="submit" id="boton">Guardar</button>
-
 					</form>
-
+                    <button  class="btn btn-primary" id="boton" name="boton">Consultar</button>
+                    <button  class="btn btn-primary" id="boton-d" name="boton-d">Descargar</button>
 				</div>
+                
 			</div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-example" >
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Nombre producto</th>
+                                <th>cantidad inicial</th>
+                                <th>precio nacional</th>
+                                <th>precio extranjero</th>
+                            </tr>
+                        </thead>
+                    <tbody id="tbody">
+                        <tr>
+                            
+                        </tr>
+                    </tbody>
+                    </table>
+                </div>
+            </div>
 		</div>
+        
 	</div>
 </div>
-
+<script>
+    $(document).ready(function(e) {
+        $('#boton').on('click', function() {
+            $('#tbody tr').slice(1).remove();
+			$.ajax({
+				method: "POST",
+				url: "{{ route('ajax_periodo') }}",
+				data:$("#formulario").serialize()
+			}).done(function(res){
+                var arreglo=JSON.parse(res);
+                var todo='';
+                for(var x=0;x<arreglo.length;x++){
+                    todo += '<tr>' +
+                            '<td>' + arreglo[x].id + '</td>' +
+                            '<td>' + arreglo[x].producto_id + '</td>' +
+                            '<td>' + arreglo[x].cantidad_inicial + '</td>' +
+                            '<td>' + arreglo[x].precio_nacional + '</td>' +
+                            '<td>' + arreglo[x].precio_extranjero + '</td>' +
+                            '</tr>';
+                }
+                $('tbody').append(todo);
+                var todo='';
+            });
+		});
+    });
+</script>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
     <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -132,6 +177,11 @@
                 $('#consulta_s').show();
             }
         }
+
+        
+
+        
+
 
    </script>
 @endsection

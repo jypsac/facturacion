@@ -125,6 +125,8 @@ Route::group(
 		Route::post('descripcion_ajax', 'CotizacionController@descripcion_ajax')->name('descripcion_ajax');
 		Route::post('descripcion_ajax_serv', 'CotizacionServiciosController@descripcion_ajax_serv')->name('descripcion_ajax_serv');
 
+		Route::post('ajax_periodo', 'PeriodoConsultaController@ajax_periodo')->name('ajax_periodo');
+
 		Route::get('guias_remision/seleccionar', 'GuiaRemisionController@seleccionar')->name('guia_remision.seleccionar');
 		Route::put('cotizacion/aprobar/{id}', 'CotizacionController@aprobar')->name('cotizacion.aprobar');
 		Route::get('/guias_remision/creates/{id}' , 'GuiaRemisionController@cotizacion')->name('guias_remision.create');
