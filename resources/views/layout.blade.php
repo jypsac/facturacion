@@ -427,7 +427,7 @@ use App\Personal;
                                 <li><a href="{{route('inventario-inicial.index')}}">Inventario Inicial</a></li>
                                 @endcan --}}
                                 @can('inventario-toma_de_inventario.index')
-                                <li><a href="{{route('periodo-consulta.index')}}">Toma de Inventario</a></li><!-- Periodo Consulta -->
+                                <li><a href="{{route('periodo-consulta.index')}}">Consultas de inventario</a></li><!-- Periodo Consulta -->
                                 @endcan
                             </ul>
                         </li>
