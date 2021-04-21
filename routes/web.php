@@ -253,6 +253,7 @@ Route::group(
 		Route::resource('/usuario','UsuarioController');
 		Route::resource('/venta','VentaController');
 
+		Route::resource('/cantidad_precio','CantidadPrecioController');
 
 		Route::view('/configuracion_general' , 'configuracion_general.configuracion_general')->name('Configuracion');
 
