@@ -3,6 +3,7 @@
 namespace App;
 
 use App\Producto;
+
 use Illuminate\Database\Eloquent\Model;
 
 class Stock_producto extends Model
@@ -10,6 +11,10 @@ class Stock_producto extends Model
     protected $table = 'stock_productos';
 
     protected $guarded = [];
+
+    public function producto(){
+        return $this->belongsTo(Producto::class,'producto_id');
+    }  
 
     public static function new($producto){
         $stock_producto_vacio = Stock_producto::get();
