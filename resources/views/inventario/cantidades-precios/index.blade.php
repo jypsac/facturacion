@@ -52,26 +52,31 @@
                             </thead>
                             <tbody>
                              @foreach($stock_producto as $index => $stock_producto)
-                             @if($stock_producto->stock > 0)
-                             <tr class="gradeX">
-                                <td>{{$id++}}</td>
-                                <td>
-                                    <a href="{{ route('productos.show', $stock_producto->producto_id) }}" target="_blank">
-                                        {{$stock_producto->producto->nombre}}
-                                    </a>
-                                </td>
-                                <td>{{$stock_producto->stock}}</td>
-                                 <td>{{$moneda_nacional->simbolo}}. {{$precio_nacional[$index] }}</td>
-                                <td>{{$moneda_extranjera->simbolo}}. {{$precio_extranjero[$index]}}</td>
-                                {{-- data-all --}}
-                                <td >{{$stock_producto->producto->codigo_producto}}</td>
-                                <td>{{$stock_producto->producto->descripcion}} </td>
-                                <td>{{$stock_producto->producto->garantia}} </td>
-                                <td>{{$stock_producto->producto->marcas_i_producto->nombre}}</td>
-                                {{-- data-all --}}
+                                 <tr class="gradeX">
+                                    <td>{{$id++}}</td>
+                                    <td>
+                                        <a href="{{ route('productos.show', $stock_producto->producto_id) }}" target="_blank">
+                                            {{$stock_producto->producto->nombre}}
+                                        </a>
+                                    </td>
+                                    @if($stock_producto->stock > 0)
+                                        <td>{{$stock_producto->stock}}</td>
+                                        <td>{{$moneda_nacional->simbolo}}. {{$precio_nacional[$index] }}</td>
+                                        <td>{{$moneda_extranjera->simbolo}}. {{$precio_extranjero[$index]}}</td>
+                                    {{-- data-all --}}
+                                    @else
+                                        <td>Sin stock</td>
+                                        <td>{{$moneda_nacional->simbolo}}. 0.00</td>
+                                        <td>{{$moneda_extranjera->simbolo}}. 0.00</td>
+                                    @endif
+                                    <td >{{$stock_producto->producto->codigo_producto}}</td>
+                                    <td>{{$stock_producto->producto->descripcion}} </td>
+                                    <td>{{$stock_producto->producto->garantia}} </td>
+                                    <td>{{$stock_producto->producto->marcas_i_producto->nombre}}</td>
+                                    {{-- data-all --}}
 
-                            </tr>
-                            @endif
+                                </tr>
+                                
                             @endforeach
                         </tbody>
                         <tfoot>

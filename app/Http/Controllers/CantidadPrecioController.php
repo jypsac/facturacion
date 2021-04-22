@@ -19,6 +19,12 @@ class CantidadPrecioController extends Controller
      */
     public function index()
     {
+        $stock_producto = Stock_producto::all();
+        if($stock_producto){
+            
+            return view('inventario.cantidades-precios.index',compact('stock_producto','id','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera'));
+        
+        }else{
         $id = 1;
         $stock_producto = Stock_producto::all();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
@@ -64,6 +70,7 @@ class CantidadPrecioController extends Controller
         $moneda_extranjera=Moneda::where('tipo','extranjera')->first();
 
          return view('inventario.cantidades-precios.index',compact('stock_producto','id','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera'));
+         }
     }
 
     /**
