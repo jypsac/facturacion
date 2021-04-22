@@ -19,18 +19,18 @@ class CantidadPrecioController extends Controller
      */
     public function index()
     {
+
         $stock_producto = Stock_producto::all();
-        if($stock_producto){
-            
-            return view('inventario.cantidades-precios.index',compact('stock_producto','id','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera'));
-        
-        }else{
         $id = 1;
-        $stock_producto = Stock_producto::all();
+
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         // return view('inventario.cantidades-precios.index',compact('stock_producto','i','tipo_cambio'));
-        $producto = Producto::all();
+        $producto = Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        
         $producto_count = count($producto);
+        if($producto_count == 0){
+            return view('consulta.cantidades-precios.index',compact('stock_producto','id','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera','producto_count'));
+        }
         foreach ($producto as $prod) {
             $produ_id[] = $prod->id;
         }
@@ -69,8 +69,8 @@ class CantidadPrecioController extends Controller
         $moneda_nacional=Moneda::where('tipo','nacional')->first();
         $moneda_extranjera=Moneda::where('tipo','extranjera')->first();
 
-         return view('inventario.cantidades-precios.index',compact('stock_producto','id','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera'));
-         }
+         return view('consulta.cantidades-precios.index',compact('stock_producto','id','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera','producto_count'));
+         
     }
 
     /**

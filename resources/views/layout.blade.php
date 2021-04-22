@@ -468,7 +468,7 @@ use App\Personal;
                                     </ul>
                                 </li>
                                 @endcan
-                                {{-- @can('cantidad_precio.index') --}}
+                                {{-- @can('consulta.cantidad_precio.index') --}}
                                 <li><a href="{{route('cantidad_precio.index')}}">Productos</a></li>
                                 {{-- @endcan --}}
                             </ul>

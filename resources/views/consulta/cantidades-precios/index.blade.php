@@ -51,8 +51,12 @@
                                 </tr>
                             </thead>
                             <tbody>
+                           
                              @foreach($stock_producto as $index => $stock_producto)
-                                 <tr class="gradeX">
+                                @if($producto_count == 0)
+                                 
+                                @else
+                                <tr class="gradeX">
                                     <td>{{$id++}}</td>
                                     <td>
                                         <a href="{{ route('productos.show', $stock_producto->producto_id) }}" target="_blank">
@@ -76,8 +80,9 @@
                                     {{-- data-all --}}
 
                                 </tr>
-                                
+                                @endif
                             @endforeach
+                            
                         </tbody>
                         <tfoot>
                             <tr>
