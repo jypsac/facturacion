@@ -190,7 +190,7 @@ class CotizacionController extends Controller
             $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
         }
     }
-
+    $almacen = $sucursal_p;
       //CALCULO PARA ARRAY DE PRECIO,STOCK,ETC
     $moneda=Moneda::where('principal','0')->first();
     $tipo_cambio=TipoCambio::latest('created_at')->first();

@@ -4,6 +4,11 @@ namespace App\Http\Controllers;
 
 use App\CantidadPrecio;
 use App\Stock_producto;
+use App\Producto;
+use App\TipoCambio;
+use App\Moneda;
+use App\Stock_almacen;
+use App\Igv;
 use Illuminate\Http\Request;
 
 class CantidadPrecioController extends Controller
@@ -15,8 +20,59 @@ class CantidadPrecioController extends Controller
      */
     public function index()
     {
+        $igv = Igv::get()->first();
         $stock_producto = Stock_producto::all();
-        return view('inventario.cantidades-precios.index',compact('stock_producto'));
+        $id_t1 = 1;
+        $id_t2 = 1;
+
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
+        // return view('inventario.cantidades-precios.index',compact('stock_producto','i','tipo_cambio'));
+        $producto = Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
+        
+        $producto_count = count($producto);
+        if($producto_count == 0){
+            return view('consulta.cantidades-precios.index',compact('stock_producto','id','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera','producto_count'));
+        }
+        foreach ($producto as $prod) {
+            $produ_id[] = $prod->id;
+        }
+        for ($i=0; $i < $producto_count ; $i++) {
+            // foreach ($producto as $prod) {
+                $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$produ_id[$i])->first();
+            // }
+        }
+         // return $productos;
+        $moneda=Moneda::where('principal',1)->first();
+
+
+        if($moneda->tipo == "nacional"){
+            foreach ($productos as $index => $producto) {
+                //precio nacional
+                $utilidad_precio_nac[] = Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                $precio_nacional[] = round((Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')+$utilidad_precio_nac[$index]),2);
+                //precio extranjero
+                $utilidad_precio_ext[] = Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                $precio_extranjero[] = round((Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')+$utilidad_precio_nac[$index])/$tipo_cambio->paralelo,2);
+
+            }
+            // $moneda_simb = Moneda::where('tipo','nacional')->first();
+        }else{
+            foreach ($productos as $index => $producto) {
+                //precio_nacional
+                $utilidad_precio_nac[] = Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                $precio_nacional[] = round((Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')+$utilidad[$index]),2);
+                //precio_extranjero
+                $utilidad_precio_ext[] = Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                $precio_extranjero[] = round((Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')+$utilidad_precio_ext[$index])*$tipo_cambio->paralelo,2);
+            }
+            // $moneda_simb = Moneda::where('tipo','extranjera')->first();
+        }
+
+        $moneda_nacional=Moneda::where('tipo','nacional')->first();
+        $moneda_extranjera=Moneda::where('tipo','extranjera')->first();
+
+         return view('consulta.cantidades-precios.index',compact('stock_producto','id_t1','id_t2','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera','producto_count','igv'));
+         
     }
 
     /**
