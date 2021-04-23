@@ -104,31 +104,61 @@
                 
 			</div>
             <div class="ibox-content">
-                <div class="table-responsive">
-                    <table class="table table-striped table-bordered table-hover dataTables-example" >
-                        <thead>
-                            <tr>
-                                <th>ID</th>
-                                <th>Nombre producto</th>
-                                <th>cantidad inicial</th>
-                                <th>precio nacional</th>
-                                <th>precio extranjero</th>
+                <div class="ibox-title">
+                    <h5>Compras</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre producto</th>
+                                    <th>cantidad inicial</th>
+                                    <th>precio nacional</th>
+                                    <th>precio extranjero</th>
+                                </tr>
+                            </thead>
+                        <tbody id="tbody">
+                            <tr style="display: none">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
                             </tr>
-                        </thead>
-                    <tbody id="tbody">
-                        <tr style="display: none">
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                            <td></td>
-                        </tr>
-                    </tbody>
-                    </table>
+                        </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+
+            <div class="ibox-content">
+                <div class="ibox-title">
+                    <h5>Ventas</h5>
+                    <div class="table-responsive">
+                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                            <thead>
+                                <tr>
+                                    <th>ID</th>
+                                    <th>Nombre producto</th>
+                                    <th>cantidad </th>
+                                    <th>precio </th>
+                                    <th>Stock</th>
+                                </tr>
+                            </thead>
+                        <tbody id="tbody_venta">
+                            <tr style="display: none">
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                                <td></td>
+                            </tr>
+                        </tbody>
+                        </table>
+                    </div>
                 </div>
             </div>
 		</div>
-        
 	</div>
 </div>
 <script>
@@ -145,16 +175,41 @@
                 for(var x=0;x<arreglo.length;x++){
                     todo += '<tr>' +
                             '<td>' + arreglo[x].id + '</td>' +
-                            '<td>' + arreglo[x].producto_id + '</td>' +
+                            '<td>' + arreglo[x].producto.nombre + '</td>' +
                             '<td>' + arreglo[x].cantidad_inicial + '</td>' +
                             '<td>' + arreglo[x].precio_nacional + '</td>' +
                             '<td>' + arreglo[x].precio_extranjero + '</td>' +
                             '</tr>';
                 }
-                $('tbody').append(todo);
+                $('#tbody').append(todo);
                 var todo='';
             });
+
+            $('#tbody_venta tr').slice(1).remove();
+			$.ajax({
+				method: "POST",
+				url: "{{ route('ajax_periodo_ventas') }}",
+				data:$("#formulario").serialize()
+			}).done(function(res){
+                var arreglo_v=JSON.parse(res);
+                var todo_v='';
+                for(var x=0;x<arreglo_v.length;x++){
+                    todo_v += '<tr>' +
+                            '<td>' + arreglo_v[x].id + '</td>' +
+                            '<td>' + arreglo_v[x].producto.nombre + '</td>' +
+                            '<td>' + arreglo_v[x].cantidad + '</td>' +
+                            '<td>' + arreglo_v[x].precio + '</td>' +
+                            '<td>' + arreglo_v[x].stock + '</td>' +
+                            '</tr>';
+                }
+                $('#tbody_venta').append(todo_v);
+                var todo_v='';
+            });
+
+
 		});
+
+
 
         $('#pdf').on('click', function() {
             $("#formulario").attr("action",'{{ route('periodo_consulta_pdf') }}');

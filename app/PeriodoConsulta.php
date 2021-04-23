@@ -13,4 +13,8 @@ class PeriodoConsulta extends Model
     public function almacen_periodo(){
         return $this->belongsTo(Almacen::class,'almacen_id');
     }
+
+    public function producto(){
+        return $this->belongsTo(Producto::class,'producto_id');
+    }
 }

@@ -10,6 +10,8 @@ class Boleta extends Model
 
     protected $guarded=[];
 
+    protected $with = ['producto'];
+
     public function cliente(){
         return $this->belongsTo(Cliente::class,'cliente_id');
     }

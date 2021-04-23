@@ -62,14 +62,41 @@ class PeriodoConsultaController extends Controller
         if($categoria=="1"){
             // falta validacion si $request->consulta_p es un numero del 1 al 3
             $consulta=$request->consulta_p;
-            if($consulta=="1"){
+            if($consulta=="1" or $consulta=="3"){
                 //productos + compra------------------------------------------
                 $kardex_entrada_registro=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
                 if (!isset($kardex_entrada_registro)) {
                     $kardex_entrada_registro[]="";
                 }
                 $json=$kardex_entrada_registro;
-            }elseif($consulta=="2"){
+            }else{
+                $json=[];
+            }
+        }elseif($categoria=="2"){
+            $consulta=2;
+            return "este es servicio";
+        }else{
+            return "categoria incorrecta";
+        }
+        
+        return response(json_encode($json),200)->header('content-type','text/plain');
+
+    }
+
+    public function ajax_periodo_ventas(Request $request){
+        // consultas
+        // 1 = Compra 
+        // 2 = Venta 
+        // 3 = Compara y venta
+        $almacen=$request->almacen;
+        $fecha_inicio=Carbon::createFromFormat('Y-m-d\TH:i',$request->fecha_inicio);
+        $fecha_final=Carbon::createFromFormat('Y-m-d\TH:i',$request->fecha_final);
+        $categoria=$request->categoria;
+        if($categoria=="1"){
+            // falta validacion si $request->consulta_p es un numero del 1 al 3
+            $consulta=$request->consulta_p;
+            
+            if($consulta=="2" or $consulta=="3"){
                 //productos + venta ------------------------------------------
                     //facturacion
                 $facturaciones=Facturacion::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
@@ -95,36 +122,7 @@ class PeriodoConsultaController extends Controller
                 //union de jsons
                 $json=array_merge(json_decode($factura, true),json_decode($boleta, true));
             }else{
-                //productos + compra + venta ------------------------------------------
-
-                //productos + compra
-                $kardex_entarda_registro=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-
-                //productos + venta
-                    //facturacion
-                $facturaciones=Facturacion::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                foreach($facturaciones as $facturacion){
-                    $factura_id[]=$facturacion->id;
-                }
-                if (!isset($factura_id)) {
-                    $factura_id[]="";
-                }
-
-                $factura= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->get();
-                    //boleta
-                $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                foreach($boletas as $boleta){
-                    $boleta_id[]=$boleta->id;
-                }
-                if (!isset($boleta_id)) {
-                    $boleta_id[]="";
-                }
-
-                $boleta= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->get();
-
-                //union de jsons
-                $json=array_merge(json_decode($kardex_entarda_registro, true),json_decode($factura, true),json_decode($boleta, true));
-
+                $json=[];
             }
         }elseif($categoria=="2"){
             $consulta=2;
@@ -136,6 +134,8 @@ class PeriodoConsultaController extends Controller
         return response(json_encode($json),200)->header('content-type','text/plain');
 
     }
+
+
 
     public function store(Request $request)
     {
