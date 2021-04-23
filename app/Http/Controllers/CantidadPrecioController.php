@@ -8,6 +8,7 @@ use App\Producto;
 use App\TipoCambio;
 use App\Moneda;
 use App\Stock_almacen;
+use App\Igv;
 use Illuminate\Http\Request;
 
 class CantidadPrecioController extends Controller
@@ -19,9 +20,10 @@ class CantidadPrecioController extends Controller
      */
     public function index()
     {
-
+        $igv = Igv::get()->first();
         $stock_producto = Stock_producto::all();
-        $id = 1;
+        $id_t1 = 1;
+        $id_t2 = 1;
 
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         // return view('inventario.cantidades-precios.index',compact('stock_producto','i','tipo_cambio'));
@@ -69,7 +71,7 @@ class CantidadPrecioController extends Controller
         $moneda_nacional=Moneda::where('tipo','nacional')->first();
         $moneda_extranjera=Moneda::where('tipo','extranjera')->first();
 
-         return view('consulta.cantidades-precios.index',compact('stock_producto','id','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera','producto_count'));
+         return view('consulta.cantidades-precios.index',compact('stock_producto','id_t1','id_t2','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera','producto_count','igv'));
          
     }
 
