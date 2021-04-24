@@ -11,6 +11,7 @@ use App\Facturacion_registro;
 use App\Boleta;
 use App\Boleta_registro;
 use App\Categoria;
+use App\Producto;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
 use DB;
@@ -64,11 +65,36 @@ class PeriodoConsultaController extends Controller
             $consulta=$request->consulta_p;
             if($consulta=="1" or $consulta=="3"){
                 //productos + compra------------------------------------------
-                $kardex_entrada_registro=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                if (!isset($kardex_entrada_registro)) {
-                    $kardex_entrada_registro[]="";
+                $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                // $cantidad_inicial=0;
+                // $precio_nacional=0;
+                // $precio_extranjero=0;
+                foreach($kardex_entrada_registros as $kardex_entrada_registro_f){
+                    $producto_id[]=$kardex_entrada_registro_f->producto_id;
                 }
-                $json=$kardex_entrada_registro;
+                $array_unico_productos=array_values(array_unique($producto_id));
+                // $array_values=array_values($array_unico_productos);
+                
+                $contador_prod=count($array_unico_productos);
+                // return $contador_prod;
+                for($a=0;$a<$contador_prod;$a++){
+                    $producto=Producto::where('id',$array_unico_productos[$a])->first();
+
+                    $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
+
+                    $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
+
+                    $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
+
+                    $kardex_entrada_r[$a]=array("producto" => $producto->nombre, "cantidad_inicial" => $kardex_entrada_r_cantidad_inicial , "precio_nacional" => $kardex_entrada_r_precio_nacional, "precio_extranjero" => $kardex_entrada_r_precio_extranjero);
+
+                    // return $kardex_entrada_r_cantidad_inicial;
+                }
+
+                if (!isset($kardex_entrada_r)) {
+                    $kardex_entrada_r[]="";
+                }
+                $json=$kardex_entrada_r;
             }else{
                 $json=[];
             }

@@ -172,14 +172,17 @@
 			}).done(function(res){
                 var arreglo=JSON.parse(res);
                 var todo='';
+                var contar=0;
                 for(var x=0;x<arreglo.length;x++){
+                    
                     todo += '<tr>' +
-                            '<td>' + arreglo[x].id + '</td>' +
-                            '<td>' + arreglo[x].producto.nombre + '</td>' +
+                            '<td>' + '-' + '</td>' +
+                            '<td>' + arreglo[x].producto + '</td>' +
                             '<td>' + arreglo[x].cantidad_inicial + '</td>' +
                             '<td>' + arreglo[x].precio_nacional + '</td>' +
                             '<td>' + arreglo[x].precio_extranjero + '</td>' +
                             '</tr>';
+                    
                 }
                 $('#tbody').append(todo);
                 var todo='';
@@ -205,8 +208,6 @@
                 $('#tbody_venta').append(todo_v);
                 var todo_v='';
             });
-
-
 		});
 
 
