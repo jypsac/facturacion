@@ -38,7 +38,7 @@ header{
         <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:200px;height: 50px ;margin-top: 5px">
     </div>
 </div> --}}
-	<header  >
+{{-- 	<header  >
 		   <table style="width: 100%;margin-bottom: -10px">
 	        <tr>
 	            <td style="width: auto;border-color: white" rowspan="2" valign="top">
@@ -48,13 +48,13 @@ header{
 
 	        </tr>
 	    </table>
-	</header>
+	</header> --}}
 	<main >
 		{{-- <div class="wrapper wrapper-content animated fadeIn" style="margin-top: 0px;"> --}}
 			<br>
 			<br>
 			<br>
-			<table width="100%" style="page-break-after:always;">
+			<table width="100%" >
 				<thead>
 					<tr>
 						<th>Id</th>
@@ -65,7 +65,7 @@ header{
 				</thead>
 			    <tbody>
 			    	@foreach($producto as $producto)
-			    	<tr style="page-break-inside: auto">
+			    	<tr >
 		 				<td>{{$x++}}</td>
 		 				<td>{{$producto->producto->nombre}}</td>
 		 				<td>{{$producto->stock}}</td>

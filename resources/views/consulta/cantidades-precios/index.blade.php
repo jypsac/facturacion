@@ -72,14 +72,15 @@
                 </table>
             </div>
           </div>
-        </form>
-       {{-- <div class="modal-footer"> --}}
-        {{-- <div class="row"> --}}
-            <div class="card-body d-flex justify-content-between align-items-center" style="padding-top: 5px;padding-bottom: 5px">
+          <div class="card-body d-flex justify-content-between align-items-center" style="padding-top: 5px;padding-bottom: 5px">
                 <input class="btn btn-info" align="left"  id="miBoton" align="left" style="display: none" type="submit" value="PDF" />
 
                 <input type="submit"  class="btn btn-secondary ml-auto" value="Cerrar" data-dismiss="modal"/>
             </div>
+        </form>
+       {{-- <div class="modal-footer"> --}}
+        {{-- <div class="row"> --}}
+            
         {{-- </div> --}}
       {{-- </div> --}}
     </div>
