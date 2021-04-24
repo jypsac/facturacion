@@ -45,12 +45,13 @@ class CantidadPrecioController extends Controller
         if($producto_count == 0){
             return view('consulta.cantidades-precios.index',compact('stock_producto','id','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera','producto_count'));
         }
+
         foreach ($producto as $prod) {
             $produ_id[] = $prod->id;
         }
         for ($i=0; $i < $producto_count ; $i++) {
             // foreach ($producto as $prod) {
-                $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$produ_id[$i])->first();
+                $producto[]=Producto::where('id',$produ_id[$i])->first();
             // }
         }
          // return $productos;
@@ -58,7 +59,7 @@ class CantidadPrecioController extends Controller
 
 
         if($moneda->tipo == "nacional"){
-            foreach ($productos as $index => $producto) {
+            foreach ($producto as $index => $producto) {
                 //precio nacional
                 $utilidad_precio_nac[] = Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                 $precio_nacional[] = round((Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')+$utilidad_precio_nac[$index]),2);
@@ -69,7 +70,7 @@ class CantidadPrecioController extends Controller
             }
             // $moneda_simb = Moneda::where('tipo','nacional')->first();
         }else{
-            foreach ($productos as $index => $producto) {
+            foreach ($producto as $index => $producto) {
                 //precio_nacional
                 $utilidad_precio_nac[] = Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                 $precio_nacional[] = round((Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')+$utilidad[$index]),2);
@@ -79,7 +80,7 @@ class CantidadPrecioController extends Controller
             }
             // $moneda_simb = Moneda::where('tipo','extranjera')->first();
         }
-
+        // ret
         $moneda_nacional=Moneda::where('tipo','nacional')->first();
         $moneda_extranjera=Moneda::where('tipo','extranjera')->first();
 

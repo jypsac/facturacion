@@ -4,7 +4,7 @@
 @section('breadcrumb2', 'Cantidades y Precios de Productos')
 @section('data-toggle', 'modal')
 @section('href_accion', '#modal-form')
-@section('value_accion', 'Agregar')
+@section('value_accion', 'Cantidades Minimas')
 
 @section('content')
 
