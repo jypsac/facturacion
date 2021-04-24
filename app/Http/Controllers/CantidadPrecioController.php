@@ -84,7 +84,7 @@ class CantidadPrecioController extends Controller
         $moneda_nacional=Moneda::where('tipo','nacional')->first();
         $moneda_extranjera=Moneda::where('tipo','extranjera')->first();
 
-         return view('consulta.cantidades-precios.index',compact('stock_producto','id_t1','id_t2','tipo_cambio','precio_nacional','precio_extranjero','moneda_simb','moneda_nacional','moneda_extranjera','producto_count','igv'));
+         return view('consulta.cantidades-precios.index',compact('stock_producto','id_t1','id_t2','tipo_cambio','precio_nacional','precio_extranjero','moneda_nacional','moneda_extranjera','producto_count','igv'));
 
     }
 
