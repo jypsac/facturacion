@@ -107,10 +107,10 @@
                 <div class="ibox-title">
                     <h5>Compras</h5>
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <table id="tablaid" class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    
                                     <th>Nombre producto</th>
                                     <th>cantidad inicial</th>
                                     <th>precio nacional</th>
@@ -118,13 +118,13 @@
                                 </tr>
                             </thead>
                         <tbody id="tbody">
-                            <tr style="display: none">
+                            {{-- <tr style="display: none">
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                         </table>
                     </div>
@@ -135,7 +135,7 @@
                 <div class="ibox-title">
                     <h5>Ventas</h5>
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-example">
+                        <table  class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -170,23 +170,43 @@
 				url: "{{ route('ajax_periodo') }}",
 				data:$("#formulario").serialize()
 			}).done(function(res){
-                var arreglo=JSON.parse(res);
-                var todo='';
-                var contar=0;
-                for(var x=0;x<arreglo.length;x++){
+                var data=JSON.parse(res);
+                $('#tablaid').dataTable({
                     
-                    todo += '<tr>' +
-                            '<td>' + '-' + '</td>' +
-                            '<td>' + arreglo[x].producto + '</td>' +
-                            '<td>' + arreglo[x].cantidad_inicial + '</td>' +
-                            '<td>' + arreglo[x].precio_nacional + '</td>' +
-                            '<td>' + arreglo[x].precio_extranjero + '</td>' +
-                            '</tr>';
-                    
-                }
-                $('#tbody').append(todo);
-                var todo='';
+                    "aaData": data,
+                    "columns": [
+                        { "data": "producto" },
+                        { "data": "cantidad_inicial" },
+                        { "data": "precio_nacional" },
+                        { "data": "precio_extranjero" }
+                    ]
+                })
+
             });
+            
+            // $('#tbody tr').slice(1).remove();
+			// $.ajax({
+			// 	method: "POST",
+			// 	url: "{{ route('ajax_periodo') }}",
+			// 	data:$("#formulario").serialize()
+			// }).done(function(res){
+            //     var arreglo=JSON.parse(res);
+            //     var todo='';
+            //     var contar=0;
+            //     for(var x=0;x<arreglo.length;x++){
+                    
+            //         todo += '<tr>' +
+            //                 '<td>' + '-' + '</td>' +
+            //                 '<td>' + arreglo[x].producto + '</td>' +
+            //                 '<td>' + arreglo[x].cantidad_inicial + '</td>' +
+            //                 '<td>' + arreglo[x].precio_nacional + '</td>' +
+            //                 '<td>' + arreglo[x].precio_extranjero + '</td>' +
+            //                 '</tr>';
+                    
+            //     }
+            //     $('#tbody').append(todo);
+            //     var todo='';
+            // });
 
             $('#tbody_venta tr').slice(1).remove();
 			$.ajax({
@@ -263,28 +283,28 @@
 
 <script>
         $(document).ready(function(){
-            $('.dataTables-example').DataTable({
-                pageLength: 25,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    {extend: 'copy'},
-                    {extend: 'csv'},
-                    {extend: 'excel', title: 'ExampleFile'},
-                    {extend: 'pdf', title: 'ExampleFile'},
-                    {extend: 'print',
-                    customize: function (win){
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
+            // $('.dataTables-example').DataTable({
+            //     pageLength: 25,
+            //     responsive: true,
+            //     dom: '<"html5buttons"B>lTfgitp',
+            //     buttons: [
+            //         {extend: 'copy'},
+            //         {extend: 'csv'},
+            //         {extend: 'excel', title: 'ExampleFile'},
+            //         {extend: 'pdf', title: 'ExampleFile'},
+            //         {extend: 'print',
+            //             customize: function (win){
+            //                     $(win.document.body).addClass('white-bg');
+            //                     $(win.document.body).css('font-size', '10px');
 
-                            $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-                    }
-                    }
-                ]
-
-            });
+            //                     $(win.document.body).find('table')
+            //                             .addClass('compact')
+            //                             .css('font-size', 'inherit');
+            //             }
+            //         }
+		    //     ]
+                
+            // });
 
         });
 
