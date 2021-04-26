@@ -38,23 +38,29 @@ header{
         <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:200px;height: 50px ;margin-top: 5px">
     </div>
 </div> --}}
-{{-- 	<header  >
+	<header   >
 		   <table style="width: 100%;margin-bottom: -10px">
 	        <tr>
-	            <td style="width: auto;border-color: white" rowspan="2" valign="top">
+	           {{--  <td style="width: auto;border-color: white" rowspan="2" valign="top">
 	                <img align="" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="margin-top: 0px;" width="300px" />
 	                <br>
-	            </td>
+	            </td> --}}
 
 	        </tr>
 	    </table>
-	</header> --}}
+	</header>
 	<main >
 		{{-- <div class="wrapper wrapper-content animated fadeIn" style="margin-top: 0px;"> --}}
 			<br>
 			<br>
 			<br>
 			<table width="100%" >
+				<thead>
+					 <tr><td colspan="4" style="width: auto;border-color: white"  valign="top">
+		                <img align="" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="margin-top: 0px;" width="300px" />
+		                <br>
+		            </td></tr>
+				</thead>
 				<thead>
 					<tr>
 						<th>Id</th>
@@ -63,7 +69,7 @@ header{
 						<th>Stock Minimo</th>
 					</tr>
 				</thead>
-			    <tbody>
+			    <tbody style="padding: 10px 10px 10px 10px">
 			    	@foreach($producto as $producto)
 			    	<tr >
 		 				<td>{{$x++}}</td>
