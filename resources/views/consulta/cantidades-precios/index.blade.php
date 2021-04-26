@@ -27,7 +27,7 @@
                 <input type="text" class="form-control form-control-sm m-b-xs" id="filter2"
                 placeholder="Buscar">
                 <table class="footable3 table table-responsive toggle-arrow-tiny" data-page-size="10" data-filter=#filter2>
-                    <thead>
+                    <thead >
                         <tr>
                             <a id="null" class="null" style="display:inline-block; ">
                                 <div>
@@ -80,7 +80,7 @@
         </form>
        {{-- <div class="modal-footer"> --}}
         {{-- <div class="row"> --}}
-            
+
         {{-- </div> --}}
       {{-- </div> --}}
     </div>
@@ -187,6 +187,9 @@
     .footable > thead > tr > th.null > span.footable-sort-indicator{
         display: none;
         padding: 0px 0px 0px 0px;
+    }
+    .table-responsive{
+        display: revert;
     }
 </style>
 <!-- Mainly scripts -->

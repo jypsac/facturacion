@@ -31,7 +31,7 @@ class KardexEntradaDistribucionController extends Controller
     {
         $kardex_distribucion=Kardex_entrada::where('tipo_registro_id',"3")->get();
 
-        return view('inventario.kardex.entrada.distribucion_producto.index',compact('kardex_distribucion','almacen'));
+        return view('inventario.kardex.entrada.distribucion_producto.index',compact('kardex_distribucion'));
     }
 
     /**

@@ -41,28 +41,28 @@ header{
 	<header   >
 		   <table style="width: 100%;margin-bottom: -10px">
 	        <tr>
-	           {{--  <td style="width: auto;border-color: white" rowspan="2" valign="top">
-	                <img align="" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="margin-top: 0px;" width="300px" />
+	            <td style="width: auto;border-color: white" rowspan="2" valign="top">
+	                <img align="right" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="margin-top: 0px;" width="300px" />
 	                <br>
-	            </td> --}}
+	            </td>
+
 
 	        </tr>
 	    </table>
 	</header>
 	<main >
-		{{-- <div class="wrapper wrapper-content animated fadeIn" style="margin-top: 0px;"> --}}
-			<br>
-			<br>
-			<br>
-			<table width="100%" >
+		<div class="table-responsive">
+			<table class="table " style="border-top: 0px" >
 				<thead>
 					 <tr><td colspan="4" style="width: auto;border-color: white"  valign="top">
 		                <img align="" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="margin-top: 0px;" width="300px" />
 		                <br>
+		                <br>
+		                <br>
 		            </td></tr>
 				</thead>
 				<thead>
-					<tr>
+					<tr style="text-align: left;font-weight: bold;border-top-width:  0px ">
 						<th>Id</th>
 						<th>Producto</th>
 						<th>Stock Actual</th>
@@ -80,8 +80,36 @@ header{
 			    	@endforeach
 			    </tbody>
 			</table>
-		{{-- </div> --}}
+		</div>
 		</main>
 </body>
+<style>
+
+    *{font-size: 14px;color: #495057;font-family: apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
+    .cero{
+    margin-bottom: 0px;
+
+    }
+     .table-bordered .blanco {
+    border: none;
+}
+    .blanco{border: none;
+        border: medium transparent;
+        }
+    .border {
+        border-color: #aaaaaa;
+        border-width: 1px;
+        border-style: solid;
+    }
+    .table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-top-width: 0px;
+
+}
+</style>
+
 </html>
 
