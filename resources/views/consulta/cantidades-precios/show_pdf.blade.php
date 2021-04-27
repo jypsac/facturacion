@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cotizacion</title>{{--
+    <title>Lista de productos con bajo Stock</title>{{--
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" > --}}
     <link href="{{ asset('css/estilos_pdf.css') }}" rel="stylesheet">
 </head>
@@ -38,15 +38,18 @@ header{
         <img align="left" src="{{asset('img/logos/')}}/{{$mi_empresa->foto}}" style="width:200px;height: 50px ;margin-top: 5px">
     </div>
 </div> --}}
-	<header   >
-		   <table style="width: 100%;margin-bottom: -10px">
+	<header  >
+		   <table style="width: 100%;border-collapse:separate;margin-bottom: -10px">
 	        <tr>
-	            <td style="width: auto;border-color: white" rowspan="2" valign="top">
-	                <img align="right" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="margin-top: 0px;" width="300px" />
-	                <br>
-	            </td>
-
-
+	        	<td style="width: 33%; ;border: 1px white solid;border-radius: 8px;margin-top: 0px;" align="right"></td>
+	        	<td style="width: 33%; ;border: 1px white solid;border-radius: 8px;margin-top: 0px;" align="right"></td>
+	            <td style="width: 33%; ;border: 2px #e5e6e7 solid;border-radius: 18px;margin-top: 0px" align="right">
+                <center>
+                    <h3 style="text-align: center;padding-top:10px;margin-bottom: -28px;margin-top: -10px"> R.U.C {{$empresa->ruc}}</h3><br>
+                    <h2 style="font-size: 19px;text-align: center;margin-bottom: -28px" >Productos</h2><br>
+                    <h5 style="text-align: center;margin-bottom: -5px" ></h5>
+                </center>
+            </td>
 	        </tr>
 	    </table>
 	</header>
@@ -55,10 +58,11 @@ header{
 			<table class="table " style="border-top: 0px" >
 				<thead>
 					 <tr><td colspan="4" style="width: auto;border-color: white"  valign="top">
-		                <img align="" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="margin-top: 0px;" width="300px" />
+		                <img align="" src="{{asset('img/logos/')}}/{{$empresa->foto}}" style="margin-top: 0px;" width="200px" />
 		                <br>
 		                <br>
 		                <br>
+		                {{-- <p>Hola mensajes</p> --}}
 		            </td></tr>
 				</thead>
 				<thead>
