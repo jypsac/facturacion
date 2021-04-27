@@ -17,8 +17,6 @@
             </div>
     </div>
 
-
-
 	<div class="row">
 		<div class="col-lg-12">
             <div class="ibox">
@@ -135,7 +133,7 @@
                 <div class="ibox-title">
                     <h5>Ventas</h5>
                     <div class="table-responsive">
-                        <table  class="table table-striped table-bordered table-hover dataTables-example">
+                        <table id="tablaid_venta" class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
                                     <th>ID</th>
@@ -146,13 +144,13 @@
                                 </tr>
                             </thead>
                         <tbody id="tbody_venta">
-                            <tr style="display: none">
+                            {{-- <tr style="display: none">
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
                                 <td></td>
-                            </tr>
+                            </tr> --}}
                         </tbody>
                         </table>
                     </div>
@@ -164,14 +162,18 @@
 <script>
     $(document).ready(function(e) {
         $('#boton').on('click', function() {
-            $('#tbody tr').slice(1).remove();
+
+            
+            // $('#tbody tr').slice(1).remove();
 			$.ajax({
 				method: "POST",
 				url: "{{ route('ajax_periodo') }}",
 				data:$("#formulario").serialize()
 			}).done(function(res){
+                $('#tablaid').dataTable().fnDestroy();
                 var data=JSON.parse(res);
                 $('#tablaid').dataTable({
+                    
                         pageLength: 25,
                         responsive: true,
                         dom: '<"html5buttons"B>lTfgitp',
@@ -198,10 +200,52 @@
                         { "data": "precio_nacional" },
                         { "data": "precio_extranjero" }
                     ]
+
+                    
                 })
 
             });
             
+            $('#tbody_venta tr').slice(1).remove();
+            
+			$.ajax({
+				method: "POST",
+				url: "{{ route('ajax_periodo_ventas') }}",
+				data:$("#formulario").serialize()
+			}).done(function(res){
+                $('#tablaid_venta').dataTable().fnDestroy();
+                var data=JSON.parse(res);
+                $('#tablaid_venta').dataTable({
+                        pageLength: 25,
+                        responsive: true,
+                        dom: '<"html5buttons"B>lTfgitp',
+                        buttons: [
+                            {extend: 'copy'},
+                            {extend: 'csv'},
+                            {extend: 'excel', title: 'ExampleFile'},
+                            {extend: 'pdf', title: 'ExampleFile'},
+                            {extend: 'print',
+                                customize: function (win){
+                                        $(win.document.body).addClass('white-bg');
+                                        $(win.document.body).css('font-size', '10px');
+
+                                        $(win.document.body).find('table')
+                                                .addClass('compact')
+                                                .css('font-size', 'inherit');
+                                }
+                            }
+                        ],
+                    "aaData": data,
+                    "columns": [
+                        { "data": "id" },
+                        { "data": "producto.nombre" },
+                        { "data": "cantidad" },
+                        { "data": "precio" },
+                        { "data": "stock" }
+                    ]
+                })
+            });
+		});
             // $('#tbody tr').slice(1).remove();
 			// $.ajax({
 			// 	method: "POST",
@@ -226,27 +270,7 @@
             //     var todo='';
             // });
 
-            $('#tbody_venta tr').slice(1).remove();
-			$.ajax({
-				method: "POST",
-				url: "{{ route('ajax_periodo_ventas') }}",
-				data:$("#formulario").serialize()
-			}).done(function(res){
-                var arreglo_v=JSON.parse(res);
-                var todo_v='';
-                for(var x=0;x<arreglo_v.length;x++){
-                    todo_v += '<tr>' +
-                            '<td>' + arreglo_v[x].id + '</td>' +
-                            '<td>' + arreglo_v[x].producto.nombre + '</td>' +
-                            '<td>' + arreglo_v[x].cantidad + '</td>' +
-                            '<td>' + arreglo_v[x].precio + '</td>' +
-                            '<td>' + arreglo_v[x].stock + '</td>' +
-                            '</tr>';
-                }
-                $('#tbody_venta').append(todo_v);
-                var todo_v='';
-            });
-		});
+            
 
 
 
@@ -300,31 +324,7 @@
    {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 
 <script>
-        $(document).ready(function(){
-            // $('.dataTables-example').DataTable({
-            //     pageLength: 25,
-            //     responsive: true,
-            //     dom: '<"html5buttons"B>lTfgitp',
-            //     buttons: [
-            //         {extend: 'copy'},
-            //         {extend: 'csv'},
-            //         {extend: 'excel', title: 'ExampleFile'},
-            //         {extend: 'pdf', title: 'ExampleFile'},
-            //         {extend: 'print',
-            //             customize: function (win){
-            //                     $(win.document.body).addClass('white-bg');
-            //                     $(win.document.body).css('font-size', '10px');
-
-            //                     $(win.document.body).find('table')
-            //                             .addClass('compact')
-            //                             .css('font-size', 'inherit');
-            //             }
-            //         }
-		    //     ]
-                
-            // });
-
-        });
+        
 
         function seleccionado(){
             var opt = $('#categoria').val();
