@@ -47,13 +47,11 @@
 @endif
 
 
+@section('form_action_modal_cliente',  route('agregado_rapido.cliente_cotizado'))
+@section('ruta_retorno', 'cotizacion')
 <div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1">
-        <i class="fa fa-user-o" aria-hidden="true"></i><span> cliente</span>
-    </a>
-    <a href="{{route('cotizacion.create_factura')}}" class="icon icon-twitter"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span> Factura</span></a>
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target="#ModalCliente"><i class="fa fa-user-o" aria-hidden="true"></i>cliente </a>
 </div>
-
 <!-- Modal CLiente -->
 
 <div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
@@ -357,7 +355,7 @@
                                                             <input type='text' id='stock0' disabled="disabled" name='stock[]' class="form-control" required  autocomplete="off"/>
                                                         </td>
                                                         <td>
-                                                            <input type='number' id='cantidad0' name='cantidad[]' max="{{$array_cantidad[$index]}}" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
+                                                            <input type='number' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
                                                         </td>
                                                         <td>
                                                             <input type='text' id='precio0' name='precio[]' disabled="disabled" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
@@ -431,15 +429,24 @@
                         input[type=number] { -moz-appearance:textfield; }
                     </style>
 
+                    <!-- Mainly scripts -->
                     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
                     <script src="{{ asset('js/popper.min.js') }}"></script>
                     <script src="{{ asset('js/bootstrap.js') }}"></script>
                     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
                     <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
+                    <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+                    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
                     <!-- Custom and plugin javascript -->
                     <script src="{{ asset('js/inspinia.js') }}"></script>
                     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+                    <!-- Jquery Validate -->
+                    <script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
+
+                    <!-- Steps -->
+                    <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
                     {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
                     <script>
                         function valida(f) {
@@ -733,7 +740,8 @@
             document.getElementById(`stock${a}`).value = stock_v;
             document.getElementById(`descuento${a}`).value = descuento_v;
             document.getElementById(`check_descuento${a}`).value =0;
-
+            var msg2 = parseInt(stock_v) ;
+            $(`#cantidad${a}`).attr('max', stock_v );
             //comision
             var comision=document.querySelector(`#comisionista`).value;
             //revirtiendo la cadena

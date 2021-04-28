@@ -113,7 +113,7 @@ class CantidadPrecioController extends Controller
         for ($i=0; $i <  $prod_count ; $i++) {
             $producto[] = Stock_producto::where('id',$producto_id[$i])->first();
         }
-        return view('consulta.cantidades-precios.show_pdf',compact('producto','x','empresa'));
+        // return view('consulta.cantidades-precios.show_pdf',compact('producto','x','empresa'));
         $pdf=PDF::loadView('consulta.cantidades-precios.show_pdf',compact('producto','x','empresa'));
         return $pdf->download('Productos.pdf');
     }

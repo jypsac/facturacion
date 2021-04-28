@@ -42,6 +42,8 @@ class EmailBandejaEnviosController extends Controller
      */
     public function index()
     {
+
+      // return view('email_html.email_send_layout',compact('empresa'));
       $id_usuario=auth()->user()->id;
       $user=User::where('id',$id_usuario)->first();
       $clientes=Cliente::all();
@@ -71,6 +73,7 @@ class EmailBandejaEnviosController extends Controller
     $date_sp = Carbon::now();
     $data_g = str_replace(' ', '_',$date_sp);
     $carbon_sp = str_replace(':','-',$data_g);
+    $empresa = Empresa::first();
 
     $id_usuario=auth()->user()->id;
     $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
@@ -79,45 +82,6 @@ class EmailBandejaEnviosController extends Controller
     $alto = $correo_busqueda->alto_firma;
     $mensaje_html = $request->get('mensaje');
 
-
-    if($firma == null){
-      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script>
-      $(document).ready(function(){
-          $("table").removeClass("table table-bordered").addClass("css");
-      });
-      </script>
-      <style>
-   .css,table,tr,td{
-      padding: 15px;
-      border: 1px solid black;
-      border-collapse: collapse;
-        }
-    table{
-      width:100%;
-    }
-      </style>'.$mensaje_html.'</body>';
-    }else{
-      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script>
-      $(document).ready(function(){
-          $("table").removeClass("table table-bordered").addClass("css");
-      });
-      </script>
-      <style>
-   .css,table,tr,td{
-      padding: 15px;
-      border: 1px solid black;
-      border-collapse: collapse;
-        }
-    table{
-      width:100%;
-    }
-      </style>'.$mensaje_html.'</body><br/><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="'.$ancho.'px" height=" '.$alto.'px " /></footer>';
-    }
-
-
-    // return $mensaje_con_firma;
     $correo=$correo_busqueda->email;
 
     /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
@@ -131,7 +95,7 @@ class EmailBandejaEnviosController extends Controller
         $yourPassword = $correo_busqueda->password;
         $sendto = $request->get('remitente')  ;
         $titulo = $request->get('asunto');
-        $mensaje = $mensaje_con_firma;
+        $mensaje = view('email_html.email_send_layout',compact('empresa','mensaje_html','firma','alto','ancho'));
         $bakcup=    $correo_busqueda->email_backup ;
 
         $transport = (new \Swift_SmtpTransport($smtpAddress, $port, $encryption)) -> setUsername($yourEmail) -> setPassword($yourPassword);
@@ -162,7 +126,7 @@ class EmailBandejaEnviosController extends Controller
           $mail->destinatario =$correo;
           $mail->remitente =$request->get('remitente') ;
           $mail->asunto =$request->get('asunto') ;
-          $mail->mensaje =$mensaje_con_firma;
+          $mail->mensaje =$mensaje;
           $mail->mensaje_sin_html =$texto ;
           $mail->estado = '0';
           $mail->fecha_hora =Carbon::now() ;
@@ -184,7 +148,7 @@ class EmailBandejaEnviosController extends Controller
 
       }
 
-   function save(Request $request){
+   public function save(Request $request){
     $date_sp = Carbon::now();
     $data_g = str_replace(' ', '_',$date_sp);
     $carbon_sp = str_replace(':','-',$data_g);
@@ -385,47 +349,15 @@ class EmailBandejaEnviosController extends Controller
     $data_g = str_replace(' ', '_',$date_sp);
     $carbon_sp = str_replace(':','-',$data_g);
     $dates = $request->get('dates');
+    $empresa = Empresa::first();
     $id_usuario=auth()->user()->id;
     $correo_busqueda=EmailConfiguraciones::where('id_usuario',$id_usuario)->first();
     $correo=$correo_busqueda->email;
 
     $firma=$correo_busqueda->firma;
+    $alto = $correo_busqueda->alto;
+    $ancho = $correo_busqueda->ancho;
     $mensaje_html = $request->get('mensaje');
-    if($firma == null){
-      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script>
-      $(document).ready(function(){
-          $("table").removeClass("table table-bordered").addClass("css");
-      });
-      </script>
-      <style>
-   .css,table,tr,td{
-      padding: 15px;
-      border: 1px solid black;
-      border-collapse: collapse;
-        }
-    table{
-      width:100%;
-    }
-      </style>'.$mensaje_html.'</body>';
-    }else{
-      $mensaje_con_firma ='<head><script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-      <script>
-      $(document).ready(function(){
-          $("table").removeClass("table table-bordered").addClass("css");
-      });
-      </script>
-      <style>
-   .css,table,tr,td{
-      padding: 15px;
-      border: 1px solid black;
-      border-collapse: collapse;
-        }
-    table{
-      width:100%;
-    }
-      </style>'.$mensaje_html.'</body><br/><br/><footer><img name="firma" src=" '.url('/').'/archivos/imagenes/firmas/'.$firma.'" width="'.$correo_busqueda->firma_ancho.'px" height="'.$correo_busqueda->firma_alto.'px" /></footer>';
-    }
     /////////ENVIO DE CORREO/////// https://myaccount.google.com/u/0/lesssecureapps?pli=1 <--- VAINA DE AUTORIZACION PARA EL GMAIL
 
         $smtpAddress = $correo_busqueda->smtp; // = $request->smtp
@@ -437,8 +369,8 @@ class EmailBandejaEnviosController extends Controller
         $yourPassword = $correo_busqueda->password;
         $sendto = $request->get('remitente')  ;
         $titulo = $request->get('asunto');
-        $mensaje = $mensaje_con_firma;
-        $bakcup=    $correo_busqueda->email_backup ;
+        $mensaje = view('email_html.email_send_layout',compact('empresa','mensaje_html','firma','alto','ancho'));;
+        $bakcup =   $correo_busqueda->email_backup ;
 
         // $file = $request->archivo;
         $pdf=$request->get('pdf');
@@ -475,7 +407,7 @@ class EmailBandejaEnviosController extends Controller
           $mail->destinatario =$correo;
           $mail->remitente =$request->get('remitente') ;
           $mail->asunto =$request->get('asunto') ;
-          $mail->mensaje =$mensaje_con_firma;
+          $mail->mensaje =$mensaje;
           $mail->mensaje_sin_html =$texto ;
           $mail->estado= $estado;
           $mail->fecha_hora =Carbon::now() ;

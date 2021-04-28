@@ -17,6 +17,8 @@
                     e.preventDefault();
                 }
             });
+
+
         });
     </script>
 </head>
@@ -33,118 +35,10 @@
 </div>
 @endif
 
+@section('form_action_modal_cliente',  route('agregado_rapido.cliente_cotizado'))
+@section('ruta_retorno', 'facturacion')
 <div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1">
-        <i class="fa fa-user-o" aria-hidden="true"></i>
-        <span>cliente</span>
-    </a>
-</div>
-
-
-
-<!-- Modal CLiente -->
-<div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-    <div class="modal-dialog modal-lg">
-        <div class="modal-content" style="width: 100%">
-            <!-- Consulta API -->
-            <form class="wizard-big" style="margin:20px 20px 20px 20px">
-                {{ csrf_field() }}
-                <div class="form-group row ">
-                    <label class="col-sm-2 col-form-label" >Introducir Ruc (Inestable):</label>
-                    <div class="col-sm-10">
-                        <input type="text" class="form-control" class="ruc" id="ruc" name="ruc">
-                        <button class="btn btn-primary" id="botoncito" class="botoncito"><i class="fa fa-search"></i> Buscar</button>
-                    </div>
-                </div>
-            </form>
-            <script>
-                $(function(){
-                    $('#botoncito').on('click', function(){
-                        var ruc = $('#ruc').val();
-                        var url = "{{ url('provedorruc') }}";
-                        $('.ajaxgif').removeClass('hide');
-                        $.ajax({
-                            type:'GET',
-                            url:url,
-                            data:'ruc='+ruc,
-                            success: function(datos_dni){
-                                $('.ajaxgif').addClass('hide');
-                                var datos = eval(datos_dni);
-                                var nada ='nada';
-                                if(datos[0]==nada){
-                                    alert('DNI o RUC no válido o no registrado');
-                                }else{
-                                    $('#numero_ruc').val(datos[0]);
-                                    $('#razon_social').val(datos[1]);
-                                    $('#fecha_actividad').val(datos[2]);
-                                    $('#condicion').val(datos[3]);
-                                    $('#tipo').val(datos[4]);
-                                    $('#estado').val(datos[5]);
-                                    $('#fecha_inscripcion').val(datos[6]);
-                                    $('#domicilio').val(datos[7]);
-                                    $('#emision').val(datos[8]);
-                                }
-                            }
-                        });
-                        return false;
-                    });
-                });
-            </script>
-            <!-- Fin Consulta API -->
-            <form action="{{ route('agregado_rapido.cliente_cotizado') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
-                @csrf
-                <h1>
-                    <i class="fa fa-user-o" aria-hidden="true"></i>
-                </h1>
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label" >Tipo Documento:</label>
-                    <div class="col-sm-4">
-                        <select class="form-control m-b" name="documento_identificacion" >
-                            <option value="Ruc">Ruc</option>
-                            <option value="dni">DNI</option>
-                            <option value="pasaporte">Pasaporte</option>
-                        </select>
-                    </div>
-
-                    <label class="col-sm-2 col-form-label">Numero de Documento:</label>
-                    <div class="col-sm-4">
-                        <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc" required value="{{ old('numero_documento')}}" autocomplete="off" type="number">
-                        <datalist id="browserdoc" >
-                            @foreach($clientes as $cliente)
-                            <option id="a">{{$cliente->numero_documento}} - existente</option>
-                            @endforeach
-                        </datalist>
-                    </div>
-                </div>
-
-                <div class="form-group row" >
-                    <label class="col-sm-2 col-form-label" >Cliente:</label>
-                    <div class="col-sm-4">
-                        <input list="browsersc" class="form-control m-b" name="nombre" id="razon_social" required value="{{ old('nombre')}}" autocomplete="off">
-                        <datalist id="browsersc" >
-                            @foreach($clientes as $cliente)
-                            <option id="a">{{$cliente->nombre}} - existente</option>
-                            @endforeach
-                        </datalist>
-                    </div>
-
-                    <label class="col-sm-2 col-form-label">Direccion:</label>
-                    <div class="col-sm-4">
-                        <input type="text" class="form-control" name="direccion" id="domicilio" class="form-control" required value="{{ old('direccion')}}" autocomplete="off">
-                    </div>
-                </div>
-
-                <div class="form-group row">
-                    <label class="col-sm-2 col-form-label">correo:</label>
-                    <div class="col-sm-4">
-                        <input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}" autocomplete="off">
-                    </div>
-                </div>
-
-                <input type="submit"class="btn btn-primary" value="Grabar">
-            </form>
-        </div>
-    </div>
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target="#ModalCliente"><i class="fa fa-user-o" aria-hidden="true"></i>cliente </a>
 </div>
 
 <form action="{{ route('facturacion.create_ms')}}" enctype="multipart/form-data" id="almacen-form" method="POST">
@@ -322,7 +216,7 @@
                                                             <input  style="width: 76px" type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
                                                         </td>
                                                         <td>
-                                                            <input style="width: 76px" type='number' id='cantidad0' name='cantidad[]' max="{{$array_cantidad[$index]}}" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
+                                                            <input style="width: 76px" type='number' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
                                                         </td>
                                                         <td>
                                                             <input style="width: 76px" type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
@@ -410,15 +304,23 @@
 
                     input[type=number] { -moz-appearance:textfield; }
                     </style>
-                    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+                     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
                     <script src="{{ asset('js/popper.min.js') }}"></script>
                     <script src="{{ asset('js/bootstrap.js') }}"></script>
                     <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
                     <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
+                    <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+                    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
                     <!-- Custom and plugin javascript -->
                     <script src="{{ asset('js/inspinia.js') }}"></script>
                     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+                    <!-- Jquery Validate -->
+                    <script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
+
+                    <!-- Steps -->
+                    <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
                       {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
                     <script>
                         function valida(f) {
@@ -455,7 +357,7 @@
                             <input type='text' style="width: 76px"  id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
                             </td>
                             <td>
-                            <input type='number' style="width: 76px"  id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off" max="{{$array_cantidad[$index]}}"/>
+                            <input type='number' style="width: 76px"  id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off" max=""/>
                             </td>
                             <td>
                             <input type='text' style="width: 76px"  id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
@@ -705,7 +607,8 @@
             document.getElementById(`stock${a}`).value = stock_v;
             document.getElementById(`descuento${a}`).value = descuento_v;
             document.getElementById(`check_descuento${a}`).value =0;
-
+            var msg2 = parseInt(stock_v) ;
+            $(`#cantidad${a}`).attr('max', stock_v );
             //comision
             var comision=document.querySelector(`#comisionista`).value;
             //revirtiendo la cadena

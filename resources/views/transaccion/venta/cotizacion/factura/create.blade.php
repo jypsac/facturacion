@@ -216,7 +216,7 @@
                                                         <input  style="width: 76px" type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
                                                     </td>
                                                     <td>
-                                                        <input style="width: 76px" type='number' id='cantidad0' name='cantidad[]' max="{{$array_cantidad[$index]}}" min="1" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
+                                                        <input style="width: 76px" type='number' id='cantidad0' name='cantidad[]' max="" min="1" class="monto0 form-control"  onkeyup="multi(0)"  required  autocomplete="off" />
                                                     </td>
                                                     <td>
                                                         <input style="width: 76px" type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
@@ -326,86 +326,7 @@
                 <!-- Steps -->
                 <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
                 {{-- scritp de modal agregar --}}
-                <script>
-                    $(document).ready(function(){
-                        $("#wizard").steps();
-                        $("#form").steps({
-                            bodyTag: "fieldset",
-                            onStepChanging: function (event, currentIndex, newIndex)
-                            {
-                    // ¡Siempre permita retroceder incluso si el paso actual contiene campos no válidos!
-                    if (currentIndex > newIndex)
-                    {
-                        return true;
-                    }
 
-                    // Prohibir suprimir el paso "Advertencia" si el usuario es demasiado joven
-                    if (newIndex === 3 && Number($("#age").val()) < 18)
-                    {
-                        return false;
-                    }
-
-                    var form = $(this);
-
-                    // Limpie si el usuario retrocedió antes
-                    if (currentIndex < newIndex)
-                    {
-                        // Para eliminar estilos de error
-                        $(".body:eq(" + newIndex + ") label.error", form).remove();
-                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
-                    }
-
-                    // Deshabilite la validación en los campos que están deshabilitados u ocultos.
-                    form.validate().settings.ignore = ":disabled,:hidden";
-
-                    // Iniciar validación; Evite avanzar si es falso
-                    return form.valid();
-                },
-                onStepChanged: function (event, currentIndex, priorIndex)
-                {
-                    // Suprima (omita) el paso "Advertencia" si el usuario tiene edad suficiente.
-                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
-                    {
-                        $(this).steps("next");
-                    }
-
-                    // Suprima (omita) el paso "Advertencia" si el usuario tiene la edad suficiente y quiere el paso anterior.
-                    if (currentIndex === 2 && priorIndex === 3)
-                    {
-                        $(this).steps("previous");
-                    }
-                },
-                onFinishing: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Deshabilita la validación en los campos que están deshabilitados.
-                    // En este punto, se recomienda hacer una verificación general (significa ignorar solo los campos deshabilitados)
-                    form.validate().settings.ignore = ":disabled";
-
-                    // Iniciar validación; Evitar el envío del formulario si es falso
-                    return form.valid();
-                },
-                onFinished: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Enviar entrada de formulario
-                    form.submit();
-                }
-            }).validate({
-                errorPlacement: function (error, element)
-                {
-                    element.before(error);
-                },
-                rules: {
-                    confirm: {
-                        equalTo: "#password"
-                    }
-                }
-            });
-        });
-    </script>
     {{-- / --}}
 
     {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
@@ -442,7 +363,7 @@
         <input type="" style="width: 76px"  id='stock${i}' name='stock[]' readonly="readonly" class="form-control"  required  autocomplete="off"/>
         </td>
         <td>
-        <input type='number' style="width: 76px" max="{{$array_cantidad[$index]}}" min="1" id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+        <input type='number' style="width: 76px" max="" min="1" id='cantidad${i}' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
         </td>
         <td>
         <input type='text' style="width: 76px"  id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
@@ -494,8 +415,10 @@
             },
             success: function (msg) {
                         // console.log(msg);
+                $('#descripcion0').val(msg);
 
-                        $('#descripcion0').val(msg);
+                var msg2 = parseInt(msg) ;
+                $('#cantidad0').attr('max', msg2 );
                     }
                 });
     });
@@ -697,6 +620,8 @@
             document.getElementById(`descuento${a}`).value = descuento_v;
             document.getElementById(`check_descuento${a}`).value =0;
 
+            var msg2 = parseInt(stock_v) ;
+            $(`#cantidad${a}`).attr('max', stock_v );
             //comision
             var comision=document.querySelector(`#comisionista`).value;
             //revirtiendo la cadena
