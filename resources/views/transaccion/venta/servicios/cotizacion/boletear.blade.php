@@ -147,6 +147,7 @@
                                 <div class="col-sm-3 ">
                                     <p class="form-control a"> Importe Total</p>
                                     <p class="form-control a"> {{$cotizacion->moneda->simbolo }}.{{round($sub_total, 2)}}</p>
+                                    <input type="text" hidden="" name="total" value="{{round($sub_total, 2)}}">
                                 </div>
                             </div> <br>
                             <div class="row">

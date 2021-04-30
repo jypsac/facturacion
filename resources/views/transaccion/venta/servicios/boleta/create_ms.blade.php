@@ -257,7 +257,7 @@
                                             <td></td>
                                             <td></td>
                                             <td>Total :</td>
-                                            <td><input id='total_final'  disabled="disabled" class="form-control" required /></td>
+                                            <td><input id='total_final'  readonly="" name="total_igv" class="form-control" required /></td>
                                         </tr>
                                     </tbody>
                                 </table>
