@@ -15,6 +15,7 @@ use App\Personal;
 use App\Personal_venta;
 use App\Servicios;
 use App\TipoCambio;
+use App\Ventas_registro;
 use Carbon\Carbon;
 use Illuminate\Http\Request;
 
@@ -231,6 +232,7 @@ class FacturacionServicioController extends Controller
             $id_personal=$cod_vendedor->id;
             $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
             $comi=$comisionista_buscador->comision;
+            $comisionista_id = $comisionista_buscador->id;
         }else{
             $comi=0;
         }
@@ -306,6 +308,33 @@ class FacturacionServicioController extends Controller
         $facturacion->estado='0';
         $facturacion->tipo='servicio';
         $facturacion->save();
+
+        // $cotizador=$request->get('id_cotizador');
+        // $id_comisionista=$request->get('id_comisionista');
+        $precio_final_igv=$request->get('precio_final_igv');
+        $sub_total_sin_igv=$request->get('sub_total_sin_igv');
+        // $tipo_moneda=$request->get('tipo_moneda');
+        // $comisionista=Cotizacion_Servicios::where('id',$cotizador)->first();
+        $comisionista_porcentaje=Personal_venta::where('id',$comisionista_id)->first();
+        // $id_comi=$comisionista_porcentaje->comisionista_id;}
+        if($comisionista_id != 0){
+           $comisionista=new Ventas_registro;
+           $comisionista->comisionista=$comisionista_id;
+           $comisionista->tipo_moneda=$moneda->id;
+           $comisionista->estado_aprobado='0';
+           $comisionista->estado_pagado='0';
+           $comisionista->estado_anular_fac_bol='0';
+           $comisionista->monto_final_fac_bol=$precio_final_igv;
+           $porcentaje=100+$comisionista_porcentaje->comision;
+           $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
+           // $comisionista->id_coti_produc=$cotizador;
+           // $comisionista->id_coti_servicio=$cotizador;
+           $comisionista->id_fac=$facturacion->id;
+           $comisionista->observacion='Factura';
+           $comisionista->save();
+        }
+        // return $request;
+        // return '1';
 
         $check = $request->input('descuento_unitario');
         $count_check=count($check);

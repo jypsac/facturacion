@@ -267,7 +267,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td>Subtotal :</td>
-                                                            <td colspan="2"><input id='sub_total'  disabled="disabled"    class="form-control" required /></td>
+                                                            <td colspan="2"><input id='sub_total'  readonly=""   name="sub_total_sin_igv" class="form-control" required /></td>
                                                         </tr>
                                                         <tr style="background-color: #f5f5f500;" align="center">
                                                             <td></td>
@@ -287,7 +287,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td>Total :</td>
-                                                            <td colspan="2"><input id='total_final'    disabled="disabled" class="form-control" required /></td>
+                                                            <td colspan="2"><input id='total_final'  name="precio_final_igv"  readonly="" class="form-control" required /></td>
                                                         </tr>
                                                     </tbody>
                                                 </table>

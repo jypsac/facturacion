@@ -397,7 +397,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td>Total :</td>
-                                                            <td><input id='total_final' style="width: 76px" disabled="disabled" class="form-control" required/>
+                                                            <td><input id='total_final' style="width: 76px" name="total_comi" readonly="" class="form-control" required/>
                                                             </td>
                                                         </tr>
                                                     </tbody>

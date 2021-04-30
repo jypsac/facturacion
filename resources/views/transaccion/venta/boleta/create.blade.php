@@ -280,7 +280,7 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td>Total :</td>
-                                                            <td><input id='total_final' style="width: 76px" disabled="disabled" class="form-control" required/>
+                                                            <td><input id='total_final' style="width: 76px" readonly="" name="total_comi" class="form-control" required/>
                                                             </td>
                                                         </tr>
                                                     </tbody>

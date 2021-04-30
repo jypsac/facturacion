@@ -1039,36 +1039,46 @@ public function boletear_store(Request $request){
    $cotizaciones_boletaciones=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$buscador_id->id)->get();
 
    foreach ($cotizaciones_boletaciones as $index => $cotizacion_boleta) {
-    $boleta_registro=new Boleta_registro();
-    $boleta_registro->boleta_id=$boletear->id;
-    $boleta_registro->servicio_id=$cotizacion_boleta->servicio_id;
-    $boleta_registro->promedio_original=$cotizacion_boleta->promedio_original;
-    $boleta_registro->precio=$cotizacion_boleta->precio;
-    $boleta_registro->cantidad=$cotizacion_boleta->cantidad;
-    $boleta_registro->descuento=$cotizacion_boleta->descuento;
-    $boleta_registro->precio_unitario_desc=$cotizacion_boleta->precio_unitario_desc;
-    $boleta_registro->comision=$cotizacion_boleta->comision;
-    $boleta_registro->precio_unitario_comi=$cotizacion_boleta->precio_unitario_comi;
-    $boleta_registro->save();
-}
+        $boleta_registro=new Boleta_registro();
+        $boleta_registro->boleta_id=$boletear->id;
+        $boleta_registro->servicio_id=$cotizacion_boleta->servicio_id;
+        $boleta_registro->promedio_original=$cotizacion_boleta->promedio_original;
+        $boleta_registro->precio=$cotizacion_boleta->precio;
+        $boleta_registro->cantidad=$cotizacion_boleta->cantidad;
+        $boleta_registro->descuento=$cotizacion_boleta->descuento;
+        $boleta_registro->precio_unitario_desc=$cotizacion_boleta->precio_unitario_desc;
+        $boleta_registro->comision=$cotizacion_boleta->comision;
+        $boleta_registro->precio_unitario_comi=$cotizacion_boleta->precio_unitario_comi;
+        $boleta_registro->save();
+    }
 
         // Creacion de Ventas Registros del Comisinista
-$cotizador=$request->get('id_cotizador');
-$id_comisionista=$request->get('id_comisionista');
-$comisionista=Cotizacion_Servicios::where('id',$cotizador)->first();
-$id_comi=$comisionista->comisionista_id;
-
-// if(isset($id_comi)){
-//    $comisionista=new Ventas_registro;
-//    $comisionista->id_facturacion=$request->get('fac_id');
-//    $comisionista->comisionista=$request->get('id_comisionista');
-//    $comisionista->estado_aprobado='0';
-//    $comisionista->pago_efectuado='0';
-//    $comisionista->estado_fac='0';
-//    $comisionista->observacion='Viene del Cotizador';
-//    $comisionista->save();
-// }
-return redirect()->route('boleta_servicio.show',$boletear->id);
+     // Creacion de Ventas Registros del Comisinista
+        $cotizador=$request->get('id_cotizador');
+        $total=$request->get('total');
+        $id_comisionista=$request->get('id_comisionista');
+        $comisionista=Cotizacion_Servicios::where('id',$cotizador)->first();
+        $igv=Igv::first();
+        $comisionista_porcentaje=Personal_venta::where('id',$id_comisionista)->first();
+        // return $comisionista;
+        $id_comi=$comisionista->comisionista_id;
+        if(isset($id_comi)){
+             $comisionista=new Ventas_registro;
+             $comisionista->comisionista=$request->get('id_comisionista');
+             $comisionista->tipo_moneda=$boletear->moneda_id;
+             $comisionista->estado_aprobado='0';
+             $comisionista->estado_pagado='0';
+             $comisionista->estado_anular_fac_bol='0';
+             $comisionista->monto_final_fac_bol=$total;
+             $porcentaje_igv=100+$igv->igv_total;
+             $porcentaje=100+$comisionista_porcentaje->comision;
+             $comisionista->monto_comision=((100*$total/$porcentaje_igv)*100/$porcentaje)*$comisionista_porcentaje->comision/100;
+             $comisionista->id_coti_servicio=$cotizador;
+             $comisionista->id_bol=$boletear->id;
+             $comisionista->observacion='Viene del Cotizador';
+             $comisionista->save();
+         }
+    return redirect()->route('boleta_servicio.show',$boletear->id);
 
 }
 
