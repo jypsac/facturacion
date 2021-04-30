@@ -65,7 +65,12 @@ class PeriodoConsultaController extends Controller
             $consulta=$request->consulta_p;
             if($consulta=="1" or $consulta=="3"){
                 //productos + compra------------------------------------------
-                $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                if($almacen==0){
+                    $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                }else{
+                    $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                }
+                
                 // $cantidad_inicial=0;
                 // $precio_nacional=0;
                 // $precio_extranjero=0;
@@ -79,13 +84,20 @@ class PeriodoConsultaController extends Controller
                 // return $contador_prod;
                 for($a=0;$a<$contador_prod;$a++){
                     $producto=Producto::where('id',$array_unico_productos[$a])->first();
+                    if($almacen==0){
+                        $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
 
-                    $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
+                        $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
 
-                    $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
+                        $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
+                    }else{
+                        $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
 
-                    $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
+                        $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
 
+                        $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
+                    }
+                    
                     $kardex_entrada_r[$a]=array("producto" => $producto->nombre, "cantidad_inicial" => $kardex_entrada_r_cantidad_inicial , "precio_nacional" => $kardex_entrada_r_precio_nacional, "precio_extranjero" => $kardex_entrada_r_precio_extranjero);
 
                     // return $kardex_entrada_r_cantidad_inicial;
@@ -123,27 +135,33 @@ class PeriodoConsultaController extends Controller
             $consulta=$request->consulta_p;
             
             if($consulta=="2" or $consulta=="3"){
-                //productos + venta ------------------------------------------
+                if($almacen==0){
+                    $factura= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $boleta= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                }else{
+                    //productos + venta ------------------------------------------
                     //facturacion
-                $facturaciones=Facturacion::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                foreach($facturaciones as $facturacion){
-                    $factura_id[]=$facturacion->id;
-                }
-                if (!isset($factura_id)) {
-                    $factura_id[]="";
-                }
+                    $facturaciones=Facturacion::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    foreach($facturaciones as $facturacion){
+                        $factura_id[]=$facturacion->id;
+                    }
+                    if (!isset($factura_id)) {
+                        $factura_id[]="";
+                    }
 
-                $factura= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->get();
-                    //boleta
-                $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                foreach($boletas as $boleta){
-                    $boleta_id[]=$boleta->id;
-                }
-                if (!isset($boleta_id)) {
-                    $boleta_id[]="";
-                }
+                    $factura= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->get();
+                        //boleta
+                    $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    foreach($boletas as $boleta){
+                        $boleta_id[]=$boleta->id;
+                    }
+                    if (!isset($boleta_id)) {
+                        $boleta_id[]="";
+                    }
 
-                $boleta= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->get();
+                    $boleta= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->get();
+                }
+                
 
                 //union de jsons
                 $json=array_merge(json_decode($factura, true),json_decode($boleta, true));
