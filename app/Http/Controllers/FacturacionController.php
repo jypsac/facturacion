@@ -312,6 +312,7 @@ class FacturacionController extends Controller
             $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
             //Comision segun comisionista
             $comi=$comisionista_buscador->comision;
+            $comision_id = $comisionista_buscador->id;
         }else{
             $comi=0;
         }
@@ -407,12 +408,31 @@ class FacturacionController extends Controller
         $facturacion->fecha_vencimiento=$nuevafechas;
         $facturacion->cambio=$cambio->paralelo;
         $facturacion->observacion=$request->get('observacion');
-        $facturacion->comisionista='0';
+        $facturacion->comisionista= $comi;
         $facturacion->user_id =auth()->user()->id;
         $facturacion->estado='0';
         $facturacion->tipo='producto';
         $facturacion->save();
 
+        $precio_final_igv=$request->get('precio_final_igv');
+        $sub_total_sin_igv=$request->get('sub_total_sin_igv');
+        $comisionista_porcentaje=Personal_venta::where('id',$comision_id)->first();
+
+        if($comision_id != 0){
+            $comisionista=new Ventas_registro;
+            $comisionista->comisionista=$comision_id;
+            $comisionista->tipo_moneda=$id_moneda;
+            $comisionista->estado_aprobado='0';
+            $comisionista->estado_pagado='0';
+            $comisionista->estado_anular_fac_bol='0';
+            $comisionista->monto_final_fac_bol=$precio_final_igv;
+                $porcentaje=100+$comisionista_porcentaje->comision;
+            $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
+            // $comisionista->id_coti_produc=$cotizador;
+            $comisionista->id_fac=$facturacion->id;
+            $comisionista->observacion='Factura';
+            $comisionista->save();
+        }
         // modificacion para que se cierre el codigo en almacen
         // obtencion de la sucursal
         // $sucursal=Almacen::where('id',$);
@@ -555,7 +575,7 @@ class FacturacionController extends Controller
             return redirect()->route('facturacion.create')->with('campo', 'Falto introducir un campo de la tabla productos');
         }
         return redirect()->route('facturacion.show',$facturacion->id);
-}
+    }
 
     /**
      * Display the specified resource.

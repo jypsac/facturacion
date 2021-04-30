@@ -296,6 +296,7 @@ class BoletaController extends Controller
             //Comision segun comisionista
             // $personal_venta=Personal_venta::where('id_personal',$comisionista_buscador->id)->first();
             $comi=$comisionista_buscador->comision;
+            $comision_id  = $comisionista_buscador->id;
         }else{
             $comi=0;
         }
@@ -378,7 +379,7 @@ class BoletaController extends Controller
             }
 
         }
-
+        $igv=Igv::first();
         $boleta=new Boleta;
         $boleta->codigo_boleta=$boleta_numero;
         $boleta->almacen_id =$request->get('almacen');
@@ -399,6 +400,25 @@ class BoletaController extends Controller
         $boleta->tipo='producto';
         $boleta->save();
 
+        $total_comi=$request->get('total_comi');
+        $comisionista_porcentaje=Personal_venta::where('id',$comision_id)->first();
+
+        if($comision_id != 0){
+            $comisionista=new Ventas_registro;
+            $comisionista->comisionista=$comision_id;
+            $comisionista->tipo_moneda=$id_moneda;
+            $comisionista->estado_aprobado='0';
+            $comisionista->estado_pagado='0';
+            $comisionista->estado_anular_fac_bol='0';
+            $comisionista->monto_final_fac_bol=$total_comi;
+            $porcentaje_igv=100+$igv->igv_total;
+            $porcentaje=100+$comisionista_porcentaje->comision;
+            $comisionista->monto_comision=((100*$total_comi/$porcentaje_igv)*100/$porcentaje)*$comisionista_porcentaje->comision/100;
+            // $comisionista->id_coti_produc=$cotizador;
+            $comisionista->id_bol=$boleta->id;
+            $comisionista->observacion='Boleta';
+            $comisionista->save();
+        }
         // modificacion para que se cierre el codigo en almacen
         // obtencion de la sucursal
         // $sucursal=auth()->user()->almacen->codigo_sunat;
@@ -416,7 +436,7 @@ class BoletaController extends Controller
         $check = $request->input('check_descuento');
         $count_check=count($check);
 
-        $igv=Igv::first();
+
 
         $moneda=Moneda::where('principal',1)->first();
         $moneda_registrada=$boleta->moneda_id;

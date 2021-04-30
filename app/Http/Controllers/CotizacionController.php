@@ -1406,7 +1406,7 @@ public function facturar_store(Request $request)
      $comisionista->id_fac=$facturar->id;
      $comisionista->observacion='Viene del Cotizador';
      $comisionista->save();
- }
+    }
         //CONDICIONAL PARA ENVIO DE CORREO
  $validacion = $request->get('validacion');
  if($validacion==1){
