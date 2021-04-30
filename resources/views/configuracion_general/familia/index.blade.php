@@ -34,6 +34,12 @@
                                         <div class="col-sm-10">
                                             <input type="text" class="form-control" name="descripcion">
                                         </div>
+                                        <br>
+                                        <br>
+                                        <label class="col-sm-2 col-form-label">Ubicacion</label>
+                                        <div class="col-sm-10">
+                                            <input type="text" class="form-control" name="Ubicacion" value="">
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -80,6 +86,7 @@
                                     <th>ID</th>
                                     <th>codigo</th>
                                     <th>Descripcion</th>
+                                    <th>Ubicacion</th>
                                     <th>EDITAR</th>
                                 </tr>
                             </thead>
@@ -89,6 +96,7 @@
                                     <td>{{$familia->id}}</td>
                                     <td>{{$familia->codigo}}</td>
                                     <td>{{$familia->descripcion}}</td>
+                                    <td></td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$familia->id}}">Editar</button>
                                         <div class="modal fade" id="exampleModal{{$familia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -115,6 +123,11 @@
                                                                                 <label class="col-sm-2 col-form-label">Descripcion:</label>
                                                                                 <div class="col-sm-10">
                                                                                     <input type="text" class="form-control" name="descripcion" value="{{$familia->descripcion}}">
+                                                                                </div>
+                                                                                <br>
+                                                                                <label class="col-sm-2 col-form-label">Ubicacion</label>
+                                                                                <div class="col-sm-10">
+                                                                                    <input type="text" class="form-control" name="descripcion" value=" ">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -143,7 +156,10 @@
         </div>
     </div>
 </div>
-
+<style>
+    .col-sm-10{padding-bottom: 5px;padding-top: 5px;}
+    .form-control{border-radius: 5px}
+</style>
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -153,6 +169,9 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+<script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
 
 <script>
 
@@ -178,4 +197,33 @@
    }
 </script>
 {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script>
+    $(document).ready(function(){
+        $('.dataTables-example').DataTable({
+            pageLength: 25,
+            responsive: true,
+            dom: '<"html5buttons"B>lTfgitp',
+            buttons: [
+            { extend: 'copy'},
+            {extend: 'csv'},
+            {extend: 'excel', title: 'ExampleFile'},
+            {extend: 'pdf', title: 'ExampleFile'},
+
+            {extend: 'print',
+            customize: function (win){
+                $(win.document.body).addClass('white-bg');
+                $(win.document.body).css('font-size', '10px');
+
+                $(win.document.body).find('table')
+                .addClass('compact')
+                .css('font-size', 'inherit');
+            }
+        }
+        ]
+
+    });
+
+    });
+
+</script>
 @endsection

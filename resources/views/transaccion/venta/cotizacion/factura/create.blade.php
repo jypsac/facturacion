@@ -416,11 +416,6 @@
             success: function (msg) {
                         // console.log(msg);
                 $('#descripcion0').val(msg);
-
-                var msg2 = parseInt(msg) ;
-                $('#cantidad0').attr('max', msg2 );
-                    }
-                });
     });
 
 
@@ -622,6 +617,7 @@
 
             var msg2 = parseInt(stock_v) ;
             $(`#cantidad${a}`).attr('max', stock_v );
+            $(`#cantidad`).attr('max', stock_v );
             //comision
             var comision=document.querySelector(`#comisionista`).value;
             //revirtiendo la cadena
