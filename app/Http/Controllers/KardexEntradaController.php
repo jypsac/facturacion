@@ -183,6 +183,7 @@ class KardexEntradaController extends Controller
       $kardex_entrada->estado=1;
       $kardex_entrada->user_id=auth()->user()->id;
       $kardex_entrada->informacion=$request->get('informacion');
+      $kardex_entrada->fecha_compra = $request->get('fecha_compra');
       $kardex_entrada->save();
 
         //contador de valores de cantidad
@@ -198,7 +199,7 @@ class KardexEntradaController extends Controller
       $moneda_principal=Moneda::where('tipo','nacional')->first();
       $moneda_principal_id=$moneda_principal->id;
 
-      $kardex_entrada_moneda_id=$kardex_entrada->moneda_id;
+      $kardex_entrada_moneda_id=$request->get('moneda');
 
 
             //cuando la moneda es la principal
@@ -213,12 +214,24 @@ class KardexEntradaController extends Controller
           if($moneda_principal_id==$kardex_entrada_moneda_id){
             $kardex_entrada_registro->precio_nacional=$request->get('precio')[$i];
             $precio_nacional=$request->get('precio')[$i];
+
+            $precio_nacional_array[]=$request->get('precio')[$i]*$request->get('cantidad')[$i];
+
             $kardex_entrada_registro->precio_extranjero=$precio_nacional/$cambio->compra;
+
+            $precio_extranjero_array[]= $kardex_entrada_registro->precio_extranjero*$request->get('cantidad')[$i];
+
             $kardex_entrada_registro->cambio=$cambio->compra;
           }else{
             $kardex_entrada_registro->precio_extranjero=$request->get('precio')[$i];
             $precio_extranjero=$request->get('precio')[$i];
+
+            $precio_extranjero_array[]=$request->get('precio')[$i]*$request->get('cantidad')[$i];
+
             $kardex_entrada_registro->precio_nacional=$precio_extranjero*$cambio->venta;
+
+            $precio_nacional_array[] = $kardex_entrada_registro->precio_nacional*$request->get('cantidad')[$i];
+
             $kardex_entrada_registro->cambio=$cambio->venta;
           }
           $kardex_entrada_registro->almacen_id=$kardex_entrada->almacen_id;
@@ -240,6 +253,11 @@ class KardexEntradaController extends Controller
           Stock_almacen::ingreso($almacen,$producto_id[$i],$kardex_entrada_registro->cantidad);
         }
         kardex_entrada_registro::stock_producto_precio();
+        //insercion de precio total en cabezera de kardex entrada
+        $kardex_entrada_tot=Kardex_entrada::find($kardex_entrada->id);
+        $kardex_entrada_tot->precio_nacional_total =  array_sum($precio_nacional_array);
+        $kardex_entrada_tot->precio_extranjero_total = array_sum($precio_extranjero_array);
+        $kardex_entrada_tot->save();
       }else {
         return redirect()->route('kardex-entrada.create')->with('campo', 'Falto introducir un campo de la tabla productos');
       }
