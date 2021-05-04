@@ -20,6 +20,8 @@ class TipoCambioController extends Controller
         $moneda1=Moneda::where('principal',1)->first();
         $moneda2=Moneda::where('principal',0)->first();
         $tipo_cambio=TipoCambio::all();
+        // $tipo_cambio=TipoCambio::orderBy('id', 'DESC')->get(); -> no funciona en la tabla
+        // return $tipo_cambio;
         return view('configuracion_general.tipo_cambio.index',compact('tipo_cambio','moneda1','moneda2','consulta'));
     }
 

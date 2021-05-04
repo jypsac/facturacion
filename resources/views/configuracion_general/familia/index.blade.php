@@ -36,10 +36,6 @@
                                         </div>
                                         <br>
                                         <br>
-                                        <label class="col-sm-2 col-form-label">Ubicacion</label>
-                                        <div class="col-sm-10">
-                                            <input type="text" class="form-control" name="Ubicacion" value="">
-                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -86,7 +82,6 @@
                                     <th>ID</th>
                                     <th>codigo</th>
                                     <th>Descripcion</th>
-                                    <th>Ubicacion</th>
                                     <th>EDITAR</th>
                                 </tr>
                             </thead>
@@ -96,7 +91,6 @@
                                     <td>{{$familia->id}}</td>
                                     <td>{{$familia->codigo}}</td>
                                     <td>{{$familia->descripcion}}</td>
-                                    <td></td>
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$familia->id}}">Editar</button>
                                         <div class="modal fade" id="exampleModal{{$familia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -123,11 +117,6 @@
                                                                                 <label class="col-sm-2 col-form-label">Descripcion:</label>
                                                                                 <div class="col-sm-10">
                                                                                     <input type="text" class="form-control" name="descripcion" value="{{$familia->descripcion}}">
-                                                                                </div>
-                                                                                <br>
-                                                                                <label class="col-sm-2 col-form-label">Ubicacion</label>
-                                                                                <div class="col-sm-10">
-                                                                                    <input type="text" class="form-control" name="descripcion" value=" ">
                                                                                 </div>
                                                                             </div>
                                                                         </div>
