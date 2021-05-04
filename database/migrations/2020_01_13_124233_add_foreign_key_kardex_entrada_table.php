@@ -40,12 +40,13 @@ class AddForeignKeyKardexEntradaTable extends Migration
             $table->string('estado');
 
             $table->unsignedBigInteger('tipo_registro_id')->nullable();
-            
+
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
-            
-
+            $table->double('precio_nacional_total',10,2)->nullable();
+            $table->double('precio_extranjero_total',10,2)->nullable();
+            $table->string('fecha_compra');
             $table->timestamps();
         });
     }

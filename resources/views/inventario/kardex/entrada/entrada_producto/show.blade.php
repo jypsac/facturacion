@@ -39,7 +39,8 @@
                             <img src="https://www.flaticon.es/svg/static/icons/svg/2897/2897818.svg" width="13px" alt="">:<strong>{{$kardex_entradas->almacen->nombre}} - {{$kardex_entradas->almacen->abreviatura}}</strong><br>
                             <i class=" fa fa-building">:</i>{{$kardex_entradas->almacen->direccion}}<br>
                             <i class="fa fa-phone">:</i> {{$mi_empresa->telefono}} / {{$mi_empresa->movil}} <br>
-                            <strong><i class="fa fa-clock-o" aria-hidden="true"></i></strong> {{$kardex_entradas->created_at}}</span>
+                            <strong><i class="fa fa-clock-o" aria-hidden="true"></i></strong> {{$kardex_entradas->created_at}}</span> <br>
+                            <strong><i class="fa fa-shopping-cart" aria-hidden="true"></i></strong>  {{$kardex_entradas->fecha_compra}}</span>
                         </address>
                     </div>
                 </div>
@@ -72,6 +73,15 @@
                             <td style="background: #f3f3f4">{{$moneda_extranjera->simbolo}}{{$moneda_nacional->precio_extranjero}}{{$kardex_entradas_registro->precio_extranjero * $kardex_entradas_registro->cantidad_inicial}}</td>
                         </tr>
                         @endforeach
+                        {{-- <tr>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                            <td>a</td>
+                        </tr> --}}
                     </tbody>
                 </table><p aling="right"><b>Nota:</b> Guia Emitada en {{$kardex_entradas->moneda->nombre}}</p>
             </div>

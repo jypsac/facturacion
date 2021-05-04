@@ -103,6 +103,12 @@
 							</select>
 						</div>
 					</div>
+					<div class="form-group row">
+						<label class="col-sm-2 col-form-label">Fecha de compra:</label>
+						<div class="col-sm-4">
+							<input type="date" name="fecha_compra" id="" required="" class="form-control">
+						</div>
+					</div>
 
 					<table cellspacing="0" class="table table-striped " width="100%">
 						<thead>
