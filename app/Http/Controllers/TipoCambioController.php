@@ -44,6 +44,21 @@ class TipoCambioController extends Controller
      */
     public function store(Request $request)
     {
+        //VALIDACION PARA EL CIERRE DEL PERIODO
+        $fecha=Carbon::now();
+        $fecha = $fecha->format('m');
+        //verificacion de la ultima vez que se hizo el cieere de periodo
+
+         //$periodo=Cierre_periodo::latest('id')->first();
+        // $periodo_fecha=$periodo->created_at;
+        // $periodo_fecha= $periodo_fecha->format('m');
+        // //aqui va la fecha de la consulta
+        // if($fecha != $periodo_fecha){
+        //     return "cierre de periodo realizado";
+        // }
+        // return $fecha;
+
+
         /*varaibles del Index*/
         $moneda1=Moneda::where('principal',1)->first();
         $moneda2=Moneda::where('principal',0)->first();
@@ -76,6 +91,7 @@ class TipoCambioController extends Controller
            return view('configuracion_general.tipo_cambio.create',compact('error','moneda_principal','compra','venta','paralelo_recomendado'));
              }
         }
+        
        $cambio=new TipoCambio;
        $cambio->compra=$request->get('compra');
        $cambio->venta=$request->get('venta');
