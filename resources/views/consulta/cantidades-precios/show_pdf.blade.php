@@ -71,15 +71,17 @@ header{
 						<th>Producto</th>
 						<th>Stock Actual</th>
 						<th>Stock Minimo</th>
+                        <td>Nuevo Stock</td>
 					</tr>
 				</thead>
 			    <tbody style="padding: 10px 10px 10px 10px">
-			    	@foreach($producto as $producto)
+			    	@foreach($producto as $index => $producto)
 			    	<tr >
 		 				<td>{{$x++}}</td>
 		 				<td>{{$producto->producto->nombre}}</td>
 		 				<td>{{$producto->stock}}</td>
 		 				<td>{{$producto->producto->stock_minimo}}</td>
+                        <td>{{$nuevo_stock[$index]}}</td>
 				    </tr>
 			    	@endforeach
 			    </tbody>

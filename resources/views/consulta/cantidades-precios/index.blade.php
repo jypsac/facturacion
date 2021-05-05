@@ -10,8 +10,8 @@
 
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-form">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+  <div class="modal-dialog modal-lg" style="width: 120%">
+    <div class="modal-content" style="width: 120%">
       <div class="modal-header">
         <h3 class="modal-title" id="exampleModalLongTitle">Productos con bajo Stock</h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -23,7 +23,7 @@
             @method('post')
           <div class="modal-body" style="padding-bottom: 0px">
             <div class="table-responsive">
-
+                <input type="hidden" value="{{ $i = 1 }}" name="" id="">
                 <input type="text" class="form-control form-control-sm m-b-xs" id="filter2"
                 placeholder="Buscar">
                 <table class="footable3 table table-responsive toggle-arrow-tiny" data-page-size="10" data-filter=#filter2>
@@ -36,9 +36,10 @@
                             </a>
                             <th></th>
                             <th colspan="1" data-toggle="true" style="clear: right;text-align: end">Id</th>
-                            <th>Nombre de Produto</th>
-                            <th>Stock</th>
+                            <th>Producto</th>
+                            <th>Stock Actual</th>
                             <th>Stock Mínimo</th>
+                            <th style="width: 100px">Stock Nuevo</th>
                             <th>Precio Nacional </th>
                             <th>Precio Extranjero </th>
                         </tr>
@@ -47,8 +48,8 @@
                      @foreach($stock_producto as $index => $producto_min)
                         @if($producto_min->stock < $producto_min->producto->stock_minimo)
                         <tr class="gradeX">
-                            <td><input type="checkbox" class="case" name="producto_id[]" id="producto_id" value="{{$producto_min->id}}" onclick="mostrar_check()"></td>
-                            <td>{{$producto_min->id}}</td>
+                            <td><input type="checkbox" class="case" name="producto_id[]" id="producto_id{{$producto_min->id}}" value="{{$producto_min->id}}" onclick="mostrar_check()"></td>
+                            <td>{{$id_t2++}}</td>
                             <td>
                                 <a href="{{ route('productos.show', $producto_min->producto_id) }}" target="_blank">
                                     {{$producto_min->producto->nombre}}
@@ -56,6 +57,10 @@
                             </td>
                             <td style="color: red">{{$producto_min->stock}}</td>
                             <td>{{$producto_min->producto->stock_minimo}}</td>
+                            <td style="width: 100px">
+
+                                <input type="number" class="form-table-input"  name="stock_nuevo[]" id="nuevo_stock{{$producto_min->id}}" disabled=""  >
+                            </td>
                             <td>{{$moneda_nacional->simbolo}}. {{$precio_nacional[$index] }}</td>
                             <td>{{$moneda_extranjera->simbolo}}. {{$precio_extranjero[$index] }}</td>
                         </tr>
@@ -191,6 +196,24 @@
     .table-responsive{
         display: revert;
     }
+    .form-table-input {
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    color: inherit;
+    /*display: block;*/
+    padding: 3px 6px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100px;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    input[type=number] { -moz-appearance:textfield; }
 </style>
 <!-- Mainly scripts -->
 
@@ -214,17 +237,21 @@
         element.classList.remove("null footable-sort-indicator");
     }
     function mostrar_check() {
-      var elementos = $('input.case');
-      var algunoMarcado = elementos.toArray().find(function(elemento) {
-         return $(elemento).prop('checked');
-      });
-
-      if(algunoMarcado) {
-        $('#miBoton').show();
-      } else {
-        $('#miBoton').hide();
-      }
+        var arr = $('[name="producto_id[]"]:checked').map(function(){
+          return this.value;
+        }).get();
+        if(arr.length == 0){
+            $('#miBoton').hide();
+            $('input[type=number]').attr('disabled','true');
+            $('input[type=number]').val('');
+        }else{
+            for (var i = 0 ; i < arr.length; i++) {
+                $('#miBoton').show();
+                $('#nuevo_stock'+arr[i]).prop('disabled', false);
+            };
+        }
     }
+
 </script>
 <script>
     $(document).ready(function(){
@@ -273,26 +300,27 @@
         });
 </script>
 <script>
-function select_all() {
-    $('input[class=case]:checkbox').each(function () {
-        if ($('input[class=check_all]:checkbox:checked').length == 0) {
-            $(this).prop("checked", false);
-        } else {
-            $(this).prop("checked", true);
-        }
-        var elementos = $('input.check_all');
-    var algunoMarcado = elementos.toArray().find(function(elemento) {
-         return $(elemento).prop('checked');
+    function select_all() {
+        $('input[class=case]:checkbox').each(function () {
+            if ($('input[class=check_all]:checkbox:checked').length == 0) {
+                $(this).prop("checked", false);
+            } else {
+                $(this).prop("checked", true);
+            }
+            var elementos = $('input.check_all');
+        var algunoMarcado = elementos.toArray().find(function(elemento) {
+             return $(elemento).prop('checked');
+            });
+
+          if(algunoMarcado) {
+            $('#miBoton').show();
+          } else {
+            $('#miBoton').hide();
+          }
         });
 
-      if(algunoMarcado) {
-        $('#miBoton').show();
-      } else {
-        $('#miBoton').hide();
-      }
-    });
 
-
-}
+    }
 </script>
+
 @endsection
