@@ -48,7 +48,7 @@
                      @foreach($stock_producto as $index => $producto_min)
                         @if($producto_min->stock < $producto_min->producto->stock_minimo)
                         <tr class="gradeX">
-                            <td><input type="checkbox" class="case" name="producto_id[]" id="producto_id{{$producto_min->id}}" value="{{$producto_min->id}}" onclick="mostrar_check()"></td>
+                            <td><input type="checkbox" class="case" name="producto_id[]" id="producto_id{{$producto_min->id}}" value="{{$producto_min->id}}" onclick="mostrar_check()" d1|qq></td>
                             <td>{{$id_t2++}}</td>
                             <td>
                                 <a href="{{ route('productos.show', $producto_min->producto_id) }}" target="_blank">
@@ -245,10 +245,34 @@
             $('input[type=number]').attr('disabled','true');
             $('input[type=number]').val('');
         }else{
+
             for (var i = 0 ; i < arr.length; i++) {
                 $('#miBoton').show();
                 $('#nuevo_stock'+arr[i]).prop('disabled', false);
             };
+
+        }
+        // if($('[name="producto_id[]"]:not(:checked)') == true){
+             
+        //        $('input[type=number]').attr('disabled','true');
+        //        $('input[type=number]').val('');
+        //     }
+
+        var arr2 = $('[name="producto_id[]"]:not(:checked)').map(function(){
+          return this.value;
+        }).get();
+        // console.log(arr2);
+        if(arr2.length == 0){
+            // $('#miBoton').hide();
+            // $('input[type=number]').attr('disabled','true');
+            // $('input[type=number]').val('');
+        }else{
+            for (var i = 0 ; i < arr2.length; i++) {
+                // $('#miBoton').hide();
+                $('#nuevo_stock'+arr2[i]).prop('disabled', true);
+                $('#nuevo_stock'+arr2[i]).prop('value', '');
+            };
+
         }
     }
 

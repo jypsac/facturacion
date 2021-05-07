@@ -110,8 +110,9 @@ class CantidadPrecioController extends Controller
         $producto_id = $request->input('producto_id');
         $prod_count = count($producto_id);
         $x = '1';
+
         $nuevo_stock = $request->input('stock_nuevo');
-        // return $nuevo_stock;
+        // retu1rn $nuevo_stock;
         for ($i=0; $i <  $prod_count ; $i++) {
             $producto[] = Stock_producto::where('id',$producto_id[$i])->first();
         }
