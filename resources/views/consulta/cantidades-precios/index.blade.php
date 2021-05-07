@@ -1,10 +1,10 @@
 @extends('layout')
-@section('title', 'Cantidades y Precios de Productos')
-@section('breadcrumb', 'Cantidades y Precios de Productos')
-@section('breadcrumb2', 'Cantidades y Precios de Productos')
+@section('title', 'Consulta de Productos')
+@section('breadcrumb', 'Consulta de Productos')
+@section('breadcrumb2', 'Consulta de Productos')
 @section('data-toggle', 'modal')
 @section('href_accion', '#modal-form')
-@section('value_accion', 'Cantidades Minimas')
+@section('value_accion', 'Reabastecer')
 
 @section('content')
 
@@ -13,7 +13,7 @@
   <div class="modal-dialog modal-lg" style="width: 120%">
     <div class="modal-content" style="width: 120%">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLongTitle">Productos con bajo Stock</h3>
+        <h3 class="modal-title" id="exampleModalLongTitle">Productos para Reabastecer </h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -24,14 +24,13 @@
           <div class="modal-body" style="padding-bottom: 0px">
             <div class="table-responsive">
                 <input type="hidden" value="{{ $i = 1 }}" name="" id="">
-                <input type="text" class="form-control form-control-sm m-b-xs" id="filter2"
-                placeholder="Buscar">
+                <input type="text" class="form-control form-control-sm m-b-xs" id="filter2" placeholder="Buscar" onkeyup="display_check()" >
                 <table class="footable3 table table-responsive toggle-arrow-tiny" data-page-size="10" data-filter=#filter2>
                     <thead >
                         <tr>
                             <a id="null" class="null" style="display:inline-block; ">
                                 <div>
-                                    <input style="position:absolute;display:block;margin-top: 15px;margin-left: 8px;" class='check_all' type='checkbox' onclick="select_all()" />
+                                    <input style="position:absolute;display:block;margin-top: 15px;margin-left: 10px;" class='check_all' type='checkbox' onclick="select_all()" id="select_all_cheak" />
                                 </div>
                             </a>
                             <th></th>
@@ -137,7 +136,7 @@
                             </thead>
                             <tbody>
 
-                             @foreach($stock_producto as $index => $stock_productos)
+                             @foreach($stock_producto->sortByDesc('updated_at') as $index => $stock_productos)
                                 @if($producto_count == 0 )
 
                                 @else
@@ -150,18 +149,16 @@
                                     </td>
                                     @if($stock_productos->stock > 0)
                                         <td>{{$stock_productos->stock}}</td>
-                                        <td>{{$moneda_nacional->simbolo}}. {{$precio_nacional[$index] }}</td>
-                                        <td>{{$moneda_nacional->simbolo}}. {{round($precio_nacional[$index] + ($precio_nacional[$index] * ($igv->igv_total/100)),2)}}</td>
-                                        <td>{{$moneda_extranjera->simbolo}}. {{$precio_extranjero[$index] }}</td>
-                                        <td>{{$moneda_extranjera->simbolo}}. {{round($precio_extranjero[$index] + ($precio_extranjero[$index] * ($igv->igv_total/100)),2)}}</td>
+
                                     {{-- data-all --}}
                                     @else
-                                        <td style="color: redb">Sin stock</td>
-                                        <td>{{$moneda_nacional->simbolo}}. 0.00</td>
-                                        <td>{{$moneda_nacional->simbolo}}. 0.00</td>
-                                        <td>{{$moneda_extranjera->simbolo}}. 0.00</td>
-                                        <td>{{$moneda_extranjera->simbolo}}. 0.00</td>
+                                        <td style="color: red">SIN STOCK</td>
+
                                     @endif
+                                    <td>{{$moneda_nacional->simbolo}}. {{$precio_nacional[$index] }}</td>
+                                    <td>{{$moneda_nacional->simbolo}}. {{round($precio_nacional[$index] + ($precio_nacional[$index] * ($igv->igv_total/100)),2)}}</td>
+                                    <td>{{$moneda_extranjera->simbolo}}. {{$precio_extranjero[$index] }}</td>
+                                    <td>{{$moneda_extranjera->simbolo}}. {{round($precio_extranjero[$index] + ($precio_extranjero[$index] * ($igv->igv_total/100)),2)}}</td>
                                     <td >{{$stock_productos->producto->codigo_producto}}</td>
                                     <td>{{$stock_productos->producto->descripcion}} </td>
                                     <td>{{$stock_productos->producto->garantia}} </td>
@@ -252,12 +249,6 @@
             };
 
         }
-        // if($('[name="producto_id[]"]:not(:checked)') == true){
-             
-        //        $('input[type=number]').attr('disabled','true');
-        //        $('input[type=number]').val('');
-        //     }
-
         var arr2 = $('[name="producto_id[]"]:not(:checked)').map(function(){
           return this.value;
         }).get();
@@ -275,6 +266,18 @@
 
         }
     }
+    function display_check(){
+        //Siempre que salgamos de un campo de texto, se chequeará esta función
+        // $('#filter2').keyup(function() {
+             if($('#filter2').val().length > 0) {
+                $('#select_all_cheak').attr('disabled', true);
+            }else{
+                $('#select_all_cheak').attr('disabled', false);
+            }
+
+        // });
+
+    };
 
 </script>
 <script>

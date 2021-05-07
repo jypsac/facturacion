@@ -416,9 +416,10 @@ class FacturacionController extends Controller
 
         $precio_final_igv=$request->get('precio_final_igv');
         $sub_total_sin_igv=$request->get('sub_total_sin_igv');
-        $comisionista_porcentaje=Personal_venta::where('id',$comision_id)->first();
 
-        if($comision_id != 0){
+
+        if(isset($comision_id)){
+            $comisionista_porcentaje=Personal_venta::where('id',$comision_id)->first();
             $comisionista=new Ventas_registro;
             $comisionista->comisionista=$comision_id;
             $comisionista->tipo_moneda=$id_moneda;
