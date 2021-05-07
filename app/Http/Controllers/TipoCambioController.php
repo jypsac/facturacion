@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\TipoCambio;
 use App\Moneda;
 use Carbon\Carbon;
+use App\CierrePeriodo;
 use Illuminate\Http\Request;
 
 class TipoCambioController extends Controller
@@ -47,17 +48,16 @@ class TipoCambioController extends Controller
         //VALIDACION PARA EL CIERRE DEL PERIODO
         $fecha=Carbon::now();
         $fecha = $fecha->format('m');
+        $compra_tipo_cambio=$request->get('compra');
         //verificacion de la ultima vez que se hizo el cieere de periodo
 
-         //$periodo=Cierre_periodo::latest('id')->first();
-        // $periodo_fecha=$periodo->created_at;
-        // $periodo_fecha= $periodo_fecha->format('m');
-        // //aqui va la fecha de la consulta
-        // if($fecha != $periodo_fecha){
-        //     return "cierre de periodo realizado";
-        // }
-        // return $fecha;
-
+        $periodo=CierrePeriodo::latest('id')->first();
+        $periodo_fecha=$periodo->created_at;
+        $periodo_fecha= $periodo_fecha->format('m');
+        //aqui va la fecha de la consulta
+        if($fecha != $periodo_fecha){
+             CierrePeriodo::cierre_periodo($compra_tipo_cambio);
+        }
 
         /*varaibles del Index*/
         $moneda1=Moneda::where('principal',1)->first();

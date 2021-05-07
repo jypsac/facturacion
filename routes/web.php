@@ -216,6 +216,7 @@ Route::group(
 		Route::post('/kardex-salida/create' , 'KardexSalidaController@create')->name('kardex-salida.create');
 		Route::resource('/kardex-salida','KardexSalidaController')->except(['create']);
 		Route::resource('/periodo-consulta','PeriodoConsultaController');
+		Route::resource('/cierre-periodo','CierrePeriodoController');
 
 		//Fin de inventarios
 		Route::resource('/motivo','MotivoController');

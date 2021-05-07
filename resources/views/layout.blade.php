@@ -419,6 +419,7 @@ use App\Personal;
                                     @can('inventario-productos_kardex-salida_producto.index')
                                     <li><a href="{{route('kardex-salida.index')}}">Salida Producto</a></li>
                                     @endcan
+                                    
                                 </ul>
                             </li>
                             @endcan
@@ -429,6 +430,7 @@ use App\Personal;
                                 @can('inventario-toma_de_inventario.index')
                                 <li><a href="{{route('periodo-consulta.index')}}">Consultas de inventario</a></li><!-- Periodo Consulta -->
                                 @endcan
+                                <li><a href="{{route('cierre-periodo.index')}}">Cierre Periodo</a></li>
                             </ul>
                         </li>
                         @endcan
