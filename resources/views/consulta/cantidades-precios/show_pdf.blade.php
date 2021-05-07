@@ -81,7 +81,11 @@ header{
 		 				<td>{{$producto->producto->nombre}}</td>
 		 				<td>{{$producto->stock}}</td>
 		 				<td>{{$producto->producto->stock_minimo}}</td>
-                        <td>{{$nuevo_stock[$index]}}</td>
+                        <td>@if(empty($nuevo_stock[$index]))
+                            {{($producto->producto->stock_minimo)+1}}
+                            @else
+                            {{$nuevo_stock[$index]}}
+                            @endif</td>
 				    </tr>
 			    	@endforeach
 			    </tbody>

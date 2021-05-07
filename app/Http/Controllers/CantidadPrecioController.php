@@ -23,16 +23,16 @@ class CantidadPrecioController extends Controller
     public function index()
     {
         $igv = Igv::get()->first();
-        $stock_producto = Stock_producto::get();
+        $stock_producto = Stock_producto::orderBy('updated_at', 'DESC')->get();
         $count_stock_prod = count($stock_producto);
         foreach ($stock_producto as $stock_productos) {
             $stock_produ[] = $stock_productos->id;
         }
-        for ($x=0; $x < $count_stock_prod ; $x++) {
-            // foreach ($producto as $prod) {
-                $productos[]=Stock_producto::where('id',$stock_produ[$x])->first();
-            // }
-        }
+        // for ($x=0; $x < $count_stock_prod ; $x++) {
+        //     // foreach ($producto as $prod) {
+        //         $productos[]=Stock_producto::where('id',$stock_produ[$x])->first();
+        //     // }
+        // }
         // return $stock_producto;
         $id_t1 = 1;
         $id_t2 = intval(1);
@@ -115,7 +115,7 @@ class CantidadPrecioController extends Controller
         for ($i=0; $i <  $prod_count ; $i++) {
             $producto[] = Stock_producto::where('id',$producto_id[$i])->first();
         }
-        // return view('consulta.cantidades-precios.show_pdf',compact('producto','x','empresa','nuevo_stock'));
+        return view('consulta.cantidades-precios.show_pdf',compact('producto','x','empresa','nuevo_stock'));
         $pdf=PDF::loadView('consulta.cantidades-precios.show_pdf',compact('producto','x','empresa','nuevo_stock'));
         return $pdf->download('Productos.pdf');
     }

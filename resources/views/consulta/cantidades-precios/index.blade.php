@@ -140,7 +140,7 @@
                              @foreach($stock_producto as $index => $stock_productos)
                                 @if($producto_count == 0 )
 
-                                @elseif($stock_productos->stock > $stock_productos->producto->stock_minimo)
+                                @else
                                 <tr class="gradeX">
                                     <td>{{$id_t1++}}</td>
                                     <td>
@@ -153,13 +153,13 @@
                                         <td>{{$moneda_nacional->simbolo}}. {{$precio_nacional[$index] }}</td>
                                         <td>{{$moneda_nacional->simbolo}}. {{round($precio_nacional[$index] + ($precio_nacional[$index] * ($igv->igv_total/100)),2)}}</td>
                                         <td>{{$moneda_extranjera->simbolo}}. {{$precio_extranjero[$index] }}</td>
-                                        <td>{{$moneda_nacional->simbolo}}. {{round($precio_extranjero[$index] + ($precio_extranjero[$index] * ($igv->igv_total/100)),2)}}</td>
+                                        <td>{{$moneda_extranjera->simbolo}}. {{round($precio_extranjero[$index] + ($precio_extranjero[$index] * ($igv->igv_total/100)),2)}}</td>
                                     {{-- data-all --}}
                                     @else
-                                        <td>Sin stock</td>
+                                        <td style="color: redb">Sin stock</td>
+                                        <td>{{$moneda_nacional->simbolo}}. 0.00</td>
                                         <td>{{$moneda_nacional->simbolo}}. 0.00</td>
                                         <td>{{$moneda_extranjera->simbolo}}. 0.00</td>
-                                        <td>{{$moneda_nacional->simbolo}}. 0.00</td>
                                         <td>{{$moneda_extranjera->simbolo}}. 0.00</td>
                                     @endif
                                     <td >{{$stock_productos->producto->codigo_producto}}</td>
@@ -307,8 +307,9 @@
             } else {
                 $(this).prop("checked", true);
             }
+
             var elementos = $('input.check_all');
-        var algunoMarcado = elementos.toArray().find(function(elemento) {
+            var algunoMarcado = elementos.toArray().find(function(elemento) {
              return $(elemento).prop('checked');
             });
 
@@ -317,6 +318,20 @@
           } else {
             $('#miBoton').hide();
           }
+
+          var arr = $('[name="producto_id[]"]:checked').map(function(){
+            return this.value;
+            }).get();
+            if(arr.length == 0){
+                $('#miBoton').hide();
+                $('input[type=number]').attr('disabled',true);
+                $('input[type=number]').val('');
+            }else{
+                for (var i = 0 ; i < arr.length; i++) {
+                    $('#miBoton').show();
+                    $('#nuevo_stock'+arr[i]).prop('disabled', false);
+                };
+            }
         });
 
 
