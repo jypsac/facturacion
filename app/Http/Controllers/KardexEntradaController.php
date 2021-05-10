@@ -10,6 +10,7 @@ use App\Kardex_entrada;
 use App\Moneda;
 use App\Motivo;
 use App\Producto;
+use App\Igv;
 use App\Provedor;
 use App\TipoCambio;
 use App\User;
@@ -272,12 +273,13 @@ class KardexEntradaController extends Controller
      */
     public function show($id)
     {
+      $igv = Igv::first();
       $mi_empresa=Empresa::first();
       $moneda_nacional=Moneda::where('id','1')->first();
       $moneda_extranjera=Moneda::where('id','2')->first();
       $kardex_entradas=Kardex_entrada::find($id);
       $kardex_entradas_registros=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
-      return view('inventario.kardex.entrada.entrada_producto.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera'));
+      return view('inventario.kardex.entrada.entrada_producto.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera','igv'));
     }
 
     /**

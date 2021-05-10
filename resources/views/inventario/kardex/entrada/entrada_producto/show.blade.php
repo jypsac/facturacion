@@ -73,26 +73,74 @@
                             <td style="background: #f3f3f4">{{$moneda_extranjera->simbolo}}{{$moneda_nacional->precio_extranjero}}{{$kardex_entradas_registro->precio_extranjero * $kardex_entradas_registro->cantidad_inicial}}</td>
                         </tr>
                         @endforeach
-                        {{-- <tr>
-                            <td>a</td>
-                            <td>a</td>
-                            <td>a</td>
-                            <td>a</td>
-                            <td>a</td>
-                            <td>a</td>
-                            <td>a</td>
-                        </tr> --}}
                     </tbody>
-                </table><p aling="right"><b>Nota:</b> Guia Emitada en {{$kardex_entradas->moneda->nombre}}</p>
+
+                </table>
+                
+                    
             </div>
-
-
+            <div>
+                <h3>Precio Nacional Total</h3>
+            </div>
+            <div class="row" style="text-align: center;">
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> Sub Total</p>
+                    <p class="form-control a">{{$moneda_nacional->simbolo}}. {{$kardex_entradas->precio_nacional_total}}</p>
+                </div>
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> Op. Agravada</p>
+                    <p class="form-control a">{{$moneda_nacional->simbolo}}. 00</p>
+                </div>
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> IGV</p>
+                    <p class="form-control a">{{$moneda_nacional->simbolo}}. {{round(($kardex_entradas->precio_nacional_total*($igv->igv_total/100)),2)}}</p>
+                </div>
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> Importe Total</p>
+                    <p class="form-control a">{{$moneda_nacional->simbolo}}. {{round($kardex_entradas->precio_nacional_total+($kardex_entradas->precio_nacional_total*($igv->igv_total/100)),2)}}</p>
+                </div>
+            </div>
+            <br>
+            <div>
+                <h3>Precio Extranjero Total </h3>
+            </div>
+            <div class="row" style="text-align: center;">
+                
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> Sub Total</p>
+                    <p class="form-control a">{{$moneda_extranjera->simbolo}}. {{$kardex_entradas->precio_extranjero_total}}</p>
+                </div>
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> Op. Agravada</p>
+                    <p class="form-control a">{{$moneda_extranjera->simbolo}}. 00</p>
+                </div>
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> IGV</p>
+                    <p class="form-control a">{{$moneda_extranjera->simbolo}}. {{round(($kardex_entradas->precio_extranjero_total*($igv->igv_total/100)),2)}}</p>
+                </div>
+                <div class="col-sm-3 ">
+                    <p class="form-control a"> Importe Total</p>
+                    <p class="form-control a">{{$moneda_extranjera->simbolo}}. {{round($kardex_entradas->precio_extranjero_total+($kardex_entradas->precio_extranjero_total*($igv->igv_total/100)),2)}}</p>
+                </div>
+            </div>
+            <br>
+                <p aling="right"><b>Nota:</b> Guia Emitada en {{$kardex_entradas->moneda->nombre}}</p>
         </div>
+
     </div>
 </div>
 </div>
 
-
+<style type="text/css">
+    .form-control{margin-top: 5px; border-radius: 5px}
+    p#texto{
+        text-align: center;
+        color:black;
+    }
+    p.form-control.a{
+        margin-bottom: 0px;
+    }
+</style>
 
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -100,7 +148,10 @@
 <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
 <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
+<script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
 @endsection
