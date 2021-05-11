@@ -49,7 +49,8 @@ class TipoCambioController extends Controller
     {
         //VALIDACION PARA EL CIERRE DEL PERIODO
         $fecha=Carbon::now();
-        $fecha = $fecha->format('m');
+        $fecha_m = $fecha->format('m');
+        $fecha_y = $fecha->format('Y');
         $compra_tipo_cambio=$request->get('compra');
         //verificacion de la ultima vez que se hizo el cieere de periodo
 
@@ -60,10 +61,11 @@ class TipoCambioController extends Controller
         }
         
         $periodo_fecha=$periodo->created_at;
-        $periodo_fecha= $periodo_fecha->format('m');
+        $periodo_fecha_m= $periodo_fecha->format('m');
+        $periodo_fecha_y= $periodo_fecha->format('Y');
         //aqui va la fecha de la consulta
-        if($fecha != $periodo_fecha){
-             CierrePeriodo::cierre_periodo($compra_tipo_cambio);
+        if($fecha_m != $periodo_fecha_m & $fecha_y != $periodo_fecha_y){
+            CierrePeriodo::cierre_periodo($compra_tipo_cambio);
         }
 
         salto:

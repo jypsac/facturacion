@@ -20,13 +20,6 @@ class CierrePeriodo extends Model
         $moneda_principal=Moneda::where('principal',1)->first();
 
         $cierre_periodo_buscar=CierrePeriodo::latest('id')->first();
-
-        //prueba
-
-        // $fecha_diferencia = Carbon::create(2021,07)
-        // $diferencia_mes=$fecha_mes_anterior->diffInMonths($fecha_diferencia);
-        // $cont=intval($diferencia_mes);
-        // return $cont;
         
         if(empty($cierre_periodo_buscar)){
             $fecha_y=$fecha->format("Y");
@@ -41,9 +34,10 @@ class CierrePeriodo extends Model
             $cierre_periodo->tipo_cambio=$compra_tipo_cambio;
             $cierre_periodo->save();
     
-            $stock_productos=Stock_producto::all();
+            $stock_productos=Stock_producto::where('stock','!=',0)->get();
             foreach($stock_productos as $stock_producto){
                 $cierre_periodo_r=New CierrePeriodoRegistro;
+                $cierre_periodo_r->cierre_periodo_id=$cierre_periodo->id;
                 $cierre_periodo_r->producto_id=$stock_producto->producto_id;
                 $cierre_periodo_r->cantidad=$stock_producto->stock;
                 $cierre_periodo_r->costo_nacional=$stock_producto->precio_nacional;
@@ -70,9 +64,10 @@ class CierrePeriodo extends Model
                 $cierre_periodo->tipo_cambio=$compra_tipo_cambio;
                 $cierre_periodo->save();
         
-                $stock_productos=Stock_producto::all();
+                $stock_productos=Stock_producto::where('stock','!=',0)->get();
                 foreach($stock_productos as $stock_producto){
                     $cierre_periodo_r=New CierrePeriodoRegistro;
+                    $cierre_periodo_r->cierre_periodo_id=$cierre_periodo->id;
                     $cierre_periodo_r->producto_id=$stock_producto->producto_id;
                     $cierre_periodo_r->cantidad=$stock_producto->stock;
                     $cierre_periodo_r->costo_nacional=$stock_producto->precio_nacional;
