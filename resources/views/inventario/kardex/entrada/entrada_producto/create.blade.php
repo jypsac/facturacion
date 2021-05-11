@@ -97,6 +97,7 @@
 						<label class="col-sm-2 col-form-label" >Moneda:</label>
 						<div class="col-sm-4">
 							<select class="form-control" name="moneda" required="">
+								<option value="" >Seleccionar Moneda</option>
 								@foreach($moneda as $monedas)
 								<option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
 								@endforeach
