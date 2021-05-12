@@ -15,7 +15,7 @@ class CreateTipoDocumentoSunatsTable extends Migration
     {
         Schema::create('tipo_documento_sunats', function (Blueprint $table) {
             $table->bigIncrements('id');
-            $table->integer('codigo');
+            $table->string('codigo');
             $table->text('informacion');
             $table->boolean('estado');
             $table->timestamps();

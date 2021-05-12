@@ -43,7 +43,8 @@
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Motivos:</label>
 							<div class="col-sm-4">
-								<select class="form-control" name="motivo" required="required">
+								<select class="form-control" name="motivo" id="motivo" required="required">
+									<option value="">Selccionar Motivo</option>
 									@foreach($motivos as $motivo)
 									<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
 									@endforeach
@@ -52,14 +53,14 @@
 
 							<label class="col-sm-2 col-form-label">G Remision:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="guia_remision" required="required" value="0">
+								<input type="text" class="form-control" name="guia_remision" id="guia_remision" required="required" value="0">
 							</div>
 						</div>
 
 						<div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Factura:</label>
 							<div class="col-sm-4">
-								<input type="text" class="form-control" name="factura" required="required" value="0">
+								<input type="text" class="form-control" name="factura" id="factura" required="required" value="0">
 							</div>
 
 							<label class="col-sm-2 col-form-label"> Provedor:</label>
@@ -278,5 +279,24 @@
 			elem.value='';
 		}
 	</script>
+	<script >
+		$(document).ready(function(){
 
+			$('#motivo').on('change',function(){
+				var valor = $(this).val();
+
+				if(valor != 5){
+					$('#factura').val('');
+					$('#guia_remision').val('');
+					$('#factura').prop('readonly',false);
+					$('#guia_remision').prop('readonly',false);
+				}else{
+					$('#factura').val('Inventario Inicial');
+					$('#factura').prop('readonly',true);
+					$('#guia_remision').val('Inventario Inicial');
+					$('#guia_remision').prop('readonly',true);
+				}
+			});
+		});
+	</script>
 	@endsection

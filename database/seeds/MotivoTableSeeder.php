@@ -23,7 +23,7 @@ class MotivoTableSeeder extends Seeder
             'updated_at' => date('2019-08-01 00:00:00'),
         ]);
         DB::table('motivos')->insert([
-            'nombre' => 'compras Internacionales',
+            'nombre' => 'Compras Internacionales',
             'created_at' => date('2019-08-01 00:00:00'),
             'updated_at' => date('2019-08-01 00:00:00'),
         ]);
