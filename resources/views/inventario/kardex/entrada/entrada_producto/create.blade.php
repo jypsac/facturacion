@@ -287,7 +287,7 @@
 
 				if(valor != 5){
 					$('#factura').val('');
-					$('#guia_remision').val('');
+					$('#guia_remision').val(' ');
 					$('#factura').prop('readonly',false);
 					$('#guia_remision').prop('readonly',false);
 				}else{

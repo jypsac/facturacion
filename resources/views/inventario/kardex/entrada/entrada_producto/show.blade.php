@@ -76,8 +76,8 @@
                     </tbody>
 
                 </table>
-                
-                    
+
+                    <p aling="right"><b>Nota:</b> Guia Emitada en {{$kardex_entradas->moneda->nombre}}</p>
             </div>
             <div>
                 <h3>Precio Nacional Total</h3>
@@ -105,7 +105,7 @@
                 <h3>Precio Extranjero Total </h3>
             </div>
             <div class="row" style="text-align: center;">
-                
+
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Sub Total</p>
                     <p class="form-control a">{{$moneda_extranjera->simbolo}}. {{$kardex_entradas->precio_extranjero_total}}</p>
@@ -124,7 +124,7 @@
                 </div>
             </div>
             <br>
-                <p aling="right"><b>Nota:</b> Guia Emitada en {{$kardex_entradas->moneda->nombre}}</p>
+
         </div>
 
     </div>
