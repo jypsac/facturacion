@@ -4,6 +4,8 @@ namespace App;
 use App\Stock_producto;
 use App\CierrePeriodoRegistro;
 use App\Moneda;
+use Illuminate\Support\Facades\Storage;
+use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Database\Eloquent\Model;
 use Carbon\Carbon;
 
@@ -21,6 +23,7 @@ class CierrePeriodo extends Model
 
         $cierre_periodo_buscar=CierrePeriodo::latest('id')->first();
         
+
         if(empty($cierre_periodo_buscar)){
             $fecha_y=$fecha->format("Y");
             $fecha_m=$fecha->format("m");
@@ -29,7 +32,11 @@ class CierrePeriodo extends Model
             $cierre_periodo->año=$fecha_y;
             $cierre_periodo->mes=$fecha_m;
             $cierre_periodo->ruta_excel="ruta excel";
-            $cierre_periodo->ruta_pdf="ruta pdf";
+
+            $name_pdf='Cierre_Periodo_'.$fecha_m.'_'.$fecha_y.'.pdf';
+            
+
+            $cierre_periodo->ruta_pdf=$name_pdf;
             $cierre_periodo->moneda_id=$moneda_principal->id;
             $cierre_periodo->tipo_cambio=$compra_tipo_cambio;
             $cierre_periodo->save();
@@ -44,6 +51,11 @@ class CierrePeriodo extends Model
                 $cierre_periodo_r->costo_extranjero=$stock_producto->precio_extranjero;
                 $cierre_periodo_r->save();
             }
+
+            $pdf=PDF::loadView('inventario.cierre_periodo.pdf',compact('stock_productos','moneda_principal'));
+
+            $archivo =  $pdf->download();
+            Storage::disk('cierre_periodo')->put($name_pdf,$archivo);
             
         }else{
         //  $fecha_diferencia = Carbon::createFromDate(         2021             ,              4             );
@@ -58,7 +70,10 @@ class CierrePeriodo extends Model
                 $cierre_periodo=New CierrePeriodo;
                 $cierre_periodo->año=$fecha_y;
                 $cierre_periodo->mes=$fecha_m;
-                $cierre_periodo->ruta_excel="ruta excel";
+
+                $name_pdf='Cierre_Periodo_'.$fecha_m.'_'.$fecha_y.'.pdf';
+
+                $cierre_periodo->ruta_excel=$name_pdf;
                 $cierre_periodo->ruta_pdf="ruta pdf";
                 $cierre_periodo->moneda_id=$moneda_principal->id;
                 $cierre_periodo->tipo_cambio=$compra_tipo_cambio;
@@ -74,6 +89,10 @@ class CierrePeriodo extends Model
                     $cierre_periodo_r->costo_extranjero=$stock_producto->precio_extranjero;
                     $cierre_periodo_r->save();
                 }
+                $pdf=PDF::loadView('inventario.cierre_periodo.pdf',compact('stock_productos','moneda_principal'));
+
+                $archivo =  $pdf->download();
+                Storage::disk('cierre_periodo')->put($name_pdf,$archivo);
                 
             }
         }

@@ -85,7 +85,10 @@ return [
             'driver' => 'local',
             'root' => public_path('archivos/imagenes/informe_tecnico/'),
         ],
-
+        'cierre_periodo' => [
+            'driver' => 'local',
+            'root' =>  public_path('archivos/cierre_periodo/'),
+        ],
         'public' => [
             'driver' => 'local',
             'root' => storage_path('app/public'),
