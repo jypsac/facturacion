@@ -431,6 +431,7 @@ use App\Personal;
                                 <li><a href="{{route('periodo-consulta.index')}}">Consultas de inventario</a></li><!-- Periodo Consulta -->
                                 @endcan
                                 <li><a href="{{route('cierre-periodo.index')}}">Cierre Periodo</a></li>
+                                <li><a href="{{route('movimiento-consulta.index')}}">Movimiento Consulta</a></li>
                             </ul>
                         </li>
                         @endcan
