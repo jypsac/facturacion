@@ -37,22 +37,27 @@
                                     <th>ID</th>
                                     <th>Mes</th>
                                     <th>Año</th>
+                                    <td>Ver</td>
                                     <th>PDF</th>
                                     <th>EXCEL</th>
                                 </tr>
                             </thead>
                             <tbody id="tbody">
-                                @foreach($cierre_periodo as $cierre_periodo)
-                                    <td>{{$cierre_periodo->id}}</td>
-                                    <td>{{$cierre_periodo->mes}}</td>
-                                    <td>{{$cierre_periodo->año}}</td>
+                                @foreach($cierre_periodo as $cierre_periodos)
+                                <tr>
+                                    <td>{{$cierre_periodos->id}}</td>
+                                    <td>{{$cierre_periodos->mes}}</td>
+                                    <td>{{$cierre_periodos->año}}</td>
+                                    <td><a href="{{ route('cierre-periodo.show', $cierre_periodos->id) }}" class="btn btn-success">
+                                            Ver
+                                        </a></td>
                                     <td>
-                                        <a href="{{asset('/archivos/cierre_periodo/'.$cierre_periodo->ruta_pdf)}}" download="{{$cierre_periodo->archivos}}" class="btn btn-danger">
-                                            PDF
-                                        </a>
+
                                     </td>
-                                    <td><input type="button" value="Excel" class="btn btn-success" style="background-color: green;border-color: green" name="">
-                                        </td>
+                                    <td>
+                                        <input type="button" value="Excel" class="btn btn-success" style="background-color: green;border-color: green" name="">
+                                    </td>
+                                </tr>
                                 @endforeach
                             </tbody>
                         </table>

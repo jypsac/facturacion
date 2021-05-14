@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\CierrePeriodo;
+use App\Moneda;
 use App\CierrePeriodoRegistro;
 
 class CierrePeriodoController extends Controller
@@ -48,7 +49,11 @@ class CierrePeriodoController extends Controller
      */
     public function show($id)
     {
-        //
+        $moneda1=Moneda::where('principal',1)->first();
+        $moneda2=Moneda::where('principal',0)->first();
+        $cierre_periodo=CierrePeriodo::where('id',$id)->first();
+        $cierre_periodo_registro=CierrePeriodoRegistro::where('cierre_periodo_id',$id)->get();
+        return view('inventario.cierre_periodo.show',compact('cierre_periodo','moneda1','moneda2','cierre_periodo_registro'));
     }
 
     /**

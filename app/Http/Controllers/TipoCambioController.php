@@ -59,12 +59,12 @@ class TipoCambioController extends Controller
             CierrePeriodo::cierre_periodo($compra_tipo_cambio);
             goto salto;
         }
-        
+
         $periodo_fecha=$periodo->created_at;
         $periodo_fecha_m= $periodo_fecha->format('m');
         $periodo_fecha_y= $periodo_fecha->format('Y');
         //aqui va la fecha de la consulta
-        if($fecha_m != $periodo_fecha_m & $fecha_y != $periodo_fecha_y){
+        if($fecha_m != $periodo_fecha_m or $fecha_y != $periodo_fecha_y){
             CierrePeriodo::cierre_periodo($compra_tipo_cambio);
         }
 
@@ -101,7 +101,7 @@ class TipoCambioController extends Controller
            return view('configuracion_general.tipo_cambio.create',compact('error','moneda_principal','compra','venta','paralelo_recomendado'));
              }
         }
-        
+
        $cambio=new TipoCambio;
        $cambio->compra=$request->get('compra');
        $cambio->venta=$request->get('venta');
