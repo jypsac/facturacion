@@ -32,7 +32,13 @@
                          <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
                             <thead>
                                 <tr>
-
+                                    <th colspan="8">
+                                        <h3>{{$empresa->nombre}}</h3>
+                                        <br>
+                                        <h2>REPORTE DE STOCK VALORIZADO</h2>
+                                        <br>
+                                        <h5>AL: {{$cierre_periodo->mes}}/{{$cierre_periodo->año}}</h5>
+                                    </th>
                                 </tr>
                                 <tr>
                                     <th rowspan="2">Almacen</th>
@@ -59,6 +65,10 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php 
+                                $costo_nacional_total = 0; 
+                                $costo_extranjero_total = 0; 
+                                ?>
                                 @foreach($cierre_periodo_registro as $cierre_registro)
                                 <tr>
                                     <td>{{$cierre_registro->producto->codigo_producto}}</td>
@@ -73,11 +83,24 @@
                                             {{$cierre_registro->costo_extranjero}}
                                         @endif
                                     </td>
-                                    <td>{{($cierre_registro->costo_nacional*$cierre_registro->cantidad)}}</td>
-                                    <td>{{($cierre_registro->costo_extranjero*$cierre_registro->cantidad)}}</td>
+                                    <td>{{ $cos_na = ($cierre_registro->costo_nacional*$cierre_registro->cantidad)}}</td>
+                                    <td>{{ $cos_ex = ($cierre_registro->costo_extranjero*$cierre_registro->cantidad)}}</td>
                                 </tr>
+                                <?php 
+                                    $costo_nacional_total += $cos_na; 
+                                    $costo_extranjero_total += $cos_ex;
+                                ?>
                                 @endforeach
                             </tbody>
+                            <tfoot>
+                                <td colspan="6"></td>
+                                <td>
+                                    {{$costo_nacional_total}}
+                                </td>
+                                <td>
+                                    {{$costo_extranjero_total}}
+                                </td>
+                            </tfoot>
                         </table>
                     </div>
                 </div>

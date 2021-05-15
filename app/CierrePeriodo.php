@@ -5,6 +5,7 @@ use App\Stock_producto;
 use App\CierrePeriodoRegistro;
 use App\Moneda;
 use App\Producto;
+use App\Empresa;
 use Illuminate\Support\Facades\Storage;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Database\Eloquent\Model;
@@ -30,7 +31,7 @@ class CierrePeriodo extends Model
         $moneda1=Moneda::where('principal',1)->first();
         $moneda2=Moneda::where('principal',0)->first();
         $cierre_periodo_buscar=CierrePeriodo::latest('id')->first();
-
+        $empresa = Empresa::first();
 
         if(empty($cierre_periodo_buscar)){
             $fecha_y=$fecha->format("Y");
@@ -60,7 +61,7 @@ class CierrePeriodo extends Model
                 $cierre_periodo_r->save();
             }
             $cierre_periodo_re = $cierre_periodo_r->get();
-            $pdf=PDF::loadView('inventario.cierre_periodo.pdf',compact('cierre_periodo','moneda_principal','cierre_periodo_re','moneda1','moneda2'));
+            $pdf=PDF::loadView('inventario.cierre_periodo.pdf',compact('cierre_periodo','moneda_principal','cierre_periodo_re','moneda1','moneda2','empresa'));
 
             $archivo =  $pdf->download();
             Storage::disk('cierre_periodo')->put($name_pdf,$archivo);
@@ -98,7 +99,7 @@ class CierrePeriodo extends Model
                     $cierre_periodo_r->save();
                 }
                 $cierre_periodo_re = $cierre_periodo_r->get();
-                $pdf=PDF::loadView('inventario.cierre_periodo.pdf',compact('cierre_periodo','moneda_principal','moneda1','moneda2','cierre_periodo_re'));
+                $pdf=PDF::loadView('inventario.cierre_periodo.pdf',compact('cierre_periodo','moneda_principal','moneda1','moneda2','cierre_periodo_re','empresa'));
 
                 $archivo =  $pdf->download();
                 Storage::disk('cierre_periodo')->put($name_pdf,$archivo);

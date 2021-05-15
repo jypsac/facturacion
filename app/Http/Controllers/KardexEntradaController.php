@@ -106,7 +106,7 @@ class KardexEntradaController extends Controller
         'factura' => ['required'],
         'almacen' => ['required','exists:almacen,id'],
             // 'clasificacion' => ['required','exists:categorias,id'],
-        'guia_remision' => ['required'],
+        // 'guia_remision' => ['required'],
         'provedor' => ['required','exists:provedores,id'],
         'moneda' => ['required','exists:monedas,id'],
       ]
@@ -167,13 +167,16 @@ class KardexEntradaController extends Controller
         $cantidad_registro=str_pad('1', 8, "0", STR_PAD_LEFT);
         $codigo_guia='GE'.$cantidad_sucursal.'-'.$cantidad_registro;
       }
-
-       //Kardex Entrada Guardado
+      if($request->get('guia_remision') == ""){
+        $guia_re = 'Sin Guia de Remision';
+      }else{
+        $guia_re=$request->get('guia_remision');
+      }
       $kardex_entrada=new Kardex_entrada();
       $kardex_entrada->motivo_id=$request->get('motivo');
       $kardex_entrada->codigo_guia=$codigo_guia;
-      $kardex_entrada->provedor_id=$request->get('provedor');
-      $kardex_entrada->guia_remision=$request->get('guia_remision');
+      $kardex_entrada->provedor_id=$request->get('provedor');;
+      $kardex_entrada->guia_remision=$guia_re;
       $kardex_entrada->categoria_id='2';
       $kardex_entrada->factura=$request->get('factura');
       $kardex_entrada->almacen_id=$request->get('almacen');

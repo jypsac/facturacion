@@ -38,8 +38,7 @@
                                     <th>Mes</th>
                                     <th>Año</th>
                                     <td>Ver</td>
-                                    <th>PDF</th>
-                                    <th>EXCEL</th>
+                                    {{-- <th>EXCEL</th> --}}
                                 </tr>
                             </thead>
                             <tbody id="tbody">
@@ -51,12 +50,12 @@
                                     <td><a href="{{ route('cierre-periodo.show', $cierre_periodos->id) }}" class="btn btn-success">
                                             Ver
                                         </a></td>
-                                    <td>
+                                    {{-- <td>
 
-                                    </td>
-                                    <td>
-                                        <input type="button" value="Excel" class="btn btn-success" style="background-color: green;border-color: green" name="">
-                                    </td>
+                                    </td> --}}
+                                    {{-- <td> --}}
+                                        {{-- <input type="button" value="Excel" class="btn btn-success" style="background-color: green;border-color: green" name=""> --}}
+                                    {{-- </td> --}}
                                 </tr>
                                 @endforeach
                             </tbody>

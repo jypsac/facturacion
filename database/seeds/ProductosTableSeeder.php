@@ -41,9 +41,9 @@ class ProductosTableSeeder extends Seeder
         DB::table('stock_productos')->insert([
             'id' => 1,
             'producto_id' => 1,
-            'stock' => 1,
-            'precio_nacional' => 0.00,
-            'precio_extranjero' => 0.00,
+            'stock' => 200,
+            'precio_nacional' => 50,
+            'precio_extranjero' => 13.59,
             'created_at' => '2020-08-01 11:36:57',
             'updated_at' => "2020-08-01 11:36:58" ,
         ]);
@@ -51,7 +51,7 @@ class ProductosTableSeeder extends Seeder
             'id' => 1,
             'producto_id' => 1,
             'almacen_id' => 1,
-            'stock' => 1,
+            'stock' => 200,
             'created_at' => '2020-08-01 11:36:57',
             'updated_at' => "2020-08-01 11:36:58" ,
         ]);
@@ -83,9 +83,9 @@ class ProductosTableSeeder extends Seeder
         DB::table('stock_productos')->insert([
             'id' => 2,
             'producto_id' => 2,
-            'stock' => 1,
-            'precio_nacional' => 0.00,
-            'precio_extranjero' => 0.00,
+            'stock' => 100,
+            'precio_nacional' => 25,
+            'precio_extranjero' => 6.79,
             'created_at' => '2020-08-01 11:36:57',
             'updated_at' => "2020-08-01 11:36:58" ,
         ]);
@@ -93,7 +93,7 @@ class ProductosTableSeeder extends Seeder
             'id' => 2,
             'producto_id' => 2,
             'almacen_id' => 1,
-            'stock' => 1,
+            'stock' => 100,
             'created_at' => '2020-08-01 11:36:57',
             'updated_at' => "2020-08-01 11:36:58" ,
         ]);

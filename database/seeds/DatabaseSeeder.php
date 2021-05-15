@@ -37,8 +37,8 @@ class DatabaseSeeder extends Seeder
         $this->call(VehiculostableSeeder::class); //innecesario
         $this->call(VentasRegistroTableSeeder::class);  //innecesario
         $this->call(TipoRegistroSeeder::class);
-        // $this->call(KardexEntradaSeeder::class);    //inncesario
-        // $this->call(KardexEntradaRegistroSeeder::class);    //innceario
+        $this->call(KardexEntradaSeeder::class);    //inncesario
+        $this->call(KardexEntradaRegistroSeeder::class);    //innceario
         $this->call(ClientesSeeder::class);             //innesa
         $this->call(FacturacionTableSeeder::class);     //innecesario
         $this->call(GarantiaTableSeeder::class);        //innecesario
