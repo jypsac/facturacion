@@ -71,7 +71,7 @@
                                     <select class="form-control" name="categoria" id="categoria" onchange="seleccionado()">
                                         <option value="0">Seleccione Categoria</option>
                                         <option value="1">Productos</option>
-                                        <option value="2">Servicios</option>
+                                        
                                     </select>
 							    </div>
 						</div>

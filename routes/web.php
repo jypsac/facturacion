@@ -130,6 +130,7 @@ Route::group(
 
 		Route::post('ajax_periodo_ventas', 'PeriodoConsultaController@ajax_periodo_ventas')->name('ajax_periodo_ventas');
 		Route::post('ajax_movimiento_ventas', 'Consulta_MovimientoController@ajax_movimiento_ventas')->name('ajax_movimiento_ventas');
+		Route::post('ajax_movimiento_ventas_b', 'Consulta_MovimientoController@ajax_movimiento_ventas_b')->name('ajax_movimiento_ventas_b');
 
 		Route::get('guias_remision/seleccionar', 'GuiaRemisionController@seleccionar')->name('guia_remision.seleccionar');
 		Route::put('cotizacion/aprobar/{id}', 'CotizacionController@aprobar')->name('cotizacion.aprobar');
