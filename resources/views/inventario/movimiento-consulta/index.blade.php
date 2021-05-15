@@ -150,7 +150,7 @@
                                     <th>Nr Doc</th>
                                     <th>Proveedor</th>
                                     <th>Ruc</th>
-                                    <th>Nr Doc Prov</th>
+                                    <th>Nr Doc </th>
                                     <th>Subtotal</th>
                                     <th>Igv</th>
                                     <th>Total</th>
@@ -182,9 +182,9 @@
                                 <tr>
                                     <th>Fecha</th>
                                     <th>Nr Doc</th>
-                                    <th>Proveedor</th>
+                                    <th>Cliente</th>
                                     <th>Ruc</th>
-                                    <th>Nr Doc Prov</th>
+                                    <th>Nr Doc </th>
                                     <th>Subtotal</th>
                                     <th>Igv</th>
                                     <th>Total</th>
@@ -246,57 +246,15 @@
                     "columns": [
                         { "data": "fecha_compra" },
                         { "data": "codigo_guia" },
-                        { "data": "provedor_id" },
-                        { "data": "provedor_id" },
+                        { "data": "provedor.empresa" },
+                        { "data": "provedor.ruc" },
                         { "data": "factura" },
                         { "data": "subtotal"},
                         { "data": "igv" },
                         { "data": "precio_nacional_total" }
                     ]
                 });
-                // $("#tablaid").find('tbody')
-                //     .append($('<tr>')
-                //         .append($('<td>')
-                //             .append($('<img>')
-                //                 .attr('src', 'img.png')
-                //                 .text('Image cell')
-                //             )
-                //         )
-                //     );
-
-                // $("#tablaid").append( '<tr><td>' + data.subtotal_total + '</td><td>' + "1" +  "2" +"3" + '</td><td>' + "1" +  "2" +"3" + '</td></tr>' );
-
-                // var total = 0;
-                // $('#tablaid').DataTable().rows().data().each(function(el, index){
-                // //Asumiendo que es la columna 5 de cada fila la que quieres agregar a la sumatoria
-                // console.log(el[4]);
-                // // total += el[6];
-                // });
-                // console.log(total);
-                // var t = $('#tablaid').DataTable();
-                // t.row.add([
-                //     1,2,3,4,5,6,7,8
-                // ]).draw(false);
-                //Parte donde se agregan la nueva data total
-                // $('#tablaid').DataTable().row.add([
-                //     "1","2","3","4","5"
-                // ]).draw(false);
-                        
-
-                // //Parte donde se agregan la nueva data total
-                    // var t = $('#tablaid').DataTable({
-                    //     "createdRow":function(row,data,index){
-                    //         if(data[6]==18.00){
-                    //             $('td',row).eq(6).css({
-                    //                 'background-color':'#ff5252',
-                    //                 'color':'white',
-                    //             });
-                    //         }
-                    //     }
-                    // });
-                        
-                        
-
+                
             });
 
             
@@ -332,10 +290,10 @@
                     "aaData": data,
                     "columns": [
                         { "data": "fecha_emision" },
-                        { "data": "fecha_emision" },
-                        { "data": "cliente_id" },
-                        { "data": "cliente_id" },
-                        { "data": "cliente_id" },
+                        { "data": "codigo_fac" },
+                        { "data": "cliente.nombre" },
+                        { "data": "cliente.numero_documento" },
+                        { "data": "codigo_fac" },
                         { "data": "subtotal"},
                         { "data": "igv" },
                         { "data": "precio" }
@@ -374,10 +332,10 @@
                     "aaData": data,
                     "columns": [
                         { "data": "fecha_emision" },
-                        { "data": "fecha_emision" },
-                        { "data": "cliente_id" },
-                        { "data": "cliente_id" },
-                        { "data": "cliente_id" },
+                        { "data": "codigo_boleta" },
+                        { "data": "cliente.nombre" },
+                        { "data": "cliente.numero_documento" },
+                        { "data": "codigo_boleta" },
                         { "data": "subtotal"},
                         { "data": "igv" },
                         { "data": "precio" }

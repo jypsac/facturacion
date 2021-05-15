@@ -10,7 +10,9 @@ class Boleta extends Model
 
     protected $guarded=[];
 
-    protected $with = ['producto'];
+    protected $with = ['producto','cliente'];
+    
+    // protected $with = ['cliente'];
 
     public function cliente(){
         return $this->belongsTo(Cliente::class,'cliente_id');
@@ -33,4 +35,6 @@ class Boleta extends Model
     public function producto(){
         return $this->belongsTo(Producto::class,'producto_id');
     }
+
+    
 }

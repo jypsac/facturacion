@@ -10,6 +10,8 @@ class Facturacion extends Model
 
 	protected $guarded = [];
 
+    protected $with = ['producto','cliente'];
+
 	public function cotizacion(){
         return $this->belongsTo(Cotizacion::class,'id_cotizador');
     }
@@ -29,6 +31,10 @@ class Facturacion extends Model
     }
      public function moneda(){
         return $this->belongsTo(Moneda::class,'moneda_id');
+    }
+
+    public function producto(){
+        return $this->belongsTo(Producto::class,'producto_id');
     }
 
 }

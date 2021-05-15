@@ -10,6 +10,8 @@ class Kardex_entrada extends Model
 
     protected $guarded = [];
 
+    protected $with = ['provedor'];
+
     public function provedor(){
         return $this->belongsTo(Provedor::class,'provedor_id');
     }
