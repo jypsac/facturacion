@@ -176,7 +176,7 @@ class Consulta_MovimientoController extends Controller
                         $subtotal=$subtotal+$facturacion->subtotal;
                         $jsons++;
                     }
-                    $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'cliente_id' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
+                    $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_fac' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
                     if (!isset($factura_id)) {
                         $factura_id[]="";
                     }
@@ -264,7 +264,7 @@ class Consulta_MovimientoController extends Controller
                     if (!isset($boleta_id)) {
                         $boleta_id[]="";
                     }
-                    $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'cliente_id' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
+                    $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_boleta' => "",'cliente_id' => "",'cliente.nombre'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
                     $json=array_merge(json_decode($boletas, true),$data_extra );
                     
                 }

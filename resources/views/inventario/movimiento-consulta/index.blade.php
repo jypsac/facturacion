@@ -246,8 +246,8 @@
                     "columns": [
                         { "data": "fecha_compra" },
                         { "data": "codigo_guia" },
-                        { "data": "provedor.empresa" },
-                        { "data": "provedor.ruc" },
+                        { "data": "provedor.empresa" , "defaultContent": ""},
+                        { "data": "provedor.ruc" , "defaultContent": ""},
                         { "data": "factura" },
                         { "data": "subtotal"},
                         { "data": "igv" },
@@ -291,8 +291,8 @@
                     "columns": [
                         { "data": "fecha_emision" },
                         { "data": "codigo_fac" },
-                        { "data": "cliente.nombre" },
-                        { "data": "cliente.numero_documento" },
+                        { "data": "cliente.nombre" , "defaultContent": ""},
+                        { "data": "cliente.numero_documento" , "defaultContent": ""},
                         { "data": "codigo_fac" },
                         { "data": "subtotal"},
                         { "data": "igv" },
@@ -333,8 +333,8 @@
                     "columns": [
                         { "data": "fecha_emision" },
                         { "data": "codigo_boleta" },
-                        { "data": "cliente.nombre" },
-                        { "data": "cliente.numero_documento" },
+                        { "data": "cliente.nombre" , "defaultContent": ""},
+                        { "data": "cliente.numero_documento" , "defaultContent": ""},
                         { "data": "codigo_boleta" },
                         { "data": "subtotal"},
                         { "data": "igv" },
