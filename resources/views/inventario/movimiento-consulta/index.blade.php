@@ -81,7 +81,7 @@
                         <div class="form-group row " id="consulta_p" style="display:none;">
 							<label class="col-sm-2 col-form-label" >Consulta para Productos:</label>
 								<div class="col-sm-10">
-									<select class="form-control" name="consulta_p">
+									<select class="form-control" name="consulta_p_input" id="consulta_p_input">
                                         <option value="0">Seleccione</option>
                                         <option value="1">Compra</option>
                                         <option value="2">Venta</option>
@@ -93,7 +93,7 @@
                         <div class="form-group row " id="consulta_s" style="display:none;">
 							<label class="col-sm-2 col-form-label" >Consulta para Servicio:</label>
 								<div class="col-sm-10">
-									<select class="form-control" name="consulta_s">
+									<select class="form-control" name="consulta_s_input" id="consulta_s_input">
                                         <option value="0">Seleccione</option>
                                         <option value="1">Venta</option>
                                     </select>
@@ -213,7 +213,6 @@
 <script>
     $(document).ready(function(e) {
         $('#boton').on('click', function() {
-
 			$.ajax({
 				method: "POST",
 				url: "{{ route('ajax_movimiento') }}",
@@ -222,7 +221,6 @@
                 $('#tablaid').dataTable().fnDestroy();
                 var data=JSON.parse(res);
                 $('#tablaid').dataTable({
-                    
                         pageLength: 25,
                         responsive: true,
                         dom: '<"html5buttons"B>lTfgitp',
@@ -342,12 +340,9 @@
                     ]
                 })
             });
-		
-
 		});
 
         
-
         $('#pdf').on('click', function() {
             $("#formulario").attr("action",'{{ route('periodo_consulta_pdf') }}');
             $("#formulario").attr("method",'POST');
@@ -373,23 +368,26 @@
    {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 
 <script>
-        
-
         function seleccionado(){
             var opt = $('#categoria').val();
             var alm = $('#almacen').val();
             console.log(alm);
             if(alm=="1"){
                 if(opt=="1"){
+                    $('#consulta_p_input').prop('disabled', false);
                     $('#consulta_p').show();
+                    $('#consulta_s_input').prop('disabled', 'disabled');
                     $('#consulta_s').hide();
                 }else{
+                    $('#consulta_p_input').prop('disabled', 'disabled');
                     $('#consulta_p').hide();
+                    $('#consulta_s_input').prop('disabled', false);
                     $('#consulta_s').show();
                 }
-                
             }else{
+                $('#consulta_p_input').prop('disabled', 'disabled');
                 $('#consulta_p').hide();
+                $('#consulta_s_input').prop('disabled', false);
                 $('#consulta_s').show();
             }
         }

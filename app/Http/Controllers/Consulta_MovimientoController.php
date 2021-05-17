@@ -40,6 +40,7 @@ class Consulta_MovimientoController extends Controller
      */
 
     public function ajax_movimiento(Request $request){
+        // return $request;
         // consultas
         // 1 = Compra 
         // 2 = Venta 
@@ -52,7 +53,10 @@ class Consulta_MovimientoController extends Controller
         $igv=Igv::first();
         if($categoria=="1"){
             // falta validacion si $request->consulta_p es un numero del 1 al 3
-            $consulta=$request->consulta_p;
+            $consulta=$request->consulta_p_input;
+            if($consulta=="0"){
+                return "consulta 0";
+            }
             if($consulta=="1" or $consulta=="3"){
                 if($almacen == 0){
                     //productos + compra------------------------------------------
@@ -126,13 +130,12 @@ class Consulta_MovimientoController extends Controller
         $igv=Igv::first();
         if($categoria=="1"){
             // falta validacion si $request->consulta_p es un numero del 1 al 3
-            $consulta_s=$request->consulta_s;
-            $consulta_p=$request->consulta_p;
-            if($consulta_s=="0" and $consulta_p=="0"){
+            $consulta_p=$request->consulta_p_input;
+            if($consulta_p=="0"){
                 return "consulta 0";
             }
             
-            if($consulta_s=="1" or $consulta_p=="2" or $consulta_p=="3"){
+            if($consulta_p=="2" or $consulta_p=="3"){
                 //todos los almacenes
                 if($almacen==0){
                     $facturaciones= Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
@@ -199,6 +202,7 @@ class Consulta_MovimientoController extends Controller
     }
 
     public function ajax_movimiento_ventas_b(Request $request){
+        // return $request;
         // consultas
         // 1 = Compra 
         // 2 = Venta 
@@ -211,13 +215,11 @@ class Consulta_MovimientoController extends Controller
         $igv=Igv::first();
         if($categoria=="1"){
             // falta validacion si $request->consulta_p es un numero del 1 al 3
-            $consulta_s=$request->consulta_s;
-            $consulta_p=$request->consulta_p;
-            if($consulta_s=="0" and $consulta_p=="0"){
+            $consulta_p=$request->consulta_p_input;
+            if($consulta_p=="0"){
                 return "consulta 0";
             }
-            
-            if($consulta_s=="1" or $consulta_p=="2" or $consulta_p=="3"){
+            if($consulta_p=="2" or $consulta_p=="3"){
                 //todos los almacenes
                 if($almacen==0){
                     $boletas= Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
