@@ -46,7 +46,7 @@ class AddForeignKeyKardexEntradaTable extends Migration
 
             $table->double('precio_nacional_total',10,2)->nullable();
             $table->double('precio_extranjero_total',10,2)->nullable();
-            $table->string('fecha_compra');
+            $table->string('fecha_compra')->nullable();
             $table->timestamps();
         });
     }
