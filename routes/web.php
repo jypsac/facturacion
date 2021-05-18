@@ -222,6 +222,7 @@ Route::group(
 		Route::resource('/periodo-consulta','PeriodoConsultaController');
 		Route::resource('/movimiento-consulta','Consulta_MovimientoController');
 		Route::resource('/cierre-periodo','CierrePeriodoController');
+		Route::get('/cierre-periodo/pdf/{id}','CierrePeriodoController@pdf')->name('cierre-periodo.pdf');
 
 		//Fin de inventarios
 		Route::resource('/motivo','MotivoController');

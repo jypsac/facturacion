@@ -17,8 +17,8 @@ class CreateCierrePeriodoTable extends Migration
 	    $table->bigIncrements('id');
 	    $table->integer('año');
 	    $table->integer('mes');
-	    $table->text('ruta_pdf');
-	    $table->text('ruta_excel');
+	    // $table->text('ruta_pdf');
+	    // $table->text('ruta_excel');
         $table->unsignedBigInteger('moneda_id');
         $table->foreign('moneda_id')->references('id')->on('monedas')->onDelete('cascade');
         $table->double('tipo_cambio');

@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\CierrePeriodo;
 use App\Moneda;
 use App\Empresa;
+use Barryvdh\DomPDF\Facade as PDF;
 use App\CierrePeriodoRegistro;
 
 class CierrePeriodoController extends Controller
@@ -57,7 +58,21 @@ class CierrePeriodoController extends Controller
         $cierre_periodo_registro=CierrePeriodoRegistro::where('cierre_periodo_id',$id)->get();
         return view('inventario.cierre_periodo.show',compact('cierre_periodo','moneda1','moneda2','cierre_periodo_registro','empresa'));
     }
+    public function pdf($id){
+        $moneda_principal=Moneda::where('principal',1)->first();
+        $moneda1=Moneda::where('principal',1)->first();
+        $moneda2=Moneda::where('principal',0)->first();
+        $cierre_periodo=CierrePeriodo::where('id',$id)->first();
+        $cierre_periodo_re = CierrePeriodoRegistro::where('cierre_periodo_id',$id)->get();
+        $empresa = Empresa::first();
+        $fecha_m = $cierre_periodo->mes;
+        $fecha_y = $cierre_periodo->año;
 
+        $name_pdf='Cierre_Periodo_'.$fecha_m.'_'.$fecha_y.'.pdf';
+
+        $pdf=PDF::loadView('inventario.cierre_periodo.pdf',compact('cierre_periodo','moneda_principal','moneda1','moneda2','cierre_periodo_re','empresa'));
+        return $pdf->download($name_pdf);
+    }
     /**
      * Show the form for editing the specified resource.
      *

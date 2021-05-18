@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cotizacion</title>{{--
+    <title>Cierre Periodo</title>{{--
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" > --}}
     <link href="{{ asset('css/estilos_pdf.css') }}" rel="stylesheet">
 </head>
@@ -29,9 +29,7 @@
     	<tr>
             <th colspan="8">
                 <h3>{{$empresa->nombre}}</h3>
-                
-                <h2>REPORTE DE STOCK VALORIZADO</h2>
-                
+                <h2 style="padding-bottom: 5px;">REPORTE DE STOCK VALORIZADO</h2>
                 <h5>AL: {{$cierre_periodo->mes}}/{{$cierre_periodo->año}}</h5>
             </th>
         </tr>
@@ -55,14 +53,14 @@
             <th>Mon.</th>
             <th></th>
             <th>Precio Unitario</th>
-            <th>{{$moneda2->nombre}} ({{$moneda2->simbolo}}) </th>
             <th>{{$moneda1->nombre}} ({{$moneda1->simbolo}}) </th>
+            <th>{{$moneda2->nombre}} ({{$moneda2->simbolo}}) </th>
         </tr>
     </thead>
     <tbody>
-    	<?php 
-        $costo_nacional_total = 0; 
-        $costo_extranjero_total = 0; 
+    	<?php
+        $costo_nacional_total = 0;
+        $costo_extranjero_total = 0;
         ?>
         @foreach($cierre_periodo_re as $cierre_registro)
         <tr>
@@ -81,20 +79,22 @@
             <td>{{ $cos_na = ($cierre_registro->costo_nacional*$cierre_registro->cantidad)}}</td>
             <td>{{ $cos_ex = ($cierre_registro->costo_extranjero*$cierre_registro->cantidad)}}</td>
         </tr>
-        <?php 
-            $costo_nacional_total += $cos_na; 
+        <?php
+            $costo_nacional_total += $cos_na;
             $costo_extranjero_total += $cos_ex;
         ?>
         @endforeach
     </tbody>
     <tfoot>
-        <td colspan="6"></td>
-        <td>
-            {{$costo_nacional_total}}
-        </td>
-        <td>
-            {{$costo_extranjero_total}}
-        </td>
+        <tr>
+        	<td colspan="6"></td>
+	        <td>
+	            {{$costo_nacional_total}}
+	        </td>
+	        <td>
+	            {{$costo_extranjero_total}}
+	        </td>
+        </tr>
     </tfoot>
 </table>
 <style>
@@ -106,7 +106,7 @@
     }
      .table-bordered .blanco {
     border: none;
-}
+	}
     .blanco{border: none;
         border: medium transparent;
         }

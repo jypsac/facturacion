@@ -23,7 +23,10 @@
                             </div>
                             <div class="col-sm-2" align="center">
                                 <a href="" class="btn btn-success" style="background-color: green;border-color: green">Excel</a>
-                                <a href="{{asset('/archivos/cierre_periodo/'.$cierre_periodo->ruta_pdf)}}" download="{{$cierre_periodo->archivos}}" class="btn btn-danger">PDF</a>
+                                <form action="{{route('cierre-periodo.pdf', $cierre_periodo->id)}}" >
+                                    <input type="text" hidden="" name="cierre-periodo-id" value="1">
+                                    <button type="submit" class="btn btn-warning" >PDF</button>
+                                </form>
                             </div>
                         </div>
                     </div>
@@ -60,14 +63,14 @@
                                     <th>Monto</th>
                                     <th></th>
                                     <th>Precio Unitario</th>
-                                    <th>{{$moneda2->nombre}} ({{$moneda2->simbolo}}) </th>
                                     <th>{{$moneda1->nombre}} ({{$moneda1->simbolo}}) </th>
+                                    <th>{{$moneda2->nombre}} ({{$moneda2->simbolo}}) </th>
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php 
-                                $costo_nacional_total = 0; 
-                                $costo_extranjero_total = 0; 
+                                <?php
+                                $costo_nacional_total = 0;
+                                $costo_extranjero_total = 0;
                                 ?>
                                 @foreach($cierre_periodo_registro as $cierre_registro)
                                 <tr>
@@ -86,8 +89,8 @@
                                     <td>{{ $cos_na = ($cierre_registro->costo_nacional*$cierre_registro->cantidad)}}</td>
                                     <td>{{ $cos_ex = ($cierre_registro->costo_extranjero*$cierre_registro->cantidad)}}</td>
                                 </tr>
-                                <?php 
-                                    $costo_nacional_total += $cos_na; 
+                                <?php
+                                    $costo_nacional_total += $cos_na;
                                     $costo_extranjero_total += $cos_ex;
                                 ?>
                                 @endforeach
