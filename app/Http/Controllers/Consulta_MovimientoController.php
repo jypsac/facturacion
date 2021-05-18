@@ -109,7 +109,7 @@ class Consulta_MovimientoController extends Controller
             }
         }elseif($categoria=="2"){
             $consulta=2;
-            return "este es servicio";
+            return "Servicio no admitible para compras";
         }else{
             return "categoria incorrecta";
         }
@@ -128,74 +128,83 @@ class Consulta_MovimientoController extends Controller
         $categoria=$request->categoria;
         //obtencion del igv
         $igv=Igv::first();
-        if($categoria=="1"){
-            // falta validacion si $request->consulta_p es un numero del 1 al 3
-            $consulta_p=$request->consulta_p_input;
-            if($consulta_p=="0"){
-                return "consulta 0";
-            }
-            
-            if($consulta_p=="2" or $consulta_p=="3"){
-                //todos los almacenes
-                if($almacen==0){
-                    $facturaciones= Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                    $total=0;
-                    $igv_t=0;
-                    $subtotal=0;
-                    $jsons=0;
-                    foreach($facturaciones as $facturacion){
-                        $factura_id[]=$facturacion->id;
-                        $factura_precio= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('precio');
-                        $facturacion->precio=$factura_precio;
-                        
-                        $facturacion->subtotal=round($facturacion->precio/(1+($igv->igv_total/100)),2);
-                        $facturacion->igv=round($facturacion->precio-$facturacion->subtotal,2);
-
-                        $total=$total+$facturacion->precio;
-                        $igv_t=$igv_t+$facturacion->igv;
-                        $subtotal=$subtotal+$facturacion->subtotal;
-                        $jsons++;
-                    }
-                    $data_extra[$jsons]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
-                    $json=array_merge(json_decode($facturaciones, true),$data_extra );
-
+        
+        // falta validacion si $request->consulta_p es un numero del 1 al 3
+        $consulta_p=$request->consulta_p_input;
+        if($categoria=="2"){
+            $consulta_p="2";
+        }
+        if($consulta_p=="0"){
+            return "consulta 0";
+        }
+        // return $consulta_p;
+        if($consulta_p=="2" or $consulta_p=="3"){
+            //todos los almacenes
+            if($almacen==0){
+                if($categoria=="1"){
+                    $facturaciones= Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','producto')->get();
+                }elseif($categoria=="2"){
+                    $facturaciones= Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','servicio')->get();
                 }else{
-                    //productos + venta ------------------------------------------
-                    //facturacion
-                    $facturaciones=Facturacion::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                    $total=0;
-                    $igv_t=0;
-                    $subtotal=0;
-                    $jsons=0;
-                    foreach($facturaciones as $facturacion){
-                        $factura_id[]=$facturacion->id;
-                        $factura_precio= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('precio');
-                        $facturacion->precio=$factura_precio;
-                        
-                        $facturacion->subtotal=round($facturacion->precio/(1+($igv->igv_total/100)),2);
-                        $facturacion->igv=round($facturacion->precio-$facturacion->subtotal,2);
-                        $total=$total+$facturacion->precio;
-                        $igv_t=$igv_t+$facturacion->igv;
-                        $subtotal=$subtotal+$facturacion->subtotal;
-                        $jsons++;
-                    }
-                    $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_fac' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
-                    if (!isset($factura_id)) {
-                        $factura_id[]="";
-                    }
-                    $json=array_merge(json_decode($facturaciones, true),$data_extra );
+                    return "categoria incorrecta";
                 }
-                //union de jsons
-                // $json=array_merge(json_decode($facturaciones, true),json_decode($boletas, true));
-                // $json=array_merge(json_decode($facturaciones, true));
+                $total=0;
+                $igv_t=0;
+                $subtotal=0;
+                $jsons=0;
+                foreach($facturaciones as $facturacion){
+                    $factura_id[]=$facturacion->id;
+                    $factura_precio= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('precio');
+                    $facturacion->precio=$factura_precio;
+                    
+                    $facturacion->subtotal=round($facturacion->precio/(1+($igv->igv_total/100)),2);
+                    $facturacion->igv=round($facturacion->precio-$facturacion->subtotal,2);
+
+                    $total=$total+$facturacion->precio;
+                    $igv_t=$igv_t+$facturacion->igv;
+                    $subtotal=$subtotal+$facturacion->subtotal;
+                    $jsons++;
+                }
+                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
+                $json=array_merge(json_decode($facturaciones, true),$data_extra );
+
             }else{
-                $json=[];
+                //productos + venta ------------------------------------------
+                //facturacion
+                if($categoria=="1"){
+                    $facturaciones=Facturacion::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','producto')->get();
+                }elseif($categoria=="2"){
+                    $facturaciones=Facturacion::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','servicio')->get();
+                }else{
+                    return "categoria incorrecta";
+                }
+                $total=0;
+                $igv_t=0;
+                $subtotal=0;
+                $jsons=0;
+                foreach($facturaciones as $facturacion){
+                    $factura_id[]=$facturacion->id;
+                    $factura_precio= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('precio');
+                    $facturacion->precio=$factura_precio;
+                    
+                    $facturacion->subtotal=round($facturacion->precio/(1+($igv->igv_total/100)),2);
+                    $facturacion->igv=round($facturacion->precio-$facturacion->subtotal,2);
+                    $total=$total+$facturacion->precio;
+                    $igv_t=$igv_t+$facturacion->igv;
+                    $subtotal=$subtotal+$facturacion->subtotal;
+                    $jsons++;
+                }
+                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_fac' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
+                if (!isset($factura_id)) {
+                    $factura_id[]="";
+                }
+                $json=array_merge(json_decode($facturaciones, true),$data_extra );
             }
-        }elseif($categoria=="2"){
-            $consulta=2;
-            return "este es servicio";
+            //union de jsons
+            // $json=array_merge(json_decode($facturaciones, true),json_decode($boletas, true));
+            // $json=array_merge(json_decode($facturaciones, true));
         }else{
-            return "categoria incorrecta";
+            $json=[];
         }
         
         return response(json_encode($json),200)->header('content-type','text/plain');
@@ -213,75 +222,85 @@ class Consulta_MovimientoController extends Controller
         $categoria=$request->categoria;
         //obtencion del igv
         $igv=Igv::first();
-        if($categoria=="1"){
-            // falta validacion si $request->consulta_p es un numero del 1 al 3
-            $consulta_p=$request->consulta_p_input;
-            if($consulta_p=="0"){
-                return "consulta 0";
-            }
-            if($consulta_p=="2" or $consulta_p=="3"){
-                //todos los almacenes
-                if($almacen==0){
-                    $boletas= Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                    $total=0;
-                    $igv_t=0;
-                    $subtotal=0;
-                    $jsons=0;
-                    foreach($boletas as $boleta){
-                        $boleta_id[]=$boleta->id;
-                        $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('precio');
-                        $boleta->precio=$boleta_precio;
-                        
-                        $boleta->subtotal=round($boleta->precio/(1+($igv->igv_total/100)),2);
-                        $boleta->igv=round($boleta->precio-$boleta->subtotal,2);
-                        $total=$total+$boleta->precio;
-                        $igv_t=$igv_t+$boleta->igv;
-                        $subtotal=$subtotal+$boleta->subtotal;
-                        $jsons++;
-                    }
-                    if (!isset($boleta_id)) {
-                        $boleta_id[]="";
-                    }
-                    $data_extra[$jsons]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
-                    $json=array_merge(json_decode($boletas, true),$data_extra );
-                }else{
-                    //productos + venta ------------------------------------------
-                    //boleta
-                    $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                    $total=0;
-                    $igv_t=0;
-                    $subtotal=0;
-                    $jsons=0;
-                    foreach($boletas as $boleta){
-                        $boleta_id[]=$boleta->id;
-                        $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('precio');
-                        $boleta->precio=$boleta_precio;
-                        $boleta->subtotal=round($boleta->precio/(1+($igv->igv_total/100)),2);
-                        $boleta->igv=round($boleta->precio-$boleta->subtotal,2);
-                        $total=$total+$boleta->precio;
-                        $igv_t=$igv_t+$boleta->igv;
-                        $subtotal=$subtotal+$boleta->subtotal;
-                        $jsons++;
-                    }
-                    if (!isset($boleta_id)) {
-                        $boleta_id[]="";
-                    }
-                    $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_boleta' => "",'cliente_id' => "",'cliente.nombre'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
-                    $json=array_merge(json_decode($boletas, true),$data_extra );
-                    
-                }
-                //union de jsons
-                // $json=array_merge(json_decode($boletas, true));
-            }else{
-                $json=[];
-            }
-        }elseif($categoria=="2"){
-            $consulta=2;
-            return "este es servicio";
-        }else{
-            return "categoria incorrecta";
-        }
         
+        // falta validacion si $request->consulta_p es un numero del 1 al 3
+        $consulta_p=$request->consulta_p_input;
+        if($categoria=="2"){
+            $consulta_p="2";
+        }
+        if($consulta_p=="0"){
+            return "consulta 0";
+        }
+        if($consulta_p=="2" or $consulta_p=="3"){
+            //todos los almacenes
+            if($almacen==0){
+                if($categoria=="1"){
+                    $boletas= Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','producto')->get();
+                }elseif($categoria=="2"){
+                    $boletas= Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','servicio')->get();
+                    // return "este es servicio";
+                }else{
+                    return "categoria incorrecta";
+                }
+                $total=0;
+                $igv_t=0;
+                $subtotal=0;
+                $jsons=0;
+                foreach($boletas as $boleta){
+                    $boleta_id[]=$boleta->id;
+                    $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('precio');
+                    $boleta->precio=$boleta_precio;
+                    
+                    $boleta->subtotal=round($boleta->precio/(1+($igv->igv_total/100)),2);
+                    $boleta->igv=round($boleta->precio-$boleta->subtotal,2);
+                    $total=$total+$boleta->precio;
+                    $igv_t=$igv_t+$boleta->igv;
+                    $subtotal=$subtotal+$boleta->subtotal;
+                    $jsons++;
+                }
+                if (!isset($boleta_id)) {
+                    $boleta_id[]="";
+                }
+                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
+                $json=array_merge(json_decode($boletas, true),$data_extra );
+            }else{
+                //productos + venta ------------------------------------------
+                //boleta
+                if($categoria=="1"){
+                    $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','producto')->get();
+                }elseif($categoria=="2"){
+                    $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','servicio')->get();
+                    // return "este es servicio";
+                }else{
+                    return "categoria incorrecta";
+                }
+                $total=0;
+                $igv_t=0;
+                $subtotal=0;
+                $jsons=0;
+                foreach($boletas as $boleta){
+                    $boleta_id[]=$boleta->id;
+                    $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('precio');
+                    $boleta->precio=$boleta_precio;
+                    $boleta->subtotal=round($boleta->precio/(1+($igv->igv_total/100)),2);
+                    $boleta->igv=round($boleta->precio-$boleta->subtotal,2);
+                    $total=$total+$boleta->precio;
+                    $igv_t=$igv_t+$boleta->igv;
+                    $subtotal=$subtotal+$boleta->subtotal;
+                    $jsons++;
+                }
+                if (!isset($boleta_id)) {
+                    $boleta_id[]="";
+                }
+                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_boleta' => "",'cliente_id' => "",'cliente.nombre'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
+                $json=array_merge(json_decode($boletas, true),$data_extra );
+                
+            }
+            //union de jsons
+            // $json=array_merge(json_decode($boletas, true));
+        }else{
+            $json=[];
+        }
         return response(json_encode($json),200)->header('content-type','text/plain');
     }
 

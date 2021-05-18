@@ -8,7 +8,6 @@
 
 @section('content')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script src="https://cdn.datatables.net/plug-ins/1.10.24/api/sum().js"></script>
 
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title" align="right" style="padding-right: 3.1%">
@@ -103,11 +102,11 @@
 					</form>
                     <button  class="btn btn-primary" id="boton" name="boton">Consultar</button>
 				</div>
-                
 			</div>
+
             <div class="ibox-content">
                 <div class="ibox-title">
-                    <h5>Compras</h5>
+                    <h5>Compras Productos</h5>
                     <div class="table-responsive">
                         <table id="tablaid" class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
@@ -212,137 +211,147 @@
 </div>
 <script>
     $(document).ready(function(e) {
+
         $('#boton').on('click', function() {
-			$.ajax({
-				method: "POST",
-				url: "{{ route('ajax_movimiento') }}",
-				data:$("#formulario").serialize()
-			}).done(function(res){
-                $('#tablaid').dataTable().fnDestroy();
-                var data=JSON.parse(res);
-                $('#tablaid').dataTable({
-                        pageLength: 25,
-                        responsive: true,
-                        dom: '<"html5buttons"B>lTfgitp',
-                        buttons: [
-                            {extend: 'copy'},
-                            {extend: 'csv'},
-                            {extend: 'excel', title: 'ExampleFile'},
-                            {extend: 'pdf', title: 'ExampleFile'},
-                            {extend: 'print',
-                                customize: function (win){
-                                        $(win.document.body).addClass('white-bg');
-                                        $(win.document.body).css('font-size', '10px');
+            // var opt = $('#categoria').val();
+            // if(opt=="1"){
+                    //para productos
+                    $.ajax({
+                    method: "POST",
+                    url: "{{ route('ajax_movimiento') }}",
+                    data:$("#formulario").serialize()
+                }).done(function(res){
+                    $('#tablaid').dataTable().fnDestroy();
+                    var data=JSON.parse(res);
+                    $('#tablaid').dataTable({
+                            pageLength: 25,
+                            responsive: true,
+                            dom: '<"html5buttons"B>lTfgitp',
+                            buttons: [
+                                {extend: 'copy'},
+                                {extend: 'csv'},
+                                {extend: 'excel', title: 'ExampleFile'},
+                                {extend: 'pdf', title: 'ExampleFile'},
+                                {extend: 'print',
+                                    customize: function (win){
+                                            $(win.document.body).addClass('white-bg');
+                                            $(win.document.body).css('font-size', '10px');
 
-                                        $(win.document.body).find('table')
-                                                .addClass('compact')
-                                                .css('font-size', 'inherit');
+                                            $(win.document.body).find('table')
+                                                    .addClass('compact')
+                                                    .css('font-size', 'inherit');
+                                    }
                                 }
-                            }
-                        ],
-                    "aaData": data,
-                    "columns": [
-                        { "data": "fecha_compra" },
-                        { "data": "codigo_guia" },
-                        { "data": "provedor.empresa" , "defaultContent": ""},
-                        { "data": "provedor.ruc" , "defaultContent": ""},
-                        { "data": "factura" },
-                        { "data": "subtotal"},
-                        { "data": "igv" },
-                        { "data": "precio_nacional_total" }
-                    ]
+                            ],
+                        "aaData": data,
+                        "columns": [
+                            { "data": "fecha_compra" },
+                            { "data": "codigo_guia" },
+                            { "data": "provedor.empresa" , "defaultContent": ""},
+                            { "data": "provedor.ruc" , "defaultContent": ""},
+                            { "data": "factura" },
+                            { "data": "subtotal"},
+                            { "data": "igv" },
+                            { "data": "precio_nacional_total" }
+                        ]
+                    });
+                    
                 });
+
                 
-            });
+                
+                $('#tbody_venta tr').slice(1).remove();
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('ajax_movimiento_ventas') }}",
+                    data:$("#formulario").serialize()
+                }).done(function(res){
+                    $('#tablaid_venta').dataTable().fnDestroy();
+                    var data=JSON.parse(res);
+                    $('#tablaid_venta').dataTable({
+                            pageLength: 25,
+                            responsive: true,
+                            dom: '<"html5buttons"B>lTfgitp',
+                            buttons: [
+                                {extend: 'copy'},
+                                {extend: 'csv'},
+                                {extend: 'excel', title: 'ExampleFile'},
+                                {extend: 'pdf', title: 'ExampleFile'},
+                                {extend: 'print',
+                                    customize: function (win){
+                                            $(win.document.body).addClass('white-bg');
+                                            $(win.document.body).css('font-size', '10px');
 
-            
-            
-            $('#tbody_venta tr').slice(1).remove();
-			$.ajax({
-				method: "POST",
-				url: "{{ route('ajax_movimiento_ventas') }}",
-				data:$("#formulario").serialize()
-			}).done(function(res){
-                $('#tablaid_venta').dataTable().fnDestroy();
-                var data=JSON.parse(res);
-                $('#tablaid_venta').dataTable({
-                        pageLength: 25,
-                        responsive: true,
-                        dom: '<"html5buttons"B>lTfgitp',
-                        buttons: [
-                            {extend: 'copy'},
-                            {extend: 'csv'},
-                            {extend: 'excel', title: 'ExampleFile'},
-                            {extend: 'pdf', title: 'ExampleFile'},
-                            {extend: 'print',
-                                customize: function (win){
-                                        $(win.document.body).addClass('white-bg');
-                                        $(win.document.body).css('font-size', '10px');
-
-                                        $(win.document.body).find('table')
-                                                .addClass('compact')
-                                                .css('font-size', 'inherit');
+                                            $(win.document.body).find('table')
+                                                    .addClass('compact')
+                                                    .css('font-size', 'inherit');
+                                    }
                                 }
-                            }
-                        ],
-                    "aaData": data,
-                    "columns": [
-                        { "data": "fecha_emision" },
-                        { "data": "codigo_fac" },
-                        { "data": "cliente.nombre" , "defaultContent": ""},
-                        { "data": "cliente.numero_documento" , "defaultContent": ""},
-                        { "data": "codigo_fac" },
-                        { "data": "subtotal"},
-                        { "data": "igv" },
-                        { "data": "precio" }
-                    ]
-                })
-            });
+                            ],
+                        "aaData": data,
+                        "columns": [
+                            { "data": "fecha_emision" , "defaultContent": "" },
+                            { "data": "codigo_fac" },
+                            { "data": "cliente.nombre" , "defaultContent": ""},
+                            { "data": "cliente.numero_documento" , "defaultContent": ""},
+                            { "data": "codigo_fac" },
+                            { "data": "subtotal"},
+                            { "data": "igv" },
+                            { "data": "precio" }
+                        ]
+                    })
+                });
 
-            $('#tbody_venta_b tr').slice(1).remove();
-			$.ajax({
-				method: "POST",
-				url: "{{ route('ajax_movimiento_ventas_b') }}",
-				data:$("#formulario").serialize()
-			}).done(function(res){
-                $('#tablaid_venta_b').dataTable().fnDestroy();
-                var data=JSON.parse(res);
-                $('#tablaid_venta_b').dataTable({
-                        pageLength: 25,
-                        responsive: true,
-                        dom: '<"html5buttons"B>lTfgitp',
-                        buttons: [
-                            {extend: 'copy'},
-                            {extend: 'csv'},
-                            {extend: 'excel', title: 'ExampleFile'},
-                            {extend: 'pdf', title: 'ExampleFile'},
-                            {extend: 'print',
-                                customize: function (win){
-                                        $(win.document.body).addClass('white-bg');
-                                        $(win.document.body).css('font-size', '10px');
+                $('#tbody_venta_b tr').slice(1).remove();
+                $.ajax({
+                    method: "POST",
+                    url: "{{ route('ajax_movimiento_ventas_b') }}",
+                    data:$("#formulario").serialize()
+                }).done(function(res){
+                    $('#tablaid_venta_b').dataTable().fnDestroy();
+                    var data=JSON.parse(res);
+                    $('#tablaid_venta_b').dataTable({
+                            pageLength: 25,
+                            responsive: true,
+                            dom: '<"html5buttons"B>lTfgitp',
+                            buttons: [
+                                {extend: 'copy'},
+                                {extend: 'csv'},
+                                {extend: 'excel', title: 'ExampleFile'},
+                                {extend: 'pdf', title: 'ExampleFile'},
+                                {extend: 'print',
+                                    customize: function (win){
+                                            $(win.document.body).addClass('white-bg');
+                                            $(win.document.body).css('font-size', '10px');
 
-                                        $(win.document.body).find('table')
-                                                .addClass('compact')
-                                                .css('font-size', 'inherit');
+                                            $(win.document.body).find('table')
+                                                    .addClass('compact')
+                                                    .css('font-size', 'inherit');
+                                    }
                                 }
-                            }
-                        ],
-                    "aaData": data,
-                    "columns": [
-                        { "data": "fecha_emision" },
-                        { "data": "codigo_boleta" },
-                        { "data": "cliente.nombre" , "defaultContent": ""},
-                        { "data": "cliente.numero_documento" , "defaultContent": ""},
-                        { "data": "codigo_boleta" },
-                        { "data": "subtotal"},
-                        { "data": "igv" },
-                        { "data": "precio" }
-                    ]
-                })
-            });
+                            ],
+                        "aaData": data,
+                        "columns": [
+                            { "data": "fecha_emision" , "defaultContent": "" },
+                            { "data": "codigo_boleta" },
+                            { "data": "cliente.nombre" , "defaultContent": ""},
+                            { "data": "cliente.numero_documento" , "defaultContent": ""},
+                            { "data": "codigo_boleta" },
+                            { "data": "subtotal"},
+                            { "data": "igv" },
+                            { "data": "precio" }
+                        ]
+                    })
+                });
+            // }else{
+            //     $('#compras_table_productos').hide();
+            //     $('#compras_table_servicios').show();
+            //     //para servicios
+            //     alert("servicios")
+                
+
+            // }
 		});
-
-        
         $('#pdf').on('click', function() {
             $("#formulario").attr("action",'{{ route('periodo_consulta_pdf') }}');
             $("#formulario").attr("method",'POST');
