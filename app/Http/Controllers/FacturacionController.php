@@ -383,12 +383,14 @@ class FacturacionController extends Controller
                     $nueva_v[]=Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first();
                 }
             }
+            // return $nueva_v;
             $comparacion_v=$nueva_v;
             //buble para la cantidad
             $cantidad_v=0;
             foreach($comparacion_v as $comparaciones_v){
                 $cantidad_v=$comparaciones_v->cantidad+$cantidad_v;
             }
+            // return $nueva_v;
             $cantidad_entrada=$request->get('cantidad')[$i];
             if($cantidad_v<$cantidad_entrada){
                return "cantidad mayor al stock";

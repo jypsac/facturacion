@@ -228,11 +228,14 @@ class FacturacionServicioController extends Controller
         $comisionista=$request->get('comisionista');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $numero = strstr($comisionista, '-',true);
+
             $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
             $id_personal=$cod_vendedor->id;
+
             $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
+            //Comision segun comisionista
             $comi=$comisionista_buscador->comision;
-            $comisionista_id = $comisionista_buscador->id;
+            $comision_id = $comisionista_buscador->id;
         }else{
             $comi=0;
         }
@@ -315,23 +318,23 @@ class FacturacionServicioController extends Controller
         $sub_total_sin_igv=$request->get('sub_total_sin_igv');
         // $tipo_moneda=$request->get('tipo_moneda');
         // $comisionista=Cotizacion_Servicios::where('id',$cotizador)->first();
-        $comisionista_porcentaje=Personal_venta::where('id',$comisionista_id)->first();
+        // $comisionista_porcentaje=Personal_venta::where('id',$comisionista_id)->first();
         // $id_comi=$comisionista_porcentaje->comisionista_id;}
-        if($comisionista_id != 0){
-           $comisionista=new Ventas_registro;
-           $comisionista->comisionista=$comisionista_id;
-           $comisionista->tipo_moneda=$moneda->id;
-           $comisionista->estado_aprobado='0';
-           $comisionista->estado_pagado='0';
-           $comisionista->estado_anular_fac_bol='0';
-           $comisionista->monto_final_fac_bol=$precio_final_igv;
-           $porcentaje=100+$comisionista_porcentaje->comision;
-           $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
-           // $comisionista->id_coti_produc=$cotizador;
-           // $comisionista->id_coti_servicio=$cotizador;
-           $comisionista->id_fac=$facturacion->id;
-           $comisionista->observacion='Factura';
-           $comisionista->save();
+        if(isset($comision_id)){
+           $comisionista_porcentaje=Personal_venta::where('id',$comision_id)->first();
+            $comisionista=new Ventas_registro;
+            $comisionista->comisionista=$comision_id;
+            $comisionista->tipo_moneda=$moneda->id;
+            $comisionista->estado_aprobado='0';
+            $comisionista->estado_pagado='0';
+            $comisionista->estado_anular_fac_bol='0';
+            $comisionista->monto_final_fac_bol=$precio_final_igv;
+                $porcentaje=100+$comisionista_porcentaje->comision;
+            $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
+            // $comisionista->id_coti_produc=$cotizador;
+            $comisionista->id_fac=$facturacion->id;
+            $comisionista->observacion='Factura';
+            $comisionista->save();
         }
         // return $request;
         // return '1';
