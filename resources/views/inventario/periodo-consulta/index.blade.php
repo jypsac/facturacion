@@ -163,9 +163,6 @@
 <script>
     $(document).ready(function(e) {
         $('#boton').on('click', function() {
-
-            
-            // $('#tbody tr').slice(1).remove();
 			$.ajax({
 				method: "POST",
 				url: "{{ route('ajax_periodo') }}",
@@ -174,7 +171,6 @@
                 $('#tablaid').dataTable().fnDestroy();
                 var data=JSON.parse(res);
                 $('#tablaid').dataTable({
-                    
                         pageLength: 25,
                         responsive: true,
                         dom: '<"html5buttons"B>lTfgitp',
@@ -201,14 +197,10 @@
                         { "data": "precio_nacional" },
                         { "data": "precio_extranjero" }
                     ]
-
-                    
                 })
-
             });
             
             $('#tbody_venta tr').slice(1).remove();
-            
 			$.ajax({
 				method: "POST",
 				url: "{{ route('ajax_periodo_ventas') }}",
@@ -239,7 +231,7 @@
                     "aaData": data,
                     "columns": [
                         { "data": "id" },
-                        { "data": "producto.nombre" },
+                        { "data": "producto.nombre" , "defaultContent": ""},
                         { "data": "cantidad" },
                         { "data": "precio" },
                         { "data": "stock" }
@@ -247,64 +239,12 @@
                 })
             });
 		});
-            // $('#tbody tr').slice(1).remove();
-			// $.ajax({
-			// 	method: "POST",
-			// 	url: "{{ route('ajax_periodo') }}",
-			// 	data:$("#formulario").serialize()
-			// }).done(function(res){
-            //     var arreglo=JSON.parse(res);
-            //     var todo='';
-            //     var contar=0;
-            //     for(var x=0;x<arreglo.length;x++){
-                    
-            //         todo += '<tr>' +
-            //                 '<td>' + '-' + '</td>' +
-            //                 '<td>' + arreglo[x].producto + '</td>' +
-            //                 '<td>' + arreglo[x].cantidad_inicial + '</td>' +
-            //                 '<td>' + arreglo[x].precio_nacional + '</td>' +
-            //                 '<td>' + arreglo[x].precio_extranjero + '</td>' +
-            //                 '</tr>';
-                    
-            //     }
-            //     $('#tbody').append(todo);
-            //     var todo='';
-            // });
-
-            
-
-
 
         $('#pdf').on('click', function() {
             $("#formulario").attr("action",'{{ route('periodo_consulta_pdf') }}');
             $("#formulario").attr("method",'POST');
             $("#formulario").submit();
 		});
-
-
-
-        // $('#print').on('click', function() {
-        //     $('#tbody tr').slice(1).remove();
-		// 	$.ajax({
-		// 		method: "POST",
-		// 		url: "{{ route('ajax_periodo') }}",
-		// 		data:$("#formulario").serialize()
-		// 	}).done(function(res){
-        //         var arreglo=JSON.parse(res);
-        //         var todo='';
-        //         for(var x=0;x<arreglo.length;x++){
-        //             todo += '<tr>' +
-        //                     '<td>' + arreglo[x].id + '</td>' +
-        //                     '<td>' + arreglo[x].producto_id + '</td>' +
-        //                     '<td>' + arreglo[x].cantidad_inicial + '</td>' +
-        //                     '<td>' + arreglo[x].precio_nacional + '</td>' +
-        //                     '<td>' + arreglo[x].precio_extranjero + '</td>' +
-        //                     '</tr>';
-        //         }
-        //         $('tbody').append(todo);
-        //         var todo='';
-        //     });
-		// });
 
     });
 </script>

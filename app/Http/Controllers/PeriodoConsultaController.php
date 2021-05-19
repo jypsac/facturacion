@@ -71,17 +71,17 @@ class PeriodoConsultaController extends Controller
                     $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
                 }
                 
-                // $cantidad_inicial=0;
-                // $precio_nacional=0;
-                // $precio_extranjero=0;
+                $cantidad_inicial=0;
+                $precio_nacional=0;
+                $precio_extranjero=0;
                 foreach($kardex_entrada_registros as $kardex_entrada_registro_f){
                     $producto_id[]=$kardex_entrada_registro_f->producto_id;
                 }
                 $array_unico_productos=array_values(array_unique($producto_id));
-                // $array_values=array_values($array_unico_productos);
+                
                 
                 $contador_prod=count($array_unico_productos);
-                // return $contador_prod;
+                
                 for($a=0;$a<$contador_prod;$a++){
                     $producto=Producto::where('id',$array_unico_productos[$a])->first();
                     if($almacen==0){
@@ -97,11 +97,14 @@ class PeriodoConsultaController extends Controller
 
                         $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
                     }
+                    $cantidad_inicial=$cantidad_inicial+$kardex_entrada_r_cantidad_inicial;
+                    $precio_nacional=$precio_nacional+$kardex_entrada_r_precio_nacional;
+                    $precio_extranjero=$precio_extranjero+round($kardex_entrada_r_precio_extranjero,2);
                     
-                    $kardex_entrada_r[$a]=array("producto" => $producto->nombre, "cantidad_inicial" => $kardex_entrada_r_cantidad_inicial , "precio_nacional" => $kardex_entrada_r_precio_nacional, "precio_extranjero" => $kardex_entrada_r_precio_extranjero);
-
-                    // return $kardex_entrada_r_cantidad_inicial;
+                    $kardex_entrada_r[$a]=array("producto" => $producto->nombre, "cantidad_inicial" => $kardex_entrada_r_cantidad_inicial , "precio_nacional" => $kardex_entrada_r_precio_nacional, "precio_extranjero" => round($kardex_entrada_r_precio_extranjero,2));
                 }
+                //suma para los totales
+                $kardex_entrada_r[$contador_prod]=array("producto" => "Total", "cantidad_inicial" => $cantidad_inicial , "precio_nacional" => $precio_nacional, "precio_extranjero" => round($precio_extranjero,2));
 
                 if (!isset($kardex_entrada_r)) {
                     $kardex_entrada_r[]="";
@@ -138,6 +141,16 @@ class PeriodoConsultaController extends Controller
                 if($almacen==0){
                     $factura= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
                     $boleta= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+
+                    //factura
+                    $cantidad_f=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad');
+                    $precio_f=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio');
+                    $stock_f=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('stock');
+
+                    //boleta
+                    $cantidad_b=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad');
+                    $precio_b=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio');
+                    $stock_b=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('stock');
                 }else{
                     //productos + venta ------------------------------------------
                     //facturacion
@@ -150,7 +163,13 @@ class PeriodoConsultaController extends Controller
                     }
 
                     $factura= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->get();
-                        //boleta
+
+                    $cantidad=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('cantidad')+Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('cantidad');
+                    $precio=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('cantidad')+Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('precio');
+                    $stock=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('cantidad')+Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('stock');
+                    $data_extra_f[]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
+                        
+                    //boleta
                     $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
                     foreach($boletas as $boleta){
                         $boleta_id[]=$boleta->id;
@@ -160,6 +179,10 @@ class PeriodoConsultaController extends Controller
                     }
 
                     $boleta= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->get();
+                    $cantidad=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('cantidad');
+                    $precio=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('precio');
+                    $stock=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('stock');
+                    $data_extra_b[]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
                 }
                 
 

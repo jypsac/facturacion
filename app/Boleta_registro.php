@@ -10,6 +10,8 @@ class Boleta_registro extends Model
 
     protected $guarded=[];
 
+    protected $with = ['producto'];
+
      public function producto(){
         return $this->belongsTo(Producto::class,'producto_id');
     }
