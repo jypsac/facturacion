@@ -83,7 +83,13 @@ class KardexEntradaController extends Controller
       $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
       $provedores=Provedor::all();
       $almacenes=Almacen::where('estado','0')->where('id',1)->get();
-      $motivos=Motivo::all();
+      $kardex_entrada = Kardex_entrada::get();
+      $count_kardex_e = count($kardex_entrada);
+      if($count_kardex_e > 0){
+        $motivos=Motivo::where('nombre','!=','Inventario Inicial')->get();
+      }else{
+        $motivos=Motivo::all();
+      }
       $categorias=Categoria::all();
       $moneda=Moneda::orderBy('principal','DESC')->get();
       $user_login =auth()->user()->id;
@@ -172,13 +178,39 @@ class KardexEntradaController extends Controller
       }else{
         $guia_re=$request->get('guia_remision');
       }
+      $provedor = $request->get('provedor');
+      $factura = $request->get('factura');
+      $guia_remision = $request->get('guia_remision');
+
+      $busc_prove_fac = Kardex_entrada::where('provedor_id',$provedor)->where('factura',$factura)->where('motivo_id','!=', '5')->first();
+      // return $busc_prove_fac;
+      if(isset($busc_prove_fac)){
+        // return redirect()->route('kardex-entrada.create')->with('repite', 'El numero de factura ya está en uso');
+         $this->validate($request,[
+            'factura' => ['required','unique:kardex_entrada'],
+          ]);
+      }else{
+        $factura = $request->get('factura');
+      }
+
+      $busc_prove_guia = Kardex_entrada::where('provedor_id',$provedor)->where('guia_remision',$guia_remision)->where('motivo_id','!=', '5')->first();
+      if(isset($busc_prove_guia)){
+        $this->validate($request,[
+            'guia_remision' => ['required','unique:kardex_entrada'],
+          ]);
+      }else{
+        $guia_remision = $request->get('factura');
+      }
+
+
+
       $kardex_entrada=new Kardex_entrada();
       $kardex_entrada->motivo_id=$request->get('motivo');
       $kardex_entrada->codigo_guia=$codigo_guia;
-      $kardex_entrada->provedor_id=$request->get('provedor');;
-      $kardex_entrada->guia_remision=$guia_re;
+      $kardex_entrada->provedor_id=$provedor;
+      $kardex_entrada->guia_remision=$guia_remision;
       $kardex_entrada->categoria_id='2';
-      $kardex_entrada->factura=$request->get('factura');
+      $kardex_entrada->factura=$factura;
       $kardex_entrada->almacen_id=$request->get('almacen');
       $kardex_entrada->almacen_emisor_id=$request->get('almacen');
       $kardex_entrada->almacen_receptor_id=$request->get('almacen');
