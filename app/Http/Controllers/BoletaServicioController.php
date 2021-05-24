@@ -238,11 +238,14 @@ class BoletaServicioController extends Controller
         $comisionista=$request->get('comisionista');
         if($comisionista!="" and $comisionista!="Sin comision - 0"){
             $numero = strstr($comisionista, '-',true);
+
             $cod_vendedor=Personal_venta::where('cod_vendedor',$numero)->first();
             $id_personal=$cod_vendedor->id;
+
             $comisionista_buscador=Personal_venta::where('id',$id_personal)->first();
-            $comision_id = $comisionista_buscador->id;
+            //Comision segun comisionista
             $comi=$comisionista_buscador->comision;
+            $comision_id = $comisionista_buscador->id;
         }else{
             $comi=0;
         }
@@ -274,24 +277,25 @@ class BoletaServicioController extends Controller
 
         // Codigo de Facturación -------------------------------------------------------------------------------------------------------
         // obtencion de la sucursal
-        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-
-        $boletear_cod_bol=$sucursal->cod_bol;
-        if (is_numeric($boletear_cod_bol)) {
+        $almacen=$request->get('almacen');
+        //obtencion del almacen
+        $sucursal=Almacen::where('id', $almacen)->first();
+        $boleta_cod_fac=$sucursal->cod_bol;
+        if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
-            $boletear_cod_bol++;
-            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
-            $boleta_nr=str_pad($boletear_cod_bol, 8, "0", STR_PAD_LEFT);
+            $boleta_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
-            // expreción del numero de fatura
-            // generacion del numero de la factura
-            $ultima_boleta=Boleta::latest()->first();
+            // exprecion del numero de fatura
+            // GENERACION DE NUMERO DE FACTURA
+            $ultima_boleta=Boleta::where('almacen_id',$sucursal->id)->latest()->first();
             $boleta_num=$ultima_boleta->codigo_boleta;
             $boleta_num_string_porcion= explode("-", $boleta_num);
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
             $boleta_num++;
-            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
@@ -318,13 +322,14 @@ class BoletaServicioController extends Controller
         $boleta->tipo='servicio';
         $boleta->save();
 
-        $total_comi=$request->get('total_igv');
-        $comisionista_porcentaje=Personal_venta::where('id',$comision_id)->first();
+        $total_comi=$request->get('total_comi');
 
-        if($comision_id != 0){
+        // return $request;
+        if(isset($comision_id)){
+            $comisionista_porcentaje=Personal_venta::where('id',$comision_id)->first();
             $comisionista=new Ventas_registro;
             $comisionista->comisionista=$comision_id;
-            $comisionista->tipo_moneda=$boleta->moneda_id;
+            $comisionista->tipo_moneda=$moneda->id;
             $comisionista->estado_aprobado='0';
             $comisionista->estado_pagado='0';
             $comisionista->estado_anular_fac_bol='0';
@@ -337,6 +342,7 @@ class BoletaServicioController extends Controller
             $comisionista->observacion='Boleta';
             $comisionista->save();
         }
+
         $check = $request->input('descuento_unitario');
         $count_check=count($check);
 

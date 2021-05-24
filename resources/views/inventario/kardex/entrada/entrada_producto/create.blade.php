@@ -6,7 +6,7 @@
 @section('content')
 
 @if (session('repite'))
-<div class="alert alert-success">
+<div class="alert alert-danger">
 	{{ session('repite') }}
 </div>
 @endif
