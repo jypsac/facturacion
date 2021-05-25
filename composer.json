@@ -12,7 +12,7 @@
         "barryvdh/laravel-dompdf": "^0.8.5",
         "dompdf/dompdf": "^0.8.3",
         "fideloper/proxy": "^4.0",
-        "greenter/greenter": "^3.0",
+        "greenter/lite": "^4.3",
         "laravel/framework": "^6.0",
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.0",
