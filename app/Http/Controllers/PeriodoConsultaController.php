@@ -6,6 +6,8 @@ use App\PeriodoConsulta;
 use App\kardex_entrada;
 use App\kardex_entrada_registro;
 use App\Almacen;
+use App\Empresa;
+use App\Igv;
 use App\Facturacion;
 use App\Facturacion_registro;
 use App\Boleta;
@@ -255,13 +257,77 @@ class PeriodoConsultaController extends Controller
     }
 
     public function pdf(Request $request){
-        return $request;
-        // $contacto = Contacto::all();
-        // $mi_empresa=Empresa::first();
-        // $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
-          // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));
-          // $pdf=App::make('dompdf.wrapper');
-          // $pdf=loadView('welcome').;
+        $empresa = Empresa::first();
+        $igv = Igv::first();
+        $almacen=$request->almacen;
+        $fecha_inicio=Carbon::createFromFormat('Y-m-d\TH:i',$request->fecha_inicio);
+        $fecha_final=Carbon::createFromFormat('Y-m-d\TH:i',$request->fecha_final);
+        $categoria=$request->categoria;
+        // return $categoria;
+
+        if($categoria=="1"){
+            // falta validacion si $request->consulta_p es un numero del 1 al 3
+            $consulta=$request->consulta_p;
+            if($consulta=="1" or $consulta=="3"){
+                //productos + compra------------------------------------------
+                if($almacen==0){
+                    $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                }else{
+                    $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                }
+                
+                $cantidad_inicial=0;
+                $precio_nacional=0;
+                $precio_extranjero=0;
+                foreach($kardex_entrada_registros as $kardex_entrada_registro_f){
+                    $producto_id[]=$kardex_entrada_registro_f->producto_id;
+                }
+                $array_unico_productos=array_values(array_unique($producto_id));
+                
+                
+                $contador_prod=count($array_unico_productos);
+                
+                for($a=0;$a<$contador_prod;$a++){
+                    $producto=Producto::where('id',$array_unico_productos[$a])->first();
+                    if($almacen==0){
+                        $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
+
+                        $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
+
+                        $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
+                    }else{
+                        $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
+
+                        $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
+
+                        $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
+                    }
+                    $cantidad_inicial=$cantidad_inicial+$kardex_entrada_r_cantidad_inicial;
+                    $precio_nacional=$precio_nacional+$kardex_entrada_r_precio_nacional;
+                    $precio_extranjero=$precio_extranjero+round($kardex_entrada_r_precio_extranjero,2);
+                    
+                    $kardex_entrada_r[$a]=array("producto" => $producto->nombre, "cantidad_inicial" => $kardex_entrada_r_cantidad_inicial , "precio_nacional" => $kardex_entrada_r_precio_nacional, "precio_extranjero" => round($kardex_entrada_r_precio_extranjero,2));
+                }
+                //suma para los totales
+                $kardex_entrada_r[$contador_prod]=array("producto" => "Total", "cantidad_inicial" => $cantidad_inicial , "precio_nacional" => $precio_nacional, "precio_extranjero" => round($precio_extranjero,2));
+
+                if (!isset($kardex_entrada_r)) {
+                    $kardex_entrada_r[]="";
+                }
+                $json=$kardex_entrada_r;
+            }else{
+                $json=[];
+            }
+        // }elseif($categoria=="2"){
+        //     $consulta=2;
+        //     return "este es servicio";
+        // }else{
+        //     return "categoria incorrecta";
+        }
+        
+        // return response(json_encode($json),200)->header('content-type','text/plain');
+        // return $json;
+        return view('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','json'));
         $archivo="123";
         $pdf=PDF::loadView('inventario.periodo-consulta.show_pdf');
               // return $pdf->download();

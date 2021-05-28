@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cierre Periodo</title>{{--
+    <title>Periodo Consulta</title>{{--
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" > --}}
     <link href="{{ asset('css/estilos_pdf.css') }}" rel="stylesheet">
 </head>
@@ -27,23 +27,51 @@
 <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
 	<thead>
 		<tr>
-			<th>PERIODO CONSULTA</th>
+			<th colspan="9">Periodo Consulta</th>
 		</tr>
 		<tr>
-			<th>
-				FECHA INICIO
+			<th colspan="4">
+				Fecha Inicio: {{$fecha_inicio}}
 			</th>
-			<th>
-				FECHA FINAÑL
+			<th colspan="4">
+				{{$empresa->nombre}}
 			</th>
 		</tr>
-		<tr>2</tr>
-		<tr>3</tr>
-		<tr>4</tr>
-		<tr>5</tr>
+		<tr>
+			<th colspan="4">
+				Fecha Final: {{$fecha_final}}
+			</th>
+			<th colspan="4">
+				{{$empresa->ruc}}
+			</th>
+		</tr>
+		<tr>
+			<th>Fecha</th>
+			<th>Nr. Doc</th>
+			<th>Proveedor</th>
+			<th>R.U.C</th>
+			<th>Doc. Prov.</th>
+			<th>Sub Total</th>
+			<th>I.G.V</th>
+			<th>Importe total</th>
+		</tr>
 	</thead>
 	<tbody>
-		
+		@foreach($json as $json)
+		<tr>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td></td>
+			<td>a</td>
+			<td>{{$json['precio_nacional']}}</td>
+			<td>{{$json['precio_nacional']*($igv->igv_total)/100}}</td>
+			<td>{{$json['precio_nacional']+( $json['precio_nacional']*($igv->igv_total)/100)}}</td>
+		</tr>
+		@endforeach
+{{-- 		<tr>
+			<td>hola</td>
+		</tr> --}}
 	</tbody>
 	<tfoot>
 		
