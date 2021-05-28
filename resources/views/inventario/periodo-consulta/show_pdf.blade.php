@@ -57,16 +57,16 @@
 		</tr>
 	</thead>
 	<tbody>
-		@foreach($json as $json)
+		@foreach($kardex_entrada as $kardex_entrada)
 		<tr>
+			<td>{{$kardex_entrada->created_at}}</td>
 			<td></td>
-			<td></td>
-			<td></td>
-			<td></td>
+			<td>{{$kardex_entrada->provedor->empresa}}</td>
+			<td>{{$kardex_entrada->provedor->ruc}}</td>
 			<td>a</td>
-			<td>{{$json['precio_nacional']}}</td>
-			<td>{{$json['precio_nacional']*($igv->igv_total)/100}}</td>
-			<td>{{$json['precio_nacional']+( $json['precio_nacional']*($igv->igv_total)/100)}}</td>
+			<td></td>
+			<td></td>
+			<td></td>
 		</tr>
 		@endforeach
 {{-- 		<tr>
@@ -74,7 +74,7 @@
 		</tr> --}}
 	</tbody>
 	<tfoot>
-		
+
 	</tfoot>
 <style>
 
