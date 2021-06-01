@@ -19,4 +19,7 @@ class Boleta_registro extends Model
     public function servicio(){
         return $this->belongsTo(Servicios::class,'servicio_id');
     }
+    public function boleta_i(){
+        return $this->belongsTo(Boleta::class,'boleta_id');
+    }
 }

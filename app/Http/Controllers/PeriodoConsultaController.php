@@ -258,26 +258,61 @@ class PeriodoConsultaController extends Controller
     }
 
     public function pdf(Request $request){
+        // consultas
+        // 1 = Compra
+        // 2 = Venta
+        // 3 = Compara y venta
         $empresa = Empresa::first();
         $igv = Igv::first();
+        $igv_t = $igv->igv_total;
         $almacen=$request->almacen;
         $fecha_inicio=Carbon::createFromFormat('Y-m-d\TH:i',$request->fecha_inicio);
         $fecha_final=Carbon::createFromFormat('Y-m-d\TH:i',$request->fecha_final);
         $categoria=$request->categoria;
-        $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+        $consulta = $request->consulta_p;
+        $jsons = 1;
+        // return $request;
+        // return $consulta;
+        if($consulta == "2" or $consulta == "3" or $consulta == "1" ){
+            if($almacen == 0){
+                $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+            }else{
+                $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
+            }
+        // }else{
+            if($almacen == 0){
+                $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                // $fac_count = count($factura);
+                foreach($factura as $facturacion){
+                    $factura_reg_precio = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi');
+                    $factura_reg_cant = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
+                    $data_extra_f[]=array('id' => $facturacion->created_at,'codigo_guia'=>$facturacion->codigo_fac,'tipo'=> 'Factura','cantidad'=>$factura_reg_cant,'precio'=>$factura_reg_precio);
+                }
+                //BOLETAS
+                $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
 
-        // return response(json_encode($json),200)->header('content-type','text/plain');
-        // return $json;
-        return view('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','kardex_entrada'));
-        $archivo="123";
-        $pdf=PDF::loadView('inventario.periodo-consulta.show_pdf');
-              // return $pdf->download();
-              return "hola";
+                foreach ($boleta as $boleta_reg) {
+                    $boleta_reg_precio = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi');
+                    $boleta_reg_cant = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('cantidad');
+                    $data_extra_b[]=array('id' => $boleta_reg->created_at,'codigo_guia'=>$boleta_reg->codigo_boleta,'tipo'=> 'Boleta','cantidad'=>$boleta_reg_cant,'precio'=>$boleta_reg_precio);
+                }
+
+                // if(!isset($data_extra_f)){
+                //     $json=$data_extra_f;
+                // }if(!isset($data_extra_b)){
+                //     $json=$data_extra_b;
+                // }else{
+                //     $json=array_merge($data_extra_f,$data_extra_b);
+                // }
+            }
+        }
+        // return view('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','kardex_entrada','consulta','json'));
+        $archivo="Periodo - Consulta";
+        $pdf=PDF::loadView('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','kardex_entrada','consulta','data_extra_f','data_extra_b'));
         return $pdf->download('Periodo consulta - '.$archivo.' .pdf');
 
         // return view('inventario.periodo-consulta.',compact('garantia_guia_ingreso','mi_empresa'));
-
-      }
+        }
 
     //   public function print(Request $request){
     //     $mi_empresa=Empresa::first();

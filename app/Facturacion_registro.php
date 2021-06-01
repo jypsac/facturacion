@@ -19,4 +19,7 @@ class Facturacion_registro extends Model
     public function servicio(){
         return $this->belongsTo(Servicios::class,'servicio_id');
     }
+    public function factura_ids(){
+        return $this->belongsTo(Facturacion::class,'facturacion_id');
+    }
 }
