@@ -26,7 +26,7 @@ class FacturacionElectronicaController extends Controller
      */
     public function index()
     {
-        $facturacion=Facturacion::all();
+        $facturacion=Facturacion::where('f_electronica',0)->get();
         return view('facturacion_electronica.factura.index',compact('facturacion'));
     }
 
@@ -73,12 +73,12 @@ class FacturacionElectronicaController extends Controller
         ->setTipoMoneda('PEN') // Sol - Catalog. 02
         ->setCompany($company)
         ->setClient($client)
-        ->setMtoOperGravadas(100.00)
-        ->setMtoIGV(18.00)
-        ->setTotalImpuestos(18.00)
-        ->setValorVenta(100.00)
-        ->setSubTotal(118.00)
-        ->setMtoImpVenta(118.00)
+        ->setMtoOperGravadas(200.00)
+        ->setMtoIGV(36.00)
+        ->setTotalImpuestos(36.00)
+        ->setValorVenta(200.00)
+        ->setSubTotal(236.00)
+        ->setMtoImpVenta(236.00)
         ;
 
         $item = (new SaleDetail())
@@ -96,11 +96,26 @@ class FacturacionElectronicaController extends Controller
         ->setMtoPrecioUnitario(59.00)
         ;
 
+        $item2 = (new SaleDetail())
+        ->setCodProducto('P0011')
+        ->setUnidad('NIU') // Unidad - Catalog. 03
+        ->setCantidad(2)
+        ->setMtoValorUnitario(50.00)
+        ->setDescripcion('PRODUCTO 21')
+        ->setMtoBaseIgv(100)
+        ->setPorcentajeIgv(18.00) // 18%
+        ->setIgv(18.00)
+        ->setTipAfeIgv('10') // Gravado Op. Onerosa - Catalog. 07
+        ->setTotalImpuestos(18.00) // Suma de impuestos en el detalle
+        ->setMtoValorVenta(100.00)
+        ->setMtoPrecioUnitario(59.00)
+        ;
+
         $legend = (new Legend())
         ->setCode('1000') // Monto en letras - Catalog. 52
         ->setValue('SON DOSCIENTOS TREINTA Y SEIS CON 00/100 SOLES');
 
-        $invoice->setDetails([$item])
+        $invoice->setDetails([$item,$item2])
             ->setLegends([$legend]);
 
             $result = $see->send($invoice);
