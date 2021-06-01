@@ -95,7 +95,14 @@ return [
             'url' => env('APP_URL').'/storage',
             'visibility' => 'public',
         ],
-
+        'facturas_electronicas' => [
+            'driver' => 'local',
+            'root' => public_path('facturas_electronicas/'),
+        ],
+        'boletas_electronicas' => [
+            'driver' => 'local',
+            'root' => public_path('boletas_electronicas/'),
+        ],
 
 
         's3' => [

@@ -13,7 +13,7 @@ use Greenter\Model\Sale\FormaPagos\FormaPagoContado;
 use Greenter\Model\Sale\Invoice;
 use Greenter\Model\Sale\SaleDetail;
 use Greenter\Model\Sale\Legend;
-
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -106,9 +106,10 @@ class FacturacionElectronicaController extends Controller
             $result = $see->send($invoice);
 
             // Guardar XML firmado digitalmente.
-            file_put_contents($invoice->getName().'.xml',
-                              $see->getFactory()->getLastXml());
-            
+            // file_put_contents('/facturas_electronica/'.$invoice->getName().'.xml',
+            //                   $see->getFactory()->getLastXml());
+
+            Storage::disk('facturas_electronicas')->put($invoice->getName().'.xml',$see->getFactory()->getLastXml());
             // Verificamos que la conexión con SUNAT fue exitosa.
             if (!$result->isSuccess()) {
                 // Mostrar error al conectarse a SUNAT.
@@ -118,7 +119,7 @@ class FacturacionElectronicaController extends Controller
             }
             
             // Guardamos el CDR
-            file_put_contents('R-'.$invoice->getName().'.zip', $result->getCdrZip());
+            Storage::disk('facturas_electronicas')->put('R-'.$invoice->getName().'.zip', $result->getCdrZip());
 
             Config_fe::lectura_cdr($result->getCdrResponse());
     }

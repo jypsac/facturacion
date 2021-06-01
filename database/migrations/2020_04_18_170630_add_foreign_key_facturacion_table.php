@@ -42,6 +42,7 @@ class AddForeignKeyFacturacionTable extends Migration
             $table->string('comisionista')->nullable();
             $table->string('user_id');
             $table->string('estado');
+            $table->boolean('f_electronica')->default(0);
             $table->string('tipo')->nullable();
 
             $table->timestamps();
