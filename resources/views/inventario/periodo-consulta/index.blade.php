@@ -46,12 +46,12 @@
                         <div class="form-group row ">
 							<label class="col-sm-2 col-form-label" >Fecha Inicio:</label>
 								<div class="col-sm-4">
-									<input type="datetime-local" class="form-control" name="fecha_inicio" >
+									<input type="datetime-local" class="form-control" name="fecha_inicio" required="required" id="fe_ini">
 								</div>
 
 							<label class="col-sm-2 col-form-label">Fecha Final:</label>
 								<div class="col-sm-4">
-                                    <input type="datetime-local" class="form-control" name="fecha_final" >
+                                    <input type="datetime-local" class="form-control" name="fecha_final" required="" >
 							    </div>
 						</div>
 
@@ -68,10 +68,10 @@
 
 							<label class="col-sm-2 col-form-label">Categoria :</label>
 								<div class="col-sm-4">
-                                    <select class="form-control" name="categoria" id="categoria" onchange="seleccionado()">
+                                    <select class="form-control" name="categoria" id="categoria" onchange="seleccionado()" required="">
                                         <option value="0">Seleccione Categoria</option>
                                         <option value="1">Productos</option>
-                                        
+
                                     </select>
 							    </div>
 						</div>
@@ -95,12 +95,12 @@
                                     </select>
 								</div>
 						</div>
-                        
+
 					</form>
                     <button  class="btn btn-primary" id="boton" name="boton">Consultar</button>
                     {{-- <button  class="btn btn-primary" id="boton-d" name="boton-d">Descargar</button> --}}
 				</div>
-                
+
 			</div>
             <div class="ibox-content">
                 <div class="ibox-title">
@@ -109,7 +109,7 @@
                         <table id="tablaid" class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
-                                    
+
                                     <th>Nombre producto</th>
                                     <th>cantidad inicial</th>
                                     <th>precio nacional</th>
@@ -163,6 +163,7 @@
 <script>
     $(document).ready(function(e) {
         $('#boton').on('click', function() {
+
 			$.ajax({
 				method: "POST",
 				url: "{{ route('ajax_periodo') }}",
@@ -199,7 +200,7 @@
                     ]
                 })
             });
-            
+
             $('#tbody_venta tr').slice(1).remove();
 			$.ajax({
 				method: "POST",
@@ -245,12 +246,8 @@
             $("#formulario").attr("method",'POST');
             $("#formulario").submit();
 		});
-
     });
 </script>
-	
-    
-    
      {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
     <script>
         function valida(f) {
@@ -259,13 +256,13 @@
             var incompleto = false;
             if( f.elements[0].value == "" )
                { alert(incompleto); }
-           else{boton.type = 'button';}
+           else{boton.type = 'button'; }
        }
    </script>
    {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 
 <script>
-        
+
 
         function seleccionado(){
             var opt = $('#categoria').val();

@@ -24,164 +24,54 @@
 @page { size: 420mm 297mm landscape; }
 </style>
 
-@if($consulta == "1")
-    {{-- KARDEX ENTRADAS --}}
-    <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
-        <thead>
-            <tr>
-                <th colspan="8">Periodo Consulta - Compra</th>
-            </tr>
-            <tr>
-                <th colspan="4">
-                    Fecha Inicio: {{$fecha_inicio}}
-                </th>
-                <th colspan="4">
-                    {{$empresa->nombre}}
-                </th>
-            </tr>
-            <tr>
-                <th colspan="4">
-                    Fecha Final: {{$fecha_final}}
-                </th>
-                <th colspan="4">
-                    {{$empresa->ruc}}
-                </th>
-            </tr>
-            <tr>
-                <th>Fecha</th>
-                <th>Nr. Doc</th>
-                <th>Proveedor</th>
-                <th>R.U.C</th>
-                <th>Doc. Prov.</th>
-                <th>Sub Total</th>
-                <th>I.G.V</th>
-                <th>Importe total</th>
-            </tr>
-        </thead>
-        <tbody>
-            @foreach($kardex_entrada as $kardex_entrada)
-            <tr>
-                <td>{{$kardex_entrada->created_at}}</td>
-                <td>{{$kardex_entrada->codigo_guia}}</td>
-                <td>{{$kardex_entrada->provedor->empresa}}</td>
-                <td>{{$kardex_entrada->provedor->ruc}}</td>
-                <td>{{$kardex_entrada->factura}}</td>
-                <td>{{$sub_uni = $kardex_entrada->precio_nacional_total}}</td>
-                <td>{{$igv_uni = ($sub_uni*($igv->igv_total/100)) }}</td>
-                <td>{{$sub_uni+ $igv_uni}}</td>
-            </tr>
-            @endforeach
-            <?php
-            ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5"></td>
-                <td>{{$sub_tot = $kardex_entrada->sum('precio_nacional_total')}}</td>
-                <td>{{$igv_sub = ($sub_tot*($igv->igv_total/100))}}</td>
-                <td>{{$sub_tot+$igv_sub}}</td>
-            </tr>
-        </tfoot>
-    </table>
-@elseif($consulta == "2")
-    {{-- BOLETA Y FACTURA --}}
-    <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
-        <thead>
-            <tr>
-                <th colspan="8">Periodo Consulta - Compra</th>
-            </tr>
-            <tr>
-                <th colspan="4">
-                    Fecha Inicio: {{$fecha_inicio}}
-                </th>
-                <th colspan="4">
-                    {{$empresa->nombre}}
-                </th>
-            </tr>
-            <tr>
-                <th colspan="4">
-                    Fecha Final: {{$fecha_final}}
-                </th>
-                <th colspan="4">
-                    {{$empresa->ruc}}
-                </th>
-            </tr>
-            <tr>
-                <th>Fecha</th>
-                <th>Nr. Doc</th>
-                <th>Tipo</th>
-                <th>R.U.C</th>
-                <th>Doc. Prov.</th>
-                <th>Sub Total</th>
-                <th>I.G.V</th>
-                <th>Importe total</th>
-            </tr>
-        </thead>
-        <div style="display: none">
-            {{ $hola = 0 }}
-        </div>
-        <tbody>
-            @foreach($json as $data)
-            <tr>
-                <td style="display: none">{{$hola += $data['precio']}}</td>
-                <td>{{$data['id']}}</td>
-                <td>{{$data['codigo_guia']}}</td>
-                <td>{{$data['tipo']}}</td>
-                <td>{{$data['cantidad']}}</td>
-                <td>{{$data['precio']}}</td>
-                <td></td>
-                <td></td>
-                <td></td>
-            </tr>
-            @endforeach
-            <?php
-            ?>
-        </tbody>
-        <tfoot>
-            <tr>
-                <td colspan="5"></td>
-                <td>{{$hola++}}</td>
-                {{-- <td>{{$igv_sub = ($sub_tot*($igv->igv_total/100))}}</td> --}}
-                {{-- <td>{{$sub_tot+$igv_sub}}</td> --}}
+{{-- @if($consulta == "1")
+    KARDEX ENTRADAS --}}
 
-            </tr>
-        </tfoot>
-    </table>
-@else
+{{-- @else --}}
 {{-- KARDEX ENTRADAS --}}
+{{-- @if(isset($data_extra_b) or isset($data_extra_f) or isset($kardex_entrada) ) --}}
+    @if(isset($kardex_entrada))
     <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
         <thead>
             <tr>
-                <th colspan="8">Periodo Consulta - Compra</th>
+                <th colspan="11">Periodo Consulta - Compra</th>
             </tr>
             <tr>
-                <th colspan="4">
+                <th colspan="5">
                     Fecha Inicio: {{$fecha_inicio}}
                 </th>
-                <th colspan="4">
+                <th colspan="6">
                     {{$empresa->nombre}}
                 </th>
             </tr>
             <tr>
-                <th colspan="4">
+                <th colspan="5">
                     Fecha Final: {{$fecha_final}}
                 </th>
-                <th colspan="4">
+                <th colspan="6">
                     {{$empresa->ruc}}
                 </th>
             </tr>
             <tr>
-                <th>Fecha</th>
-                <th>Nr. Doc</th>
-                <th>Proveedor</th>
-                <th>R.U.C</th>
-                <th>Doc. Prov.</th>
-                <th>Sub Total</th>
-                <th>I.G.V</th>
-                <th>Importe total</th>
+                <th colspan="5"></th>
+                <th  colspan="3" >{{$moneda_nac->simbolo}}</th>
+                <th  colspan="3" >{{$moneda_ex->simbolo}}</th>
+            </tr>
+            <tr>
+                <th >Fecha</th>
+                <th >Nr. Doc</th>
+                <th >Proveedor</th>
+                <th >R.U.C</th>
+                <th >Doc. Prov.</th>
+                <th >Sub Total </th>
+                <th >I.G.V</th>
+                <th >Importe total</th>
+                <th >Sub Total </th>
+                <th >I.G.V</th>
+                <th >Importe total</th>
             </tr>
         </thead>
-        <tbody>
+        <tbody  >
             @foreach($kardex_entrada as $kardex_entrada)
             <tr>
                 <td>{{$kardex_entrada->created_at}}</td>
@@ -189,110 +79,113 @@
                 <td>{{$kardex_entrada->provedor->empresa}}</td>
                 <td>{{$kardex_entrada->provedor->ruc}}</td>
                 <td>{{$kardex_entrada->factura}}</td>
-                <td>{{$sub_uni = $kardex_entrada->precio_nacional_total}}</td>
-                <td>{{$igv_uni = ($sub_uni*($igv->igv_total/100)) }}</td>
-                <td>{{$sub_uni+ $igv_uni}}</td>
+                {{-- PRECIO NACIONAL --}}
+                <td align="right"> {{round($sub_tot_nac = $kardex_entrada->precio_nacional_total,4)}}</td>
+                <td align="right"> {{round($igv_uni_nac = ($sub_tot_nac*($igv->igv_total/100)),2)}}</td>
+                <td align="right"> {{round($sub_tot_nac+ $igv_uni_nac,2)}}</td>
+                {{-- PRECIO EXTRANJERO --}}
+                <td align="right">{{$sub_uni_ext = round($kardex_entrada->precio_extranjero_total,2)}}</td>
+                <td align="right">{{$igv_uni_ext = round(($sub_uni_ext*($igv->igv_total/100)),2) }}</td>
+                <td align="right">{{round($sub_uni_ext+ $igv_uni_ext,2)}}</td>
             </tr>
             @endforeach
-            <?php
-            ?>
         </tbody>
         <tfoot>
             <tr>
                 <td colspan="5"></td>
-                <td>{{$sub_tot = $kardex_entrada->sum('precio_nacional_total')}}</td>
-                <td>{{$igv_sub = ($sub_tot*($igv->igv_total/100))}}</td>
-                <td>{{$sub_tot+$igv_sub}}</td>
+                {{-- PRECIO NACIONAL --}}
+                <td align="right">{{round($sub_tot_nac = $kardex_entrada->sum('precio_nacional_total'),2)}}</td>
+                <td align="right">{{round($igv_sub_nac = ($sub_tot_nac*($igv->igv_total/100)),2)}}</td>
+                <td align="right">{{round($sub_tot_nac+$igv_sub_nac,2)}}</td>
+                {{-- PRECIO EXTRANJERO --}}
+                <td align="right">{{round($sub_tot_ext = $kardex_entrada->sum('precio_extranjero_total'),2)}}</td>
+                <td align="right">{{round($igv_sub_ext = ($sub_tot_ext*($igv->igv_total/100)),2)}}</td>
+                <td align="right">{{round($sub_tot_ext+$igv_sub_ext,2)}}</td>
             </tr>
         </tfoot>
     </table>
     <br>
     <br>
+    @endif
     {{-- BOLETA Y FACTURA --}}
-    <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
-        <thead>
-            <tr>
-                <th colspan="5">Periodo Consulta - Venta</th>
-            </tr>
-            <tr>
-                <th colspan="2">
-                    Fecha Inicio: {{$fecha_inicio}}
-                </th>
-                <th colspan="3">
-                    {{$empresa->nombre}}
-                </th>
-            </tr>
-            <tr>
-                <th colspan="2">
-                    Fecha Final: {{$fecha_final}}
-                </th>
-                <th colspan="3">
-                    {{$empresa->ruc}}
-                </th>
-            </tr>
-            <tr>
-                <th>Fecha</th>
-                <th>Tipo</th>
-                <th>Nr. Doc</th>
-                <th>Cantidad</th>
-                <th>Total</th>
-            </tr>
-        </thead>
-        <div style="display: none">
-            {{ $fac_t = 0 }}
-            {{ $bol_t = 0 }}
-        </div>
-        @if(isset($data_extra_f))
-            <tbody>
-                @foreach($data_extra_f as $data)
+    @if(isset($data_extra_f) || isset($data_extra_b))
+        <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
+            <thead>
                 <tr>
-                    <td style="display: none">{{$fac_t += $data['precio']}}</td>
-                    <td>{{$data['id']}}</td>
-                    <td>{{$data['tipo']}}</td>
-                    <td>{{$data['codigo_guia']}}</td>
-                    <td>{{$data['cantidad']}}</td>
-                    <td>{{$data['precio']}}</td>
+                    <th colspan="5">Periodo Consulta - Venta</th>
                 </tr>
-                @endforeach
-            </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="4"></td>
-                <td>{{$fac_t++}}</td>
-                {{-- <td>{{$igv_sub = ($sub_tot*($igv->igv_total/100))}}</td> --}}
-                {{-- <td>{{$sub_tot+$igv_sub}}</td> --}}
-
-            </tr>
-        </tfoot>
-        @else
-
-        @endif
-        @if(isset($data_extra_b))
-            <tbody>
-                @foreach($data_extra_b as $data)
                 <tr>
-                    <td style="display: none">{{$bol_t += $data['precio']}}</td>
-                    <td>{{$data['id']}}</td>
-                    <td>{{$data['tipo']}}</td>
-                    <td>{{$data['codigo_guia']}}</td>
-                    <td>{{$data['cantidad']}}</td>
-                    <td>{{$data['precio']}}</td>
+                    <th colspan="2">
+                        Fecha Inicio: {{$fecha_inicio}}
+                    </th>
+                    <th colspan="3">
+                        {{$empresa->nombre}}
+                    </th>
                 </tr>
-                @endforeach
+                <tr>
+                    <th colspan="2">
+                        Fecha Final: {{$fecha_final}}
+                    </th>
+                    <th colspan="3">
+                        {{$empresa->ruc}}
+                    </th>
+                </tr>
+                <tr>
+                    <th>Fecha</th>
+                    <th>Tipo</th>
+                    <th>Nr. Doc</th>
+                    <th>Cantidad</th>
+                    <th>Total</th>
+                </tr>
+            </thead>
+            <div style="display: none">
+                {{ $fac_t = 0 }}
+                {{ $bol_t = 0 }}
+            </div>
+            @if(isset($data_extra_f))
+                <tbody>
+                    @foreach($data_extra_f as $data)
+                    <tr>
+                        <td style="display: none">{{$fac_t += $data['precio']}}</td>
+                        <td>{{$data['id']}}</td>
+                        <td>{{$data['tipo']}}</td>
+                        <td>{{$data['codigo_guia']}}</td>
+                        <td>{{$data['cantidad']}}</td>
+                        <td>{{$data['precio']}}</td>
+                    </tr>
+                    @endforeach
+                    <tr>
+                        <td colspan="4"></td>
+                        <td>{{$fac_t++}}</td>
+                    </tr>
+                </tbody>
+            @endif
+            <tbody>
+                <tr>
+                    <td colspan="5"></td>
+                </tr>
             </tbody>
-            <tfoot>
-            <tr>
-                <td colspan="4"></td>
-                <td>{{$bol_t++}}</td>
-                {{-- <td>{{$igv_sub = ($sub_tot*($igv->igv_total/100))}}</td> --}}
-                {{-- <td>{{$sub_tot+$igv_sub}}</td> --}}
-
-            </tr>
-        @else
-        @endif
-        </tfoot>
-    </table>
-@endif
+            @if(isset($data_extra_b))
+                <tbody>
+                    @foreach($data_extra_b as $data)
+                    <tr>
+                        <td style="display: none">{{$bol_t += $data['precio']}}</td>
+                        <td>{{$data['id']}}</td>
+                        <td>{{$data['tipo']}}</td>
+                        <td>{{$data['codigo_guia']}}</td>
+                        <td>{{$data['cantidad']}}</td>
+                        <td>{{$data['precio']}}</td>
+                    </tr>
+                    @endforeach
+                </tbody>
+                <tr>
+                    <td colspan="4"></td>
+                    <td>{{$bol_t++}}</td>
+                </tr>
+            @endif
+        </table>
+    @endif
+    {{-- @endif --}}
 <style>
     *{font-size: 14px;color: #495057;font-family: apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
     .cero{
