@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Config_fe;
 use App\Facturacion;
+use App\Facturacion_registro;
 use DateTime;
 
 use Greenter\Model\Client\Client;
@@ -38,15 +39,15 @@ class FacturacionElectronicaController extends Controller
     public function factura(Request $request)
     {
         //facturas a buscar
-        $factura=1;
-        $factura_registro=1;
-
+        $factura=Facturacion::where('f_electronica',0)->where('id',$request->factura_id)->first();
+        $factura_registro=Facturacion_registro::where('facturacion_id',$request->factura_id)->get();
+        
         //configuracion
         $see=Config_fe::facturacion_electronica();
 
         //factura
         $invoice=Config_fe::factura($factura, $factura_registro);
-
+        // return $invoice;
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
 

@@ -15,7 +15,7 @@ class EmpresaSeeder extends Seeder
 			'id' => 1 ,
 			'nombre' => 'Empresa S.A.C.',
 			'razon_social' => 'Empresa S.A.C.',
-			'ruc' => '013658742',
+			'ruc' => '20123456789',
 			'telefono' => '(511) 123 456',
 			'movil' => '946 026 042',
 			'correo' => 'empresa@empresa.com',

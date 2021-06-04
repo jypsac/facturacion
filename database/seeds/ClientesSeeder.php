@@ -21,7 +21,7 @@ class ClientesSeeder extends Seeder
     		'celular' => "9999999",
     		'empresa' => "J&P SAC" ,
     		'documento_identificacion' => 'RUC',
-    		'numero_documento' => "20125478568225",
+    		'numero_documento' => "20000000001",
     		'ciudad' => "Lima",
     		'departamento' => "Lima",
     		'pais' => "Peru",

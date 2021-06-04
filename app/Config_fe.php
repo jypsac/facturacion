@@ -14,6 +14,8 @@ use Illuminate\Database\Eloquent\Model;
 use Greenter\Ws\Services\SunatEndpoints;
 use Greenter\See;
 
+use App\Empresa;
+
 //DATOS DE PRUEBA
 // RUC: 20000000001
 // Usuario: MODDATOS
@@ -33,39 +35,46 @@ class Config_fe extends Model
         return $see;
     }
 
-    public static function factura($factura,$factura_registro){
+    public static function factura($factura,$facturas_registros){
+
+        //libro: https://cpe.sunat.gob.pe/sites/default/files/inline-files/guia%2Bxml%2Bfactura%2Bversion%202-1%2B1%2B0%20%282%29_0.pdf
+
+        // return $factura->moneda->nombre;
+        $empresa=Empresa::first();
+        // return $empresa;
+
         // Cliente
         $client = (new Client())
-        ->setTipoDoc('6')
-        ->setNumDoc('20000000001')
-        ->setRznSocial('EMPRESA X');
+        ->setTipoDoc('6')   //pagina 42 del pdf sunat 2.1
+        ->setNumDoc($factura->cliente->numero_documento) //ruc del receptor
+        ->setRznSocial($factura->cliente->empresa); //nombre empresa
 
         // Emisor
         $address = (new Address())
         ->setUbigueo('150101')
-        ->setDepartamento('LIMA')
-        ->setProvincia('LIMA')
-        ->setDistrito('LIMA')
+        ->setDepartamento($empresa->region_provincia)
+        ->setProvincia($empresa->region_provincia)
+        ->setDistrito($empresa->ciudad)
         ->setUrbanizacion('-')
-        ->setDireccion('Av. Villa Nueva 221')
+        ->setDireccion($empresa->calle)
         ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.
 
         $company = (new Company())
-        ->setRuc('20123456789')
-        ->setRazonSocial('GREEN SAC')
-        ->setNombreComercial('GREEN')
+        ->setRuc($empresa->ruc)
+        ->setRazonSocial($empresa->razon_social)
+        ->setNombreComercial($empresa->nombre)
         ->setAddress($address);
 
         // Venta
         $invoice = (new Invoice())
         ->setUblVersion('2.1')
-        ->setTipoOperacion('0101') // Venta - Catalog. 51
-        ->setTipoDoc('01') // Factura - Catalog. 01 
-        ->setSerie('F001')
-        ->setCorrelativo('1')
+        ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
+        ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
+        ->setSerie('F001')// numero de serie 
+        ->setCorrelativo('1') // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
         ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
         ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
-        ->setTipoMoneda('PEN') // Sol - Catalog. 02
+        ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
         ->setCompany($company)
         ->setClient($client)
         ->setMtoOperGravadas(200.00)
@@ -76,22 +85,26 @@ class Config_fe extends Model
         ->setMtoImpVenta(236.00)
         ;
 
-        $item = (new SaleDetail())
-        ->setCodProducto('P001')
-        ->setUnidad('NIU') // Unidad - Catalog. 03
-        ->setCantidad(2)
-        ->setMtoValorUnitario(50.00)
-        ->setDescripcion('PRODUCTO 1')
-        ->setMtoBaseIgv(100)
-        ->setPorcentajeIgv(18.00) // 18%
-        ->setIgv(18.00)
-        ->setTipAfeIgv('10') // Gravado Op. Onerosa - Catalog. 07
-        ->setTotalImpuestos(18.00) // Suma de impuestos en el detalle
-        ->setMtoValorVenta(100.00)
-        ->setMtoPrecioUnitario(59.00)
-        ;
+        foreach($facturas_registros as $cont => $factura_registro){
+            $item[$cont] = (new SaleDetail())
+            ->setCodProducto('P001')
+            ->setUnidad('NIU') // Unidad - Catalog. 03
+            ->setCantidad(2)
+            ->setMtoValorUnitario(50.00)
+            ->setDescripcion('PRODUCTO 1')
+            ->setMtoBaseIgv(100)
+            ->setPorcentajeIgv(18.00) // 18%
+            ->setIgv(18.00)
+            ->setTipAfeIgv('10') // Gravado Op. Onerosa - Catalog. 07
+            ->setTotalImpuestos(18.00) // Suma de impuestos en el detalle
+            ->setMtoValorVenta(100.00)
+            ->setMtoPrecioUnitario(59.00)
+            ;
 
-        $item2 = (new SaleDetail())
+            
+        }
+
+        $item[1] = (new SaleDetail())
         ->setCodProducto('P0011')
         ->setUnidad('NIU') // Unidad - Catalog. 03
         ->setCantidad(2)
@@ -110,7 +123,7 @@ class Config_fe extends Model
         ->setCode('1000') // Monto en letras - Catalog. 52
         ->setValue('SON DOSCIENTOS TREINTA Y SEIS CON 00/100 SOLES');
 
-        $invoice->setDetails([$item,$item2])
+        $invoice->setDetails($item)
             ->setLegends([$legend]);
 
         return $invoice;
