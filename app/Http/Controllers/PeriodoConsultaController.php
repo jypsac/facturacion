@@ -325,18 +325,39 @@ class PeriodoConsultaController extends Controller
                 $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
                 // $fac_count = count($factura);
                 foreach($factura as $facturacion){
-                    $factura_reg_precio = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi');
+                    if($facturacion->moneda_id == $moneda_nac->id){
+                        $factura_reg_precio_n = number_format(Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi'),2);
+                        $factura_reg_precio_x = number_format($factura_reg_precio_n/$facturacion->cambio,2);
+                    }
+                    if($facturacion->moneda_id == $moneda_ex->id){
+                        $factura_reg_precio_x = number_format(Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi'),2);
+                        $factura_reg_precio_n = number_format(round($factura_reg_precio_x*$facturacion->cambio, 1, PHP_ROUND_HALF_UP),2);
+                    }
+                    // $factura_cambio = $facturacion->cambio;
                     $factura_reg_cant = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
-                    $data_extra_f[]=array('id' => $facturacion->created_at,'codigo_guia'=>$facturacion->codigo_fac,'tipo'=> 'Factura','cantidad'=>$factura_reg_cant,'precio'=>$factura_reg_precio);
+                    $data_extra_f[]=array('id' => $facturacion->created_at,'codigo_guia'=>$facturacion->codigo_fac,'tipo'=> 'Factura','cantidad'=>$factura_reg_cant,'cambio'=>$facturacion->cambio,'precio_nac'=>$factura_reg_precio_n,'precio_ex'=> $factura_reg_precio_x);
+                    // return $factura_reg_precio_x;
                 }
+                // return $data_extra_f;
                 //BOLETAS
                 $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-
+                // return $boleta;
                 foreach ($boleta as $boleta_reg) {
-                    $boleta_reg_precio = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi');
+                    if($boleta_reg->moneda_id == $moneda_nac->id){
+                        $boleta_reg_precio_n = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
+                        $boleta_reg_precio_x = number_format($boleta_reg_precio_n/$boleta_reg->cambio,2);
+                    }
+                    if($boleta_reg->moneda_id == $moneda_ex->id){
+                        $boleta_reg_precio_x = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
+                        $boleta_reg_precio_n = number_format(round($boleta_reg_precio_x*$boleta_reg->cambio,1, PHP_ROUND_HALF_UP ),2);
+                    // }else{
+
+                    }
+
                     $boleta_reg_cant = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('cantidad');
-                    $data_extra_b[]=array('id' => $boleta_reg->created_at,'codigo_guia'=>$boleta_reg->codigo_boleta,'tipo'=> 'Boleta','cantidad'=>$boleta_reg_cant,'precio'=>$boleta_reg_precio);
+                    $data_extra_b[]=array('id' => $boleta_reg->created_at,'codigo_guia'=>$boleta_reg->codigo_boleta,'tipo'=> 'Boleta','cantidad'=>$boleta_reg_cant,'cambio'=>$boleta_reg->cambio,'precio_nac'=>$boleta_reg_precio_n,'precio_ex'=>$boleta_reg_precio_x);
                 }
+                    // return $data_extra_b;
             }else{
                 //almacen seleccionado
                 $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();

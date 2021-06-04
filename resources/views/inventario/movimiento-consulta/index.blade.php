@@ -98,7 +98,7 @@
                                     </select>
 								</div>
 						</div>
-                        
+
 					</form>
                     <button  class="btn btn-primary" id="boton" name="boton">Consultar</button>
 				</div>
@@ -255,11 +255,11 @@
                             { "data": "precio_nacional_total" }
                         ]
                     });
-                    
+
                 });
 
-                
-                
+
+
                 $('#tbody_venta tr').slice(1).remove();
                 $.ajax({
                     method: "POST",
@@ -348,21 +348,21 @@
             //     $('#compras_table_servicios').show();
             //     //para servicios
             //     alert("servicios")
-                
+
 
             // }
 		});
         $('#pdf').on('click', function() {
-            $("#formulario").attr("action",'{{ route('periodo_consulta_pdf') }}');
+            $("#formulario").attr("action",'{{ route('movimiento_consulta_pdf') }}');
             $("#formulario").attr("method",'POST');
             $("#formulario").submit();
 		});
 
     });
 </script>
-	
-    
-    
+
+
+
      {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
     <script>
         function valida(f) {
