@@ -283,6 +283,7 @@ Route::get('guia_remision/pdf/{id}' , 'GuiaRemisionController@pdf')->name('pdf_g
 Route::get('facturacion/pdf/{id}' , 'FacturacionController@pdf')->name('pdf_fac');
 Route::get('boleta/pdf/{id}' , 'BoletaController@pdf')->name('pdf_bol');
 Route::post('periodo_consulta/pdf' , 'PeriodoConsultaController@pdf')->name('periodo_consulta_pdf');
+Route::post('movimiento-consulta/pdf' , 'Consulta_MovimientoController@pdf')->name('movimiento_consulta_pdf');
 Route::post('periodo_consulta/print' , 'PeriodoConsultaController@print')->name('periodo_consulta_print');
 Route::get('/home', 'HomeController@index')->name('home');
 
