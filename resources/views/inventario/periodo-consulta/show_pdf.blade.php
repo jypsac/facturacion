@@ -30,79 +30,60 @@
 {{-- @else --}}
 {{-- KARDEX ENTRADAS --}}
 {{-- @if(isset($data_extra_b) or isset($data_extra_f) or isset($kardex_entrada) ) --}}
-    @if(isset($kardex_entrada))
+    @if(isset($productos))
     <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
         <thead>
             <tr>
-                <th colspan="11">Periodo Consulta - Compra</th>
+                <th colspan="4">Periodo Consulta - Compra</th>
             </tr>
             <tr>
-                <th colspan="5">
+                <th colspan="2">
                     Fecha Inicio: {{$fecha_inicio}}
                 </th>
-                <th colspan="6">
+                <th colspan="2">
                     {{$empresa->nombre}}
                 </th>
             </tr>
             <tr>
-                <th colspan="5">
+                <th colspan="2">
                     Fecha Final: {{$fecha_final}}
                 </th>
-                <th colspan="6">
+                <th colspan="2">
                     {{$empresa->ruc}}
                 </th>
             </tr>
             <tr>
-                <th colspan="5"></th>
-                <th  colspan="3" >{{$moneda_nac->simbolo}}</th>
-                <th  colspan="3" >{{$moneda_ex->simbolo}}</th>
-            </tr>
-            <tr>
-                <th >Fecha</th>
-                <th >Nr. Doc</th>
-                <th >Proveedor</th>
-                <th >R.U.C</th>
-                <th >Doc. Prov.</th>
-                <th >Sub Total </th>
-                <th >I.G.V</th>
-                <th >Importe total</th>
-                <th >Sub Total </th>
-                <th >I.G.V</th>
-                <th >Importe total</th>
+                <th>Nombr del Producto</th>
+                <th>Cantidad inicial</th>
+                <th>Precio Nacional ({{$moneda_nac->simbolo}})</th>
+                <th>Precio Extranjero ({{$moneda_ex->simbolo}})</th>
             </tr>
         </thead>
-        <tbody  >
-            @foreach($kardex_entrada as $kardex_entrada)
+        <div style="display: none">
+            {{ $cant_ini = 0}}
+            {{ $pre_nac = 0 }}
+            {{ $pre_ex = 0 }}
+        </div>
+        <tbody >
+            @foreach($productos as $producto)
             <tr>
-                <td>{{$kardex_entrada->created_at}}</td>
-                <td>{{$kardex_entrada->codigo_guia}}</td>
-                <td>{{$kardex_entrada->provedor->empresa}}</td>
-                <td>{{$kardex_entrada->provedor->ruc}}</td>
-                <td>{{$kardex_entrada->factura}}</td>
-                {{-- PRECIO NACIONAL --}}
-                <td align="right"> {{round($sub_tot_nac = $kardex_entrada->precio_nacional_total,4)}}</td>
-                <td align="right"> {{round($igv_uni_nac = ($sub_tot_nac*($igv->igv_total/100)),2)}}</td>
-                <td align="right"> {{round($sub_tot_nac+ $igv_uni_nac,2)}}</td>
-                {{-- PRECIO EXTRANJERO --}}
-                <td align="right">{{$sub_uni_ext = round($kardex_entrada->precio_extranjero_total,2)}}</td>
-                <td align="right">{{$igv_uni_ext = round(($sub_uni_ext*($igv->igv_total/100)),2) }}</td>
-                <td align="right">{{round($sub_uni_ext+ $igv_uni_ext,2)}}</td>
+                <td style="display: none">{{$pre_nac += $producto['precio_nacional']}} {{$pre_ex += $producto['precio_extranjero']}} {{$cant_ini += $producto['cantidad_inicial']}}</td>
+                <td>{{$producto['producto']}}</td>
+                <td>{{$producto['cantidad_inicial']}}</td>
+                <td>{{$producto['precio_nacional']}}</td>
+                <td>{{$producto['precio_extranjero']}}</td>
             </tr>
             @endforeach
         </tbody>
-        <tfoot>
+
+        <tfooter >
             <tr>
-                <td colspan="5"></td>
-                {{-- PRECIO NACIONAL --}}
-                <td align="right">{{round($sub_tot_nac = $kardex_entrada->sum('precio_nacional_total'),2)}}</td>
-                <td align="right">{{round($igv_sub_nac = ($sub_tot_nac*($igv->igv_total/100)),2)}}</td>
-                <td align="right">{{round($sub_tot_nac+$igv_sub_nac,2)}}</td>
-                {{-- PRECIO EXTRANJERO --}}
-                <td align="right">{{round($sub_tot_ext = $kardex_entrada->sum('precio_extranjero_total'),2)}}</td>
-                <td align="right">{{round($igv_sub_ext = ($sub_tot_ext*($igv->igv_total/100)),2)}}</td>
-                <td align="right">{{round($sub_tot_ext+$igv_sub_ext,2)}}</td>
+                <td align="right" style="font-weight: 600">Total:</td>
+                <td>{{$cant_ini}}</td>
+                <td>{{number_format($pre_nac++,2)}}</td>
+                <td>{{number_format($pre_ex++,2)}}</td>
             </tr>
-        </tfoot>
+        </tfooter>
     </table>
     <br>
     <br>

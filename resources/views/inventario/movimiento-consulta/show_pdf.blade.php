@@ -29,12 +29,13 @@
 
 {{-- @else --}}
 {{-- KARDEX ENTRADAS --}}
-{{-- @if(isset($data_extra_b) or isset($data_extra_f) or isset($kardex_entrada) ) --}}
+{{-- @if(isset($data_extra_b) or isset($data_extra_f) or isset($kardex_entradas) ) --}}
+@if($categoria == "1")
     @if(isset($kardex_entrada))
     <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
         <thead>
             <tr>
-                <th colspan="11">Periodo Consulta - Compra</th>
+                <th colspan="11">Movimiento Consulta - Compra</th>
             </tr>
             <tr>
                 <th colspan="5">
@@ -72,19 +73,19 @@
             </tr>
         </thead>
         <tbody  >
-            @foreach($kardex_entrada as $kardex_entrada)
+            @foreach($kardex_entrada as $kardex_entradas)
             <tr>
-                <td>{{$kardex_entrada->created_at}}</td>
-                <td>{{$kardex_entrada->codigo_guia}}</td>
-                <td>{{$kardex_entrada->provedor->empresa}}</td>
-                <td>{{$kardex_entrada->provedor->ruc}}</td>
-                <td>{{$kardex_entrada->factura}}</td>
+                <td>{{$kardex_entradas->fecha_compra}}</td>
+                <td>{{$kardex_entradas->codigo_guia}}</td>
+                <td>{{$kardex_entradas->provedor->empresa}}</td>
+                <td>{{$kardex_entradas->provedor->ruc}}</td>
+                <td>{{$kardex_entradas->factura}}</td>
                 {{-- PRECIO NACIONAL --}}
-                <td align="right"> {{round($sub_tot_nac = $kardex_entrada->precio_nacional_total,4)}}</td>
+                <td align="right"> {{round($sub_tot_nac = $kardex_entradas->precio_nacional_total,2)}}</td>
                 <td align="right"> {{round($igv_uni_nac = ($sub_tot_nac*($igv->igv_total/100)),2)}}</td>
                 <td align="right"> {{round($sub_tot_nac+ $igv_uni_nac,2)}}</td>
                 {{-- PRECIO EXTRANJERO --}}
-                <td align="right">{{$sub_uni_ext = round($kardex_entrada->precio_extranjero_total,2)}}</td>
+                <td align="right">{{$sub_uni_ext = round($kardex_entradas->precio_extranjero_total,2)}}</td>
                 <td align="right">{{$igv_uni_ext = round(($sub_uni_ext*($igv->igv_total/100)),2) }}</td>
                 <td align="right">{{round($sub_uni_ext+ $igv_uni_ext,2)}}</td>
             </tr>
@@ -196,7 +197,7 @@
         </table>
         <br>
     @endif
-    {{-- @endif --}}
+@endif
 <style>
     *{font-size: 14px;color: #495057;font-family: apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
     .cero{

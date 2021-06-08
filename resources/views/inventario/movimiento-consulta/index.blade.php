@@ -60,6 +60,7 @@
 							<label class="col-sm-2 col-form-label" >Almacen:</label>
 								<div class="col-sm-4">
 									<select class="form-control" name="almacen" id="almacen" onchange="seleccionado()">
+                                        <option value="">Seleccione Almacen</option>
                                         <option value="0">Todos los almacenes</option>
                                         @foreach($almacenes as $almacen)
                                         <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>

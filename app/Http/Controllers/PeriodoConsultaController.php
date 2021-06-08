@@ -277,11 +277,47 @@ class PeriodoConsultaController extends Controller
         // return $request;
         // return $consulta;
         if($consulta == "1"){
-            if($almacen == 0){
-                $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+            if($almacen==0){
+                $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
             }else{
-                $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
+                $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
             }
+                $cantidad_inicial=0;
+                $precio_nacional=0;
+                $precio_extranjero=0;
+                foreach($kardex_entrada_registros as $kardex_entrada_registro_f){
+                    $producto_id[]=$kardex_entrada_registro_f->producto_id;
+                }
+                $array_unico_productos=array_values(array_unique($producto_id));
+                $contador_prod=count($array_unico_productos);
+
+                for($a=0;$a<$contador_prod;$a++){
+                    $producto=Producto::where('id',$array_unico_productos[$a])->first();
+                    if($almacen==0){
+                        $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
+
+                        $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
+
+                        $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
+                    }else{
+                        $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
+
+                        $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
+
+                        $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
+                    }
+                    $cantidad_inicial=$cantidad_inicial+$kardex_entrada_r_cantidad_inicial;
+                    $precio_nacional=$precio_nacional+$kardex_entrada_r_precio_nacional;
+                    $precio_extranjero=$precio_extranjero+round($kardex_entrada_r_precio_extranjero,2);
+
+                    $kardex_entrada_r[$a]=array("producto" => $producto->nombre, "cantidad_inicial" => $kardex_entrada_r_cantidad_inicial , "precio_nacional" => $kardex_entrada_r_precio_nacional, "precio_extranjero" => round($kardex_entrada_r_precio_extranjero,2));
+                }
+                 // $total_producto_k_e=array("producto_tot" => "Total", "cantidad_inicial" => $cantidad_inicial , "precio_nacional" => $precio_nacional, "precio_extranjero" => round($precio_extranjero,2));
+                 if (!isset($kardex_entrada_r)) {
+                    $kardex_entrada_r[]="";
+                }
+                $productos=$kardex_entrada_r;
+                // return $json;
         }elseif($consulta == "2" ){
             if($almacen == 0){
                 $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
@@ -377,9 +413,9 @@ class PeriodoConsultaController extends Controller
                 }
             }
         }
-        // return view('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','kardex_entrada','consulta','data_extra_f','data_extra_b','moneda_ex','moneda_nac'));
+        return view('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','productos','consulta','data_extra_f','data_extra_b','moneda_ex','moneda_nac','total_producto_k_e'));
         $archivo="Periodo - Consulta";
-        $pdf=PDF::loadView('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','kardex_entrada','consulta','data_extra_f','data_extra_b','moneda_ex','moneda_nac'));
+        $pdf=PDF::loadView('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','productos ','consulta','data_extra_f','data_extra_b','moneda_ex','moneda_nac'));
         return $pdf->download('Periodo consulta - '.$archivo.' .pdf');
 
         // return view('inventario.periodo-consulta.',compact('garantia_guia_ingreso','mi_empresa'));
