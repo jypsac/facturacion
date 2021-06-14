@@ -53,7 +53,7 @@
                 </th>
             </tr>
             <tr>
-                <th>Nombr del Producto</th>
+                <th>Nombre del Producto</th>
                 <th>Cantidad inicial</th>
                 <th>Precio Nacional ({{$moneda_nac->simbolo}})</th>
                 <th>Precio Extranjero ({{$moneda_ex->simbolo}})</th>
@@ -65,6 +65,7 @@
             {{ $pre_ex = 0 }}
         </div>
         <tbody >
+
             @foreach($productos as $producto)
             <tr>
                 <td style="display: none">{{$pre_nac += $producto['precio_nacional']}} {{$pre_ex += $producto['precio_extranjero']}} {{$cant_ini += $producto['cantidad_inicial']}}</td>
@@ -75,104 +76,79 @@
             </tr>
             @endforeach
         </tbody>
-
-        <tfooter >
+        <tbody>
             <tr>
                 <td align="right" style="font-weight: 600">Total:</td>
                 <td>{{$cant_ini}}</td>
                 <td>{{number_format($pre_nac++,2)}}</td>
                 <td>{{number_format($pre_ex++,2)}}</td>
             </tr>
-        </tfooter>
+        </tbody>
     </table>
     <br>
     <br>
     @endif
     {{-- BOLETA Y FACTURA --}}
-    @if(isset($data_extra_f) || isset($data_extra_b))
+    @if(isset($data_final_fac) || isset($data_final_bol))
         <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
             <thead>
                 <tr>
-                    <th colspan="7">Periodo Consulta - Venta</th>
+                    <th colspan="4">Periodo Consulta - Venta</th>
                 </tr>
                 <tr>
-                    <th colspan="4">
+                    <th colspan="2">
                         Fecha Inicio: {{$fecha_inicio}}
                     </th>
-                    <th colspan="3">
+                    <th colspan="2">
                         {{$empresa->nombre}}
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="4">
+                    <th colspan="2">
                         Fecha Final: {{$fecha_final}}
                     </th>
-                    <th colspan="3">
+                    <th colspan="2">
                         {{$empresa->ruc}}
                     </th>
                 </tr>
                 <tr>
-                    <th>Fecha</th>
                     <th>Tipo</th>
-                    <th>Nr. Doc</th>
+                    <th>Producto</th>
                     <th>Cantidad</th>
-                    <th>Tipo de Cambio</th>
                     <th>Total {{$moneda_nac->simbolo}} </th>
                     <th>Total {{$moneda_ex->simbolo}} </th>
                 </tr>
             </thead>
-            <div style="display: none">
-                {{ $fac_t_n = 0 }}
-                {{ $fac_t_x = 0 }}
-                {{ $bol_t_n = 0 }}
-                {{ $bol_t_x = 0 }}
-            </div>
-            @if(isset($data_extra_f))
+            @if(isset($data_final_fac))
                 <tbody>
-                    @foreach($data_extra_f as $data)
+                    @foreach($data_final_fac as $data)
                     <tr>
-                        <td style="display: none">{{$fac_t_n += $data['precio_nac']}} {{$fac_t_x += $data['precio_ex']}}</td>
-                        <td>{{$data['id']}}</td>
                         <td>{{$data['tipo']}}</td>
-                        <td>{{$data['codigo_guia']}}</td>
+                        <td>{{$data['producto']}}</td>
                         <td>{{$data['cantidad']}}</td>
-                        <td>{{$data['cambio']}}</td>
-                        <td>{{$data['precio_nac']}}</td>
-                        <td>{{$data['precio_ex']}}</td>
+                        <td>{{$data['precio nacional']}}</td>
+                        <td>{{$data['precio extranjero']}}</td>
                     </tr>
                     @endforeach
-                    <tr>
-                        <td colspan="5"></td>
-                        <td>{{number_format($fac_t_n++,2)}}</td>
-                        <td>{{number_format($fac_t_x++,2)}}</td>
-                    </tr>
                 </tbody>
             @endif
             <tbody>
                 <tr>
-                    <td colspan="7"></td>
+                    <td colspan="4"></td>
                 </tr>
             </tbody>
-            @if(isset($data_extra_b))
+            @if(isset($data_final_bol))
                 <tbody>
-                    @foreach($data_extra_b as $data)
+                    @foreach($data_final_bol as $data)
                     <tr>
-                        <td style="display: none">{{$bol_t_n += $data['precio_nac']}}{{$bol_t_x += $data['precio_ex']}}</td>
-                        <td>{{$data['id']}}</td>
                         <td>{{$data['tipo']}}</td>
-                        <td>{{$data['codigo_guia']}}</td>
+                        <td>{{$data['producto']}}</td>
                         <td>{{$data['cantidad']}}</td>
-                        <td>{{$data['cambio']}}</td>
-                        <td>{{$data['precio_nac']}}</td>
-                        <td>{{$data['precio_ex']}}</td>
+                        <td>{{$data['precio nacional']}}</td>
+                        <td>{{$data['precio extranjero']}}</td>
                     </tr>
                     @endforeach
                 </tbody>
-                <tr>
-                    <td colspan="5"></td>
-                    <td>{{number_format($bol_t_n++,2)}}</td>
-                    <td>{{number_format($bol_t_x++,2)}}</td>
-                </tr>
             @endif
         </table>
         <br>
