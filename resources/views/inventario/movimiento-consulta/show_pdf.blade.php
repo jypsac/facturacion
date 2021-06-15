@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Periodo Consulta</title>{{--
+    <title>Movimiento Consulta</title>{{--
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" > --}}
     <link href="{{ asset('css/estilos_pdf.css') }}" rel="stylesheet">
 </head>
@@ -30,7 +30,7 @@
 {{-- @else --}}
 {{-- KARDEX ENTRADAS --}}
 {{-- @if(isset($data_extra_b) or isset($data_extra_f) or isset($kardex_entradas) ) --}}
-@if($categoria == "1")
+{{-- @if($categoria == "1") --}}
     @if(isset($kardex_entrada))
     <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
         <thead>
@@ -113,7 +113,11 @@
         <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
             <thead>
                 <tr>
-                    <th colspan="7">Periodo Consulta - Venta</th>
+                    @if($categoria == "1")
+                    <th colspan="7">Movimiento Consulta - Venta Productos</th>
+                    @elseif($categoria == "2")
+                        <th colspan="7">Movimiento Consulta - Venta Servicios</th>
+                    @endif
                 </tr>
                 <tr>
                     <th colspan="4">
@@ -151,14 +155,14 @@
                 <tbody>
                     @foreach($data_extra_f as $data)
                     <tr>
-                        <td style="display: none">{{$fac_t_n += $data['precio_nac']}} {{$fac_t_x += $data['precio_ex']}}</td>
+                        <td style="display: none">{{$fac_t_n += $data['precio_nac']*$data['cantidad']}} {{$fac_t_x += $data['precio_ex']*$data['cantidad']}}</td>
                         <td>{{$data['id']}}</td>
                         <td>{{$data['tipo']}}</td>
                         <td>{{$data['codigo_guia']}}</td>
                         <td>{{$data['cantidad']}}</td>
                         <td>{{$data['cambio']}}</td>
-                        <td>{{$data['precio_nac']}}</td>
-                        <td>{{$data['precio_ex']}}</td>
+                        <td>{{$data['precio_nac']*$data['cantidad']}}</td>
+                        <td>{{$data['precio_ex']*$data['cantidad']}}</td>
                     </tr>
                     @endforeach
                     <tr>
@@ -177,14 +181,14 @@
                 <tbody>
                     @foreach($data_extra_b as $data)
                     <tr>
-                        <td style="display: none">{{$bol_t_n += $data['precio_nac']}}{{$bol_t_x += $data['precio_ex']}}</td>
+                        <td style="display: none">{{$bol_t_n += $data['precio_nac']*$data['cantidad']}}{{$bol_t_x += $data['precio_ex']*$data['cantidad']}}</td>
                         <td>{{$data['id']}}</td>
                         <td>{{$data['tipo']}}</td>
                         <td>{{$data['codigo_guia']}}</td>
                         <td>{{$data['cantidad']}}</td>
                         <td>{{$data['cambio']}}</td>
-                        <td>{{$data['precio_nac']}}</td>
-                        <td>{{$data['precio_ex']}}</td>
+                        <td>{{$data['precio_nac']*$data['cantidad']}}</td>
+                        <td>{{$data['precio_ex']*$data['cantidad']}}</td>
                     </tr>
                     @endforeach
                 </tbody>
@@ -197,7 +201,7 @@
         </table>
         <br>
     @endif
-@endif
+{{-- @endif --}}
 <style>
     *{font-size: 14px;color: #495057;font-family: apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
     .cero{

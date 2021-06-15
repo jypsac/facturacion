@@ -60,7 +60,7 @@
 							<label class="col-sm-2 col-form-label" >Almacen:</label>
 								<div class="col-sm-4">
 									<select class="form-control" name="almacen" id="almacen" onchange="seleccionado()">
-                                        <option value="">Seleccione Almacen</option>
+                                        {{-- <option value="">Seleccione Almacen</option> --}}
                                         <option value="0">Todos los almacenes</option>
                                         @foreach($almacenes as $almacen)
                                         <option value="{{$almacen->id}}">{{$almacen->nombre}}</option>
@@ -395,10 +395,17 @@
                     $('#consulta_s').show();
                 }
             }else{
-                $('#consulta_p_input').prop('disabled', 'disabled');
-                $('#consulta_p').hide();
-                $('#consulta_s_input').prop('disabled', false);
-                $('#consulta_s').show();
+                if(opt=="1"){
+                    $('#consulta_p_input').prop('disabled', false);
+                    $('#consulta_p').show();
+                    $('#consulta_s_input').prop('disabled', 'disabled');
+                    $('#consulta_s').hide();
+                }else{
+                    $('#consulta_p_input').prop('disabled', 'disabled');
+                    $('#consulta_p').hide();
+                    $('#consulta_s_input').prop('disabled', false);
+                    $('#consulta_s').show();
+                }
             }
         }
 
