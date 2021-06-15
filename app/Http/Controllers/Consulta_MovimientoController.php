@@ -132,6 +132,7 @@ class Consulta_MovimientoController extends Controller
 
         // falta validacion si $request->consulta_p es un numero del 1 al 3
         $consulta_p=$request->consulta_p_input;
+        $consulta_s=$request->consulta_s_input;
         if($categoria=="2"){
             $consulta_p="2";
         }
@@ -139,7 +140,7 @@ class Consulta_MovimientoController extends Controller
             return "consulta 0";
         }
         // return $consulta_p;
-        if($consulta_p=="2" or $consulta_p=="3"){
+        if($consulta_p=="2" or $consulta_p=="3" or $consulta_s = "1"){
             //todos los almacenes
             if($almacen==0){
                 if($categoria=="1"){
@@ -160,8 +161,8 @@ class Consulta_MovimientoController extends Controller
                 foreach($facturaciones as $facturacion){
                     $factura_id[]=$facturacion->id;
                     $factura_precio= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio');
-                    $factura_cantidad = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
-                    $facturacion->precio=$factura_precio*$factura_cantidad;
+                    $factura_cantidad= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
+                    $facturacion->precio=round($factura_precio*$factura_cantidad,2);
 
                     $facturacion->subtotal=round($facturacion->precio/(1+($igv->igv_total/100)),2);
                     $facturacion->igv=round($facturacion->precio-$facturacion->subtotal,2);
@@ -171,7 +172,8 @@ class Consulta_MovimientoController extends Controller
                     $subtotal=$subtotal+$facturacion->subtotal;
                     $jsons++;
                 }
-                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_fac' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
+                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_fac' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => round($subtotal,2) , 'igv' => $igv_t , 'precio'=>round($total,2));
+
                 $json=array_merge(json_decode($facturaciones, true),$data_extra );
                 salto_fac_json:
             }else{
@@ -194,8 +196,9 @@ class Consulta_MovimientoController extends Controller
                 $jsons=0;
                 foreach($facturaciones as $facturacion){
                     $factura_id[]=$facturacion->id;
-                    $factura_precio= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('precio');
-                    $facturacion->precio=$factura_precio;
+                    $factura_precio = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio');
+                    $fact_cant = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
+                    $facturacion->precio=$factura_precio*$fact_cant;
 
                     $facturacion->subtotal=round($facturacion->precio/(1+($igv->igv_total/100)),2);
                     $facturacion->igv=round($facturacion->precio-$facturacion->subtotal,2);
@@ -204,7 +207,7 @@ class Consulta_MovimientoController extends Controller
                     $subtotal=$subtotal+$facturacion->subtotal;
                     $jsons++;
                 }
-                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_fac' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
+                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_fac' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => round($subtotal,2) , 'igv' => $igv_t , 'precio'=>round($total,2));
                 if (!isset($factura_id)) {
                     $factura_id[]="";
                 }
@@ -238,13 +241,14 @@ class Consulta_MovimientoController extends Controller
 
         // falta validacion si $request->consulta_p es un numero del 1 al 3
         $consulta_p=$request->consulta_p_input;
+        $consulta_s=$request->consulta_s_input;
         if($categoria=="2"){
             $consulta_p="2";
         }
         if($consulta_p=="0"){
             return "consulta 0";
         }
-        if($consulta_p=="2" or $consulta_p=="3"){
+        if($consulta_p=="2" or $consulta_p=="3" or $consulta_s=="1"){
             //todos los almacenes
             if($almacen==0){
                 if($categoria=="1"){
@@ -265,8 +269,8 @@ class Consulta_MovimientoController extends Controller
                 $jsons=0;
                 foreach($boletas as $boleta){
                     $boleta_id[]=$boleta->id;
-                    $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_id)->sum('precio');
-                    $boleta_cant= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_id)->sum('cantidad');
+                    $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta->id)->sum('precio');
+                    $boleta_cant= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta->id)->sum('cantidad');
                     $boleta->precio=$boleta_precio*$boleta_cant;
 
                     $boleta->subtotal=round($boleta->precio/(1+($igv->igv_total/100)),2);
@@ -303,8 +307,9 @@ class Consulta_MovimientoController extends Controller
                 $jsons=0;
                 foreach($boletas as $boleta){
                     $boleta_id[]=$boleta->id;
-                    $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_id)->sum('precio');
-                    $boleta->precio=$boleta_precio;
+                    $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta->id)->sum('precio');
+                    $boleta_cant= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta->id)->sum('cantidad');
+                    $boleta->precio=$boleta_precio*$boleta_cant;
                     $boleta->subtotal=round($boleta->precio/(1+($igv->igv_total/100)),2);
                     $boleta->igv=round($boleta->precio-$boleta->subtotal,2);
                     $total=$total+$boleta->precio;
