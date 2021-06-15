@@ -93,10 +93,10 @@
         <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
             <thead>
                 <tr>
-                    <th colspan="4">Consulta de Inventario - Venta</th>
+                    <th colspan="5">Consulta de Inventario - Venta</th>
                 </tr>
                 <tr>
-                    <th colspan="2">
+                    <th colspan="3">
                         Fecha Inicio: {{$fecha_inicio}}
                     </th>
                     <th colspan="2">
@@ -104,7 +104,7 @@
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="2">
+                    <th colspan="3">
                         Fecha Final: {{$fecha_final}}
                     </th>
                     <th colspan="2">
@@ -134,7 +134,7 @@
             @endif
             <tbody>
                 <tr>
-                    <td colspan="4"></td>
+                    <td colspan="5"></td>
                 </tr>
             </tbody>
             @if(isset($data_final_bol))

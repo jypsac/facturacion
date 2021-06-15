@@ -325,11 +325,11 @@ class PeriodoConsultaController extends Controller
             $precio_nacional=0;
             $precio_extranjero=0;
             if($almacen == 0){
-                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
+                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
             }else{
-                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
-                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
+                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->where('almacen_id',$almacen)->get();
+                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=',null)->where('almacen_id',$almacen)->get();
             }
             if (count($factura_registro) == 0 or count($boleta_registro) == 0  ) {
                 

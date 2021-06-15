@@ -73,8 +73,10 @@ class Consulta_MovimientoController extends Controller
                     }
                     foreach($kardex_entradas as $kardex_entrada){
                         $kardex_entrada->igv=$igv->igv_total;
-                        $kardex_entrada->subtotal=round($kardex_entrada->precio_nacional_total/(1+($igv->igv_total/100)),2);
-                        $total=$total+$kardex_entrada->precio_nacional_total;
+                        $kardex_entrada->subtotal=$kardex_entrada->precio_nacional_total;
+                        $kardex_entrada->igv=round($kardex_entrada->subtotal*($igv->igv_total/100),2);
+                        // $tot =  $kardex_entrada->precio_nacional_total+$kardex_entrada->igv;
+                        $total = $total+($kardex_entrada->precio_nacional_total+$kardex_entrada->igv);
                         $igv_t=$igv_t+$kardex_entrada->igv;
                         $subtotal=$subtotal+$kardex_entrada->subtotal;
                         $jsons++;
@@ -85,7 +87,7 @@ class Consulta_MovimientoController extends Controller
                 }else{
                     //productos + compra------------------------------------------
                     //solo permite hacer el llamado para el almacen 1
-                    $kardex_entradas=kardex_entrada::where('almacen_id',1)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entradas=kardex_entrada::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
                     $total=0;
                     $igv_t=0;
                     $subtotal=0;
