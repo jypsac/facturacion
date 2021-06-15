@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Periodo Consulta</title>{{--
+    <title>Consulta de Inventarios</title>{{--
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" > --}}
     <link href="{{ asset('css/estilos_pdf.css') }}" rel="stylesheet">
 </head>
@@ -34,7 +34,7 @@
     <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
         <thead>
             <tr>
-                <th colspan="4">Periodo Consulta - Compra</th>
+                <th colspan="4">Consulta de Inventario - Compra</th>
             </tr>
             <tr>
                 <th colspan="2">
@@ -93,7 +93,7 @@
         <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
             <thead>
                 <tr>
-                    <th colspan="4">Periodo Consulta - Venta</th>
+                    <th colspan="4">Consulta de Inventario - Venta</th>
                 </tr>
                 <tr>
                     <th colspan="2">

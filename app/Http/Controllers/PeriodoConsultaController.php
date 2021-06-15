@@ -143,8 +143,8 @@ class PeriodoConsultaController extends Controller
 
             if($consulta=="2" or $consulta=="3"){
                 if($almacen==0){
-                    $factura= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                    $boleta= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $factura= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=',null)->get();
+                    $boleta= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=',null)->get();
 
                     //factura
                     $cantidad_f=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad');

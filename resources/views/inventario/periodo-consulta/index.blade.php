@@ -1,9 +1,9 @@
 @extends('layout')
 
-@section('title', 'periodo consulta')
+@section('title', 'Consulta de Inventario')
 @section('breadcrumb', 'Periodo')
 @section('breadcrumb2', 'Periodo')
-@section('href_accion', route('periodo-consulta.create'))
+{{-- @section('href_accion', route('periodo-consulta.create')) --}}
 @section('value_accion', 'Agregar')
 
 @section('content')
