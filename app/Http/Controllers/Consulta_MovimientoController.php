@@ -53,9 +53,9 @@ class Consulta_MovimientoController extends Controller
         $categoria=$request->categoria;
         //obtencion del igv
         $igv=Igv::first();
+        $consulta=$request->consulta_p_input;
         if($categoria=="1"){
             // falta validacion si $request->consulta_p es un numero del 1 al 3
-            $consulta=$request->consulta_p_input;
             if($consulta=="0"){
                 return "consulta 0";
             }
@@ -72,13 +72,14 @@ class Consulta_MovimientoController extends Controller
                         $kardex_entradas[]="";
                     }
                     foreach($kardex_entradas as $kardex_entrada){
-                        $kardex_entrada->igv=$igv->igv_total;
                         $kardex_entrada->subtotal=$kardex_entrada->precio_nacional_total;
+                        // $kardex_entrada->igv=$igv->igv_total;
                         $kardex_entrada->igv=round($kardex_entrada->subtotal*($igv->igv_total/100),2);
+                        $kardex_entrada->precio_nacional_total = $kardex_entrada->subtotal + round($kardex_entrada->subtotal*($igv->igv_total/100),2);
                         // $tot =  $kardex_entrada->precio_nacional_total+$kardex_entrada->igv;
-                        $total = $total+($kardex_entrada->precio_nacional_total+$kardex_entrada->igv);
-                        $igv_t=$igv_t+$kardex_entrada->igv;
                         $subtotal=$subtotal+$kardex_entrada->subtotal;
+                        $igv_t=$igv_t+$kardex_entrada->igv;
+                        $total = $total+($kardex_entrada->subtotal+$kardex_entrada->igv);
                         $jsons++;
                     }
                     $data_extra[$jsons]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
@@ -96,11 +97,14 @@ class Consulta_MovimientoController extends Controller
                         $kardex_entradas[]="";
                     }
                     foreach($kardex_entradas as $kardex_entrada){
-                        $kardex_entrada->subtotal=round($kardex_entrada->precio_nacional_total/(1+($igv->igv_total/100)),2);
-                        $kardex_entrada->igv=round($kardex_entrada->precio_nacional_total-$kardex_entrada->subtotal,2);
-                        $total=$total+$kardex_entrada->precio_nacional_total;
-                        $igv_t=$igv_t+$kardex_entrada->igv;
+                        $kardex_entrada->subtotal=$kardex_entrada->precio_nacional_total;
+                        // $kardex_entrada->igv=$igv->igv_total;
+                        $kardex_entrada->igv=round($kardex_entrada->subtotal*($igv->igv_total/100),2);
+                        $kardex_entrada->precio_nacional_total = $kardex_entrada->subtotal + round($kardex_entrada->subtotal*($igv->igv_total/100),2);
+                        // $tot =  $kardex_entrada->precio_nacional_total+$kardex_entrada->igv;
                         $subtotal=$subtotal+$kardex_entrada->subtotal;
+                        $igv_t=$igv_t+$kardex_entrada->igv;
+                        $total = $total+($kardex_entrada->subtotal+$kardex_entrada->igv);
                         $jsons++;
                     }
                     $data_extra[$jsons]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
@@ -135,14 +139,13 @@ class Consulta_MovimientoController extends Controller
         // falta validacion si $request->consulta_p es un numero del 1 al 3
         $consulta_p=$request->consulta_p_input;
         $consulta_s=$request->consulta_s_input;
-        if($categoria=="2"){
-            $consulta_p="2";
-        }
+        // if($categoria=="2"){
+        //     $consulta_p="2";
+        // }
         if($consulta_p=="0"){
             return "consulta 0";
         }
-        // return $consulta_p;
-        if($consulta_p=="2" or $consulta_p=="3" or $consulta_s = "1"){
+        if($consulta_p=="2" or $consulta_p=="3" or $consulta_s = "1" && $consulta_p != "1"){
             //todos los almacenes
             if($almacen==0){
                 if($categoria=="1"){
@@ -222,6 +225,7 @@ class Consulta_MovimientoController extends Controller
         }else{
             $json=[];
         }
+
         // if($categoria == "2"){
 
         // }
@@ -244,9 +248,9 @@ class Consulta_MovimientoController extends Controller
         // falta validacion si $request->consulta_p es un numero del 1 al 3
         $consulta_p=$request->consulta_p_input;
         $consulta_s=$request->consulta_s_input;
-        if($categoria=="2"){
-            $consulta_p="2";
-        }
+        // if($categoria=="2"){
+        //     $consulta_p="2";
+        // }
         if($consulta_p=="0"){
             return "consulta 0";
         }

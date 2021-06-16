@@ -63,7 +63,7 @@ class AlmacenController extends Controller
             'cod_fac' => ['required','integer'],
             'cod_bol' => ['required','integer'],
             'cod_guia' => ['required','integer'],
-            'codigo_sunat' => ['required'],
+            'codigo_sunat' => ['required','unique:almacen'],
         ]);
 
         $almacen=new Almacen;
