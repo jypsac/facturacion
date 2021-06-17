@@ -63,7 +63,7 @@ class Consulta_MovimientoController extends Controller
                 if($almacen == 0){
                     //productos + compra------------------------------------------
                     //solo permite hacer el llamado para el almacen 1
-                    $kardex_entradas=kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entradas=kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
                     $total=0;
                     $igv_t=0;
                     $subtotal=0;
@@ -88,7 +88,7 @@ class Consulta_MovimientoController extends Controller
                 }else{
                     //productos + compra------------------------------------------
                     //solo permite hacer el llamado para el almacen 1
-                    $kardex_entradas=kardex_entrada::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entradas=kardex_entrada::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
                     $total=0;
                     $igv_t=0;
                     $subtotal=0;
@@ -399,9 +399,9 @@ class Consulta_MovimientoController extends Controller
         // if($categoria== "1"){
             if($consulta_prod == "1" or $consulta_prod == "3"){
                 if($almacen == 0){
-                    $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
                 }else{
-                    $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
+                    $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->where('almacen_id',$almacen)->get();
                 }
             }
             if($consulta_prod == "2" or $consulta_prod == "3" or $consulta_serv == "1") {
@@ -482,7 +482,7 @@ class Consulta_MovimientoController extends Controller
                 }
             }
         // }
-        // return view('inventario.movimiento-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','kardex_entrada','consulta','data_extra_f','data_extra_b','moneda_ex','moneda_nac','categoria'));
+        return view('inventario.movimiento-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','kardex_entrada','consulta','data_extra_f','data_extra_b','moneda_ex','moneda_nac','categoria'));
         $archivo="Periodo - Consulta";
         $pdf=PDF::loadView('inventario.movimiento-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','kardex_entrada','categoria','data_extra_f','data_extra_b','moneda_ex','moneda_nac'));
         return $pdf->download('Periodo consulta - '.$archivo.' .pdf');

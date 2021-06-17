@@ -24,40 +24,40 @@
 @page { size: 420mm 297mm landscape; }
 </style>
 
-{{-- @if($consulta == "1")
-    KARDEX ENTRADAS --}}
-
-{{-- @else --}}
-{{-- KARDEX ENTRADAS --}}
-{{-- @if(isset($data_extra_b) or isset($data_extra_f) or isset($kardex_entrada) ) --}}
+    <table style="width: 100%;border-collapse:separate;vertical-align: inherit">
+        <tr>
+            <td style="border: 1px #e5e6e7 solid;border-radius: 10px;width: auto;padding-top: 5px;text-align: center;vertical-align: inherit;" align="center">
+                <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="height: 50px;width: 150px;margin-top: 5px;">
+            </td>
+            {{-- <td style="width: 5px;border: 1px white"></td> --}}
+            <td style="width: 33%;border: 1px white"></td>
+            {{-- <td style="width: 5px;border: 1px white"></td> --}}
+            <td style="border: 1px #e5e6e7 solid;border-radius: 10px;width: auto;margin-top: -10px;text-align: center;" align="center">
+                {{-- <div style="height: 50px;width: 165px;border: 1px white solid;margin-right: -5px;margin-top: -15px;padding-right: -45px"   > --}}
+                {{-- <center> --}}
+                    <span style="margin: 5px;font-weight: 250;"> R.U.C {{$empresa->ruc}}</span><br>
+                    <span style="margin: 5px;font-size: 15px;font-weight: 500;" >CONSULTA DE PERIODO</span><br>
+                    <span style="margin: 5px;font-size: 10px;" >Del: {{$fecha_inicio}}</span><br>
+                    <span style="margin: 5px;font-size: 10px;" >Al: {{$fecha_final}}</span>
+                {{-- </center> --}}
+                {{-- </div> --}}
+            </td>
+        </tr>
+    </table>
     @if(isset($productos))
     <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
         <thead>
             <tr>
-                <th colspan="4">Consulta de Inventario - Compra</th>
-            </tr>
-            <tr>
-                <th colspan="2">
-                    Fecha Inicio: {{$fecha_inicio}}
-                </th>
-                <th colspan="2">
-                    {{$empresa->nombre}}
+                <th colspan="4" style="text-align: center;">
+                    COMPRAS
                 </th>
             </tr>
             <tr>
-                <th colspan="2">
-                    Fecha Final: {{$fecha_final}}
-                </th>
-                <th colspan="2">
-                    {{$empresa->ruc}}
-                </th>
-            </tr>
-            <tr>
-                <th>Nombre del Producto</th>
-                <th>Cantidad inicial</th>
-                <th>Precio Nacional ({{$moneda_nac->simbolo}})</th>
-                <th>Precio Extranjero ({{$moneda_ex->simbolo}})</th>
-            </tr>
+                    <th>Producto:</th>
+                    <th>Cantidad:</th>
+                    <th>Precio Nacional ({{$moneda_nac->simbolo}}): </th>
+                    <th>Precio Extranjero ({{$moneda_ex->simbolo}}): </th>
+                </tr>
         </thead>
         <div style="display: none">
             {{ $cant_ini = 0}}
@@ -65,7 +65,6 @@
             {{ $pre_ex = 0 }}
         </div>
         <tbody >
-
             @foreach($productos as $producto)
             <tr>
                 <td style="display: none">{{$pre_nac += $producto['precio_nacional']}} {{$pre_ex += $producto['precio_extranjero']}} {{$cant_ini += $producto['cantidad_inicial']}}</td>
@@ -78,7 +77,7 @@
         </tbody>
         <tbody>
             <tr>
-                <td align="right" style="font-weight: 600">Total:</td>
+                <td align="right" style="font-weight: 500">Total:</td>
                 <td>{{$cant_ini}}</td>
                 <td>{{number_format($pre_nac++,2)}}</td>
                 <td>{{number_format($pre_ex++,2)}}</td>
@@ -93,30 +92,16 @@
         <table class="table table-striped table-bordered table-hover dataTables-example" style="text-align: center;">
             <thead>
                 <tr>
-                    <th colspan="5">Consulta de Inventario - Venta</th>
-                </tr>
-                <tr>
-                    <th colspan="3">
-                        Fecha Inicio: {{$fecha_inicio}}
-                    </th>
-                    <th colspan="2">
-                        {{$empresa->nombre}}
+                    <th colspan="5">
+                        VENTAS
                     </th>
                 </tr>
                 <tr>
-                    <th colspan="3">
-                        Fecha Final: {{$fecha_final}}
-                    </th>
-                    <th colspan="2">
-                        {{$empresa->ruc}}
-                    </th>
-                </tr>
-                <tr>
-                    <th>Tipo</th>
-                    <th>Producto</th>
-                    <th>Cantidad</th>
-                    <th>Total {{$moneda_nac->simbolo}} </th>
-                    <th>Total {{$moneda_ex->simbolo}} </th>
+                    <th>Tipo:</th>
+                    <th>Producto: </th>
+                    <th>Cantidad:</th>
+                    <th>Total ({{$moneda_nac->simbolo}}): </th>
+                    <th>Total ({{$moneda_ex->simbolo}}): </th>
                 </tr>
             </thead>
             @if(isset($data_final_fac))
@@ -155,7 +140,7 @@
     @endif
     {{-- @endif --}}
 <style>
-    *{font-size: 14px;color: #495057;font-family: apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
+    *{font-size: 12px;color: #495057;font-family: apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
     .cero{
     margin-bottom: 0px;
 

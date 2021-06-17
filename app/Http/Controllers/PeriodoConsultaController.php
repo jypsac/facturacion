@@ -70,9 +70,9 @@ class PeriodoConsultaController extends Controller
             if($consulta=="1" or $consulta=="3"){
                 //productos + compra------------------------------------------
                 if($almacen==0){
-                    $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
                 }else{
-                    $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->where('tipo_registro_id',1)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
                 }
                 if(count($kardex_entrada_registros) == 0){
                     $json = [];
@@ -149,13 +149,8 @@ class PeriodoConsultaController extends Controller
             $consulta=$request->consulta_p;
 
             if($consulta=="2" or $consulta=="3"){
-                // if($almacen == 0){
                 $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
                 $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
-            // }else{
-            //     $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
-            //     $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=',null)->get();
-            // }
             if(count($factura_registro) == 0){
                 $data_fac =[];
                 goto fact_fin_aj;
@@ -333,9 +328,9 @@ class PeriodoConsultaController extends Controller
         $jsons = 1;
         if($consulta == "1" or $consulta == "3"){
             if($almacen==0){
-                $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
             }else{
-                $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
             }
             // return $kardex_entrada_registros;
             if (count($kardex_entrada_registros) == 0) {
