@@ -25,6 +25,7 @@ class FacturacionElectronicaController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
+
     public function index()
     {
         $facturacion=Facturacion::where('f_electronica',0)->get();
