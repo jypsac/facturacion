@@ -53,9 +53,9 @@ class Consulta_MovimientoController extends Controller
         $categoria=$request->categoria;
         //obtencion del igv
         $igv=Igv::first();
+        $consulta=$request->consulta_p_input;
         if($categoria=="1"){
             // falta validacion si $request->consulta_p es un numero del 1 al 3
-            $consulta=$request->consulta_p_input;
             if($consulta=="0"){
                 return "consulta 0";
             }
@@ -63,7 +63,7 @@ class Consulta_MovimientoController extends Controller
                 if($almacen == 0){
                     //productos + compra------------------------------------------
                     //solo permite hacer el llamado para el almacen 1
-                    $kardex_entradas=kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entradas=kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
                     $total=0;
                     $igv_t=0;
                     $subtotal=0;
@@ -72,11 +72,14 @@ class Consulta_MovimientoController extends Controller
                         $kardex_entradas[]="";
                     }
                     foreach($kardex_entradas as $kardex_entrada){
-                        $kardex_entrada->igv=$igv->igv_total;
-                        $kardex_entrada->subtotal=round($kardex_entrada->precio_nacional_total/(1+($igv->igv_total/100)),2);
-                        $total=$total+$kardex_entrada->precio_nacional_total;
-                        $igv_t=$igv_t+$kardex_entrada->igv;
+                        $kardex_entrada->subtotal=$kardex_entrada->precio_nacional_total;
+                        // $kardex_entrada->igv=$igv->igv_total;
+                        $kardex_entrada->igv=round($kardex_entrada->subtotal*($igv->igv_total/100),2);
+                        $kardex_entrada->precio_nacional_total = $kardex_entrada->subtotal + round($kardex_entrada->subtotal*($igv->igv_total/100),2);
+                        // $tot =  $kardex_entrada->precio_nacional_total+$kardex_entrada->igv;
                         $subtotal=$subtotal+$kardex_entrada->subtotal;
+                        $igv_t=$igv_t+$kardex_entrada->igv;
+                        $total = $total+($kardex_entrada->subtotal+$kardex_entrada->igv);
                         $jsons++;
                     }
                     $data_extra[$jsons]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
@@ -85,7 +88,7 @@ class Consulta_MovimientoController extends Controller
                 }else{
                     //productos + compra------------------------------------------
                     //solo permite hacer el llamado para el almacen 1
-                    $kardex_entradas=kardex_entrada::where('almacen_id',1)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entradas=kardex_entrada::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
                     $total=0;
                     $igv_t=0;
                     $subtotal=0;
@@ -94,11 +97,14 @@ class Consulta_MovimientoController extends Controller
                         $kardex_entradas[]="";
                     }
                     foreach($kardex_entradas as $kardex_entrada){
-                        $kardex_entrada->subtotal=round($kardex_entrada->precio_nacional_total/(1+($igv->igv_total/100)),2);
-                        $kardex_entrada->igv=round($kardex_entrada->precio_nacional_total-$kardex_entrada->subtotal,2);
-                        $total=$total+$kardex_entrada->precio_nacional_total;
-                        $igv_t=$igv_t+$kardex_entrada->igv;
+                        $kardex_entrada->subtotal=$kardex_entrada->precio_nacional_total;
+                        // $kardex_entrada->igv=$igv->igv_total;
+                        $kardex_entrada->igv=round($kardex_entrada->subtotal*($igv->igv_total/100),2);
+                        $kardex_entrada->precio_nacional_total = $kardex_entrada->subtotal + round($kardex_entrada->subtotal*($igv->igv_total/100),2);
+                        // $tot =  $kardex_entrada->precio_nacional_total+$kardex_entrada->igv;
                         $subtotal=$subtotal+$kardex_entrada->subtotal;
+                        $igv_t=$igv_t+$kardex_entrada->igv;
+                        $total = $total+($kardex_entrada->subtotal+$kardex_entrada->igv);
                         $jsons++;
                     }
                     $data_extra[$jsons]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
@@ -109,8 +115,8 @@ class Consulta_MovimientoController extends Controller
                 $json=[];
             }
         }elseif($categoria=="2"){
-            $consulta=2;
-            return "Servicio no admitible para compras";
+            $json=[];
+            // return "Servicio no admitible para compras";
         }else{
             return "categoria incorrecta";
         }
@@ -132,14 +138,14 @@ class Consulta_MovimientoController extends Controller
 
         // falta validacion si $request->consulta_p es un numero del 1 al 3
         $consulta_p=$request->consulta_p_input;
-        if($categoria=="2"){
-            $consulta_p="2";
-        }
+        $consulta_s=$request->consulta_s_input;
+        // if($categoria=="2"){
+        //     $consulta_p="2";
+        // }
         if($consulta_p=="0"){
             return "consulta 0";
         }
-        // return $consulta_p;
-        if($consulta_p=="2" or $consulta_p=="3"){
+        if($consulta_p=="2" or $consulta_p=="3" or $consulta_s = "1" && $consulta_p != "1"){
             //todos los almacenes
             if($almacen==0){
                 if($categoria=="1"){
@@ -149,14 +155,19 @@ class Consulta_MovimientoController extends Controller
                 }else{
                     return "categoria incorrecta";
                 }
+                if(count($facturaciones) == 0){
+                    $json=[];
+                    goto salto_fac_json;
+                }
                 $total=0;
                 $igv_t=0;
                 $subtotal=0;
                 $jsons=0;
                 foreach($facturaciones as $facturacion){
                     $factura_id[]=$facturacion->id;
-                    $factura_precio= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('precio');
-                    $facturacion->precio=$factura_precio;
+                    $factura_precio= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio');
+                    $factura_cantidad= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
+                    $facturacion->precio=round($factura_precio*$factura_cantidad,2);
 
                     $facturacion->subtotal=round($facturacion->precio/(1+($igv->igv_total/100)),2);
                     $facturacion->igv=round($facturacion->precio-$facturacion->subtotal,2);
@@ -166,9 +177,10 @@ class Consulta_MovimientoController extends Controller
                     $subtotal=$subtotal+$facturacion->subtotal;
                     $jsons++;
                 }
-                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
-                $json=array_merge(json_decode($facturaciones, true),$data_extra );
+                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_fac' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => round($subtotal,2) , 'igv' => $igv_t , 'precio'=>round($total,2));
 
+                $json=array_merge(json_decode($facturaciones, true),$data_extra );
+                salto_fac_json:
             }else{
                 //productos + venta ------------------------------------------
                 //facturacion
@@ -179,14 +191,19 @@ class Consulta_MovimientoController extends Controller
                 }else{
                     return "categoria incorrecta";
                 }
+                if(count($facturaciones) == 0){
+                    $json=[];
+                    goto salto_alm_fac_json;
+                }
                 $total=0;
                 $igv_t=0;
                 $subtotal=0;
                 $jsons=0;
                 foreach($facturaciones as $facturacion){
                     $factura_id[]=$facturacion->id;
-                    $factura_precio= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('precio');
-                    $facturacion->precio=$factura_precio;
+                    $factura_precio = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio');
+                    $fact_cant = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
+                    $facturacion->precio=$factura_precio*$fact_cant;
 
                     $facturacion->subtotal=round($facturacion->precio/(1+($igv->igv_total/100)),2);
                     $facturacion->igv=round($facturacion->precio-$facturacion->subtotal,2);
@@ -195,11 +212,12 @@ class Consulta_MovimientoController extends Controller
                     $subtotal=$subtotal+$facturacion->subtotal;
                     $jsons++;
                 }
-                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_fac' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
+                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_fac' => "",'cliente_id'=>"", 'cliente_id'=>"" , 'subtotal' => round($subtotal,2) , 'igv' => $igv_t , 'precio'=>round($total,2));
                 if (!isset($factura_id)) {
                     $factura_id[]="";
                 }
                 $json=array_merge(json_decode($facturaciones, true),$data_extra );
+                salto_alm_fac_json:
             }
             //union de jsons
             // $json=array_merge(json_decode($facturaciones, true),json_decode($boletas, true));
@@ -208,6 +226,9 @@ class Consulta_MovimientoController extends Controller
             $json=[];
         }
 
+        // if($categoria == "2"){
+
+        // }
         return response(json_encode($json),200)->header('content-type','text/plain');
     }
 
@@ -226,13 +247,14 @@ class Consulta_MovimientoController extends Controller
 
         // falta validacion si $request->consulta_p es un numero del 1 al 3
         $consulta_p=$request->consulta_p_input;
-        if($categoria=="2"){
-            $consulta_p="2";
-        }
+        $consulta_s=$request->consulta_s_input;
+        // if($categoria=="2"){
+        //     $consulta_p="2";
+        // }
         if($consulta_p=="0"){
             return "consulta 0";
         }
-        if($consulta_p=="2" or $consulta_p=="3"){
+        if($consulta_p=="2" or $consulta_p=="3" or $consulta_s=="1"){
             //todos los almacenes
             if($almacen==0){
                 if($categoria=="1"){
@@ -243,46 +265,20 @@ class Consulta_MovimientoController extends Controller
                 }else{
                     return "categoria incorrecta";
                 }
+                if(count($boletas) == 0){
+                    $json=[];
+                    goto salto_bol_alm_js;
+                }
                 $total=0;
                 $igv_t=0;
                 $subtotal=0;
                 $jsons=0;
                 foreach($boletas as $boleta){
                     $boleta_id[]=$boleta->id;
-                    $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('precio');
-                    $boleta->precio=$boleta_precio;
+                    $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta->id)->sum('precio');
+                    $boleta_cant= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta->id)->sum('cantidad');
+                    $boleta->precio=$boleta_precio*$boleta_cant;
 
-                    $boleta->subtotal=round($boleta->precio/(1+($igv->igv_total/100)),2);
-                    $boleta->igv=round($boleta->precio-$boleta->subtotal,2);
-                    $total=$total+$boleta->precio;
-                    $igv_t=$igv_t+$boleta->igv;
-                    $subtotal=$subtotal+$boleta->subtotal;
-                    $jsons++;
-                }
-                if (!isset($boleta_id)) {
-                    $boleta_id[]="";
-                }
-                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
-                $json=array_merge(json_decode($boletas, true),$data_extra );
-            }else{
-                //productos + venta ------------------------------------------
-                //boleta
-                if($categoria=="1"){
-                    $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','producto')->get();
-                }elseif($categoria=="2"){
-                    $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','servicio')->get();
-                    // return "este es servicio";
-                }else{
-                    return "categoria incorrecta";
-                }
-                $total=0;
-                $igv_t=0;
-                $subtotal=0;
-                $jsons=0;
-                foreach($boletas as $boleta){
-                    $boleta_id[]=$boleta->id;
-                    $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('precio');
-                    $boleta->precio=$boleta_precio;
                     $boleta->subtotal=round($boleta->precio/(1+($igv->igv_total/100)),2);
                     $boleta->igv=round($boleta->precio-$boleta->subtotal,2);
                     $total=$total+$boleta->precio;
@@ -295,7 +291,44 @@ class Consulta_MovimientoController extends Controller
                 }
                 $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_boleta' => "",'cliente_id' => "",'cliente.nombre'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
                 $json=array_merge(json_decode($boletas, true),$data_extra );
-
+                salto_bol_alm_js:
+            }else{
+                //productos + venta ------------------------------------------
+                //boleta
+                if($categoria=="1"){
+                    $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','producto')->get();
+                }elseif($categoria=="2"){
+                    $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','servicio')->get();
+                    // return "este es servicio";
+                }else{
+                    return "categoria incorrecta";
+                }
+                if(count($boletas) == 0){
+                    $json=[];
+                    goto salto_alm_json;
+                }
+                $total=0;
+                $igv_t=0;
+                $subtotal=0;
+                $jsons=0;
+                foreach($boletas as $boleta){
+                    $boleta_id[]=$boleta->id;
+                    $boleta_precio= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta->id)->sum('precio');
+                    $boleta_cant= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta->id)->sum('cantidad');
+                    $boleta->precio=$boleta_precio*$boleta_cant;
+                    $boleta->subtotal=round($boleta->precio/(1+($igv->igv_total/100)),2);
+                    $boleta->igv=round($boleta->precio-$boleta->subtotal,2);
+                    $total=$total+$boleta->precio;
+                    $igv_t=$igv_t+$boleta->igv;
+                    $subtotal=$subtotal+$boleta->subtotal;
+                    $jsons++;
+                }
+                if (!isset($boleta_id)) {
+                    $boleta_id[]="";
+                }
+                $data_extra[$jsons]=array('id' => $jsons+1,'fecha_emision' => "Total",'codigo_boleta' => "",'cliente_id' => "",'cliente.nombre'=>"", 'cliente_id'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio'=>$total);
+                $json=array_merge(json_decode($boletas, true),$data_extra );
+                salto_alm_json:
             }
             //union de jsons
             // $json=array_merge(json_decode($boletas, true));
@@ -363,16 +396,24 @@ class Consulta_MovimientoController extends Controller
         $jsons = 1;
         // return $consulta;
         // PRODUCTOS
-        if($categoria== "1"){
-            if($consulta_prod == "1"){
+        // if($categoria== "1"){
+            if($consulta_prod == "1" or $consulta_prod == "3"){
                 if($almacen == 0){
-                    $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
                 }else{
-                    $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
+                    $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->where('almacen_id',$almacen)->get();
                 }
-            }elseif($consulta_prod == "2" ){
+            }
+            if($consulta_prod == "2" or $consulta_prod == "3" or $consulta_serv == "1") {
+
                 if($almacen == 0){
-                    $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    if($categoria == "1"){
+                       $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','producto')->get();
+                       $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','producto')->get();
+                    }elseif($categoria == "2"){
+                        $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','servicio')->get();
+                        $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','servicio')->get();
+                    }
                     foreach($factura as $facturacion){
                         if($facturacion->moneda_id == $moneda_nac->id){
                             $factura_reg_precio_n = number_format(Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi'),2);
@@ -386,15 +427,16 @@ class Consulta_MovimientoController extends Controller
                         $factura_reg_cant = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
                         $data_extra_f[]=array('id' => $facturacion->created_at,'codigo_guia'=>$facturacion->codigo_fac,'tipo'=> 'Factura','cantidad'=>$factura_reg_cant,'cambio'=>$facturacion->cambio,'precio_nac'=>$factura_reg_precio_n,'precio_ex'=> $factura_reg_precio_x);
                     }
+
                     //BOLETAS
-                    $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+
                     foreach ($boleta as $boleta_reg) {
                         if($boleta_reg->moneda_id == $moneda_nac->id){
-                            $boleta_reg_precio_n = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
+                            $boleta_reg_precio_n = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio'),2);
                             $boleta_reg_precio_x = number_format($boleta_reg_precio_n/$boleta_reg->cambio,2);
                         }
                         if($boleta_reg->moneda_id == $moneda_ex->id){
-                            $boleta_reg_precio_x = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
+                            $boleta_reg_precio_x = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio'),2);
                             $boleta_reg_precio_n = number_format(round($boleta_reg_precio_x*$boleta_reg->cambio,1, PHP_ROUND_HALF_UP ),2);
                         }
                         $boleta_reg_cant = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('cantidad');
@@ -402,7 +444,13 @@ class Consulta_MovimientoController extends Controller
                     }
                 }else{
                     //almacen seleccionado
-                    $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
+                    if($categoria == "1"){
+                       $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id', $almacen)->where('tipo','producto')->get();
+                       $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','producto')->where('almacen_id', $almacen)->get();
+                    }elseif($categoria == "2"){
+                        $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','servicio')->where('almacen_id', $almacen)->get();
+                        $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo','servicio')->where('almacen_id', $almacen)->get();
+                    }
                     // $fac_count = count($factura);
                     foreach($factura as $facturacion){
                         if($facturacion->moneda_id == $moneda_nac->id){
@@ -417,88 +465,15 @@ class Consulta_MovimientoController extends Controller
                         $data_extra_f[]=array('id' => $facturacion->created_at,'codigo_guia'=>$facturacion->codigo_fac,'tipo'=> 'Factura','cantidad'=>$factura_reg_cant,'cambio'=>$facturacion->cambio,'precio_nac'=>$factura_reg_precio_n,'precio_ex'=> $factura_reg_precio_x);
                     }
                     //BOLETAS
-                    $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    // $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
 
                     foreach ($boleta as $boleta_reg) {
                         if($boleta_reg->moneda_id == $moneda_nac->id){
-                            $boleta_reg_precio_n = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
+                            $boleta_reg_precio_n = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio'),2);
                             $boleta_reg_precio_x = number_format($boleta_reg_precio_n/$boleta_reg->cambio,2);
                         }
                         if($boleta_reg->moneda_id == $moneda_ex->id){
-                            $boleta_reg_precio_x = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
-                            $boleta_reg_precio_n = number_format(round($boleta_reg_precio_x*$boleta_reg->cambio,1, PHP_ROUND_HALF_UP ),2);
-                        }
-                        $boleta_reg_cant = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('cantidad');
-                        $data_extra_b[]=array('id' => $boleta_reg->created_at,'codigo_guia'=>$boleta_reg->codigo_boleta,'tipo'=> 'Boleta','cantidad'=>$boleta_reg_cant,'cambio'=>$boleta_reg->cambio,'precio_nac'=>$boleta_reg_precio_n,'precio_ex'=>$boleta_reg_precio_x);
-                    }
-                }
-            }else{
-                if($almacen == "0"){
-                    $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                }else{
-                    $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
-                }
-                if($almacen == "0"){
-                    $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                    // $fac_count = count($factura);
-                    foreach($factura as $facturacion){
-                        if($facturacion->moneda_id == $moneda_nac->id){
-                            $factura_reg_precio_n = number_format(Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi'),2);
-                            $factura_reg_precio_x = number_format($factura_reg_precio_n/$facturacion->cambio,2);
-                        }
-                        if($facturacion->moneda_id == $moneda_ex->id){
-                            $factura_reg_precio_x = number_format(Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi'),2);
-                            $factura_reg_precio_n = number_format(round($factura_reg_precio_x*$facturacion->cambio, 1, PHP_ROUND_HALF_UP),2);
-                        }
-                        // $factura_cambio = $facturacion->cambio;
-                        $factura_reg_cant = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
-                        $data_extra_f[]=array('id' => $facturacion->created_at,'codigo_guia'=>$facturacion->codigo_fac,'tipo'=> 'Factura','cantidad'=>$factura_reg_cant,'cambio'=>$facturacion->cambio,'precio_nac'=>$factura_reg_precio_n,'precio_ex'=> $factura_reg_precio_x);
-                        // return $factura_reg_precio_x;
-                    }
-                    // return $data_extra_f;
-                    //BOLETAS
-                    $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                    // return $boleta;
-                    foreach ($boleta as $boleta_reg) {
-                        if($boleta_reg->moneda_id == $moneda_nac->id){
-                            $boleta_reg_precio_n = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
-                            $boleta_reg_precio_x = number_format($boleta_reg_precio_n/$boleta_reg->cambio,2);
-                        }
-                        if($boleta_reg->moneda_id == $moneda_ex->id){
-                            $boleta_reg_precio_x = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
-                            $boleta_reg_precio_n = number_format(round($boleta_reg_precio_x*$boleta_reg->cambio,1, PHP_ROUND_HALF_UP ),2);
-                        }
-
-                        $boleta_reg_cant = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('cantidad');
-                        $data_extra_b[]=array('id' => $boleta_reg->created_at,'codigo_guia'=>$boleta_reg->codigo_boleta,'tipo'=> 'Boleta','cantidad'=>$boleta_reg_cant,'cambio'=>$boleta_reg->cambio,'precio_nac'=>$boleta_reg_precio_n,'precio_ex'=>$boleta_reg_precio_x);
-                    }
-                        // return $data_extra_b;
-                }else{
-                    //almacen seleccionado
-                    $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
-                    // $fac_count = count($factura);
-                    foreach($factura as $facturacion){
-                        if($facturacion->moneda_id == $moneda_nac->id){
-                            $factura_reg_precio_n = number_format(Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi'),2);
-                            $factura_reg_precio_x = number_format($factura_reg_precio_n/$facturacion->cambio,2);
-                        }
-                        if($facturacion->moneda_id == $moneda_ex->id){
-                            $factura_reg_precio_x = number_format(Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi'),2);
-                            $factura_reg_precio_n = number_format(round($factura_reg_precio_x*$facturacion->cambio, 1, PHP_ROUND_HALF_UP),2);
-                        }
-                        $factura_reg_cant = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
-                        $data_extra_f[]=array('id' => $facturacion->created_at,'codigo_guia'=>$facturacion->codigo_fac,'tipo'=> 'Factura','cantidad'=>$factura_reg_cant,'cambio'=>$facturacion->cambio,'precio_nac'=>$factura_reg_precio_n,'precio_ex'=> $factura_reg_precio_x);
-                    }
-                    //BOLETAS
-                    $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-
-                    foreach ($boleta as $boleta_reg) {
-                        if($boleta_reg->moneda_id == $moneda_nac->id){
-                            $boleta_reg_precio_n = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
-                            $boleta_reg_precio_x = number_format($boleta_reg_precio_n/$boleta_reg->cambio,2);
-                        }
-                        if($boleta_reg->moneda_id == $moneda_ex->id){
-                            $boleta_reg_precio_x = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
+                            $boleta_reg_precio_x = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio'),2);
                             $boleta_reg_precio_n = number_format(round($boleta_reg_precio_x*$boleta_reg->cambio,1, PHP_ROUND_HALF_UP ),2);
                         }
                         $boleta_reg_cant = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('cantidad');
@@ -506,7 +481,7 @@ class Consulta_MovimientoController extends Controller
                     }
                 }
             }
-        }
+        // }
         return view('inventario.movimiento-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','kardex_entrada','consulta','data_extra_f','data_extra_b','moneda_ex','moneda_nac','categoria'));
         $archivo="Periodo - Consulta";
         $pdf=PDF::loadView('inventario.movimiento-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','kardex_entrada','categoria','data_extra_f','data_extra_b','moneda_ex','moneda_nac'));

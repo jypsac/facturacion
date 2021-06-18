@@ -70,17 +70,21 @@ class PeriodoConsultaController extends Controller
             if($consulta=="1" or $consulta=="3"){
                 //productos + compra------------------------------------------
                 if($almacen==0){
-                    $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
                 }else{
-                    $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                    $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->where('tipo_registro_id',1)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
                 }
-
+                if(count($kardex_entrada_registros) == 0){
+                    $json = [];
+                    goto fin_kardex;
+                }
                 $cantidad_inicial=0;
                 $precio_nacional=0;
                 $precio_extranjero=0;
                 foreach($kardex_entrada_registros as $kardex_entrada_registro_f){
                     $producto_id[]=$kardex_entrada_registro_f->producto_id;
                 }
+
                 $array_unico_productos=array_values(array_unique($producto_id));
 
 
@@ -114,11 +118,12 @@ class PeriodoConsultaController extends Controller
                     $kardex_entrada_r[]="";
                 }
                 $json=$kardex_entrada_r;
+                fin_kardex:
             }else{
                 $json=[];
             }
         }elseif($categoria=="2"){
-            $consulta=2;
+            $json=[];
             return "este es servicio";
         }else{
             return "categoria incorrecta";
@@ -137,61 +142,108 @@ class PeriodoConsultaController extends Controller
         $fecha_inicio=Carbon::createFromFormat('Y-m-d\TH:i',$request->fecha_inicio);
         $fecha_final=Carbon::createFromFormat('Y-m-d\TH:i',$request->fecha_final);
         $categoria=$request->categoria;
+        $moneda_nac = Moneda::where('tipo','nacional')->first();
+        $moneda_ex = Moneda::where('tipo','extranjera')->first();
         if($categoria=="1"){
             // falta validacion si $request->consulta_p es un numero del 1 al 3
             $consulta=$request->consulta_p;
 
             if($consulta=="2" or $consulta=="3"){
-                if($almacen==0){
-                    $factura= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                    $boleta= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-
-                    //factura
-                    $cantidad_f=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad');
-                    $precio_f=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio');
-                    $stock_f=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('stock');
-
-                    //boleta
-                    $cantidad_b=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad');
-                    $precio_b=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio');
-                    $stock_b=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('stock');
+                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
+                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
+            if(count($factura_registro) == 0){
+                $data_fac =[];
+                goto fact_fin_aj;
+            }
+            //FACTURA
+            foreach ($factura_registro as $f_reg) {
+                if($almacen == 0){
+                    $factura = Facturacion::where('id',$f_reg->facturacion_id)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->first();
                 }else{
-                    //productos + venta ------------------------------------------
-                    //facturacion
-                    $facturaciones=Facturacion::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                    foreach($facturaciones as $facturacion){
-                        $factura_id[]=$facturacion->id;
-                    }
-                    if (!isset($factura_id)) {
-                        $factura_id[]="";
-                    }
+                    $factura = Facturacion::where('id',$f_reg->facturacion_id)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->first();
+                }
+                //MONEDA NACIONAL
+                if($factura->moneda_id == $moneda_nac->id){
+                    $f_reg_pre_nac = $f_reg->precio_unitario_comi;
+                    $f_reg_pre_ex = number_format(round($f_reg->precio_unitario_comi/$factura->cambio,1),2);
+                }else{
+                    $f_reg_pre_nac = number_format(round($f_reg->precio_unitario_comi*$factura->cambio, 1, PHP_ROUND_HALF_UP),2);
+                    $f_reg_pre_ex = $f_reg->precio_unitario_comi;
+                }
+                // $cant_fact_pro =
+                $prod_fact[] = $f_reg->producto->nombre;
+                $data_extra_f[]=array('tipo' => 'Factura' ,'producto' => $f_reg->producto->nombre ,'cantidad' => $f_reg->cantidad  ,'precio nacional' => $f_reg_pre_nac, 'precio extranjero' => $f_reg_pre_ex);
 
-                    $factura= Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->get();
+            }
+            $uniq_prod_fac =   array_unique($prod_fact);
 
-                    $cantidad=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('cantidad')+Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('cantidad');
-                    $precio=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('cantidad')+Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('precio');
-                    $stock=Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('cantidad')+Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('facturacion_id',$factura_id)->sum('stock');
-                    $data_extra_f[]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
+            $data_fact =  $data_extra_f;
 
-                    //boleta
-                    $boletas=Boleta::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                    foreach($boletas as $boleta){
-                        $boleta_id[]=$boleta->id;
+            foreach ($uniq_prod_fac as  $prods_fac ) {
+                foreach ($data_fact as  $value_fac) {
+                    // return $value;
+                    if( $prods_fac == $value_fac['producto'] ){
+                        $cantidad_fac[] = $value_fac['cantidad'];
+                        $precio_nac_total_fac[] =   $value_fac['precio nacional'];
+                        $precio_ex_total_fac[] =   $value_fac['precio extranjero'];
                     }
-                    if (!isset($boleta_id)) {
-                        $boleta_id[]="";
-                    }
+                }
 
-                    $boleta= Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->get();
-                    $cantidad=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('cantidad');
-                    $precio=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('precio');
-                    $stock=Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('cantidad')+Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('boleta_id',$boleta_id)->sum('stock');
-                    $data_extra_b[]=array('id' => $jsons+1,'fecha_compra' => "Total",'codigo_guia' => "",'provedor_id'=>"", 'factura'=>"" , 'subtotal' => $subtotal , 'igv' => $igv_t , 'precio_nacional_total'=>$total);
+                $data_final_fac[] = array('tipo' => 'Factura' ,'producto' => $prods_fac,'precio nacional' => array_sum($precio_nac_total_fac) ,'cantidad' => array_sum($cantidad_fac)  ,'precio extranjero' =>array_sum($precio_ex_total_fac) );
+                unset($precio_nac_total_fac);
+                unset($precio_ex_total_fac);
+                unset($cantidad_fac);
+            }
+            $data_fac = $data_final_fac;
+            fact_fin_aj:
+            // return $data_final_fac;
+            if(count($boleta_registro) == 0){
+                $data_bol =[];
+                goto bol_fin_aj;
+            }
+            //BOLETA
+            foreach ($boleta_registro as $b_reg) {
+                if($almacen == 0){
+                    $boleta = Boleta::where('id',$b_reg->boleta_id)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->first();
+                }else{
+                    $boleta = Boleta::where('id',$b_reg->boleta_id)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->first();
                 }
 
 
+                if($boleta->moneda_id == $moneda_nac->id){
+                    $b_reg_pre_nac = $b_reg->precio_unitario_comi;
+                    $b_reg_pre_ex = number_format(round($b_reg->precio_unitario_comi/$boleta->cambio,1),2);
+                }else{
+                    $b_reg_pre_nac = number_format(round($b_reg->precio_unitario_comi*$boleta->cambio, 1, PHP_ROUND_HALF_UP),2);
+                    $b_reg_pre_ex = $b_reg->precio_unitario_comi;
+                }
+                $prod_bol[] = $b_reg->producto->nombre;
+                $data_extra_b[] = array('tipo'=> 'Boleta' ,'producto' => $b_reg->producto->nombre,'cantidad' => $b_reg->cantidad  ,'precio nacional' => $b_reg_pre_nac, 'precio extranjero' => $b_reg_pre_ex);
+            }
+            $uniq_prod_bol =   array_unique($prod_bol);
+
+            $data_bol =  $data_extra_b;
+
+            // return $data_bol;
+            foreach ($uniq_prod_bol as  $prods_bol ) {
+                foreach ($data_bol as  $value_bol) {
+                    // return $value_bol['productos'];
+                    if( $prods_bol == $value_bol['producto'] ){
+                        $cantidad_bol[] = $value_bol['cantidad'];
+                        $precio_nac_total_bol[] =   $value_bol['precio nacional'];
+                        $precio_ex_total_bol[] =   $value_bol['precio extranjero'];
+                    }
+                }
+
+                $data_final_bol[] = array('tipo' => 'Boleta' ,'producto' => $prods_bol, 'cantidad' => array_sum($cantidad_bol) ,'precio nacional' => array_sum($precio_nac_total_bol) ,'precio extranjero' =>array_sum($precio_ex_total_bol) );
+                unset($precio_nac_total_bol);
+                unset($precio_ex_total_bol);
+                unset($cantidad_bol);
+            }
+            $data_bol = $data_final_bol;
+            bol_fin_aj:
                 //union de jsons
-                $json=array_merge(json_decode($factura, true),json_decode($boleta, true));
+                $json=array_merge($data_fac,$data_bol);
             }else{
                 $json=[];
             }
@@ -274,214 +326,152 @@ class PeriodoConsultaController extends Controller
         $categoria=$request->categoria;
         $consulta = $request->consulta_p;
         $jsons = 1;
-        if($consulta == "1"){
+        if($consulta == "1" or $consulta == "3"){
             if($almacen==0){
-                $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                $kardex_entrada_registros=kardex_entrada_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
             }else{
-                $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
+                $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
             }
-                $cantidad_inicial=0;
-                $precio_nacional=0;
-                $precio_extranjero=0;
-                foreach($kardex_entrada_registros as $kardex_entrada_registro_f){
-                    $producto_id[]=$kardex_entrada_registro_f->producto_id;
-                }
-                $array_unico_productos=array_values(array_unique($producto_id));
-                $contador_prod=count($array_unico_productos);
-
-                for($a=0;$a<$contador_prod;$a++){
-                    $producto=Producto::where('id',$array_unico_productos[$a])->first();
-                    if($almacen==0){
-                        $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
-
-                        $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
-
-                        $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
-                    }else{
-                        $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
-
-                        $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
-
-                        $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
-                    }
-                    $cantidad_inicial=$cantidad_inicial+$kardex_entrada_r_cantidad_inicial;
-                    $precio_nacional=$precio_nacional+$kardex_entrada_r_precio_nacional;
-                    $precio_extranjero=$precio_extranjero+round($kardex_entrada_r_precio_extranjero,2);
-
-                    $kardex_entrada_r[$a]=array("producto" => $producto->nombre, "cantidad_inicial" => $kardex_entrada_r_cantidad_inicial , "precio_nacional" => $kardex_entrada_r_precio_nacional, "precio_extranjero" => round($kardex_entrada_r_precio_extranjero,2));
-                }
-                if (!isset($kardex_entrada_r)) {
-                    $kardex_entrada_r[]="";
-                }
-                $productos=$kardex_entrada_r;
-        }elseif($consulta == "2" ){
+            // return $kardex_entrada_registros;
+            if (count($kardex_entrada_registros) == 0) {
+                
+                goto salto_kard_ent;
+            }
             $cantidad_inicial=0;
             $precio_nacional=0;
             $precio_extranjero=0;
-            if($almacen == 0){
-                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-            }else{
-                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
-                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
+            foreach($kardex_entrada_registros as $kardex_entrada_registro_f){
+                $producto_id[]=$kardex_entrada_registro_f->producto_id;
             }
-            // return $factura_registro;
-            //MONEDA NACIONAL
-            // return $moneda_nac;  
-            foreach ($factura_registro as $f_reg) {
-                $factura = Facturacion::where('id',$f_reg->facturacion_id)->first();
 
+            $array_unico_productos=array_values(array_unique($producto_id));
+            $contador_prod=count($array_unico_productos);
+
+            for($a=0;$a<$contador_prod;$a++){
+                $producto=Producto::where('id',$array_unico_productos[$a])->first();
+                if($almacen==0){
+                    $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
+
+                    $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
+
+                    $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
+                }else{
+                    $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
+
+                    $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
+
+                    $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
+                }
+                $cantidad_inicial=$cantidad_inicial+$kardex_entrada_r_cantidad_inicial;
+                $precio_nacional=$precio_nacional+$kardex_entrada_r_precio_nacional;
+                $precio_extranjero=$precio_extranjero+round($kardex_entrada_r_precio_extranjero,2);
+
+                $kardex_entrada_r[$a]=array("producto" => $producto->nombre, "cantidad_inicial" => $kardex_entrada_r_cantidad_inicial , "precio_nacional" => $kardex_entrada_r_precio_nacional, "precio_extranjero" => round($kardex_entrada_r_precio_extranjero,2));
+            }
+            
+            $productos=$kardex_entrada_r;
+            salto_kard_ent:
+        }
+        if($consulta == "2" or $consulta == "3" ){
+            $cantidad_inicial=0;
+            $precio_nacional=0;
+            $precio_extranjero=0;
+            // if($almacen == 0){
+                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
+                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
+
+            if (count($factura_registro) == 0 or count($boleta_registro) == 0  ) {
+                
+                goto salto_fc_ent;
+            }
+            //FACTURA
+            foreach ($factura_registro as $f_reg) {
+                if($almacen == 0){
+                    $factura = Facturacion::where('id',$f_reg->facturacion_id)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->first();
+                }else{
+                    $factura = Facturacion::where('id',$f_reg->facturacion_id)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->first();
+                }
+                //MONEDA NACIONAL
                 if($factura->moneda_id == $moneda_nac->id){
                     $f_reg_pre_nac = $f_reg->precio_unitario_comi;
-                    $f_reg_pre_ex = ($f_reg->precio_unitario_comi/$factura->cambio);
+                    $f_reg_pre_ex = number_format(round($f_reg->precio_unitario_comi/$factura->cambio,1),2);
                 }else{
-                    $f_reg_pre_nac = ($f_reg->precio_unitario_comi*$factura->cambio);
+                    $f_reg_pre_nac = number_format(round($f_reg->precio_unitario_comi*$factura->cambio, 1, PHP_ROUND_HALF_UP),2);
                     $f_reg_pre_ex = $f_reg->precio_unitario_comi;
                 }
+                // $cant_fact_pro = 
+                $prod_fact[] = $f_reg->producto->nombre;
+                $data_extra_f[]=array('tipo' => 'Factura' ,'producto' => $f_reg->producto->nombre ,'cantidad' => $f_reg->cantidad  ,'precio nacional' => $f_reg_pre_nac, 'precio extranjero' => $f_reg_pre_ex);
 
-                $data_extra_f[]=array( 'producto' => $f_reg->producto->nombre,'precio nacional' => $f_reg_pre_nac, 'precio extranjero' => $f_reg_pre_ex);
             } 
+            $uniq_prod_fac =   array_unique($prod_fact);
 
-            $data =  $data_extra_f;
-            // return $data;
-            // $array=[100][100];
-            foreach($data as $cont => $data_f_l){
-                // $array[$cont][1] = ['0','0'];
-                $comp = array_search($data[$cont]['producto'], array($data_f_l['producto']));
-                if($comp !== false) {
-
-                    $data[$cont][1] = $data_f_l['precio nacional'] + $data[$cont]['precio nacional'];
-                    $data[$cont][2] = $data_f_l['precio extranjero'] + $data[$cont]['precio extranjero'];  
-                }else{
-                    $data[$cont][0] = $data_f_l['producto'];
-
-                    $data[$cont][1] = $data_f_l['precio nacional'] + $data[$cont]['precio nacional'];
-                    $data[$cont][2] = $data_f_l['precio extranjero'] + $data[$cont]['precio extranjero'];
+            $data_fact =  $data_extra_f;
+            
+            foreach ($uniq_prod_fac as  $prods_fac ) {
+                foreach ($data_fact as  $value_fac) {
+                    // return $value;
+                    if( $prods_fac == $value_fac['producto'] ){
+                        $cantidad_fac[] = $value_fac['cantidad'];
+                        $precio_nac_total_fac[] =   $value_fac['precio nacional'];       
+                        $precio_ex_total_fac[] =   $value_fac['precio extranjero'];      
+                    }
                 }
-                $data_f[] = array('producto'=> $data[$cont]['producto'],'precio nac' =>$data[$cont][1],'precio ex' =>$data[$cont][2]);
+                
+                $data_final_fac[] = array('tipo' => 'Factura' ,'producto' => $prods_fac,'precio nacional' => array_sum($precio_nac_total_fac) ,'cantidad' => array_sum($cantidad_fac)  ,'precio extranjero' =>array_sum($precio_ex_total_fac) );
+                unset($precio_nac_total_fac);
+                unset($precio_ex_total_fac);
+                unset($cantidad_fac);
             }
-            return $data_f;
+            $data_final_fac = $data_final_fac;
+            
+            // return $data_final_fac;
 
-
-
-            $data_factura =  $data_extra_f;
-            $data_c_f=count($data_extra_f);
- 
-            // return $$f_reg->id;
+            //BOLETA
             foreach ($boleta_registro as $b_reg) {
-                $boleta = Facturacion::where('id',$b_reg->id)->first();
+                if($almacen == 0){
+                    $boleta = Boleta::where('id',$b_reg->boleta_id)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->first();
+                }else{
+                    $boleta = Boleta::where('id',$b_reg->boleta_id)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->first();
+                }
+
 
                 if($boleta->moneda_id == $moneda_nac->id){
                     $b_reg_pre_nac = $b_reg->precio_unitario_comi;
-                    $b_reg_pre_ex = ($b_reg->precio_unitario_comi*$boleta->cambio);
+                    $b_reg_pre_ex = number_format(round($b_reg->precio_unitario_comi/$boleta->cambio,1),2);
                 }else{
-                    $b_reg_pre_nac = ($b_reg->precio_unitario_comi/$boleta->cambio);
+                    $b_reg_pre_nac = number_format(round($b_reg->precio_unitario_comi*$boleta->cambio, 1, PHP_ROUND_HALF_UP),2);
                     $b_reg_pre_ex = $b_reg->precio_unitario_comi;
                 }
-
-                $data_extra_b[]=array('tipo'=> 'Boleta' ,'producto ' => $b_reg->producto->nombre,'precio nacional' => $b_reg_pre_nac, 'precio extranjero' => $f_reg_pre_ex);
+                $prod_bol[] = $b_reg->producto->nombre;
+                $data_extra_b[] = array('tipo'=> 'Boleta' ,'producto' => $b_reg->producto->nombre,'cantidad' => $b_reg->cantidad  ,'precio nacional' => $b_reg_pre_nac, 'precio extranjero' => $b_reg_pre_ex);
             } 
-             
+            $uniq_prod_bol =   array_unique($prod_bol);
+
+            $data_bol =  $data_extra_b;
             
-        }else{
-            if($almacen == 0){
-                $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-            }else{
-                $kardex_entrada =  kardex_entrada::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
+            // return $data_bol;
+            foreach ($uniq_prod_bol as  $prods_bol ) {
+                foreach ($data_bol as  $value_bol) {
+                    // return $value_bol['productos'];
+                    if( $prods_bol == $value_bol['producto'] ){
+                        $cantidad_bol[] = $value_bol['cantidad'];
+                        $precio_nac_total_bol[] =   $value_bol['precio nacional'];       
+                        $precio_ex_total_bol[] =   $value_bol['precio extranjero'];      
+                    }
+                }
+                
+                $data_final_bol[] = array('tipo' => 'Boleta' ,'producto' => $prods_bol,'precio nacional' => array_sum($precio_nac_total_bol) , 'cantidad' => array_sum($cantidad_bol) ,'precio extranjero' =>array_sum($precio_ex_total_bol) );
+                unset($precio_nac_total_bol);
+                unset($precio_ex_total_bol);
+                unset($cantidad_bol);
             }
-            $cantidad_inicial=0;
-                $precio_nacional=0;
-                $precio_extranjero=0;
-                foreach($kardex_entrada_registros as $kardex_entrada_registro_f){
-                    $producto_id[]=$kardex_entrada_registro_f->producto_id;
-                }
-                $array_unico_productos=array_values(array_unique($producto_id));
-                $contador_prod=count($array_unico_productos);
-
-                for($a=0;$a<$contador_prod;$a++){
-                    $producto=Producto::where('id',$array_unico_productos[$a])->first();
-                    if($almacen==0){
-                        $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
-
-                        $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
-
-                        $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
-                    }else{
-                        $kardex_entrada_r_cantidad_inicial=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('cantidad_inicial');
-
-                        $kardex_entrada_r_precio_nacional=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_nacional');
-
-                        $kardex_entrada_r_precio_extranjero=kardex_entrada_registro::where('almacen_id',$almacen)->where('producto_id',$array_unico_productos[$a])->whereBetween('created_at',[$fecha_inicio,$fecha_final])->sum('precio_extranjero');
-                    }
-                    $cantidad_inicial=$cantidad_inicial+$kardex_entrada_r_cantidad_inicial;
-                    $precio_nacional=$precio_nacional+$kardex_entrada_r_precio_nacional;
-                    $precio_extranjero=$precio_extranjero+round($kardex_entrada_r_precio_extranjero,2);
-
-                    $kardex_entrada_r[$a]=array("producto" => $producto->nombre, "cantidad_inicial" => $kardex_entrada_r_cantidad_inicial , "precio_nacional" => $kardex_entrada_r_precio_nacional, "precio_extranjero" => round($kardex_entrada_r_precio_extranjero,2));
-                }
-                if (!isset($kardex_entrada_r)) {
-                    $kardex_entrada_r[]="";
-                }
-                $productos=$kardex_entrada_r;
-            if($almacen == 0){
-                $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                // $fac_count = count($factura);
-                foreach($factura as $facturacion){
-                    if($facturacion->moneda_id == $moneda_nac->id){
-                        $factura_reg_precio_n = number_format(Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi'),2);
-                        $factura_reg_precio_x = number_format($factura_reg_precio_n/$facturacion->cambio,2);
-                    }
-                    if($facturacion->moneda_id == $moneda_ex->id){
-                        $factura_reg_precio_x = number_format(Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi'),2);
-                        $factura_reg_precio_n = number_format(round($factura_reg_precio_x*$facturacion->cambio, 1, PHP_ROUND_HALF_UP),2);
-                    }
-                    // $factura_cambio = $facturacion->cambio;
-                    $factura_reg_cant = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('facturacion_id',$facturacion->id)->sum('cantidad');
-                    $data_extra_f[]=array('id' => $facturacion->created_at,'codigo_guia'=>$facturacion->codigo_fac,'tipo'=> 'Factura','cantidad'=>$factura_reg_cant,'cambio'=>$facturacion->cambio,'precio_nac'=>$factura_reg_precio_n,'precio_ex'=> $factura_reg_precio_x);
-                    // return $factura_reg_precio_x;
-                }
-                // return $data_extra_f;
-                //BOLETAS
-                $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-                // return $boleta;
-                foreach ($boleta as $boleta_reg) {
-                    if($boleta_reg->moneda_id == $moneda_nac->id){
-                        $boleta_reg_precio_n = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
-                        $boleta_reg_precio_x = number_format($boleta_reg_precio_n/$boleta_reg->cambio,2);
-                    }
-                    if($boleta_reg->moneda_id == $moneda_ex->id){
-                        $boleta_reg_precio_x = number_format(Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi'),2);
-                        $boleta_reg_precio_n = number_format(round($boleta_reg_precio_x*$boleta_reg->cambio,1, PHP_ROUND_HALF_UP ),2);
-                    // }else{
-
-                    }
-
-                    $boleta_reg_cant = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('boleta_id',$boleta_reg->id)->sum('cantidad');
-                    $data_extra_b[]=array('id' => $boleta_reg->created_at,'codigo_guia'=>$boleta_reg->codigo_boleta,'tipo'=> 'Boleta','cantidad'=>$boleta_reg_cant,'cambio'=>$boleta_reg->cambio,'precio_nac'=>$boleta_reg_precio_n,'precio_ex'=>$boleta_reg_precio_x);
-                }
-                    // return $data_extra_b;
-            }else{
-                //almacen seleccionado
-                $factura = Facturacion::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->get();
-                // $fac_count = count($factura);
-                foreach($factura as $facturacion){
-                    $factura_reg_precio = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->where('facturacion_id',$facturacion->id)->sum('precio_unitario_comi');
-                    $factura_reg_cant = Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->where('facturacion_id',$facturacion->id)->sum('cantidad');
-                    $data_extra_f[]=array('id' => $facturacion->created_at,'codigo_guia'=>$facturacion->codigo_fac,'tipo'=> 'Factura','cantidad'=>$factura_reg_cant,'precio'=>$factura_reg_precio);
-                }
-                //BOLETAS
-                $boleta = Boleta::whereBetween('created_at',[$fecha_inicio,$fecha_final])->get();
-
-                foreach ($boleta as $boleta_reg) {
-                    $boleta_reg_precio = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->where('boleta_id',$boleta_reg->id)->sum('precio_unitario_comi');
-                    $boleta_reg_cant = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('almacen_id',$almacen)->where('boleta_id',$boleta_reg->id)->sum('cantidad');
-                    $data_extra_b[]=array('id' => $boleta_reg->created_at,'codigo_guia'=>$boleta_reg->codigo_boleta,'tipo'=> 'Boleta','cantidad'=>$boleta_reg_cant,'precio'=>$boleta_reg_precio);
-                }
-            }
+            $data_final_bol = $data_final_bol;
+            salto_fc_ent:
         }
-        return view('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','productos','consulta','data_extra_f','data_extra_b','moneda_ex','moneda_nac','total_producto_k_e'));
+        // return view('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','productos','consulta','data_final_fac','data_final_bol','moneda_ex','moneda_nac','total_producto_k_e'));
         $archivo="Periodo - Consulta";
-        $pdf=PDF::loadView('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','productos ','consulta','data_extra_f','data_extra_b','moneda_ex','moneda_nac'));
+        $pdf=PDF::loadView('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','productos','consulta','data_final_fac','data_final_bol','moneda_ex','moneda_nac','total_producto_k_e'));
         return $pdf->download('Periodo consulta - '.$archivo.' .pdf');
 
         // return view('inventario.periodo-consulta.',compact('garantia_guia_ingreso','mi_empresa'));

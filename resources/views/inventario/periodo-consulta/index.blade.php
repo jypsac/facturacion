@@ -1,9 +1,9 @@
 @extends('layout')
 
-@section('title', 'periodo consulta')
+@section('title', 'Consulta de Inventario')
 @section('breadcrumb', 'Periodo')
 @section('breadcrumb2', 'Periodo')
-@section('href_accion', route('periodo-consulta.create'))
+{{-- @section('href_accion', route('periodo-consulta.create')) --}}
 @section('value_accion', 'Agregar')
 
 @section('content')
@@ -137,11 +137,11 @@
                         <table id="tablaid_venta" class="table table-striped table-bordered table-hover dataTables-example">
                             <thead>
                                 <tr>
-                                    <th>ID</th>
+                                    <th>Tipo</th>
                                     <th>Nombre producto</th>
-                                    <th>cantidad </th>
-                                    <th>precio </th>
-                                    <th>Stock</th>
+                                    <th>cantidad</th>
+                                    <th>Precio Nacional</th>
+                                    <th>Precio Extranjero</th>
                                 </tr>
                             </thead>
                         <tbody id="tbody_venta">
@@ -231,11 +231,12 @@
                         ],
                     "aaData": data,
                     "columns": [
-                        { "data": "id" },
-                        { "data": "producto.nombre" , "defaultContent": ""},
+                        { "data": "tipo" },
+                        { "data": "producto" , "defaultContent": ""},
+                        // { "data": "precio nacional" },
                         { "data": "cantidad" },
-                        { "data": "precio" },
-                        { "data": "stock" }
+                        { "data": "precio nacional" },
+                        { "data": "precio extranjero" }
                     ]
                 })
             });

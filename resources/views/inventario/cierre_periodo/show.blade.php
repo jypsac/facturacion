@@ -23,10 +23,10 @@
                             </div>
                             <div class="col-sm-2" align="center">
                                 <div class="row">
-                                    <div class="col-sm-6" align="right">
+                                    {{-- <div class="col-sm-6" align="right">
                                         <a href="" class="btn btn-success" style="background-color: green;border-color: green"><i class="fa fa-file-excel-o"></i></a>
-                                    </div>
-                                    <div class="col-sm-6" align="left">
+                                    </div> --}}
+                                    <div class="col-sm-12" align="right">
                                         <form action="{{route('cierre-periodo.pdf', $cierre_periodo->id)}}" >
                                     <input type="text" hidden="" name="cierre-periodo-id" value="1">
                                     <button type="submit" class="btn btn-danger" ><i class="fa fa-file-pdf-o"></i></button>
