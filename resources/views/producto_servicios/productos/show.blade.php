@@ -163,7 +163,12 @@
  <label class="col-sm-2 col-form-label">Stock Maximo:</label>
  <div class="col-sm-4"><input type="text" class="form-control" name="stock_maximo"  value="{{$producto->stock_maximo}}"  disabled="disabled">
  </div>
-
+<label class="col-sm-2 col-form-label">Tipo de Afectación:</label>
+    <div class="col-sm-4">
+     <div class="input-group m-b">
+       <input type="text" class="form-control" value="{{$producto->tipo_afec_i_producto->informacion}}" disabled="disabled">
+     </div>
+   </div>
 </div>
 
 

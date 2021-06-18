@@ -35,6 +35,7 @@ class ProductosTableSeeder extends Seeder
             'unidad_medida_id' => "7",
             'estado_id' => "1",
             'estado_anular'=>'1',
+            'tipo_afectacion_id' => 1,
             'created_at' => '2020-08-01 11:36:57',
             'updated_at' => "2020-08-01 11:36:58" ,
         ]);
@@ -77,6 +78,7 @@ class ProductosTableSeeder extends Seeder
             'unidad_medida_id' => "7",
             'estado_id' => "1",
             'estado_anular'=>'1',
+            'tipo_afectacion_id' => 1,
             'created_at' => '2020-08-01 11:36:57',
             'updated_at' => "2020-08-01 11:36:58" ,
         ]);

@@ -203,7 +203,17 @@
 <label class="col-sm-2 col-form-label">Stock Maximo:</label>
 <div class="col-sm-4"><input type="text" class="form-control" name="stock_maximo"  value="{{$producto->stock_maximo}}"  >
 </div>
-
+<label class="col-sm-2 col-form-label">Tipo de Afectacion:</label>
+ <div class="col-sm-4">
+   <div class="input-group m-b">
+    <select class="form-control m-b" name="tipo_afectacion">
+     <option value="{{$producto->tipo_afec_i_producto->id}}" style="font-weight:bold">{{$producto->tipo_afec_i_producto->informacion}}</option>
+     @foreach($tipo_afectacion as $tipo_afec)
+     <option value="{{ $tipo_afec->id }}">{{ $tipo_afec->informacion}}</option>
+     @endforeach
+   </select>
+ </div>
+</div>
 </div>
 
 

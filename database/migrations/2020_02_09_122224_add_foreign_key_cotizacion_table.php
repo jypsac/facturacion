@@ -45,6 +45,13 @@ class AddForeignKeyCotizacionTable extends Migration
             $table->boolean('estado');
             $table->boolean('estado_vigente');
             $table->string('tipo');
+            //
+            $table->string('op_gravada')->default('0');
+            $table->string('op_inafecta')->default('0');
+            $table->string('op_exonerada')->default('0');
+            $table->string('op_gratuita')->default('0');
+            $table->unsignedBigInteger('tipo_operacion_id')->nullable();
+            $table->unsignedBigInteger('tipo_documento_id')->nullable();
             $table->timestamps();
         });
     }

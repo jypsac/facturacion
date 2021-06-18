@@ -30,4 +30,7 @@ class Producto extends Model
     public function unidad_i_producto(){
         return $this->belongsTo(Unidad_medida::class,'unidad_medida_id');
     }
+    public function tipo_afec_i_producto(){
+        return $this->belongsTo(Tipo_afectacion::class,'tipo_afectacion_id');
+    }
 }

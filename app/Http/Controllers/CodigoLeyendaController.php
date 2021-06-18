@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
-use App\Tipo_documento_sunat;
+use App\Codigo_leyenda;
 use Illuminate\Http\Request;
 
-class TipoDocumentoSunatController extends Controller
+class CodigoLeyendaController extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -41,10 +41,10 @@ class TipoDocumentoSunatController extends Controller
     /**
      * Display the specified resource.
      *
-     * @param  \App\tipo_documento_sunat  $tipo_documento_sunat
+     * @param  \App\Codigo_leyenda  $codigo_leyenda
      * @return \Illuminate\Http\Response
      */
-    public function show(tipo_documento_sunat $tipo_documento_sunat)
+    public function show(Codigo_leyenda $codigo_leyenda)
     {
         //
     }
@@ -52,10 +52,10 @@ class TipoDocumentoSunatController extends Controller
     /**
      * Show the form for editing the specified resource.
      *
-     * @param  \App\tipo_documento_sunat  $tipo_documento_sunat
+     * @param  \App\Codigo_leyenda  $codigo_leyenda
      * @return \Illuminate\Http\Response
      */
-    public function edit(tipo_documento_sunat $tipo_documento_sunat)
+    public function edit(Codigo_leyenda $codigo_leyenda)
     {
         //
     }
@@ -64,10 +64,10 @@ class TipoDocumentoSunatController extends Controller
      * Update the specified resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request
-     * @param  \App\tipo_documento_sunat  $tipo_documento_sunat
+     * @param  \App\Codigo_leyenda  $codigo_leyenda
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, tipo_documento_sunat $tipo_documento_sunat)
+    public function update(Request $request, Codigo_leyenda $codigo_leyenda)
     {
         //
     }
@@ -75,10 +75,10 @@ class TipoDocumentoSunatController extends Controller
     /**
      * Remove the specified resource from storage.
      *
-     * @param  \App\tipo_documento_sunat  $tipo_documento_sunat
+     * @param  \App\Codigo_leyenda  $codigo_leyenda
      * @return \Illuminate\Http\Response
      */
-    public function destroy(tipo_documento_sunat $tipo_documento_sunat)
+    public function destroy(Codigo_leyenda $codigo_leyenda)
     {
         //
     }

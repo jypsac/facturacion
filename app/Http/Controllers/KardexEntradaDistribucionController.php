@@ -30,8 +30,8 @@ class KardexEntradaDistribucionController extends Controller
     public function index()
     {
         $kardex_distribucion=Kardex_entrada::where('tipo_registro_id',"3")->get();
-
-        return view('inventario.kardex.entrada.distribucion_producto.index',compact('kardex_distribucion'));
+        $almacen = Almacen::all();
+        return view('inventario.kardex.entrada.distribucion_producto.index',compact('kardex_distribucion','almacen'));
     }
 
     /**

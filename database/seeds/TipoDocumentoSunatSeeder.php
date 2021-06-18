@@ -165,7 +165,7 @@ class TipoDocumentoSunatSeeder extends Seeder
      ]);
        DB::table('tipo_documento_sunats')->insert([
         'id' => 18,
-       'codigo' => "71",
+       'codigo' => "72",
        'informacion' => "Guia de remisión remitente Transportista complementaria",
        'estado' => "0",
        'created_at' => date('2019-08-01 00:00:00'),

@@ -11,6 +11,7 @@ use App\Familia;
 use App\kardex_entrada_registro;
 use App\Moneda;
 use App\Stock_almacen;
+use App\Tipo_afectacion;
 use App\Stock_producto;
 use Illuminate\Http\Request;
 
@@ -43,7 +44,8 @@ class ProductosController extends Controller
         $estados=Estado::all();
         $categorias=Categoria::where('descripcion','PRODUCTOS')->first();
         $unidad_medidas=Unidad_medida::all();
-        return view('producto_servicios.productos.create',compact('unidad_medidas','categorias','marcas','estados','familias','monedas'));
+        $tipo_afectacion = Tipo_afectacion::all();
+        return view('producto_servicios.productos.create',compact('unidad_medidas','categorias','marcas','estados','familias','monedas','tipo_afectacion'));
     }
 
     /**
@@ -109,6 +111,7 @@ class ProductosController extends Controller
     $producto->peso=$peso.' '.$simbolo;
     $producto->stock_minimo=$request->get('stock_minimo');
     $producto->stock_maximo=$request->get('stock_maximo');
+    $producto->tipo_afectacion_id = $request->get('tipo_afectacion');
     $producto->foto=$name;
     $producto->estado_anular='1';
     $producto->save();
@@ -156,7 +159,8 @@ class ProductosController extends Controller
         $estados=Estado::all();
         $categorias=Categoria::all();
         $unidad_medidas=Unidad_medida::all();
-        return view('producto_servicios.productos.edit',compact('unidad_medidas','categorias','marcas','estados','familias','monedas','producto','peso','simbolo'));
+        $tipo_afectacion = Tipo_afectacion::all();
+        return view('producto_servicios.productos.edit',compact('unidad_medidas','categorias','marcas','estados','familias','monedas','producto','peso','simbolo','tipo_afectacion'));
     }
 
     /**
@@ -208,6 +212,7 @@ class ProductosController extends Controller
     $producto->peso=$peso.' '.$simbolo;
     $producto->stock_minimo=$request->get('stock_minimo');
     $producto->stock_maximo=$request->get('stock_maximo');
+    $producto->tipo_afectacion_id = $request->get('tipo_afectacion');
     $producto->foto=$name;
     $producto->save();
     return redirect()->route('productos.show',$id);

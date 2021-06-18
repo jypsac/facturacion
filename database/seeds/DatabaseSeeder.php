@@ -30,6 +30,9 @@ class DatabaseSeeder extends Seeder
         $this->call(FamiliasTableSeeder::class);        //innecesario
         $this->call(MarcasTableSeeder::class);          //inncesario
         $this->call(ServicioSeeder::class); //innecesario
+        $this->call(TipoOperacionFSeeder::class);
+        $this->call(Tipo_afectacionSeeder::class);
+        $this->call(CodigoLeyendaSeeder::class);
         $this->call(ProductosTableSeeder::class);       //inncesario
         $this->call(ConfigFacturacionElectronicaSeeder::class); //innecesario
         $this->call(MotivoTableSeeder::class);          //innecesario
@@ -44,6 +47,7 @@ class DatabaseSeeder extends Seeder
         $this->call(GarantiaTableSeeder::class);        //innecesario
         $this->call(FormaPagoSeeder::class);        //innecesario
         $this->call(TipoDocumentoSunatSeeder::class);
+
 
     }
 }

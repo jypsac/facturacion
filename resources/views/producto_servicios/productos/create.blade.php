@@ -214,7 +214,17 @@
  <label class="col-sm-2 col-form-label">Stock Maximo:</label>
  <div class="col-sm-4"><input type="text" class="form-control" name="stock_maximo" required="" value="0" autocomplete="off" >
  </div>
-
+ <label class="col-sm-2 col-form-label">Tipo de Afectacion:</label>
+ <div class="col-sm-4">
+   <div class="input-group m-b">
+    <select class="form-control m-b" name="tipo_afectacion" required="required">
+      {{-- <option>Seleccione La Unidad de Medida</option> --}}
+      @foreach($tipo_afectacion as $tipo_afec)
+      <option value="{{ $tipo_afec->id }}">{{ $tipo_afec->informacion}}</option>
+      @endforeach
+    </select>
+  </div>
+</div>
 </div>
 
 

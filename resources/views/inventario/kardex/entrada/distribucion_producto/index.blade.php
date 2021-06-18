@@ -1,7 +1,12 @@
 @extends('layout')
 @section('title', 'kardex Distribucion')
-@section('href_accion', route('kardex-entrada-Distribucion.create'))
-@section('value_accion', 'Agregar')
+@if(count($almacen) == 1)
+    @section('value_accion', '#')
+    @section('href_accion', '#')
+@else
+    @section('value_accion', 'Agregar')
+    @section('href_accion', route('kardex-entrada-Distribucion.create'))
+@endif
 
 @section('content')
 
