@@ -391,6 +391,7 @@ class CotizacionController extends Controller
             if($moneda->id == $moneda_registrada){
                 if ($moneda->tipo == 'nacional') {
                             //promedio original ojo revisar que es precio nacional --------------------------------------------------------
+                    
                     $array2=round(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional'));
                     $cotizacion_registro->promedio_original=$array2;
 
@@ -445,6 +446,11 @@ class CotizacionController extends Controller
                 $cotizacion_registro->precio_unitario_comi=($prec_uni_des+($prec_uni_des*$comi/100));
             }else{
                 $cotizacion_registro->precio_unitario_comi=$array+($array*$comi/100);
+            }
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado ') !== false){
+                $cotizacion_2=Cotizacion::find($cotizacion->id);
+                $cotizacion_2->op_gravada = $array2;
+                $cotizacion_2->save();
             }
             $cotizacion_registro->save();
         }
