@@ -215,17 +215,15 @@
     </div>
     <div class="col-sm-4 form-control" >
         <span style="display: block;float: left"> Sub Total:</span>
-        <span style="display: block;float: right;"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}</span>
+        <span style="display: block;float: right;"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{number_format($sub_total, 2)}}</span>
         <br>
         <span style="display: block;float: left"> Op. Agravada: </span> 
-        <span style="display: block;float: right"> {{$opgravada = $cotizacion->op_gravada}}</span><br>
+        <span style="display: block;float: right">{{$simbologia}}. {{number_format($cotizacion->op_gravada,2)}}</span><br>
         <span style="display: block;float: left"> Op. Inafecta: </span> 
-        <span style="display: block;float: right"> {{$op_inafecta = $cotizacion->op_inafecta}}</span><br>
-        <span style="display: block;float: left"> Op. Gratuita: </span> 
-        <span style="display: block;float: right"> {{$op_gratuita = $cotizacion->op_gratuita}}</span><br>
-        <span style="display: block;float: left"> Op. Exonerada: </span> 
-        <span style="display: block;float: right"> {{$op_exonerada = $cotizacion->op_exonerada}} </span><br>
-        <span style="display: block;float: left"> Igv.: </span> 
+        <span style="display: block;float: right">{{$simbologia}} {{ number_format($cotizacion->op_inafecta,2)}}</span><br>
+        <span style="display: block;float: left"> Op. Exonerada: </span>
+        <span style="display: block;float: right">{{$simbologia}}. {{number_format($cotizacion->op_exonerada,2)}} </span><br>
+        <span style="display: block;float: left"> I.G.V.: </span>
         <span style="display: block;float: right">@if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}} @else  {{$cotizacion->moneda->simbolo}}.00 @endif</span><br>
         <span style="display: block;float: left"> Importe Total: </span>
          <span style="display: block;float: right">@if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif</span>

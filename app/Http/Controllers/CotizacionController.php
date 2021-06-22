@@ -131,7 +131,7 @@ class CotizacionController extends Controller
                 $array_promedio[]=round(Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero'),2);
             }
         }
-
+// return $productos;
         //LLAMADO A TABLAS PARA LA VISTA
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
@@ -447,11 +447,18 @@ class CotizacionController extends Controller
             }else{
                 $cotizacion_registro->precio_unitario_comi=$array+($array*$comi/100);
             }
-            if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado ') !== false){
-                $cotizacion_2=Cotizacion::find($cotizacion->id);
-                $cotizacion_2->op_gravada = $array2;
-                $cotizacion_2->save();
+            //TIPO DE AFECTACION
+            $cotizacion_2=Cotizacion::find($cotizacion->id);
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
+                $cotizacion_2->op_gravada += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
             }
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Exonerado') !== false){
+                $cotizacion_2->op_exonerada += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+            }
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Inafecto') !== false){
+                $cotizacion_2->op_inafecta += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+            }
+            $cotizacion_2->save();
             $cotizacion_registro->save();
         }
     }else{
@@ -890,11 +897,14 @@ public function show($id)
     /* FIN registros boleta y factura*/
 
     /*de numeros a Letras*/
-    foreach ($cotizacion_registro as $cotizacion_registros) {
-        $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
-        $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+    // foreach ($cotizacion_registro as $cotizacion_registros) {
+    //     $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
+    //     $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+
+    // }
+    $sub_total = $cotizacion->op_gravada;
+    $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
         if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
-    }
     /* Finde numeros a Letras*/
 
     $firma= EmailConfiguraciones::where('id_usuario',$cotizacion->user_id)->pluck('firma_digital')->first();
