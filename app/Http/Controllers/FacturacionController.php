@@ -471,19 +471,19 @@ class FacturacionController extends Controller
                 if($moneda->id == $moneda_registrada){
                     if ($moneda->tipo == 'nacional') {
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                        $array2=Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional');
+                        $array2=round(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional'),2);
                         $facturacion_registro->promedio_original=$array2;
                         // respectividad de la moneda deacurdo al id
                         $utilidad=Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-                        $array=Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional')+$utilidad;
+                        $array=round(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional')+$utilidad,2);
                         $facturacion_registro->precio=$array;
                     }else {
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
-                        $array2=Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero');
+                        $array2=round(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero'),2);
                         $facturacion_registro->promedio_original=$array2;
                         // validacion para la otra moneda con igv paralelo
                         $utilidad=Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-                        $array=Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero')+$utilidad;
+                        $array=round(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero')+$utilidad,2);
                         $facturacion_registro->precio=$array;
                     }
                 }else{
@@ -517,11 +517,23 @@ class FacturacionController extends Controller
                 }
                 //precio unitario comision ----------------------------------------
                 if($desc_comprobacion <> 0){
-                    $factura_desc = $array-($array2*$desc_comprobacion/100);
-                    $facturacion_registro->precio_unitario_comi=$factura_desc+($factura_desc*$comi/100);
+                    $factura_desc = round($array-($array2*$desc_comprobacion/100),2);
+                    $facturacion_registro->precio_unitario_comi=round($factura_desc+($factura_desc*$comi/100),2);
                 }else{
-                    $facturacion_registro->precio_unitario_comi=$array+($array*$comi/100);
+                    $facturacion_registro->precio_unitario_comi=round($array+($array*$comi/100),2);
                 }
+                $facturacion_2=Facturacion::find($facturacion->id);
+                if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
+                    $facturacion_2->op_gravada += $facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad;
+                }
+                if(strpos($producto->tipo_afec_i_producto->informacion,'Exonerado') !== false){
+                    $facturacion_2->op_exonerada += $facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad;
+                }
+                if(strpos($producto->tipo_afec_i_producto->informacion,'Inafecto') !== false){
+                    $facturacion_2->op_inafecta += $facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad;
+                }
+                // return $cotizacion_registro->precio_unitario_comi;
+                $facturacion_2->save();
                 $facturacion_registro->save();
 
                 //empieza la busqueda total

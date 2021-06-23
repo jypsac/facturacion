@@ -392,7 +392,7 @@ class CotizacionController extends Controller
                 if ($moneda->tipo == 'nacional') {
                             //promedio original ojo revisar que es precio nacional --------------------------------------------------------
                     
-                    $array2=round(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional'));
+                    $array2=round(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional'),2);
                     $cotizacion_registro->promedio_original=$array2;
 
                             // respectividad de la moneda deacurdo al id
@@ -442,10 +442,10 @@ class CotizacionController extends Controller
             }
                 //precio unitario comision ----------------------------------------
             if($desc_comprobacion <> 0){
-                $prec_uni_des=$array-($array2*$desc_comprobacion/100);
-                $cotizacion_registro->precio_unitario_comi=($prec_uni_des+($prec_uni_des*$comi/100));
+                $prec_uni_des=round($array-($array2*$desc_comprobacion/100),2);
+                $cotizacion_registro->precio_unitario_comi=round($prec_uni_des+($prec_uni_des*$comi/100),2);
             }else{
-                $cotizacion_registro->precio_unitario_comi=$array+($array*$comi/100);
+                $cotizacion_registro->precio_unitario_comi=round($array+($array*$comi/100),2);
             }
             //TIPO DE AFECTACION
             $cotizacion_2=Cotizacion::find($cotizacion->id);
@@ -458,6 +458,8 @@ class CotizacionController extends Controller
             if(strpos($producto->tipo_afec_i_producto->informacion,'Inafecto') !== false){
                 $cotizacion_2->op_inafecta += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
             }
+            // return $cotizacion_registro->precio_unitario_comi;
+
             $cotizacion_2->save();
             $cotizacion_registro->save();
         }

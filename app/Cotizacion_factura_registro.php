@@ -13,4 +13,7 @@ class Cotizacion_factura_registro extends Model
     public function producto(){
         return $this->belongsTo(Producto::class,'producto_id');
     }
+    public function cotizacion(){
+        return $this->belongsTo(Cotizacion::class,'cotizacion_id');
+    }
 }

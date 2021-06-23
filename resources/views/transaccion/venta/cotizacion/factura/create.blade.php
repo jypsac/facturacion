@@ -209,7 +209,7 @@
                                                             @endforeach
                                                         </datalist>
                                                         <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
-                                                        <input style="width: 76px" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off"  />
+                                                        <input style="width: 76px" hidden="" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off"  />
 
                                                     </td>
 
@@ -242,7 +242,8 @@
                                                         </td>
                                                         <td>
                                                             <input style="width: 76px"  type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
-                                                            <input type='text' id='afectacion0'  style="width: 76px"  name='afectacion' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
+                                                            {{-- total afectacion    --}}
+                                                            <input type='text' id='afectacion0'  style="width: 76px"  name='afectacion' disabled="disabled" class="afectacion form-control " hidden=""  required  autocomplete="off"/>
 
                                                         </td>
                                                         <span id="spTotal"></span>
@@ -361,7 +362,7 @@
         </datalist>
 
         <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
-        <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off" />
+        <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required hidden  autocomplete="off" />
         </td>
 
         <td>
@@ -397,7 +398,7 @@
 
         <td>
         <input type='text' id='total${i}'  style="width: 76px"  name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
-        <input type='text' id='afectacion${i}'  style="width: 76px"  name='afectacion' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
+        <input type='text' id='afectacion${i}'  style="width: 76px" hidden  name='afectacion' disabled="disabled" class="afectacion form-control "  required  autocomplete="off"/>
         </td>
 
         </tr>`;
@@ -423,6 +424,8 @@
             success: function (msg) {
                         // console.log(msg);
                 $('#descripcion0').val(msg);
+     }
+                });
     });
 
 
@@ -451,6 +454,7 @@
             var separador=" ";
             //revirtiendo la cadena
             var reverse9=reverseString(comision);//devuelve toda la cadena articulo al reves
+            console.log(reverse9);
             //para comision
             var comision_v_r=reverse9.split(separador,1); //devuelve el precio en objeto al revez
             var comision_r=comision_v_r[0];//obtiene el precio del objeto [0] al revez
@@ -518,11 +522,12 @@
 
                 var final=comisiones*cantidad;
                 var final_decimal = Math.round(final * multiplier) / multiplier;
-                console.log(final_decimal);
+                // console.log(final_decimal);
                 if(afec.toString() == "Gravado"){
                     document.getElementById(`total${a}`).value = final_decimal;
                     document.getElementById(`afectacion${a}`).value = final_decimal;
                }else{
+                    document.getElementById(`total${a}`).value = final_decimal;
                    document.getElementById(`afectacion${a}`).value = 0;
                }
             } else {
@@ -549,20 +554,13 @@
                     document.getElementById(`total${a}`).value = final_decimal;
                     document.getElementById(`afectacion${a}`).value = final_decimal;
                }else{
+                    document.getElementById(`total${a}`).value = final_decimal;
                    document.getElementById(`afectacion${a}`).value = 0;
                }
 
             }
-             {{-- @if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado')!== false){{$prc_afec[$index] = $array[$index]}}@else --}}
-            // var afec = document.querySelector(`#tipo_afec${a}`).value;
-            // console.log(afec);
-            // if(afec.toString() == "Gravado"){
-                var totalInp = $('[name="total"]');
-                var total_t = 0;
-            // }else{
-            //     var totalInp = 0;
-            // }
-            // console.log(totalInp);
+            var totalInp = $('[name="afectacion"]');
+            var total_t = 0;
             totalInp.each(function(){
                 total_t += parseFloat($(this).val());
             });
@@ -635,7 +633,7 @@
             var afec_prec_tot=reverse5.split(separador,1);
             var afec_pre_r=afec_prec_tot[0];
             var afec_pre_v =reverseString(afec_prec_tot[0]);
-
+            document.getElementById(`tipo_afec${a}`).value =  afec_pre_v;
             console.log("el promedio original es: "+prom_v);
             console.log("el strock es: "+stock_v+"-------------")
 
@@ -645,9 +643,7 @@
             document.getElementById(`promedio_original${a}`).value = prom_v;
             document.getElementById(`stock${a}`).value = stock_v;
             document.getElementById(`descuento${a}`).value = descuento_v;
-            document.getElementById(`check_descuento${a}`).value =0;
-            document.getElementById(`tipo_afec${a}`).value =  afec_pre_v;
-
+            document.getElementById(`check_descuento${a}`).value = 0;
             var msg2 = parseInt(stock_v) ;
             $(`#cantidad${a}`).attr('max', stock_v );
             $(`#cantidad`).attr('max', stock_v );
@@ -655,6 +651,7 @@
             var comision=document.querySelector(`#comisionista`).value;
             //revirtiendo la cadena
             var reverse9=reverseString(comision);//devuelve toda la cadena articulo al reves
+            console.log(reverse9);
             //para comision
             var comision_v_r=reverse9.split(separador,1); //devuelve el precio en objeto al revez
             var comision_r=comision_v_r[0];//obtiene el precio del objeto [0] al revez
