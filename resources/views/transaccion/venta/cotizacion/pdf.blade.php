@@ -16,7 +16,7 @@
     border: 1px solid #e5e6e7;
     border-radius: 1px;
     color: inherit;
-    display: block;
+    display: ;
     padding: 6px 12px;
     transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
     width: 100%;
@@ -110,7 +110,7 @@
     Son : {{$letra_final}} {{$end_final}}/100 {{$cotizacion->moneda->nombre }}
 </h3>
 
-<table style="border: white 0px solid;text-align: center;" >
+{{-- <table style="border: white 0px solid;text-align: center;" >
     <tr style="border: white 0px solid" >
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
                 Subtotal <br style="height: 2px;">
@@ -145,6 +145,38 @@
                 @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif
             </td>
     </tr>
+</table> --}}
+<table  style="width: 100%;border-collapse:collapse;margin-bottom: -10px">
+     <tr>
+         <td style="width: 70%;border: none"></td>
+         <td   style="width: auto; ;border: 1px #e5e6e7 solid;border-top-right-radius: 8px 0 0 8px;margin-top: 0px;border-right: none;margin-right: 15px;border-collapse:collapse;" align="left">
+            <span > Sub Total:</span>
+            <br>
+            <span > Op. Agravada:</span> <br>
+            <span > Op. Inafecta:</span> <br>
+            <span > Op. Exonerada:</span> <br>
+            <span > I.G.V.:</span> <br>
+            <span > Importe Total:</span> <br>
+        </td>
+        <td   style="width: auto; ;border: 1px #e5e6e7 solid;border-top-left-radius: 8px 0 0 8px;margin-top: 0px;border-left: none;border-collapse:collapse;" align="right">
+            <span>{{$simbologia=$cotizacion->moneda->simbolo}}. {{number_format($sub_total, 2)}}</span><br>
+            <span>{{$simbologia}}. {{number_format($cotizacion->op_gravada,2)}}</span><br>
+            <span>{{$simbologia}}. {{number_format($cotizacion->op_inafecta,2)}}</span><br>
+            <span>{{$simbologia}}. {{number_format($cotizacion->op_exonerada,2)}}</span><br>
+            <span>@if($regla=="factura")
+                {{$simbologia}}. {{number_format(round($igv_p, 2),2)}}
+                @else
+                {{$simbologia}}. 0.00
+            @endif</span><br>
+            <span>
+            @if ($regla=="factura")
+                {{$simbologia}}. {{$end}}
+            @else
+                {{$simbologia}}. {{$end=round($sub_total, 2)}}
+            @endif
+        </span>
+        </td>
+     </tr>
 </table>
 </center>
 

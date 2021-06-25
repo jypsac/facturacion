@@ -938,16 +938,15 @@ public function print($id){
     /* FIN registros boleta y factura*/
     /*de numeros a Letras*/
 
-    foreach($cotizacion_registro as $cotizacion_registros){
-        $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
-        $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
-        if ($regla=='factura'){
+    // foreach($cotizacion_registro as $cotizacion_registros){
+    $sub_total=$cotizacion->op_gravada;
+    $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+    //     if ($regla=='factura'){
             $end=round($sub_total, 2)+round($igv_p, 2);
-        }elseif ($regla=='boleta'){
-            $end=round($sub_total, 2);
-        }
-    }
-
+    //     }elseif ($regla=='boleta'){
+    //         $end=round($sub_total, 2);
+    //     }
+    // }
     /* Finde numeros a Letras*/
     $empresa=Empresa::first();
     $sum=0;
@@ -971,15 +970,15 @@ public function pdf(Request $request,$id){
     }
     /* FIN registros boleta y factura*/
     /*de numeros a Letras*/
-    foreach($cotizacion_registro as $cotizacion_registros){
-        $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
-        $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
-        if ($regla=='factura'){
-            $end=round($sub_total, 2)+round($igv_p, 2);
-        }elseif ($regla=='boleta'){
-            $end=round($sub_total, 2);
-        }
+    // foreach($cotizacion_registro as $cotizacion_registros){
+    $sub_total=$cotizacion->op_gravada;
+    $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+    if($regla=='factura'){
+        $end=round($sub_total, 2)+round($igv_p, 2);
+    }elseif($regla=='boleta'){
+        $end=round($sub_total, 2);
     }
+    // }
 
     /* Finde numeros a Letras*/
     $empresa=Empresa::first();
@@ -987,7 +986,7 @@ public function pdf(Request $request,$id){
     $i=1;
     $regla=$cotizacion->tipo;
     $archivo=$name.$regla.$id.".pdf";
-
+    // return view('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
     if($request->get('firma') == "0"){
         $pdf=PDF::loadView('transaccion.venta.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','regla','sum','igv','sub_total','banco','i','end','igv_p','banco_count'));
         return $pdf->download('Cotizacion - '.$archivo.'.pdf');
