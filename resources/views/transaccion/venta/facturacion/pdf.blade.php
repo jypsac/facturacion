@@ -5,7 +5,7 @@
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cotizacion</title>{{--
+    <title>Facturacion</title>{{--
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" > --}}
     <link href="{{ asset('css/estilos_pdf.css') }}" rel="stylesheet">
 </head>
@@ -166,41 +166,33 @@
 @endif
 <footer style="padding-top: 120px">
 
-<table style="border: white 0px solid;text-align: center;" >
-    <tr style="border: white 0px solid" >
-            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                Subtotal <br style="height: 2px;">
-            </td>
-        <th style="width: 2%;border-color: white"></th>
-            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                 Op. Agravada <br style="height: 2px;">
-             </td>
-         <th style="width: 2%;border-color: white"></th>
-            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                IGV  <br style="height: 2px;">
-            </td>
-        <th style="width: 2%;border-color: white"></th>
-            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                Importe Total <br style="height: 2px;">
-            </td>
-    </tr>
-    <tr style="border: white 0px solid" >
-            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                {{-- {{$simbologia=$cotizacion->moneda->simbolo}}. --}}    S/.{{round($sub_total, 2)}}
-            </td>
-        <th style="width: 2%;border-color: white"></th>
-            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                {{-- {{$simbologia=$cotizacion->moneda->simbolo}} --}}S/.00
-            </td>
-        <th style="width: 2%;border-color: white"></th>
-            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-               {{-- {{$simbologia=$cotizacion->moneda->simbolo}} --}} S/.{{round($igv_p, 2)}}
-            </td>
-        <th style="width: 2%;border-color: white"></th>
-            <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
-                {{-- {{$cotizacion->moneda->simbolo}} --}}    S/.{{$end}}
-            </td>
-    </tr>
+<table  style="width: 100%;border-collapse:collapse;margin-bottom: -10px">
+     <tr>
+         <td style="width: 70%;border: none"></td>
+         <td   style="width: auto; ;border: 1px #e5e6e7 solid;border-top-right-radius: 8px 0 0 8px;margin-top: 0px;border-right: none;margin-right: 15px;border-collapse:collapse;" align="left">
+            <span > Sub Total:</span>
+            <br>
+            <span > Op. Agravada:</span> <br>
+            <span > Op. Inafecta:</span> <br>
+            <span > Op. Exonerada:</span> <br>
+            <span > I.G.V.:</span> <br>
+            <span > Importe Total:</span> <br>
+        </td>
+        <td   style="width: auto; ;border: 1px #e5e6e7 solid;border-top-left-radius: 8px 0 0 8px;margin-top: 0px;border-left: none;border-collapse:collapse;" align="right">
+            <span>{{$simbologia=$facturacion->moneda->simbolo}}. {{number_format($sub_total, 2)}}</span><br>
+            <span>{{$simbologia}}. {{number_format($facturacion->op_gravada,2)}}</span><br>
+            <span>{{$simbologia}}. {{number_format($facturacion->op_inafecta,2)}}</span><br>
+            <span>{{$simbologia}}. {{number_format($facturacion->op_exonerada,2)}}</span><br>
+            <span>
+                {{$simbologia}}. {{number_format(round($igv_p, 2),2)}}
+                
+            </span><br>
+            <span>
+                {{$simbologia}}. {{$end}}
+            
+        </span>
+        </td>
+     </tr>
 </table>
 </center>
 

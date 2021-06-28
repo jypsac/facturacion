@@ -147,7 +147,6 @@
                                     {{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                                     {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                 </td>
-                                <p>Hola</p>
                             </tr>
                             <span hidden="hidden">{{$i++}}</span>
                             @endforeach
@@ -204,21 +203,22 @@
 
             <br><br><br><br>
             <div class="row">
-                <div class="col-sm-3 ">
-                    <p class="form-control a"> Sub Total</p>
-                    <p class="form-control a"> S/.{{round($sub_total, 2)}}</p>
+                <div class="col-sm-8 ">
                 </div>
-                <div class="col-sm-3 ">
-                    <p class="form-control a"> Op. Agravada</p>
-                    <p class="form-control a"> S/.00</p>
-                </div>
-                <div class="col-sm-3 ">
-                    <p class="form-control a"> IGV</p>
-                    <p class="form-control a"> S/.{{round($igv_p, 2)}}</p>
-                </div>
-                <div class="col-sm-3 ">
-                    <p class="form-control a"> Importe Total</p>
-                    <p class="form-control a"> S/.{{$end}}</p>
+                <div class="col-sm-4 form-control" >
+                    <span style="display: block;float: left"> Sub Total:</span>
+                    <span style="display: block;float: right;"> {{$simbologia=$facturacion->moneda->simbolo}}. {{number_format($sub_total, 2)}}</span>
+                    <br>
+                    <span style="display: block;float: left"> Op. Agravada: </span>
+                    <span style="display: block;float: right">{{$simbologia}}. {{number_format($facturacion->op_gravada,2)}}</span><br>
+                    <span style="display: block;float: left"> Op. Inafecta: </span>
+                    <span style="display: block;float: right">{{$simbologia}} {{ number_format($facturacion->op_inafecta,2)}}</span><br>
+                    <span style="display: block;float: left"> Op. Exonerada: </span>
+                    <span style="display: block;float: right">{{$simbologia}}. {{number_format($facturacion->op_exonerada,2)}} </span><br>
+                    <span style="display: block;float: left"> I.G.V.: </span>
+                    <span style="display: block;float: right">{{$facturacion->moneda->simbolo}}.{{number_format(round($igv_p, 2),2)}}</span><br>
+                    <span style="display: block;float: left"> Importe Total: </span>
+                     <span style="display: block;float: right">{{$facturacion->moneda->simbolo}}.{{$end}}</span>
                 </div>
             </div><br>
             <div class="row">
