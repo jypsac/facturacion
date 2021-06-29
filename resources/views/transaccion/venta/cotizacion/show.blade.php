@@ -190,7 +190,7 @@
     ?>
     Son : {{$letra_final}} {{$end_final}}/100 {{$cotizacion->moneda->nombre }}
 </h3>
-
+{{-- //POSIBLE CONDICIONAL PARA LA VISTA, 1ERO EN BOLETA, 2DO EN FACTURA POR OP GRAVADA --}}
 {{-- <div class="row">
     <div class="col-sm-3 ">
         <p class="form-control a"> Sub Total</p>

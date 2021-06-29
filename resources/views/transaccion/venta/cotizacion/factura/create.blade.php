@@ -90,7 +90,7 @@
                                     <td>Cliente</td>
                                     <td>:</td>
                                     <td>
-                                        <input list="browsersc1" class="form-control m-b" name="cliente" required="required" value="{{ old('nombre')}}" autocomplete="off">
+                                        <input list="browsersc1" class="form-control" name="cliente" required="required" value="{{ old('nombre')}}" autocomplete="off">
                                         <datalist id="browsersc1" >
                                             @foreach($clientes as $cliente)
                                             <option id="{{$cliente->id}}">{{$cliente->numero_documento}} - {{$cliente->nombre}}</option>
@@ -101,7 +101,7 @@
                                     <td>Comisionista</td>
                                     <td>:</td>
                                     <td>
-                                        <input list="browsersc2" class="form-control m-b" id="comisionista" name="comisionista" required value="Sin comision - 0" onkeyup="comision()" autocomplete="off">
+                                        <input list="browsersc2" class="form-control" id="comisionista" name="comisionista" required value="Sin comision - 0" onkeyup="comision()" autocomplete="off">
                                         <datalist id="browsersc2" >
                                             <option id="">Sin comision - 0 </option>
                                             @foreach($p_venta as $p_ventas)
@@ -166,6 +166,21 @@
                                             <td>
                                                 <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tipo de Operacion</td>
+                                            <td>:</td>
+                                            <td><select class="form-control" name="tipo_operacion" >
+                                                @foreach($tipo_operacion as $t_op)
+                                                <option id="{{$t_op->id}}">{{$t_op->codigo}} - {{$t_op->informacion}}</option>
+                                                @endforeach
+                                                </select>
+                                            </td>
+                                            {{-- <td>Fecha de cotizacion</td>
+                                            <td>:</td>
+                                            <td>
+                                                <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
+                                            </td> --}}
                                         </tr>
                                         <tr>
                                             <td>Observacion</td>

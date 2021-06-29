@@ -134,7 +134,7 @@
                                 {{-- @endif --}}
                                 @endforeach
                                 <tr>
-                                    <td colspan="3" rowspan="4">
+                                    <td colspan="3" rowspan="6">
                                         <div class="row">
                                             <div class="col-lg-2" align="center">
                                                 <img src="https://www.codigos-qr.com/qr/php/qr_img.php?d=https%3A%2F%2Fwww.jypsac.com%2F&s=6&e=m" alt="Generador de Códigos QR Codes" height="150px" />
@@ -155,14 +155,34 @@
                                     <td></td>
                                     <td>Sub Total</td>
                                     <td>
-                                        {{$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
-                                        <input type="text" hidden="" name="sub_total_sin_igv" value="{{round($sub_total, 2)}}" >
+                                        {{$simbologia = $cotizacion->moneda->simbolo}}.{{number_format(round($sub_total, 2),2)}}
+                                        <input type="text" hidden="" name="sub_total_sin_igv" value="{{number_format(round($sub_total, 2),2)}}" >
                                     </td>
                                 </tr>
                                 <tr>
                                     <td></td>
-                                    <td>IGV</td>
-                                    <td>{{$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}}</td>
+                                    <td>Op. Gravada</td>
+                                    <td>{{$simbologia}}. {{number_format($cotizacion->op_gravada,2)}}</td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Op. Inafecta</td>
+                                    <td>{{$simbologia}} {{ number_format($cotizacion->op_inafecta,2)}}
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Op. Exonerada</td>
+                                    <td>{{$simbologia}}. {{number_format($cotizacion->op_exonerada,2)}}
+                                        <input type="text" value="{{$end}}" hidden="hidden" name="precio_final_igv">
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td></td>
+                                    <td>Igv.</td>
+                                    <td>{{$cotizacion->moneda->simbolo}}.{{number_format(round($igv_p, 2),2)}}
+                                        <input type="text" value="{{$end}}" hidden="hidden" name="precio_final_igv">
+                                    </td>
                                 </tr>
                                 <tr>
                                     <td></td>
@@ -171,6 +191,7 @@
                                         <input type="text" value="{{$end}}" hidden="hidden" name="precio_final_igv">
                                     </td>
                                 </tr>
+
                                 <tr></tr>
                             </tbody>
                         </table>

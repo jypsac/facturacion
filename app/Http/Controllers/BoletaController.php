@@ -24,6 +24,7 @@ use App\Ventas_registro;
 use App\Kardex_entrada;
 use App\kardex_entrada_registro;
 use App\TipoCambio;
+use App\Tipo_operacion_f;
 use App\Stock_almacen;
 use App\Stock_producto;
 use Carbon\Carbon;
@@ -118,7 +119,7 @@ class BoletaController extends Controller
         $moneda=Moneda::where('principal','1')->first();
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
-
+        $tipo_operacion = Tipo_operacion_f::all();
         $empresa=Empresa::first();
 
         // obtencion de la sucursal
@@ -145,7 +146,7 @@ class BoletaController extends Controller
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
 
-        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','sucursal','boleta_numero'));
+        return view('transaccion.venta.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','sucursal','boleta_numero','tipo_operacion'));
 
     }
 
@@ -210,7 +211,7 @@ class BoletaController extends Controller
 
         $personales=Personal::all();
         $p_venta=Personal_venta::where('estado','0')->get();
-
+        $tipo_operacion = Tipo_operacion_f::all();
 
         $empresa=Empresa::first();
 
@@ -238,7 +239,7 @@ class BoletaController extends Controller
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
 
-        return view('transaccion.venta.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_numero','sucursal'));
+        return view('transaccion.venta.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','boleta_numero','sucursal','tipo_operacion'));
 
     }
 
@@ -379,6 +380,10 @@ class BoletaController extends Controller
             }
 
         }
+        // CODIGO PARA BUSCAR EL ID DEL TIPO DE DOCUMENTO
+        $operacion=$request->get('tipo_operacion');
+        $nombre = strstr($operacion, '-',true);
+        $busca_ope=Tipo_operacion_f::where('codigo',$nombre)->first();
         $igv=Igv::first();
         $boleta=new Boleta;
         $boleta->codigo_boleta=$boleta_numero;
@@ -398,6 +403,8 @@ class BoletaController extends Controller
         $boleta->user_id =auth()->user()->id;
         $boleta->estado='0';
         $boleta->tipo='producto';
+        $boleta->tipo_documento_id = 3;
+        $boleta->tipo_operacion_id = $busca_ope->id;
         $boleta->save();
 
         $total_comi=$request->get('total_comi');
@@ -519,8 +526,19 @@ class BoletaController extends Controller
                     $precio_comi = $array+($array*($comi/100));
                     $boleta_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv->igv_total/100));
             }
-
-                $boleta_registro->save();
+             //TIPO DE AFECTACION
+            $boleta_2=Boleta::find($boleta->id);
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
+                $boleta_2->op_gravada += $boleta_registro->precio_unitario_comi*$boleta_registro->cantidad;
+            }
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Exonerado') !== false){
+                $boleta_2->op_exonerada += $boleta_registro->precio_unitario_comi*$boleta_registro->cantidad;
+            }
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Inafecto') !== false){
+                $boleta_2->op_inafecta += $boleta_registro->precio_unitario_comi*$boleta_registro->cantidad;
+            }
+            $boleta_2->save();
+            $boleta_registro->save();
                 // return $array;
 
                 $almacen=$boleta->almacen_id;

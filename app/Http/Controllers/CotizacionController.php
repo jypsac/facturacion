@@ -26,6 +26,7 @@ use App\Personal;
 use App\Personal_venta;
 use App\Producto;
 use App\TipoCambio;
+use App\Tipo_operacion_f;
 use App\Unidad_medida;
 use App\User;
 use App\Ventas_registro;
@@ -131,8 +132,8 @@ class CotizacionController extends Controller
                 $array_promedio[]=round(Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero'),2);
             }
         }
-// return $productos;
         //LLAMADO A TABLAS PARA LA VISTA
+        $tipo_operacion = Tipo_operacion_f::all();
         $forma_pagos=Forma_pago::all();
         $clientes=Cliente::where('documento_identificacion','ruc')->get();
         $personales=Personal::all();
@@ -143,7 +144,7 @@ class CotizacionController extends Controller
         $suma=$personal_contador+1;
         $categoria='producto';
 
-        return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','cotizacion_numero','sucursal'));
+        return view('transaccion.venta.cotizacion.factura.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','cotizacion_numero','sucursal','tipo_operacion'));
     }
 
     public function create_factura_ms(Request $request)
@@ -179,52 +180,53 @@ class CotizacionController extends Controller
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
            return back()->withErrors(['No hay productos en el Almacen con nombre: '.$sucursal->nombre.'']);
-       }
+        }
 
         //LLAMAMIENTO DE PRODUCTOS
        $lista=array_values(array_unique($prod));
        $lista_count=count($lista);
        for($x=0;$x<$lista_count;$x++){
         $validacion[$x]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
-        if(!$validacion[$x]==NULL){
-            $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            if(!$validacion[$x]==NULL){
+                $productos[]=Producto::where('estado_anular',1)->where('estado_id','!=',2)->where('id',$lista[$x])->first();
+            }
         }
-    }
-    $almacen = $sucursal_p;
-      //CALCULO PARA ARRAY DE PRECIO,STOCK,ETC
-    $moneda=Moneda::where('principal','0')->first();
-    $tipo_cambio=TipoCambio::latest('created_at')->first();
-    if ($moneda->tipo == 'extranjera'){
-        foreach ($productos as $index => $producto) {
-            $utilidad[]=Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
-            $array[]=round((Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo,2);
-            $array_cantidad[]=Stock_almacen::where('producto_id',$producto->id)->where('almacen_id',$almacen)->pluck('stock')->first();
-            $array_promedio[]=round(Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')/$tipo_cambio->paralelo,2);
-            // return ($producto->utilidad-$producto->descuento1)/100;
+        $almacen = $sucursal_p;
+          //CALCULO PARA ARRAY DE PRECIO,STOCK,ETC
+        $moneda=Moneda::where('principal','0')->first();
+        $tipo_cambio=TipoCambio::latest('created_at')->first();
+        if ($moneda->tipo == 'extranjera'){
+            foreach ($productos as $index => $producto) {
+                $utilidad[]=Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+                $array[]=round((Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo,2);
+                $array_cantidad[]=Stock_almacen::where('producto_id',$producto->id)->where('almacen_id',$almacen)->pluck('stock')->first();
+                $array_promedio[]=round(Stock_producto::where('producto_id',$producto->id)->avg('precio_nacional')/$tipo_cambio->paralelo,2);
+                // return ($producto->utilidad-$producto->descuento1)/100;
+            }
+        }else{
+            foreach ($productos as $index => $producto) {
+                $utilidad[]=Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+                $array[]=round((Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo,2);
+                $array_cantidad[]=Stock_almacen::where('producto_id',$producto->id)->where('almacen_id',$almacen)->pluck('stock')->first();
+                $array_promedio[]=round(Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')*$tipo_cambio->paralelo,2);
+            }
         }
-    }else{
-        foreach ($productos as $index => $producto) {
-            $utilidad[]=Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-            $array[]=round((Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo,2);
-            $array_cantidad[]=Stock_almacen::where('producto_id',$producto->id)->where('almacen_id',$almacen)->pluck('stock')->first();
-            $array_promedio[]=round(Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')*$tipo_cambio->paralelo,2);
-        }
-    }
 
-        //LLAMADOS DE TABLAS PARA LA VISTA
-    $forma_pagos=Forma_pago::all();
-    $clientes=Cliente::where('documento_identificacion','ruc')->get();
-    $personales=Personal::all();
-    $p_venta=Personal_venta::where('estado','0')->get();
-    $igv=Igv::first();
-    $empresa=Empresa::first();
-    $personal_contador= Facturacion::all()->count();
-    $suma=$personal_contador+1;
-    $categoria='producto';
+            //LLAMADOS DE TABLAS PARA LA VISTA
+        $forma_pagos=Forma_pago::all();
+        $clientes=Cliente::where('documento_identificacion','ruc')->get();
+        $personales=Personal::all();
+        $p_venta=Personal_venta::where('estado','0')->get();
+        $igv=Igv::first();
+        $empresa=Empresa::first();
+        $personal_contador= Facturacion::all()->count();
+        $suma=$personal_contador+1;
+        $tipo_operacion = Tipo_operacion_f::all();
+        $categoria='producto';
 
-    return view('transaccion.venta.cotizacion.factura.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','cotizacion_numero','sucursal'));
-    // return $utilidad;
-}
+        return view('transaccion.venta.cotizacion.factura.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','cotizacion_numero','sucursal','tipo_operacion'));
+        // return $utilidad;
+    }
 
     /**
      * Store a newly created resource in storage.
@@ -237,6 +239,7 @@ class CotizacionController extends Controller
 
     public function store_factura(Request $request,$id_moneda)
     {
+
         //codigo para convertir nombre a producto
         $cantidad_p = $request->input('cantidad');
         $count_cantidad_p=count($cantidad_p);
@@ -339,6 +342,10 @@ class CotizacionController extends Controller
                 return "cantidad mayor al stock";
             }
         }
+        // CODIGO PARA BUSCAR EL ID DEL TIPO DE DOCUMENTO
+        $operacion=$request->get('tipo_operacion');
+        $nombre = strstr($operacion, '-',true);
+        $busca_ope=Tipo_operacion_f::where('codigo',$nombre)->first();
 
         $cotizacion=new Cotizacion;
         $cotizacion->cod_cotizacion=$cotizacion_numero;
@@ -361,6 +368,8 @@ class CotizacionController extends Controller
        $cotizacion->estado='0';
        $cotizacion->estado_vigente='0';
        $cotizacion->tipo='factura';
+       $cotizacion->tipo_documento_id = 2;
+       $cotizacion->tipo_operacion_id = $busca_ope->id;
        $cotizacion->save();
 
         //contador de valores de cantidad
@@ -552,8 +561,9 @@ class CotizacionController extends Controller
     $personales=Personal::all();
     $p_venta=Personal_venta::where('estado','0')->get();
     $empresa=Empresa::first();
+    $tipo_operacion = Tipo_operacion_f::all();
 
-    return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','cotizacion_numero','sucursal'));
+    return view('transaccion.venta.cotizacion.boleta.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','cotizacion_numero','sucursal','tipo_operacion'));
 }
 
     //agregamiento de una nueva funcion create_boleta a monde secundaria comnetado
@@ -630,8 +640,9 @@ public function create_boleta_ms(Request $request)
     $personales=Personal::all();
     $p_venta=Personal_venta::where('estado','0')->get();
     $empresa=Empresa::first();
+    $tipo_operacion = Tipo_operacion_f::all();
 
-    return view('transaccion.venta.cotizacion.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','cotizacion_numero','sucursal'));
+    return view('transaccion.venta.cotizacion.boleta.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','cotizacion_numero','sucursal','tipo_operacion'));
 }
 
     /**
@@ -757,7 +768,10 @@ public function create_boleta_ms(Request $request)
             return "cantidad mayor al stock";
         }
     }
-
+    // CODIGO PARA BUSCAR EL ID DEL TIPO DE DOCUMENTO
+    $operacion=$request->get('tipo_operacion');
+    $nombre = strstr($operacion, '-',true);
+    $busca_ope=Tipo_operacion_f::where('codigo',$nombre)->first();
         //REGISTRO EN TABLA COTIZACION
     $cotizacion=new Cotizacion;
     $cotizacion->cod_cotizacion=$cotizacion_numero;
@@ -780,6 +794,8 @@ public function create_boleta_ms(Request $request)
     $cotizacion->estado='0';
     $cotizacion->estado_vigente='0';
     $cotizacion->tipo='boleta';
+    $cotizacion->tipo_documento_id = 3;
+    $cotizacion->tipo_operacion_id = $busca_ope->id;
     $cotizacion->save();
 
         //contador de valores de cantidad
@@ -871,7 +887,21 @@ public function create_boleta_ms(Request $request)
                 $precio_comi = $array+($array*($comi/100));
                 $cotizacion_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv->igv_total/100));
             }
+
+             //TIPO DE AFECTACION
+            $cotizacion_2=Cotizacion::find($cotizacion->id);
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
+                $cotizacion_2->op_gravada += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+            }
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Exonerado') !== false){
+                $cotizacion_2->op_exonerada += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+            }
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Inafecto') !== false){
+                $cotizacion_2->op_inafecta += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+            }
+            $cotizacion_2->save();
             $cotizacion_registro->save();
+            // return $cotizacion_registro->precio_unitario_comi;
         }
     }else {
         return redirect()->route('cotizacion.create_boleta')->with('campo', 'Falto introducir un campo de la tabla productos');
@@ -1204,7 +1234,11 @@ public function facturar_store(Request $request)
     $facturar->comisionista=$cotizacion->comisionista_id;
     $facturar->user_id =auth()->user()->id;
     $facturar->estado='0';
-    $facturar->tipo='producto';
+    $facturar->op_gravada=$cotizacion->op_gravada;
+    $facturar->op_inafecta=$cotizacion->op_inafecta;
+    $facturar->op_exonerada=$cotizacion->op_exonerada;
+    $facturar->tipo_operacion_id=$cotizacion->tipo_operacion_id;
+    $facturar->tipo_documento_id=$cotizacion->tipo_documento_id;
     $facturar->save();
 
     // modificacion para que se cierre el codigo en almacen
@@ -1753,6 +1787,11 @@ public function facturar_store(Request $request)
         $boletear->user_id =auth()->user()->id;
         $boletear->estado='0';
         $boletear->tipo='producto';
+        $boletear->op_gravada=$cotizacion->op_gravada;
+        $boletear->op_inafecta=$cotizacion->op_inafecta;
+        $boletear->op_exonerada=$cotizacion->op_exonerada;
+        $boletear->tipo_operacion_id=$cotizacion->tipo_operacion_id;
+        $boletear->tipo_documento_id=$cotizacion->tipo_documento_id;
         $boletear->save();
 
         // modificacion para que se cierre el codigo en almacen
