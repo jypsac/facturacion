@@ -1234,6 +1234,7 @@ public function facturar_store(Request $request)
     $facturar->comisionista=$cotizacion->comisionista_id;
     $facturar->user_id =auth()->user()->id;
     $facturar->estado='0';
+    $facturar->tipo='producto';
     $facturar->op_gravada=$cotizacion->op_gravada;
     $facturar->op_inafecta=$cotizacion->op_inafecta;
     $facturar->op_exonerada=$cotizacion->op_exonerada;

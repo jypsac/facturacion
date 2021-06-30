@@ -167,6 +167,21 @@
                                                 </td>
                                             </tr>
                                             <tr>
+                                            <td>Tipo de Operacion</td>
+                                            <td>:</td>
+                                            <td><select class="form-control" name="tipo_operacion" >
+                                                @foreach($tipo_operacion as $t_op)
+                                                <option id="{{$t_op->id}}">{{$t_op->codigo}} - {{$t_op->informacion}}</option>
+                                                @endforeach
+                                                </select>
+                                            </td>
+                                            {{-- <td>Fecha de cotizacion</td>
+                                            <td>:</td>
+                                            <td>
+                                                <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
+                                            </td> --}}
+                                        </tr>
+                                            <tr>
                                                 <td>Observacion</td>
                                                 <td>:</td>
                                                 <td colspan="4">

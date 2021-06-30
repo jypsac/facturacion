@@ -149,8 +149,9 @@ class PeriodoConsultaController extends Controller
             $consulta=$request->consulta_p;
 
             if($consulta=="2" or $consulta=="3"){
-                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
-                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
+                $productos = Producto::whereBetween('tipo_afectacion_id', [1,8])->pluck('id');
+                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('producto_id',$productos)->get();
+                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('producto_id',$productos)->get();
             if(count($factura_registro) == 0){
                 $data_fac =[];
                 goto fact_fin_aj;
@@ -235,7 +236,7 @@ class PeriodoConsultaController extends Controller
                     }
                 }
 
-                $data_final_bol[] = array('tipo' => 'Boleta' ,'producto' => $prods_bol, 'cantidad' => array_sum($cantidad_bol) ,'precio nacional' => array_sum($precio_nac_total_bol) ,'precio extranjero' =>array_sum($precio_ex_total_bol) );
+                $data_final_bol[] = array('tipo' => 'Boleta' ,'producto' => $prods_bol, 'cantidad' => array_sum($cantidad_bol) ,'precio nacional' => round(array_sum($precio_nac_total_bol),2) ,'precio extranjero' =>array_sum($precio_ex_total_bol) );
                 unset($precio_nac_total_bol);
                 unset($precio_ex_total_bol);
                 unset($cantidad_bol);
@@ -377,8 +378,9 @@ class PeriodoConsultaController extends Controller
             $precio_nacional=0;
             $precio_extranjero=0;
             // if($almacen == 0){
-                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
-                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('producto_id','!=', null)->get();
+                $productos = Producto::whereBetween('tipo_afectacion_id', [1,8])->pluck('id');
+                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('producto_id',$productos)->get();
+                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('producto_id',$productos)->get();
 
             if (count($factura_registro) == 0 or count($boleta_registro) == 0  ) {
                 

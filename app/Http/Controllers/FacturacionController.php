@@ -22,6 +22,7 @@ use App\Servicios;
 use App\TipoCambio;
 use App\Unidad_medida;
 use App\User;
+use App\Tipo_operacion_f;
 use App\Ventas_registro;
 use App\Kardex_entrada;
 use App\kardex_entrada_registro;
@@ -134,6 +135,7 @@ class FacturacionController extends Controller
         $personal_contador= Facturacion::all()->count();
         $suma=$personal_contador+1;
         $categoria='producto';
+        $tipo_operacion = Tipo_operacion_f::all();
         // $empresa = Empresa::all();
         // obtencion de la sucursal
         $almacen=$request->get('almacen');
@@ -162,7 +164,7 @@ class FacturacionController extends Controller
 
         $factura_numero="F".$sucursal_nr."-".$factura_nr;
 
-        return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','factura_numero','sucursal','empresa'));
+        return view('transaccion.venta.facturacion.create',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','factura_numero','sucursal','empresa','tipo_operacion'));
     }
 
     public function create_ms(Request $request){
@@ -230,6 +232,7 @@ class FacturacionController extends Controller
         $personal_contador= Facturacion::all()->count();
         $suma=$personal_contador+1;
         $categoria='producto';
+        $tipo_operacion = Tipo_operacion_f::all();
 
        // obtencion de la sucursal
        $almacen=$request->get('almacen');
@@ -258,7 +261,7 @@ class FacturacionController extends Controller
 
        $factura_numero="F".$sucursal_nr."-".$factura_nr;
 
-        return view('transaccion.venta.facturacion.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','factura_numero','sucursal'));
+        return view('transaccion.venta.facturacion.create_ms',compact('productos','forma_pagos','clientes','personales','array','array_cantidad','igv','moneda','p_venta','array_promedio','empresa','suma','categoria','factura_numero','sucursal','tipo_operacion'));
     }
 
     /**
@@ -397,7 +400,10 @@ class FacturacionController extends Controller
             }
 
         }
-
+        // CODIGO PARA BUSCAR EL ID DEL TIPO DE DOCUMENTO
+        $operacion=$request->get('tipo_operacion');
+        $nombre = strstr($operacion, '-',true);
+        $busca_ope=Tipo_operacion_f::where('codigo',$nombre)->first();
         $facturacion=new facturacion;
         $facturacion->codigo_fac=$factura_numero;
         $facturacion->almacen_id =$request->get('almacen');
@@ -414,6 +420,8 @@ class FacturacionController extends Controller
         $facturacion->user_id =auth()->user()->id;
         $facturacion->estado='0';
         $facturacion->tipo='producto';
+        $facturacion->tipo_operacion_id= $busca_ope->id;
+        $facturacion->tipo_documento_id = 2;
         $facturacion->save();
 
         $precio_final_igv=$request->get('precio_final_igv');
