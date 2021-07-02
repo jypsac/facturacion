@@ -118,12 +118,22 @@
                                 <td>Forma de pago</td>
                                 <td>:</td>
                                 <td>
-                                    <select class="form-control" name="forma_pago" required="required">
-                                        @foreach($forma_pagos as $forma_pago)
-                                        <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
-                                        @endforeach
-                                        <select>
-                                        </td>
+                                    <div class="row">
+                                        <div class="col-sm-9">
+                                            <select class="form-control" name="forma_pago" required="required" id ="forma_pago" onchange="seleccionado()">
+                                                @foreach($forma_pagos as $forma_pago)
+                                                    <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
+                                                @endforeach
+                                            <select>
+                                        </div>
+                                        <div class="col-sm-1" id="credito_pago" style="display: none">
+                                        <button style="height: 35px;width: auto" type="button" class='btn btn-info' >
+
+                                        </button>
+
+                                        </div>
+                                    </div>
+                                    </td>
                                         <td>Validez</td>
                                         <td>:</td>
                                         <td><select  class="form-control" name="validez" required="required">
@@ -132,7 +142,8 @@
                                             <option value="3 Días">3 Días</option>
                                             <option value="2 Días">2 Días</option>
                                             <option value="1 Día">1 Día</option>
-                                        </select></td>
+                                        </select>
+                                    </td>
                                     </tr>
                                     <tr>
                                         <td>Vendedor</td>
@@ -172,6 +183,13 @@
                                             </td>
                                         </tr>
                                         <tr>
+                                            <td>Observacion</td>
+                                            <td>:</td>
+                                            <td colspan="4">
+                                                <textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Boleta a vuestra solicitud</textarea>
+                                            </td>
+                                        </tr>
+                                        <tr>
                                             <td>Tipo de Operacion</td>
                                             <td>:</td>
                                             <td><select class="form-control" name="tipo_operacion" >
@@ -185,13 +203,6 @@
                                             <td>
                                                 <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
                                             </td> --}}
-                                        </tr>
-                                        <tr>
-                                            <td>Observacion</td>
-                                            <td>:</td>
-                                            <td colspan="4">
-                                                <textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Boleta a vuestra solicitud</textarea>
-                                            </td>
                                         </tr>
                                     </tbody>
                                 </table>
@@ -710,6 +721,22 @@
                 radioClass: 'iradio_square-green',
             });
         });
+    </script>
+    <script type="text/javascript">
+        function seleccionado(){
+            var opt = $('#forma_pago').val();
+                if(opt=="1"){
+                    // $('#consulta_p_input').prop('disabled', false);
+                    $('#credito_pago').hide();
+                    // $('#consulta_s_input').prop('disabled', 'disabled');
+                    // $('#consulta_s').hide();
+                }else{
+                    // $('#consulta_p_input').prop('disabled', 'disabled');
+                    $('#credito_pago').show();
+                    // $('#consulta_s_input').prop('disabled', false);
+                    // $('#consulta_s').show();
+                }
+        }
     </script>
     <style type="text/css">
         .a {

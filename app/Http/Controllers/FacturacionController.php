@@ -532,13 +532,13 @@ class FacturacionController extends Controller
                 }
                 $facturacion_2=Facturacion::find($facturacion->id);
                 if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
-                    $facturacion_2->op_gravada += $facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad;
+                    $facturacion_2->op_gravada += round($facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad,2);
                 }
                 if(strpos($producto->tipo_afec_i_producto->informacion,'Exonerado') !== false){
-                    $facturacion_2->op_exonerada += $facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad;
+                    $facturacion_2->op_exonerada += round($facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad,2);
                 }
                 if(strpos($producto->tipo_afec_i_producto->informacion,'Inafecto') !== false){
-                    $facturacion_2->op_inafecta += $facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad;
+                    $facturacion_2->op_inafecta += round($facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad,2);
                 }
                 // return $cotizacion_registro->precio_unitario_comi;
                 $facturacion_2->save();

@@ -129,67 +129,109 @@
                                     <td>Forma de pago</td>
                                     <td>:</td>
                                     <td>
-                                        <select class="form-control" name="forma_pago" required="required">
-                                            @foreach($forma_pagos as $forma_pago)
-                                            <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
-                                            @endforeach
-                                            <select>
-                                            </td>
-                                        </tr>
-                                        <tr>
-                                            <td>Vendedor</td>
-                                            <td>:</td>
-                                            <td>
-                                                <input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}">
-                                            </td>
-                                            <td>Guia remision</td>
-                                            <td>:</td>
-                                            <td><input type="text" class="form-control" value="0" name="guia_r"></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Moneda</td>
-                                            <td>:</td>
-                                            <td >
-                                                <div class="row">
-                                                    <input type="hidden" name="almacen" class="form-control " value="{{$sucursal->id}}" readonly="readonly">
-                                                    <div class=" col-sm-5">
-                                                        <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
+                                         <div class="row">
+                                            <div class="col-sm-5">
+                                                <select class="form-control" name="forma_pago" required="required" id ="forma_pago" onchange="seleccionado()">
+                                                    @foreach($forma_pagos as $forma_pago)
+                                                        <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
+                                                    @endforeach
+                                                <select>
+                                            </div>
+                                            <div class="col-sm-5" id="credito_pago" style="visibility: hidden;">
+                                                <button  type="button" class='btn btn-info'  data-toggle="modal" data-target="#cuotas_modal">Cuotas</button>
+                                            </div>
+                                            <!-- Modal -->
+                                            <div class="modal fade bd-example-modal-lg" id="cuotas_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                                              <div class="modal-dialog modal-lg" role="document">
+                                                <div class="modal-content">
+                                                  <div class="modal-header">
+                                                    <h5 class="modal-title" id="exampleModalLabel">Registrar cuotas</h5>
+                                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                      <span aria-hidden="true">&times;</span>
+                                                    </button>
+                                                  </div>
+                                                  <div class="modal-body">
+                                                    <div class="row_number">
+                                                        <div class="pago_modal row">
+                                                            <div class="col-sm-1"><label>Fecha:</label></div>
+                                                            <div class="col-sm-4">
+                                                                <input type="date" name="fecha_pago0" class="form-control">
+                                                            </div>
+                                                            <div class="col-sm-1"><label>Monto:</label></div>
+                                                            <div class="col-sm-4">
+                                                                <div class="input-group mb-3" style="padding-right:15px">
+                                                                  <div class="input-group-prepend">
+                                                                    <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
+                                                                  </div>
+                                                                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="monto_pago0" >
+                                                                </div>
+                                                            </div>
+                                                            <div class="col-sm-2">
+                                                                <label ><button type="button"  aria-hidden="true" class="add_pago"><i class="fa fa-plus-square-o fa-lg" > </i></button></label>
+                                                        </div>
+                                                        </div>
                                                     </div>
+                                                  </div>
+                                                </div>
+                                              </div>
+                                            </div>
+                                        </div>
+                                    </td>
+                                </tr>
+                                <tr>
+                                    <td>Vendedor</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" class="form-control" name="personal" disabled required="required" value="{{auth()->user()->name}}">
+                                    </td>
+                                    <td>Guia remision</td>
+                                    <td>:</td>
+                                    <td><input type="text" class="form-control" value="0" name="guia_r"></td>
+                                </tr>
+                                <tr>
+                                    <td>Moneda</td>
+                                    <td>:</td>
+                                    <td >
+                                        <div class="row">
+                                            <input type="hidden" name="almacen" class="form-control " value="{{$sucursal->id}}" readonly="readonly">
+                                            <div class=" col-sm-5">
+                                                <input type="text" name="moneda" class="form-control " value=" {{$moneda->nombre}}" readonly="readonly">
+                                            </div>
 
-                                                    <a class="col-sm-5" onclick="event.preventDefault();document.getElementById('almacen-form').submit();">
-                                                        <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>@if($moneda->tipo=='nacional')Dolares @elseif($moneda->tipo=='extranjera') Soles @endif</button></a>
-                                                    </div>
-                                                </td>
-                                                <td>Fecha</td>
-                                                <td>:</td>
-                                                <td>
-                                                    <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
-                                                </td>
-                                            </tr>
-                                            <tr>
-                                            <td>Tipo de Operacion</td>
-                                            <td>:</td>
-                                            <td><select class="form-control" name="tipo_operacion" >
-                                                @foreach($tipo_operacion as $t_op)
-                                                <option id="{{$t_op->id}}">{{$t_op->codigo}} - {{$t_op->informacion}}</option>
-                                                @endforeach
-                                                </select>
-                                            </td>
-                                            {{-- <td>Fecha de cotizacion</td>
-                                            <td>:</td>
-                                            <td>
-                                                <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
-                                            </td> --}}
-                                        </tr>
-                                            <tr>
-                                                <td>Observacion</td>
-                                                <td>:</td>
-                                                <td colspan="4">
-                                                    <textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
-                                                </td>
-                                            </tr>
-                                        </tbody>
-                                    </table>
+                                            <a class="col-sm-5" onclick="event.preventDefault();document.getElementById('almacen-form').submit();">
+                                                <button style="height: 35px;width: auto" type="button" class=' addmores btn btn-info'>@if($moneda->tipo=='nacional')Dolares @elseif($moneda->tipo=='extranjera') Soles @endif</button></a>
+                                            </div>
+                                        </td>
+                                        <td>Fecha</td>
+                                        <td>:</td>
+                                        <td>
+                                            <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
+                                        </td>
+                                    </tr>
+                                    <tr>
+                                    <td>Tipo de Operacion</td>
+                                    <td>:</td>
+                                    <td><select class="form-control" name="tipo_operacion" >
+                                        @foreach($tipo_operacion as $t_op)
+                                        <option id="{{$t_op->id}}">{{$t_op->codigo}} - {{$t_op->informacion}}</option>
+                                        @endforeach
+                                        </select>
+                                    </td>
+                                    {{-- <td>Fecha de cotizacion</td>
+                                    <td>:</td>
+                                    <td>
+                                        <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
+                                    </td> --}}
+                                </tr>
+                                    <tr>
+                                        <td>Observacion</td>
+                                        <td>:</td>
+                                        <td colspan="4">
+                                            <textarea class="form-control" name="observacion" id="observacion"  rows="2"  >Emitimos la siguiente Factura a vuestra solicitud</textarea>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
 
                                     <div id="resultado_moneda"></div>
 
@@ -319,8 +361,10 @@
                         -webkit-appearance: none;
                         margin: 0;
                         }
-
                     input[type=number] { -moz-appearance:textfield; }
+                        label.col-form-label::marker{
+                            list-style:none;
+                        }
                     </style>
                      <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
                     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -718,10 +762,59 @@
             });
         });
     </script>
+    <script type="text/javascript">
+        function seleccionado(){
+            var opt = $('#forma_pago').val();
+                if(opt=="1"){
+                    // $('#consulta_p_input').prop('disabled', false);
+                    document.getElementById('credito_pago').style.visibility = "hidden";
+                    // $('#consulta_s_input').prop('disabled', 'disabled');
+                    // $('#consulta_s').hide();
+                }else{
+                    // $('#consulta_p_input').prop('disabled', 'disabled');
+                    document.getElementById('credito_pago').style.visibility = "initial";
+                    // $('#consulta_s_input').prop('disabled', false);
+                    // $('#consulta_s').show();
+                }
+        }
+    </script>
+    <script>
+        var x = 2;
+        $(".add_pago").on('click', function () {
+        var data = `
+        <div class="delete_modal${x}">
+        <div class="col-sm-1"><label>Fecha:</label></div>
+        <div class="col-sm-4">
+            <input type="date" name="fecha_pago${x}" class="form-control">
+        </div>
+        <div class="col-sm-1"><label>Monto:</label></div>
+        <div class="col-sm-4">
+            <div class="input-group mb-3" style="padding-right:15px">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
+              </div>
+              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="monto_pago${x}" >
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <label ><button type="button"  class="xd" onclick="eliminar(${x})"><i class="fa fa-trash-o fa-lg" > </i></button></label>
+        </div>
+        </div>`;
+        $('.row_number').append(data);
+        x++;
+        });
+
+    </script>
     <style type="text/css">
         .a{color: red}
     </style>
-
+    <script type="text/javascript">
+        // $(".delete_pago").on('click', function () {
+        function eliminar(x){
+            $(`.delete_modal${x}`).remove();
+            // console.log(x);
+        };
+    </script>
 
 
     @endif

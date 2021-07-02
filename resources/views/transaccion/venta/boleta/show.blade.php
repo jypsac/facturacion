@@ -167,8 +167,8 @@
                                 <td>{{$boleta_registros->precio_unitario_comi}}</td>
                                 <td>{{$boleta_registros->precio_unitario_comi * $boleta_registros->cantidad }}</td>
                                 <td style="display: none">
-                                    {{$sub_total=(($boleta_registros->precio_unitario_comi * $boleta_registros->cantidad)+$sub_total)}}
-                                    {{-- {{$sub_total=(($boleta->op_gravada))}} --}}
+                                    {{-- {{$sub_total=(($boleta_registros->precio_unitario_comi * $boleta_registros->cantidad)+$sub_total)}} --}}
+                                    {{$sub_total=(($boleta->op_gravada))}}
 
                                     </td>
                             </tr>

@@ -126,7 +126,7 @@
                                     <td>{{$cotizacion->moneda->simbolo}}. {{round(($comis_array)+($comis_array)*($igv->igv_total/100),2)}}</td>
                                     <td>{{$cotizacion->moneda->simbolo}}. {{round($comis_array+($comis_array)*($igv->igv_total/100),2)*$cotizacion_registros->cantidad}}</td>
 
-                                    <td style="display: none">{{$sub_total=((($comis_array)+($comis_array)*($igv->igv_total/100))*$cotizacion_registros->cantidad)+$sub_total}}
+                                    <td style="display: none">{{$sub_total=$cotizacion->op_gravada}}
                                     </td>
                                  </tr>
                                  {{-- @endif --}}

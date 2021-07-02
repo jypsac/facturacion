@@ -459,13 +459,13 @@ class CotizacionController extends Controller
             //TIPO DE AFECTACION
             $cotizacion_2=Cotizacion::find($cotizacion->id);
             if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
-                $cotizacion_2->op_gravada += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+                $cotizacion_2->op_gravada += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
             }
             if(strpos($producto->tipo_afec_i_producto->informacion,'Exonerado') !== false){
-                $cotizacion_2->op_exonerada += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+                $cotizacion_2->op_exonerada += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
             }
             if(strpos($producto->tipo_afec_i_producto->informacion,'Inafecto') !== false){
-                $cotizacion_2->op_inafecta += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+                $cotizacion_2->op_inafecta += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
             }
             // return $cotizacion_registro->precio_unitario_comi;
 
@@ -891,13 +891,13 @@ public function create_boleta_ms(Request $request)
              //TIPO DE AFECTACION
             $cotizacion_2=Cotizacion::find($cotizacion->id);
             if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
-                $cotizacion_2->op_gravada += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+                $cotizacion_2->op_gravada += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
             }
             if(strpos($producto->tipo_afec_i_producto->informacion,'Exonerado') !== false){
-                $cotizacion_2->op_exonerada += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+                $cotizacion_2->op_exonerada += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
             }
             if(strpos($producto->tipo_afec_i_producto->informacion,'Inafecto') !== false){
-                $cotizacion_2->op_inafecta += $cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad;
+                $cotizacion_2->op_inafecta += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
             }
             $cotizacion_2->save();
             $cotizacion_registro->save();

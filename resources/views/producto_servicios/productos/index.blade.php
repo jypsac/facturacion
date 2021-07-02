@@ -93,6 +93,7 @@
                                 <th>Categoria</th>
                                 <th>Marca</th>
                                 <th>Estado</th>
+                                <th>Afectacion</th>
                                 <th>Foto</th>
                                 <th>Ver</th>
                                 {{-- <th>Editar</th> --}}
@@ -109,6 +110,7 @@
                                 <td>{{$producto->categoria_i_producto->descripcion}}</td>
                                 <td>{{$producto->marcas_i_producto->nombre}}</td>
                                 <td>{{$producto->estado_i_producto->nombre}}</td>
+                                <td>{{$producto->tipo_afec_i_producto->informacion}}</td>
                                 <td><img src="
                                     {{ asset('/archivos/imagenes/productos/')}}/{{$producto->foto}}" style="width: 45px;">
                                 </td>
