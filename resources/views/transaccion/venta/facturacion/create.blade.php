@@ -73,7 +73,7 @@
                     </div>
                 </div>
                 <div class="ibox-content">
-                    <form action="{{route('facturacion.store',$moneda->id)}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
+                    <form action="{{route('facturacion.store',$moneda->id)}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)" id="form_store">
                         @csrf
                         @method('put')
                         {{-- Cabecera --}}
@@ -138,7 +138,7 @@
                                                 <select>
                                             </div>
                                             <div class="col-sm-5" id="credito_pago" style="visibility: hidden;">
-                                                <button  type="button" class='btn btn-info'  data-toggle="modal" data-target="#cuotas_modal">Cuotas</button>
+                                                <button  type="button" class='btn btn-info' id="cuota_modal"  data-toggle="modal" data-target="#cuotas_modal">Cuotas</button>
                                             </div>
                                             <!-- Modal -->
                                             <div class="modal fade bd-example-modal-lg" id="cuotas_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
@@ -151,11 +151,17 @@
                                                     </button>
                                                   </div>
                                                   <div class="modal-body">
+                                                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;" id="alert_campos" >
+                                                      <strong style="font-size:11px">Rellenar todos los campos</strong>
+                                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                        <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                    </div>
                                                     <div class="row_number">
                                                         <div class="pago_modal row">
                                                             <div class="col-sm-1"><label>Fecha:</label></div>
                                                             <div class="col-sm-4">
-                                                                <input type="date" name="fecha_pago0" class="form-control">
+                                                                <input type="date" name="fecha_pago[]" id="fecha_pago" class="form-control" required="">
                                                             </div>
                                                             <div class="col-sm-1"><label>Monto:</label></div>
                                                             <div class="col-sm-4">
@@ -163,7 +169,7 @@
                                                                   <div class="input-group-prepend">
                                                                     <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
                                                                   </div>
-                                                                  <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="monto_pago0" >
+                                                                  <input type="text" class="form-control" id="monto_pago" aria-describedby="basic-addon3" name="monto_pago[]" required="">
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-2">
@@ -342,7 +348,7 @@
                                             </div>
                                             <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                             <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                                            <button class="btn btn-primary float-right" type="submit" id="boton"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
+                                            <button class="btn btn-primary float-right" type="submit" id="boton" name="boton" onsubmit="validar()"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
                                         </form>
 
                                     </div>
@@ -782,10 +788,10 @@
         var x = 2;
         $(".add_pago").on('click', function () {
         var data = `
-        <div class="delete_modal${x}">
+        <div class="delete_modal${x} row">
         <div class="col-sm-1"><label>Fecha:</label></div>
         <div class="col-sm-4">
-            <input type="date" name="fecha_pago${x}" class="form-control">
+            <input type="date" name="fecha_pago[]" id="fecha_pago" class="form-control">
         </div>
         <div class="col-sm-1"><label>Monto:</label></div>
         <div class="col-sm-4">
@@ -793,7 +799,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
               </div>
-              <input type="text" class="form-control" id="basic-url" aria-describedby="basic-addon3" name="monto_pago${x}" >
+              <input type="text" class="form-control" id="monto_pago" aria-describedby="basic-addon3" name="monto_pago[]" >
             </div>
         </div>
         <div class="col-sm-2">
@@ -815,7 +821,26 @@
             // console.log(x);
         };
     </script>
+    <script type="text/javascript">
+        $("#boton").on("click",function(event){
+            var f_p = $('#forma_pago').val();
+            var fc_p = $('#fecha_pago').val();
+            var opt = $('#monto_pago').val();
+            if(f_p == "2"){
+                if(opt.length == 0 || fc_p.length == 0){
+                    event.preventDefault();
+                    document.getElementById('alert_campos').style.display = "block";
+                    document.getElementById("cuota_modal").addEventListener("click",load, true);
+                }else{
+                    document.getElementById("form_store").submit();
+                }
+            }else{
+                 document.getElementById("form_store").submit();
+            }
 
+            // resto de tu codigo
+         });
+    </script>
 
     @endif
 

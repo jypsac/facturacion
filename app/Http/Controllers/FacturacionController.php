@@ -273,6 +273,7 @@ class FacturacionController extends Controller
      */
     public function store(Request $request,$id_moneda)
     {
+        // return $request->get('monto_pago');
         $facturacion_input=$request->get('facturacion');
 
         //codigo para convertir nombre a producto
@@ -451,7 +452,12 @@ class FacturacionController extends Controller
         $factura_primera=Almacen::where('id', $sucursal->id)->first();
         $factura_primera->cod_fac='NN';
         $factura_primera->save();
+        //FORMA DE PAGO
+        // if(){
 
+        // }else{
+
+        // }
         //contador de valores de cantidad
         $cantidad = $request->input('cantidad');
         $count_cantidad=count($cantidad);
