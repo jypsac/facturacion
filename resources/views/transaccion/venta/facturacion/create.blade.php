@@ -161,7 +161,7 @@
                                                         <div class="pago_modal row">
                                                             <div class="col-sm-1"><label>Fecha:</label></div>
                                                             <div class="col-sm-4">
-                                                                <input type="date" name="fecha_pago[]" id="fecha_pago0" onkeyup="montvalue(0)" class="fecha_pago0 form-control" required="">
+                                                                <input type="date" name="fecha_pago[]" id="fecha_pago"  class="fecha_pago form-control" required="">
                                                             </div>
                                                             <div class="col-sm-1"><label>Monto:</label></div>
                                                             <div class="col-sm-4">
@@ -169,7 +169,7 @@
                                                                   <div class="input-group-prepend">
                                                                     <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
                                                                   </div>
-                                                                  <input type="text" class="monto_pago0 form-control" onkeyup="montvalue(0)" id="monto_pago0" name="monto_pago[]" required="">
+                                                                  <input type="number" class="monto_pago form-control"  id="monto_pago0" name="monto_pago[]" required="">
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-2">
@@ -785,13 +785,13 @@
         }
     </script>
     <script>
-        var x = 2;
+        var x = 1;
         $(".add_pago").on('click', function () {
         var data = `
         <div class="delete_modal${x} row">
         <div class="col-sm-1"><label>Fecha:</label></div>
         <div class="col-sm-4">
-            <input type="date" name="fecha_pago[]" id="fecha_pago${x}" class="fecha_pago${x} form-control" montvalue="admitir_valor(${x})">
+            <input type="date" name="fecha_pago[]" id="fecha_pago${x}" class="fecha_pago form-control" montvalue="admitir_valor(${x})">
         </div>
         <div class="col-sm-1"><label>Monto:</label></div>
         <div class="col-sm-4">
@@ -799,7 +799,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
               </div>
-              <input type="text" class="monto_pago${x} form-control" id="monto_pago${x}" montvalue="admitir_valor(${x})" aria-describedby="basic-addon3" name="monto_pago[]" on >
+              <input type="number" class="monto_pago form-control" id="monto_pago${x}" montvalue="admitir_valor(${x})" aria-describedby="basic-addon3" name="monto_pago[]" on >
             </div>
         </div>
         <div class="col-sm-2">
@@ -808,6 +808,7 @@
         </div>`;
         $('.row_number').append(data);
         x++;
+        // console.log(`monto_pago${x}`)
         });
 
     </script>
@@ -822,30 +823,36 @@
         };
     </script>
     <script>
+       $("#boton").on("click",function(buton){
         var f_p = $('#forma_pago').val();
-
-       // $("#boton").on("click",function(buton){
-        function montvalue(m){
-            console.log(`${m}`);
-            // var fc_p = document.getElementById(`fecha_pago${m}`).value;
-            var opt = document.getElementById(`monto_pago${m}`).value;
-            console.log(opt);
-            if(f_p == "1" ){
-                if( opt.length  == 0){
-                    console.log("a");
-                    // document.getElementById('cuota_modal').click();
-                    // document.getElementById('boton').prop('disabled', true);
+        // function montvalue(m){
+            // console.log(`${m}`);
+            var inp_mont = document.getElementsByClassName('monto_pago').length;
+            var monto_c = document.getElementsByClassName('monto_pago');
+            var monto_fc = document.getElementsByClassName('fecha_pago');
+            for (var i = 0; i < inp_mont; i++) {
+                var monto = monto_c[i].id;
+                var fecha = monto_fc[i].id;
+                var input_text = document.getElementById(`${monto}`).value;
+                var date_text = document.getElementById(`${fecha}`).value;
+                if(f_p == "2" ){
+                    if( input_text.length  == 0 || date_text.length  == 0){
+                        // console.log("a");
+                        $("cliente").prop('required', true);
+                        document.getElementById('cuota_modal').click();
+                        buton.preventDefault();
+                    }else{
+                        document.getElementById("form_store").submit();
+                    }
                 }else{
-                    console.log("else 2");
-                    // document.getElementById("form_store").submit();
+                     document.getElementById("form_store").submit();
                 }
-            }else{
-                console.log("else 1");
+            }
+            // var fc_p = document.getElementById(`fecha_pago${m}`).value;
+            // var opt = document.getElementById(`monto_pago${x}`).value;
 
-                 // document.getElementById("form_store").submit();
-        }
-        }
-    // });
+        // }
+    });
     </script>
 
     @endif
