@@ -161,7 +161,7 @@
                                                         <div class="pago_modal row">
                                                             <div class="col-sm-1"><label>Fecha:</label></div>
                                                             <div class="col-sm-4">
-                                                                <input type="date" name="fecha_pago[]" id="fecha_pago"  class="fecha_pago form-control" required="" >
+                                                                <input type="date" name="fecha_pago[]" id="fecha_pago"  class="fecha_pago form-control" >
                                                             </div>
                                                             <div class="col-sm-1"><label>Monto:</label></div>
                                                             <div class="col-sm-4">
@@ -169,11 +169,11 @@
                                                                   <div class="input-group-prepend">
                                                                     <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
                                                                   </div>
-                                                                  <input type="number" class="monto_pago form-control"  id="monto_pago0" name="monto_pago[]" required="" onkeyup="admitir_valor(0)" max="">
+                                                                  <input type="number" class="monto_pago form-control"  id="monto_pago0" name="monto_pago[]"   max="">
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                <label ><button type="button"  aria-hidden="true" class="add_pago"><i class="fa fa-plus-square-o fa-lg" > </i></button></label>
+                                                                <label ><button type="button"  aria-hidden="true" class="add_pago btn btn-success"><i class="fa fa-plus-square-o fa-lg" > </i></button></label>
                                                         </div>
                                                         </div>
                                                     </div>
@@ -348,7 +348,7 @@
                                             </div>
                                             <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                             <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                                            <button class="btn btn-primary float-right" type="submit" id="boton" name="boton" onsubmit="validar()"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
+                                            <button class="btn btn-primary float-right" type="submit" id="boton" name="boton" onsubmit="valida()"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
                                         </form>
 
                                     </div>
@@ -638,7 +638,18 @@
 
             document.getElementById("igv").value = igv_decimal;
             document.getElementById("total_final").value = end2;
-
+            // var total = document.getElementById("total_final").value;
+            $(`#monto_pago0`).attr('max', end2);
+            // document.getElementById("monto_pago0").value = end2;
+            var monto_c = document.getElementsByClassName('monto_pago');
+            
+            var inp_mont = document.getElementsByClassName('monto_pago').length;
+            for (var i = 0; i < inp_mont; i++) {
+                var monto = monto_c[i].id;
+                // var input_text = document.getElementById(`${monto}`).value;
+                document.getElementById("monto_pago0").value =  Math.round((end2/inp_mont));
+                document.getElementById(`${monto}`).value = Math.round((end2/inp_mont));
+            }
         }
     </script>
 
@@ -719,7 +730,7 @@
                 document.getElementById(`comision${a}`).value = 0;
             }
 
-
+            // $(`#monto_pago0`).attr('max', end);
         }
     </script>
 
@@ -743,6 +754,15 @@
             // console.log(typeof end);
             document.getElementById("igv").value = igv;
             document.getElementById("total_final").value = end;
+            // $(`#monto_pago0`).attr('max', end);
+            var inp_mont = document.getElementsByClassName('monto_pago').length;
+            var monto_c = document.getElementsByClassName('monto_pago');
+            for (var i = 0; i < inp_mont; i++) {
+                var monto = monto_c[i].id;
+                // var input_text = document.getElementById(`${monto}`).value;
+                document.getElementById("monto_pago0").value =  Math.round((end/inp_mont));
+                document.getElementById(`${monto}`).value = Math.round((end/inp_mont));
+            }
         });
     </script>
 
@@ -773,8 +793,8 @@
             var opt = $('#forma_pago').val();
                 if(opt=="1"){
                     // $('#consulta_p_input').prop('disabled', false);
+                    
                     document.getElementById('credito_pago').style.visibility = "hidden";
-                    // $('#consulta_s_input').prop('disabled', 'disabled');
                     // $('#consulta_s').hide();
                 }else{
                     // $('#consulta_p_input').prop('disabled', 'disabled');
@@ -788,6 +808,7 @@
         var total = document.getElementById('total_final').value;
         var x = 1;
         $(".add_pago").on('click', function () {
+        var total = document.getElementById('total_final').value;
         var data = `
         <div class="delete_modal${x} row">
         <div class="col-sm-1"><label>Fecha:</label></div>
@@ -800,21 +821,30 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
               </div>
-              <input type="number" class="monto_pago form-control" id="monto_pago${x}" onkeyup="admitir_valor(${x})" aria-describedby="basic-addon3" name="monto_pago[]" max="">
+              <input type="number" class="monto_pago form-control" id="monto_pago${x}"  aria-describedby="basic-addon3" name="monto_pago[]" max="">
             </div>
         </div>
         <div class="col-sm-2">
-            <label ><button type="button"  class="xd" onclick="eliminar(${x})"><i class="fa fa-trash-o fa-lg" > </i></button></label>
+            <label ><button type="button"  class="xd btn btn-danger" onclick="eliminar(${x})"><i class="fa fa-trash-o fa-lg" > </i></button></label>
         </div>
         </div>`;
         $('.row_number').append(data);
+        
+        var inp_mont = document.getElementsByClassName('monto_pago').length;
+ 
+       document.getElementById(`monto_pago${x}`).value = (total/inp_mont);
+ 
         x++;
-        // console.log(`monto_pago${x}`)
-        $(`#monto_pago${x}`).attr('max', val_tot);
-        $(`#monto_pago0`).attr('max', val_tot);
+        var multiplier = 100;
+        var monto_c = document.getElementsByClassName('monto_pago');
+        var inp_mont = document.getElementsByClassName('monto_pago').length;
+        for (var i = 0; i < inp_mont; i++) {
+            var monto = monto_c[i].id;
+            document.getElementById("monto_pago0").value = Math.round((total/inp_mont));
+            document.getElementById(`${monto}`).value = Math.round((total/inp_mont));
+        }
         });
-
-
+        
     </script>
     <style type="text/css">
         .a{color: red}
@@ -823,10 +853,24 @@
         // $(".delete_pago").on('click', function () {
         function eliminar(x){
             $(`.delete_modal${x}`).remove();
-            // console.log(x);
+            var monto_c = document.getElementsByClassName('monto_pago');
+            var inp_mont = document.getElementsByClassName('monto_pago').length;
+            for (var i = 0; i < inp_mont; i++) {
+                var monto = monto_c[i].id;
+                var total = document.getElementById('total_final').value;
+                document.getElementById("monto_pago0").value =  Math.round((total/inp_mont));
+                document.getElementById(`${monto}`).value = Math.round((total/inp_mont));
+            }
+
         };
     </script>
-
+{{--     <script type="text/javascript">
+        //MONTO MAXIMO DE la primera celda
+            var total = document.getElementById("total_final").value;
+            var msg2 = parseFloat(total) ;
+            console.log(msg2);
+            
+    </script> --}}
     <script>
         $("#boton").on("click",function(buton){
             var cliente = document.getElementById("cliente").value;
@@ -839,31 +883,41 @@
                 var monto_c = document.getElementsByClassName('monto_pago');
                 var monto_fc = document.getElementsByClassName('fecha_pago');
                 for (var i = 0; i < inp_mont; i++) {
+
                     var monto = monto_c[i].id;
                     var fecha = monto_fc[i].id;
                     var input_text = document.getElementById(`${monto}`).value;
                     var date_text = document.getElementById(`${fecha}`).value;
                     if(f_p == "2" ){
-                        if( input_text.length  == 0 || date_text.length  == 0){
-                            // console.log("a");
+                        if( input_text.length  == 0 || date_text.length  == 0 ){
+                            console.log("a");
                             document.getElementById('cuota_modal').click();
                             buton.preventDefault();
                         }else{
+                            // console.log("b");
                             document.getElementById('boton').click();
                             // document.getElementById("form_store").submit();
+                            // buton.preventDefault();
                         }
                     }else{
+                            // console.log("c");
                             document.getElementById('boton').click();
                          // document.getElementById("form_store").submit();
+                         // buton.preventDefault();
                     }
                 }
             }
+            // buton.preventDefault();
         });
 
     </script>
-    <script >
-
-    </script>
+{{--     <script >
+        function admitir_valor(x){
+        $(`#monto_pago${x}`).attr('max', val_tot);
+        
+        }
+        
+    </script> --}}
     @endif
 
     @stop
