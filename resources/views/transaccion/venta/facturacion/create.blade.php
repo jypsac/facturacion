@@ -131,7 +131,7 @@
                                     <td>
                                          <div class="row">
                                             <div class="col-sm-5">
-                                                <select class="form-control" name="forma_pago" required="required" id ="forma_pago" onchange="seleccionado()">
+                                                <select class="form-control" name="forma_pago"  id ="forma_pago" onchange="seleccionado()">
                                                     @foreach($forma_pagos as $forma_pago)
                                                         <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
                                                     @endforeach
@@ -161,7 +161,7 @@
                                                         <div class="pago_modal row">
                                                             <div class="col-sm-1"><label>Fecha:</label></div>
                                                             <div class="col-sm-4">
-                                                                <input type="date" name="fecha_pago[]" id="fecha_pago"  class="fecha_pago form-control" >
+                                                                <input type="date" name="fecha_pago[]" id="fecha_pago0"  class="fecha_pago form-control" >
                                                             </div>
                                                             <div class="col-sm-1"><label>Monto:</label></div>
                                                             <div class="col-sm-4">
@@ -169,7 +169,7 @@
                                                                   <div class="input-group-prepend">
                                                                     <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
                                                                   </div>
-                                                                  <input type="number" class="monto_pago form-control"  id="monto_pago0" name="monto_pago[]"   max="">
+                                                                  <input type="text" name="monto_pago[]" id="monto_pago0" class="monto_pago form-control"   >
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-2">
@@ -272,7 +272,7 @@
                                                             </datalist>
                                                             <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                                             <textarea type='text' id='numero_serie0'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
-                                                            <input style="width: 76px" hidden="" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off"  />
+                                                            <input style="width: 76px" hidden="" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)"   autocomplete="off"  />
 
                                                         </td>
 
@@ -305,7 +305,7 @@
                                                             </td>
                                                             <td>
                                                                 <input style="width: 76px"  type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
-                                                                <input type='text' id='afectacion0'  style="width: 76px"  name='afectacion' disabled="disabled" class="afectacion form-control " hidden=""  required  autocomplete="off"/>
+                                                                <input type='text' id='afectacion0'  style="width: 76px"  name='afectacion' disabled="disabled" class="afectacion form-control " hidden=""    autocomplete="off"/>
 
                                                             </td>
                                                             <span id="spTotal"></span>
@@ -348,7 +348,7 @@
                                             </div>
                                             <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
                                             <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                                            <button class="btn btn-primary float-right" type="submit" id="boton" name="boton" onsubmit="valida()"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
+                                            <button class="btn btn-primary float-right" type="submit" id="boton" name="boton" ><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
                                         </form>
 
                                     </div>
@@ -420,7 +420,7 @@
 
                             <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                             <textarea type='text' id='numero_serie0'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
-                            <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required hidden  autocomplete="off" />
+                            <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})"  hidden  autocomplete="off" />
 
                             </td>
                             <td>
@@ -440,7 +440,7 @@
                             <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
                             </div>
                             <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
-                            <input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"  required >
+                            <input type='hidden' id='promedio_original${i}' name='promedio_original[]'  class="form-control"   >
                             </td>
 
                             <td>
@@ -455,7 +455,7 @@
 
                             <td>
                             <input type='text' id='total${i}'  style="width: 76px"  name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
-                            <input type='text' id='afectacion${i}'  style="width: 76px" hidden  name='afectacion' disabled="disabled" class="afectacion form-control "  required  autocomplete="off"/>
+                            <input type='text' id='afectacion${i}'  style="width: 76px" hidden  name='afectacion' disabled="disabled" class="afectacion form-control "    autocomplete="off"/>
 
                             </td>
 
@@ -639,7 +639,7 @@
             document.getElementById("igv").value = igv_decimal;
             document.getElementById("total_final").value = end2;
             // var total = document.getElementById("total_final").value;
-            $(`#monto_pago0`).attr('max', end2);
+            // $(`#monto_pago0`).attr('max', end2);
             // document.getElementById("monto_pago0").value = end2;
             var monto_c = document.getElementsByClassName('monto_pago');
             
@@ -647,8 +647,9 @@
             for (var i = 0; i < inp_mont; i++) {
                 var monto = monto_c[i].id;
                 // var input_text = document.getElementById(`${monto}`).value;
-                document.getElementById("monto_pago0").value =  Math.round((end2/inp_mont));
-                document.getElementById(`${monto}`).value = Math.round((end2/inp_mont));
+                var fin = (end2/inp_mont)
+                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
+                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
             }
         }
     </script>
@@ -757,11 +758,13 @@
             // $(`#monto_pago0`).attr('max', end);
             var inp_mont = document.getElementsByClassName('monto_pago').length;
             var monto_c = document.getElementsByClassName('monto_pago');
+            var multiplier2 = 100;
+
             for (var i = 0; i < inp_mont; i++) {
                 var monto = monto_c[i].id;
-                // var input_text = document.getElementById(`${monto}`).value;
-                document.getElementById("monto_pago0").value =  Math.round((end/inp_mont));
-                document.getElementById(`${monto}`).value = Math.round((end/inp_mont));
+                var fin = (end/inp_mont)
+                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
+                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
             }
         });
     </script>
@@ -821,7 +824,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
               </div>
-              <input type="number" class="monto_pago form-control" id="monto_pago${x}"  aria-describedby="basic-addon3" name="monto_pago[]" max="">
+              <input type="text" name="monto_pago[]" class="monto_pago form-control" id="monto_pago${x}"    >
             </div>
         </div>
         <div class="col-sm-2">
@@ -835,13 +838,14 @@
        document.getElementById(`monto_pago${x}`).value = (total/inp_mont);
  
         x++;
-        var multiplier = 100;
+        var multiplier2 = 100;
         var monto_c = document.getElementsByClassName('monto_pago');
         var inp_mont = document.getElementsByClassName('monto_pago').length;
         for (var i = 0; i < inp_mont; i++) {
             var monto = monto_c[i].id;
-            document.getElementById("monto_pago0").value = Math.round((total/inp_mont));
-            document.getElementById(`${monto}`).value = Math.round((total/inp_mont));
+            var fin = (total/inp_mont)
+                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
+                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
         }
         });
         
@@ -855,22 +859,18 @@
             $(`.delete_modal${x}`).remove();
             var monto_c = document.getElementsByClassName('monto_pago');
             var inp_mont = document.getElementsByClassName('monto_pago').length;
+            var multiplier2 = 100;
+
             for (var i = 0; i < inp_mont; i++) {
                 var monto = monto_c[i].id;
                 var total = document.getElementById('total_final').value;
-                document.getElementById("monto_pago0").value =  Math.round((total/inp_mont));
-                document.getElementById(`${monto}`).value = Math.round((total/inp_mont));
+                var fin = (total/inp_mont)
+                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
+                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
             }
 
         };
     </script>
-{{--     <script type="text/javascript">
-        //MONTO MAXIMO DE la primera celda
-            var total = document.getElementById("total_final").value;
-            var msg2 = parseFloat(total) ;
-            console.log(msg2);
-            
-    </script> --}}
     <script>
         $("#boton").on("click",function(buton){
             var cliente = document.getElementById("cliente").value;
@@ -894,13 +894,13 @@
                             document.getElementById('cuota_modal').click();
                             buton.preventDefault();
                         }else{
-                            // console.log("b");
+                            console.log("b");
                             document.getElementById('boton').click();
                             // document.getElementById("form_store").submit();
                             // buton.preventDefault();
                         }
                     }else{
-                            // console.log("c");
+                            console.log("c");
                             document.getElementById('boton').click();
                          // document.getElementById("form_store").submit();
                          // buton.preventDefault();

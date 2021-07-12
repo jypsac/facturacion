@@ -171,7 +171,7 @@
                                                         <div class="pago_modal row">
                                                             <div class="col-sm-1"><label>Fecha:</label></div>
                                                             <div class="col-sm-4">
-                                                                <input type="date" name="fecha_pago[]" id="fecha_pago"  class="fecha_pago form-control" required="" >
+                                                                <input type="date" name="fecha_pago[]" id="fecha_pago0"  class="fecha_pago form-control" >
                                                             </div>
                                                             <div class="col-sm-1"><label>Monto:</label></div>
                                                             <div class="col-sm-4">
@@ -179,7 +179,7 @@
                                                                   <div class="input-group-prepend">
                                                                     <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
                                                                   </div>
-                                                                  <input type="number" class="monto_pago form-control"  id="monto_pago0" name="monto_pago[]"   max="">
+                                                                  <input type="text" name="monto_pago[]" id="monto_pago0" class="monto_pago form-control"   >
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-2">
@@ -651,10 +651,10 @@
             for (var i = 0; i < inp_mont; i++) {
                 var monto = monto_c[i].id;
                 // var input_text = document.getElementById(`${monto}`).value;
-                document.getElementById("monto_pago0").value =  Math.round((end2/inp_mont));
-                document.getElementById(`${monto}`).value = Math.round((end2/inp_mont));
+                var fin = (end2/inp_mont)
+                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
+                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
             }
-        }
     </script>
 
     <script>
@@ -761,11 +761,13 @@
             // $(`#monto_pago0`).attr('max', end);
             var inp_mont = document.getElementsByClassName('monto_pago').length;
             var monto_c = document.getElementsByClassName('monto_pago');
+            var multiplier2 = 100;
+
             for (var i = 0; i < inp_mont; i++) {
                 var monto = monto_c[i].id;
-                // var input_text = document.getElementById(`${monto}`).value;
-                document.getElementById("monto_pago0").value =  Math.round((end/inp_mont));
-                document.getElementById(`${monto}`).value = Math.round((end/inp_mont));
+                var fin = (end/inp_mont)
+                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
+                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
             }
         });
     </script>
@@ -825,7 +827,7 @@
               <div class="input-group-prepend">
                 <span class="input-group-text" id="basic-addon3">{{$moneda->simbolo}}</span>
               </div>
-              <input type="number" class="monto_pago form-control" id="monto_pago${x}"  aria-describedby="basic-addon3" name="monto_pago[]" max="">
+              <input type="text" name="monto_pago[]" class="monto_pago form-control" id="monto_pago${x}"    >
             </div>
         </div>
         <div class="col-sm-2">
@@ -839,13 +841,14 @@
        document.getElementById(`monto_pago${x}`).value = (total/inp_mont);
  
         x++;
-        var multiplier = 100;
+        var multiplier2 = 100;
         var monto_c = document.getElementsByClassName('monto_pago');
         var inp_mont = document.getElementsByClassName('monto_pago').length;
         for (var i = 0; i < inp_mont; i++) {
             var monto = monto_c[i].id;
-            document.getElementById("monto_pago0").value = Math.round((total/inp_mont));
-            document.getElementById(`${monto}`).value = Math.round((total/inp_mont));
+            var fin = (total/inp_mont)
+                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
+                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
         }
         });
         
@@ -859,11 +862,14 @@
             $(`.delete_modal${x}`).remove();
             var monto_c = document.getElementsByClassName('monto_pago');
             var inp_mont = document.getElementsByClassName('monto_pago').length;
+            var multiplier2 = 100;
+
             for (var i = 0; i < inp_mont; i++) {
                 var monto = monto_c[i].id;
                 var total = document.getElementById('total_final').value;
-                document.getElementById("monto_pago0").value =  Math.round((total/inp_mont));
-                document.getElementById(`${monto}`).value = Math.round((total/inp_mont));
+                var fin = (total/inp_mont)
+                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
+                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
             }
 
         };

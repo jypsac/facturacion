@@ -11,7 +11,7 @@ class DatabaseSeeder extends Seeder
      */
     public function run()
     {
-        // $this->call(PersonalTableSeeder::class);
+        $this->call(PersonalTableSeeder::class);
         $this->call(AlmacenTableSeeder::class);
         $this->call(PaisesTableSeeder::class);
         $this->call(Personal_laboralTableSeeder::class);
@@ -27,21 +27,21 @@ class DatabaseSeeder extends Seeder
         $this->call(PermissionsTableSeeder::class);
         $this->call(ProvedorTableSeeder::class);        //innecesario
         $this->call(CategoriasTableSeeder::class);      //innecesario
-        // $this->call(FamiliasTableSeeder::class);        //innecesario
-        // $this->call(MarcasTableSeeder::class);          //inncesario
+        $this->call(FamiliasTableSeeder::class);        //innecesario
+        $this->call(MarcasTableSeeder::class);          //inncesario
         $this->call(ServicioSeeder::class); //innecesario
         $this->call(TipoOperacionFSeeder::class);
         $this->call(Tipo_afectacionSeeder::class);
         $this->call(CodigoLeyendaSeeder::class);
-        // $this->call(ProductosTableSeeder::class);       //inncesario
+        $this->call(ProductosTableSeeder::class);       //inncesario
         $this->call(ConfigFacturacionElectronicaSeeder::class); //innecesario
         $this->call(MotivoTableSeeder::class);          //innecesario
         $this->call(MotivoTrasladoSeeder::class);   //innecesario
         $this->call(VehiculostableSeeder::class); //innecesario
         $this->call(VentasRegistroTableSeeder::class);  //innecesario
         $this->call(TipoRegistroSeeder::class);
-        // $this->call(KardexEntradaSeeder::class);    //inncesario
-        // $this->call(KardexEntradaRegistroSeeder::class);    //innceario
+        $this->call(KardexEntradaSeeder::class);    //inncesario
+        $this->call(KardexEntradaRegistroSeeder::class);    //innceario
         $this->call(ClientesSeeder::class);             //innesa
         $this->call(FacturacionTableSeeder::class);     //innecesario
         $this->call(GarantiaTableSeeder::class);        //innecesario

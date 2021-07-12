@@ -15,6 +15,7 @@ use App\Forma_pago;
 use App\Igv;
 use App\Marcas;
 use App\Moneda;
+use App\Cuotas_credito;
 use App\Personal;
 use App\Personal_venta;
 use App\Producto;
@@ -406,7 +407,22 @@ class BoletaController extends Controller
         $boleta->tipo_documento_id = 3;
         $boleta->tipo_operacion_id = $busca_ope->id;
         $boleta->save();
+        
+        if($boleta->forma_pago_id == 2){
 
+            $fecha_pago = $request->input('fecha_pago');
+            $contador_for = count($fecha_pago);
+            $monto_pago = $request->input('monto_pago');
+            // foreach($contador_for as $cuotas => $index ){
+            for($c = 0; $c<$contador_for;$c++ ){
+                $cuota_cred = new Cuotas_credito;
+                $cuota_cred->boleta_id = $boleta->id;
+                $cuota_cred->numero_cuota = $c+1;
+                $cuota_cred->monto = $monto_pago[$c];
+                $cuota_cred->fecha_pago = $fecha_pago[$c];
+                $cuota_cred->save();
+            }
+        }
         $total_comi=$request->get('total_comi');
 
 
