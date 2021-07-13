@@ -176,9 +176,15 @@
                                                     </button>
                                                   </div>
                                                   <div class="modal-body">
-                                                    <div class="alert alert-danger alert-dismissible fade show" role="alert" style="display: none;" id="alert_campos" >
+                                                    <div class="alert alert-danger alert-dismissible fade show" role="alert"  id="alert_campos" style="display: none">
                                                       <strong style="font-size:11px">Rellenar todos los campos</strong>
-                                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 6;">
+                                                        <span aria-hidden="true">&times;</span>
+                                                      </button>
+                                                    </div>
+                                                    <div class="alert alert-danger alert-dismissible fade show" role="alert"  id="suma_campos" style="display: none" >
+                                                      <strong style="font-size:11px">La suma de las cuotas exceden el monto total</strong>
+                                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 6;">
                                                         <span aria-hidden="true">&times;</span>
                                                       </button>
                                                     </div>
@@ -198,7 +204,7 @@
                                                                 </div>
                                                             </div>
                                                             <div class="col-sm-2">
-                                                                <label ><button type="button"  aria-hidden="true" class="add_pago btn btn-success"><i class="fa fa-plus-square-o fa-lg" > </i></button></label>
+                                                                <label ><button type="button"  aria-hidden="true" id="add_pago" class="add_pago btn btn-success"><i class="fa fa-plus-square-o fa-lg" > </i></button></label>
                                                         </div>
                                                         </div>
                                                     </div>
@@ -818,7 +824,7 @@
                 }
         }
     </script>
-    <script>
+     <script>
         var total = document.getElementById('total_final').value;
         var x = 1;
         $(".add_pago").on('click', function () {
@@ -843,12 +849,15 @@
         </div>
         </div>`;
         $('.row_number').append(data);
-        
+
         var inp_mont = document.getElementsByClassName('monto_pago').length;
- 
+
        document.getElementById(`monto_pago${x}`).value = (total/inp_mont);
- 
+
         x++;
+        if(inp_mont>6){
+            $('.add_pago').attr('disabled');
+        }
         var multiplier2 = 100;
         var monto_c = document.getElementsByClassName('monto_pago');
         var inp_mont = document.getElementsByClassName('monto_pago').length;
@@ -858,10 +867,18 @@
                 document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
                 document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
         }
+        var inp_mont = document.getElementsByClassName('monto_pago').length;
+        if(inp_mont>5){
+            document.getElementById('add_pago').setAttribute('disabled', "true");
+        }else{
+            document.getElementById('add_pago').removeAttribute('disabled');
+        }
         });
-        
-    </script>
 
+    </script>
+    <style type="text/css">
+        .a{color: red}
+    </style>
     <script type="text/javascript">
         // $(".delete_pago").on('click', function () {
         function eliminar(x){
@@ -877,45 +894,54 @@
                 document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
                 document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
             }
-
+            if(inp_mont>5){
+            document.getElementById('add_pago').setAttribute('disabled', "true");
+            }else{
+                document.getElementById('add_pago').removeAttribute('disabled');
+            }
         };
     </script>
-    <script>
+<script>
         $("#boton").on("click",function(buton){
             var cliente = document.getElementById("cliente").value;
             console.log(cliente);
-           if(cliente.length != 0){
+           // if(cliente.length != 0){
                 var f_p = $('#forma_pago').val();
-                // function montvalue(m){
-                // console.log(`${m}`);
+                var total = document.getElementById('total_final').value;
                 var inp_mont = document.getElementsByClassName('monto_pago').length;
                 var monto_c = document.getElementsByClassName('monto_pago');
                 var monto_fc = document.getElementsByClassName('fecha_pago');
-                for (var i = 0; i < inp_mont; i++) {
-
-                    var monto = monto_c[i].id;
-                    var fecha = monto_fc[i].id;
-                    var input_text = document.getElementById(`${monto}`).value;
-                    var date_text = document.getElementById(`${fecha}`).value;
-                    if(f_p == "2" ){
+                if(f_p == "2" ){
+                    var sum = 0;
+                    for(g = 0; g<inp_mont;g++){
+                        var monto1 = monto_c[g].id;
+                        var input_text_2 = document.getElementById(`${monto1}`).value;
+                        var sum = parseFloat(sum) + parseFloat(input_text_2);
+                    }
+                    console.log(sum);
+                    if(sum != total){
+                        document.getElementById('cuota_modal').click();
+                        document.getElementById('suma_campos').style.display = "flex";
+                        buton.preventDefault();
+                    }
+                    for (var i = 0; i < inp_mont; i++) {
+                        var fecha = monto_fc[i].id;
+                        var monto = monto_c[i].id;
+                        var input_text = document.getElementById(`${monto}`).value;
+                        var date_text = document.getElementById(`${fecha}`).value;
                         if( input_text.length  == 0 || date_text.length  == 0 ){
-                            console.log("a");
                             document.getElementById('cuota_modal').click();
+                            document.getElementById('alert_campos').style.display = "flex";
                             buton.preventDefault();
                         }else{
-                            console.log("b");
                             document.getElementById('boton').click();
-                            // document.getElementById("form_store").submit();
                             // buton.preventDefault();
                         }
-                    }else{
-                            console.log("c");
-                            document.getElementById('boton').click();
-                         // document.getElementById("form_store").submit();
-                         // buton.preventDefault();
                     }
+                }else{
+                    document.getElementById('boton').click();
+                     // buton.preventDefault();
                 }
-            }
             // buton.preventDefault();
         });
 
