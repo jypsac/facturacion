@@ -14,6 +14,7 @@ use App\Empresa;
 use App\EmailBandejaEnvios;
 use App\EmailBandejaEnviosArchivos;
 use App\EmailConfiguraciones;
+use App\Cuotas_credito;
 use Illuminate\Support\Facades\Storage;
 use App\Facturacion;
 use App\Facturacion_registro;
@@ -1241,7 +1242,20 @@ public function facturar_store(Request $request)
     $facturar->tipo_operacion_id=$cotizacion->tipo_operacion_id;
     $facturar->tipo_documento_id=$cotizacion->tipo_documento_id;
     $facturar->save();
-
+    if($facturar->forma_pago_id == 2){
+        $fecha_pago = $request->input('fecha_pago');
+        $contador_for = count($fecha_pago);
+        $monto_pago = $request->input('monto_pago');
+        // foreach($contador_for as $cuotas => $index ){
+        for($c = 0; $c<$contador_for;$c++ ){
+            $cuota_cred = new Cuotas_credito;
+            $cuota_cred->facturacion_id = $facturar->id;
+            $cuota_cred->numero_cuota = $c+1;
+            $cuota_cred->monto = $monto_pago[$c];
+            $cuota_cred->fecha_pago = $fecha_pago[$c];
+            $cuota_cred->save();
+        }
+    }
     // modificacion para que se cierre el codigo en almacen
     $factura_primera=Almacen::where('id', $sucursal->id)->first();
     $factura_primera->cod_fac='NN';
@@ -1795,6 +1809,20 @@ public function facturar_store(Request $request)
         $boletear->tipo_documento_id=$cotizacion->tipo_documento_id;
         $boletear->save();
 
+        if($boletear->forma_pago_id == 2){
+        $fecha_pago = $request->input('fecha_pago');
+        $contador_for = count($fecha_pago);
+        $monto_pago = $request->input('monto_pago');
+        // foreach($contador_for as $cuotas => $index ){
+        for($c = 0; $c<$contador_for;$c++ ){
+            $cuota_cred = new Cuotas_credito;
+            $cuota_cred->facturacion_id = $boletear->id;
+            $cuota_cred->numero_cuota = $c+1;
+            $cuota_cred->monto = $monto_pago[$c];
+            $cuota_cred->fecha_pago = $fecha_pago[$c];
+            $cuota_cred->save();
+        }
+    }
         // modificacion para que se cierre el codigo en almacen
         $factura_primera=Almacen::where('id', $sucursal->id)->first();
         $factura_primera->cod_bol='NN';

@@ -76,7 +76,59 @@
                              <tr>
                                  <td><b>Condiciones de Pago</b></td>
                                  <td style="width: 3px">:</td>
-                                 <td colspan="4"><input type="text" class="form-control" value="{{$cotizacion->forma_pago->nombre }}" readonly="readonly"></td>
+                                 @if($cotizacion->forma_pago_id == 1)
+                                    <td colspan="4"><input type="text" class="form-control" value="{{$cotizacion->forma_pago->nombre }}" readonly="readonly"></td>
+                                @else
+                                    <td colspan="2"><input type="text" class="form-control" value="{{$cotizacion->forma_pago->nombre }}" readonly="readonly"></td>
+                                    <td colspan="2"><button  type="button" class='cuota_modal btn btn-info' id="cuota_modal" onclick="most_tot()"  data-toggle="modal" data-target="#cuotas_modal">Cuotas</button></td>
+                                    <!-- Modal -->
+                                    <div class="modal fade bd-example-modal-lg" id="cuotas_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" >
+                                      <div class="modal-dialog modal-lg" role="document">
+                                        <div class="modal-content">
+                                          <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Registrar cuotas</h5>
+                                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                          </div>
+                                          <div class="modal-body">
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert"   id="alert_campos" style="display: none">
+                                              <strong style="font-size:11px">Rellenar todos los campos</strong>
+                                              <button type="button" class="close_model_rc close" onclick="cerrar_but_rc()" style="padding: 6;">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="alert alert-danger alert-dismissible fade show" role="alert"  id="suma_campos" style="display: none" >
+                                              <strong style="font-size:11px">La suma de las cuotas exceden el monto total</strong>
+                                              <button type="button" class="close_model_mt close" onclick="cerrar_but_mt()" style="padding: 6;">
+                                                <span aria-hidden="true">&times;</span>
+                                              </button>
+                                            </div>
+                                            <div class="row_number">
+                                                <div class="pago_modal row">
+                                                    <div class="col-sm-1"><label>Fecha:</label></div>
+                                                    <div class="col-sm-4">
+                                                        <input type="date" name="fecha_pago[]" id="fecha_pago0"  class="fecha_pago form-control" >
+                                                    </div>
+                                                    <div class="col-sm-1"><label>Monto:</label></div>
+                                                    <div class="col-sm-4">
+                                                        <div class="input-group mb-3" style="padding-right:15px">
+                                                          <div class="input-group-prepend">
+                                                            <span class="input-group-text" id="basic-addon3">{{$cotizacion->moneda->simbolo}}</span>
+                                                          </div>
+                                                          <input type="text" name="monto_pago[]" id="monto_pago0" class="monto_pago form-control"   >
+                                                        </div>
+                                                    </div>
+                                                    <div class="col-sm-2">
+                                                        <label ><button type="button"  aria-hidden="true" id="add_pago" class="add_pago btn btn-success"><i class="fa fa-plus-square-o fa-lg" > </i></button></label>
+                                                </div>
+                                                </div>
+                                            </div>
+                                          </div>
+                                        </div>
+                                      </div>
+                                    </div>
+                                @endif
                                  <td><b>Guia Remision</b></td>
                                  <td style="width: 3px">:</td>
                                  <td><input type="text" class="form-control" value="0" name="guia_remision"></td>
@@ -221,4 +273,148 @@
    }
 </script>
 {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script type="text/javascript">
+    function most_tot(){
+       var monto_0 = document.getElementById("monto_pago0").value;
+        if(monto_0.length == 0){
+            var total_final = document.getElementById('total').value;
+            document.getElementById("monto_pago0").value = total_final;
+        }
+    }
+</script>
+{{-- <script type="text/javascript">
+    $(document).ready(function() {
+    // show the alert
+    setTimeout(function() {
+        $(".alert").alert('close');
+    }, 2000);
+});
+</script> --}}
+<script>
+        var total = document.getElementById('total').value;
+        var x = 1;
+        $(".add_pago").on('click', function () {
+        var total = document.getElementById('total').value;
+        var data = `
+        <div class="delete_modal${x} row">
+        <div class="col-sm-1"><label>Fecha:</label></div>
+        <div class="col-sm-4">
+            <input type="date" name="fecha_pago[]" id="fecha_pago${x}" class="fecha_pago form-control" >
+        </div>
+        <div class="col-sm-1"><label>Monto:</label></div>
+        <div class="col-sm-4">
+            <div class="input-group mb-3" style="padding-right:15px">
+              <div class="input-group-prepend">
+                <span class="input-group-text" id="basic-addon3">{{$cotizacion->moneda->simbolo}}</span>
+              </div>
+              <input type="text" name="monto_pago[]" class="monto_pago form-control" id="monto_pago${x}"    >
+            </div>
+        </div>
+        <div class="col-sm-2">
+            <label ><button type="button"  class="xd btn btn-danger" onclick="eliminar(${x})"><i class="fa fa-trash-o fa-lg" > </i></button></label>
+        </div>
+        </div>`;
+        $('.row_number').append(data);
+
+        var inp_mont = document.getElementsByClassName('monto_pago').length;
+
+       document.getElementById(`monto_pago${x}`).value = (total/inp_mont);
+
+        x++;
+        if(inp_mont>6){
+            $('.add_pago').attr('disabled');
+        }
+        var multiplier2 = 100;
+        var monto_c = document.getElementsByClassName('monto_pago');
+        var inp_mont = document.getElementsByClassName('monto_pago').length;
+        for (var i = 0; i < inp_mont; i++) {
+            var monto = monto_c[i].id;
+            var fin = (total/inp_mont)
+                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
+                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
+        }
+        var inp_mont = document.getElementsByClassName('monto_pago').length;
+        if(inp_mont>5){
+            document.getElementById('add_pago').setAttribute('disabled', "true");
+        }else{
+            document.getElementById('add_pago').removeAttribute('disabled');
+        }
+        });
+    </script>
+    <script type="text/javascript">
+        // $(".delete_pago").on('click', function () {
+        function eliminar(x){
+            $(`.delete_modal${x}`).remove();
+            var monto_c = document.getElementsByClassName('monto_pago');
+            var inp_mont = document.getElementsByClassName('monto_pago').length;
+            var multiplier2 = 100;
+
+            for (var i = 0; i < inp_mont; i++) {
+                var monto = monto_c[i].id;
+                var total = document.getElementById('total').value;
+                var fin = (total/inp_mont)
+                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
+                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
+            }
+            if(inp_mont>5){
+            document.getElementById('add_pago').setAttribute('disabled', "true");
+            }else{
+                document.getElementById('add_pago').removeAttribute('disabled');
+            }
+        };
+    </script>
+    <script>
+        $("#boton").on(" click",function(buton){
+            var monto_0 = document.getElementById("monto_pago0").value;
+            if(monto_0.length == 0){
+                var total_final = document.getElementById('total').value;
+                document.getElementById("monto_pago0").value = total_final;
+            }
+          @if($cotizacion->forma_pago_id == 2)
+                var total = document.getElementById('total').value;
+                var inp_mont = document.getElementsByClassName('monto_pago').length;
+                var monto_c = document.getElementsByClassName('monto_pago');
+                var monto_fc = document.getElementsByClassName('fecha_pago');
+                    var sum = 0;
+                    for(g = 0; g<inp_mont;g++){
+                        var monto1 = monto_c[g].id; //input montopago0
+                        var input_text_2 = document.getElementById(`${monto1}`).value; //180
+                        var sum = parseFloat(sum) + parseFloat(input_text_2); //suma(180+0) ->180
+                    }
+                    if(sum != total){
+                        document.getElementById('suma_campos').style.display = "flex";
+                        document.getElementById('cuota_modal').click();
+                        buton.preventDefault();
+                    }
+                    for (var i = 0; i < inp_mont; i++) {
+                        var fecha = monto_fc[i].id;
+                        var monto = monto_c[i].id;
+                        var input_text = document.getElementById(`${monto}`).value;
+                        var date_text = document.getElementById(`${fecha}`).value;
+                        if( input_text.length  == 0 || date_text.length  == 0 ){
+                            console.log("q");
+                            document.getElementById('alert_campos').style.display = "flex";
+                            document.getElementById('cuota_modal').click();
+                            buton.preventDefault();
+                        }else{
+                            console.log("b");
+                            document.getElementById('boton').click();
+                            // buton.preventDefault();
+                        }
+                    }
+            // buton.preventDefault();
+            @else
+                document.getElementById('boton').click();
+            @endif
+        });
+
+    </script>
+    <script >
+        function cerrar_but_rc(){
+            document.getElementById('alert_campos').style.display = "none";
+        }
+        function cerrar_but_mt(){
+            document.getElementById('suma_campos').style.display = "none";
+        }
+    </script>
 @endsection

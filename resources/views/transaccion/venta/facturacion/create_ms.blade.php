@@ -161,15 +161,15 @@
                                                     </button>
                                                   </div>
                                                   <div class="modal-body">
-                                                    <div class="alert alert-danger alert-dismissible fade show" role="alert"  id="alert_campos" style="display: none">
+                                                    <div class="alert alert-danger alert-dismissible fade show" role="alert"   id="alert_campos" style="display: none">
                                                       <strong style="font-size:11px">Rellenar todos los campos</strong>
-                                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 6;">
+                                                      <button type="button" class="close_model_rc close" onclick="cerrar_but_rc()" style="padding: 6;">
                                                         <span aria-hidden="true">&times;</span>
                                                       </button>
                                                     </div>
                                                     <div class="alert alert-danger alert-dismissible fade show" role="alert"  id="suma_campos" style="display: none" >
                                                       <strong style="font-size:11px">La suma de las cuotas exceden el monto total</strong>
-                                                      <button type="button" class="close" data-dismiss="alert" aria-label="Close" style="padding: 6;">
+                                                      <button type="button" class="close_model_mt close" onclick="cerrar_but_mt()" style="padding: 6;">
                                                         <span aria-hidden="true">&times;</span>
                                                       </button>
                                                     </div>
@@ -945,7 +945,14 @@
         });
 
     </script>
-
+    <script >
+        function cerrar_but_rc(){
+            document.getElementById('alert_campos').style.display = "none";
+        }
+        function cerrar_but_mt(){
+            document.getElementById('suma_campos').style.display = "none";
+        }
+    </script>
 
 
     @stop
