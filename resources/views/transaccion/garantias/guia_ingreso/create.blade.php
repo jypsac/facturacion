@@ -40,11 +40,34 @@
     </div>
 	@endif
 	<div class="row">
+        <div class="col-sm-4 text-left" align="left">
+
+            <address class="col-sm-4" align="left">
+
+                <img src="{{asset('img/logos/logo.png')}}" alt="" width="300px">
+            </address>
+        </div>
+        <div class="col-sm-4">
+        </div>
+
+        <div class="col-sm-4 ">
+            <div class="form-control ruc" style="height: 125px">
+                <center>
+                    <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
+                    <h2>Guia de Ingreso</h2>
+                    {{-- <h5>{{$boleta_numero}}</h5> --}}
+                    <h5>N° -- </h5>
+                </center>
+
+            </div>
+        </div>
+    </div>
+	<div class="row">
 		<div class="col-lg-12">
 	        <div class="ibox">
-	            <div class="ibox-title">
+	            {{-- <div class="ibox-title">
 					<h5>Crear</h5>
-		        </div>
+		        </div> --}}
 	            <div class="ibox-content" style="padding-bottom: 0px">
 	            	<div class="row">
 						<div class="col-lg-12">

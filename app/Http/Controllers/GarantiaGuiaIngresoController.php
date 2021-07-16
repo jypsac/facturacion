@@ -36,7 +36,6 @@ class GarantiaGuiaIngresoController extends Controller
     {
       $marcas=Marca::all();
       $garantias_guias_ingresos=GarantiaGuiaIngreso::all();
-
       $contacto = Contacto::all();
       return view('transaccion.garantias.guia_ingreso.index',compact('marcas','garantias_guias_ingresos','contacto'));
     }
@@ -64,6 +63,7 @@ class GarantiaGuiaIngresoController extends Controller
       $marca_cantidad=substr($marca_cantidad,1);
       $orden_servicio=$marca.$guion.$marca_cantidad;
       $paises = Pais::all();
+      $empresa = Empresa::first();
       // Producto que no esten anulados
       $productos = Producto::all()->where('estado_anular',1);
 
@@ -74,7 +74,7 @@ class GarantiaGuiaIngresoController extends Controller
         // $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
 
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
-      return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales','paises','productos'));
+      return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales','paises','productos','empresa'));
     }
 
     /**
