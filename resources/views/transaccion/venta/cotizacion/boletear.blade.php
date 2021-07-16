@@ -207,7 +207,7 @@
                                      <td>
                                          {{$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}
 
-                                         <input type="text" name="total" hidden="hidden" value="{{round($sub_total, 2)}}" >
+                                         <input type="text" name="total" hidden="hidden" value="{{round($sub_total, 2)}}"id="total" >
 
                                      </td>
                                  </tr>
@@ -318,7 +318,7 @@
 
         var inp_mont = document.getElementsByClassName('monto_pago').length;
 
-       document.getElementById(`monto_pago${x}`).value = (total/inp_mont);
+       // document.getElementById(`monto_pago${x}`).value = (total/inp_mont);
 
         x++;
         if(inp_mont>6){
@@ -330,8 +330,8 @@
         for (var i = 0; i < inp_mont; i++) {
             var monto = monto_c[i].id;
             var fin = (total/inp_mont)
-                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
-                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
+                document.getElementById("monto_pago0").value = '';
+                // document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
         }
         var inp_mont = document.getElementsByClassName('monto_pago').length;
         if(inp_mont>5){
@@ -353,11 +353,13 @@
                 var monto = monto_c[i].id;
                 var total = document.getElementById('total').value;
                 var fin = (total/inp_mont)
-                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
-                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
+                document.getElementById("monto_pago0").value = '' ;
+                // document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
             }
             if(inp_mont>5){
-            document.getElementById('add_pago').setAttribute('disabled', "true");
+                document.getElementById('add_pago').setAttribute('disabled', "true");
+            }else if(inp_mont == 1){
+                document.getElementById("monto_pago0").value = total;
             }else{
                 document.getElementById('add_pago').removeAttribute('disabled');
             }

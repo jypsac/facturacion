@@ -235,7 +235,7 @@ use App\Personal;
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label> Correo *</label>
-                                            <input name="email_contacto" type="text" class="form-control required email" value="correo@contanto.com">
+                                            <input name="email_contacto" type="text" class="form-control required email" value="correo@contacto.com">
                                         </div>
                                     </div>
                                     {{--  --}}

@@ -30,7 +30,7 @@ class CreateProductosTable extends Migration
             $table->integer('stock_maximo');
             $table->string('foto')->nullable();
             $table->string('estado_anular');
-            $table->unsignedBigInteger('tipo_afectacion_id')->nullable();
+            $table->unsignedBigInteger('tipo_afectacion_id')->default('1')->nullable();
         });
     }
     /**

@@ -5,204 +5,28 @@
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_guia_ingreso.index') )
 @section('value_accion', 'Atras')
-@section('vue_js',  asset('js/app.js') )
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+{{-- @section('vue_js',  asset('js/app.js') ) --}}
 @section('content')
-<div class="social-bar">
-    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg1"><i class="fa fa-user-o" aria-hidden="true"></i><span style="font-size:15px;padding-left:4px"> cliente</span></a>
-    <a class="icon icon-twitter" target="_blank" data-toggle="modal" data-target=".bd-example-modal-lg2"><i style="padding-left: 5px" class="fa fa-male" aria-hidden="true"></i><span style="font-size:15px;padding-left:4px">personal</span></a>
-</div>
- <!-- MODAL CLIENTE -->
-<div class="modal fade bd-example-modal-lg1" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-	  <div class="modal-content" style="width: 100%">
-		<form action="{{ route('agregado_rapido.cliente_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:0 20px 20px 20px">
-		@csrf
-			<h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
-		 	<div class="form-group row ">
-		 		<label class="col-sm-2 col-form-label" >Tipo Documento:</label>
-                <div class="col-sm-4">
-                 	<select class="form-control m-b" name="documento_identificacion" >
-						<option value="dni">DNI</option>
-						<option value="pasaporte">Pasaporte</option>
-						<option value="ruc">Ruc</option>
-					</select>
-                </div>
-                <label class="col-sm-2 col-form-label">Numero de Documento:</label>
-				<div class="col-sm-4">
-					<input list="browserdoc" class="form-control m-b" name="numero_documento" required value="{{ old('numero_documento')}}"/>
-					<datalist id="browserdoc" >
-						@foreach($clientes as $cliente)
-							<option id="a">{{$cliente->numero_documento}} - existente</option>
-						@endforeach
-			 		</datalist>
-                </div>
-			</div>
-            <div class="form-group row" >
-		 		<label class="col-sm-2 col-form-label" >Cliente:</label>
-                <div class="col-sm-4">
-					<input list="browsersc" class="form-control m-b" name="nombre" required value="{{ old('nombre')}}"/>
-					<datalist id="browsersc" >
-						@foreach($clientes as $cliente)
-							<option id="a">{{$cliente->nombre}} - existente</option>
-						@endforeach
-			 		</datalist>
-                </div>
-                <label class="col-sm-2 col-form-label">Direccion:</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" name="direccion" class="form-control" required value="{{ old('direccion')}}">
-                </div>
-            </div>
-            <div class="form-group row">
-		 		<label class="col-sm-2 col-form-label" >Celular:</label>
-                    <div class="col-sm-4">
-                    	<input type="telefono" class="form-control" name="celular" class="form-control" required value="{{ old('celular')}}">							        </div>
+    <script type="text/javascript">
+        $(document).ready(function() {
 
-                    <label class="col-sm-2 col-form-label">Telefono:</label>
-					<div class="col-sm-4">
-							<input type="telefono" class="form-control" name="telefono" class="form-control"required value="{{ old('telefono')}}">
-                    </div>
-            </div>
-            <div class="form-group row">
-		 		<label class="col-sm-2 col-form-label" >correo:</label>
-                <div class="col-sm-4">
-                	<input type="email" class="form-control" name="email" class="form-control" required value="{{ old('email')}}">
-            	 </div>
-            </div>
-			<h1><i class="fa fa-address-book-o" aria-hidden="true"></i></h1>
-            <div class="form-group row">
-		 		<label class="col-sm-2 col-form-label" >Nombre Contacto:</label>
-            	<div class="col-sm-4">
-						<input id="name" name="nombre_contacto" type="text" class="form-control" required value="{{ old('nombre_contacto')}}">
-                </div>
-                <label class="col-sm-2 col-form-label">Cargo Contacto:</label>
-				<div class="col-sm-4">
-					<input id="surname" name="cargo_contacto" type="text" class="form-control" required value="{{ old('cargo_contacto')}}">
-                </div>
-            </div>
-            <div class="form-group row" style="">
-		 		<label class="col-sm-2 col-form-label" >Telefono Contacto:</label>
-                    <div class="col-sm-4">
-						<input id="email" name="telefono_contacto" type="text" class="form-control" required value="{{ old('telefono_contacto')}}">
-                     </div>
-                    <label class="col-sm-2 col-form-label">Celular Contacto:</label>
-					<div class="col-sm-4">
-						<input id="address" name="celular_contacto" type="text" class="form-control" required value="{{ old('celular_contacto')}}">
-                    </div>
-            </div>
-            <div class="form-group row">
-		 		<label class="col-sm-2 col-form-label" >Correo Contacto:</label>
-                <div class="col-sm-4">
-					<input id="email" name="email_contacto" type="text" class="form-control email" 	required value="{{ old('email_contacto')}}">
-                 </div>
-            </div>
-			<input type="submit"class="btn btn-primary" value="Grabar">
-		</form>
-	  </div>
-	</div>
-</div>
-<br>
-  <!-- MODAL Personal -->
-<div class="modal fade bd-example-modal-lg2" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel"  	aria-hidden="true">
-	<div class="modal-dialog modal-lg">
-	  	<div class="modal-content" style="width: 100%">
-			<form action="{{ route('agregado_rapido.personal_store') }}"  enctype="multipart/form-data" id="form" class="wizard-big" method="post" style="margin:20px">
-			@csrf
-			<h1 ><i class="fa fa-user-o" aria-hidden="true"></i></h1>
-			<style type="text/css">
-				.xd{    margin-bottom: 0px;}
-				h1{margin-bottom: 0px;}
-			</style>
-		 	<div class="form-group row">
-		 		<label class="col-sm-2 col-form-label" >Nombre:</label>
-                <div class="col-sm-4">
-                 	<input type="text" class="form-control" name="nombres" required>
-                </div>
-                 <label class="col-sm-2 col-form-label">Apellidos:</label>
-				<div class="col-sm-4">
-					<input type="text" class="form-control" name="apellidos" required>
-                </div>
-            	<label class="col-sm-2 col-form-label">Fecha Nacimiento:</label>
-				<div class="col-sm-4">
-					<input type="date" class="form-control" name="fecha_nacimiento" required>
-                </div>
-                <label class="col-sm-2 col-form-label">Genero:</label>
-				<div class="col-sm-4">
-					<select class="form-control m-b" name="genero">
-						<option value="masculino">masculino</option>
-						<option value="femenino">femenino</option>
-					</select>
-                </div>
-		                <label class="col-sm-2 col-form-label">Estado Civil:</label>
-				<div class="col-sm-4">
-					<select class="form-control m-b" name="estado_civil">
-						<option value="Soltero">Soltero</option>
-						<option value="Casado">Casado</option>
-						<option value="Viudo con hijos">Viudo con hijos</option>
-						<option value="Viudo sin hijos">Viudo sin hijos</option>
-					</select>
-                </div>
-            </div>
-            <h1><i class="fa fa-address-card-o" aria-hidden="true"></i></h1>
-            <div class="form-group row xd">
-		 		<label class="col-sm-2 col-form-label" >Tipo Documento:</label>
-                <div class="col-sm-4"><select class="form-control m-b" name="documento_identificacion">
-					<option value="dni">DNI</option>
-					<option value="pasaporte">Pasaporte</option>
-					<option value="ruc">RUC</option>
-				</select>
-				</div>
-                <label class="col-sm-2 col-form-label">N° de Doc:</label>
-				<div class="col-sm-4">
-						<input type="text" class="form-control" name="numero_documento" required>
-                </div>
-            </div>
-            <div class="form-group row xd">
-                <label class="col-sm-2 col-form-label" >Direccion:</label>
-                <div class="col-sm-4">
-						<input type="text" class="form-control" name="direccion" required>
-                 </div>
-                <label class="col-sm-2 col-form-label">Pais:</label>
-				<div class="col-sm-4">
-					<select class="form-control m-b" name="nacionalidad" required>
-						<option>Seleccione</option>
-						@foreach($paises as $pais)
-							<option value="{{ $pais->nombre }}" >{{ $pais->nombre }}</option>
-						@endforeach
-					</select>
-                </div>
-            </div>
-			<h1><i class="fa fa-graduation-cap" aria-hidden="true"></i></h1>
-            <div class="form-group row">
-	            <label class="col-sm-2 col-form-label" >Nivel Educativo:</label>
-                <div class="col-sm-4">
-					<input type="text" class="form-control" name="nivel_educativo" required>
-                </div>
-	 			<label class="col-sm-2 col-form-label" >Profesion:</label>
-                <div class="col-sm-4">
-                	<input type="text" class="form-control" name="profesion" required>
-              	</div>
-            </div>
-			<h1><i class="fa fa-phone" aria-hidden="true"></i></h1>
-            <div class="form-group row">
-            	<label class="col-sm-2 col-form-label" >Telefono:</label>
-            	<div class="col-sm-4">
-					<input type="telefono" class="form-control" name="telefono" required>
-                </div>
-		 		<label class="col-sm-2 col-form-label" >Celular:</label>
-                <div class="col-sm-4">
-					<input type="telefono" class="form-control" name="celular" required>
-                 </div>
-            </div>
-            <div class="form-group row" style="">
-                <label class="col-sm-2 col-form-label">Correo:</label>
-				<div class="col-sm-4">
-						<input type="email" class="form-control" name="email" required>
-                </div>
-            </div>
-			<input type="submit"class="btn btn-primary" value="Grabar"/>
-			</form>
-  		</div>
-	</div>
+            $("form").keypress(function(e) {
+                if (e.which == 13) {
+                    setTimeout(function() {
+                        e.target.value += ' | ';
+                    }, 4);
+                    e.preventDefault();
+                }
+            });
+
+
+        });
+    </script>
+@section('form_action_modal_cliente',  route('agregado_rapido.cliente_cotizado'))
+@section('ruta_retorno', 'garantia_guia_ingreso')
+<div class="social-bar">
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target="#ModalCliente"><i class="fa fa-user-o" aria-hidden="true"></i>cliente </a>
 </div>
 
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -403,6 +227,21 @@
 	$.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script> --}}
 <style>
+    .form-control{border-radius: 10px}
+    .text_des{border-radius: 10px;border: 1px solid #e5e6e7;width: 80px;padding: 6px 12px;}
+    .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
+    .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
+    .check:checked {background: #0375bd6b;}
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    input[type=number] { -moz-appearance:textfield; }
+</style>
+
+<style>
 	.form-control{    margin-bottom: 15px;
 }
    fieldset
@@ -431,15 +270,24 @@
     }
 </style>
 
-	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+	 <!-- Mainly scripts -->
+        <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+        <script src="{{ asset('js/popper.min.js') }}"></script>
+        <script src="{{ asset('js/bootstrap.js') }}"></script>
+        <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+        <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    <!-- Custom and plugin javascript -->
-    <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+        <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+        <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+        <!-- Custom and plugin javascript -->
+        <script src="{{ asset('js/inspinia.js') }}"></script>
+        <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+        <!-- Jquery Validate -->
+        <script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
+
+        <!-- Steps -->
+        <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
 
 
 @stop

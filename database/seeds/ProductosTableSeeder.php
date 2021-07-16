@@ -12,7 +12,7 @@ class ProductosTableSeeder extends Seeder
      */
     public function run()
     {
-        // factory(Producto::class, 100)->create();
+        // factory(Producto::class, 1000)->create();
     	DB::table('productos')->insert([
             'id' => 1,
             'codigo_producto' => 'EX-000000',

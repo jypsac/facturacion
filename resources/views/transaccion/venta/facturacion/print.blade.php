@@ -120,10 +120,10 @@
                             <th>Cantidad</th>
                             <th>Unid.Medida</th>
                             <th>Descripción</th>
-                            <th>Valor Unitario</th>
-                            <th>Dscto.%</th>
+                            {{-- <th>Valor Unitario</th>
+                            <th>Dscto.%</th> --}}
                             <th>Precio Unitario</th>
-                            <th>Valor Venta </th>
+                            <th>Total</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -138,8 +138,8 @@
                                 <td>{{$facturacion_registros->cantidad}}</td>
                                 <td>{{$facturacion_registros->producto->unidad_i_producto->medida}}</td>
                                 <td>{{$facturacion_registros->producto->nombre}} <br><strong>N/S:</strong> {{$facturacion_registros->numero_serie}}</td>
-                                <td>{{$facturacion_registros->precio}}</td>
-                                <td>{{$facturacion_registros->descuento}}%</td>
+                                {{-- <td>{{$facturacion_registros->precio}}</td> --}}
+                                {{-- <td>{{$facturacion_registros->descuento}}%</td> --}}
                                 <td>{{$facturacion_registros->precio_unitario_comi}}</td>
                                 <td>{{$facturacion_registros->precio_unitario_comi * $facturacion_registros->cantidad }}</td>
                                 <td style="display: none">

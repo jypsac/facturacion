@@ -658,9 +658,10 @@
                 var monto = monto_c[i].id;
                 // var input_text = document.getElementById(`${monto}`).value;
                 var fin = (end2/inp_mont)
-                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
-                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
+                document.getElementById("monto_pago0").value = Math.round(end2 * multiplier2)/ multiplier2;
+                // document.getElementById(`${monto}`).value = end2;
             }
+        }
     </script>
 
     <script>
@@ -772,8 +773,8 @@
             for (var i = 0; i < inp_mont; i++) {
                 var monto = monto_c[i].id;
                 var fin = (end/inp_mont)
-                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
-                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
+                document.getElementById("monto_pago0").value = Math.round(end * multiplier2)/ multiplier2; ;
+                // document.getElementById(`${monto}`).value = end;
             }
         });
     </script>
@@ -844,7 +845,7 @@
         
         var inp_mont = document.getElementsByClassName('monto_pago').length;
  
-       document.getElementById(`monto_pago${x}`).value = (total/inp_mont);
+       // document.getElementById(`monto_pago${x}`).value = (total/inp_mont);
  
         x++;
         if(inp_mont>6){
@@ -856,8 +857,8 @@
         for (var i = 0; i < inp_mont; i++) {
             var monto = monto_c[i].id;
             var fin = (total/inp_mont)
-                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
-                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
+                document.getElementById("monto_pago0").value = '';
+                // document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
         }
         var inp_mont = document.getElementsByClassName('monto_pago').length;
         if(inp_mont>5){
@@ -877,17 +878,19 @@
             $(`.delete_modal${x}`).remove();
             var monto_c = document.getElementsByClassName('monto_pago');
             var inp_mont = document.getElementsByClassName('monto_pago').length;
+            var total = document.getElementById('total_final').value;
             var multiplier2 = 100;
-
             for (var i = 0; i < inp_mont; i++) {
                 var monto = monto_c[i].id;
-                var total = document.getElementById('total_final').value;
+
                 var fin = (total/inp_mont)
-                document.getElementById("monto_pago0").value = Math.round(fin * multiplier2)/ multiplier2; ;
-                document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
+                document.getElementById("monto_pago0").value = '';
+                // document.getElementById(`${monto}`).value = Math.round(fin * multiplier2)/ multiplier2;
             }
             if(inp_mont>5){
-            document.getElementById('add_pago').setAttribute('disabled', "true");
+                document.getElementById('add_pago').setAttribute('disabled', "true");
+            }else if(inp_mont == 1){
+                document.getElementById("monto_pago0").value = total;
             }else{
                 document.getElementById('add_pago').removeAttribute('disabled');
             }
@@ -902,8 +905,8 @@
     </script> --}}
     <script>
         $("#boton").on("click",function(buton){
-            var cliente = document.getElementById("cliente").value;
-            console.log(cliente);
+            // var cliente = document.getElementById("cliente").value;
+            // console.log(cliente);
            // if(cliente.length != 0){
                 var f_p = $('#forma_pago').val();
                 var total = document.getElementById('total_final').value;

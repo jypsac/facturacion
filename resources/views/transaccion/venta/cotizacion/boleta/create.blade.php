@@ -119,18 +119,12 @@
                                 <td>:</td>
                                 <td>
                                     <div class="row">
-                                        <div class="col-sm-9">
+                                        <div class="col-sm-12">
                                             <select class="form-control" name="forma_pago" required="required" id ="forma_pago" onchange="seleccionado()">
                                                 @foreach($forma_pagos as $forma_pago)
                                                     <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
                                                 @endforeach
                                             <select>
-                                        </div>
-                                        <div class="col-sm-1" id="credito_pago" style="display: none">
-                                        <button style="height: 35px;width: auto" type="button" class='btn btn-info' >
-
-                                        </button>
-
                                         </div>
                                     </div>
                                     </td>
