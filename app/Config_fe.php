@@ -16,7 +16,8 @@ use Greenter\See;
 use Luecano\NumeroALetras\NumeroALetras;
 use App\Empresa;
 use App\Igv;
-//DATOS DE PRUEBA
+
+// DATOS DE PRUEBA
 // RUC: 20000000001
 // Usuario: MODDATOS
 // Contraseña: moddatos
@@ -64,10 +65,12 @@ class Config_fe extends Model
         ->setNombreComercial($empresa->nombre)
         ->setAddress($address);
 
+
         $igv_f=0;
         $gravada=0;
         $precio=0;
         
+
         foreach($facturas_registros as $cont => $factura_registro){
             $item[$cont] = (new SaleDetail())
             ->setCodProducto($factura_registro->producto->codigo_producto)//codigo del producto
@@ -83,7 +86,6 @@ class Config_fe extends Model
             ->setMtoValorVenta($factura_registro->precio*$factura_registro->cantidad)
             ->setMtoPrecioUnitario($factura_registro->precio+($factura_registro->precio*(($igv->igv_total)/100)))
             ;
-            
             //sumatorias
             $igv_f=$factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)+$igv_f;
             $precio=$factura_registro->precio*$factura_registro->cantidad+$precio;
@@ -93,19 +95,32 @@ class Config_fe extends Model
         }
         $total=$igv_f+$precio;
         // return $gravada;
+
+        //codigo factura
+        $codigo_factura=$factura->codigo_fac;
+        $serie=explode("-",$codigo_factura);
+
+        $correlativo=$serie[1];
+        $serie=$serie[0];
+        
         // Venta
         $invoice = (new Invoice())
         ->setUblVersion('2.1')
         ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
         ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
-        ->setSerie('F001')// numero de serie 
-        ->setCorrelativo('1') // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
+        ->setSerie($serie)// numero de serie 
+        ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
         ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
         ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
         ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
         ->setCompany($company)
         ->setClient($client)
-        ->setMtoOperGravadas($gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+        //--------------------------estados de obtencion
+        ->setMtoOperGravadas($factura->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+        ->setMtoOperInafectas($factura->op_inafecta)
+        ->setMtoOperExoneradas($factura->op_exonerada)
+        // ->setMtoOperGratuitas($factura->op_gratuita)
+        //--------------------------
         //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
         ->setMtoIGV($igv_f)
         ->setTotalImpuestos($igv_f)
@@ -131,27 +146,52 @@ class Config_fe extends Model
         
     }
 
-    public static function boleta(){
+    
+
+    public static function boleta($boleta,$boletas_registros){
+
+        $empresa=Empresa::first();
+        $igv=Igv::first();
+
         // Cliente
-        $client = new Client();
-        $client->setTipoDoc('1')
-            ->setNumDoc('46712369')
-            ->setRznSocial('MARIA RAMOS ARTEAGA');
+        $client = (new Client())
+        ->setTipoDoc('6')   //pagina 42 del pdf sunat 2.1
+        ->setNumDoc($boleta->cliente->numero_documento) //ruc del receptor
+        ->setRznSocial($boleta->cliente->empresa); //nombre empresa
 
         // Emisor
         $address = new Address();
         $address->setUbigueo('150101')
-            ->setDepartamento('LIMA')
-            ->setProvincia('LIMA')
-            ->setDistrito('LIMA')
+            ->setDepartamento($empresa->region_provincia)
+            ->setProvincia($empresa->region_provincia)
+            ->setDistrito($empresa->ciudad)
             ->setUrbanizacion('-')
-            ->setDireccion('AV LOS GERUNDIOS');
+            ->setDireccion($empresa->calle);
 
-        $company = new Company();
-        $company->setRuc('20000000001')
-            ->setRazonSocial('EMPRESA SAC')
-            ->setNombreComercial('EMPRESA')
-            ->setAddress($address);
+        $company = (new Company())
+        ->setRuc($empresa->ruc)
+        ->setRazonSocial($empresa->razon_social)
+        ->setNombreComercial($empresa->nombre)
+        ->setAddress($address);
+
+        $igv_f=0;
+        $gravada=0;
+        $precio=0;
+
+
+        $item = (new SaleDetail())
+            ->setCodProducto('P001')
+            ->setUnidad('NIU')
+            ->setCantidad(2)
+            ->setDescripcion('PRODUCTO 1')
+            ->setMtoBaseIgv(100)
+            ->setPorcentajeIgv(18.00) // 18%
+            ->setIgv(18.00)
+            ->setTipAfeIgv('10')
+            ->setTotalImpuestos(18.00)
+            ->setMtoValorVenta(100.00)
+            ->setMtoValorUnitario(50.00)
+            ->setMtoPrecioUnitario(59.00);
 
         // Venta
         $invoice = (new Invoice())
@@ -171,30 +211,12 @@ class Config_fe extends Model
             ->setMtoImpVenta(118.00)
             ->setCompany($company);
 
-        $item = (new SaleDetail())
-            ->setCodProducto('P001')
-            ->setUnidad('NIU')
-            ->setCantidad(2)
-            ->setDescripcion('PRODUCTO 1')
-            ->setMtoBaseIgv(100)
-            ->setPorcentajeIgv(18.00) // 18%
-            ->setIgv(18.00)
-            ->setTipAfeIgv('10')
-            ->setTotalImpuestos(18.00)
-            ->setMtoValorVenta(100.00)
-            ->setMtoValorUnitario(50.00)
-            ->setMtoPrecioUnitario(59.00);
-
         $legend = (new Legend())
             ->setCode('1000')
             ->setValue('SON CIENTO DIECIOCHO CON 00/100 SOLES');
 
         $invoice->setDetails([$item])
                 ->setLegends([$legend]);
-    }
-
-    public static function boleta_servicio(){
-        //pagina 58
     }
 
     public static function send($see, $invoice){
@@ -210,7 +232,7 @@ class Config_fe extends Model
             echo 'Mensaje Error: '.$result->getError()->getMessage();
             exit();
         }
-        // Guardamos el CDR
+        // Guardamos el CDR [pregunats si se guardan las boletas]
         Storage::disk('facturas_electronicas')->put('R-'.$invoice->getName().'.zip', $result->getCdrZip());
 
         return $result;
@@ -235,7 +257,7 @@ class Config_fe extends Model
             echo 'Excepción';
         }
 
-        echo $cdr->getDescription().PHP_EOL;
+        return $cdr->getDescription().PHP_EOL;
     }
 }
 

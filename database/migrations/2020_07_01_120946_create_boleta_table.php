@@ -44,7 +44,7 @@ class CreateBoletaTable extends Migration
             $table->string('comisionista')->nullable();
             $table->string('user_id');
             $table->string('estado');
-
+            $table->boolean('b_electronica')->default(0);
             $table->string('tipo')->nullable();
             //
             $table->string('op_gravada')->default('0');

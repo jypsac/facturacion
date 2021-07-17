@@ -86,7 +86,9 @@ Route::group(
 
 		//factura
 		Route::post('/facturacion_electronica_factura','FacturacionElectronicaController@factura')->name('facturacion_electronica.factura_sunat');
-
+		//boleta
+		Route::post('/facturacion_electronica_boleta','FacturacionElectronicaController@boleta')->name('facturacion_electronica.boleta_sunat');
+		Route::get('/facturacion_electronica_boleta','FacturacionElectronicaController@index_boleta')->name('facturacion_electronica.index_boleta');
 		Route::resource('/facturacion_electronica','FacturacionElectronicaController');
 
 		Route::resource('/credito','CreditoController');

@@ -235,7 +235,7 @@ use App\Personal;
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label> Correo *</label>
-                                            <input name="email_contacto" type="text" class="form-control required email" value="correo@contacto.com">
+                                            <input name="email_contacto" type="text" class="form-control required email" value="correo@contanto.com">
                                         </div>
                                     </div>
                                     {{--  --}}
@@ -478,10 +478,10 @@ use App\Personal;
                         </li>
                         @endcan
                         <li>
-                            <a href="#"><img src="{{ asset('/archivos/imagenes/layout/facturacion_electronica.svg')}}" class="iconos"> <span class="nav-label">Fac.Electronica </span></a>
+                            <a href="#"><img src="{{ asset('/archivos/imagenes/layout/cturacion_electronica.svg')}}" class="iconos"> <span class="nav-label">Fac.Electronica </span></a>
                             <ul class="nav nav-second-level collapse">
                                 <li><a href="{{route('facturacion_electronica.index')}}">Facturas</a></li>
-                                <li><a href="#">Boletas</a></li>
+                                <li><a href="{{route('facturacion_electronica.index_boleta')}}">Boletas</a></li>
                                 <li><a href="#">Resumen diario</a></li>
                             </ul>
                         </li>

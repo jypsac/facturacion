@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Config_fe;
 use App\Facturacion;
 use App\Facturacion_registro;
+use App\Boleta;
+use App\Boleta_registro;
 use DateTime;
 
 use Greenter\Model\Client\Client;
@@ -32,6 +34,12 @@ class FacturacionElectronicaController extends Controller
         return view('facturacion_electronica.factura.index',compact('facturacion'));
     }
 
+    public function index_boleta(){
+
+        $boletas=Boleta::where('b_electronica',0)->get();
+        return view('facturacion_electronica.boleta.index',compact('boletas'));
+    }
+
     /**
      * Show the form for creating a new resource.
      *
@@ -43,17 +51,54 @@ class FacturacionElectronicaController extends Controller
         $factura=Facturacion::where('f_electronica',0)->where('id',$request->factura_id)->first();
         $factura_registro=Facturacion_registro::where('facturacion_id',$request->factura_id)->get();
         
+
         //configuracion
         $see=Config_fe::facturacion_electronica();
 
+
         //factura
         $invoice=Config_fe::factura($factura, $factura_registro);
-        // return $invoice;
+        
+
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
 
         //lectura CDR
-        Config_fe::lectura_cdr($result->getCdrResponse());
+        $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+
+        //cambio de factura electronica - en caso sea todo exitoso
+        $factura->f_electronica=1;
+        $factura->save();
+
+        return $msg;
+    }
+
+    public function boleta(Request $request)
+    {
+        //boletas a buscar
+        $boleta=Boleta::where('b_electronica',0)->where('id',$request->factura_id)->first();
+        $boleta_registro=Boleta_registro::where('boleta_id',$request->factura_id)->get();
+        
+
+        //configuracion
+        $see=Config_fe::facturacion_electronica();
+
+
+        //boleta
+        $invoice=Config_fe::boleta($boleta, $boleta_registro);
+        
+
+        //envio a SUNAT    
+        $result=Config_fe::send($see, $invoice);
+
+        //lectura CDR
+        $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+
+        //cambio de boleta electronica - en caso sea todo exitoso
+        $boleta->b_electronica=1;
+        $boleta->save();
+
+        return $msg;
     }
 
     /**
