@@ -12,8 +12,8 @@ class ProductosTableSeeder extends Seeder
      */
     public function run()
     {
-        // factory(Producto::class, 1000)->create();
-    	DB::table('productos')->insert([
+         factory(Producto::class, 1000)->create();
+    /*	DB::table('productos')->insert([
             'id' => 1,
             'codigo_producto' => 'EX-000000',
             'codigo_original' => 'EXAMPLE-00',
@@ -98,7 +98,7 @@ class ProductosTableSeeder extends Seeder
             'stock' => 100,
             'created_at' => '2020-08-01 11:36:57',
             'updated_at' => "2020-08-01 11:36:58" ,
-        ]);
+        ]);*/
         // DB::table('productos')->insert([
         //     'id' => 2 ,
         //     'codigo_producto' => 'BRTH-000002',
@@ -466,3 +466,6 @@ class ProductosTableSeeder extends Seeder
         // factory(Producto::class,10)->create();
     }
 }
+
+
+

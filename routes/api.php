@@ -1,6 +1,8 @@
 <?php
 
 use Illuminate\Http\Request;
+use App\Producto;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -13,6 +15,10 @@ use Illuminate\Http\Request;
 |
 */
 
-Route::middleware('auth:api')->get('/user', function (Request $request) {
+/*Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
+});
+*/
+Route::get('productos',function(){
+    return datatables(Producto::all())->toJson();
 });

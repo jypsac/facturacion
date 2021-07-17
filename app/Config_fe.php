@@ -112,6 +112,7 @@ class Config_fe extends Model
         ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
         ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
         ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
+        
         ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
         ->setCompany($company)
         ->setClient($client)

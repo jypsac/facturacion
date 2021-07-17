@@ -21,21 +21,17 @@ Route::group(
 
 		Route::put('vendedores/estado/{id}', 'PersonalVentaController@estado')->name('vendedores.estado');
 
-
 		Route::resource('/registros','Ventas_registroController');
 
 		Route::post('/cliente/contac','ClienteController@storecontact')->name('cliente.storecontact');
 		Route::resource('/cliente','ClienteController');
 		Route::resource('/compra','CompraController');
 
-
 // COTIZACIONES BOLETA - FACTURA
 		//boleta
-
 		Route::post('/cotizacion/create_boleta' , 'CotizacionController@create_boleta')->name('cotizacion.create_boleta');
 		Route::post('/cotizacion/create_boleta_ms' , 'CotizacionController@create_boleta_ms')->name('cotizacion.create_boleta_ms');
 		Route::put('/cotizacion/store_boleta/{id}','CotizacionController@store_boleta')->name('cotizacion.store_boleta');
-
 		//factura
 
 		// Route::get('cotizacion/fast_print', 'CotizacionController@fast_print')->name('cotizacion.fast_print');
@@ -211,7 +207,8 @@ Route::group(
 
 		// Route::post('/autocomplete/fetch', 'KardexEntradaController@fetch')->name('autocomplete.fetch');
 		// Route::get('autocomplete', 'KardexEntradaController@search');
-		// Route::get('kardex_entrada_productos','KardexEntradaController@productos');
+
+		Route::get('kardex_entrada_productos','KardexEntradaController@productos');
 
 		Route::resource('/kardex-entrada-Distribucion','KardexEntradaDistribucionController');
 		Route::resource('/kardex-entrada','KardexEntradaController');
@@ -236,6 +233,7 @@ Route::group(
 
 		Route::get('/personal-laboral/{id}','PersonalDatosLaboralesController@idpersonal')->name('create.laboral');
 		Route::resource('/personal-datos-laborales','PersonalDatosLaboralesController');
+		Route::post('/productos_ajax','ProductosController@index_ajax')->name('productos.index_ajax');
 		Route::resource('/productos','ProductosController');
 		Route::resource('/promedios','PromediosController');
 
@@ -288,4 +286,24 @@ Route::post('periodo_consulta/pdf' , 'PeriodoConsultaController@pdf')->name('per
 Route::post('movimiento-consulta/pdf' , 'Consulta_MovimientoController@pdf')->name('movimiento_consulta_pdf');
 Route::post('periodo_consulta/print' , 'PeriodoConsultaController@print')->name('periodo_consulta_print');
 Route::get('/home', 'HomeController@index')->name('home');
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 

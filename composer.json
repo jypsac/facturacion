@@ -17,7 +17,8 @@
         "laravel/tinker": "^1.0",
         "laravel/ui": "^1.0",
         "luecano/numero-a-letras": "^2.2",
-        "spatie/laravel-permission": "^3.13"
+        "spatie/laravel-permission": "^3.13",
+        "yajra/laravel-datatables-oracle": "~9.0"
     },
     "require-dev": {
         "beyondcode/laravel-dump-server": "^1.0",
