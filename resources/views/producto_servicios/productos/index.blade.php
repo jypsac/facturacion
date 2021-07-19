@@ -86,7 +86,7 @@
 $(document).ready(function(){
     $('#table_productos').DataTable({
         "serverSide":true,
-        "ajax":{{url('api/productos')}},
+        "ajax":"{{url('api/productos')}}",
         "columns":[
             {data : 'id'},
             {data : 'codigo_producto'},
