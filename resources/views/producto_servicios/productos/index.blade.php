@@ -48,7 +48,7 @@
                                 <th>Codigo Producto</th>
                                 <th>Codigo Original</th>
                                 <th>Nombre</th>
-                                {{-- <th>Categoria</th>
+                                <th>Categoria</th>
                                 <th>Marca</th>
                                 <th>Estado</th>
                                 <th>Afectacion</th>
@@ -58,7 +58,7 @@
                                 <th>Anular</th> --}}
                             </tr>
                         </thead>
-                        
+
    
 </table>
 </div>
@@ -91,7 +91,33 @@ $(document).ready(function(){
             {data : 'id'},
             {data : 'codigo_producto'},
             {data : 'codigo_original'},
-            {data : 'nombre'}
+            {data : 'nombre'},
+            {data : 'categoria_id'},
+            {data : 'marca_id'},
+            {data : 'estado_id'},
+            {data : 'tipo_afectacion_id'},
+            // {
+            //     name: '',
+            //     data: null,
+            //     sortable: false,
+            //     searchable: false,
+            //     render: function (data) {
+            //         var imagen_act = '';
+            //         imagen_act += '<img href="{{ route('productos.show',':id') }}" target="_blank"><span class="label label-primary" >VER</span></a>';
+            //         return actions.replace(/:id/g, data.id);
+            //     }
+            // },
+            {
+                name: '',
+                data: null,
+                sortable: false,
+                searchable: false,
+                render: function (data) {
+                    var actions = '';
+                    actions += '<a href="{{ route('productos.show',':id') }}" target="_blank"><span class="label label-primary" >VER</span></a>';
+                    return actions.replace(/:id/g, data.id);
+                }
+            }
         ]
     });
 });
