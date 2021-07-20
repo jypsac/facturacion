@@ -102,6 +102,8 @@ class Config_fe extends Model
 
         $correlativo=$serie[1];
         $serie=$serie[0];
+
+        
         
         // Venta
         $invoice = (new Invoice())
@@ -180,44 +182,76 @@ class Config_fe extends Model
         $precio=0;
 
 
-        $item = (new SaleDetail())
-            ->setCodProducto('P001')
-            ->setUnidad('NIU')
-            ->setCantidad(2)
-            ->setDescripcion('PRODUCTO 1')
-            ->setMtoBaseIgv(100)
-            ->setPorcentajeIgv(18.00) // 18%
-            ->setIgv(18.00)
-            ->setTipAfeIgv('10')
-            ->setTotalImpuestos(18.00)
-            ->setMtoValorVenta(100.00)
-            ->setMtoValorUnitario(50.00)
-            ->setMtoPrecioUnitario(59.00);
+        $igv_f=0;
+        $gravada=0;
+        $precio=0;
+        
+        foreach($boletas_registros as $cont => $boleta_registro){
+            $item[$cont] = (new SaleDetail())
+            ->setCodProducto($boleta_registro->producto->codigo_producto)//codigo del producto
+            ->setUnidad('NIU') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
+            ->setCantidad($boleta_registro->cantidad)
+            ->setMtoValorUnitario($boleta_registro->precio)
+            ->setDescripcion($boleta_registro->producto->nombre)
+            ->setMtoBaseIgv($boleta_registro->precio*$boleta_registro->cantidad)
+            ->setPorcentajeIgv($igv->igv_total) // 18%
+            ->setIgv($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100))
+            ->setTipAfeIgv('10') // Gravado Op. Onerosa - Catalog. 07
+            ->setTotalImpuestos($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)) // Suma de impuestos en el detalle
+            ->setMtoValorVenta($boleta_registro->precio*$boleta_registro->cantidad)
+            ->setMtoPrecioUnitario($boleta_registro->precio+($boleta_registro->precio*(($igv->igv_total)/100)))
+            ;
+            //sumatorias
+            $igv_f=$boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)+$igv_f;
+            $precio=$boleta_registro->precio*$boleta_registro->cantidad+$precio;
+            if($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)!=0){
+                $gravada=$gravada+$boleta_registro->precio*$boleta_registro->cantidad;
+            }
+        }
+        $total=$igv_f+$precio;
+        // return $gravada;
 
-        // Venta
+        //codigo factura
+        $codigo_boleta=$boleta->codigo_boleta;
+        $serie=explode("-",$codigo_boleta);
+
+        $correlativo=$serie[1];
+        $serie=$serie[0];
+
         $invoice = (new Invoice())
-            ->setUblVersion('2.1')
-            ->setTipoOperacion('0101') // Catalog. 51
-            ->setTipoDoc('03')
-            ->setSerie('B001')
-            ->setCorrelativo('1')
-            ->setFechaEmision(new DateTime())
-            ->setTipoMoneda('PEN')
-            ->setClient($client)
-            ->setMtoOperGravadas(100.00)
-            ->setMtoIGV(18.00)
-            ->setTotalImpuestos(18.00)
-            ->setValorVenta(100.00)
-            ->setSubTotal(118.00)
-            ->setMtoImpVenta(118.00)
-            ->setCompany($company);
+        ->setUblVersion('2.1')
+        ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
+        ->setTipoDoc('01') // boleta - Catalog. 01  // pagina 33 del pdf sunat 2.1
+        ->setSerie($serie)// numero de serie 
+        ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
+        ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+        ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
+        
+        ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
+        ->setCompany($company)
+        ->setClient($client)
+        //--------------------------estados de obtencion
+        ->setMtoOperGravadas($boleta->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+        //--------------------------
+        //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
+        ->setMtoIGV($igv_f)
+        ->setTotalImpuestos($igv_f)
+        ->setValorVenta($precio)
+        ->setSubTotal($total)
+        ->setMtoImpVenta($total)
+        ;
 
+        $formatter = new NumeroALetras();
+        $valor=$formatter->toInvoice($total, 2, 'soles');
+        
         $legend = (new Legend())
-            ->setCode('1000')
-            ->setValue('SON CIENTO DIECIOCHO CON 00/100 SOLES');
-
-        $invoice->setDetails([$item])
-                ->setLegends([$legend]);
+        ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
+        ->setValue($valor);
+        
+        $invoice->setDetails($item)
+        ->setLegends([$legend]);
+        
+        return $invoice;
     }
 
     public static function send($see, $invoice){

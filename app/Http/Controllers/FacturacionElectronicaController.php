@@ -80,7 +80,7 @@ class FacturacionElectronicaController extends Controller
         $boleta=Boleta::where('b_electronica',0)->where('id',$request->factura_id)->first();
         $boleta_registro=Boleta_registro::where('boleta_id',$request->factura_id)->get();
         
-
+        
         //configuracion
         $see=Config_fe::facturacion_electronica();
 
