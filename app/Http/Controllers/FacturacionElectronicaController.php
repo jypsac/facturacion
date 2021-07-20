@@ -52,7 +52,7 @@ class FacturacionElectronicaController extends Controller
         $factura_registro=Facturacion_registro::where('facturacion_id',$request->factura_id)->get();
         
 
-        //configuracion
+        //configuracion de conexion
         $see=Config_fe::facturacion_electronica();
 
 
@@ -66,6 +66,7 @@ class FacturacionElectronicaController extends Controller
         //lectura CDR
         $msg=Config_fe::lectura_cdr($result->getCdrResponse());
 
+        
         //cambio de factura electronica - en caso sea todo exitoso
         $factura->f_electronica=1;
         $factura->save();
