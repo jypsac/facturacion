@@ -48,10 +48,10 @@
                                 <th>Codigo Producto</th>
                                 <th>Codigo Original</th>
                                 <th>Nombre</th>
-                                <th>Categoria</th>
+                                {{-- <th>Categoria</th> --}}
                                 <th>Marca</th>
                                 <th>Estado</th>
-                                <th>Afectacion</th>
+                                {{-- <th>Afectacion</th> --}}
                                 <th>Foto</th>
                                 <th>Ver</th>
                                 {{-- <th>Editar</th> -
@@ -92,21 +92,21 @@ $(document).ready(function(){
             {data : 'codigo_producto'},
             {data : 'codigo_original'},
             {data : 'nombre'},
-            {data : 'categoria_id'},
-            {data : 'marca_id'},
-            {data : 'estado_id'},
-            {data : 'tipo_afectacion_id'},
-            // {
-            //     name: '',
-            //     data: null,
-            //     sortable: false,
-            //     searchable: false,
-            //     render: function (data) {
-            //         var imagen_act = '';
-            //         imagen_act += '<img href="{{ route('productos.show',':id') }}" target="_blank"><span class="label label-primary" >VER</span></a>';
-            //         return actions.replace(/:id/g, data.id);
-            //     }
-            // },
+            // {data : 'categoria'},
+            {data : 'marca'},
+            {data : 'estado'},
+            // {data : 'afectacion'},
+            {
+                name: '',
+                data: null,
+                sortable: false,
+                searchable: false,
+                render: function (data) {
+                    var imagen_act = '';
+                    imagen_act += '<img src="{{ asset('/archivos/imagenes/productos/')}}/:foto" style="width: 45px;" />';
+                    return imagen_act.replace(/:foto/g, data.foto);
+                }
+            },
             {
                 name: '',
                 data: null,
@@ -114,7 +114,7 @@ $(document).ready(function(){
                 searchable: false,
                 render: function (data) {
                     var actions = '';
-                    actions += '<a href="{{ route('productos.show',':id') }}" target="_blank"><span class="label label-primary" >VER</span></a>';
+                    actions += '<a href="{{ route('productos.show',':id') }}" target="_blank"><span class="btn btn-success" >VER</span></a>';
                     return actions.replace(/:id/g, data.id);
                 }
             }
