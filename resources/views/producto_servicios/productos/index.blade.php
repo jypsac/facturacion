@@ -48,14 +48,14 @@
                                 <th>Codigo Producto</th>
                                 <th>Codigo Original</th>
                                 <th>Nombre</th>
-                                {{-- <th>Categoria</th> --}}
+                                <th>Categoria</th>
                                 <th>Marca</th>
                                 <th>Estado</th>
-                                {{-- <th>Afectacion</th> --}}
+                                <th>Afectacion</th>
                                 <th>Foto</th>
                                 <th>Ver</th>
-                                {{-- <th>Editar</th> -
-                                <th>Anular</th> --}}
+                                {{-- <th>Editar</th> - --}}
+                                <th>Anular</th>
                             </tr>
                         </thead>
 
@@ -92,10 +92,10 @@ $(document).ready(function(){
             {data : 'codigo_producto'},
             {data : 'codigo_original'},
             {data : 'nombre'},
-            // {data : 'categoria'},
+            {data : 'categoria'},
             {data : 'marca'},
             {data : 'estado'},
-            // {data : 'afectacion'},
+            {data : 'afectacion'},
             {
                 name: '',
                 data: null,
@@ -117,6 +117,26 @@ $(document).ready(function(){
                     actions += '<a href="{{ route('productos.show',':id') }}" target="_blank"><span class="btn btn-success" >VER</span></a>';
                     return actions.replace(/:id/g, data.id);
                 }
+            },
+            {
+                data: null,
+                name: '',
+                sortable: false,
+                searchable: false,
+                render: function (data) {
+                    if(data.estado_anular == 1){
+                        data: null;
+                        var actions = '';
+                        actions += '<button type="button" class="btn btn-s-m btn-danger" data-toggle="modal" data-target="#:id">Anular</button><div class="modal fade" id=":id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true"><div class="modal-dialog" style="margin-top: 12%; border-radius: 20px"><div class="modal-content" ><div class="modal-body" style="padding: 0px;"><div class="ibox-content float-e-margins"><h3 class="font-bold col-lg-12" align="center">¿Esta Seguro que Deseas Anular el Producto: :id".?<br><h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4></h3><p align="center"><form action="{{ route('productos.destroy',':id')}}" method="POST">@csrf @method('delete')<center><button type="submit" class="btn btn-w-m btn-primary">Anular</button></form></p></div></div></div></div></div>';
+                        return actions.replace(/:id/g, data.id);
+                    }else{
+                        var actions2 = '';
+                        data: 'id';
+                        actions2 += '<a href="{{ route('productos.show',':id') }}" target="_blank"><span class="btn btn-secondary" >ANULADO</span></a>';
+                         return actions2.replace(/:id/g, data.id);
+                    }
+
+                }
             }
         ]
     });
@@ -124,7 +144,11 @@ $(document).ready(function(){
 
 </script>
 
-<!-- Page-Level Scripts 
+
+
+
+
+<!-- Page-Level Scripts
 
 
 <script>

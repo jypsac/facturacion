@@ -27,7 +27,7 @@ class ProductosController extends Controller
     {
         // $stok=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
         $marcas=Marca::all();
-        $productos=Producto::paginate('25');
+        $productos=Producto::all();
         return view('producto_servicios.productos.index',compact('productos','marcas'));
     }
 

@@ -7,7 +7,7 @@ use Illuminate\Database\Eloquent\Model;
 class Producto extends Model
 {
     protected $guarded = [];
-    protected $table = 'productos';
+    // protected $table = 'productos';
 /*
     public function categorias(){
         return $this->belongsTo(categorias::class,'categoria_id');
@@ -15,7 +15,7 @@ class Producto extends Model
 */
 
     public function marcas_i_producto(){
-        return $this->belongsTo(Marca::class,'marca_id');
+        return $this->belongsTo(Marca::class,'marca_id','id');
     }  
     public function categoria_i_producto(){
         return $this->belongsTo(Categoria::class,'categoria_id');
