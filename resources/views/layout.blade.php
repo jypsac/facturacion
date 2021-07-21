@@ -48,9 +48,14 @@
     background-color: #1a5eb3;
     border-color: #1a3bb3;
 }
+.dataTables_filter{
+    text-align: right;
+}
+.dataTables_filter > label{
+    text-align: left;
+}
 .rounded-circle{width: 120px; height: auto; border:@yield('2', auth()->user()->config->borde_foto) solid @yield('2', auth()->user()->config->color_borde_foto);}
 </style>
-
 <body class="">
  {{-- Modal Cliente --}}
  <div class="modal fade" id="ModalCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">

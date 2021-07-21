@@ -77,97 +77,21 @@
 
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example" >
+                                <table class="table table-striped table-bordered table-hover dataTables-example" id="table_productos" >
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Marca</th>
-                                            <th>Estado</th>
-                                            <th>Motivo</th>
-                                            <th>Ing Asignado</th>
-                                            <th>fecha</th>
                                             <th>Orden servicio</th>
+                                            <th>Marca</th>
+                                            <th>fecha</th>
+                                            <th>Motivo</th>
                                             <th>Asunto</th>
                                             <th>Cliente</th>
                                             <th>Ver</th>
-                                            <th>Editar</th>
                                             <th>Anular</th>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
-                                        <!-- {{tiempo($garantias_guias_ingreso->created_at)}} -->
-                                        <tr class="gradeX">
-                                            <td>{{$garantias_guias_ingreso->id}}</td>
-                                            <td>{{$garantias_guias_ingreso->marcas_i->nombre}}</td>
-                                            <td>
-                                                @if($garantias_guias_ingreso->estado==1)
-                                                    Activo
-                                                @else
-                                                    Anulado
-                                                @endif
-                                            </td>
-                                            <td>{{$garantias_guias_ingreso->motivo}}</td>
-                                            <td>{{$garantias_guias_ingreso->personal_laborales->nombres}}</td>
-                                            <td>{{$garantias_guias_ingreso->fecha}}</td>
-                                            <td>{{$garantias_guias_ingreso->orden_servicio}}</td>
-                                            <td>{{$garantias_guias_ingreso->asunto}}</td>
-                                            <td>{{$garantias_guias_ingreso->clientes_i->nombre}}</td>
-                                            <td><center><a href="{{ route('garantia_guia_ingreso.show', $garantias_guias_ingreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
-                                            <td>@if( tiempo($garantias_guias_ingreso->created_at) ==1)
 
-                                                    @if($garantias_guias_ingreso->estado==1)
-                                                        <center><a href="{{ route('garantia_guia_ingreso.edit', $garantias_guias_ingreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">Editar</button></a></center>
-                                                    @else
-                                                        <button class="btn btn-w-m btn-info">FUERA DE FUNCION</button>
-                                                    @endif
-
-                                                @else
-                                                    <button class="btn btn-w-m btn-info">FUERA DE FUNCION</button>
-                                                @endif
-                                            </td>
-
-
-                                            <td><center>
-
-                                                @if( tiempo($garantias_guias_ingreso->created_at) ==1)
-
-                                                    @if($garantias_guias_ingreso->estado==1)
-
-                                                    <a data-toggle="modal" class="btn btn-warning" href="#modal-form{{$garantias_guias_ingreso->id}}">Anular</a>
-                                                        <div id="modal-form{{$garantias_guias_ingreso->id}}" class="modal fade" aria-hidden="true">
-                                                            <div class="modal-dialog">
-                                                                <div class="modal-content">
-                                                                    <div class="modal-body">
-                                                                        <div class="row">
-                                                                            <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">¿Seguro que desea ANULAR esta guia? {{$garantias_guias_ingreso->id }}</h3>
-                                                                                <p>Esta guia se anulara inmediatamente. Esta acción no se puede deshacer</p>
-                                                                                <form action="{{ route('garantia_guia_ingreso.update',$garantias_guias_ingreso->id) }}"  enctype="multipart/form-data" method="post">
-                                                                                    @csrf
-                                                                                    @method('PATCH')
-                                                                                    <button type="submit" class="btn btn-w-m btn-danger">ANULAR</button>
-                                                                                </form>
-                                                                            </div>
-                                                                        </div>
-                                                                    </div>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                    @else
-                                                        <button class="btn btn-w-m btn-secondary">PROCESADO</button>
-                                                    @endif
-
-                                                @else
-                                                    <button class="btn btn-w-m btn-info">FUERA DE FUNCION</button>
-                                                @endif
-                                            </center>
-
-                                        </td>
-
-                                        </tr>
-                                        @endforeach
-                                    </tbody>
                                 </table>
                             </div>
                         </div>
@@ -194,34 +118,78 @@
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-    <!-- Page-Level Scripts -->
-    <script>
-        $(document).ready(function(){
-            $('.dataTables-example').DataTable({
-                pageLength: 25,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    { extend: 'copy'},
-                    {extend: 'csv'},
-                    {extend: 'excel', title: 'ExampleFile'},
-                    {extend: 'pdf', title: 'ExampleFile'},
 
-                    {extend: 'print',
-                     customize: function (win){
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
+<script >
+$(document).ready(function(){
+    $('#table_productos').DataTable({
+        "serverSide":true,
+        "ajax":"{{url('api/garantia_ingreso')}}",
+        "columns":[
+         {data : 'id'},
+         {data : 'orden_servicio'},
+         {data : 'marcas'},
+         {data : 'fecha'},
+         {data : 'motivo'},
+         {data : 'asunto'},
+         {data : 'cliente'},
+         {
+            name: '',
+            data: null,
+            sortable: false,
+            searchable: false,
+            render: function (data) {
+                var actions = '';
+                actions += '<center><a href="{{ route('garantia_guia_ingreso.show', ':id') }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>';
+                return actions.replace(/:id/g, data.id);
+            }
+         },
+         {
+            // data: 'anulacion'
+            name: '',
+            data: null,
+            sortable: false,
+            searchable: false,
+            render: function (data) {
+                if(data.anulacion == 1){
+                    if(data.estado == 1){
+                        var actions = '';
+                        actions += '<center><a data-toggle="modal" class="btn btn-warning" href="#modal-form:id">Anular</a></center>'+
+                        '<div id="modal-form:id" class="modal fade" aria-hidden="true">'+
+                            '<div class="modal-dialog">'+
+                                '<div class="modal-content">'+
+                                    '<div class="modal-body">'+
+                                        '<div class="row">'+
+                                            '<div class="col-sm-12 b-r"><h3 class="m-t-none m-b">¿Seguro que desea ANULAR esta guia? :id </h3>'+
+                                                '<p>Esta guia se anulara inmediatamente. Esta acción no se puede deshacer</p>'+
+                                                '<form action=" {{ route('garantia_guia_ingreso.update', ':id') }} "  enctype="multipart/form-data" method="post">'+
+                                                    '@csrf @method('PATCH')'+
+                                                    '<button type="submit" class="btn btn-w-m btn-danger">ANULAR</button>'+
+                                                '</form>'+
+                                            '</div>'+
+                                        '</div>'+
+                                    '</div>'+
+                                '</div>'+
+                            '</div>'+
+                        '</div>';
+                        return actions.replace(/:id/g, data.id);
+                    }else{
+                        var actions2 = '';
+                        data: 'id';
+                        actions2 += '<center><button class="btn btn-w-m btn-secondary">PROCESADO</button></center>';
+                         return actions2.replace(/:id/g, data.id);
                     }
-                    }
-                ]
+                }else{
+                    var actions2 = '';
+                    data: 'id';
+                    actions2 += '<center><button class="btn btn-w-m btn-info">FUERA DE FUNCION</button></center>';
+                     return actions2.replace(/:id/g, data.id);
+                }
+            }
+         },
+        ]
+    });
+});
+</script>
 
-            });
-
-        });
-    </script>
 
 @endsection
