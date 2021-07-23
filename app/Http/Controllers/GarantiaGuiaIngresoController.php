@@ -51,9 +51,9 @@ class GarantiaGuiaIngresoController extends Controller
       $tiempo_actual = $tiempo_actual->format('Y-m-d');
 
       $name = $request->input('familia');
-      $marca = Marca::where("id","=",$name)->first();
-      $marca_nombre=(string)$marca->nombre;
-      $marca=(string)$marca->abreviatura;
+      $marca_t = Marca::where("id","=",$name)->first();
+      $marca_nombre=(string)$marca_t->nombre_empresa;
+      $marca=(string)$marca_t->abreviatura;
       $guion='-';
       $marca_cantidad= GarantiaGuiaIngreso::where("marca_id","=",$name)->count();
       $marca_cantidad++;
@@ -74,7 +74,7 @@ class GarantiaGuiaIngresoController extends Controller
         // $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
 
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
-      return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales','paises','productos','empresa'));
+      return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales','paises','productos','empresa','marca_t'));
     }
 
     /**
@@ -130,7 +130,9 @@ class GarantiaGuiaIngresoController extends Controller
 
         //TRAANSFORMNADO CON VALUE DE MARCA A UN ID
       $marca_nombre=$request->get('marca_id');
-      $marca= Marca::where("nombre","=",$marca_nombre)->first();
+
+      $marca= Marca::where("nombre_empresa","=",$marca_nombre)->first();
+      // return $marca;
       $marca_id_var=$marca->id;
 
       $garantia_guia_ingreso=new GarantiaGuiaIngreso;

@@ -50,7 +50,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    {{-- <tbody>
                                         @foreach($garantias_guias_egresos as $garantias_guias_egreso)
                                         <tr class="gradeX">
                                             <td>{{$garantias_guias_egreso->id}}</td>
@@ -78,7 +78,7 @@
 
                                         </tr>
                                         @endforeach
-                                    </tbody>
+                                    </tbody> --}}
                                 </table>
                             </div>
                         </div>
@@ -126,7 +126,7 @@ $(document).ready(function(){
                 sortable: false,
                 searchable: false,
                 render: function (data) {
-                    if(data.inform_tecnico == 0){
+                    if(data.informe_tecnico == 0){
                         var actions = '';
                     actions += '<center><a href="{{ route('garantia_informe_tecnico.edit', ':id') }}"><button type="button" class="btn btn-w-m btn-primary">Agregar</button></a></center>';
                     return actions.replace(/:id/g, data.id);
