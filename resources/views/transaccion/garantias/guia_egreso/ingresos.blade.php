@@ -33,7 +33,7 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example" >
+                                <table class="table table-striped table-bordered table-hover dataTables-example" id="table_egreso" >
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -49,7 +49,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    {{-- <tbody>
                                         @foreach($garantias_guias_ingresos as $garantias_guias_ingreso)
                                         <tr class="gradeX">
                                             <td>{{$garantias_guias_ingreso->id}}</td>
@@ -80,7 +80,7 @@
 
                                         </tr>
                                         @endforeach
-                                    </tbody>
+                                    </tbody> --}}
                                 </table>
                             </div>
                         </div>
@@ -108,7 +108,48 @@
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
     <!-- Page-Level Scripts -->
-    <script>
+    <script>    
+$(document).ready(function(){
+    $('#table_egreso').DataTable({
+        "serverSide":true,
+        "ajax":"{{url('api/garantia_ingreso')}}",
+        "columns":[
+            {data : 'id'},
+            {data : 'marcas'},
+            {data : 'estado'},
+            {data : 'motivo'},
+            {data : 'personal'},
+            {data : 'fecha'},
+            {data : 'orden_servicio'},
+            {data : 'asunto'},
+            {data : 'cliente'},
+            {
+                name: '',
+                data: null,
+                sortable: false,
+                searchable: false,
+                render: function (data) {
+                    if(data.estado == 0){
+                        var actions = '';
+                        actions += '<center><button class="btn btn-w-m btn-secondary">ANULADO</button><center>';
+                        return actions.replace(/:id/g, data.id);
+                    }else if(data.egresado == 0){
+                        var actions = '';
+                        actions += '<center><a href="{{ route('garantia_guia_egreso.edit', ':id') }}"><button type="button" class="btn btn-w-m btn-info">Egresar</button></a></center>';
+                        return actions.replace(/:id/g, data.id);
+                    }else{
+                        var actions = '';
+                        actions += '<center><button class="btn btn-w-m btn-secondary">Procesado</button></center>';
+                        return actions.replace(/:id/g, data.id);
+                    }
+                }
+             }
+        ]
+    });
+});
+
+</script>
+{{--     <script>
         $(document).ready(function(){
             $('.dataTables-example').DataTable({
                 pageLength: 25,
@@ -136,5 +177,5 @@
 
         });
 
-    </script>
+    </script> --}}
 @endsection

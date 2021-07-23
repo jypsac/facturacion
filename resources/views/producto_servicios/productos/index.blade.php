@@ -40,7 +40,7 @@
                 </div>
                 <div class="ibox-content">
                     <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-example " id="table_productos">
+                        <table class="table table-striped table-bordered table-hover dataTables-example " id="table_ingreso">
                             <thead>
                             <tr><!--
                                 <th>COD. GENERAL</th> -->
@@ -84,7 +84,7 @@
 
 <script>
 $(document).ready(function(){
-    $('#table_productos').DataTable({
+    $('#table_ingreso').DataTable({
         "serverSide":true,
         "ajax":"{{url('api/productos')}}",
         "columns":[

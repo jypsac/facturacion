@@ -33,7 +33,7 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example" >
+                                <table class="table table-striped table-bordered table-hover dataTables-example" id="table_egreso" >
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -44,7 +44,7 @@
                                             <th>fecha</th>
                                             <th>Orden servicio</th>
                                             <th>Asunto</th>
-                                            <th>Clienste</th>
+                                            <th>Cliente</th>
                                             <th>Agregar</th>
 
 
@@ -105,8 +105,45 @@
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
+<script>    
+$(document).ready(function(){
+    $('#table_egreso').DataTable({
+        "serverSide":true,
+        "ajax":"{{url('api/garantia_egreso')}}",
+        "columns":[
+            {data : 'id'},
+            {data : 'marcas'},
+            {data : 'estado'},
+            {data : 'motivo'},
+            {data : 'personal'},
+            {data : 'fecha'},
+            {data : 'orden_servicio'},
+            {data : 'asunto'},
+            {data : 'clientes'},
+            {
+                name: '',
+                data: null,
+                sortable: false,
+                searchable: false,
+                render: function (data) {
+                    if(data.inform_tecnico == 0){
+                        var actions = '';
+                    actions += '<center><a href="{{ route('garantia_informe_tecnico.edit', ':id') }}"><button type="button" class="btn btn-w-m btn-primary">Agregar</button></a></center>';
+                    return actions.replace(/:id/g, data.id);
+                    }else{
+                        var actions = '';
+                    actions += '<center><a><button type="button" class="btn btn-w-m btn-secondary">Procesado</button></a></center>';
+                    return actions.replace(/:id/g, data.id);
+                    }
+                }
+             }
+        ]
+    });
+});
+
+</script>
     <!-- Page-Level Scripts -->
-    <script>
+{{--     <script>
         $(document).ready(function(){
             $('.dataTables-example').DataTable({
                 pageLength: 25,
@@ -134,5 +171,5 @@
 
         });
 
-    </script>
+    </script> --}}
 @endsection
