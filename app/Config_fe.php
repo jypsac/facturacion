@@ -8,6 +8,9 @@ use Greenter\Model\Sale\FormaPagos\FormaPagoContado;
 use Greenter\Model\Sale\Invoice;
 use Greenter\Model\Sale\SaleDetail;
 use Greenter\Model\Sale\Legend;
+use Greenter\Model\Response\BillResult;
+use Greenter\Model\Sale\Cuota;
+use Greenter\Model\Sale\FormaPagos\FormaPagoCredito;
 use DateTime;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
@@ -16,6 +19,7 @@ use Greenter\See;
 use Luecano\NumeroALetras\NumeroALetras;
 use App\Empresa;
 use App\Igv;
+use App\Cuotas_Credito;
 
 // DATOS DE PRUEBA
 // RUC: 20000000001
@@ -103,46 +107,97 @@ class Config_fe extends Model
         $correlativo=$serie[1];
         $serie=$serie[0];
 
-        
-        
-        // Venta
-        $invoice = (new Invoice())
-        ->setUblVersion('2.1')
-        ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
-        ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
-        ->setSerie($serie)// numero de serie 
-        ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-        ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
-        ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
-        
-        ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
-        ->setCompany($company)
-        ->setClient($client)
-        //--------------------------estados de obtencion
-        ->setMtoOperGravadas($factura->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
-        ->setMtoOperInafectas($factura->op_inafecta)
-        ->setMtoOperExoneradas($factura->op_exonerada)
-        // ->setMtoOperGratuitas($factura->op_gratuita)
-        //--------------------------
-        //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
-        ->setMtoIGV($igv_f)
-        ->setTotalImpuestos($igv_f)
-        ->setValorVenta($precio)
-        ->setSubTotal($total)
-        ->setMtoImpVenta($total)
-        ;
+        if($factura->forma_pago_id==1){
+            // Venta - contado
+            $invoice = (new Invoice())
+            ->setUblVersion('2.1')
+            ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
+            ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
+            ->setSerie($serie)// numero de serie 
+            ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
+            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
+            
+            ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
+            ->setCompany($company)
+            ->setClient($client)
+            //--------------------------estados de obtencion
+            ->setMtoOperGravadas($factura->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+            ->setMtoOperInafectas($factura->op_inafecta)
+            ->setMtoOperExoneradas($factura->op_exonerada)
+            //--------------------------
+            //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
+            ->setMtoIGV($igv_f)
+            ->setTotalImpuestos($igv_f)
+            ->setValorVenta($precio)
+            ->setSubTotal($total)
+            ->setMtoImpVenta($total)
+            ;
 
-        $formatter = new NumeroALetras();
-        $valor=$formatter->toInvoice($total, 2, 'soles');
-        
-        $legend = (new Legend())
-        ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
-        ->setValue($valor);
-        
-        $invoice->setDetails($item)
-        ->setLegends([$legend]);
-        
-        return $invoice;
+
+            $formatter = new NumeroALetras();
+            $valor=$formatter->toInvoice($total, 2, 'soles');
+            
+            $legend = (new Legend())
+            ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
+            ->setValue($valor);
+            
+            $invoice->setDetails($item)
+            ->setLegends([$legend]);
+            
+            return $invoice;
+        }else{
+            // Venta - credito
+            $cuotas=Cuotas_Credito::where('facturacion_id',$factura->id)->get();
+            // foreach ($cuotas as $key => $cuota) {
+            //     # code...
+            //     $cuotas_credito[$key]=(new Cuota())
+            //     ->setMonto($cuota->monto)
+            //     ->setFechaPago(new DateTime('+7days'));
+            // }
+
+            $invoice = (new Invoice())
+            ->setUblVersion('2.1')
+            ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
+            ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
+            ->setSerie($serie)// numero de serie 
+            ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
+            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
+            ->setCuotas([
+                // $cuotas_credito
+                (new Cuota()) //->                   meterlo en un foreach exlusivo de array
+                ->setMonto(236)
+                ->setFechaPago(new DateTime('+7days'))
+            ])
+            ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
+            ->setCompany($company)
+            ->setClient($client)
+            //--------------------------estados de obtencion
+            ->setMtoOperGravadas($factura->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+            ->setMtoOperInafectas($factura->op_inafecta)
+            ->setMtoOperExoneradas($factura->op_exonerada)
+            //--------------------------
+            //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
+            ->setMtoIGV($igv_f)
+            ->setTotalImpuestos($igv_f)
+            ->setValorVenta($precio)
+            ->setSubTotal($total)
+            ->setMtoImpVenta($total)
+            ;
+
+            $formatter = new NumeroALetras();
+            $valor=$formatter->toInvoice($total, 2, 'soles');
+            
+            $legend = (new Legend())
+            ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
+            ->setValue($valor);
+            
+            $invoice->setDetails($item)
+            ->setLegends([$legend]);
+            
+            return $invoice;
+        }
     }
     
     public static function factura_servicio(){
@@ -218,40 +273,146 @@ class Config_fe extends Model
         $correlativo=$serie[1];
         $serie=$serie[0];
 
-        $invoice = (new Invoice())
-        ->setUblVersion('2.1')
-        ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
-        ->setTipoDoc('01') // boleta - Catalog. 01  // pagina 33 del pdf sunat 2.1
-        ->setSerie($serie)// numero de serie 
-        ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-        ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
-        ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
-        
-        ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
-        ->setCompany($company)
-        ->setClient($client)
-        //--------------------------estados de obtencion
-        ->setMtoOperGravadas($boleta->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
-        //--------------------------
-        //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
-        ->setMtoIGV($igv_f)
-        ->setTotalImpuestos($igv_f)
-        ->setValorVenta($precio)
-        ->setSubTotal($total)
-        ->setMtoImpVenta($total)
-        ;
+        if($boleta->forma_pago_id==1){
+            //contado
+            $invoice = (new Invoice())
+            ->setUblVersion('2.1')
+            ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
+            ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
+            ->setSerie($serie)// numero de serie 
+            ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
+            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
+            
+            ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
+            ->setCompany($company)
+            ->setClient($client)
+            //--------------------------estados de obtencion
+            ->setMtoOperGravadas($boleta->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+            //--------------------------
+            //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
+            ->setMtoIGV($igv_f)
+            ->setTotalImpuestos($igv_f)
+            ->setValorVenta($precio)
+            ->setSubTotal($total)
+            ->setMtoImpVenta($total)
+            ;
 
-        $formatter = new NumeroALetras();
-        $valor=$formatter->toInvoice($total, 2, 'soles');
-        
-        $legend = (new Legend())
-        ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
-        ->setValue($valor);
-        
-        $invoice->setDetails($item)
-        ->setLegends([$legend]);
-        
-        return $invoice;
+            $formatter = new NumeroALetras();
+            $valor=$formatter->toInvoice($total, 2, 'soles');
+            
+            $legend = (new Legend())
+            ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
+            ->setValue($valor);
+            
+            $invoice->setDetails($item)
+            ->setLegends([$legend]);
+            
+            return $invoice;
+        }else{
+            //credito
+            $cuotas=Cuotas_Credito::where('boleta_id',$boleta->id)->get();
+
+            $invoice = (new Invoice())
+            ->setUblVersion('2.1')
+            ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
+            ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
+            ->setSerie($serie)// numero de serie 
+            ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
+            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
+            ->setCuotas([
+                // $cuotas_credito
+                (new Cuota()) //->                   meterlo en un foreach exlusivo de array
+                ->setMonto(59)
+                ->setFechaPago(new DateTime('+7days'))
+            ])
+            
+            ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
+            ->setCompany($company)
+            ->setClient($client)
+            //--------------------------estados de obtencion
+            ->setMtoOperGravadas($boleta->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+            //--------------------------
+            //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
+            ->setMtoIGV($igv_f)
+            ->setTotalImpuestos($igv_f)
+            ->setValorVenta($precio)
+            ->setSubTotal($total)
+            ->setMtoImpVenta($total)
+            ;
+
+            $formatter = new NumeroALetras();
+            $valor=$formatter->toInvoice($total, 2, 'soles');
+            
+            $legend = (new Legend())
+            ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
+            ->setValue($valor);
+            
+            $invoice->setDetails($item)
+            ->setLegends([$legend]);
+            
+            return $invoice;
+        }
+    }
+
+    //llenado guia de remision
+    public static function guia_remision(){
+        $util = Util::getInstance();
+
+        $baja = new Document();
+        $baja->setTipoDoc('09')
+            ->setNroDoc('T001-00001');
+
+        $transp = new Transportist();
+        $transp->setTipoDoc('6')
+            ->setNumDoc('20000000002')
+            ->setRznSocial('TRANSPORTES S.A.C')
+            ->setPlaca('ABI-453')
+            ->setChoferTipoDoc('1')
+            ->setChoferDoc('40003344');
+
+        $envio = new Shipment();
+        $envio
+            ->setCodTraslado('01') // Cat.20
+            ->setDesTraslado('VENTA')
+            ->setModTraslado('01') // Cat.18
+            ->setFecTraslado(new DateTime())
+            ->setCodPuerto('123')
+            ->setIndTransbordo(false)
+            ->setPesoTotal(12.5)
+            ->setUndPesoTotal('KGM')
+            ->setNumContenedor('XD-2232')
+            ->setLlegada(new Direction('150101', 'AV LIMA'))
+            ->setPartida(new Direction('150203', 'AV ITALIA'))
+            ->setTransportista($transp);
+
+        $despatch = new Despatch();
+        $despatch->setTipoDoc('09')
+            ->setSerie('T001')
+            ->setCorrelativo('123')
+            ->setFechaEmision(new DateTime())
+            ->setCompany($util->shared->getCompany())
+            ->setDestinatario((new Client())
+                ->setTipoDoc('6')
+                ->setNumDoc('20000000002')
+                ->setRznSocial('EMPRESA 1'))
+            ->setTercero((new Client())
+                ->setTipoDoc('6')
+                ->setNumDoc('20000000003')
+                ->setRznSocial('EMPRESA SA'))
+            ->setObservacion('NOTA GUIA')
+            ->setDocBaja($baja)
+            ->setEnvio($envio);
+
+        $detail = new DespatchDetail();
+        $detail->setCantidad(2)
+            ->setUnidad('ZZ')
+            ->setDescripcion('PROD 1')
+            ->setCodigo('PROD1')
+            ->setCodProdSunat('P001');
+
+        $despatch->setDetails([$detail]);
     }
 
     public static function send($see, $invoice){

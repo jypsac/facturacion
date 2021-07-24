@@ -38,7 +38,7 @@
                                 <thead>
                                     <tr>
                                         <th>ID</th>
-                                        <th>Codigo de Factura</th>
+                                        <th>Codigo de Boleta</th>
                                         <th>Cliente</th>
                                         <th>Ruc/DNI</th>
                                         <th>Fecha Vencimiento</th>
@@ -50,7 +50,7 @@
                                     @foreach($boletas as $boleta)
                                     <tr class="gradeX">
                                         <td>{{$boleta->id}}</td>
-                                        <td>{{$boleta->codigo_fac}}</td>
+                                        <td>{{$boleta->codigo_boleta}}</td>
                                         @if(isset($boleta->cliente_id)) <!-- Nombre del cliente -->
                                         <td>{{$boleta->cliente->nombre}}</td>
                                         @else
@@ -64,7 +64,7 @@
                                         <td>{{$boleta->fecha_vencimiento }}</td>
                                         <td>
                                             <center>
-                                                <form action="{{route('facturacion_electronica.factura_sunat')}}" method="POST">
+                                                <form action="{{route('facturacion_electronica.boleta_sunat')}}" method="POST">
                                                     @csrf
                                                         <input type="hidden" name="factura_id" value="{{$boleta->id}}">
                                                         <button type="submit" class="btn btn-w-m btn-primary">Enviar</button>
