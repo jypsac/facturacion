@@ -6,6 +6,7 @@ use App\GarantiaGuiaEgreso;
 use App\GarantiaInformeTecnico;
 use App\Producto;
 use App\Categoria;
+Use App\Cliente;
 
 use App\Providers\RouteServiceProvider;
 /*
@@ -139,4 +140,11 @@ Route::get('informe_tecnico', function(){
             return $inform_tec->garantia_egreso_i->garantia_ingreso_i->clientes_i->nombre;
         })
     ->toJson();
+});
+
+//CLIENTES
+Route::get('clientes',function(){
+    $cliente = Cliente::query();
+    return Datatables($cliente)
+        ->toJson();
 });
