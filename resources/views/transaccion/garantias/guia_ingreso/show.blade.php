@@ -45,7 +45,7 @@
         {{-- <div class="ibox-tools"> --}}
             {{-- <a class="btn btn-success"  href="" >Imprimir --}}
                 <div class="col-sm-6">
-                    <a href="{{ route('garantia_guia_ingreso.edit', $garantia_guia_ingreso->id) }}"><button type="button" class="btn btn-primary">Editar</button></a>
+                    <a href="{{ route('garantia_guia_ingreso.edit', $garantia_guia_ingreso->id) }}"><button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button></a>
                 </div>
             <div class="col-sm-6 tooltip-demo "align="right"  >
 

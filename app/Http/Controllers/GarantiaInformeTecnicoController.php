@@ -122,11 +122,13 @@ class GarantiaInformeTecnicoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function edit($id)
-    {    $tiempo_actual = Carbon::now();
+    {
+        $empresa = Empresa::first();
+        $tiempo_actual = Carbon::now();
          $contacto = Contacto::all();
         $tiempo_actual = $tiempo_actual->format('Y-m-d');
         $garantia_guia_egreso=GarantiaGuiaEgreso::find($id);
-        return view('transaccion.garantias.informe_tecnico.edit',compact('garantia_guia_egreso','tiempo_actual','contacto'));
+        return view('transaccion.garantias.informe_tecnico.edit',compact('garantia_guia_egreso','tiempo_actual','contacto','empresa'));
     }
 
     /**

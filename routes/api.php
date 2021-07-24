@@ -2,10 +2,12 @@
 
 use Illuminate\Http\Request;
 use App\GarantiaGuiaIngreso;
+use App\GarantiaGuiaEgreso;
+use App\GarantiaInformeTecnico;
 use App\Producto;
 use App\Categoria;
 
-
+use App\Providers\RouteServiceProvider;
 /*
 |--------------------------------------------------------------------------
 | API Routes
@@ -22,6 +24,7 @@ use App\Categoria;
 });
 */
 // PRODUCTOS
+Auth::routes();
 Route::get('productos',function(){
     $producto = Producto::query();
     return Datatables($producto)
@@ -48,6 +51,9 @@ Route::get('garantia_ingreso',function(){
         ->addColumn('marcas', function ($garantia_ingreso_q) {
             return $garantia_ingreso_q->marcas_i->nombre;
         })
+        ->addColumn('personal', function ($garantia_ingreso_q) {
+            return $garantia_ingreso_q->personal_laborales->nombres;
+        })
         ->addColumn('cliente', function ($garantia_ingreso_q) {
             return $garantia_ingreso_q->clientes_i->nombre;
         })
@@ -59,6 +65,78 @@ Route::get('garantia_ingreso',function(){
                 return '0';
             }
 
+        })
+        ->addColumn('estado', function ($garantia_ingreso_q) {
+            $valor = $garantia_ingreso_q->estado;
+            if($valor == 1){
+                return 'ACTIVO';
+            }else{
+                return 'ANULADO';
+            }
+
+        })
+    ->toJson();
+});
+// GARANTIA GUIA EGRESO
+Route::get('garantia_egreso',function(){
+    $garantia_egre_q = GarantiaGuiaEgreso::query();
+    return Datatables($garantia_egre_q)
+        ->addColumn('marcas', function ($garantia_egre_q) {
+            return $garantia_egre_q->garantia_ingreso_i->marcas_i->nombre;
+        })
+        ->addColumn('estado', function ($garantia_egre_q) {
+            $valor = $garantia_egre_q->estado;
+            if($valor == 1){
+                return 'ACTIVO';
+            }else{
+                return 'ANULADO';
+            }
+
+        })
+        ->addColumn('motivo', function ($garantia_egre_q) {
+            return $garantia_egre_q->garantia_ingreso_i->motivo;
+        })
+        ->addColumn('personal', function ($garantia_egre_q) {
+            return $garantia_egre_q->garantia_ingreso_i->personal_laborales->nombres;
+        })
+        ->addColumn('asunto', function ($garantia_egre_q) {
+            return $garantia_egre_q->garantia_ingreso_i->asunto;
+        })
+        ->addColumn('clientes', function ($garantia_egre_q) {
+            return $garantia_egre_q->garantia_ingreso_i->clientes_i->nombre;
+        })
+    ->toJson();
+});
+//INFORME TECNICO
+Route::get('informe_tecnico', function(){
+    $inform_tec = GarantiaInformeTecnico::query();
+    return Datatables($inform_tec)
+        ->addColumn('marcas', function ($inform_tec) {
+            return $inform_tec->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre;
+        })
+        ->addColumn('estado', function ($inform_tec) {
+            $valor = $inform_tec->estado;
+            if($valor == 1){
+                return 'ACTIVO';
+            }else{
+                return 'ANULADO';
+            }
+
+        })
+        ->addColumn('motivo', function ($inform_tec) {
+            return $inform_tec->garantia_egreso_i->garantia_ingreso_i->motivo;
+        })
+        ->addColumn('personal', function ($inform_tec) {
+            return $inform_tec->garantia_egreso_i->garantia_ingreso_i->personal_laborales->nombres;
+        })
+        ->addColumn('fecha', function ($inform_tec) {
+            return $inform_tec->garantia_egreso_i->garantia_ingreso_i->fecha;
+        })
+        ->addColumn('asunto', function ($inform_tec) {
+            return $inform_tec->garantia_egreso_i->garantia_ingreso_i->asunto;
+        })
+        ->addColumn('clientes', function ($inform_tec) {
+            return $inform_tec->garantia_egreso_i->garantia_ingreso_i->clientes_i->nombre;
         })
     ->toJson();
 });

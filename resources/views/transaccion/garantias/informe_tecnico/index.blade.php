@@ -33,7 +33,7 @@
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
-                                <table class="table table-striped table-bordered table-hover dataTables-example" >
+                                <table class="table table-striped table-bordered table-hover dataTables-example" id="table_informe_tec" >
                                     <thead>
                                         <tr>
                                             <th>ID</th>
@@ -51,7 +51,7 @@
 
                                         </tr>
                                     </thead>
-                                    <tbody>
+                                    {{-- <tbody>
                                         @foreach($garantias_informe_tecnicos as $garantias_informe_tecnico)
                                         <tr class="gradeX">
                                             <td>{{$garantias_informe_tecnico->id}}</td>
@@ -65,7 +65,6 @@
                                             </td>
                                             <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->motivo}}</td>
                                             <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->nombres}}</td>
-                                            {{-- <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_laborales->personal_l->nombres}}</td> --}}
                                             <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->fecha}}</td>
                                             <td>{{$garantias_informe_tecnico->orden_servicio}}</td>
                                             <td>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->asunto}}</td>
@@ -79,7 +78,7 @@
 
                                         </tr>
                                         @endforeach
-                                    </tbody>
+                                    </tbody> --}}
                                 </table>
                             </div>
                         </div>
@@ -103,7 +102,49 @@
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
     <!-- Page-Level Scripts -->
-    <script>
+        <script>    
+$(document).ready(function(){
+    $('#table_informe_tec').DataTable({
+        "serverSide":true,
+        "ajax":"{{url('api/informe_tecnico')}}",
+        "columns":[
+            {data : 'id'},
+            {data : 'marcas'},
+            {data : 'estado'},
+            {data : 'motivo'},
+            {data : 'personal'},
+            {data : 'fecha'},
+            {data : 'orden_servicio'},
+            {data : 'asunto'},
+            {data : 'clientes'},
+            {
+                name: '',
+                data: null,
+                sortable: false,
+                searchable: false,
+                render: function (data) {
+                    var actions = '';
+                    actions += '<center><a href="{{ route('garantia_informe_tecnico.show', ':id') }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>';
+                    return actions.replace(/:id/g, data.id);
+                }
+            },
+            {
+                name: '',
+                data: null,
+                sortable: false,
+                searchable: false,
+                render: function (data) {
+                    var actions = '';
+                    actions += '<center><a href="{{ route('garantia_informe_tecnico.actualizar', ':id') }}"><button type="button" class="btn btn-w-m btn-primary">EDITAR</button></a></center>';
+                    return actions.replace(/:id/g, data.id);
+                }
+            }
+        ]
+    });
+});
+
+</script>
+{{--     <script>
         $(document).ready(function(){
             $('.dataTables-example').DataTable({
                 pageLength: 25,
@@ -131,5 +172,5 @@
 
         });
 
-    </script>
+    </script> --}}
 @endsection

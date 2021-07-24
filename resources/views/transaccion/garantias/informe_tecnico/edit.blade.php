@@ -7,161 +7,183 @@
 @section('value_accion', 'Atras')
 @section('content')
 
- <form action="{{route('garantia_informe_tecnico.store')}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
- 	@csrf
- 	<div class="ibox-content" style="margin-top: 5px;margin-bottom:50px" align="center">
-    <div class="row">
-      <fieldset class="col-sm-6" style="align-items: center;">
-			 <legend>Datos<br>Generales</legend>
-				<div class="panel panel-default">
-    			<div class="panel-body" align="left">
-		    		<div class="row">
-					      <label class="col-sm-2 col-form-label">Marca:</label>
-					        <div class="col-sm-4">
-						          <input type="text" class="form-control" name="marca" value="{{$garantia_guia_egreso->garantia_ingreso_i->marcas_i->nombre}}" readonly>
-                	</div>
-              		<label class="col-sm-2 col-form-label">Motivo:</label>
-                    <div class="col-sm-4">
-                     	<input type="text" class="form-control" name="motivo" value="{{$garantia_guia_egreso->garantia_ingreso_i->motivo}}" readonly>
-						        </div>
-					  </div>
-				    <div class="row">
-					    <label class="col-sm-2 col-form-label">Orden de servicio:</label>
+<div class="wrapper wrapper-content animated fadeInRight">
+  <form action="{{route('garantia_informe_tecnico.store')}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
+  @csrf
+  <br>
+  <div class="ibox-content p-xl" style=" margin-bottom: 2px;padding-bottom: 50px;">
+    <div class="row" >
+      <div class="col-sm-4 text-left" align="left">
+        <div class="form-control" align="center" style="height: 79%;" align="left">
+          <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="height: 70px;width: 90%;margin-top: 5px">
+        </div>
+      </div>
+      <div class="col-sm-4" align="center">
+        <div class="form-control" align="center" style="height: 79%;" align="center">
+          <img align="center" src="{{asset('archivos/imagenes/marcas/'.$garantia_guia_egreso->garantia_ingreso_i->marcas_i->imagen)}}" style="height: 70px;width: 90%;margin-top: 5px">
+        </div>
+      </div>
+      <div class="col-sm-4" align="right" >
+        <div class="form-control" align="center" style="height: 79%;" align="right">
+          <h3 style="">R.U.C {{$empresa->ruc}}</h3>
+          <h2 style="font-size: 19px">GUIA DE INFORME TECNICO</h2>
+          <h5>{{$garantia_guia_egreso->garantia_ingreso_i->orden_servicio}} <input type="hidden" name="orden_servicio" value="{{$garantia_guia_egreso->garantia_ingreso_i->orden_servicio}}"> </h5>
+        </div>
+      </div>
+      <br>
+      <div class="col-sm-6" align="center" >
+          <div class="form-control">
+              <h3>Datos Generales </h3>
+              <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
+                {{-- <input type="text" class="form-control" name="marca_id" value="{{$marca_nombre}}" readonly hidden=""> --}}
+                <label class="col-sm-2 col-form-label">Asunto:</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" name="orden_servicio" value="{{$garantia_guia_egreso->garantia_ingreso_i->orden_servicio}}" readonly>
+                    <input type="text" class="form-control" name="asunto" value="{{$garantia_guia_egreso->garantia_ingreso_i->asunto}}" readonly>
                 </div>
-              	<label class="col-sm-2 col-form-label">Fecha:</label>
-          			<div class="col-sm-4">
-           			  <input type="text" class="form-control" name="fecha_uno" value="{{$tiempo_actual}}" readonly>
+                  <label class="col-sm-2 col-form-label">Ing. Asignado:</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" name="ing_asignado" value="{{$garantia_guia_egreso->garantia_ingreso_i->personal_laborales->nombres}}" readonly>
                 </div>
-				    </div>
-				    <div class="row">
-              <label class="col-sm-2 col-form-label">Ing. Asignado:</label>
-              <div class="col-sm-10">
-              	<input type="text" class="form-control" name="ing_asignado" value="{{$garantia_guia_egreso->garantia_ingreso_i->personal_laborales->nombres}}" readonly>
-            	</div>
-				    </div>
-				    <div class="row">
-        			<label class="col-sm-2 col-form-label">Asunto:</label>
-        		  <div class="col-sm-10">
-             		<input type="text" class="form-control" name="asunto" value="{{$garantia_guia_egreso->garantia_ingreso_i->asunto}}" readonly>
-      				</div>
-				    </div>
-					<br>
-			    </div>
-        </div>
-	    </fieldset>
-	    <fieldset class="col-sm-6">
-			<legend> Datos del <br>  Cliente </legend>
-				<div class="panel panel-default">
-					<div class="panel-body" align="left">
-						<div class="row">
-							<label class="col-sm-2 col-form-label">Nombre:</label>
-                <div class="col-sm-10"><input type="text" class="form-control" name="nombre_cliente" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->nombre}}" readonly></div>
-              <label class="col-sm-2 col-form-label"> Direccion:</label>
-                <div class="col-sm-10"><input type="text" class="form-control" name="direccion" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->direccion}}" readonly></div>
-						</div>
-						<div class="row">
-							<label class="col-sm-2 col-form-label">Telefono:</label>
-              <div class="col-sm-10">
+                <label class="col-sm-2 col-form-label">Motivo:</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" name="motivo" value="{{$garantia_guia_egreso->garantia_ingreso_i->motivo}}" readonly>
+                </div>
+                <label class="col-sm-2 col-form-label">Fecha:</label>
+                <div class="col-sm-4">
+                  <input type="text" class="form-control" name="fecha_uno" value="{{$tiempo_actual}}" readonly>
+                </div>
+              </div>
+          </div>
+      </div>
+      <div class="col-sm-6" align="center">
+        <div class="form-control">
+          <h3>Datos del Cliente</h3>
+          <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
+            <label class="col-sm-2 col-form-label">Nombre:</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" name="nombre_cliente" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->nombre}}" readonly>
+                    </div>
+                    {{-- <label class="col-sm-2 col-form-label"> Direccion:</label>
+                    <div class="col-sm-10">
+                      <input type="text" class="form-control" name="direccion" value="{{$garantias_guias_ingresos->clientes_i->direccion}}" readonly>
+                    </div> --}}
+                    <label class="col-sm-2 col-form-label">Telefono:</label>
+                  <div class="col-sm-4">
                 <input type="text" class="form-control" name="telefono" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->telefono}}" readonly>
-              </div>
-              <label class="col-sm-2 col-form-label">Correo:</label>
-                <div class="col-sm-10">
-                  <input type="text" class="form-control" name="correo" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->email}}" readonly>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Correo:</label>
+                  <div class="col-sm-10">
+                    <input type="text" class="form-control" name="correo" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->email}}" readonly>
                 </div>
-{{--                 <label class="col-sm-2 col-form-label">Contacto:</label>
-                <div class="col-sm-10">
-                	<input type="text" class="form-control" name="contacto" value="{{$garantia_guia_egreso->garantia_ingreso_i->contactos->nombre}}" readonly>
-                </div> --}}
-						</div>
-				  </div>
-			  </div>
-      </fieldset>
-	    <fieldset class="col-sm-12">
-	    <legend> Datos del <br> Equipo </legend>
-  			<div class="panel panel-default">
-  				<div class="panel-body" align="left">
-  					<div class="row">
-  						<label class="col-sm-2 col-form-label">Modelo:</label>
-              <div class="col-sm-4">
-                <input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_guia_egreso->garantia_ingreso_i->nombre_equipo}}" readonly>
-              </div>
-              <label class="col-sm-2 col-form-label">Nr Serie:</label>
-              <div class="col-sm-4">
-                <input type="text" class="form-control" name="numero_serie" value="{{$garantia_guia_egreso->garantia_ingreso_i->numero_serie}}" readonly>
-              </div>
-  					</div>
-  					<div class="row">
-  						<label class="col-sm-2 col-form-label">Codigo Interno:</label>
-              <div class="col-sm-4">
-          			<input type="text" class="form-control" name="codigo_interno" value="{{$garantia_guia_egreso->garantia_ingreso_i->codigo_interno}}" readonly>
-              </div>
-              <label class="col-sm-2 col-form-label">Fecha de Compra:</label>
-              <div class="col-sm-4">
-               	<input type="text" class="form-control" name="fecha_compra" value="{{$garantia_guia_egreso->garantia_ingreso_i->fecha_compra}}" readonly>
-              </div>
-  					</div>
-  				</div>
-  			</div>
-		  </fieldset>
-		  <fieldset class="col-sm-12">
-      <legend> Informe del <br>Problema</legend>
-        <div class="panel panel-default">
-          <div class="panel-body" align="left">
-            <div class="row">
-            <label class="col-sm-1 col-form-label"> Estetica:</label>
-              <div class="col-sm-5">
-                <div class="input-group m-b">
-                  <textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="630" required></textarea>
+          </div>
+        </div>
+      </div>
+      <div class="col-sm-12" align="center">
+        <br>
+        <div class="form-control">
+          <h3>Datos del Equipo</h3>
+          {{-- <br> --}}
+          <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
+            <label class="col-sm-2 col-form-label">Modelo:</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_guia_egreso->garantia_ingreso_i->nombre_equipo}}" readonly>
+                    </div>
+                    <label class="col-sm-2 col-form-label"> Nr Serie:</label>
+                    <div class="col-sm-4">
+                      <input type="text" class="form-control" name="numero_serie" value="{{$garantia_guia_egreso->garantia_ingreso_i->numero_serie}}" readonly>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Codigo Interno:</label>
+                  <div class="col-sm-4">
+                <input type="text" class="form-control" name="codigo_interno" value="{{$garantia_guia_egreso->garantia_ingreso_i->codigo_interno}}" readonly>
+                    </div>
+                    <label class="col-sm-2 col-form-label">Fecha Compra:</label>
+                  <div class="col-sm-4">
+                    <input type="text" class="form-control" name="fecha_compra" value="{{$garantia_guia_egreso->garantia_ingreso_i->fecha_compra}}" readonly>
                 </div>
+          </div>
+          {{-- <br> --}}
+        </div>
+      </div>
+      <div class="col-sm-12" align="center">
+        <div class="form-control">
+          <h3>Informe del Problema</h3>
+          <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
+            <div class="col-sm-6">
+              <center><h4>Estética</h4></center>
+              <div class="input-group m-b">
+                <textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="1230" required style="resize: none;height: 200px;"></textarea>
               </div>
-              <label class="col-sm-1 col-form-label">  Revision y Diagnostico:</label>
-              <div class="col-sm-5">
-                <div class="input-group m-b">
-                  <textarea class="form-control" rows="5" id="comment" name="revision_diagnostico"  maxlength="630" required></textarea>
-                </div>
+            </div>
+            <div class="col-sm-6">
+              <center><h4>Revision y Diagnostico</h4></center>
+              <div class="input-group m-b">
+                <textarea class="form-control" rows="5" id="comment" name="revision_diagnostico"  maxlength="1230" required style="resize: none;height: 200px;"></textarea>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <center><h4>Causas del problema</h4></center>
+              <div class="input-group m-b">
+                <textarea class="form-control" rows="5" id="comment" name="causas_del_problema"  maxlength="1230" required style="resize: none;height: 200px;"></textarea>
+              </div>
+            </div>
+            <div class="col-sm-6">
+              <center><h4>Solucion</h4></center>
+              <div class="input-group m-b">
+                <textarea class="form-control" rows="5" id="comment" name="solucion"  maxlength="1230" required style="resize: none;height: 200px;"></textarea>
               </div>
             </div>
           </div>
         </div>
-        <div class="panel panel-default">
-          <div class="panel-body" align="left">
-            <div class="row">
-              <label class="col-sm-1 col-form-label">Causas de problema:</label>
-              <div class="col-sm-5">
-                <div class="input-group m-b">
-                  <textarea class="form-control" rows="5" id="comment" name="causas_del_problema"  maxlength="630" required></textarea>
-                </div>
-              </div>
-              <label class="col-sm-1 col-form-label">Solucion:</label>
-              <div class="col-sm-5">
-                <div class="input-group m-b">
-                  <textarea class="form-control" rows="5" id="comment" name="solucion"  maxlength="630" required></textarea>
-                </div>
+      </div>
+      <div class="col-sm-12">
+        <div class="form-control">
+          <h4>Imagenes</h4>
+          {{-- <div class="panel panel-default"> --}}
+            <div class="panel-body" align="left">
+              <div class="field" align="left">
+                 <input  type="file" name="files[]" id="files"  multiple=""  accept="image/jpeg/svg/png/jpg" />
               </div>
             </div>
-          </div>
+          {{-- </div> --}}
         </div>
-        <div class="panel panel-default">
-          <div class="panel-body" align="left">
-            <div class="field" align="left">
-              <h3>Imagenes</h3>
-               <input  type="file" name="files[]" id="files"  multiple=""  accept="image/jpeg/svg/png/jpg" />
-            </div>
-
-          </div>
-        </div>
-      </fieldset>
-	    <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit" id="boton">
-        <strong>Grabar</strong>
-      </button>
+      </div>
     </div>
+    <br>
+    <button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit" id="boton"><strong>Grabar</strong></button>
   </div>
-</form>
+  </form>
+</div>
+{{-- </div> --}}
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 
-<br><br><br><br><br>
+
+<style>
+  .form-control{margin-top: 5px; border-radius: 5px}
+   fieldset
+  {
+    /*border: 1px solid #ddd !important;*/
+    padding: 10px;
+    /*border-radius:4px ;*/
+    background-color:#f5f5f5;
+    padding-left:10px!important;
+    padding-right:10px!important;
+    margin-bottom: 10px;
+    border-left: 1px solid #ddd !important;
+
+  }
+
+    legend
+    {
+      font-size:14px;
+      font-weight:bold;
+      margin-bottom: 0px;
+      width: 35%;
+      border: 1px solid #ddd;
+      border-radius: 4px;
+      padding: 5px 5px 5px 10px;
+      background-color: #ffffff;
+    }
+</style>
 <style type="text/css">
   input[type="file"] {
      display: block;

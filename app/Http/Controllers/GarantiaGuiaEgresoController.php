@@ -63,8 +63,9 @@ class GarantiaGuiaEgresoController extends Controller
         $numero_doc=$cliente->numero_documento;
 
         $orden_servicio=$request->get('orden_servicio');
+        // return $orden_servicio;
         $orden_servicio=(string)$orden_servicio;
-
+        // return $orden_servicio;
         // //GUIA INGRESO
         $garantia_guia_ingreso=GarantiaGuiaIngreso::where('orden_servicio',$orden_servicio)->first();
         $garantia_guia_ingreso->egresado=1;
@@ -115,11 +116,12 @@ class GarantiaGuiaEgresoController extends Controller
      */
     public function edit($id)
     {
+        $empresa = Empresa::first();
         $tiempo_actual = Carbon::now();
         $tiempo_actual = $tiempo_actual->format('Y-m-d');
         // Enviando vista para crear guia de egreso con datos de ingreso para egresar
         $garantias_guias_ingresos=GarantiaGuiaIngreso::find($id);
-        return view('transaccion.garantias.guia_egreso.edit',compact('garantias_guias_ingresos','tiempo_actual'));
+        return view('transaccion.garantias.guia_egreso.edit',compact('garantias_guias_ingresos','tiempo_actual','empresa'));
     }
 
     /**

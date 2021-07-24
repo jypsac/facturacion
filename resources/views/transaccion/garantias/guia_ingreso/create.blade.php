@@ -39,186 +39,141 @@
 		</a>
     </div>
 	@endif
-	<div class="row">
-        <div class="col-sm-4 text-left" align="left">
+	<div class="ibox">
+		<div class="ibox-content" style=" margin-bottom: 2px;padding-bottom: 50px;padding: 30px;">
+			 <div class="row" style="height: 120px">
+                    <div class="col-sm-4 text-left" align="left">
+                        <div class="form-control" align="center" style="height: 79%;" align="left">
+                            <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="height: 70px;width: 90%;margin-top: 5px">
+                        </div>
+                    </div>
+                    <div class="col-sm-4" align="center">
+                        <div class="form-control" align="center" style="height: 79%;" align="center"  >
+                            <img align="center" src="{{asset('archivos/imagenes/marcas/'.$marca_t->imagen)}}" style="height: 70px;width: 90%;margin-top: 5px">
+                         </div>
+                    </div>
+                    <div class="col-sm-4" align="right" >
+                        <div class="form-control" align="center" style="height: 79%;"align="right">
+                            <h3 style="">R.U.C {{$empresa->ruc}}</h3>
+                            <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
+                            <h5>{{$orden_servicio}}</h5>
+                        </div>
+                    </div>
+                </div>
+                <br>
+                <form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" 	method="post" onsubmit="return valida(this)">
+            	@csrf
+            		<input type="hidden" name="orden_servicio" value="{{$orden_servicio}}">
+            		<div class="row" >
+            			<div class="col-sm-6" align="center" >
+	                        <div class="form-control">
+	                            <h3>Datos Generales </h3>
+	                            <br>
+	                            <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
+	                        		<input type="text" class="form-control" name="marca_id" value="{{$marca_nombre}}" readonly hidden="">
+	                        		<label class="col-sm-2 col-form-label">Asunto:</label>
+	                        		<div class="col-sm-4">
+		                         		<input type="text" class="form-control" name="asunto" required/>
+	                				</div>
+				          			<label class="col-sm-2 col-form-label">Ing. Asignado:</label>
+	                         		<div class="col-sm-4">
+	                        		 	<input type="text" class="form-control m-b" value="{{Auth::user()->personal->nombres}}"  name="personal_lab_id" id="" readonly="">
+	                				</div>
+	                				<label class="col-sm-2 col-form-label">Motivo:</label>
+		                            <div class="col-sm-4">
+		                            	<select class="form-control m-b" name="motivo">
+								    		<option value="Garantia">Garantia</option>
+								    		<option value="Servicio">Servicio</option>
+								    		<option value="Informativo">Informativo</option>
+								    		<option value="Reingreso">Reingreso</option>
+										</select>
+	                            	</div>
+		                            <label class="col-sm-2 col-form-label">Fecha:</label>
+		          					<div class="col-sm-4">
+				   						<input type="text" class="form-control" name="fecha" value="{{$tiempo_actual}}" readonly>
+				          			</div>
 
-            <address class="col-sm-4" align="left">
-
-                <img src="{{asset('img/logos/logo.png')}}" alt="" width="300px">
-            </address>
-        </div>
-        <div class="col-sm-4">
-        </div>
-
-        <div class="col-sm-4 ">
-            <div class="form-control ruc" style="height: 125px">
-                <center>
-                    <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
-                    <h2>Guia de Ingreso</h2>
-                    {{-- <h5>{{$boleta_numero}}</h5> --}}
-                    <h5>N° -- </h5>
-                </center>
-
-            </div>
-        </div>
-    </div>
-	<div class="row">
-		<div class="col-lg-12">
-	        <div class="ibox">
-	            {{-- <div class="ibox-title">
-					<h5>Crear</h5>
-		        </div> --}}
-	            <div class="ibox-content" style="padding-bottom: 0px">
-	            	<div class="row">
-						<div class="col-lg-12">
-   							<form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" 	method="post" onsubmit="return valida(this)">
-							@csrf
-								<div class="ibox-content" style="" align="center">
-								    <div class="row">
-								        <fieldset class="col-sm-6">
-											<legend>Datos<br>Generales</legend>
-											<div class="panel panel-default">
-												<div class="panel-body" align="left">
-													<div class="row">
-														<label class="col-sm-2 col-form-label">Marca:</label>
-														<div class="col-sm-4">
-															<input type="text" class="form-control" name="marca_id" value="{{$marca_nombre}}" readonly>
-							                    		</div>
-							                    		<label class="col-sm-2 col-form-label">Motivo:</label>
-							                            <div class="col-sm-4">
-							                            	<select class="form-control m-b" name="motivo">
-													    		<option value="Garantia">Garantia</option>
-													    		<option value="Servicio">Servicio</option>
-													    		<option value="Informativo">Informativo</option>
-													    		<option value="Reingreso">Reingreso</option>
-															</select>
-														</div>
-													</div>
-													<div class="row">
-														<label class="col-sm-2 col-form-label">Orden de servicio:</label>
-						                               <div class="col-sm-4">
-						    	                            <input type="text" class="form-control" name="orden_servicio" value="{{$orden_servicio}}" readonly>
-						                      			</div>
-							                  		 	<label class="col-sm-2 col-form-label">Fecha:</label>
-							              					<div class="col-sm-4">
-							               						 <input type="text" class="form-control" name="fecha" value="{{$tiempo_actual}}" readonly>
-							                      			</div>
-													</div>
-													<div class="row">
-						                      			<label class="col-sm-2 col-form-label">Ing. Asignado:</label>
-						                         		<div class="col-sm-10">
-						                        		 	<input type="text" class="form-control m-b" value="{{Auth::user()->personal->nombres}}"  name="personal_lab_id" id="" readonly="">
-						                				</div>
-													</div>
-													<div class="row">
-						                      			<label class="col-sm-2 col-form-label">Cliente:</label>
-						                        		<div class="col-sm-10">
-							                         		<input list="browsersc1" class="form-control m-b" name="cliente_id" id="cliente_id" required autocomplete="off" >
-															<datalist id="browsersc1" >
-																@foreach($clientes as $cliente)
-																	<option id="{{$cliente->id}}">{{$cliente->numero_documento}}- {{$cliente->nombre}}</option>
-																@endforeach
-															 </datalist>
-						                				</div>
-													</div>
-													<div class="row">
-						                      			<label class="col-sm-2 col-form-label">Contacto:</label>
-						                        		 <div class="col-sm-10">
-						                        		 	<input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"   id=""    autocomplete="off"  >
-						                         			<datalist id="contacto_cliente" ></datalist>
-						                				</div>
-													</div>
-													<div class="row">
-						                      			<label class="col-sm-2 col-form-label">Asunto:</label>
-						                        		<div class="col-sm-10">
-							                         		<input type="text" class="form-control" name="asunto" required/>
-						                				</div>
-													</div>
-													<br/>
-											</div>
-										</fieldset>
-										<fieldset class="col-sm-6">
-											<legend> Datos del <br> Equipo </legend>
-											<div class="panel panel-default">
-												<div class="panel-body" align="left">
-													<div class="row">
-														<label class="col-sm-2 col-form-label">Modelo:</label>
-							                            <div class="col-sm-10">
-							                              	<input name="nombre_equipos" list="browserprod"   class="form-control" autocomplete="off" />
-							                              	<datalist id="browserprod">
-								                              	@foreach($productos as $producto)
-									                              	<option  id="{{$producto->nombre}}">{{$producto->nombre}}</option>
-								                              	@endforeach
-							                              	</datalist>
-							                            </div>
-						                    			<label class="col-sm-2 col-form-label">Nr Serie:</label>
-						                        	    <div class="col-sm-10">
-						                        	     	<input type="text" class="form-control" name="numero_serie" required>
-							                            </div>
-													</div>
-													<div class="row">
-														<label class="col-sm-2 col-form-label">Codigo Interno:</label>
-						                            	<div class="col-sm-10">
-					                     					<input type="text" class="form-control" name="codigo_interno" required>
-						                             	</div>
-						                    			<label class="col-sm-2 col-form-label">Fecha de Compra:</label>
-						                              	<div class="col-sm-10">
- 						                   					<input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}" required>
-						                              	</div>
-													</div>
-												</div>
-											</div>
-										</fieldset>
-										<fieldset class="col-sm-12">
-											<legend> Informe del <br>Problema</legend>
-											<div class="panel panel-default">
-												<div class="panel-body" align="left">
-													<div class="row">
-														<label class="col-sm-2 col-form-label">Descripcion del Problema:</label>
-							                            <div class="col-sm-10">
-							                              	<div class="input-group m-b">
-							                  					<textarea class="form-control" rows="5" id="comment" name="descripcion_problema"  maxlength="1230" required></textarea>
-							                				</div>
-							                   			 </div>
-													</div>
-												</div>
-											</div>
-											<div class="panel panel-default">
-												<div class="panel-body" align="left">
-													<div class="row">
-														<label class="col-sm-2 col-form-label">Revisión y diagnóstico:</label>
-							                            <div class="col-sm-10">
-							                             	<div class="input-group m-b">
-							                  				<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" maxlength="1230" required></textarea>
-							                				</div>
-							                   			</div>
-													</div>
-												</div>
-											</div>
-											<div class="panel panel-default">
-												<div class="panel-body" align="left">
-													<div class="row">
-														<label class="col-sm-2 col-form-label">Estetica:</label>
-						                            	<div class="col-sm-10">
-							                              	<div class="input-group m-b">
-							                  					<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="1230" required></textarea>
-							                				</div>
-						                   				</div>
-													</div>
-												</div>
-											</div>
-										</fieldset>
-										<br>
-									 	<button class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit" id="boton"><strong>Grabar</strong></button>
-							    	</div>
+				          			<label class="col-sm-2 col-form-label">Cliente:</label>
+	                        		<div class="col-sm-10">
+		                         		<input list="browsersc1" class="form-control m-b" name="cliente_id" id="cliente_id" required autocomplete="off" >
+										<datalist id="browsersc1" >
+											@foreach($clientes as $cliente)
+												<option id="{{$cliente->id}}">{{$cliente->numero_documento}}- {{$cliente->nombre}}</option>
+											@endforeach
+										 </datalist>
+	                				</div>
+	                				<label class="col-sm-2 col-form-label">Contacto:</label>
+	                        		 <div class="col-sm-10">
+	                        		 	<input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"   id=""    autocomplete="off"  >
+	                         			<datalist id="contacto_cliente" ></datalist>
+	                				</div>
+	                        	</div>
+	                    	</div>
+                    	</div>
+	                	<div class="col-sm-6" align="center">
+	                        <div class="form-control">
+	                            <h3>Datos del Equipo</h3>
+	                            <br>
+	                            <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
+                        		{{-- <strong>Marca</strong><input type="text" class="form-control" name="marca_id" value="{{$marca_nombre}}" readonly> --}}
+	                        		<label class="col-sm-2 col-form-label">Modelo:</label>
+		                            <div class="col-sm-10">
+		                              	<input name="nombre_equipos" list="browserprod"   class="form-control" autocomplete="off" />
+		                              	<datalist id="browserprod">
+			                              	@foreach($productos as $producto)
+				                              	<option  id="{{$producto->nombre}}">{{$producto->nombre}}</option>
+			                              	@endforeach
+		                              	</datalist>
+		                            </div>
+	                    			<label class="col-sm-2 col-form-label">Nr Serie:</label>
+	                        	    <div class="col-sm-10">
+	                        	     	<input type="text" class="form-control" name="numero_serie" required>
+		                            </div>
+									<label class="col-sm-2 col-form-label">Codigo Interno:</label>
+	                            	<div class="col-sm-10">
+                     					<input type="text" class="form-control" name="codigo_interno" required>
+	                             	</div>
+	                    			<label class="col-sm-2 col-form-label">Fecha de Compra:</label>
+	                              	<div class="col-sm-10">
+		                   					<input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}" required>
+	                              	</div>
 								</div>
-							 </form>
-						</div>
-					</div>
-				</div>
-			</div>
+                            </div>
+                        </div>
+                        <div class="col-sm-12" align="center">
+                        	<div class="form-control">
+                        		<center><h3>Informe del Problema</h3></center>
+                        		<br>
+	                            <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
+	                        		<div class="col-sm-4">
+	                        			<center><h4>Descripcion del Problema</h4></center>
+	                        			<div class="input-group m-b">
+			                  				<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" maxlength="1230" required style="resize: none;height: 300px;"></textarea>
+		                				</div>
+	                        		</div>
+	                        		<div class="col-sm-4">
+	                        			<center><h4>Revisión y diganostico</h4></center>
+	                        			<div class="input-group m-b">
+			                  				<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" maxlength="1230" required style="resize: none;height: 300px;"></textarea>
+		                				</div>
+	                        		</div>
+	                        		<div class="col-sm-4">
+	                        			<center><h4>Estética</h4></center>
+	                        			<div class="input-group m-b">
+		                  					<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="1230" required style="resize: none;height: 300px;"></textarea>
+		                				</div>
+	                        		</div>
+	                        	</div>
+                        	</div>
+                        	{{-- <div align="ibox" align="right"> --}}
+                        		<button style="align: left" class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit" id="boton"><strong>Grabar</strong></button>
+                        	{{-- </div> --}}
+                        </div>
+            		</div>
+                </form>
 		</div>
 	</div>
+
 </div>
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.0/jquery.min.js"></script>
 <script type="text/javascript">
@@ -250,7 +205,7 @@
 	$.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script> --}}
 <style>
-    .form-control{border-radius: 10px}
+    .form-control{border-radius: 10px; border: 1px solid #e5e6e7;}
     .text_des{border-radius: 10px;border: 1px solid #e5e6e7;width: 80px;padding: 6px 12px;}
     .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
     .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
