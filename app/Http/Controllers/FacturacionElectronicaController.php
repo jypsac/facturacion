@@ -7,6 +7,7 @@ use App\Facturacion;
 use App\Facturacion_registro;
 use App\Boleta;
 use App\Boleta_registro;
+use App\Guia_remision;
 use DateTime;
 
 use Greenter\Model\Client\Client;
@@ -37,6 +38,12 @@ class FacturacionElectronicaController extends Controller
     public function index_boleta(){
 
         $boletas=Boleta::where('b_electronica',0)->get();
+        return view('facturacion_electronica.boleta.index',compact('boletas'));
+    }
+
+    public function index_guia_remision(){
+
+        $guia_remisiones=Guia_remision::where('b_electronica',0)->get();
         return view('facturacion_electronica.boleta.index',compact('boletas'));
     }
 
@@ -98,6 +105,25 @@ class FacturacionElectronicaController extends Controller
         //cambio de boleta electronica - en caso sea todo exitoso
         $boleta->b_electronica=1;
         $boleta->save();
+
+        return $msg;
+    }
+
+    public function guia_remision()
+    {   
+        //configuracion
+        $see=Config_fe::facturacion_electronica();
+
+        //boleta
+        $invoice=Config_fe::guia_remision();
+        
+
+        //envio a SUNAT    
+        $result=Config_fe::send($see, $invoice);
+
+        //lectura CDR
+        $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+
 
         return $msg;
     }

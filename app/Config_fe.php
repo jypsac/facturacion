@@ -11,6 +11,13 @@ use Greenter\Model\Sale\Legend;
 use Greenter\Model\Response\BillResult;
 use Greenter\Model\Sale\Cuota;
 use Greenter\Model\Sale\FormaPagos\FormaPagoCredito;
+use Greenter\Model\Sale\Document;
+use Greenter\Model\Despatch\Despatch;
+use Greenter\Model\Despatch\DespatchDetail;
+use Greenter\Model\Despatch\Direction;
+use Greenter\Model\Despatch\Shipment;
+use Greenter\Model\Despatch\Transportist;
+
 use DateTime;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Database\Eloquent\Model;
@@ -119,6 +126,7 @@ class Config_fe extends Model
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
             
             ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
+            
             ->setCompany($company)
             ->setClient($client)
             //--------------------------estados de obtencion
@@ -358,10 +366,28 @@ class Config_fe extends Model
 
     //llenado guia de remision
     public static function guia_remision(){
-        $util = Util::getInstance();
+
+        //$util = Util::getInstance();
+        $empresa=Empresa::first();
+
+        // Emisor
+        $address = (new Address())
+        ->setUbigueo('150101')
+        ->setDepartamento($empresa->region_provincia)
+        ->setProvincia($empresa->region_provincia)
+        ->setDistrito($empresa->ciudad)
+        ->setUrbanizacion('-')
+        ->setDireccion($empresa->calle)
+        ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.
+
+        $company = (new Company())
+        ->setRuc($empresa->ruc)
+        ->setRazonSocial($empresa->razon_social)
+        ->setNombreComercial($empresa->nombre)
+        ->setAddress($address);
 
         $baja = new Document();
-        $baja->setTipoDoc('09')
+        $baja->setTipoDoc('09') ///codigo de guia de remision
             ->setNroDoc('T001-00001');
 
         $transp = new Transportist();
@@ -392,7 +418,7 @@ class Config_fe extends Model
             ->setSerie('T001')
             ->setCorrelativo('123')
             ->setFechaEmision(new DateTime())
-            ->setCompany($util->shared->getCompany())
+            ->setCompany($company)
             ->setDestinatario((new Client())
                 ->setTipoDoc('6')
                 ->setNumDoc('20000000002')
@@ -413,6 +439,8 @@ class Config_fe extends Model
             ->setCodProdSunat('P001');
 
         $despatch->setDetails([$detail]);
+
+        return $despatch;
     }
 
     public static function send($see, $invoice){

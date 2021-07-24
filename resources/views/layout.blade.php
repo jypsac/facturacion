@@ -487,6 +487,7 @@ use App\Personal;
                             <ul class="nav nav-second-level collapse">
                                 <li><a href="{{route('facturacion_electronica.index')}}">Facturas</a></li>
                                 <li><a href="{{route('facturacion_electronica.index_boleta')}}">Boletas</a></li>
+                                <li><a href="{{route('facturacion_electronica.index_guia_remision')}}">Guia Remision</a></li>
                                 <li><a href="#">Resumen diario</a></li>
                             </ul>
                         </li>

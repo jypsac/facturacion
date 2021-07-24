@@ -40,6 +40,8 @@ class CreateGuiaRemisionTable extends Migration
             $table->string('estado_anulado');
             $table->string('estado_registrado');/*cuando la Facturacion ya lo uso- o se vinculó con la fac*/
 
+            $table->boolean('g_electronica')->default(0);
+
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
 
