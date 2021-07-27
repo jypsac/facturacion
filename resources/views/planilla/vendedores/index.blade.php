@@ -84,7 +84,7 @@
        @foreach($vendedores as $vendedor)
        <li class="list-group-item">
         <a  onclick="myFunction{{$vendedor->id}}()" class="nav-link" data-toggle="tab" href="#tab-{{$vendedor->id}}" style="padding-top: 5px;padding-bottom: 5px;">
-          <strong style="font-size: 10px">{{$vendedor->cod_vendedor}}-{{$vendedor->personal->personal_l->apellidos}}</strong>
+          <strong style="font-size: 10px">{{$vendedor->cod_vendedor}}- {{$vendedor->personal->personal_l->nombres}} {{$vendedor->personal->personal_l->apellidos}}</strong>
           <div class="small m-t-xs">
             <p class="m-b-xs">
               {{$vendedor->personal->personal_l->documento_identificacion}}: {{$vendedor->personal->personal_l->numero_documento}} <br>

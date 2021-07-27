@@ -147,7 +147,7 @@
                                     <td>{{$almacen->nombre}}</td>
                                     <td>{{$almacen->abreviatura}}</td>
                                     <td>{{$almacen->direccion}}</td>
-                                    <td>{{$almacen->responsable}}</td>
+                                    <td>{{$almacen->personal->nombres}} {{$almacen->personal->apellidos}}</td>
                                     <td>{{$almacen->descripcion}}</td>
                                     <td>@if($almacen->estado==0)Activo @elseif($almacen->estado==1)Desactivo @endif</td>
                                     <td>
@@ -241,7 +241,7 @@
                                                                     </div>
                                                                     @endif
                                                                 </div>
-                                                                <button class="btn btn-primary" type="submit" name="action">Editar</button>
+                                                                <button class="btn btn-primary" type="submit" name="action">Guardar</button>
                                                             </form>
                                                         </div>
                                                     </div>

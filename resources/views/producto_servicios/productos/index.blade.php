@@ -48,7 +48,7 @@
                                 <th>Codigo Producto</th>
                                 <th>Codigo Original</th>
                                 <th>Nombre</th>
-                                <th>Categoria</th>
+                                <th>Familia</th>
                                 <th>Marca</th>
                                 <th>Estado</th>
                                 <th>Afectacion</th>
@@ -92,7 +92,7 @@ $(document).ready(function(){
             {data : 'codigo_producto'},
             {data : 'codigo_original'},
             {data : 'nombre'},
-            {data : 'categoria'},
+            {data : 'familia'},
             {data : 'marca'},
             {data : 'estado'},
             {data : 'afectacion'},

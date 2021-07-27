@@ -54,7 +54,7 @@ class MarcaController extends Controller
         }
         $suma=Marca::all()->count();
         $suma ++;
-        $cien=100000+$suma;
+        $cien=100000+($suma-1);
         $contador=substr($cien,1);
         $descripcion=$request->get('descripcion');
         if (!isset($descripcion)) {$descripcion='Sin descripcion'; }

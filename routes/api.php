@@ -32,6 +32,9 @@ Route::get('productos',function(){
         ->addColumn('categoria', function ($producto) {
             return $producto->categoria_i_producto->descripcion;
         })
+        ->addColumn('familia', function ($producto) {
+            return $producto->familia_i_producto->descripcion;
+        })
         ->addColumn('marca', function ($producto) {
             return $producto->marcas_i_producto->nombre;
         })
