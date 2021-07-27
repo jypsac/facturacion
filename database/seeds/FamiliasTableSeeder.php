@@ -13,7 +13,7 @@ class FamiliasTableSeeder extends Seeder
     {
     	DB::table('familias')->insert([
 			'id' => 1 ,
-			'codigo' => '000',
+			'codigo' => '001',
 			'descripcion' => 'Familia',
 			'estado' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),

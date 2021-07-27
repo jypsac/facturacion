@@ -73,9 +73,9 @@ Route::get('garantia_ingreso',function(){
         ->addColumn('estado', function ($garantia_ingreso_q) {
             $valor = $garantia_ingreso_q->estado;
             if($valor == 1){
-                return 'ACTIVO';
+                return '1';
             }else{
-                return 'ANULADO';
+                return '0';
             }
 
         })
