@@ -6,6 +6,10 @@
 @section('href_accion', route('garantia_guia_egreso.guias'))
 @section('value_accion', 'Nueva Guia')
 
+@section('button2', 'Inicio')
+@section('config',route('garantia_guia_egreso.index'))
+
+
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">

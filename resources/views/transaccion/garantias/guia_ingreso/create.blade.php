@@ -73,7 +73,7 @@
 	                        		<input type="text" class="form-control" name="marca_id" value="{{$marca_nombre}}" readonly hidden="">
 	                        		<label class="col-sm-2 col-form-label">Asunto:</label>
 	                        		<div class="col-sm-4">
-		                         		<input type="text" class="form-control" name="asunto" required/>
+		                         		<input type="text" class="form-control" name="asunto" value="Ingreso de Equipo" required/>
 	                				</div>
 				          			<label class="col-sm-2 col-form-label">Ing. Asignado:</label>
 	                         		<div class="col-sm-4">

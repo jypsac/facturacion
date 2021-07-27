@@ -7,6 +7,9 @@
 @section('href_accion', '#modal-form')
 @section('value_accion', 'Nueva Guia')
 
+@section('button2', 'Inicio')
+@section('config',route('garantia_guia_ingreso.index'))
+
 @section('content')
 <div id="modal-form" class="modal fade" aria-hidden="true">
 <div class="modal-dialog">
