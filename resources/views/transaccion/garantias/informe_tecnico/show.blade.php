@@ -205,12 +205,12 @@
           <footer style="padding-top: 10px">
           <br>
           <div class="row">
-            <div class="col-sm-4">
+           <div class="col-sm-4">
                 <strong><p><u>Centro de Atencion : </strong></u></p>
-                <strong>Direccion:</strong> {{$empresa->calle}}<br>
-                <strong>Telefono:</strong> {{Auth::user()->celular}} &nbsp;<br>
-                <strong>Celular-Soporte:</strong> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->teleofno }}<br>
-                <strong>Email:</strong> {{Auth::user()->email}}<br>
+                <strong>Direccion:</strong> {{$usuario->almacen->direccion}}<br>
+                <strong>Telefonos :</strong>  {{$empresa->telefono}} / {{$usuario->celular}} &nbsp;<br>
+                <strong>{{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->nombre_empresa}}:</strong> {{$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->marcas_i->telefono}}<br>
+                <strong>Email:</strong> {{$usuario->email}}<br>
                 <strong>Web:</strong> {{$empresa->pagina_web}}<br>
             </div>
             <div class="col-sm-2"></div>

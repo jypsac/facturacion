@@ -7,6 +7,7 @@ use App\GarantiaInformeTecnico;
 use App\GarantiaGuiaEgreso;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Cliente;
+use App\User;
 use App\Contacto;
 use App\Empresa;
 use App\GarantiaInformeTecnicoArchivos;
@@ -107,11 +108,12 @@ class GarantiaInformeTecnicoController extends Controller
      */
     public function show($id)
     {
-         $contacto = Contacto::all();
+        $contacto = Contacto::all();
         $empresa=Empresa::first();
         $garantias_informe_tecnico=GarantiaInformeTecnico::find($id);
         $archivo_informe_tecnico  = GarantiaInformeTecnicoArchivos::where('id_informe_tecnico',$id)->get();
-        return view('transaccion.garantias.informe_tecnico.show',compact('garantias_informe_tecnico','empresa','archivo_informe_tecnico','contacto'));
+        $usuario = User::where('personal_id',$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_lab_id)->first();
+        return view('transaccion.garantias.informe_tecnico.show',compact('garantias_informe_tecnico','empresa','archivo_informe_tecnico','contacto','usuario'));
         // return $archivo_informe_tecnico;
     }
 
@@ -238,7 +240,8 @@ class GarantiaInformeTecnicoController extends Controller
         $mi_empresa=Empresa::first();
         $garantias_informe_tecnico=GarantiaInformeTecnico::find($id);
         $archivo_informe_tecnico  = GarantiaInformeTecnicoArchivos::where('id_informe_tecnico',$id)->get();
-        return view('transaccion.garantias.informe_tecnico.show_print',compact('garantias_informe_tecnico','mi_empresa','archivo_informe_tecnico','contacto'));
+        $usuario = User::where('personal_id',$garantias_informe_tecnico->garantia_egreso_i->garantia_ingreso_i->personal_lab_id)->first();
+        return view('transaccion.garantias.informe_tecnico.show_print',compact('garantias_informe_tecnico','mi_empresa','archivo_informe_tecnico','contacto','usuario'));
     }
 
     public function pdf(Request $request,$id){

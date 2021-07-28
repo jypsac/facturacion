@@ -154,7 +154,7 @@ class GarantiaGuiaEgresoController extends Controller
         $mi_empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
         $usuario = User::where('personal_id',$garantias_guias_egreso->garantia_ingreso_i->personal_lab_id)->first();
-        return view('transaccion.garantias.guia_egreso.show_print',compact('garantias_guias_egreso','mi_empresa','contacto'));
+        return view('transaccion.garantias.guia_egreso.show_print',compact('garantias_guias_egreso','mi_empresa','contacto','usuario'));
     }
 
     public function pdf(Request $request,$id){
