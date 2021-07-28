@@ -131,7 +131,7 @@
 		                            </div>
 									<label class="col-sm-2 col-form-label">Codigo Interno:</label>
 	                            	<div class="col-sm-10">
-                     					<input type="text" class="form-control" name="codigo_interno" required>
+                     					<input type="text" class="form-control" name="codigo_interno" value="000000" required>
 	                             	</div>
 	                    			<label class="col-sm-2 col-form-label">Fecha de Compra:</label>
 	                              	<div class="col-sm-10">
