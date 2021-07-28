@@ -54,7 +54,7 @@ class PersonalTableSeeder extends Seeder
             'direccion' => '00',
             'estado' => '1',
             'estado_trabajador_laboral' => 'Activo',
-            'usuario_registrado' => '1',
+            'usuario_registrado' => '0',
             'foto' => '47587674-descarga.jpg',
             'created_at' => date('2020-07-01 00:00:00'),
             'updated_at' => date('2020-07-01 00:00:00'),

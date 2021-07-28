@@ -148,6 +148,7 @@ class AlmacenController extends Controller
         $almacen->abreviatura=$request->get('abreviatura');
         $almacen->responsable=$request->get('responsable');
         $almacen->direccion=$request->get('direccion');
+        $almacen->codigo_sunat=$request->get('codigo_sunat');
         $almacen->descripcion=$request->get('descripcion');
         $almacen->estado=$estado_numero;
         if(is_numeric($almacen->cod_fac) and is_numeric($nr_fac)){

@@ -7,52 +7,46 @@
 @section('href_accion', '#modal-form')
 @section('value_accion', 'Agregar')
 
-
 @section('content')
+
 <!-- modal -->
-    <div class="wrapper wrapper-content animated fadeInRight">
-            <div class="row">
-                <div class="col-lg-12">
-                    <div class="ibox ">
-
-
-
-                            <div id="modal-form" class="modal fade" aria-hidden="true">
-                                <div class="modal-dialog">
-                                    <div class="modal-content">
-                                        <div class="modal-body">
-                                            <div class="row">
-                                                <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
-
-                                                    <p>Selecciona marca a agregar</p>
-
-                                                    <form action="{{ route('garantia_guia_ingreso.create') }}"  enctype="multipart/form-data" method="get">
-                                                        <div class="form-group">{{-- <label>Marca</label> --}}
-                                                            <div class="form-group row"><label class="col-sm-2 col-form-label">Marca:</label>
-                                                                <div class="col-sm-10">
-                                                                    <select class="form-control m-b" name="familia">
-                                                                    @foreach($marcas as $marca)
-                                                                    <option value="{{$marca->id}}" >{{$marca->nombre}}</option>
-                                                                    @endforeach
-                                                                    </select>
-                                                                </div>
-                                                            </div>
-                                                        </div>
-
-                                                            <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
-                                                    </form>
-
-                                                        </div>
-                                                </div>
-
-                                            </div>
-                                    </div>
+<div id="modal-form" class="modal fade" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
+                        <p>Selecciona marca a agregar</p>
+                        <form action="{{ route('garantia_guia_ingreso.create') }}"  enctype="multipart/form-data" method="get">
+                            <div class="form-group">{{-- <label>Marca</label> --}}
+                                <div class="form-group row"><label class="col-sm-2 col-form-label">Marca:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" name="familia">
+                                        @foreach($marcas as $marca)
+                                        <option value="{{$marca->id}}" >{{$marca->nombre}}</option>
+                                        @endforeach
+                                        </select>
                                     </div>
                                 </div>
-
+                            </div>
+                            <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
+                        </form>
                     </div>
                 </div>
-                <div class="col-lg-12">
+            </div>
+        </div>
+    </div>
+</div>
+<div class="wrapper wrapper-content animated fadeInRight">
+    @if (session('repite'))
+        <div class="alert alert-danger">
+            {{ session('repite') }}
+        </div>
+    @endif
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="ibox ">
+                <div class="">
                     <div class="ibox ">
                         <div class="ibox-title">
                             <h5>Vista Previa</h5>
@@ -74,7 +68,6 @@
                                 </a>
                             </div>
                         </div>
-
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example" id="table_productos" >
@@ -91,14 +84,16 @@
                                             <th>Anular</th>
                                         </tr>
                                     </thead>
-
+                                    {{-- TBODY POR AJAX --}}
                                 </table>
                             </div>
                         </div>
                     </div>
                 </div>
             </div>
+        </div>
     </div>
+</div>
 
 
 

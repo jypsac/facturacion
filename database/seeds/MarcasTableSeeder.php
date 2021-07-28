@@ -14,7 +14,7 @@ class MarcasTableSeeder extends Seeder
     	DB::table('marcas')->insert([
 			'id' => 1 ,
 			'nombre' => 'Example' ,
-			'codigo' => '00000',
+			'codigo' => '00001',
 			'abreviatura' => 'EP',
 			'nombre_empresa' => 'Marca 01',
 			'descripcion' => 'Descripcion del Producto',

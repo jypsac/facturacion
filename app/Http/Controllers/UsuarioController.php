@@ -287,8 +287,8 @@ class UsuarioController extends Controller
     {
         /*Configuracion Correo*/
         $smtpAddress = 'mail.grupojypsac.com';
-        $port = '25';
-        $encryption = 'SSL';
+        $port = '465';
+        $encryption = 'ssl';
         $yourEmail = 'informes@grupojypsac.com';
         $yourPassword = 'vP8JzoYs5Inu';
         /*Fin confing correo*/

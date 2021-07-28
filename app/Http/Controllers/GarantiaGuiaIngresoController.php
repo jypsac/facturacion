@@ -65,16 +65,19 @@ class GarantiaGuiaIngresoController extends Controller
       $paises = Pais::all();
       $empresa = Empresa::first();
       // Producto que no esten anulados
-      $productos = Producto::all()->where('estado_anular',1)->where('marca_id',$marca_t->id);
-
+      $productos = Producto::where('estado_anular',1)->where('marca_id',$marca_t->id)->get();
+      if(count($productos) == 0){
+        return redirect()->route('garantia_guia_ingreso.index')->with('repite', 'La marca escogida no cuenta con productos relacionados');
+      }
+      // return $productos;
       $clientes=Cliente::all();
         // $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
       $personales=Personal_datos_laborales::all();
         // $personales=Personal::join("personal_datos_laborales","id","=","personal_datos_laborales.personal_id")->get();
         // $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
 
+        return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales','paises','productos','empresa','marca_t'));
         //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
-      return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales','paises','productos','empresa','marca_t'));
     }
 
     /**

@@ -218,7 +218,7 @@
                                                                     </div>
                                                                     <label class="col-sm-2 col-form-label">Codigo Sunat:</label>
                                                                     <div class="col-sm-1">
-                                                                        <input style="padding-right: 0;padding-left:  7px"  type="text" class="form-control"  value="{{$almacen->codigo_sunat}}" disabled="disabled">
+                                                                        <input style="padding-right: 0;padding-left:  7px"  type="text" class="form-control"  value="{{$almacen->codigo_sunat}}" name="codigo_sunat">
                                                                     </div>
                                                                 </div>
                                                                 <div class="form-group  row">
