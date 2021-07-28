@@ -77,7 +77,7 @@ class BoletaController extends Controller
         }
         //validar almacen con prodcutos vacios
         if(!isset($prod)){
-            return "no hay prodcutos en el almacen seleccionado";
+            return redirect()->route('boleta.index')->with('repite', 'No hay productos en el almacen seleccionado');
         }
 
         $lista=array_values(array_unique($prod));
@@ -173,7 +173,7 @@ class BoletaController extends Controller
         }
         //validar almacen con prodcutos vacios
         if(!isset($prod)){
-            return "no hay prodcutos en el almacen seleccionado";
+            return redirect()->route('boleta.index')->with('repite', 'No hay productos en el almacen seleccionado');
         }
 
         $lista=array_values(array_unique($prod));
