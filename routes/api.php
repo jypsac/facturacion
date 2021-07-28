@@ -61,18 +61,9 @@ Route::get('garantia_ingreso',function(){
         ->addColumn('cliente', function ($garantia_ingreso_q) {
             return $garantia_ingreso_q->clientes_i->nombre;
         })
-        ->addColumn('anulacion', function ($garantia_ingreso_q) {
+        ->addColumn('tiempo', function ($garantia_ingreso_q) {
             $valor = $garantia_ingreso_q->created_at;
             if(tiempo($valor) == 1){
-                return '1';
-            }else{
-                return '0';
-            }
-
-        })
-        ->addColumn('estado', function ($garantia_ingreso_q) {
-            $valor = $garantia_ingreso_q->estado;
-            if($valor == 1){
                 return '1';
             }else{
                 return '0';
@@ -151,3 +142,5 @@ Route::get('clientes',function(){
     return Datatables($cliente)
         ->toJson();
 });
+
+//TIPO DE CAMBIO

@@ -129,17 +129,17 @@ $(document).ready(function(){
                 sortable: false,
                 searchable: false,
                 render: function (data) {
-                    if(data.estado == 0){
-                        var actions = '';
-                        actions += '<center><button class="btn btn-w-m btn-secondary">ANULADO</button><center>';
-                        return actions.replace(/:id/g, data.id);
-                    }else if(data.egresado == 0){
+                    if(data.estado == 1  && data.egresado == 0 ){
                         var actions = '';
                         actions += '<center><a href="{{ route('garantia_guia_egreso.edit', ':id') }}"><button type="button" class="btn btn-w-m btn-info">Egresar</button></a></center>';
                         return actions.replace(/:id/g, data.id);
-                    }else{
+                    }else if(data.estado == 0 && data.egresado == 1){
                         var actions = '';
                         actions += '<center><button class="btn btn-w-m btn-secondary">Procesado</button></center>';
+                        return actions.replace(/:id/g, data.id);
+                    }else{
+                        var actions = '';
+                        actions += '<center><button class="btn btn-w-m btn-warning">ANULADO</button><center>';
                         return actions.replace(/:id/g, data.id);
                     }
                 }

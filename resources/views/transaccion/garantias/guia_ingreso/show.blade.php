@@ -11,6 +11,7 @@
 @section('config',route('garantia_guia_ingreso.index'))
 
 @section('content')
+
 <div id="modal-form" class="modal fade" aria-hidden="true">
 <div class="modal-dialog">
     <div class="modal-content">
@@ -44,15 +45,23 @@
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
+    {{-- @if ( tiempo($garantia_guia_ingreso->created_at) == 1 )
+        <div class="alert alert-danger">
+            Codigo Interno
+        </div>
+    @endif --}}
     <div class="row ibox-title" style="padding-right: 3.1%;margin: 0" >
         {{-- <div class="ibox-tools"> --}}
             {{-- <a class="btn btn-success"  href="" >Imprimir --}}
-                <div class="col-sm-6">
-                    <a href="{{ route('garantia_guia_ingreso.edit', $garantia_guia_ingreso->id) }}"><button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button></a>
-                </div>
+            <div class="col-sm-6">
+                @if(tiempo($garantia_guia_ingreso->created_at) == 1)
+                    @if($garantia_guia_ingreso->estado == 1)
+                      <a href="{{ route('garantia_guia_ingreso.edit', $garantia_guia_ingreso->id) }}"><button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button></a>
+                    @endif
+                @endif
+            </div>
+
             <div class="col-sm-6 tooltip-demo "align="right"  >
-
-
             <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}">
                 <input type="text" name="archivo" id="texto2"  maxlength="50" value="{{$garantia_guia_ingreso->orden_servicio}}" oninput="actualizatext()" />
                 <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg" ></i>  </button>

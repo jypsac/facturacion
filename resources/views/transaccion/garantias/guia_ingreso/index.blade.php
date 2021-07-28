@@ -145,8 +145,8 @@ $(document).ready(function(){
             sortable: false,
             searchable: false,
             render: function (data) {
-                if(data.anulacion == 1){
-                    if(data.estado == 1){
+                if(data.tiempo == 1){
+                    if(data.estado == 1 && data.egresado == 0){
                         var actions = '';
                         actions += '<center><a data-toggle="modal" class="btn btn-warning" href="#modal-form:id">Anular</a></center>'+
                         '<div id="modal-form:id" class="modal fade" aria-hidden="true">'+
@@ -167,10 +167,15 @@ $(document).ready(function(){
                             '</div>'+
                         '</div>';
                         return actions.replace(/:id/g, data.id);
+                    }else if(data.estado == 0 && data.egresado == 1){
+                        var actions2 = '';
+                        data: 'id';
+                        actions2 += '<center><button class="btn btn-w-m btn-info">PROCESADO</button></center>';
+                         return actions2.replace(/:id/g, data.id);
                     }else{
                         var actions2 = '';
                         data: 'id';
-                        actions2 += '<center><button class="btn btn-w-m btn-secondary">PROCESADO</button></center>';
+                        actions2 += '<center><button class="btn btn-w-m btn-secondary">ANULADO</button></center>';
                          return actions2.replace(/:id/g, data.id);
                     }
                 }else{

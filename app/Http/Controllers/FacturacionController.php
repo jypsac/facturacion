@@ -87,7 +87,7 @@ class FacturacionController extends Controller
         }
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
-            return "no hay prodcutos en el almacen seleccionado";
+            return redirect()->route('facturacion.index')->with('repite', 'No hay productos en el almacen seleccionado');
         }
 
         // return $nueva;
@@ -158,8 +158,19 @@ class FacturacionController extends Controller
             $factura_num_string_porcion= explode("-", $factura_num);
             $factura_num_string=$factura_num_string_porcion[1];
             $factura_num=(int)$factura_num_string;
+
+            //CONDICIONAL PARA QUE EMPIEZE DE NUEVO EN 0001 PARA EL NUMERO DE SERIE Y EL CORRELATIVO -> FALTA PULIR/IDEA GENERAL
+            // if($factura_num == 99999999){
+            //     $almacen_codigo = Almacen::latest()->first();
+            //     $ultima_factura = $almacen_codigo->codigo_sunat+1;
+            //     $factura_num = 00000001;
+            // }else{
+                $ultima_factura = $sucursal->codigo_sunat;
+            //     $factura_num++;
+            // }
+
             $factura_num++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($ultima_factura, 3, "0", STR_PAD_LEFT);
             $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
         }
 
@@ -188,7 +199,7 @@ class FacturacionController extends Controller
         }
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
-            return "no hay prodcutos en el almacen seleccionado";
+            return redirect()->route('facturacion.index')->with('repite', 'No hay productos en el almacen seleccionado');
         }
 
         // return $nueva;

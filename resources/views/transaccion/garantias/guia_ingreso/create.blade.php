@@ -10,7 +10,6 @@
 @section('content')
     <script type="text/javascript">
         $(document).ready(function() {
-
             $("form").keypress(function(e) {
                 if (e.which == 13) {
                     setTimeout(function() {
@@ -23,6 +22,7 @@
 
         });
     </script>
+
 @section('form_action_modal_cliente',  route('agregado_rapido.cliente_cotizado'))
 @section('ruta_retorno', 'garantia_guia_ingreso')
 <div class="social-bar">
@@ -43,17 +43,17 @@
 		<div class="ibox-content" style=" margin-bottom: 2px;padding-bottom: 50px;padding: 30px;">
 			 <div class="row" style="height: 120px">
                     <div class="col-sm-4 text-left" align="left">
-                        <div class="form-control" align="center" style="height: 79%;" align="left">
+                        <div class="form-control for" align="center" style="height: 79%;" align="left">
                             <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="height: 70px;width: 90%;margin-top: 5px">
                         </div>
                     </div>
                     <div class="col-sm-4" align="center">
-                        <div class="form-control" align="center" style="height: 79%;" align="center"  >
+                        <div class="form-control for" align="center" style="height: 79%;" align="center"  >
                             <img align="center" src="{{asset('archivos/imagenes/marcas/'.$marca_t->imagen)}}" style="height: 70px;width: 90%;margin-top: 5px">
                          </div>
                     </div>
                     <div class="col-sm-4" align="right" >
-                        <div class="form-control" align="center" style="height: 79%;"align="right">
+                        <div class="form-control for" align="center" style="height: 79%;"align="right">
                             <h3 style="">R.U.C {{$empresa->ruc}}</h3>
                             <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
                             <h5>{{$orden_servicio}}</h5>
@@ -66,22 +66,22 @@
             		<input type="hidden" name="orden_servicio" value="{{$orden_servicio}}">
             		<div class="row" >
             			<div class="col-sm-6" align="center" >
-	                        <div class="form-control">
+	                        <div class="form-control for">
 	                            <h3>Datos Generales </h3>
 	                            <br>
 	                            <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
-	                        		<input type="text" class="form-control" name="marca_id" value="{{$marca_nombre}}" readonly hidden="">
+	                        		<input type="text" class="form-control for" name="marca_id" value="{{$marca_nombre}}" readonly hidden="">
 	                        		<label class="col-sm-2 col-form-label">Asunto:</label>
 	                        		<div class="col-sm-4">
-		                         		<input type="text" class="form-control" name="asunto" value="Ingreso de Equipo" required/>
+		                         		<input type="text" class="form-control for" name="asunto" value="Ingreso de Equipo" required/>
 	                				</div>
 				          			<label class="col-sm-2 col-form-label">Ing. Asignado:</label>
 	                         		<div class="col-sm-4">
-	                        		 	<input type="text" class="form-control m-b" value="{{Auth::user()->personal->nombres}}"  name="personal_lab_id" id="" readonly="">
+	                        		 	<input type="text" class="form-control for m-b" value="{{Auth::user()->personal->nombres}}"  name="personal_lab_id" id="" readonly="">
 	                				</div>
 	                				<label class="col-sm-2 col-form-label">Motivo:</label>
 		                            <div class="col-sm-4">
-		                            	<select class="form-control m-b" name="motivo">
+		                            	<select class="form-control for m-b" name="motivo">
 								    		<option value="Garantia">Garantia</option>
 								    		<option value="Servicio">Servicio</option>
 								    		<option value="Informativo">Informativo</option>
@@ -90,12 +90,12 @@
 	                            	</div>
 		                            <label class="col-sm-2 col-form-label">Fecha:</label>
 		          					<div class="col-sm-4">
-				   						<input type="text" class="form-control" name="fecha" value="{{$tiempo_actual}}" readonly>
+				   						<input type="text" class="form-control for" name="fecha" value="{{$tiempo_actual}}" readonly>
 				          			</div>
 
 				          			<label class="col-sm-2 col-form-label">Cliente:</label>
 	                        		<div class="col-sm-10">
-		                         		<input list="browsersc1" class="form-control m-b" name="cliente_id" id="cliente_id" required autocomplete="off" >
+		                         		<input list="browsersc1" class="form-control for m-b" name="cliente_id" id="cliente_id" required autocomplete="off" >
 										<datalist id="browsersc1" >
 											@foreach($clientes as $cliente)
 												<option id="{{$cliente->id}}">{{$cliente->numero_documento}}- {{$cliente->nombre}}</option>
@@ -104,21 +104,21 @@
 	                				</div>
 	                				<label class="col-sm-2 col-form-label">Contacto:</label>
 	                        		 <div class="col-sm-10">
-	                        		 	<input list="contacto_cliente" type="text" class="form-control m-b" name="contacto_cliente"   id=""    autocomplete="off"  >
+	                        		 	<input list="contacto_cliente" type="text" class="form-control for m-b" name="contacto_cliente"   id=""    autocomplete="off"  >
 	                         			<datalist id="contacto_cliente" ></datalist>
 	                				</div>
 	                        	</div>
 	                    	</div>
                     	</div>
 	                	<div class="col-sm-6" align="center">
-	                        <div class="form-control">
+	                        <div class="form-control for">
 	                            <h3>Datos del Equipo</h3>
 	                            <br>
 	                            <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
-                        		{{-- <strong>Marca</strong><input type="text" class="form-control" name="marca_id" value="{{$marca_nombre}}" readonly> --}}
+                        		{{-- <strong>Marca</strong><input type="text" class="form-control for" name="marca_id" value="{{$marca_nombre}}" readonly> --}}
 	                        		<label class="col-sm-2 col-form-label">Modelo:</label>
 		                            <div class="col-sm-10">
-		                              	<input name="nombre_equipos" list="browserprod"   class="form-control" autocomplete="off" />
+		                              	<input name="nombre_equipos" list="browserprod"   class="form-control for" autocomplete="off" />
 		                              	<datalist id="browserprod">
 			                              	@foreach($productos as $producto)
 				                              	<option  id="{{$producto->nombre}}">{{$producto->nombre}}</option>
@@ -127,40 +127,40 @@
 		                            </div>
 	                    			<label class="col-sm-2 col-form-label">Nr Serie:</label>
 	                        	    <div class="col-sm-10">
-	                        	     	<input type="text" class="form-control" name="numero_serie" required>
+	                        	     	<input type="text" class="form-control for" name="numero_serie" required>
 		                            </div>
 									<label class="col-sm-2 col-form-label">Codigo Interno:</label>
 	                            	<div class="col-sm-10">
-                     					<input type="text" class="form-control" name="codigo_interno" value="000000" required>
+                     					<input type="text" class="form-control for" name="codigo_interno" value="000000" required>
 	                             	</div>
 	                    			<label class="col-sm-2 col-form-label">Fecha de Compra:</label>
 	                              	<div class="col-sm-10">
-		                   					<input type="date" class="form-control" name="fecha_compra" max="{{$orden_servicio}}" required>
+		                   					<input type="date" class="form-control for" name="fecha_compra" max="{{$orden_servicio}}" required>
 	                              	</div>
 								</div>
                             </div>
                         </div>
                         <div class="col-sm-12" align="center">
-                        	<div class="form-control">
+                        	<div class="form-control for">
                         		<center><h3>Informe del Problema</h3></center>
                         		<br>
 	                            <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
 	                        		<div class="col-sm-4">
 	                        			<center><h4>Descripcion del Problema</h4></center>
 	                        			<div class="input-group m-b">
-			                  				<textarea class="form-control" rows="5" id="comment" name="descripcion_problema" maxlength="1230" required style="resize: none;height: 300px;"></textarea>
+			                  				<textarea class="form-control for" rows="5" id="comment" name="descripcion_problema" maxlength="1230" required style="resize: none;height: 300px;"></textarea>
 		                				</div>
 	                        		</div>
 	                        		<div class="col-sm-4">
 	                        			<center><h4>Revisión y diganostico</h4></center>
 	                        			<div class="input-group m-b">
-			                  				<textarea class="form-control" rows="5" id="comment" name="revision_diagnostico" maxlength="1230" required style="resize: none;height: 300px;"></textarea>
+			                  				<textarea class="form-control for" rows="5" id="comment" name="revision_diagnostico" maxlength="1230" required style="resize: none;height: 300px;"></textarea>
 		                				</div>
 	                        		</div>
 	                        		<div class="col-sm-4">
 	                        			<center><h4>Estética</h4></center>
 	                        			<div class="input-group m-b">
-		                  					<textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="1230" required style="resize: none;height: 300px;"></textarea>
+		                  					<textarea class="form-control for" rows="5" id="comment" name="estetica" maxlength="1230" required style="resize: none;height: 300px;"></textarea>
 		                				</div>
 	                        		</div>
 	                        	</div>
@@ -205,7 +205,7 @@
 	$.ajaxSetup({ headers: { 'csrftoken' : '{{ csrf_token() }}' } });
 </script> --}}
 <style>
-    .form-control{border-radius: 10px; border: 1px solid #e5e6e7;}
+    .form-control.for{border-radius: 10px; border: 1px solid #e5e6e7;margin-bottom: 15px}
     .text_des{border-radius: 10px;border: 1px solid #e5e6e7;width: 80px;padding: 6px 12px;}
     .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
     .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
@@ -220,21 +220,9 @@
 </style>
 
 <style>
-	.form-control{    margin-bottom: 15px;
-}
-   fieldset
-  {
-    /*border: 1px solid #ddd !important;*/
-    padding: 10px;
-    /*border-radius:4px ;*/
-    background-color:#f5f5f5;
-    padding-left:10px!important;
-    padding-right:10px!important;
-    margin-bottom: 10px;
-    border-left: 1px solid #ddd !important;
-
-  }
-
+	.form-control{
+		border-radius: 10px;border: 1px solid #e5e6e7;
+	}
     legend
     {
       font-size:14px;

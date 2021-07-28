@@ -208,7 +208,7 @@ use App\Personal;
                                         </div>
                                         <div class="form-group">
                                             <label>Fecha Registro *</label>
-                                            <input  type="text" class="form-control" id="fechaInscripcion_cli" name="fecha_registro" class="form-control required" value="2020-07-22">
+                                            <input  type="date" class="form-control" id="fechaInscripcion_cli" name="fecha_registro" class="form-control required" value="2020-07-22">
                                         </div>
                                     </div>
                                 </div>

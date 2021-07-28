@@ -177,6 +177,7 @@
                 </div>
             </div>
         </div>
+    </div>
     </form>
 
     <style type="text/css">

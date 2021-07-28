@@ -56,7 +56,7 @@ class AlmacenController extends Controller
         // return "limite";
         $this->validate($request,[
             'nombre' => ['required'],
-            'abreviatura' => ['required'],
+            'abreviatura' => ['required','unique:almacen'],
             'responsable' => ['required'],
             'direccion' => ['required'],
             'descripcion' => ['required'],
@@ -122,11 +122,12 @@ class AlmacenController extends Controller
     public function update(Request $request, $id)
     {
         $this->validate($request,[
-            'nombre' => ['required'],
-            'abreviatura' => ['required','unique'],
+            'nombre' => ['required','unique:almacen,nombre,'.$id],
+            'abreviatura' => ['required','unique:almacen,abreviatura,'.$id],
             'responsable' => ['required'],
             'direccion' => ['required'],
             'descripcion' => ['required'],
+            'codigo_sunat' => ['required','unique:almacen,codigo_sunat,'.$id],
         ]);
 
         $estado=$request->get('estado');
