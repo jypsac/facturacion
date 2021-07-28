@@ -10,6 +10,7 @@ use App\Marca;
 use App\Contacto;
 use App\Empresa;
 use App\Cliente;
+use App\User;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
 use Swift_Mailer;
@@ -105,7 +106,8 @@ class GarantiaGuiaEgresoController extends Controller
          $contacto = Contacto::all();
         $empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
-        return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso','empresa','contacto'));
+        $usuario = User::where('personal_id',$garantias_guias_egreso->garantia_ingreso_i->personal_lab_id)->first();
+        return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso','empresa','contacto','usuario'));
     }
 
     /**
@@ -151,6 +153,7 @@ class GarantiaGuiaEgresoController extends Controller
         $contacto = Contacto::all();
         $mi_empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
+        $usuario = User::where('personal_id',$garantias_guias_egreso->garantia_ingreso_i->personal_lab_id)->first();
         return view('transaccion.garantias.guia_egreso.show_print',compact('garantias_guias_egreso','mi_empresa','contacto'));
     }
 
@@ -158,6 +161,7 @@ class GarantiaGuiaEgresoController extends Controller
         $contacto = Contacto::all();
         $mi_empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
+        $usuario = User::where('personal_id',$garantias_guias_egreso->garantia_ingreso_i->personal_lab_id)->first();
         $archivo=$request->get('archivo');
 
         // return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa'));

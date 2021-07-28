@@ -123,7 +123,7 @@ class AlmacenController extends Controller
     {
         $this->validate($request,[
             'nombre' => ['required'],
-            'abreviatura' => ['required'],
+            'abreviatura' => ['required','unique'],
             'responsable' => ['required'],
             'direccion' => ['required'],
             'descripcion' => ['required'],

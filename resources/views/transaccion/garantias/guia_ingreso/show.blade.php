@@ -26,7 +26,7 @@
                                 <div class="col-sm-10">
                                     <select class="form-control m-b" name="familia">
                                     @foreach($marcas as $marca)
-                                    <option value="{{$marca->id}}" >{{$marca->nombre_empresa}}</option>
+                                    <option value="{{$marca->id}}" >{{$marca->nombre}}</option>
                                     @endforeach
                                     </select>
                                 </div>
@@ -211,10 +211,10 @@
           <div class="row">
             <div class="col-sm-4">
                 <strong><p><u>Centro de Atencion : </strong></u></p>
-                <strong>Direccion:</strong> {{$empresa->calle}}<br>
-                <strong>Telefonos :</strong>  {{$empresa->telefono}} / {{Auth::user()->celular}} &nbsp;<br>
-                <strong>SOPORTE {{$garantia_guia_ingreso->marcas_i->nombre}}:</strong> {{$garantia_guia_ingreso->marcas_i->telefono}}<br>
-                <strong>Email:</strong> {{Auth::user()->email}}<br>
+                <strong>Direccion:</strong> {{$usuario->almacen->direccion}}<br>
+                <strong>Telefonos :</strong>  {{$empresa->telefono}} / {{$usuario->celular}} &nbsp;<br>
+                <strong>{{$garantia_guia_ingreso->marcas_i->nombre_empresa}}:</strong> {{$garantia_guia_ingreso->marcas_i->telefono}}<br>
+                <strong>Email:</strong> {{$usuario->email}}<br>
                 <strong>Web:</strong> {{$empresa->pagina_web}}<br>
             </div>
             <div class="col-sm-2"></div>

@@ -155,12 +155,12 @@
           <br>
           <div class="row">
             <div class="col-sm-4">
-                 <strong><p><u>Centro de Atencion : </strong></u></p>
-                <strong>Direccion:</strong> {{$mi_empresa->calle}}<br>
-                <strong>Telefonos:</strong>  {{$mi_empresa->telefono}} / {{Auth::user()->celular}} &nbsp;<br>
-                <strong>SOPORTE {{$garantia_guia_ingreso->marcas_i->nombre}}:</strong> {{$garantia_guia_ingreso->marcas_i->telefono}}<br>
-                <strong>Email:</strong> {{Auth::user()->email}}<br>
-                <strong>Web:</strong> {{$mi_empresa->pagina_web}}<br>
+                <strong><p><u>Centro de Atencion : </strong></u></p>
+                <strong>Direccion:</strong> {{$usuario->almacen->direccion}}<br>
+                <strong>Telefonos :</strong>  {{$empresa->telefono}} / {{$usuario->celular}} &nbsp;<br>
+                <strong>{{$garantia_guia_ingreso->marcas_i->nombre_empresa}}:</strong> {{$garantia_guia_ingreso->marcas_i->telefono}}<br>
+                <strong>Email:</strong> {{$usuario->email}}<br>
+                <strong>Web:</strong> {{$empresa->pagina_web}}<br>
             </div>
             <div class="col-sm-2"></div>
             <div class="col-sm-3"></div>

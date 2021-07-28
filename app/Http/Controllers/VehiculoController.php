@@ -39,6 +39,7 @@ class VehiculoController extends Controller
        $vehiculo->placa=$request->get('placa');
        $vehiculo->marca=$request->get('marca');
        $vehiculo->modelo=$request->get('modelo');
+       $vehiculo->certificado_inscripcion=$request->get('certificado_inscripcion');
        $vehiculo->año=$request->get('año');
        $vehiculo->estado_activo='0';
        $vehiculo->save();
@@ -87,6 +88,7 @@ class VehiculoController extends Controller
        $vehiculo->placa=$request->get('placa');
        $vehiculo->marca=$request->get('marca');
        $vehiculo->modelo=$request->get('modelo');
+       $vehiculo->certificado_inscripcion=$request->get('certificado_inscripcion');
        $vehiculo->año=$request->get('año');
        $vehiculo->estado_activo=$estado_numero;
        $vehiculo->save();

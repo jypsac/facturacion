@@ -16,7 +16,8 @@ class VehiculostableSeeder extends Seeder
 			'placa' => 'EX4M1',
             'marca' => 'Vehiculo  ',
             'modelo' => 'Modelo',
-			'año' => '2000',
+            'año' => '2000',
+			'certificado_inscripcion' => '00000000000',
             'estado_activo' => '0',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')

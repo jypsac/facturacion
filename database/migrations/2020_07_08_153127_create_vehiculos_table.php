@@ -19,6 +19,7 @@ class CreateVehiculosTable extends Migration
             $table->string('marca');
             $table->string('modelo');
             $table->string('año');
+            $table->string('certificado_inscripcion');
             $table->boolean('estado_activo');
             $table->timestamps();
         });

@@ -13,6 +13,7 @@ use App\Personal;
 use App\CreateMail;
 use App\Mailbox;
 use App\Pais;
+use App\User;
 use App\Producto;
 use Barryvdh\DomPDF\Facade as PDF;
 use DB;
@@ -183,7 +184,8 @@ class GarantiaGuiaIngresoController extends Controller
       $empresa=Empresa::first();
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
       $marcas=Marca::all();
-      return view('transaccion.garantias.guia_ingreso.show',compact('garantia_guia_ingreso','empresa','contacto','marcas'));
+      $usuario = User::where('personal_id',$garantia_guia_ingreso->personal_lab_id)->first();
+      return view('transaccion.garantias.guia_ingreso.show',compact('garantia_guia_ingreso','empresa','contacto','marcas','usuario'));
     }
 
     /**
@@ -289,7 +291,9 @@ class GarantiaGuiaIngresoController extends Controller
       $mi_empresa=Empresa::first();
       $contacto = Contacto::all();
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
-      return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa','contacto'));
+      $usuario = User::where('personal_id',$garantia_guia_ingreso->personal_lab_id)->first();
+      $empresa=Empresa::first();
+      return view('transaccion.garantias.guia_ingreso.show_print',compact('garantia_guia_ingreso','mi_empresa','contacto','usuario','empresa'));
     }
 
     public function pdf(Request $request,$id){
@@ -300,7 +304,9 @@ class GarantiaGuiaIngresoController extends Controller
         // $pdf=App::make('dompdf.wrapper');
         // $pdf=loadView('welcome').;
       $archivo=$request->get('archivo');
-      $pdf=PDF::loadView('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','mi_empresa','contacto'));
+      $usuario = User::where('personal_id',$garantia_guia_ingreso->personal_lab_id)->first();
+      $empresa=Empresa::first();
+      $pdf=PDF::loadView('transaccion.garantias.guia_ingreso.show_pdf',compact('garantia_guia_ingreso','mi_empresa','contacto','usuario','empresa'));
             // return $pdf->download();
       return $pdf->download('Guia Ingreso - '.$archivo.' .pdf');
 

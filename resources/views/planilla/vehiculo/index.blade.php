@@ -48,6 +48,10 @@
                                         <label class="col-sm-2 col-form-label">Año:</label>
                                         <div class="col-sm-4"><input type="text" class="form-control" required="" name="año" placeholder="2020"></div>
                                     </div>
+                                    <div class="form-group  row">
+                                        <label class="col-sm-3 col-form-label">Certificado de Inscripcion:</label>
+                                        <div class="col-sm-9"><input type="text" class="form-control" required="" name="certificado_inscripcion" ></div>
+                                    </div>
                                 </div>
                             </div>
 
@@ -95,6 +99,7 @@
                                     <th>Marca</th>
                                     <th>Modelo</th>
                                     <th>Año</th>
+                                    <th>Certificado</th>
                                     <th>Activo/desactivo</th>
                                     <th>Editar</th>
                                 </tr>
@@ -107,6 +112,7 @@
                                  <td>{{$vehiculos->marca}}</td>
                                  <td>{{$vehiculos->modelo}}</td>
                                  <td>{{$vehiculos->año}}</td>
+                                 <td>{{$vehiculos->certificado_inscripcion}}</td>
                                  <td>
                                     @if($vehiculos->estado_activo==0)Activo
                                     @elseif($vehiculos->estado_activo==1)Desactivado
@@ -152,6 +158,10 @@
 
                                                                         <label class="col-sm-2 col-form-label">Año:</label>
                                                                         <div class="col-sm-4"><input type="text" class="form-control" name="año" value="{{$vehiculos->año}}" placeholder="2020"></div>
+                                                                    </div>
+                                                                    <div class="form-group  row">
+                                                                        <label class="col-sm-3 col-form-label">Certificado de Inscripcion:</label>
+                                                                        <div class="col-sm-9"><input type="text" class="form-control" required="" value="{{$vehiculos->certificado_inscripcion}}" name="certificado_inscripcion" ></div>
                                                                     </div>
                                                                     <div class="form-group  row">
                                                                          <div class="col-sm-6" align="right">
