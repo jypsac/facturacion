@@ -126,7 +126,7 @@ $(document).ready(function(){
          {data : 'fecha'},
          {data : 'motivo'},
          {data : 'asunto'},
-         {data : 'cliente'},
+         {data : 'cliente',},
          {
             name: '',
             data: null,

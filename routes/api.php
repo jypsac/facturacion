@@ -43,8 +43,6 @@ Route::get('productos',function(){
         })
         ->addColumn('afectacion', function ($producto) {
             return $producto->tipo_afec_i_producto->informacion;
-        })->addColumn('afectacion', function ($producto) {
-            return $producto->tipo_afec_i_producto->informacion;
         })
         ->toJson();
 });

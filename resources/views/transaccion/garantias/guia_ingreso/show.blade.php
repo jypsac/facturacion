@@ -120,9 +120,9 @@
                 <br>
                 <div class="row" align="center" style="padding-bottom: 5px">
                     <div class="col-sm-6" align="center">
-                        <div class="form-control">
+                        <div class="form-control" style="height: 100%;">
                             <h3>Contacto Cliente</h3>
-                            <div align="left">
+                            <div align="left" style="height: 100%;">
                                 <strong>Señor(es):</strong> &nbsp;{{$garantia_guia_ingreso->clientes_i->nombre}}<br>
                                 <strong>{{$garantia_guia_ingreso->clientes_i->documento_identificacion}} :</strong> &nbsp;{{$garantia_guia_ingreso->clientes_i->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
                                 <strong>Fecha:</strong> &nbsp;{{$garantia_guia_ingreso->fecha}}<br>
@@ -139,10 +139,10 @@
                             </div>
                         </div>
                     </div>
-                    <div class="col-sm-6" align="center">
-                         <div class="form-control" >
+                    <div class="col-sm-6" align="center" style="height: 100%;">
+                         <div class="form-control" style="height: 100%;">
                              <h3>Condiciones Generales</h3>
-                             <div align="left">
+                             <div align="left" style="height: 100%;">
                                 <strong>Ing. Asignado:</strong>&nbsp;{{$garantia_guia_ingreso->personal_laborales->nombres}} {{$garantia_guia_ingreso->personal_laborales->apellidos}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                                 <strong>Motivo:</strong>&nbsp;{{$garantia_guia_ingreso->motivo}}<br>
                                 <strong>Marca :</strong>&nbsp;{{$garantia_guia_ingreso->marcas_i->nombre}} &nbsp;<br>

@@ -117,7 +117,11 @@ class GarantiaGuiaIngresoController extends Controller
         $contacto_id = null;
       }else{
         $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
-        $contacto_id = $contacto_nombre->id;
+        if(!isset($contacto_nombre)){
+          $contacto_id = null;
+        }else{
+           $contacto_id = $contacto_nombre->id;
+        }
       }
         // $cliente=$request->get('cliente_id');
         // $cliente_id_nombre=Cliente::where("nombre","=",$cliente)->first();
