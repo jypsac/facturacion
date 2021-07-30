@@ -42,9 +42,9 @@
                           <td>{{$contacto->cargo}}</td>
                           <td class="contact-type"><i class="fa fa-envelope"> </i></td>
                           <td> {{$contacto->email}}</td>
-                          <td class="contact-type"><i class="fa fa-phone"> </i></td>
+                          <td class="contact-type"><img src="{{asset('img/icons/telefono.svg')}}" width="18px"> </td>
                           <td>{{$contacto->telefono}} </td>
-                          <td class="contact-type"><i class="fa fa-phone"> </i></td>
+                          <td class="contact-type"><img src="{{asset('img/icons/celular.svg')}}" width="18px"></td>
                           <td>{{$contacto->celular}}</td>
                           @if($contacto->estado==0)
                           <td class="client-status"><span class="label label-primary">Activo</span></td>
@@ -72,7 +72,7 @@
                                           <p><input class="form-control " type="text" value="{{$contacto->cargo}}" name="cargo" >
                                           </div>
                                           <div class="col-lg-6">
-                                            <h4>Telefono/Celular:</h4>
+                                            <h4 class="row"><div class="col-sm-6">Telefono:</div><div class="">Celular:</div></h4 >
                                             <div class="row" style="padding-left: 15px">
                                               <input class="form-control col-sm-5" name="telefono" type="text" placeholder="Telefono" value="{{$contacto->telefono}}"> &nbsp; -  &nbsp;<input class="form-control col-sm-5" name="celular" type="text" placeholder="Celular" value="{{$contacto->celular}}" >
                                             </div>

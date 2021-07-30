@@ -6,6 +6,8 @@ use App\GarantiaGuiaEgreso;
 use App\GarantiaInformeTecnico;
 use App\Producto;
 use App\Categoria;
+// use DB;
+// use DataTables;
 Use App\Cliente;
 
 use App\Providers\RouteServiceProvider;
@@ -27,23 +29,25 @@ use App\Providers\RouteServiceProvider;
 // PRODUCTOS
 Auth::routes();
 Route::get('productos',function(){
-    $producto = Producto::query();
-    return Datatables($producto)
-        ->addColumn('categoria', function ($producto) {
-            return $producto->categoria_i_producto->descripcion;
-        })
-        ->addColumn('familia', function ($producto) {
-            return $producto->familia_i_producto->descripcion;
-        })
-        ->addColumn('marca', function ($producto) {
-            return $producto->marcas_i_producto->nombre;
-        })
-        ->addColumn('estado', function ($producto) {
-            return $producto->estado_i_producto->nombre;
-        })
-        ->addColumn('afectacion', function ($producto) {
-            return $producto->tipo_afec_i_producto->informacion;
-        })
+    $producto = DB::table('productos')->join('marcas', 'productos.marca_id', '=', 'marcas.id')->join('familias', 'productos.familia_id', '=', 'familias.id')->join('estado', 'productos.estado_id', '=', 'estado.id')->join('tipo_afectacion', 'productos.tipo_afectacion_id', '=', 'tipo_afectacion.id')->get();
+    // ->join('drawings', 'drawings.customer_id', '=', 'customers.id')
+    return DataTables::of($producto)
+    // return datatables::of($producto)
+        // ->addColumn('categoria', function ($producto) {
+        //     return $producto->categoria_i_producto->descripcion;
+        // })
+        // ->addColumn('familia', function ($producto) {
+        //     return $producto->familia_i_producto->descripcion;
+        // })
+        // ->addColumn('marca', function ($producto) {
+        //     return $producto->marcas_i_producto->nombre;
+        // })
+        // ->addColumn('estado', function ($producto) {
+        //     return $producto->estado_i_producto->nombre;
+        // })
+        // ->addColumn('afectacion', function ($producto) {
+        //     return $producto->tipo_afec_i_producto->informacion;
+        // })
         ->toJson();
 });
 // GARANTIA GUIA INGRESO

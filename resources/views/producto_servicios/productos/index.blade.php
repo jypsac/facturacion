@@ -92,10 +92,10 @@ $(document).ready(function(){
             {data : 'codigo_producto'},
             {data : 'codigo_original'},
             {data : 'nombre'},
-            {data : 'familia'},
-            {data : 'marca'},
-            {data : 'estado'},
-            {data : 'afectacion'},
+            {data : 'familia.id'},
+            {data : 'nombre_empresa'},
+            {data : 'nombre'},
+            {data : 'informacion'},
             {
                 name: '',
                 data: null,
@@ -114,7 +114,7 @@ $(document).ready(function(){
                 searchable: false,
                 render: function (data) {
                     var actions = '';
-                    actions += '<a href="{{ route('productos.show',':id') }}" target="_blank"><span class="btn btn-success" >VER</span></a>';
+                    actions += '<a href="{{ route('productos.show',':id') }}" target="_blank"><span class="btn btn-success" ><img src="{{asset('img/icons/ver.svg')}}" width="20px" ></span></a>';
                     return actions.replace(/:id/g, data.id);
                 }
             },

@@ -15,7 +15,7 @@ class Producto extends Model
 */
 
     public function marcas_i_producto(){
-        return $this->belongsTo(Marca::class,'marca_id','id');
+        return $this->belongsTo(Marca::class,'marca_id');
     }  
     public function categoria_i_producto(){
         return $this->belongsTo(Categoria::class,'categoria_id');
