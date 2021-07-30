@@ -15,8 +15,8 @@ class ProductosTableSeeder extends Seeder
         //  factory(Producto::class, 1000)->create();
     	DB::table('productos')->insert([
             'id' => 1,
-            'codigo_producto' => 'EX-000000',
-            'codigo_original' => 'EXAMPLE-00',
+            'codigo_producto' => 'EP-000001',
+            'codigo_original' => 'EP-000001',
             'nombre' =>'Producto' ,
             'utilidad' => '100',
             'descuento1' => "0",
@@ -58,8 +58,8 @@ class ProductosTableSeeder extends Seeder
         ]);
         DB::table('productos')->insert([
             'id' => 2,
-            'codigo_producto' => 'EX-000001',
-            'codigo_original' => 'EX11AMPLE-00',
+            'codigo_producto' => 'EP-000002',
+            'codigo_original' => 'EP-000002',
             'nombre' =>'Lapiz' ,
             'utilidad' => '100',
             'descuento1' => "0",

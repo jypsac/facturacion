@@ -84,17 +84,17 @@
                                           <div class="col-lg-6">
                                             <h4>Estado</h4>
                                             @if($contacto_cantidad_estado==1)
-                                            @if($contacto->estado==0)
-                                            <select name="estado" id="" class="form-control" disabled="">
-                                              <option value="0"> Activo</option>
-                                              <option value="1"> Desactivo</option>
-                                            </select>
-                                            @elseif($contacto->estado==1)
-                                            <select name="estado" id="" class="form-control" >
-                                              <option value="1"> Desactivo</option>
-                                              <option value="0"> Activo</option>
-                                            </select>
-                                            @endif
+                                              @if($contacto->estado==0)
+                                              <select name="estado" id="" class="form-control" readonly="">
+                                                <option value="0"> Activo</option>
+                                                <option value="1"> Desactivo</option>
+                                              </select>
+                                              @elseif($contacto->estado==1)
+                                              <select name="estado" id="" class="form-control" >
+                                                <option value="1"> Desactivo</option>
+                                                <option value="0"> Activo</option>
+                                              </select>
+                                              @endif
                                             @else
                                             <select name="estado" id="" class="form-control" >
                                               @if($contacto->estado==0)
