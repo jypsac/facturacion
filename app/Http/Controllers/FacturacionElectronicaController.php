@@ -6,8 +6,9 @@ use App\Config_fe;
 use App\Facturacion;
 use App\Facturacion_registro;
 use App\Boleta;
-use App\Boleta_registro;
+use App\Boleta_registro; 
 use App\Guia_remision;
+
 use DateTime;
 
 use Greenter\Model\Client\Client;
@@ -17,6 +18,7 @@ use Greenter\Model\Sale\FormaPagos\FormaPagoContado;
 use Greenter\Model\Sale\Invoice;
 use Greenter\Model\Sale\SaleDetail;
 use Greenter\Model\Sale\Legend;
+
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -43,8 +45,8 @@ class FacturacionElectronicaController extends Controller
 
     public function index_guia_remision(){
 
-        $guia_remisiones=Guia_remision::where('b_electronica',0)->get();
-        return view('facturacion_electronica.boleta.index',compact('boletas'));
+        $guia_remisiones=Guia_remision::where('g_electronica',0)->get();
+        return view('facturacion_electronica.guia_remision.index',compact('guia_remisiones'));
     }
 
     /**
@@ -54,26 +56,28 @@ class FacturacionElectronicaController extends Controller
      */
     public function factura(Request $request)
     {
+        
         //facturas a buscar
         $factura=Facturacion::where('f_electronica',0)->where('id',$request->factura_id)->first();
         $factura_registro=Facturacion_registro::where('facturacion_id',$request->factura_id)->get();
         
-
         //configuracion de conexion
         $see=Config_fe::facturacion_electronica();
 
-
-        //factura
-        $invoice=Config_fe::factura($factura, $factura_registro);
+        if($factura->tipo=="producto"){
+            //factura
+            $invoice=Config_fe::factura($factura, $factura_registro);
+        }elseif($factura->tipo=="servicio"){
+            //factura
+            $invoice=Config_fe::factura_servicio($factura, $factura_registro);
+        }
         
-
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
 
         //lectura CDR
         $msg=Config_fe::lectura_cdr($result->getCdrResponse());
 
-        
         //cambio de factura electronica - en caso sea todo exitoso
         $factura->f_electronica=1;
         $factura->save();
@@ -81,21 +85,20 @@ class FacturacionElectronicaController extends Controller
         return $msg;
     }
 
+    
+
     public function boleta(Request $request)
     {
         //boletas a buscar
         $boleta=Boleta::where('b_electronica',0)->where('id',$request->factura_id)->first();
         $boleta_registro=Boleta_registro::where('boleta_id',$request->factura_id)->get();
         
-        
         //configuracion
         $see=Config_fe::facturacion_electronica();
-
 
         //boleta
         $invoice=Config_fe::boleta($boleta, $boleta_registro);
         
-
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
 
@@ -109,21 +112,23 @@ class FacturacionElectronicaController extends Controller
         return $msg;
     }
 
-    public function guia_remision()
+
+
+    public function guia_remision(Request $request)
     {   
+        $guia=Guia_remision::where('g_electronica',0)->where('id',$request->id)->first();
+
         //configuracion
-        $see=Config_fe::facturacion_electronica();
+        $see=Config_fe::guia_electronica();
 
         //boleta
         $invoice=Config_fe::guia_remision();
         
-
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
 
         //lectura CDR
         $msg=Config_fe::lectura_cdr($result->getCdrResponse());
-
 
         return $msg;
     }

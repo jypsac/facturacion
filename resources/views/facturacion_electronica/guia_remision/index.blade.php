@@ -38,33 +38,23 @@
                                     <tr>
                                         <th>ID</th>
                                         <th>Codigo de Guia</th>
-                                        <th>Cliente</th>
-                                        <th>Ruc/DNI</th>
-                                        <th>Fecha Vencimiento</th>
+                                        <th>Fecha emision</th>
+                                        <th>Fecha entrega</th>
                                         <th>Enviar A Sunat</th>
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    @foreach($facturacion as $facturaciones)
+                                    @foreach($guia_remisiones as $guia_remision)
                                     <tr class="gradeX">
-                                        <td>{{$facturaciones->id}}</td>
-                                        <td>{{$facturaciones->codigo_fac}}</td>
-                                        @if(isset($facturaciones->cliente_id)) <!-- Nombre del cliente -->
-                                        <td>{{$facturaciones->cliente->nombre}}</td>
-                                        @else
-                                        <td>{{$facturaciones->cotizacion->cliente->nombre}}</td>
-                                        @endif
-                                        @if(isset($facturaciones->cliente_id))<!-- documento del cliente -->
-                                        <td>{{$facturaciones->cliente->numero_documento}}</td>
-                                        @else
-                                        <td>{{$facturaciones->cotizacion->cliente->numero_documento}}</td>
-                                        @endif
-                                        <td>{{$facturaciones->fecha_vencimiento }}</td>
+                                        <td>{{$guia_remision->id}}</td>
+                                        <td>{{$guia_remision->cod_guia}}</td>
+                                        <td>{{$guia_remision->fecha_emision}}</td>
+                                        <td>{{$guia_remision->fecha_entrega}}</td>
                                         <td>
                                             <center>
-                                                <form action="{{route('facturacion_electronica.factura_sunat')}}" method="POST">
+                                                <form action="{{route('facturacion_electronica.guia_remision_sunat')}}" method="POST">
                                                     @csrf
-                                                        <input type="hidden" name="factura_id" value="{{$facturaciones->id}}">
+                                                        <input type="hidden" name="factura_id" value="{{$guia_remision->id}}">
                                                         <button type="submit" class="btn btn-w-m btn-primary">Enviar</button>
                                                 </form>
                                             </center>

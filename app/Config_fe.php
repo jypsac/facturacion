@@ -42,6 +42,14 @@ class Config_fe extends Model
     public static function facturacion_electronica(){
         $see = new See();
         $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
+        $see->setService(SunatEndpoints::FE_BETA);
+        $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
+        return $see;
+    }
+
+    public static function guia_electronica(){
+        $see = new See();
+        $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
         $see->setService(SunatEndpoints::GUIA_BETA);
         $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
         return $see;
@@ -157,12 +165,13 @@ class Config_fe extends Model
         }else{
             // Venta - credito
             $cuotas=Cuotas_Credito::where('facturacion_id',$factura->id)->get();
-            // foreach ($cuotas as $key => $cuota) {
-            //     # code...
-            //     $cuotas_credito[$key]=(new Cuota())
-            //     ->setMonto($cuota->monto)
-            //     ->setFechaPago(new DateTime('+7days'));
-            // }
+
+            foreach ($cuotas as $key => $cuota) {
+                # code...
+                $cuotas_credito[$key]=(new Cuota())
+                ->setMonto($cuota->monto)
+                ->setFechaPago(new DateTime('+7days'));
+            }
 
             $invoice = (new Invoice())
             ->setUblVersion('2.1')
@@ -172,12 +181,9 @@ class Config_fe extends Model
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
             ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
-            ->setCuotas([
-                // $cuotas_credito
-                (new Cuota()) //->                   meterlo en un foreach exlusivo de array
-                ->setMonto(236)
-                ->setFechaPago(new DateTime('+7days'))
-            ])
+            ->setCuotas(
+                $cuotas_credito
+            )
             ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
             ->setCompany($company)
             ->setClient($client)
@@ -208,8 +214,8 @@ class Config_fe extends Model
         }
     }
     
-    public static function factura_servicio(){
-        // return $facturas_registros;
+    public static function factura_servicio($factura,$facturas_registros){
+        
         $empresa=Empresa::first();
         $igv=Igv::first();
         // Cliente
@@ -242,11 +248,11 @@ class Config_fe extends Model
 
         foreach($facturas_registros as $cont => $factura_registro){
             $item[$cont] = (new SaleDetail())
-            ->setCodProducto($factura_registro->producto->codigo_producto)//codigo del producto
-            ->setUnidad('NIU') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
+            ->setCodProducto($factura_registro->servicio->codigo_servicio)//codigo del producto
+            ->setUnidad('ZZ') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
             ->setCantidad($factura_registro->cantidad)
             ->setMtoValorUnitario($factura_registro->precio)
-            ->setDescripcion($factura_registro->producto->nombre)
+            ->setDescripcion($factura_registro->servicio->nombre)
             ->setMtoBaseIgv($factura_registro->precio*$factura_registro->cantidad)
             ->setPorcentajeIgv($igv->igv_total) // 18%
             ->setIgv($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100))
@@ -315,12 +321,13 @@ class Config_fe extends Model
         }else{
             // Venta - credito
             $cuotas=Cuotas_Credito::where('facturacion_id',$factura->id)->get();
-            // foreach ($cuotas as $key => $cuota) {
-            //     # code...
-            //     $cuotas_credito[$key]=(new Cuota())
-            //     ->setMonto($cuota->monto)
-            //     ->setFechaPago(new DateTime('+7days'));
-            // }
+
+            foreach ($cuotas as $key => $cuota) {
+                # code...
+                $cuotas_credito[$key]=(new Cuota())
+                ->setMonto($cuota->monto)
+                ->setFechaPago(new DateTime('+7days'));
+            }
 
             $invoice = (new Invoice())
             ->setUblVersion('2.1')
@@ -330,12 +337,9 @@ class Config_fe extends Model
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
             ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
-            ->setCuotas([
-                // $cuotas_credito
-                (new Cuota()) //->                   meterlo en un foreach exlusivo de array
-                ->setMonto(236)
-                ->setFechaPago(new DateTime('+7days'))
-            ])
+            ->setCuotas(
+                $cuotas_credito
+            )
             ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
             ->setCompany($company)
             ->setClient($client)
@@ -364,6 +368,7 @@ class Config_fe extends Model
             
             return $invoice;
         }
+        
     }
 
     
@@ -489,7 +494,6 @@ class Config_fe extends Model
                 ->setMonto(59)
                 ->setFechaPago(new DateTime('+7days'))
             ])
-            
             ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
             ->setCompany($company)
             ->setClient($client)
