@@ -11,6 +11,8 @@
 	@section('href_accion', '#')
 	@section('value_accion', '#')
 @endif
+@section('button2', 'Inicio')
+@section('config',route('Configuracion'))
 
 @section('content')
  <div class="wrapper wrapper-content animated fadeInRight">

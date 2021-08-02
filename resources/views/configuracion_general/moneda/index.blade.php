@@ -9,6 +9,8 @@
 @section('href_accion', '#exampleModal')
 @section('value_accion', 'Agregar')
 @endif
+@section('button2', 'Inicio')
+@section('config',route('Configuracion'))
 
 @section('content')
 
