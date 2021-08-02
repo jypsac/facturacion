@@ -4,7 +4,7 @@
 // });
 
 Route::group(
-	[ 'middleware' => ['auth','cambio_diario']],
+	[ 'middleware' => ['auth','api','cambio_diario']],
 	function(){
 
 		// Route::view('/' , 'home')->name('inicio');
@@ -273,7 +273,7 @@ Route::group(
 		//Ajax
 		// Route::get('/inventario.kardex.entrada.create', 'KardexEntradaController@index');
 		// Route::post('/inventario.kardex.entrada.create/fetcha', 'KardexEntradaController@fetcha')->name('autocomplete.fetcha');
-
+		// Route::post('/api','api.php');
 	});
 Auth::routes();
 Route::post('sunat_cambio','TipoCambioController@sunat_cambio');

@@ -38,7 +38,7 @@
                                         <tr>
                                             <th>ID</th>
                                             <th>Marca</th>
-                                            <th>Estado</th>
+                                            {{-- <th>Estado</th> --}}
                                             <th>Motivo</th>
                                             <th>Ing Asignado</th>
                                             <th>fecha</th>
@@ -111,18 +111,19 @@
     <script>    
 $(document).ready(function(){
     $('#table_egreso').DataTable({
+        "order": [[ 1, "desc" ]],
         "serverSide":true,
         "ajax":"{{url('api/garantia_ingreso')}}",
         "columns":[
-            {data : 'id'},
-            {data : 'marcas'},
-            {data : 'estado'},
+            {data : 'gar_ing_id'},
+            {data : 'nombre_marca'},
+            // {data : 'estado'},
             {data : 'motivo'},
-            {data : 'personal'},
+            {data : 'personal_as'},
             {data : 'fecha'},
             {data : 'orden_servicio'},
             {data : 'asunto'},
-            {data : 'cliente'},
+            {data : 'cliente_nom',},
             {
                 name: '',
                 data: null,
@@ -132,15 +133,15 @@ $(document).ready(function(){
                     if(data.estado == 1  && data.egresado == 0 ){
                         var actions = '';
                         actions += '<center><a href="{{ route('garantia_guia_egreso.edit', ':id') }}"><button type="button" class="btn btn-w-m btn-info">Egresar</button></a></center>';
-                        return actions.replace(/:id/g, data.id);
+                        return actions.replace(/:id/g, data.gar_ing_id);
                     }else if(data.estado == 0 && data.egresado == 1){
                         var actions = '';
                         actions += '<center><button class="btn btn-w-m btn-secondary">Procesado</button></center>';
-                        return actions.replace(/:id/g, data.id);
+                        return actions.replace(/:id/g, data.gar_ing_id);
                     }else{
                         var actions = '';
                         actions += '<center><button class="btn btn-w-m btn-warning">ANULADO</button><center>';
-                        return actions.replace(/:id/g, data.id);
+                        return actions.replace(/:id/g, data.gar_ing_id);
                     }
                 }
              }

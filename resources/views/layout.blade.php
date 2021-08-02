@@ -115,7 +115,7 @@
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Documento Identificacion *</label>
-                                            <select class="form-control m-b" name="documento_identificacion" >
+                                            <select class="form-control m-b" name="documento_identificacion" onchange="seleccionado()" id="cliente_doc" >
                                                 <option value="RUC">RUC</option>
                                                 <option value="DNI">DNI</option>
                                                 <option value="pasaporte">Pasaporte</option>
@@ -697,4 +697,19 @@ use App\Personal;
         });
     });
 </script>
-    </html>
+<script >
+    function seleccionado(){
+        var opt = $('#cliente_doc').val();
+            if(opt=="DNI" || opt == "pasaporte"){
+                // $('#consulta_p_input').prop('disabled', false);
+                 $('#botoncito_cliente').prop('disabled', true);
+                // $('#consulta_s').hide();
+            }else{
+                // $('#consulta_p_input').prop('disabled', 'disabled');
+                // document.getElementById('credito_pago').style.visibility = "initial";
+                $('#botoncito_cliente').prop('disabled', false);
+                // $('#consulta_s').show();
+            }
+    }
+</script>
+</html>

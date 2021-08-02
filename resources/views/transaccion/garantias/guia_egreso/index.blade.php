@@ -103,18 +103,19 @@
 <script>    
 $(document).ready(function(){
     $('#table_egreso').DataTable({
+        "order": [[ 1, "desc" ]],
         "serverSide":true,
         "ajax":"{{url('api/garantia_egreso')}}",
         "columns":[
-            {data : 'id'},
-            {data : 'marcas'},
+            {data : 'egreso_id'},
+            {data : 'nombre_marca'},
             {data : 'estado'},
             {data : 'motivo'},
-            {data : 'personal'},
+            {data : 'personal_as'},
             {data : 'fecha'},
             {data : 'orden_servicio'},
             {data : 'asunto'},
-            {data : 'clientes'},
+            {data : 'cliente_nom'},
             {
                 name: '',
                 data: null,
@@ -123,7 +124,7 @@ $(document).ready(function(){
                 render: function (data) {
                     var actions = '';
                     actions += '<center><a href="{{ route('garantia_guia_egreso.show', ':id') }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>';
-                    return actions.replace(/:id/g, data.id);
+                    return actions.replace(/:id/g, data.egreso_id);
                 }
              }
         ]
