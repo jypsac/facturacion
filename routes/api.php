@@ -37,7 +37,6 @@ Route::get('productos',function(){
         ->join('estado', 'productos.estado_id', '=', 'estado.id')->get();
     // ->join('drawings', 'drawings.customer_id', '=', 'customers.id')
     return DataTables($producto)
-    // return datatables::of($producto)
         // ->addColumn('categoria', function ($producto) {
         //     return $producto->categoria_i_producto->descripcion;
         // })
