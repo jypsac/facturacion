@@ -6,11 +6,17 @@ use App\Carbon;
 function tiempo($actual){
     date_default_timezone_set("America/Lima");
 
-    $creado = $actual;
+    if(is_string($actual) ){
+      $new_date = date('Y-m-d', strtotime($actual));
+      $new_actual = DateTime::createFromFormat("Y-m-d", $new_date);
+    }else{
+      $new_actual = $actual;
+    }
+    $creado = $new_actual;
     $creado=$creado->format('Y-m-d');
 
 
-    $dia_proximo = $actual;
+    $dia_proximo = $new_actual;
     $dia_proximo->modify('+2 day');
     $dia_proximo=$dia_proximo->format('Y-m-d');
 

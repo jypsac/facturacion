@@ -5,6 +5,8 @@
 @section('breadcrumb2', 'Usuario')
 @section('href_accion', route('usuario.lista'))
 @section('value_accion', 'Agregar')
+@section('button2', 'Inicio')
+@section('config',route('Configuracion'))
 
 @section('content')
 

@@ -105,18 +105,19 @@
         <script>    
 $(document).ready(function(){
     $('#table_informe_tec').DataTable({
+        "order": [[ 1, "desc" ]],
         "serverSide":true,
         "ajax":"{{url('api/informe_tecnico')}}",
         "columns":[
-            {data : 'id'},
-            {data : 'marcas'},
+            {data : 'inf_tec_id'},
+            {data : 'nombre_marca'},
             {data : 'estado'},
             {data : 'motivo'},
-            {data : 'personal'},
+            {data : 'personal_as'},
             {data : 'fecha'},
             {data : 'orden_servicio'},
             {data : 'asunto'},
-            {data : 'clientes'},
+            {data : 'cliente_nom'},
             {
                 name: '',
                 data: null,
@@ -125,7 +126,7 @@ $(document).ready(function(){
                 render: function (data) {
                     var actions = '';
                     actions += '<center><a href="{{ route('garantia_informe_tecnico.show', ':id') }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>';
-                    return actions.replace(/:id/g, data.id);
+                    return actions.replace(/:id/g, data.inf_tec_id);
                 }
             },
             {
@@ -136,7 +137,7 @@ $(document).ready(function(){
                 render: function (data) {
                     var actions = '';
                     actions += '<center><a href="{{ route('garantia_informe_tecnico.actualizar', ':id') }}"><button type="button" class="btn btn-w-m btn-primary">EDITAR</button></a></center>';
-                    return actions.replace(/:id/g, data.id);
+                    return actions.replace(/:id/g, data.inf_tec_id);
                 }
             }
         ]

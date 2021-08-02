@@ -364,7 +364,14 @@ class KardexEntradaController extends Controller
         foreach ($bucador_registro_kardex as $registro => $ids) {
           kardex_entrada_registro::whereIn('id', [$ids->id])->update(['estado' => 'ANULADO']);
           Stock_almacen::egreso($Kardex_entrada->almacen_id,$ids->producto_id,$ids->cantidad);
+          $stock_productos=Stock_producto::where('producto_id',$ids->producto_id)->first();
+          $stock_productos->stock=$stock_productos->stock-$ids->cantidad;
+          $stock_productos->save();
         }
+
+
+
+
       $Kardex_entrada->estado='ANULADO';
       $Kardex_entrada->save();
 

@@ -43,6 +43,17 @@
             {{ session('repite') }}
         </div>
     @endif
+    @if($errors->any())
+    <div style="padding-top: 20px;">
+        <div class="alert alert-danger">
+            <a class="alert-link" href="#">
+                @foreach ($errors->all() as $error)
+                <li style="color: red">{{ $error }}</li>
+                @endforeach
+            </a>
+        </div>
+    </div>
+    @endif
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
@@ -117,16 +128,17 @@
 <script >
 $(document).ready(function(){
     $('#table_productos').DataTable({
+        "order": [[ 1, "desc" ]],
         "serverSide":true,
         "ajax":"{{url('api/garantia_ingreso')}}",
         "columns":[
-         {data : 'id'},
+         {data : 'gar_ing_id'},
          {data : 'orden_servicio'},
-         {data : 'marcas'},
+         {data : 'nombre_marca'},
          {data : 'fecha'},
          {data : 'motivo'},
          {data : 'asunto'},
-         {data : 'cliente',},
+         {data : 'cliente_nom',},
          {
             name: '',
             data: null,
@@ -135,7 +147,7 @@ $(document).ready(function(){
             render: function (data) {
                 var actions = '';
                 actions += '<center><a href="{{ route('garantia_guia_ingreso.show', ':id') }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>';
-                return actions.replace(/:id/g, data.id);
+                return actions.replace(/:id/g, data.gar_ing_id);
             }
          },
          {
@@ -145,10 +157,10 @@ $(document).ready(function(){
             sortable: false,
             searchable: false,
             render: function (data) {
-                if(data.tiempo == 1){
-                    if(data.estado == 1 && data.egresado == 0){
-                        var actions = '';
-                        actions += '<center><a data-toggle="modal" class="btn btn-warning" href="#modal-form:id">Anular</a></center>'+
+                if( data.tiempo == 1){
+                    if(data.estado_ga_ing == 1 && data.egresado == 0){
+                        var actions1 = '';
+                        actions1 += '<center><a data-toggle="modal" class="btn btn-warning" href="#modal-form:id">Anular</a></center>'+
                         '<div id="modal-form:id" class="modal fade" aria-hidden="true">'+
                             '<div class="modal-dialog">'+
                                 '<div class="modal-content">'+
@@ -166,23 +178,23 @@ $(document).ready(function(){
                                 '</div>'+
                             '</div>'+
                         '</div>';
-                        return actions.replace(/:id/g, data.id);
-                    }else if(data.estado == 0 && data.egresado == 1){
+                        return actions1.replace(/:id/g, data.gar_ing_id);
+                    }else if(data.estado_ga_ing == 0 && data.egresado == 1){
                         var actions2 = '';
                         data: 'id';
                         actions2 += '<center><button class="btn btn-w-m btn-info">PROCESADO</button></center>';
-                         return actions2.replace(/:id/g, data.id);
+                         return actions2.replace(/:id/g, data.gar_ing_id);
                     }else{
                         var actions2 = '';
                         data: 'id';
                         actions2 += '<center><button class="btn btn-w-m btn-secondary">ANULADO</button></center>';
-                         return actions2.replace(/:id/g, data.id);
+                         return actions2.replace(/:id/g, data.gar_ing_id);
                     }
                 }else{
                     var actions2 = '';
                     data: 'id';
                     actions2 += '<center><button class="btn btn-w-m btn-info">FUERA DE FUNCION</button></center>';
-                     return actions2.replace(/:id/g, data.id);
+                     return actions2.replace(/:id/g, data.gar_ing_id);
                 }
             }
          },

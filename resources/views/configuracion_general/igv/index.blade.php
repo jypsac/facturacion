@@ -2,6 +2,8 @@
 @section('title', 'Configuracion del IGV')
 @section('breadcrumb', 'IGV')
 @section('breadcrumb2', 'IGV')
+@section('button2', 'Inicio')
+@section('config',route('Configuracion'))
 
 
 @section('content')

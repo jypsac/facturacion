@@ -9,6 +9,8 @@
 @section('href_accion', route('tipo_cambio.create'))
 @section('value_accion', 'Agregar Cambio Diario')
 @endif
+@section('button2', 'Inicio')
+@section('config',route('Configuracion'))
 
 @section('content')
 

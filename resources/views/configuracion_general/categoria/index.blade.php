@@ -7,6 +7,8 @@
 @section('href_accion', '#exampleModal')
 @section('value_accion', 'Agregar')
 @section('content')
+@section('button2', 'Inicio')
+@section('config',route('Configuracion'))
 
 <!-- Modal Create  -->
 

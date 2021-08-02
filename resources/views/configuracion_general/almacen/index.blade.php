@@ -1,24 +1,27 @@
-    @extends('layout')
+@extends('layout')
 
-    @section('title', 'Almacen')
-    @section('breadcrumb', 'Almacen')
-    @section('breadcrumb2', 'Almacen')
-    @section('data-toggle', 'modal')
-    @section('href_accion', '#exampleModal')
-    @section('value_accion', 'Agregar')
+@section('title', 'Almacen')
+@section('breadcrumb', 'Almacen')
+@section('breadcrumb2', 'Almacen')
+@section('data-toggle', 'modal')
+@section('href_accion', '#exampleModal')
+@section('value_accion', 'Agregar')
 
-    @section('content')
+@section('button2', 'Inicio')
+@section('config',route('Configuracion'))
 
-    <!-- Modal Create  -->
-    @if($errors->any())
-    <div style="padding-top: 10px">
-      <div class="alert alert-danger">
-        <a class="alert-link" href="#">
-          @foreach ($errors->all() as $error)
-          <li style="color: red">{{ $error }}</li>
-          @endforeach
-      </a>
-  </div>
+@section('content')
+
+<!-- Modal Create  -->
+@if($errors->any())
+<div style="padding-top: 10px">
+  <div class="alert alert-danger">
+    <a class="alert-link" href="#">
+      @foreach ($errors->all() as $error)
+      <li style="color: red">{{ $error }}</li>
+      @endforeach
+  </a>
+</div>
 </div>
 @endif
 @if (session('campo'))
