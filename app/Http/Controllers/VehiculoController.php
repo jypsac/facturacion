@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\TransportePublico;
 use App\Vehiculo;
 use Illuminate\Http\Request;
 
@@ -14,7 +15,8 @@ class VehiculoController extends Controller
     public function index()
     {
         $vehiculo=Vehiculo::all();
-        return view('planilla.vehiculo.index',compact('vehiculo'));
+        $transporte_publico=TransportePublico::all();
+        return view('planilla.vehiculo.index',compact('vehiculo','transporte_publico'));
     }
 
     /**
