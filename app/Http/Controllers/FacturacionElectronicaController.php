@@ -8,7 +8,7 @@ use App\Facturacion_registro;
 use App\Boleta;
 use App\Boleta_registro; 
 use App\Guia_remision;
-
+use App\g_remision_registro;
 use DateTime;
 
 use Greenter\Model\Client\Client;
@@ -116,19 +116,25 @@ class FacturacionElectronicaController extends Controller
 
     public function guia_remision(Request $request)
     {   
-        $guia=Guia_remision::where('g_electronica',0)->where('id',$request->id)->first();
+        $guia=Guia_remision::where('g_electronica',0)->where('id',$request->factura_id)->first();
+        $guias_registros=g_remision_registro::where('guia_remision_id',$request->factura_id)->get();
 
+        // return $request;
         //configuracion
         $see=Config_fe::guia_electronica();
 
         //boleta
-        $invoice=Config_fe::guia_remision();
+        $invoice=Config_fe::guia_remision($guia,$guias_registros);
         
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
 
         //lectura CDR
         $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+
+        //cambio de guia electronica - en caso sea exitodo
+        $guia->g_electronica=1;
+        $guia->save();
 
         return $msg;
     }

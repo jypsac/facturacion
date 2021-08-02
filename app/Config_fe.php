@@ -27,6 +27,8 @@ use Luecano\NumeroALetras\NumeroALetras;
 use App\Empresa;
 use App\Igv;
 use App\Cuotas_Credito;
+use App\Guia_remision;
+
 
 // DATOS DE PRUEBA
 // RUC: 20000000001
@@ -523,8 +525,9 @@ class Config_fe extends Model
     }
 
     //llenado guia de remision
-    public static function guia_remision(){
+    public static function guia_remision($guia, $guias_registros){
 
+        
         //$util = Util::getInstance();
         $empresa=Empresa::first();
 
@@ -546,15 +549,15 @@ class Config_fe extends Model
 
         $rel = new Document();
         $rel->setTipoDoc('02') // Tipo: Numero de Orden de Entrega
-        ->setNroDoc('213123');
+        ->setNroDoc('213123'); //Buscar ayuda sobre ello
 
         $transp = new Transportist();
         $transp->setTipoDoc('6')
-            ->setNumDoc('20000000002')
-            ->setRznSocial('TRANSPORTES S.A.C')
-            ->setPlaca('ABI-453')
-            ->setChoferTipoDoc('1')
-            ->setChoferDoc('40003344');
+            ->setNumDoc('20000000002')          //falta documentacion del conductor
+            ->setRznSocial('TRANSPORTES S.A.C') //nombre de la conduccion
+            ->setPlaca($guia->vehiculo->placa)   
+            ->setChoferTipoDoc('1')             //ayuda
+            ->setChoferDoc('40003344');         //doc chofer
 
         $envio = new Shipment();
         $envio
@@ -565,38 +568,42 @@ class Config_fe extends Model
             ->setCodPuerto('123')
             ->setIndTransbordo(false)
             ->setPesoTotal(12.5)
-            ->setUndPesoTotal('KGM')
+            ->setUndPesoTotal('KGM')    //unidad de medida
             ->setNumContenedor('XD-2232')
             ->setLlegada(new Direction('150101', 'AV LIMA'))
             ->setPartida(new Direction('150203', 'AV ITALIA'))
             ->setTransportista($transp);
 
-            $despatch = new Despatch();
-            $despatch->setTipoDoc('09')
-                ->setSerie('T001')
-                ->setCorrelativo('123')
-                ->setFechaEmision(new DateTime())
-                ->setCompany($company)
-                ->setDestinatario((new Client())
-                    ->setTipoDoc('6')
-                    ->setNumDoc('20000000002')
-                    ->setRznSocial('EMPRESA (<!-- --> />) 1'))
-                ->setTercero((new Client())
-                    ->setTipoDoc('6')
-                    ->setNumDoc('20000000003')
-                    ->setRznSocial('EMPRESA SA'))
-                ->setObservacion('NOTA GUIA')
-                ->setRelDoc($rel)
-                ->setEnvio($envio);
-
-        $detail = new DespatchDetail();
-        $detail->setCantidad(2)
+        $despatch = new Despatch();
+        $despatch->setTipoDoc('09')
+            ->setSerie('T001')      //cambiar codigo de guia
+            ->setCorrelativo('123')
+            ->setFechaEmision(new DateTime())
+            ->setCompany($company)
+            ->setDestinatario((new Client())
+                ->setTipoDoc('6')
+                ->setNumDoc('20000000002')
+                ->setRznSocial('EMPRESA (<!-- --> />) 1'))
+            ->setTercero((new Client())
+                ->setTipoDoc('6')
+                ->setNumDoc('20000000003')
+                ->setRznSocial('EMPRESA SA'))
+            ->setObservacion('NOTA GUIA')
+            ->setRelDoc($rel)
+            ->setEnvio($envio);
+        
+        foreach($guias_registros as $cont => $guia_registro){
+            $detail[$cont] = new DespatchDetail();
+            $detail[$cont]->setCantidad(2)
             ->setUnidad('ZZ')
-            ->setDescripcion('PROD 1')
-            ->setCodigo('PROD1')
-            ->setCodProdSunat('P001');
+            ->setDescripcion($guia_registro->producto->nombre)
+            ->setCodigo($guia_registro->producto->codigo_producto)
+            ->setCodProdSunat($guia_registro->producto->codigo_producto);
+        }
 
-        $despatch->setDetails([$detail]);
+        
+
+        $despatch->setDetails($detail);
 
         return $despatch;
     }
