@@ -88,14 +88,14 @@ $(document).ready(function(){
         "serverSide":true,
         "ajax":"{{url('api/productos')}}",
         "columns":[
-            {data : 'id'},
+            {data : 'prod_id'},
             {data : 'codigo_producto'},
             {data : 'codigo_original'},
             {data : 'nombre'},
-            {data : 'familia.id'},
-            {data : 'nombre_empresa'},
-            {data : 'nombre'},
-            {data : 'informacion'},
+            {data : 'familia_desc'},
+            {data : 'nombre_marca'},
+            {data : 'estado_nom'},
+            {data : 'afectacion_info'},
             {
                 name: '',
                 data: null,
@@ -115,7 +115,7 @@ $(document).ready(function(){
                 render: function (data) {
                     var actions = '';
                     actions += '<a href="{{ route('productos.show',':id') }}" target="_blank"><span class="btn btn-success" ><img src="{{asset('img/icons/ver.svg')}}" width="20px" ></span></a>';
-                    return actions.replace(/:id/g, data.id);
+                    return actions.replace(/:id/g, data.prod_id);
                 }
             },
             {
@@ -141,12 +141,12 @@ $(document).ready(function(){
                                             '@csrf @method('delete')'+
                                             '<center><button type="submit" class="btn btn-w-m btn-primary">Anular</button></form>'+
                                         '</p></div></div></div></div></div>';
-                        return actions.replace(/:id/g, data.id);
+                        return actions.replace(/:id/g, data.prod_id);
                     }else{
                         var actions2 = '';
                         data: 'id';
                         actions2 += '<a href="#"><span class="btn btn-secondary" >ANULADO</span></a>';
-                         return actions2.replace(/:id/g, data.id);
+                         return actions2.replace(/:id/g, data.prod_id);
                     }
 
                 }

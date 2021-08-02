@@ -29,9 +29,14 @@ use App\Providers\RouteServiceProvider;
 // PRODUCTOS
 Auth::routes();
 Route::get('productos',function(){
-    $producto = DB::table('productos')->join('marcas', 'productos.marca_id', '=', 'marcas.id')->join('familias', 'productos.familia_id', '=', 'familias.id')->join('estado', 'productos.estado_id', '=', 'estado.id')->join('tipo_afectacion', 'productos.tipo_afectacion_id', '=', 'tipo_afectacion.id')->get();
+    $producto = DB::table('productos')
+        ->select('*','productos.id as prod_id' ,'marcas.nombre as nombre_marca','familias.descripcion as familia_desc', 'tipo_afectacion.informacion as afectacion_info','estado.nombre as estado_nom' )
+        ->join('familias', 'productos.familia_id', '=', 'familias.id')
+        ->join('marcas', 'productos.marca_id', '=', 'marcas.id')
+        ->join('tipo_afectacion', 'productos.tipo_afectacion_id', '=', 'tipo_afectacion.id')
+        ->join('estado', 'productos.estado_id', '=', 'estado.id')->get();
     // ->join('drawings', 'drawings.customer_id', '=', 'customers.id')
-    return DataTables::of($producto)
+    return DataTables($producto)
     // return datatables::of($producto)
         // ->addColumn('categoria', function ($producto) {
         //     return $producto->categoria_i_producto->descripcion;
