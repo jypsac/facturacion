@@ -128,7 +128,7 @@
 <script >
 $(document).ready(function(){
     $('#table_productos').DataTable({
-        "order": [[ 1, "desc" ]],
+        // "order": [[ 1, "desc" ]],
         "serverSide":true,
         "ajax":"{{url('api/garantia_ingreso')}}",
         "columns":[
