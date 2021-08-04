@@ -105,7 +105,7 @@
         <script>    
 $(document).ready(function(){
     $('#table_informe_tec').DataTable({
-        "order": [[ 1, "desc" ]],
+        // "order": [[ 1, "desc" ]],
         "serverSide":true,
         "ajax":"{{url('api/informe_tecnico')}}",
         "columns":[

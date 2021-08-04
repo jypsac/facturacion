@@ -103,7 +103,7 @@
 <script>    
 $(document).ready(function(){
     $('#table_egreso').DataTable({
-        "order": [[ 1, "desc" ]],
+        // "order": [[ 1, "desc" ]],
         "serverSide":true,
         "ajax":"{{url('api/garantia_egreso')}}",
         "columns":[
