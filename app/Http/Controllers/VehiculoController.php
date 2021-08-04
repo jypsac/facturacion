@@ -37,16 +37,29 @@ class VehiculoController extends Controller
      */
     public function store(Request $request)
     {
-       $vehiculo=new Vehiculo;
-       $vehiculo->placa=$request->get('placa');
-       $vehiculo->marca=$request->get('marca');
-       $vehiculo->modelo=$request->get('modelo');
-       $vehiculo->certificado_inscripcion=$request->get('certificado_inscripcion');
-       $vehiculo->año=$request->get('año');
-       $vehiculo->estado_activo='0';
-       $vehiculo->save();
-       return redirect()->route('vehiculo.index');
-   }
+        $categoria=$request->get('categoria');
+
+        if ($categoria=='create_publico') {
+            $vehiculo=new TransportePublico;
+            $vehiculo->nombre=$request->get('nombre');
+            $vehiculo->ruc=$request->get('ruc');
+            $vehiculo->estado='0';
+            $vehiculo->save();
+        }
+        elseif($categoria=='create_privado'){
+            $vehiculo=new Vehiculo;
+            $vehiculo->placa=$request->get('placa');
+            $vehiculo->marca=$request->get('marca');
+            $vehiculo->modelo=$request->get('modelo');
+            $vehiculo->certificado_inscripcion=$request->get('certificado_inscripcion');
+            $vehiculo->año=$request->get('año');
+            $vehiculo->estado_activo='0';
+            $vehiculo->save();
+        }
+
+
+        return redirect()->route('vehiculo.index');
+    }
 
     /**
      * Display the specified resource.
@@ -79,23 +92,41 @@ class VehiculoController extends Controller
      */
     public function update(Request $request, $id)
     {
-         $estado=$request->get('estado_activo');
-        if($estado=='on'){
+       $categoria=$request->get('categoria');
+       if ($categoria=='update_publico') {
+          $estado=$request->get('estado');
+          if(isset($estado)){
             $estado_numero='0';
         }
         else{
             $estado_numero='1';
         }
-       $vehiculo=Vehiculo::find($id);
-       $vehiculo->placa=$request->get('placa');
-       $vehiculo->marca=$request->get('marca');
-       $vehiculo->modelo=$request->get('modelo');
-       $vehiculo->certificado_inscripcion=$request->get('certificado_inscripcion');
-       $vehiculo->año=$request->get('año');
-       $vehiculo->estado_activo=$estado_numero;
-       $vehiculo->save();
-       return redirect()->route('vehiculo.index');
-   }
+        $vehiculo=TransportePublico::find($id);
+        $vehiculo->nombre=$request->get('nombre');
+        $vehiculo->ruc=$request->get('ruc');
+        $vehiculo->estado=$estado_numero;
+        $vehiculo->save();
+
+    }
+    elseif($categoria=='update_privado'){
+       $estado=$request->get('estado');
+       if(isset($estado)){
+        $estado_numero='0';
+    }
+    else{
+        $estado_numero='1';
+    }
+    $vehiculo=Vehiculo::find($id);
+    $vehiculo->placa=$request->get('placa');
+    $vehiculo->marca=$request->get('marca');
+    $vehiculo->modelo=$request->get('modelo');
+    $vehiculo->certificado_inscripcion=$request->get('certificado_inscripcion');
+    $vehiculo->año=$request->get('año');
+    $vehiculo->estado_activo=$estado_numero;
+    $vehiculo->save();
+}
+return redirect()->route('vehiculo.index');
+}
 
     /**
      * Remove the specified resource from storage.

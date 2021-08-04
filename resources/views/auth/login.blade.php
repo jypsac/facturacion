@@ -7,7 +7,6 @@
         <div class="card">
             <div class="card-header">
                 <center><h3 class="letra">Iniciar Sesion</h3></center>
-                
             </div>
             <div class="card-body"  >
                 <form method="POST" action="{{ route('login') }}">
@@ -81,11 +80,11 @@ https://images2.alphacoders.com/361/thumb-1920-36170.jpg
 */
 
 html,body{
-background-image: url('{{$url}}');
-
+background-image: url('{{ asset('/archivos/imagenes/leonosoft.jpg')}}');
+background-position: center center;
+background-attachment: fixed;
 background-size: cover;
 background-repeat: no-repeat;
-height: 100%;
 font-family: 'Numans', sans-serif;
 }
 .pt-4, .py-4{
