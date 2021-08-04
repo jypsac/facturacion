@@ -94,9 +94,9 @@ class AgregadoRapidoController extends Controller
            $contacto->email=$request->get('email_contacto');
            $contacto->clientes_id=$cliente->id;
            $contacto->save();
-           return redirect()->route($ruta_retorno.'.index');
+           return back();
        }else{
-          return redirect()->route($ruta_retorno.'.index')->withErrors(['Cliente ya Agregado!']);
+          return back()->withErrors(['Cliente ya Agregado!']);
        }
    }
 

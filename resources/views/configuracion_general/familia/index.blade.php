@@ -85,6 +85,7 @@
                                     <th>ID</th>
                                     <th>codigo</th>
                                     <th>Descripcion</th>
+                                    <th>Estado</th>
                                     <th>EDITAR</th>
                                 </tr>
                             </thead>
@@ -94,6 +95,11 @@
                                     <td>{{$familia->id}}</td>
                                     <td>{{$familia->codigo}}</td>
                                     <td>{{$familia->descripcion}}</td>
+                                    @if($familia->estado == 0)
+                                        <td style="width: 20%;"><center><label class="label label-primary" style="font-size: 14px">ACTIVADO</label></center></td>
+                                    @else
+                                        <td style="width: 20%;"><center><label class="label label-danger" style="font-size: 14px">DESACTIVADO</label></center></td>
+                                    @endif
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$familia->id}}">Editar</button>
                                         <div class="modal fade" id="exampleModal{{$familia->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -120,6 +126,22 @@
                                                                                 <label class="col-sm-2 col-form-label">Descripcion:</label>
                                                                                 <div class="col-sm-10">
                                                                                     <input type="text" class="form-control" name="descripcion" value="{{$familia->descripcion}}">
+                                                                                </div>
+                                                                                <label class="col-sm-2 col-form-label">Estado:</label>
+                                                                                <div class="col-sm-10" align="center">
+                                                                                    <div class="switch-lg" >
+                                                                                        <div class="onoffswitch" style="width: 150px;">
+                                                                                            @if($familia->estado == 0)
+                                                                                                <input type="checkbox" checked class="onoffswitch-checkbox" name="estado" id="switch{{$familia->id}}" >
+                                                                                            @else
+                                                                                                <input type="checkbox"  class="onoffswitch-checkbox" name="estado" id="switch{{$familia->id}}" >
+                                                                                            @endif
+                                                                                            <label class="onoffswitch-label" for="switch{{$familia->id}}">
+                                                                                                <span class="onoffswitch-inner" ></span>
+                                                                                                <span class="onoffswitch-switch"></span>
+                                                                                            </label>
+                                                                                        </div>
+                                                                                    </div>
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -164,7 +186,20 @@
 
 <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
 <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+<style type="text/css">
+    .onoffswitch-inner:before{
+        content: "ACTIVAR";
+        text-align: center;
+    }
+    .onoffswitch-inner:after{
+        content: "DESACTIVAR";
+        text-align: center;
+    }
+    .onoffswitch-switch {
+        right: 131px;
+    }
 
+</style>
 <script>
 
     $(document).ready(function () {

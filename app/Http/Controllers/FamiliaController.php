@@ -46,6 +46,7 @@ class FamiliaController extends Controller
         $familia=new Familia;
         $familia->codigo=$contador;
         $familia->descripcion=$nombre;
+        $familia->estado='0';
         $familia->save();
 
         return redirect()->route('familia.index');
@@ -83,11 +84,18 @@ class FamiliaController extends Controller
      */
     public function update(Request $request, $id)
     {
-
+        //ESTADO
+        $estado = $request->get('estado');
+        if($estado == "on"){
+            $estado_marca = 0;
+        }else{
+            $estado_marca = 1;
+        }
         $nombre=$request->get('descripcion');
         $nombre=strtoupper($nombre);
         $familia=Familia::find($id);
         $familia->descripcion=$nombre;
+        $familia->estado=$estado_marca;
         $familia->save();
 
         return redirect()->route('familia.index');

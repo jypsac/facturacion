@@ -19,6 +19,7 @@ class MarcasTableSeeder extends Seeder
 			'nombre_empresa' => 'Marca 01',
 			'descripcion' => 'Descripcion del Producto',
 			'imagen'=>'1596486447Rexroth.png',
+			'estado'=>'1',
 			'created_at' => date('2020-08-01 15:27:28'),
            	'updated_at' => date('2020-08-01 15:27:28')
 		]);

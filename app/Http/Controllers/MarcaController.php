@@ -54,7 +54,7 @@ class MarcaController extends Controller
         }
         $suma=Marca::all()->count();
         $suma ++;
-        $cien=100000+($suma-1);
+        $cien=100000+($suma);
         $contador=substr($cien,1);
         $descripcion=$request->get('descripcion');
         if (!isset($descripcion)) {$descripcion='Sin descripcion'; }
@@ -66,6 +66,7 @@ class MarcaController extends Controller
         $marca->telefono=strtoupper($request->get('telefono'));
         $marca->descripcion=$descripcion;
         $marca->imagen=$nombre_imagen;
+        $marca->estado='1';
         $marca->save();
 
         return back();
@@ -113,6 +114,14 @@ class MarcaController extends Controller
             $nombre_imagen=$request->get('imagenes');
         }
 
+        //ESTADO
+        $estado = $request->get('estado');
+        if($estado == "on"){
+            $estado_marca = 1;
+        }else{
+            $estado_marca = 0;
+        }
+        // return $estado;
         $marca=Marca::find($id);
         $marca->nombre=strtoupper($request->get('nombre'));
         // $marca->abreviatura=strtoupper($request->get('abreviatura'));
@@ -120,6 +129,7 @@ class MarcaController extends Controller
         $marca->telefono=strtoupper($request->get('telefono'));
         $marca->descripcion=$request->get('descripcion');
         $marca->imagen=$nombre_imagen;
+        $marca->estado=$estado_marca;
         $marca->save();
 
         return redirect()->route('marca.index');

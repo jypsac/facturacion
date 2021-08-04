@@ -19,6 +19,7 @@
     <link href="{{asset('css/plugins/iCheck/custom.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/footable/footable.core.css')}}" rel="stylesheet">
+    <link href="{{asset('css/plugins/switchery/switchery.css')}}" rel="stylesheet">
 
     <link href="{{ asset('main.css') }}" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="{{ asset('img/icono.svg') }}" sizes="any">
@@ -702,12 +703,20 @@ use App\Personal;
         var opt = $('#cliente_doc').val();
             if(opt=="DNI" || opt == "pasaporte"){
                 // $('#consulta_p_input').prop('disabled', false);
-                 $('#botoncito_cliente').prop('disabled', true);
+                $('#botoncito_cliente').prop('disabled', true);
+                $('#numero_ruc_cli').val('');
+                $('#direccion_cli').val('');
+                $('#distrito_cli').val('');
+                $('#razon_social_cli').val('');
                 // $('#consulta_s').hide();
             }else{
                 // $('#consulta_p_input').prop('disabled', 'disabled');
                 // document.getElementById('credito_pago').style.visibility = "initial";
                 $('#botoncito_cliente').prop('disabled', false);
+                $('#numero_ruc_cli').val('');
+                $('#direccion_cli').val('');
+                $('#distrito_cli').val('');
+                $('#razon_social_cli').val('');
                 // $('#consulta_s').show();
             }
     }

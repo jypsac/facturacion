@@ -148,6 +148,7 @@
                                     <th>codigo</th>
                                     <th>Descripcion</th>
                                     <th>Foto</th>
+                                    <th>Estado</th>
                                     <th>EDITAR</th>
                                 </tr>
                             </thead>
@@ -167,6 +168,11 @@
                                         <img src="{{asset('img/logos/marca_ejemplo.svg')}}" style="width: 150px;height:50px">
                                         @endif
                                     </td>
+                                    @if($marca->estado == 1)
+                                        <td><center><label class="label label-primary" style="font-size: 14px">ACTIVADO</label></center></td>
+                                    @else
+                                        <td><center><label class="label label-danger" style="font-size: 14px">DESACTIVADO</label></center></td>
+                                    @endif
                                     <td>
                                         <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal{{$marca->id}}">Editar</button>
                                         <div class="modal fade" id="exampleModal{{$marca->id}}" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -202,6 +208,22 @@
                                                                             </div><label class="col-sm-2 col-form-label">Descripcion:</label>
                                                                             <div class="col-sm-10">
                                                                                 <textarea type="text" class="form-control" placeholder="opcional" name="descripcion"> {{$marca->descripcion}}</textarea>
+                                                                            </div>
+                                                                            <label class="col-sm-2 col-form-label">Estado:</label>
+                                                                            <div class="col-sm-10" align="center">
+                                                                                <div class="switch-lg" >
+                                                                                    <div class="onoffswitch" style="width: 150px;">
+                                                                                        @if($marca->estado == 1)
+                                                                                            <input type="checkbox" checked class="onoffswitch-checkbox" name="estado" id="switch{{$marca->id}}" >
+                                                                                        @else
+                                                                                            <input type="checkbox"  class="onoffswitch-checkbox" name="estado" id="switch{{$marca->id}}" >
+                                                                                        @endif
+                                                                                        <label class="onoffswitch-label" for="switch{{$marca->id}}">
+                                                                                            <span class="onoffswitch-inner" ></span>
+                                                                                            <span class="onoffswitch-switch"></span>
+                                                                                        </label>
+                                                                                    </div>
+                                                                                </div>
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Foto:</label>
                                                                             <div class="col-sm-10">
@@ -285,9 +307,24 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-
+<!-- Switchery -->
+<script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
 <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
 <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+<style type="text/css">
+    .onoffswitch-inner:before{
+        content: "ACTIVAR";
+        text-align: center;
+    }
+    .onoffswitch-inner:after{
+        content: "DESACTIVAR";
+        text-align: center;
+    }
+    .onoffswitch-switch {
+        right: 131px;
+    }
+
+</style>
 <script>
 
     $(document).ready(function () {
