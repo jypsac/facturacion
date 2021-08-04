@@ -4,7 +4,7 @@
 @section('breadcrumb', 'Productos')
 @section('breadcrumb2', 'Productos')
 @section('href_accion', route('productos.index'))
-@section('value_accion', 'Atras')
+@section('value_accion', 'Inicio')
 @section('button2', 'Nuevo Producto')
 @section('config',route('productos.create'))
 

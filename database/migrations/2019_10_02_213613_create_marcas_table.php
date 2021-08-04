@@ -22,7 +22,7 @@ class CreateMarcasTable extends Migration
             $table->string('telefono')->nullable();
             $table->text('descripcion')->nullable();
             $table->string('imagen')->nullable();
-            $table->boolean('estado');
+            $table->boolean('estado')->default('1')->nullable();;
             $table->timestamps();
         });
     }

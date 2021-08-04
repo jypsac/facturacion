@@ -143,7 +143,7 @@ use App\Personal;
                                         </div>
                                         <div class="form-group">
                                             <label>Direccion *</label>
-                                            <input type="text" class="form-control" name="direccion" id="direccion_cli" class="form-control required" required="required">
+                                            <input type="text" value="Lima" class="form-control" name="direccion" id="direccion_cli" class="form-control required" required="required">
                                         </div>
                                     </div>
                                     <!--  -->
@@ -155,7 +155,7 @@ use App\Personal;
                                             </div>
                                             <div class="form-group col-lg-6">
                                                 <label>Distrito *</label>
-                                                <input type="text" class="form-control" name="ciudad" id="distrito_cli" class="form-control required" required="required">
+                                                <input type="text" value="Lima" class="form-control" name="ciudad" id="distrito_cli" class="form-control required" required="required">
                                             </div>
                                         </div>
                                     </div>
@@ -705,8 +705,8 @@ use App\Personal;
                 // $('#consulta_p_input').prop('disabled', false);
                 $('#botoncito_cliente').prop('disabled', true);
                 $('#numero_ruc_cli').val('');
-                $('#direccion_cli').val('');
-                $('#distrito_cli').val('');
+                $('#direccion_cli').val('Lima');
+                $('#distrito_cli').val('Lima');
                 $('#razon_social_cli').val('');
                 // $('#consulta_s').hide();
             }else{
@@ -714,8 +714,8 @@ use App\Personal;
                 // document.getElementById('credito_pago').style.visibility = "initial";
                 $('#botoncito_cliente').prop('disabled', false);
                 $('#numero_ruc_cli').val('');
-                $('#direccion_cli').val('');
-                $('#distrito_cli').val('');
+                $('#direccion_cli').val('Lima');
+                $('#distrito_cli').val('Lima');
                 $('#razon_social_cli').val('');
                 // $('#consulta_s').show();
             }

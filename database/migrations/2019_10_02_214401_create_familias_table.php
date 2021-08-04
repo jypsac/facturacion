@@ -17,7 +17,7 @@ class CreateFamiliasTable extends Migration
             $table->bigIncrements('id');
             $table->string('codigo');
             $table->string('descripcion');
-            $table->string('estado')->nullable();
+            $table->string('estado')->default('0')->nullable();
             $table->timestamps();
         });
     }

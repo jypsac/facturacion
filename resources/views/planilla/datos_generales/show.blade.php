@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title', 'Personal')
 @section('href_accion', route('personal.index') )
-@section('value_accion', 'Atras')
+@section('value_accion', 'Inicio')
 @section('button2', 'Nuevo Personal')
 @section('config',route('personal.create'))
 @section('content')

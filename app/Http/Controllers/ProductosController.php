@@ -44,8 +44,8 @@ class ProductosController extends Controller
     public function create(Request $request)
     {
         $monedas=Moneda::all();
-        $familias=Familia::all();
-        $marcas=Marca::all();
+        $familias=Familia::where('estado',0)->get();
+        $marcas=Marca::where('estado',1)->get();
         $estados=Estado::all();
         $categorias=Categoria::where('descripcion','PRODUCTOS')->first();
         $unidad_medidas=Unidad_medida::all();
