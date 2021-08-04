@@ -66,7 +66,7 @@ class MarcaController extends Controller
         $marca->telefono=strtoupper($request->get('telefono'));
         $marca->descripcion=$descripcion;
         $marca->imagen=$nombre_imagen;
-        $marca->estado='1';
+        $marca->estado='0';
         $marca->save();
 
         return back();
@@ -117,9 +117,9 @@ class MarcaController extends Controller
         //ESTADO
         $estado = $request->get('estado');
         if($estado == "on"){
-            $estado_marca = 1;
-        }else{
             $estado_marca = 0;
+        }else{
+            $estado_marca = 1;
         }
         // return $estado;
         $marca=Marca::find($id);

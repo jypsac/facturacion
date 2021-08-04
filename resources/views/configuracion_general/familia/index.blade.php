@@ -129,19 +129,7 @@
                                                                                 </div>
                                                                                 <label class="col-sm-2 col-form-label">Estado:</label>
                                                                                 <div class="col-sm-10" align="center">
-                                                                                    <div class="switch-lg" >
-                                                                                        <div class="onoffswitch" style="width: 150px;">
-                                                                                            @if($familia->estado == 0)
-                                                                                                <input type="checkbox" checked class="onoffswitch-checkbox" name="estado" id="switch{{$familia->id}}" >
-                                                                                            @else
-                                                                                                <input type="checkbox"  class="onoffswitch-checkbox" name="estado" id="switch{{$familia->id}}" >
-                                                                                            @endif
-                                                                                            <label class="onoffswitch-label" for="switch{{$familia->id}}">
-                                                                                                <span class="onoffswitch-inner" ></span>
-                                                                                                <span class="onoffswitch-switch"></span>
-                                                                                            </label>
-                                                                                        </div>
-                                                                                    </div>
+                                                                                   <input type="checkbox" class="js-switch_{{$familia->id}}" name="estado"  @if($familia->estado==0) checked="" @endif />
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -186,20 +174,9 @@
 
 <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
 <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
-<style type="text/css">
-    .onoffswitch-inner:before{
-        content: "ACTIVAR";
-        text-align: center;
-    }
-    .onoffswitch-inner:after{
-        content: "DESACTIVAR";
-        text-align: center;
-    }
-    .onoffswitch-switch {
-        right: 131px;
-    }
-
-</style>
+ <link href="{{asset('css/plugins/switchery/switchery.css')}}" rel="stylesheet">
+<!-- Switchery -->
+<script src="{{asset('js/plugins/switchery/switchery.js')}}"></script>
 <script>
 
     $(document).ready(function () {
@@ -253,4 +230,16 @@
     });
 
 </script>
+@foreach($familias as $familia)
+<script>
+    var elem_2 = document.querySelector('.js-switch_{{$familia->id}}');
+    var switchery_2 = new Switchery(elem_2, { color: '#ED5565' });
+</script>
+@endforeach
+@foreach($familias as $familia)
+<script>
+    var elem_2 = document.querySelector('.js-switch_vehiculo{{$familia->id}}');
+    var switchery_2 = new Switchery(elem_2, { color: '#ED5565' });
+</script>
+@endforeach
 @endsection

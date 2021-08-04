@@ -168,7 +168,7 @@
                                         <img src="{{asset('img/logos/marca_ejemplo.svg')}}" style="width: 150px;height:50px">
                                         @endif
                                     </td>
-                                    @if($marca->estado == 1)
+                                    @if($marca->estado == 0)
                                         <td><center><label class="label label-primary" style="font-size: 14px">ACTIVADO</label></center></td>
                                     @else
                                         <td><center><label class="label label-danger" style="font-size: 14px">DESACTIVADO</label></center></td>
@@ -211,19 +211,7 @@
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Estado:</label>
                                                                             <div class="col-sm-10" align="center">
-                                                                                <div class="switch-lg" >
-                                                                                    <div class="onoffswitch" style="width: 150px;">
-                                                                                        @if($marca->estado == 1)
-                                                                                            <input type="checkbox" checked class="onoffswitch-checkbox" name="estado" id="switch{{$marca->id}}" >
-                                                                                        @else
-                                                                                            <input type="checkbox"  class="onoffswitch-checkbox" name="estado" id="switch{{$marca->id}}" >
-                                                                                        @endif
-                                                                                        <label class="onoffswitch-label" for="switch{{$marca->id}}">
-                                                                                            <span class="onoffswitch-inner" ></span>
-                                                                                            <span class="onoffswitch-switch"></span>
-                                                                                        </label>
-                                                                                    </div>
-                                                                                </div>
+                                                                                <input type="checkbox" class="js-switch_{{$marca->id}}" name="estado"  @if($marca->estado==0) checked="" @endif />
                                                                             </div>
                                                                             <label class="col-sm-2 col-form-label">Foto:</label>
                                                                             <div class="col-sm-10">
@@ -311,20 +299,9 @@
 <script src="{{ asset('js/plugins/switchery/switchery.js') }}"></script>
 <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
 <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
-<style type="text/css">
-    .onoffswitch-inner:before{
-        content: "ACTIVAR";
-        text-align: center;
-    }
-    .onoffswitch-inner:after{
-        content: "DESACTIVAR";
-        text-align: center;
-    }
-    .onoffswitch-switch {
-        right: 131px;
-    }
-
-</style>
+ <link href="{{asset('css/plugins/switchery/switchery.css')}}" rel="stylesheet">
+<!-- Switchery -->
+<script src="{{asset('js/plugins/switchery/switchery.js')}}"></script>
 <script>
 
     $(document).ready(function () {
@@ -366,4 +343,16 @@
     });
 
 </script>
+@foreach($marcas as $marca)
+<script>
+    var elem_2 = document.querySelector('.js-switch_{{$marca->id}}');
+    var switchery_2 = new Switchery(elem_2, { color: '#ED5565' });
+</script>
+@endforeach
+@foreach($marcas as $marca)
+<script>
+    var elem_2 = document.querySelector('.js-switch_vehiculo{{$marca->id}}');
+    var switchery_2 = new Switchery(elem_2, { color: '#ED5565' });
+</script>
+@endforeach
 @endsection
