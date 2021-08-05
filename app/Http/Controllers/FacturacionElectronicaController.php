@@ -121,9 +121,9 @@ class FacturacionElectronicaController extends Controller
 
         // return $request;
         //configuracion
-        $see=Config_fe::guia_electronica();
+         $see=Config_fe::guia_electronica();
 
-        //boleta
+        //guia
         $invoice=Config_fe::guia_remision($guia,$guias_registros);
         
         //envio a SUNAT    

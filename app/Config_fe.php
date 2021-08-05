@@ -373,8 +373,6 @@ class Config_fe extends Model
         
     }
 
-    
-
     public static function boleta($boleta,$boletas_registros){
 
         $empresa=Empresa::first();
@@ -526,7 +524,6 @@ class Config_fe extends Model
 
     //llenado guia de remision
     public static function guia_remision($guia, $guias_registros){
-
         
         //$util = Util::getInstance();
         $empresa=Empresa::first();
@@ -553,11 +550,17 @@ class Config_fe extends Model
 
         $transp = new Transportist();
         $transp->setTipoDoc('6')
-            ->setNumDoc('20000000002')          //falta documentacion del conductor
-            ->setRznSocial('TRANSPORTES S.A.C') //nombre de la conduccion
+            // ->setNumDoc('20000000002')          //falta documentacion del conductor
+            // ->setRznSocial('TRANSPORTES S.A.C') //nombre de la conduccion
             ->setPlaca($guia->vehiculo->placa)   
-            ->setChoferTipoDoc('1')             //ayuda
-            ->setChoferDoc('40003344');         //doc chofer
+            ->setChoferTipoDoc('1')        ;     //ayuda
+            // ->setChoferDoc('40003344');         //doc chofer
+
+        //obtencion del peso total
+        $peso_total=0;
+        foreach($guias_registros as $guia_electronica){
+            $peso_total=$peso_total + $guia_electronica->peso;
+        }
 
         $envio = new Shipment();
         $envio
@@ -565,30 +568,35 @@ class Config_fe extends Model
             ->setDesTraslado('VENTA')
             ->setModTraslado('01') // Cat.18
             ->setFecTraslado(new DateTime())
-            ->setCodPuerto('123')
+            // ->setCodPuerto('123')
             ->setIndTransbordo(false)
-            ->setPesoTotal(12.5)
+            ->setPesoTotal($peso_total)
             ->setUndPesoTotal('KGM')    //unidad de medida
-            ->setNumContenedor('XD-2232')
-            ->setLlegada(new Direction('150101', 'AV LIMA'))
-            ->setPartida(new Direction('150203', 'AV ITALIA'))
+            // ->setNumContenedor('XD-2232')
+            ->setLlegada(new Direction('150101', 'AV LIMA'))    //arreglar el ubigeo de llegada  salida
+            ->setPartida(new Direction('150104', 'AV LIMA'))    //arreglar el ubigeo de llegada  salida
             ->setTransportista($transp);
+
+        //codigo correlaativo
+        $codigo_guia=$guia->cod_guia;
+        $serie=explode("-",$codigo_guia);
+
+        $correlativo=substr($serie[1],-3);
+        $serie=$serie[0];
+
+        $correlativo_guia="T".$correlativo;
 
         $despatch = new Despatch();
         $despatch->setTipoDoc('09')
-            ->setSerie('T001')      //cambiar codigo de guia
-            ->setCorrelativo('123')
+            ->setSerie($correlativo_guia)      //cambiar codigo de guia
+            ->setCorrelativo($correlativo)
             ->setFechaEmision(new DateTime())
             ->setCompany($company)
             ->setDestinatario((new Client())
                 ->setTipoDoc('6')
-                ->setNumDoc('20000000002')
-                ->setRznSocial('EMPRESA (<!-- --> />) 1'))
-            ->setTercero((new Client())
-                ->setTipoDoc('6')
-                ->setNumDoc('20000000003')
-                ->setRznSocial('EMPRESA SA'))
-            ->setObservacion('NOTA GUIA')
+                ->setNumDoc($guia->cliente->numero_documento)
+                ->setRznSocial($guia->cliente->empresa))
+            ->setObservacion($guia->observacion)
             ->setRelDoc($rel)
             ->setEnvio($envio);
         
@@ -600,8 +608,6 @@ class Config_fe extends Model
             ->setCodigo($guia_registro->producto->codigo_producto)
             ->setCodProdSunat($guia_registro->producto->codigo_producto);
         }
-
-        
 
         $despatch->setDetails($detail);
 
