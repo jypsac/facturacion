@@ -56,7 +56,6 @@ class FacturacionElectronicaController extends Controller
      */
     public function factura(Request $request)
     {
-        
         //facturas a buscar
         $factura=Facturacion::where('f_electronica',0)->where('id',$request->factura_id)->first();
         $factura_registro=Facturacion_registro::where('facturacion_id',$request->factura_id)->get();
