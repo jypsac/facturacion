@@ -148,7 +148,7 @@ class FacturacionController extends Controller
         if (is_numeric($factura_cod_fac)) {
             // exprecion del numero de fatura
             $factura_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->serie_factura, 3, "0", STR_PAD_LEFT);
             $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
@@ -159,16 +159,18 @@ class FacturacionController extends Controller
             $factura_num_string=$factura_num_string_porcion[1];
             $factura_num=(int)$factura_num_string;
 
+            $almacen_codigo = Almacen::orderBy('serie_factura','DESC')->latest()->first();
             //CONDICIONAL PARA QUE EMPIEZE DE NUEVO EN 0001 PARA EL NUMERO DE SERIE Y EL CORRELATIVO -> FALTA PULIR/IDEA GENERAL
-            // if($factura_num == 99999999){
-            //     $almacen_codigo = Almacen::latest()->first();
-            //     $ultima_factura = $almacen_codigo->codigo_sunat+1;
-            //     $factura_num = 00000001;
-            // }else{
-                $ultima_factura = $sucursal->codigo_sunat;
-            //     $factura_num++;
-            // }
+            if($factura_num == 99999999){
+                $ultima_factura = $almacen_codigo->serie_factura+1;
+                // $almacen_l = Almacen::find($almacen_codigo->id);
+                // $almacen_l->serie_factura = $ultima_factura;
+                // $almacen_l->save();
+                $factura_num = 00000000;
 
+            }else{
+                $ultima_factura = $sucursal->serie_factura;
+            }
             $factura_num++;
             $sucursal_nr = str_pad($ultima_factura, 3, "0", STR_PAD_LEFT);
             $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
@@ -256,7 +258,7 @@ class FacturacionController extends Controller
        if (is_numeric($factura_cod_fac)) {
            // exprecion del numero de fatura
            $factura_cod_fac++;
-           $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+           $sucursal_nr = str_pad($sucursal->serie_factura, 3, "0", STR_PAD_LEFT);
            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
        }else{
            // exprecion del numero de fatura
@@ -266,8 +268,20 @@ class FacturacionController extends Controller
            $factura_num_string_porcion= explode("-", $factura_num);
            $factura_num_string=$factura_num_string_porcion[1];
            $factura_num=(int)$factura_num_string;
+           //CONDICIONAL PARA QUE EMPIEZE DE NUEVO EN 0001 PARA EL NUMERO DE SERIE Y EL CORRELATIVO -> FALTA PULIR/IDEA GENERAL
+           $almacen_codigo = Almacen::orderBy('serie_factura','DESC')->latest()->first();
+            if($factura_num == 99999999){
+                $ultima_factura = $almacen_codigo->serie_factura+1;
+                // $almacen_codigo = Almacen::latest()->first();
+                // $almacen_codigo->serie_factura = $ultima_factura;
+                // $almacen_codigo->save();
+                $factura_num = 00000000;
+
+            }else{
+                $ultima_factura = $sucursal->serie_factura;
+            }
            $factura_num++;
-           $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+           $sucursal_nr = str_pad($ultima_factura, 3, "0", STR_PAD_LEFT);
            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
        }
 
@@ -367,7 +381,7 @@ class FacturacionController extends Controller
        if (is_numeric($factura_cod_fac)) {
            // exprecion del numero de fatura
            $factura_cod_fac++;
-           $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+           $sucursal_nr = str_pad($sucursal->serie_factura, 3, "0", STR_PAD_LEFT);
            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
        }else{
            // exprecion del numero de fatura
@@ -377,8 +391,20 @@ class FacturacionController extends Controller
            $factura_num_string_porcion= explode("-", $factura_num);
            $factura_num_string=$factura_num_string_porcion[1];
            $factura_num=(int)$factura_num_string;
+           //CONDICIONAL PARA QUE EMPIEZE DE NUEVO EN 0001 PARA EL NUMERO DE SERIE Y EL CORRELATIVO -> FALTA PULIR/IDEA GENERAL --> SOLO PARA STORE
+           $almacen_codigo = Almacen::orderBy('serie_factura','DESC')->latest()->first();
+            if($factura_num == 99999999){
+                $ultima_factura = $almacen_codigo->serie_factura+1;
+                $almacen_save_last = Almacen::find($sucursal->id);
+                $almacen_save_last->serie_factura = $almacen_codigo->serie_factura+1;
+                $almacen_save_last->save();
+                $factura_num = 00000000;
+
+            }else{
+                $ultima_factura = $sucursal->serie_factura;
+            }
            $factura_num++;
-           $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+           $sucursal_nr = str_pad($ultima_factura, 3, "0", STR_PAD_LEFT);
            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
        }
 

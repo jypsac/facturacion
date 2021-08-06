@@ -35,7 +35,7 @@ class kardex_entrada_registro extends Model
         $count_cantidad=count($prod);
 
         for($x=0;$x<$count_cantidad;$x++){
-            $cantidad[] = intval(kardex_entrada_registro::where('producto_id',$prod[$x])->sum('cantidad'));
+            $cantidad[] = intval(kardex_entrada_registro::where('producto_id',$prod[$x])->where('estado',1)->sum('cantidad'));
         }
         //$prod -> los productos en orden
         //$cantidad -> obtiene el stock en orden al producto
@@ -45,7 +45,7 @@ class kardex_entrada_registro extends Model
         // $array_registros[]=3;
         for($x=0;$x<$count_cantidad;$x++){
             while($cantidad[$x] > $contador){
-                $kardex_almacen_principal_desc= kardex_entrada_registro::where('producto_id',$prod[$x])->where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->whereNotIn('id',$array_registros)->first();
+                $kardex_almacen_principal_desc= kardex_entrada_registro::where('producto_id',$prod[$x])->where('estado',1)->where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->whereNotIn('id',$array_registros)->first();
                 $contador=$contador+$kardex_almacen_principal_desc->cantidad_inicial;
                 $array_registros[]=$kardex_almacen_principal_desc->id;
             }
