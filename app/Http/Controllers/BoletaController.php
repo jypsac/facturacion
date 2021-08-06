@@ -131,7 +131,7 @@ class BoletaController extends Controller
         if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
             $boleta_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->serie_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
@@ -141,8 +141,16 @@ class BoletaController extends Controller
             $boleta_num_string_porcion= explode("-", $boleta_num);
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
+            //CONDICIONAL PARA SERIE BOLETA
+            $almacen_codigo = Almacen::orderBy('serie_boleta','DESC')->latest()->first();
+            if($boleta_num == 99999999){
+                $ultima_boleta = $almacen_codigo->serie_boleta+1;
+                $boleta_num = 00000000;
+            }else{
+                $ultima_boleta = $sucursal->serie_boleta;
+            }
             $boleta_num++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($ultima_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
@@ -224,7 +232,7 @@ class BoletaController extends Controller
         if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
             $boleta_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->serie_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
@@ -234,8 +242,16 @@ class BoletaController extends Controller
             $boleta_num_string_porcion= explode("-", $boleta_num);
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
+            //CONDICIONAL PARA SERIE BOLETA
+            $almacen_codigo = Almacen::orderBy('serie_boleta','DESC')->latest()->first();
+            if($boleta_num == 99999999){
+                $ultima_boleta = $almacen_codigo->serie_boleta+1;
+                $boleta_num = 00000000;
+            }else{
+                $ultima_boleta = $sucursal->serie_boleta;
+            }
             $boleta_num++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($ultima_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
@@ -336,7 +352,7 @@ class BoletaController extends Controller
         if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
             $boleta_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->serie_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
@@ -346,8 +362,19 @@ class BoletaController extends Controller
             $boleta_num_string_porcion= explode("-", $boleta_num);
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
+            //CONDICIONAL PARA SERIE BOLETA
+            $almacen_codigo = Almacen::orderBy('serie_boleta','DESC')->latest()->first();
+            if($boleta_num == 99999999){
+                $ultima_boleta = $almacen_codigo->serie_boleta+1;
+                $almacen_save_last = Almacen::find($sucursal->id);
+                $almacen_save_last->serie_boleta = $almacen_codigo->serie_boleta+1;
+                $almacen_save_last->save();
+                $boleta_num = 00000000;
+            }else{
+                $ultima_boleta = $sucursal->serie_boleta;
+            }
             $boleta_num++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($ultima_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $boleta_numero="B".$sucursal_nr."-".$boleta_nr;
@@ -445,7 +472,7 @@ class BoletaController extends Controller
         }
         // modificacion para que se cierre el codigo en almacen
         // obtencion de la sucursal
-        // $sucursal=auth()->user()->almacen->codigo_sunat;
+        // $sucursal=auth()->user()->almacen->serie_boleta;
         //obtencion del almacen
         $factura_primera=Almacen::where('id', $sucursal->id)->first();
         $factura_primera->cod_bol='NN';
