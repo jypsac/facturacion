@@ -75,7 +75,7 @@
                 <div class="col-sm-6" align="center">
                     <div class="form-control"><h3>Domicilio De Partida</h3>
                         <div align="left" style="font-size: 13px">
-                            <p>{{$empresa->calle}}</p>
+                            <p>{{$guia_remision->almacen->direccion}}</p>
                         </div>
                     </div>
                 </div>
@@ -104,12 +104,14 @@
                             <p>
                                 <b>Placa del Vehiculo : </b>{{$guia_remision->vehiculo->placa}}<br>
                                 <b>Marca del Vehiculo : </b>{{$guia_remision->vehiculo->marca}}<br>
-                                <b>Conductor : </b>
-                                @if(isset($guia_remision->conductor_id))
                                 <b>Conductor : </b>{{$guia_remision->personal->nombres}}
-                                @else
-                                <b>Conductor : </b> No Hay Conductor
-                                @endif
+                            </p>
+                            @elseif(isset($guia_remision->vehiculo_publico))
+                             <p>
+                                <b>Empresa:</b> {{$guia_remision->vehiculo_publicos->nombre}}<br>
+                                <b>Ruc: </b> {{$guia_remision->vehiculo_publicos->ruc}}<br>
+                                <b>Nota:</b>Esta Empresa es Publica
+
                             </p>
                             @else
                             <p>
