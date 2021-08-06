@@ -25,4 +25,7 @@ class Guia_remision extends Model
      public function almacen(){
         return $this->belongsTo(Almacen::class,'almacen_id');
     }
+    public function vehiculo_publicos(){
+        return $this->belongsTo(TransportePublico::class,'vehiculo_publico');
+    }
 }

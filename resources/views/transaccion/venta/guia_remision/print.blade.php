@@ -54,7 +54,7 @@
                     <div class="col-sm-6" align="center">
                         <div class="form-control"><h3>Domicilio De Partida</h3>
                             <div align="left" style="font-size: 13px">
-                                <p>{{$empresa->calle}}</p>
+                            <p>{{$guia_remision->cliente->direccion}}</p>
                             </div>
                         </div>
                     </div>
@@ -79,29 +79,31 @@
                        <div class="col-sm-6" align="center">
                         <div class="form-control" ><h3>Unidad de Transporte/Conductor</h3>
                             <div align="left" style="font-size: 13px">
-                                @if(isset($guia_remision->vehiculo_id))
-                                <p>
-                                    <b>Placa del Vehiculo : </b>{{$guia_remision->vehiculo->placa}}<br>
-                                    <b>Marca del Vehiculo : </b>{{$guia_remision->vehiculo->marca}}<br>
-                                    <b>Conductor : </b>
-                                    @if(isset($guia_remision->conductor_id))
-                                    <b>Conductor : </b>{{$guia_remision->personal->nombres}}
-                                    @else
-                                    <b>Conductor : </b> No Hay Conductor
-                                    @endif
-                                </p>
-                                @else
-                                <p>
-                                    <b>Placa del Vehiculo : </b>No Hay Vehiculo<br>
-                                    <b>Marca del Vehiculo : </b>No Hay Vehiculo<br>
-                                    @if(isset($guia_remision->conductor_id))
-                                    <b>Conductor : </b>{{$guia_remision->personal->nombres}}
-                                    @else
-                                    <b>Conductor : </b> No Hay Conductor
-                                    @endif
-                                </p>
+                              @if(isset($guia_remision->vehiculo_id))
+                            <p>
+                                <b>Placa del Vehiculo : </b>{{$guia_remision->vehiculo->placa}}<br>
+                                <b>Marca del Vehiculo : </b>{{$guia_remision->vehiculo->marca}}<br>
+                                <b>Conductor : </b>{{$guia_remision->personal->nombres}}
+                            </p>
+                            @elseif(isset($guia_remision->vehiculo_publico))
+                             <p>
+                                <b>Empresa:</b> {{$guia_remision->vehiculo_publicos->nombre}}<br>
+                                <b>Ruc: </b> {{$guia_remision->vehiculo_publicos->ruc}}<br>
+                                <b>Nota:</b>Esta Empresa es Publica
 
+                            </p>
+                            @else
+                            <p>
+                                <b>Placa del Vehiculo : </b>No Hay Vehiculo<br>
+                                <b>Marca del Vehiculo : </b>No Hay Vehiculo<br>
+                                @if(isset($guia_remision->conductor_id))
+                                <b>Conductor : </b>{{$guia_remision->personal->nombres}}
+                                @else
+                                <b>Conductor : </b> No Hay Conductor
                                 @endif
+                            </p>
+
+                            @endif
                             </div>
                         </div>
                     </div>

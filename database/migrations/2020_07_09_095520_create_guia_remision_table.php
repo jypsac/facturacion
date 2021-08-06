@@ -29,6 +29,7 @@ class CreateGuiaRemisionTable extends Migration
             $table->string('fecha_emision');
             $table->string('fecha_entrega');
 
+            $table->string('vehiculo_publico')->nullable();
             $table->string('conductor_id')->nullable();
 
             $table->unsignedBigInteger('vehiculo_id')->nullable();

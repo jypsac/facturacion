@@ -14,11 +14,12 @@ use App\Igv;
 use App\MotivoTraslado;
 use App\Personal;
 use App\Producto;
+use App\TransportePublico;
 use App\Vehiculo;
 use App\g_remision_registro;
 use App\kardex_entrada_registro;
-use Illuminate\Http\Request;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Http\Request;
 
 class GuiaRemisionController extends Controller
 {
@@ -77,9 +78,10 @@ class GuiaRemisionController extends Controller
       $personal=Personal::all();
       $motivo_traslado=MotivoTraslado::all();
       $vehiculo=Vehiculo::where('estado_activo',0)->get();
+      $transporte_publico=TransportePublico::where('estado',0)->get();
       $empresa=Empresa::first();
       $igv=Igv::first();
-      return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo','motivo_traslado','codigo_guia','almacen','personal'));
+      return view('transaccion.venta.guia_remision.create',compact('productos','clientes','array','array_cantidad','igv','array_promedio','empresa','vehiculo','motivo_traslado','codigo_guia','almacen','personal','transporte_publico'));
     }
 
 
@@ -124,14 +126,7 @@ class GuiaRemisionController extends Controller
       $cliente_buscador=Cliente::where('numero_documento',$nombre)->first();
       $cliente_id=$cliente_buscador->id;
     }
-            //buscador Vehiculo
-    $vehiculo_nombre=$request->get('vehiculo');
-    if ($vehiculo_nombre==" ") {
-      $vehiculo_id="";
-    }else{
-      $vehiculo_id=$vehiculo_nombre;
-    }
-
+    $tipo_transporte=$request->get('tipo_transporte');
 
     $guia_remision=new Guia_remision;
     $guia_remision->cod_guia=$codigo_guia;
@@ -139,8 +134,12 @@ class GuiaRemisionController extends Controller
     $guia_remision->almacen_id=$id_almacen->id;
     $guia_remision->fecha_emision=$request->get('fecha_emision');
     $guia_remision->fecha_entrega=$request->get('fecha_entrega');
-    $guia_remision->vehiculo_id=$vehiculo_id;
-    $guia_remision->conductor_id=$request->get('conductor');
+    if ($tipo_transporte==1) {
+      $guia_remision->vehiculo_publico=$request->get('vehiculo_publico');
+    }elseif ($tipo_transporte==2) {
+      $guia_remision->vehiculo_id=$request->get('vehiculo');
+      $guia_remision->conductor_id=$request->get('conductor');
+    }
     $guia_remision->motivo_traslado=$request->get('motivo_traslado');
     $guia_remision->observacion=$request->get('observacion');
     $guia_remision->estado_anulado='0';
