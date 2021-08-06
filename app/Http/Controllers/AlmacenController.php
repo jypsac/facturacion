@@ -68,6 +68,12 @@ class AlmacenController extends Controller
 
         $almacen=new Almacen;
         $almacen->nombre=$request->get('nombre');
+        $serie_fact_last = Almacen::orderBy('serie_factura','DESC')->latest()->first();
+        $almacen->serie_factura=$serie_fact_last->serie_factura+1;
+        $serie_bol_last = Almacen::orderBy('serie_boleta','DESC')->latest()->first();
+        $almacen->serie_boleta=$serie_bol_last->serie_boleta+1;
+        $serie_guia_last = Almacen::orderBy('serie_remision','DESC')->latest()->first();
+        $almacen->serie_remision=$serie_guia_last->serie_remision+1;
         $almacen->abreviatura=$request->get('abreviatura');
         $almacen->responsable=$request->get('responsable');
         $almacen->direccion=$request->get('direccion');

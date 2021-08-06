@@ -16,16 +16,15 @@ class AgregadoRapidoController extends Controller
 
 //FUNCION PARA CREAR CLIENTES Y CONTACTOS
     public function cliente_store(Request $request){
-        //return "1";
+        // return "1";
         $this->validate($request,[
             'numero_documento' => ['required','unique:clientes,numero_documento'],
         ],[
             'numero_documento.unique' => 'El Cliente ya ha sido registrado'
         ]);
-
         $data = $request->all();
 
-
+        // return $request;
 
         $cliente= new Cliente;
         $cliente->nombre=$request->get('nombre');
@@ -63,10 +62,16 @@ class AgregadoRapidoController extends Controller
 
 //FUNCION PARA CREAR CLIENTE Y CONTACTO CON PARAMETROS POR DEFECTO
     public function cliente_cotizado(Request $request){
-        $ruta_retorno=$request->get('ruta_retorno');
         $documento_identificacion=$request->get('numero_documento');
-        $cliente_existe=Cliente::where('numero_documento',$documento_identificacion)->count();
-
+         if(strstr($documento_identificacion,' ',true) == true){
+          $doc_ruc = strstr($documento_identificacion,' ',true);
+          // return "1";
+         }else{
+          $doc_ruc = $documento_identificacion;
+          // return "2";
+         }
+        $cliente_existe=Cliente::where('numero_documento',$doc_ruc)->count();
+        // return $cliente_existe;
         if ($cliente_existe==0) {
            $cliente= new Cliente;
            $cliente->nombre=$request->get('nombre');

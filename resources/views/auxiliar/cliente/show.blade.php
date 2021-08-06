@@ -6,6 +6,8 @@
 @section('data-toggle', 'modal')
 @section('href_accion', '#ModalCliente')
 @section('value_accion', 'Agregar')
+@section('button2', 'Inicio')
+@section('config',route('cliente.index'))
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 @section('content')

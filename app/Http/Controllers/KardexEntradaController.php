@@ -363,20 +363,18 @@ class KardexEntradaController extends Controller
         $bucador_registro_kardex=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
         foreach ($bucador_registro_kardex as $registro => $ids) {
           kardex_entrada_registro::whereIn('id', [$ids->id])->update(['estado' => 'ANULADO']);
+          //STOCK ALMACEN
           Stock_almacen::egreso($Kardex_entrada->almacen_id,$ids->producto_id,$ids->cantidad);
+          // STOCK PRODUCTOS -> CANTIDAD
           $stock_productos=Stock_producto::where('producto_id',$ids->producto_id)->first();
           $stock_productos->stock=$stock_productos->stock-$ids->cantidad;
           $stock_productos->save();
+          // PRECIO //ANULAR RESTAR
+          kardex_entrada_registro::stock_producto_precio();
         }
-
-
-
 
       $Kardex_entrada->estado='ANULADO';
       $Kardex_entrada->save();
-
-
-
       return redirect()->route('kardex-entrada.index');
 
     }

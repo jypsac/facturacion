@@ -35,7 +35,7 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function index()
     {
-      $marcas=Marca::where('estado',1)->get();
+      $marcas=Marca::where('estado',0)->get();
       $garantias_guias_ingresos=GarantiaGuiaIngreso::all();
       $contacto = Contacto::all();
       return view('transaccion.garantias.guia_ingreso.index',compact('marcas','garantias_guias_ingresos','contacto'));

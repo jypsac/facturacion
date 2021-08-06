@@ -132,11 +132,11 @@ class UsuarioController extends Controller
             $cuerpo_mensaje  = view('email_html.email_cod_confirmacion',compact('codigo_unidos','nombre_personal','usuario_hora','empresa'));
             /* envio*/
             /* Confi*/
-            $smtpAddress = 'mail.grupojypsac.com';
+            $smtpAddress = 'mail.jypsac.com';
             $port = '465';
-            $encryption = 'ssl';
-            $yourEmail = 'informes@grupojypsac.com';
-            $yourPassword = 'vP8JzoYs5Inu';
+            $encryption = 'SSL';
+            $yourEmail = 'desarrollo@jypsac.com';
+            $yourPassword = '=+WQyq73%cC"';
             $sendto = $email;
             $titulo = 'Sistema-Codigo Confirmacion';
             $mensaje = $cuerpo_mensaje;
@@ -286,11 +286,11 @@ class UsuarioController extends Controller
     public function  envio_codigo(Request $request, $id)
     {
         /*Configuracion Correo*/
-        $smtpAddress = 'mail.grupojypsac.com';
+        $smtpAddress = 'mail.jypsac.com';
         $port = '465';
-        $encryption = 'ssl';
-        $yourEmail = 'informes@grupojypsac.com';
-        $yourPassword = 'vP8JzoYs5Inu';
+        $encryption = 'SSL';
+        $yourEmail = 'desarrollo@jypsac.com';
+        $yourPassword = '=+WQyq73%cC"';
         /*Fin confing correo*/
 
         /*Codigo recibido del index*/
