@@ -49,16 +49,23 @@ class GuiaRemisionController extends Controller
         //Guardado de almacen para inventario-inicial
       $almacen=$request->get('almacen');
       $id_almacen=Almacen::where('id',$almacen)->first();
-      $almacen_codigo_sunat=$id_almacen->codigo_sunat;/*Codigo que brinda sunat a cada sucursal*/
+      $almacen_serie_remision=$id_almacen->serie_remision;/*Codigo que brinda sunat a cada sucursal*/
+      $almacen_codigo = Almacen::orderBy('serie_remision','DESC')->latest()->first(); // NUYMERO SERIE DE REMISIONMAS ALTO PARA EL CAMBIO
       if ($id_almacen->cod_guia=='NN'){
         $agrupar_almacen=Guia_remision::where('almacen_id',$almacen)->get()->last();
         $numero = substr(strstr($agrupar_almacen->cod_guia, '-'), 1);
-        $numero++;
+        if($numero == 99999999){
+          $ultima_serie = $almacen_codigo->serie_remision+1;
+          $numero = 00000000;
+        }else{
+          $ultima_serie = $almacen_serie_remision;
+        }
+      } else{
+        $numero=$id_almacen->cod_guia;
+        $ultima_serie = $almacen_serie_remision;
       }
-      else{
-        $numero=$id_almacen->cod_guia+1;
-      }
-      $cantidad_sucursal=str_pad($almacen_codigo_sunat, 3, "0", STR_PAD_LEFT);
+      $numero++;
+      $cantidad_sucursal=str_pad($ultima_serie, 3, "0", STR_PAD_LEFT);
       $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
       $codigo_guia='GR'.$cantidad_sucursal.'-'.$cantidad_registro;
 
@@ -96,16 +103,26 @@ class GuiaRemisionController extends Controller
         //Guardado de almacen para inventario-inicial
       $almacen=$request->get('almacen');
       $id_almacen=Almacen::where('id',$almacen)->first();
-      $almacen_codigo_sunat=$id_almacen->codigo_sunat;/*Codigo que brinda sunat a cada sucursal*/
+      $almacen_serie_remision=$id_almacen->serie_remision;/*Codigo que brinda sunat a cada sucursal*/
+      $almacen_codigo = Almacen::orderBy('serie_remision','DESC')->latest()->first(); // NUYMERO SERIE DE REMISIONMAS ALTO PARA EL CAMBIO
       if ($id_almacen->cod_guia=='NN') {
         $agrupar_almacen=Guia_remision::where('almacen_id',$almacen)->get()->last();
         $numero = substr(strstr($agrupar_almacen->cod_guia, '-'), 1);
-        $numero++;
+        if($numero == 99999999){
+          $ultima_serie = $almacen_codigo->serie_remision+1;
+          $almacen_update = Almacen::find($id_almacen->id);
+          $almacen_update->serie_remision = $ultima_serie;
+          $almacen_update->save();
+          $numero = 00000000;
+        }else{
+          $ultima_serie = $almacen_serie_remision;
+        }
+      } else{
+        $numero = $id_almacen->cod_guia;
+        $ultima_serie = $almacen_serie_remision;
       }
-      else{
-        $numero=$id_almacen->cod_guia+1;
-      }
-      $cantidad_sucursal=str_pad($almacen_codigo_sunat, 3, "0", STR_PAD_LEFT);
+      $numero++;
+      $cantidad_sucursal=str_pad($ultima_serie, 3, "0", STR_PAD_LEFT);
       $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
       $codigo_guia='GR'.$cantidad_sucursal.'-'.$cantidad_registro;
 
