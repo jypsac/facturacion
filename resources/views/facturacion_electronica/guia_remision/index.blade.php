@@ -40,6 +40,7 @@
                                         <th>Codigo de Guia</th>
                                         <th>Fecha emision</th>
                                         <th>Fecha entrega</th>
+                                        <th>Tipo Transporte</th>
                                         <th>Enviar A Sunat</th>
                                     </tr>
                                 </thead>
@@ -50,6 +51,14 @@
                                         <td>{{$guia_remision->cod_guia}}</td>
                                         <td>{{$guia_remision->fecha_emision}}</td>
                                         <td>{{$guia_remision->fecha_entrega}}</td>
+                                        
+                                        @if($guia_remision->tipo_transporte==0)
+                                            <td>Sin Trasporte</td>
+                                        @elseif($guia_remision->tipo_transporte==1)
+                                            <td>Trasporte Publico</td>
+                                        @else 
+                                            <td>Trasporte Privado</td>
+                                        @endif
                                         <td>
                                             <center>
                                                 <form action="{{route('facturacion_electronica.guia_remision_sunat')}}" method="POST">

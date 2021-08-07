@@ -117,13 +117,13 @@ class FacturacionElectronicaController extends Controller
     {   
         $guia=Guia_remision::where('g_electronica',0)->where('id',$request->factura_id)->first();
         $guias_registros=g_remision_registro::where('guia_remision_id',$request->factura_id)->get();
+        $tipo_transporte=$guia->tipo_transporte;
 
-        // return $request;
         //configuracion
-         $see=Config_fe::guia_electronica();
+        $see=Config_fe::guia_electronica();
 
         //guia
-        $invoice=Config_fe::guia_remision($guia,$guias_registros);
+        $invoice=Config_fe::guia_remision($guia,$guias_registros,$tipo_transporte);
         
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);

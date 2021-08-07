@@ -157,6 +157,10 @@ class GuiaRemisionController extends Controller
       $guia_remision->vehiculo_id=$request->get('vehiculo');
       $guia_remision->conductor_id=$request->get('conductor');
     }
+    $guia_remision->tipo_transporte=$tipo_transporte;
+    //0= sin transporte 
+    //1= transporte publico 
+    //2= transporte privado
     $guia_remision->motivo_traslado=$request->get('motivo_traslado');
     $guia_remision->observacion=$request->get('observacion');
     $guia_remision->estado_anulado='0';

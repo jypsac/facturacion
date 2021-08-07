@@ -32,6 +32,8 @@ class CreateGuiaRemisionTable extends Migration
             $table->string('vehiculo_publico')->nullable();
             $table->string('conductor_id')->nullable();
 
+            $table->integer('tipo_transporte');
+
             $table->unsignedBigInteger('vehiculo_id')->nullable();
             $table->foreign('vehiculo_id')->references('id')->on('vehiculos')->onDelete('cascade');
 

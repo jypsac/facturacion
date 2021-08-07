@@ -28,6 +28,7 @@ use App\Empresa;
 use App\Igv;
 use App\Cuotas_Credito;
 use App\Guia_remision;
+use App\TransportePublico;
 
 
 // DATOS DE PRUEBA
@@ -523,7 +524,7 @@ class Config_fe extends Model
     }
 
     //llenado guia de remision
-    public static function guia_remision($guia, $guias_registros){
+    public static function guia_remision($guia, $guias_registros,$tipo_transporte){
         
         //$util = Util::getInstance();
         $empresa=Empresa::first();
@@ -544,17 +545,29 @@ class Config_fe extends Model
         ->setNombreComercial($empresa->nombre)
         ->setAddress($address);
 
-        $rel = new Document();
-        $rel->setTipoDoc('02') // Tipo: Numero de Orden de Entrega
-        ->setNroDoc('213123'); //Buscar ayuda sobre ello
+        //$rel = new Document();
+        //$rel->setTipoDoc('02') // Tipo: Numero de Orden de Entrega
+        //->setNroDoc('213123'); //Buscar ayuda sobre ello
 
-        $transp = new Transportist();
-        $transp->setTipoDoc('6')
-            // ->setNumDoc('20000000002')          //falta documentacion del conductor
-            // ->setRznSocial('TRANSPORTES S.A.C') //nombre de la conduccion
+
+        if($tipo_transporte==1){ //TRASNPORTE PUBLICO
+            $vehiculo_trasporte=TransportePublico::where('id',$guia->vehiculo_publico)->first();
+            $transp = new Transportist();
+            $transp->setTipoDoc('6')
+            ->setNumDoc($vehiculo_trasporte->ruc)          //falta documentacion del conductor
+            ->setRznSocial($vehiculo_trasporte->nombre); //nombre de la conduccion
+
+        }elseif($tipo_transporte==2){   //TRASPORTE PRIVADO
+            $empleado=Personal::where('id',$guia->conductor_id)->first();
+            $transp = new Transportist();
+            $transp->setTipoDoc('6')
+            ->setNumDoc($empresa->ruc)          //falta documentacion del conductor
+            ->setRznSocial($empresa->razon_social) //nombre de la conduccion
             ->setPlaca($guia->vehiculo->placa)   
-            ->setChoferTipoDoc('1')        ;     //ayuda
-            // ->setChoferDoc('40003344');         //doc chofer
+            ->setChoferTipoDoc('1')     //ayuda
+            ->setChoferDoc($empleado->numero_documento);         //doc chofer
+        }
+        
 
         //obtencion del peso total
         $peso_total=0;
@@ -562,20 +575,39 @@ class Config_fe extends Model
             $peso_total=$peso_total + $guia_electronica->peso;
         }
 
-        $envio = new Shipment();
-        $envio
-            ->setCodTraslado('01') // Cat.20
-            ->setDesTraslado('VENTA')
-            ->setModTraslado('01') // Cat.18
-            ->setFecTraslado(new DateTime())
-            // ->setCodPuerto('123')
-            ->setIndTransbordo(false)
-            ->setPesoTotal($peso_total)
-            ->setUndPesoTotal('KGM')    //unidad de medida
-            // ->setNumContenedor('XD-2232')
-            ->setLlegada(new Direction('150101', 'AV LIMA'))    //arreglar el ubigeo de llegada  salida
-            ->setPartida(new Direction('150104', 'AV LIMA'))    //arreglar el ubigeo de llegada  salida
-            ->setTransportista($transp);
+        $partida=Almacen::where('almacen_id',$guia->almacen->id)
+        $llegada=
+
+        if($tipo_transporte==0){
+            $envio = new Shipment();
+            $envio
+                ->setCodTraslado('01') // Cat.20
+                ->setDesTraslado('VENTA')
+                ->setModTraslado('01') // Cat.18
+                ->setFecTraslado(new DateTime())
+                // ->setCodPuerto('123')
+                ->setIndTransbordo(false)
+                ->setPesoTotal($peso_total)
+                ->setUndPesoTotal('KGM')    //unidad de medida
+                // ->setNumContenedor('XD-2232')
+                ->setLlegada(new Direction('150101', 'AV LIMA'))    //arreglar el ubigeo de llegada  salida
+                ->setPartida(new Direction('150104', 'AV LIMA'));    //arreglar el ubigeo de llegada  salida
+        }else{
+            $envio = new Shipment();
+            $envio
+                ->setCodTraslado('01') // Cat.20
+                ->setDesTraslado('VENTA')
+                ->setModTraslado('01') // Cat.18
+                ->setFecTraslado(new DateTime())
+                // ->setCodPuerto('123')
+                ->setIndTransbordo(false)
+                ->setPesoTotal($peso_total)
+                ->setUndPesoTotal('KGM')    //unidad de medida
+                // ->setNumContenedor('XD-2232')
+                ->setLlegada(new Direction('150101', 'AV LIMA'))    //arreglar el ubigeo de llegada  salida
+                ->setPartida(new Direction('150104', 'AV LIMA'))    //arreglar el ubigeo de llegada  salida
+                ->setTransportista($transp);
+        }
 
         //codigo correlaativo
         $codigo_guia=$guia->cod_guia;
@@ -597,7 +629,7 @@ class Config_fe extends Model
                 ->setNumDoc($guia->cliente->numero_documento)
                 ->setRznSocial($guia->cliente->empresa))
             ->setObservacion($guia->observacion)
-            ->setRelDoc($rel)
+            //->setRelDoc($rel)
             ->setEnvio($envio);
         
         foreach($guias_registros as $cont => $guia_registro){
