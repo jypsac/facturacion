@@ -43,7 +43,7 @@
                                         <th>Cliente</th>
                                         <th>Ruc/DNI</th>
                                         <th>Fecha Vencimiento</th>
-
+                                        <th>Guia Remision</th>
                                         <th>Enviar A Sunat</th>
                                     </tr>
                                 </thead>
@@ -63,6 +63,11 @@
                                         <td>{{$facturaciones->cotizacion->cliente->numero_documento}}</td>
                                         @endif
                                         <td>{{$facturaciones->fecha_vencimiento }}</td>
+                                        @if($facturaciones->guia_remision=="0")
+                                        <td>Sin guia</td>
+                                        @else
+                                        <td>{{$facturaciones->guia_remision}}</td>
+                                        @endif
                                         <td>
                                             <center>
                                                 <form action="{{route('facturacion_electronica.factura_sunat')}}" method="POST">

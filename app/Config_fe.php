@@ -58,13 +58,20 @@ class Config_fe extends Model
         return $see;
     }
 
-    public static function factura($factura,$facturas_registros){
+    public static function factura($factura,$facturas_registros,$guia){
 
         //libro: https://cpe.sunat.gob.pe/sites/default/files/inline-files/guia%2Bxml%2Bfactura%2Bversion%202-1%2B1%2B0%20%282%29_0.pdf
+        // return $guia;
+        if($guia==1){
+            $guiaRemision = (new Document())
+            ->setTipoDoc('09') // Guia de Remision remitente: 09, catalogo 01
+            ->setNroDoc($factura->guia_remision); // Serie y correlativo de la guia de remision
+            
+        }
 
-        // return $facturas_registros;
         $empresa=Empresa::first();
         $igv=Igv::first();
+
         // Cliente
         $client = (new Client())
         ->setTipoDoc('6')   //pagina 42 del pdf sunat 2.1
@@ -153,6 +160,12 @@ class Config_fe extends Model
             ->setMtoImpVenta($total)
             ;
 
+            if($guia==1){
+                $invoice->setGuias([
+                    $guiaRemision // Incluir guia remision.
+                ]);
+            }
+
 
             $formatter = new NumeroALetras();
             $valor=$formatter->toInvoice($total, 2, 'soles');
@@ -203,6 +216,13 @@ class Config_fe extends Model
             ->setMtoImpVenta($total)
             ;
 
+            if($guia==1){
+                $invoice->setGuias([
+                    $guiaRemision // Incluir guia remision.
+                ]);
+            }
+            
+
             $formatter = new NumeroALetras();
             $valor=$formatter->toInvoice($total, 2, 'soles');
             
@@ -217,7 +237,7 @@ class Config_fe extends Model
         }
     }
     
-    public static function factura_servicio($factura,$facturas_registros){
+    public static function factura_servicio($factura,$facturas_registros,$guia){
         
         $empresa=Empresa::first();
         $igv=Igv::first();
@@ -575,9 +595,6 @@ class Config_fe extends Model
             $peso_total=$peso_total + $guia_electronica->peso;
         }
 
-        $partida=Almacen::where('almacen_id',$guia->almacen->id)
-        $llegada=
-
         if($tipo_transporte==0){
             $envio = new Shipment();
             $envio
@@ -590,8 +607,8 @@ class Config_fe extends Model
                 ->setPesoTotal($peso_total)
                 ->setUndPesoTotal('KGM')    //unidad de medida
                 // ->setNumContenedor('XD-2232')
-                ->setLlegada(new Direction('150101', 'AV LIMA'))    //arreglar el ubigeo de llegada  salida
-                ->setPartida(new Direction('150104', 'AV LIMA'));    //arreglar el ubigeo de llegada  salida
+                ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))   //arreglar el ubigeo de llegada  salida
+                ->setPartida(new Direction('150104', $guia->almacen->direccion));    //arreglar el ubigeo de llegada  salida
         }else{
             $envio = new Shipment();
             $envio

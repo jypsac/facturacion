@@ -59,16 +59,24 @@ class FacturacionElectronicaController extends Controller
         //facturas a buscar
         $factura=Facturacion::where('f_electronica',0)->where('id',$request->factura_id)->first();
         $factura_registro=Facturacion_registro::where('facturacion_id',$request->factura_id)->get();
+
+        if($factura->guia_remision=="0"){
+            $guia=0;
+        }else{
+            $guia=1;
+        }
+        
+        // return $guia;
         
         //configuracion de conexion
         $see=Config_fe::facturacion_electronica();
 
         if($factura->tipo=="producto"){
             //factura
-            $invoice=Config_fe::factura($factura, $factura_registro);
+            $invoice=Config_fe::factura($factura, $factura_registro,$guia);
         }elseif($factura->tipo=="servicio"){
             //factura
-            $invoice=Config_fe::factura_servicio($factura, $factura_registro);
+            $invoice=Config_fe::factura_servicio($factura, $factura_registro,$guia);
         }
         
         //envio a SUNAT    
