@@ -252,6 +252,8 @@ class GuiaRemisionController extends Controller
       $banco_count=Banco::where('estado','0')->count();
       $guia_remision=Guia_remision::find($id);
       $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
+      // $suma_peso=sum($guia_registro->peso);
+      // return $suma_peso;
       $banco=Banco::where('estado','0')->get();
       $empresa=Empresa::first();
 

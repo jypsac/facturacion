@@ -10,18 +10,18 @@
     <link href="{{ asset('css/estilos_pdf.css') }}" rel="stylesheet">
 </head>
 <style type="text/css">
-    .form-control, .single-line {
-        background-color: #FFFFFF;
-        background-image: none;
-        border: 1px solid #e5e6e7;
-        border-radius: 1px;
-        color: inherit;
-        display: block;
-        padding: 6px 12px;
-        transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
-        width: 100%;
-    }
-    @page { size: 420mm 297mm landscape; }
+.form-control, .single-line {
+    background-color: #FFFFFF;
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 1px;
+    color: inherit;
+    display: block;
+    padding: 6px 12px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100%;
+}
+@page { size: 420mm 297mm landscape; }
 </style>
 <div class="wrapper wrapper-content animated fadeInRight">
 
@@ -71,31 +71,31 @@
                             <th style="width: 2%;border-color: white"></th>
                             <td  style="border: 1px #e5e6e7 solid;border-radius: 8px;width: auto">
                                 <center><strong style="align-content: center;margin: 5px">Unidad de Transporte/Conductor</strong></center><br>
-                                 @if(isset($guia_remision->vehiculo_id))
-                            <p>
-                                <b>Placa del Vehiculo : </b>{{$guia_remision->vehiculo->placa}}<br>
-                                <b>Marca del Vehiculo : </b>{{$guia_remision->vehiculo->marca}}<br>
-                                <b>Conductor : </b>{{$guia_remision->personal->nombres}}
-                            </p>
-                            @elseif(isset($guia_remision->vehiculo_publico))
-                             <p>
-                                <b>Empresa:</b> {{$guia_remision->vehiculo_publicos->nombre}}<br>
-                                <b>Ruc: </b> {{$guia_remision->vehiculo_publicos->ruc}}<br>
-                                <b>Nota:</b>Esta Empresa es Publica
+                                @if(isset($guia_remision->vehiculo_id))
+                                <p>
+                                    <b>Placa del Vehiculo : </b>{{$guia_remision->vehiculo->placa}}<br>
+                                    <b>Marca del Vehiculo : </b>{{$guia_remision->vehiculo->marca}}<br>
+                                    <b>Conductor : </b>{{$guia_remision->personal->nombres}}
+                                </p>
+                                @elseif(isset($guia_remision->vehiculo_publico))
+                                <p>
+                                    <b>Empresa:</b> {{$guia_remision->vehiculo_publicos->nombre}}<br>
+                                    <b>Ruc: </b> {{$guia_remision->vehiculo_publicos->ruc}}<br>
+                                    <b>Nota:</b>Esta Empresa es Publica
 
-                            </p>
-                            @else
-                            <p>
-                                <b>Placa del Vehiculo : </b>No Hay Vehiculo<br>
-                                <b>Marca del Vehiculo : </b>No Hay Vehiculo<br>
-                                @if(isset($guia_remision->conductor_id))
-                                <b>Conductor : </b>{{$guia_remision->personal->nombres}}
+                                </p>
                                 @else
-                                <b>Conductor : </b> No Hay Conductor
-                                @endif
-                            </p>
+                                <p>
+                                    <b>Placa del Vehiculo : </b>No Hay Vehiculo<br>
+                                    <b>Marca del Vehiculo : </b>No Hay Vehiculo<br>
+                                    @if(isset($guia_remision->conductor_id))
+                                    <b>Conductor : </b>{{$guia_remision->personal->nombres}}
+                                    @else
+                                    <b>Conductor : </b> No Hay Conductor
+                                    @endif
+                                </p>
 
-                            @endif
+                                @endif
                             </td>
                         </tr>
                     </tbody>
@@ -104,7 +104,7 @@
 
                 <table class="table " style="text-align: left;border-top: 0px" >
                     <thead style="text-align: left;">
-                       <tr align="left" style="text-align: left;font-weight: bold;border-top-width:  0px ">
+                     <tr align="left" style="text-align: left;font-weight: bold;border-top-width:  0px ">
                         <th>Codigo Producto </th>
                         <th>Marca / Descripcion</th>
                         <th>Unid.Medida</th>
@@ -123,6 +123,13 @@
                     <td>{{$guia_registros->producto->peso}}</td>
                 </tr>
                 @endforeach
+                <tr>
+                    <td colspan="6"><hr></td>
+                </tr>
+                <tr>
+                    <td colspan="4" align="right">Peso Total:</td>
+                    <td>{{$guia_registro->sum('peso')}}KL</td>
+                </tr>
             </tbody>
         </table>
         <div style="height: 150px"></div>
@@ -147,10 +154,10 @@
 
         <table style="border-collapse: separate;">
             <tr>
-             <th style="width: 2%;border-color: white"></th>
-             @foreach($banco as $bancos)
-             @if($banco_count==3)
-             <th width="33%" style="border: 1px #e5e6e7 solid;border-radius: 8px;">
+               <th style="width: 2%;border-color: white"></th>
+               @foreach($banco as $bancos)
+               @if($banco_count==3)
+               <th width="33%" style="border: 1px #e5e6e7 solid;border-radius: 8px;">
                 @elseif($banco_count==2)
                 <th width="50%"style="border: 1px #e5e6e7 solid;border-radius: 8px;">
                     @elseif($banco_count==1)
@@ -202,35 +209,35 @@
 </div>
 
 <style type="text/css">
-    .form-control{border-radius: 10px; height: auto;}
-    .ibox-tools a{color: white !important}
-    .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
-    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {border-top-width: 0px;}
+.form-control{border-radius: 10px; height: auto;}
+.ibox-tools a{color: white !important}
+.a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {border-top-width: 0px;}
 
-    *{font-size: 15px;color: #495057;font-family: apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
-    .cero{
-        margin-bottom: 0px;
+*{font-size: 15px;color: #495057;font-family: apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif,"Apple Color Emoji","Segoe UI Emoji","Segoe UI Symbol"}
+.cero{
+    margin-bottom: 0px;
 
-    }
-    .table-bordered .blanco {
-        border: none;
-    }
-    .blanco{border: none;
-        border: medium transparent;
-    }
-    .border {
-        border-color: #aaaaaa;
-        border-width: 1px;
-        border-style: solid;
-    }
-    .table {
-        width: 100%;
-        max-width: 100%;
-        margin-bottom: 1rem;
-        background-color: transparent;
-        border-top-width: 0px;
+}
+.table-bordered .blanco {
+    border: none;
+}
+.blanco{border: none;
+    border: medium transparent;
+}
+.border {
+    border-color: #aaaaaa;
+    border-width: 1px;
+    border-style: solid;
+}
+.table {
+    width: 100%;
+    max-width: 100%;
+    margin-bottom: 1rem;
+    background-color: transparent;
+    border-top-width: 0px;
 
-    }
+}
 </style>
 
 </body>

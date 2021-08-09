@@ -115,7 +115,6 @@
                             <tr >
                                 <th>Codigo Producto </th>
                                 <th>Marca / Descripcion</th>
-                                <th>N/S</th>
                                 <th>Unid.Medida</th>
                                 <th>Cantidad</th>
                                 <th>Peso</th>
@@ -124,14 +123,20 @@
                              @foreach($guia_registro as $guia_registros)
                              <tr>
                                 <td>{{$guia_registros->id}}</td>
-                                <td>{{$guia_registros->producto->marcas_i_producto->nombre}} / {{$guia_registros->producto->nombre}}</td>
-                                <td>{{$guia_registros->numero_serie}}</td>
+                                <td>{{$guia_registros->producto->marcas_i_producto->nombre}} / {{$guia_registros->producto->nombre}} N/S {{$guia_registros->numero_serie}}</td>
                                 <td>{{$guia_registros->producto->unidad_i_producto->medida}}</td>
                                 <td>{{$guia_registros->cantidad}}</td>
                                 <td>{{$guia_registros->producto->peso}}</td>
                             </tr>
 
                             @endforeach
+                            <tr>
+                                <td colspan="6"><hr></td>
+                            </tr>
+                            <tr>
+                                <td colspan="4" align="right">Peso Total:</td>
+                                <td>{{$guia_registro->sum('peso')}}KL</td>
+                            </tr>
                         </tbody>
                     </table>
                 </div><!-- /table-responsive -->

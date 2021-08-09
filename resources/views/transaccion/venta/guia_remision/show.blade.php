@@ -7,7 +7,6 @@
  @section('value_accion', 'Atras')
 
  @section('content')
-
  <div class="wrapper wrapper-content animated fadeInRight">
     <div class="ibox-title" style="padding-right: 3.1%">
         <div class="row tooltip-demo">
@@ -155,7 +154,7 @@
                         </tr>
                         <tr>
                             <td colspan="4" align="right">Peso Total:</td>
-                            <td>50KL</td>
+                            <td>{{$guia_registro->sum('peso')}}KL</td>
                         </tr>
                     </tbody>
                 </table>
