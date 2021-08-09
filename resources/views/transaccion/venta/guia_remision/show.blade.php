@@ -150,6 +150,13 @@
                             <td>{{$guia_registros->producto->peso}}</td>
                         </tr>
                         @endforeach
+                        <tr>
+                            <td colspan="5"><hr></td>
+                        </tr>
+                        <tr>
+                            <td colspan="4" align="right">Peso Total:</td>
+                            <td>50KL</td>
+                        </tr>
                     </tbody>
                 </table>
             </div><!-- /table-responsive -->

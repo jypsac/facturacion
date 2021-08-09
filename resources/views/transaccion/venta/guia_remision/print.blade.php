@@ -54,7 +54,7 @@
                     <div class="col-sm-6" align="center">
                         <div class="form-control"><h3>Domicilio De Partida</h3>
                             <div align="left" style="font-size: 13px">
-                            <p>{{$guia_remision->cliente->direccion}}</p>
+                            <p>{{$guia_remision->almacen->direccion}}</p>
                             </div>
                         </div>
                     </div>
