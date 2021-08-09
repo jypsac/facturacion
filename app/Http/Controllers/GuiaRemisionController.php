@@ -68,7 +68,7 @@ class GuiaRemisionController extends Controller
       $numero++;
       $cantidad_sucursal=str_pad($ultima_serie, 3, "0", STR_PAD_LEFT);
       $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
-      $codigo_guia='GR'.$cantidad_sucursal.'-'.$cantidad_registro;
+      $codigo_guia='T'.$cantidad_sucursal.'-'.$cantidad_registro;
 
       /* Fin de Codigo*/
 
@@ -126,7 +126,7 @@ class GuiaRemisionController extends Controller
       $numero++;
       $cantidad_sucursal=str_pad($ultima_serie, 3, "0", STR_PAD_LEFT);
       $cantidad_registro=str_pad($numero, 8, "0", STR_PAD_LEFT);
-      $codigo_guia='GR'.$cantidad_sucursal.'-'.$cantidad_registro;
+      $codigo_guia='T'.$cantidad_sucursal.'-'.$cantidad_registro;
 
       /* Fin de Codigo*/
 
