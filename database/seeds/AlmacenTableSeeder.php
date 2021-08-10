@@ -21,6 +21,7 @@ class AlmacenTableSeeder extends Seeder
       'codigo_sunat' => '1',
       'direccion' => 'Calle Cuzco nr1 Lima-Lima',
       'responsable' => '1',
+      'cod_postal' => '154545',
       'descripcion' => 'Almacen de perritos',
       'cod_fac' => '0',
       'cod_bol' => '0',

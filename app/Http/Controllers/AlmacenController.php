@@ -64,6 +64,7 @@ class AlmacenController extends Controller
             'cod_bol' => ['required','integer'],
             'cod_guia' => ['required','integer'],
             'codigo_sunat' => ['required','unique:almacen'],
+            'ubigeo' => ['required', 'max:6', 'min:6'],
         ]);
 
         $almacen=new Almacen;
@@ -77,6 +78,7 @@ class AlmacenController extends Controller
         $almacen->abreviatura=$request->get('abreviatura');
         $almacen->responsable=$request->get('responsable');
         $almacen->direccion=$request->get('direccion');
+        $almacen->cod_postal=$request->get('ubigeo');
         $almacen->descripcion=$request->get('descripcion');
         $almacen->cod_fac=$request->get('cod_fac');
         $almacen->cod_bol=$request->get('cod_bol');

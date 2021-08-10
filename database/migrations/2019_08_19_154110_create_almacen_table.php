@@ -24,6 +24,7 @@ class CreateAlmacenTable extends Migration
             $table->integer('serie_boleta')->nullable();
             $table->integer('serie_remision')->nullable();
             // F001 - B001 - GR001
+            $table->string('cod_postal');
             $table->text('direccion');
             // $table->string('responsable');
             $table->text('descripcion');

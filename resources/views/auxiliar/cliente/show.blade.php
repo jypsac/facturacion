@@ -13,7 +13,7 @@
 @section('content')
 <div class="wrapper wrapper-content  animated fadeInRight">
   <div class="row">
-    <div class="col-sm-8">
+    <div class="col-sm-7">
       <div class="ibox">
         <div class="ibox-content">
           <h2>Contacto Cliente</h2>
@@ -86,17 +86,17 @@
                                           <div class="col-lg-6">
                                             <h4>Estado</h4>
                                             @if($contacto_cantidad_estado==1)
-                                              @if($contacto->estado==0)
-                                              <select name="estado" id="" class="form-control" readonly="">
-                                                <option value="0"> Activo</option>
-                                                <option value="1"> Desactivo</option>
-                                              </select>
-                                              @elseif($contacto->estado==1)
-                                              <select name="estado" id="" class="form-control" >
-                                                <option value="1"> Desactivo</option>
-                                                <option value="0"> Activo</option>
-                                              </select>
-                                              @endif
+                                            @if($contacto->estado==0)
+                                            <select name="estado" id="" class="form-control" readonly="">
+                                              <option value="0"> Activo</option>
+                                              <option value="1"> Desactivo</option>
+                                            </select>
+                                            @elseif($contacto->estado==1)
+                                            <select name="estado" id="" class="form-control" >
+                                              <option value="1"> Desactivo</option>
+                                              <option value="0"> Activo</option>
+                                            </select>
+                                            @endif
                                             @else
                                             <select name="estado" id="" class="form-control" >
                                               @if($contacto->estado==0)
@@ -174,7 +174,7 @@
     </div>
 
     {{-- Cliente  --}}
-    <div class="col-sm-4">
+    <div class="col-sm-5">
       <div class="ibox selected">
         <div class="ibox-content">
           <div class="tab-content">
@@ -255,7 +255,7 @@
                     <tbody>
                       <tr>
                         <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/ruc.svg')}}"> </td>
-                        <td colspan="2"><input type="text" name="nombre" class="form-control" value="{{$cliente_show->nombre}}"></td>
+                        <td colspan="2"><input type="text" name="nombre" class="form-control" placeholder="Nombre" value="{{$cliente_show->nombre}}"></td>
                       </tr>
                       <tr>
                         <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/ruc.svg')}}"> </td>
@@ -267,25 +267,40 @@
                           <option value="pasaporte">Pasaporte</option>
                         </select>
                       </td>
-                      <td><input type="text"  name="numero_documento" value="{{$cliente_show->numero_documento}}" class="form-control"></td>
+                      <td><input type="text"  name="numero_documento" placeholder="Numero Documento" value="{{$cliente_show->numero_documento}}" class="form-control"></td>
                     </tr>
                     <tr>
                       <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/direccion.svg')}}"> </td>
-                      <td colspan="2"><textarea  name="direccion" class="form-control">{{$cliente_show->direccion}} </textarea></td>
+                      <td colspan="2"><textarea  name="direccion" placeholder="Direccion" class="form-control">{{$cliente_show->direccion}} </textarea></td>
                     </tr>
                     <tr>
                       <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/correo.svg')}}"> </td>
-                      <td colspan="2"><input type="text"  name="email" value="{{$cliente_show->email}}" class="form-control"></td>
+                      <td colspan="2"><input type="text"  name="email" placeholder="Correo" value="{{$cliente_show->email}}" class="form-control"></td>
                     </tr>
                     <tr>
                       <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/ubicacion.svg')}}"> </td>
-                      <td><input type="text"  name="pais" value="{{$cliente_show->pais}} " class="form-control">
-                      </td><td><input type="text" name="departamento" value="{{$cliente_show->departamento}}"  class="form-control">
+                      <td><input type="text"  name="pais" placeholder="Pais" value="{{$cliente_show->pais}} " class="form-control">
+                      </td><td><input type="text" name="departamento" placeholder="Departamento" value="{{$cliente_show->departamento}}"  class="form-control">
                       </td>
                     </tr>
                     <tr>
                       <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/ubicacion.svg')}}"> </td>
-                      <td><input type="text"  name="ciudad" value="{{$cliente_show->ciudad}}" class="form-control">
+                      <td><input type="text" placeholder="Ciudad" name="ciudad" value="{{$cliente_show->ciudad}}" class="form-control">
+                        <td><input type="number" placeholder="" placeholder="Codigo Ubigeo" name="ubigeo" value="{{$cliente_show->cod_postal}}" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/telefono.svg')}}"> </td>
+                        <td><input type="text" placeholder="Telefono"  name="telefono" value="{{$cliente_show->telefono}} " class="form-control"></td>
+                        <td><input type="text"  placeholder="Celular" name="celular" value="{{$cliente_show->celular}}" class="form-control"></td>
+                      </tr>
+                      <tr>
+                        <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/aniversario.svg')}}"> </td>
+                        <td><input type="date" placeholder="Aniversario" name="aniversario" value="{{$cliente_show->aniversario}}" class="form-control"></td>
+                        <td><input type="date" placeholder="" placeholder="Fecha de Registro" name="fecha_registro" value="{{$cliente_show->fecha_registro}}" class="form-control"></td>
+
+                      </tr>
+                      <tr>
+                        <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/ruc.svg')}}"> </td>
                         <td> <select class="form-control" name="tipo_cliente">
                           <option value="{{$cliente_show->tipo_cliente}}">{{$cliente_show->tipo_cliente}}</option>
                           <option disabled="">--------------------</option>
@@ -294,18 +309,6 @@
                           <option value="Cliente VIP">Cliente VIP</option>
                         </select>
                       </td>
-                    </tr>
-                    <tr>
-                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/telefono.svg')}}"> </td>
-                      <td><input type="text"  name="telefono" value="{{$cliente_show->telefono}} " class="form-control"></td>
-                      <td><input type="text"  name="celular" value="{{$cliente_show->celular}}" class="form-control"></td>
-                    </tr>
-                    <tr>
-                      <td class="client-avatar"><img src="{{ asset('/archivos/imagenes/clientes_svg/aniversario.svg')}}"> </td>
-                      <td><input type="text"  name="aniversario" value="{{$cliente_show->aniversario}}" class="form-control"></td>
-                      <td><input type="text"  name="fecha_registro" value="{{$cliente_show->fecha_registro}}" class="form-control"></td>
-                    </tr>
-                    <tr>
                       <td colspan="3" align="center"><button class="btn btn-primary" type="submit"> Guardar</button></td>
                     </tr>
                   </tbody>
@@ -323,7 +326,7 @@
 </div>
 </div>
 <style>
-  .form-control{border-radius: 5px}
+.form-control{border-radius: 5px}
 </style>
 <!-- Mainly scripts -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

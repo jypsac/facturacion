@@ -47,12 +47,16 @@
                         <div class="form-group  row">
                             <div class="col-sm-12" style="padding-bottom: 15px"><img src="{{asset('img/logos/almacen.svg')}}" width="100px"></div>
                             <label class="col-sm-2 col-form-label">Nombre:</label>
-                            <div class="col-sm-4">
-                                <input type="text" placeholder="Almacen" class="form-control" name="nombre" autocomplete="off" >
+                            <div class="col-sm-2">
+                                <input type="text" placeholder="Almacen" class="form-control" required="required" name="nombre" autocomplete="off" >
                             </div><br>
                             <label class="col-sm-2 col-form-label">Abreviatura:</label>
-                            <div class="col-sm-4">
+                            <div class="col-sm-2">
                                 <input type="text" class="form-control" name="abreviatura" autocomplete="off" required="required" placeholder="ALM.">
+                            </div>
+                            <label class="col-sm-2 col-form-label">Cod. Ubigeo:</label>
+                            <div class="col-sm-2">
+                                <input type="number"  class="form-control" name="ubigeo" autocomplete="off" required="required" value="150101">
                             </div>
 
                             <label class="col-sm-2 col-form-label">Responsable:</label>
@@ -71,12 +75,12 @@
 
                         <label class="col-sm-2 col-form-label">Descripcion:</label>
                         <div class="col-sm-4">
-                            <textarea class="form-control" name="descripcion" autocomplete="off" required="required">Almacen Localizado en ...</textarea>
+                            <textarea class="form-control" name="descripcion" autocomplete="off" required="required">Almacen ...</textarea>
                         </div>
 
                         <label class="col-sm-2 col-form-label">Codigo Sunat:</label>
                         <div class="col-sm-4">
-                            <input  type="text" class="form-control" name="codigo_sunat" autocomplete="off" required="required" placeholder="Numero de sucursal">
+                            <input  type="number" class="form-control" name="codigo_sunat" autocomplete="off" required="required" placeholder="Numero de sucursal">
                         </div>
                         <div class="col-sm-12">
                             <p class="form-control"  style="background: #57b59738;text-align: left;font-family: fangsong;"><b>Nota:</b>Los campos siguientes es el numero de registro que se continuara en el sistema.</p>
