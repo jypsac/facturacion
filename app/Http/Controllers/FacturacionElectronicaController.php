@@ -89,11 +89,10 @@ class FacturacionElectronicaController extends Controller
         $factura->f_electronica=1;
         $factura->save();
 
-        return $msg;
+        return redirect()->route('facturacion_electronica.index')->with('successMsg',$msg);
     }
 
     
-
     public function boleta(Request $request)
     {
         //boletas a buscar
@@ -116,13 +115,13 @@ class FacturacionElectronicaController extends Controller
         $boleta->b_electronica=1;
         $boleta->save();
 
-        return $msg;
+        return redirect()->route('facturacion_electronica.index_boleta')->with('successMsg',$msg);
     }
-
 
 
     public function guia_remision(Request $request)
     {   
+
         $guia=Guia_remision::where('g_electronica',0)->where('id',$request->factura_id)->first();
         $guias_registros=g_remision_registro::where('guia_remision_id',$request->factura_id)->get();
         $tipo_transporte=$guia->tipo_transporte;
@@ -143,7 +142,8 @@ class FacturacionElectronicaController extends Controller
         $guia->g_electronica=1;
         $guia->save();
 
-        return $msg;
+        return redirect()->route('facturacion_electronica.index_guia_remision')->with('successMsg',$msg);
+
     }
 
     /**

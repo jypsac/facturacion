@@ -26,7 +26,7 @@ class ClientesSeeder extends Seeder
     		'departamento' => "Lima",
     		'pais' => "Peru",
     		'tipo_cliente' => "Cliente Frencuentes",
-    		'cod_postal' => "7021",
+    		'cod_postal' => "702112",
     		'aniversario' => "0/00/0000 ",
     		'fecha_registro' => "2020-08-01 ",
     		'created_at' => '2020-08-01 11:36:57',

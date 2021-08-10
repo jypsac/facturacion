@@ -10,6 +10,13 @@
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
+                    <div class="ibox-content">
+                        @if(Session::has('successMsg'))
+                        <div class="alert alert-success">
+                            <a class="alert-link" href="#">{{ session('successMsg') }}</a>.
+                        </div>
+                        @endif
+                    </div>
                     <div class="ibox-title">
                         <h5>Boleta Electronica</h5>
                         <div class="ibox-tools">

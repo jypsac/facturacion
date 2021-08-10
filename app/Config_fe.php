@@ -608,7 +608,7 @@ class Config_fe extends Model
                 ->setUndPesoTotal('KGM')    //unidad de medida
                 // ->setNumContenedor('XD-2232')
                 ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))   //arreglar el ubigeo de llegada  salida
-                ->setPartida(new Direction('150104', $guia->almacen->direccion));    //arreglar el ubigeo de llegada  salida
+                ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion));    //arreglar el ubigeo de llegada  salida
         }else{
             $envio = new Shipment();
             $envio
@@ -621,8 +621,8 @@ class Config_fe extends Model
                 ->setPesoTotal($peso_total)
                 ->setUndPesoTotal('KGM')    //unidad de medida
                 // ->setNumContenedor('XD-2232')
-                ->setLlegada(new Direction('150101', 'AV LIMA'))    //arreglar el ubigeo de llegada  salida
-                ->setPartida(new Direction('150104', 'AV LIMA'))    //arreglar el ubigeo de llegada  salida
+                ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))    //arreglar el ubigeo de llegada  salida
+                ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion))    //arreglar el ubigeo de llegada  salida
                 ->setTransportista($transp);
         }
 
