@@ -11,23 +11,23 @@ class ServicioSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('servicios')->insert([
-            'codigo_servicio'=>"SERV-00001",
-            'codigo_original'=>123,
-            'moneda_id'=>1,
-            'nombre'=>"Servicios1",
-            'categoria'=>"Servicios",
-            'precio_nacional'=>100,
-            'precio_extranjero'=>30,
-            'utilidad'=>50,
-            'descuento'=>10,
-            'descripcion'=>"instalacion de windows",
-            'foto'=>"defecto.png",
-            'estado_anular'=>0,
-            'estado_activo'=>0,
-            'created_at' => date('2019-08-01 00:00:00'),
-            'updated_at' => date('2019-08-01 00:00:00')
-        ]);
+        // DB::table('servicios')->insert([
+        //     'codigo_servicio'=>"SERV-00001",
+        //     'codigo_original'=>123,
+        //     'moneda_id'=>1,
+        //     'nombre'=>"Servicios1",
+        //     'categoria'=>"Servicios",
+        //     'precio_nacional'=>100,
+        //     'precio_extranjero'=>30,
+        //     'utilidad'=>50,
+        //     'descuento'=>10,
+        //     'descripcion'=>"instalacion de windows",
+        //     'foto'=>"defecto.png",
+        //     'estado_anular'=>0,
+        //     'estado_activo'=>0,
+        //     'created_at' => date('2019-08-01 00:00:00'),
+        //     'updated_at' => date('2019-08-01 00:00:00')
+        // ]);
     }
 
 }
