@@ -17,6 +17,9 @@ use App\Producto;
 use App\TransportePublico;
 use App\Vehiculo;
 use App\g_remision_registro;
+use App\Stock_almacen;
+use App\Stock_producto;
+use App\Kardex_entrada;
 use App\kardex_entrada_registro;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
@@ -100,6 +103,7 @@ class GuiaRemisionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request){
+
         /*Codigo*/
         //Guardado de almacen para inventario-inicial
         $almacen=$request->get('almacen');
@@ -146,6 +150,47 @@ class GuiaRemisionController extends Controller
         }
         $tipo_transporte=$request->get('tipo_transporte');
 
+        //registro de productos de la tabla guia de remision
+        $articulo = $request->input('articulo');
+        $count_articulo=count($articulo);
+
+        for($i=0 ; $i<$count_articulo;$i++){
+            $articulos_val[$i]= $request->input('articulo')[$i];
+            $producto_id_val[$i]=strstr($articulos_val[$i], ' ', true);
+        }
+
+        //validacion
+        //calculo para el stock del producto
+        $almacen_producto_validacion=$id_almacen->id;
+        for($i=0;$i<$count_articulo;$i++){
+            $kardex_entrada_v=Kardex_entrada::where('almacen_id',$almacen_producto_validacion)->get();
+            $kardex_entrada_count_v=Kardex_entrada::where('almacen_id',$almacen_producto_validacion)->count();
+
+            //return $kardex_entrada;
+            foreach($kardex_entrada_v as $kardex_entradas_v){
+                $kadex_entrada_id_v[]=$kardex_entradas_v->id;
+            }
+            // return $kardex_entrada;
+            for($x=0;$x<$kardex_entrada_count_v;$x++){
+                if(Kardex_entrada_registro::where('producto_id',$producto_id_val[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first()){
+                    $nueva_v[]=Kardex_entrada_registro::where('producto_id',$producto_id_val[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first();
+                }
+            }
+            // return $nueva_v;
+            $comparacion_v=$nueva_v;
+            //buble para la cantidad
+            $cantidad_v=0;
+            foreach($comparacion_v as $comparaciones_v){
+                $cantidad_v=$comparaciones_v->cantidad+$cantidad_v;
+            }
+            // return $nueva_v;
+            $cantidad_entrada=$request->get('cantidad')[$i];
+            if($cantidad_v<$cantidad_entrada){
+               return "cantidad mayor al stock";
+            }
+
+        }
+
         $guia_remision=new Guia_remision;
         $guia_remision->cod_guia=$codigo_guia;
         $guia_remision->cliente_id=$cliente_id;
@@ -182,9 +227,7 @@ class GuiaRemisionController extends Controller
             $cotizacion_estado_aprobado->save();
         }
 
-        //registro de productos de la tabla guia de remision
-        $articulo = $request->input('articulo');
-        $count_articulo=count($articulo);
+        
 
         $stock = $request->input('stock');
         $count_stock=count($stock);
@@ -213,15 +256,57 @@ class GuiaRemisionController extends Controller
                 $guia_remision_registro->estado=1;
                 $guia_remision_registro->peso=$request->get('peso')[$i];
                 $guia_remision_registro->save();
+
+                $nueva=Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('almacen_id',$guia_remision->almacen_id)->where('estado',1)->get();
+
+                $comparacion=$nueva;
+                //buble para la cantidad
+                $cantidad=0;
+                foreach($comparacion as $comparaciones){
+                    $cantidad=$comparaciones->cantidad+$cantidad;
+                }
+                if(isset($comparacion)){
+                    $var_cantidad_entrada=$guia_remision_registro->cantidad;
+                    $contador=0;
+                    foreach ($comparacion as $p) {
+                        if($p->cantidad>$var_cantidad_entrada){
+                            $cantidad_mayor=$p->cantidad;
+                            $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                            $p->cantidad=$cantidad_final;
+                            if($cantidad_final==0){
+                                $p->estado=0;
+                                $p->save();
+                                break;
+                            }else{
+                                $p->save();
+                                break;
+                            }
+                        }elseif($p->cantidad==$var_cantidad_entrada){
+                            $p->cantidad=0;
+                            $p->estado=0;
+                            $p->save();
+                            break;
+                        }
+                        else{
+                            $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+                            $p->cantidad=0;
+                            $p->estado=0;
+                            $p->save();
+                        }
+                    }
+                }
+                //Resta en la tabla stock almacen
+                Stock_almacen::egreso($guia_remision->almacen_id,$producto_id[$i],$guia_remision_registro->cantidad);
+                //resta de cantidades de productos para la tabla stock productos
+                    $stock_productos=Stock_producto::where('producto_id',$producto_id[$i])->first();
+                    $stock_productos->stock=$stock_productos->stock-$guia_remision_registro->cantidad;
+                    $stock_productos->save();
+
             }
         }else{
             return "campos no completados";
         }
-
-        //cantidad de articulos ( algoritmo ) parael descuento
         
-
-
         return redirect()->route('guia_remision.show',$guia_remision->id);
 
     }
