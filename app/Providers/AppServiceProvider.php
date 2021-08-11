@@ -34,6 +34,6 @@ class AppServiceProvider extends ServiceProvider
         Stock_producto::observe(StockProductosObserver::class);
         // kardex_entrada_registro::observe(KardexEntradaRegistroObserver::class);
         // TipoCambio::observe(new TipoCambioObserver());
-        // Schema::defaultStringLength(191);
+        Schema::defaultStringLength(191);
     }
 }
