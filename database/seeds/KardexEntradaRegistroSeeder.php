@@ -11,38 +11,38 @@ class KardexEntradaRegistroSeeder extends Seeder
      */
     public function run()
     {
-        DB::table('kardex_entrada_registro')->insert([
-            'id' => 1 ,
-            'kardex_entrada_id' => 1,
-            'producto_id' => 1,
-            'cantidad_inicial' => 200,
-            'precio_nacional' => 50.00,
-            'precio_extranjero' => 13.59,
-            'cantidad' => 200,
-            'cambio' => 3.68,
-            'estado' => 1,
-            'estado_devolucion' => NULL,
-            'almacen_id' => 1,
-            'tipo_registro_id' => 1,
-            'created_at' => date('2021-03-08 17:05:26'),
-           	'updated_at' => date('2021-03-08 17:05:26')
-        ]);
-         DB::table('kardex_entrada_registro')->insert([
-            'id' =>2 ,
-            'kardex_entrada_id' => 1,
-            'producto_id' => 2,
-            'cantidad_inicial' => 100,
-            'precio_nacional' => 25.00,
-            'precio_extranjero' =>6.79,
-            'cantidad' => 100,
-            'cambio' => 3.68,
-            'estado' => 1,
-            'estado_devolucion' => NULL,
-            'almacen_id' => 1,
-            'tipo_registro_id' => 1,
-            'created_at' => date('2021-03-08 17:05:26'),
-           	'updated_at' => date('2021-03-08 17:05:26')
-        ]);
+        // DB::table('kardex_entrada_registro')->insert([
+        //     'id' => 1 ,
+        //     'kardex_entrada_id' => 1,
+        //     'producto_id' => 1,
+        //     'cantidad_inicial' => 200,
+        //     'precio_nacional' => 50.00,
+        //     'precio_extranjero' => 13.59,
+        //     'cantidad' => 200,
+        //     'cambio' => 3.68,
+        //     'estado' => 1,
+        //     'estado_devolucion' => NULL,
+        //     'almacen_id' => 1,
+        //     'tipo_registro_id' => 1,
+        //     'created_at' => date('2021-03-08 17:05:26'),
+        //    	'updated_at' => date('2021-03-08 17:05:26')
+        // ]);
+        //  DB::table('kardex_entrada_registro')->insert([
+        //     'id' =>2 ,
+        //     'kardex_entrada_id' => 1,
+        //     'producto_id' => 2,
+        //     'cantidad_inicial' => 100,
+        //     'precio_nacional' => 25.00,
+        //     'precio_extranjero' =>6.79,
+        //     'cantidad' => 100,
+        //     'cambio' => 3.68,
+        //     'estado' => 1,
+        //     'estado_devolucion' => NULL,
+        //     'almacen_id' => 1,
+        //     'tipo_registro_id' => 1,
+        //     'created_at' => date('2021-03-08 17:05:26'),
+        //    	'updated_at' => date('2021-03-08 17:05:26')
+        // ]);
         // DB::table('kardex_entrada_registro')->insert([
         //     'id' => 3 ,
         //     'kardex_entrada_id' => 2,

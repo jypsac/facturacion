@@ -156,7 +156,7 @@
                                     <td>
                                          <div class="row">
                                             <div class="col-sm-5">
-                                                <select class="form-control" name="forma_pago"  id ="forma_pago" onchange="seleccionado()">
+                                                <select class="form-control" name="forma_pago"  id ="forma_pago" onchange="seleccionado_fp()">
                                                     @foreach($forma_pagos as $forma_pago)
                                                         <option value="{{$forma_pago->id}}">{{$forma_pago->nombre}}</option>
                                                     @endforeach
@@ -806,7 +806,7 @@
         }
     </style>
  <script type="text/javascript">
-        function seleccionado(){
+        function seleccionado_fp(){
             var opt = $('#forma_pago').val();
                 if(opt=="1"){
                     // $('#consulta_p_input').prop('disabled', false);

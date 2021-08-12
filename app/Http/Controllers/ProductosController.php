@@ -45,7 +45,7 @@ class ProductosController extends Controller
     {
         $monedas=Moneda::all();
         $familias=Familia::where('estado',0)->get();
-        $marcas=Marca::where('estado',1)->get();
+        $marcas=Marca::where('estado',0)->get();
         $estados=Estado::all();
         $categorias=Categoria::where('descripcion','PRODUCTOS')->first();
         $unidad_medidas=Unidad_medida::all();
