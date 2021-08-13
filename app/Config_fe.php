@@ -630,14 +630,13 @@ class Config_fe extends Model
         $codigo_guia=$guia->cod_guia;
         $serie=explode("-",$codigo_guia);
 
-        $correlativo=substr($serie[1],-3);
-        $serie=$serie[0];
+        $correlativo=$serie[1];
+        $serie_g=$serie[0];
 
-        $correlativo_guia="T".$correlativo;
 
         $despatch = new Despatch();
         $despatch->setTipoDoc('09')
-            ->setSerie($correlativo_guia)      //cambiar codigo de guia
+            ->setSerie($serie_g)      //cambiar codigo de guia
             ->setCorrelativo($correlativo)
             ->setFechaEmision(new DateTime())
             ->setCompany($company)
