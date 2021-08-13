@@ -57,6 +57,9 @@ class AlmacenController extends Controller
         $this->validate($request,[
             'nombre' => ['required'],
             'abreviatura' => ['required','unique:almacen'],
+            'serie_factura' => ['required','unique:almacen'],
+            'serie_boleta' => ['required','unique:almacen'],
+            'serie_remision' => ['required','unique:almacen'],
             'responsable' => ['required'],
             'direccion' => ['required'],
             'descripcion' => ['required'],
@@ -69,12 +72,12 @@ class AlmacenController extends Controller
 
         $almacen=new Almacen;
         $almacen->nombre=$request->get('nombre');
-        $serie_fact_last = Almacen::orderBy('serie_factura','DESC')->latest()->first();
-        $almacen->serie_factura=$serie_fact_last->serie_factura+1;
-        $serie_bol_last = Almacen::orderBy('serie_boleta','DESC')->latest()->first();
-        $almacen->serie_boleta=$serie_bol_last->serie_boleta+1;
-        $serie_guia_last = Almacen::orderBy('serie_remision','DESC')->latest()->first();
-        $almacen->serie_remision=$serie_guia_last->serie_remision+1;
+        // $serie_fact_last = Almacen::orderBy('serie_factura','DESC')->latest()->first();
+        $almacen->serie_factura=$request->get('serie_factura');
+        // $serie_bol_last = Almacen::orderBy('serie_boleta','DESC')->latest()->first();
+        $almacen->serie_boleta=$request->get('serie_boleta');;
+        // $serie_guia_last = Almacen::orderBy('serie_remision','DESC')->latest()->first();
+        $almacen->serie_remision=$request->get('serie_remision');;
         $almacen->abreviatura=$request->get('abreviatura');
         $almacen->responsable=$request->get('responsable');
         $almacen->direccion=$request->get('direccion');

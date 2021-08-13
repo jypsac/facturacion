@@ -85,17 +85,35 @@
                         <div class="col-sm-12">
                             <p class="form-control"  style="background: #57b59738;text-align: left;font-family: fangsong;"><b>Nota:</b>Los campos siguientes es el numero de registro que se continuara en el sistema.</p>
                         </div>
-                        <label class="col-sm-2 col-form-label">Cod.Facturacion:</label>
-                        <div class="col-sm-2">
-                            <input type="text" value="0" class="form-control" name="cod_fac" autocomplete="off" required="required">
+                        <div class="col-lg-4 ">
+                            <label class="col-sm-12 col-form-label">Cod.Facturacion:</label>
+                             <div class="col-sm-12 input-group">
+                                <label class="col-form-label">F00 &nbsp; </label>
+                                <input type="text" value="" class="form-control col-sm-3" name="serie_factura" autocomplete="off" required="required" style="border-radius: 5px">
+
+                             <label class="col-form-label"> - 000 </label>
+                             <input type="text"  name="cod_fac" class="form-control col-sm-3">
+                             </div>
                         </div>
-                        <label class="col-sm-2 col-form-label">Cod.Boleta:</label>
-                        <div class="col-sm-2">
-                            <input type="text" value="0" class="form-control" name="cod_bol" autocomplete="off" required="required">
+                        <div class="col-lg-4 ">
+                            <label class="col-sm-12 col-form-label">Cod.Boleta:</label>
+                             <div class="col-sm-12 input-group">
+                                <label class="col-form-label">B00 &nbsp; </label>
+                                <input type="text" value="" class="form-control col-sm-3" name="serie_boleta" autocomplete="off" required="required" style="border-radius: 5px">
+
+                             <label class="col-form-label"> - 000 </label>
+                             <input type="text"  name="cod_bol" class="form-control col-sm-3">
+                             </div>
                         </div>
-                        <label class="col-sm-2 col-form-label">Cod.Guia R.:</label>
-                        <div class="col-sm-2">
-                            <input type="text" value="0" class="form-control" name="cod_guia" autocomplete="off" required="required">
+                        <div class="col-lg-4 ">
+                            <label class="col-sm-12 col-form-label">Cod.Guia R.:</label>
+                             <div class="col-sm-12 input-group">
+                                <label class="col-form-label">T00 &nbsp; </label>
+                                <input type="text" value="" class="form-control col-sm-3" name="serie_remision" autocomplete="off" required="required" style="border-radius: 5px">
+
+                             <label class="col-form-label"> - 000 </label>
+                             <input type="text"  name="cod_guia" class="form-control col-sm-3">
+                             </div>
                         </div>
                     </div>
 
@@ -237,31 +255,50 @@
                                                                     </div> --}}
                                                                 </div>
                                                                 <div class="form-group  row">
-                                                                    @if(is_numeric($almacen->cod_fac))
+                                                                    {{-- @if(is_numeric($almacen->cod_fac)) --}}
                                                                     <div class="col-lg-4 ">
                                                                         <label class="col-sm-12 col-form-label">Cod.Facturacion:</label>
                                                                          <div class="col-sm-12 input-group">
                                                                             <label class="col-form-label">F00 &nbsp; </label>
-                                                                            <input type="text" value="{{$almacen->serie_factura}}" class="form-control col-sm-3" name="cod_fac" autocomplete="off" required="required" style="border-radius: 5px">
-                                                                        </div>
+                                                                            <input type="text" value="{{$almacen->serie_factura}}" class="form-control col-sm-3" name="serie_factura" autocomplete="off" required="required" readonly="" style="border-radius: 5px">
+                                                                        @if(is_numeric($almacen->cod_fac))
+                                                                         <label class="col-form-label"> - 000 </label>
+                                                                         <input type="text" value="{{$almacen->cod_fac}}" name="cod_fac" class="form-control col-sm-3">
+                                                                         @endif
+                                                                         </div>
                                                                     </div>
 
-                                                                    @endif
+                                                                    {{-- @endif --}}
 
-                                                                    @if(is_numeric($almacen->cod_bol))
-                                                                    <label class="col-sm-4 col-form-label">Cod.Boleta:
-                                                                    <div class="col-sm-2">
-                                                                        <input type="text" value="{{$almacen->cod_bol}}" class="form-control" name="cod_bol" autocomplete="off" required="required">
+                                                                    {{-- @if(is_numeric($almacen->cod_bol)) --}}
+                                                                    <div class="col-lg-4 ">
+                                                                        <label class="col-sm-12 col-form-label">Cod.Boleta:</label>
+                                                                         <div class="col-sm-12 input-group">
+                                                                            <label class="col-form-label">B00 &nbsp; </label>
+                                                                            <input type="text" value="{{$almacen->serie_boleta}}" class="form-control col-sm-3" name="serie_boleta" autocomplete="off" readonly="" required="required" style="border-radius: 5px">
+
+                                                                         <label class="col-form-label"> - 000 </label>
+                                                                         @if(is_numeric($almacen->cod_bol))
+                                                                         <input type="text" value="{{$almacen->cod_bol}}" name="cod_bol" class="form-control col-sm-3">
+                                                                         @endif
+                                                                         </div>
                                                                     </div>
-                                                                    </label>
-                                                                    @endif
-                                                                    @if(is_numeric($almacen->cod_guia))
-                                                                    <label class="col-sm-4 col-form-label">Cod.Guia R.:
-                                                                    <div class="col-sm-2">
-                                                                        <input type="text" value="{{$almacen->cod_guia}}" class="form-control" name="cod_guia" autocomplete="off" required="required">
+
+                                                                    {{-- @endif --}}
+                                                                    {{-- @if(is_numeric($almacen->cod_guia)) --}}
+                                                                    <div class="col-lg-4 ">
+                                                                        <label class="col-sm-12 col-form-label">Cod.Guia R.:</label>
+                                                                         <div class="col-sm-12 input-group">
+                                                                            <label class="col-form-label">T00 &nbsp; </label>
+                                                                            <input type="text" value="{{$almacen->serie_remision}}" readonly="" class="form-control col-sm-3" name="serie_remision" autocomplete="off" required="required" style="border-radius: 5px">
+
+                                                                         <label class="col-form-label"> - 000 </label>
+                                                                         @if(is_numeric($almacen->cod_guia))
+                                                                         <input type="text" value="{{$almacen->cod_guia}}" name="cod_guia" class="form-control col-sm-3">
+                                                                         </div>
+                                                                         @endif
                                                                     </div>
-                                                                    </label>
-                                                                    @endif
+                                                                    {{-- @endif --}}
                                                                 </div>
                                                                 <button class="btn btn-primary" type="submit" name="action">Guardar</button>
                                                             </form>
