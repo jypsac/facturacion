@@ -58,6 +58,7 @@ class ClienteController extends Controller
      $cliente->telefono=$request->get('telefono');
      $cliente->celular=$request->get('celular');
      $cliente->documento_identificacion=$request->get('documento_identificacion');
+     $cliente->empresa=$request->get('nombre');
      $cliente->numero_documento=$request->get('numero_documento');
      $cliente->ciudad=$request->get('ciudad');
      $cliente->departamento=$request->get('departamento');
