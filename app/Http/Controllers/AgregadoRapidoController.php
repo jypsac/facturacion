@@ -99,7 +99,7 @@ class AgregadoRapidoController extends Controller
            $contacto->email=$request->get('email_contacto');
            $contacto->clientes_id=$cliente->id;
            $contacto->save();
-           return back();
+           return "ee";
        }else{
           return back()->withErrors(['Cliente ya Agregado!']);
        }
