@@ -51,10 +51,22 @@ class Config_fe extends Model
     }
 
     public static function guia_electronica(){
+
         $see = new See();
         $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
         $see->setService(SunatEndpoints::GUIA_BETA);
         $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
+        // ...
+
+        // $pfx = file_get_contents('mycert.pfx');
+        // $password = 'YOUR-PASSWORD';
+
+        // $certificate = new X509Certificate($pfx, $password);
+
+        // $see->setCertificate($certificate->export(X509ContentType::PEM));
+
+// ...
+
         return $see;
     }
 
@@ -408,11 +420,11 @@ class Config_fe extends Model
         // Emisor
         $address = new Address();
         $address->setUbigueo('150101')
-            ->setDepartamento($empresa->region_provincia)
-            ->setProvincia($empresa->region_provincia)
-            ->setDistrito($empresa->ciudad)
-            ->setUrbanizacion('-')
-            ->setDireccion($empresa->calle);
+        ->setDepartamento($empresa->region_provincia)
+        ->setProvincia($empresa->region_provincia)
+        ->setDistrito($empresa->ciudad)
+        ->setUrbanizacion('-')
+        ->setDireccion($empresa->calle);
 
         $company = (new Company())
         ->setRuc($empresa->ruc)
@@ -609,9 +621,9 @@ class Config_fe extends Model
                 // ->setNumContenedor('XD-2232')
                 ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))   //arreglar el ubigeo de llegada  salida
                 ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion));    //arreglar el ubigeo de llegada  salida
-        }else{
-            $envio = new Shipment();
-            $envio
+            }else{
+                $envio = new Shipment();
+                $envio
                 ->setCodTraslado('01') // Cat.20
                 ->setDesTraslado('VENTA')
                 ->setModTraslado('01') // Cat.18
@@ -624,18 +636,18 @@ class Config_fe extends Model
                 ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))    //arreglar el ubigeo de llegada  salida
                 ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion))    //arreglar el ubigeo de llegada  salida
                 ->setTransportista($transp);
-        }
+            }
 
         //codigo correlaativo
-        $codigo_guia=$guia->cod_guia;
-        $serie=explode("-",$codigo_guia);
+            $codigo_guia=$guia->cod_guia;
+            $serie=explode("-",$codigo_guia);
 
-        $correlativo=$serie[1];
-        $serie_g=$serie[0];
+            $correlativo=$serie[1];
+            $serie_g=$serie[0];
 
 
-        $despatch = new Despatch();
-        $despatch->setTipoDoc('09')
+            $despatch = new Despatch();
+            $despatch->setTipoDoc('09')
             ->setSerie($serie_g)      //cambiar codigo de guia
             ->setCorrelativo($correlativo)
             ->setFechaEmision(new DateTime())
@@ -647,60 +659,60 @@ class Config_fe extends Model
             ->setObservacion($guia->observacion)
             //->setRelDoc($rel)
             ->setEnvio($envio);
-        
-        foreach($guias_registros as $cont => $guia_registro){
-            $detail[$cont] = new DespatchDetail();
-            $detail[$cont]->setCantidad(2)
-            ->setUnidad('ZZ')
-            ->setDescripcion($guia_registro->producto->nombre)
-            ->setCodigo($guia_registro->producto->codigo_producto)
-            ->setCodProdSunat($guia_registro->producto->codigo_producto);
+
+            foreach($guias_registros as $cont => $guia_registro){
+                $detail[$cont] = new DespatchDetail();
+                $detail[$cont]->setCantidad(2)
+                ->setUnidad('ZZ')
+                ->setDescripcion($guia_registro->producto->nombre)
+                ->setCodigo($guia_registro->producto->codigo_producto)
+                ->setCodProdSunat($guia_registro->producto->codigo_producto);
+            }
+
+            $despatch->setDetails($detail);
+
+            return $despatch;
         }
 
-        $despatch->setDetails($detail);
+        public static function send($see, $invoice){
 
-        return $despatch;
-    }
-
-    public static function send($see, $invoice){
-
-        $result = $see->send($invoice);
+            $result = $see->send($invoice);
 
         // Guardar XML firmado digitalmente.
-        Storage::disk('facturas_electronicas')->put($invoice->getName().'.xml',$see->getFactory()->getLastXml());
+            Storage::disk('facturas_electronicas')->put($invoice->getName().'.xml',$see->getFactory()->getLastXml());
         // Verificamos que la conexión con SUNAT fue exitosa.
-        if (!$result->isSuccess()) {
+            if (!$result->isSuccess()) {
             // Mostrar error al conectarse a SUNAT.
-            echo 'Codigo Error: '.$result->getError()->getCode();
-            echo 'Mensaje Error: '.$result->getError()->getMessage();
-            exit();
-        }
+                echo 'Codigo Error: '.$result->getError()->getCode();
+                echo 'Mensaje Error: '.$result->getError()->getMessage();
+                exit();
+            }
         // Guardamos el CDR [pregunats si se guardan las boletas]
-        Storage::disk('facturas_electronicas')->put('R-'.$invoice->getName().'.zip', $result->getCdrZip());
+            Storage::disk('facturas_electronicas')->put('R-'.$invoice->getName().'.zip', $result->getCdrZip());
 
-        return $result;
-    }
-
-    public static function lectura_cdr($cdr){
-
-        $code = (int)$cdr->getCode();
-
-        if ($code === 0) {
-            echo 'ESTADO: ACEPTADA'.PHP_EOL;
-            if (count($cdr->getNotes()) > 0) {
-                echo 'OBSERVACIONES:'.PHP_EOL;
-                // Corregir estas observaciones en siguientes emisiones.
-                var_dump($cdr->getNotes());
-            }  
-        } else if ($code >= 2000 && $code <= 3999) {
-            echo 'ESTADO: RECHAZADA'.PHP_EOL;
-        } else {
-            /* Esto no debería darse, pero si ocurre, es un CDR inválido que debería tratarse como un error-excepción. */
-            /*code: 0100 a 1999 */
-            echo 'Excepción';
+            return $result;
         }
 
-        return $cdr->getDescription().PHP_EOL;
+        public static function lectura_cdr($cdr){
+
+            $code = (int)$cdr->getCode();
+
+            if ($code === 0) {
+                echo 'ESTADO: ACEPTADA'.PHP_EOL;
+                if (count($cdr->getNotes()) > 0) {
+                    echo 'OBSERVACIONES:'.PHP_EOL;
+                // Corregir estas observaciones en siguientes emisiones.
+                    var_dump($cdr->getNotes());
+                }
+            } else if ($code >= 2000 && $code <= 3999) {
+                echo 'ESTADO: RECHAZADA'.PHP_EOL;
+            } else {
+                /* Esto no debería darse, pero si ocurre, es un CDR inválido que debería tratarse como un error-excepción. */
+                /*code: 0100 a 1999 */
+                echo 'Excepción';
+            }
+
+            return $cdr->getDescription().PHP_EOL;
+        }
     }
-}
 
