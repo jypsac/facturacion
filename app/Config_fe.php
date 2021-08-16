@@ -78,7 +78,7 @@ class Config_fe extends Model
             $guiaRemision = (new Document())
             ->setTipoDoc('09') // Guia de Remision remitente: 09, catalogo 01
             ->setNroDoc($factura->guia_remision); // Serie y correlativo de la guia de remision
-            
+
         }
 
         $empresa=Empresa::first();
@@ -110,7 +110,7 @@ class Config_fe extends Model
         $igv_f=0;
         $gravada=0;
         $precio=0;
-        
+
 
         foreach($facturas_registros as $cont => $factura_registro){
             $item[$cont] = (new SaleDetail())
@@ -150,13 +150,13 @@ class Config_fe extends Model
             ->setUblVersion('2.1')
             ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
             ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
-            ->setSerie($serie)// numero de serie 
+            ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
             ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
-            
+
             ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
-            
+
             ->setCompany($company)
             ->setClient($client)
             //--------------------------estados de obtencion
@@ -181,14 +181,14 @@ class Config_fe extends Model
 
             $formatter = new NumeroALetras();
             $valor=$formatter->toInvoice($total, 2, 'soles');
-            
+
             $legend = (new Legend())
             ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
             ->setValue($valor);
-            
+
             $invoice->setDetails($item)
             ->setLegends([$legend]);
-            
+
             return $invoice;
         }else{
             // Venta - credito
@@ -205,7 +205,7 @@ class Config_fe extends Model
             ->setUblVersion('2.1')
             ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
             ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
-            ->setSerie($serie)// numero de serie 
+            ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
             ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
@@ -233,24 +233,24 @@ class Config_fe extends Model
                     $guiaRemision // Incluir guia remision.
                 ]);
             }
-            
+
 
             $formatter = new NumeroALetras();
             $valor=$formatter->toInvoice($total, 2, 'soles');
-            
+
             $legend = (new Legend())
             ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
             ->setValue($valor);
-            
+
             $invoice->setDetails($item)
             ->setLegends([$legend]);
-            
+
             return $invoice;
         }
     }
-    
+
     public static function factura_servicio($factura,$facturas_registros,$guia){
-        
+
         $empresa=Empresa::first();
         $igv=Igv::first();
         // Cliente
@@ -279,7 +279,7 @@ class Config_fe extends Model
         $igv_f=0;
         $gravada=0;
         $precio=0;
-        
+
 
         foreach($facturas_registros as $cont => $factura_registro){
             $item[$cont] = (new SaleDetail())
@@ -319,13 +319,13 @@ class Config_fe extends Model
             ->setUblVersion('2.1')
             ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
             ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
-            ->setSerie($serie)// numero de serie 
+            ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
             ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
-            
+
             ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
-            
+
             ->setCompany($company)
             ->setClient($client)
             //--------------------------estados de obtencion
@@ -344,14 +344,14 @@ class Config_fe extends Model
 
             $formatter = new NumeroALetras();
             $valor=$formatter->toInvoice($total, 2, 'soles');
-            
+
             $legend = (new Legend())
             ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
             ->setValue($valor);
-            
+
             $invoice->setDetails($item)
             ->setLegends([$legend]);
-            
+
             return $invoice;
         }else{
             // Venta - credito
@@ -368,7 +368,7 @@ class Config_fe extends Model
             ->setUblVersion('2.1')
             ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
             ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
-            ->setSerie($serie)// numero de serie 
+            ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
             ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
@@ -393,17 +393,17 @@ class Config_fe extends Model
 
             $formatter = new NumeroALetras();
             $valor=$formatter->toInvoice($total, 2, 'soles');
-            
+
             $legend = (new Legend())
             ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
             ->setValue($valor);
-            
+
             $invoice->setDetails($item)
             ->setLegends([$legend]);
-            
+
             return $invoice;
         }
-        
+
     }
 
     public static function boleta($boleta,$boletas_registros){
@@ -440,7 +440,7 @@ class Config_fe extends Model
         $igv_f=0;
         $gravada=0;
         $precio=0;
-        
+
         foreach($boletas_registros as $cont => $boleta_registro){
             $item[$cont] = (new SaleDetail())
             ->setCodProducto($boleta_registro->producto->codigo_producto)//codigo del producto
@@ -479,11 +479,11 @@ class Config_fe extends Model
             ->setUblVersion('2.1')
             ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
             ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
-            ->setSerie($serie)// numero de serie 
+            ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
             ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
-            
+
             ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
             ->setCompany($company)
             ->setClient($client)
@@ -500,14 +500,14 @@ class Config_fe extends Model
 
             $formatter = new NumeroALetras();
             $valor=$formatter->toInvoice($total, 2, 'soles');
-            
+
             $legend = (new Legend())
             ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
             ->setValue($valor);
-            
+
             $invoice->setDetails($item)
             ->setLegends([$legend]);
-            
+
             return $invoice;
         }else{
             //credito
@@ -517,7 +517,7 @@ class Config_fe extends Model
             ->setUblVersion('2.1')
             ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
             ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
-            ->setSerie($serie)// numero de serie 
+            ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
             ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
@@ -543,21 +543,21 @@ class Config_fe extends Model
 
             $formatter = new NumeroALetras();
             $valor=$formatter->toInvoice($total, 2, 'soles');
-            
+
             $legend = (new Legend())
             ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
             ->setValue($valor);
-            
+
             $invoice->setDetails($item)
             ->setLegends([$legend]);
-            
+
             return $invoice;
         }
     }
 
     //llenado guia de remision
     public static function guia_remision($guia, $guias_registros,$tipo_transporte){
-        
+
         //$util = Util::getInstance();
         $empresa=Empresa::first();
 
@@ -595,11 +595,11 @@ class Config_fe extends Model
             $transp->setTipoDoc('6')
             ->setNumDoc($empresa->ruc)          //falta documentacion del conductor
             ->setRznSocial($empresa->razon_social) //nombre de la conduccion
-            ->setPlaca($guia->vehiculo->placa)   
+            ->setPlaca($guia->vehiculo->placa)
             ->setChoferTipoDoc('1')     //ayuda
             ->setChoferDoc($empleado->numero_documento);         //doc chofer
         }
-        
+
 
         //obtencion del peso total
         $peso_total=0;
@@ -673,6 +673,128 @@ class Config_fe extends Model
 
             return $despatch;
         }
+
+
+    public static function guia_remision_baja($guia, $guias_registros,$tipo_transporte){
+
+        $baja = new Document();
+        $baja->setTipoDoc('09')
+            ->setNroDoc($guia->cod_guia);
+
+        $empresa=Empresa::first();
+
+        // Emisor
+        $address = (new Address())
+            ->setUbigueo('150101')
+            ->setDepartamento($empresa->region_provincia)
+            ->setProvincia($empresa->region_provincia)
+            ->setDistrito($empresa->ciudad)
+            ->setUrbanizacion('-')
+            ->setDireccion($empresa->calle)
+            ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.
+
+        $company = (new Company())
+            ->setRuc($empresa->ruc)
+            ->setRazonSocial($empresa->razon_social)
+            ->setNombreComercial($empresa->nombre)
+            ->setAddress($address);
+
+        //$rel = new Document();
+        //$rel->setTipoDoc('02') // Tipo: Numero de Orden de Entrega
+        //->setNroDoc('213123'); //Buscar ayuda sobre ello
+
+
+        if($tipo_transporte==1){ //TRASNPORTE PUBLICO
+            $vehiculo_trasporte=TransportePublico::where('id',$guia->vehiculo_publico)->first();
+            $transp = new Transportist();
+            $transp->setTipoDoc('6')
+                ->setNumDoc($vehiculo_trasporte->ruc)          //falta documentacion del conductor
+                ->setRznSocial($vehiculo_trasporte->nombre); //nombre de la conduccion
+
+        }elseif($tipo_transporte==2){   //TRASPORTE PRIVADO
+            $empleado=Personal::where('id',$guia->conductor_id)->first();
+            $transp = new Transportist();
+            $transp->setTipoDoc('6')
+                ->setNumDoc($empresa->ruc)          //falta documentacion del conductor
+                ->setRznSocial($empresa->razon_social) //nombre de la conduccion
+                ->setPlaca($guia->vehiculo->placa)
+                ->setChoferTipoDoc('1')     //ayuda
+                ->setChoferDoc($empleado->numero_documento);         //doc chofer
+        }
+
+
+        //obtencion del peso total
+        $peso_total=0;
+        foreach($guias_registros as $guia_electronica){
+            $peso_total=$peso_total + $guia_electronica->peso;
+        }
+
+        if($tipo_transporte==0){
+            $envio = new Shipment();
+            $envio
+                ->setCodTraslado('01') // Cat.20
+                ->setDesTraslado('VENTA')
+                ->setModTraslado('01') // Cat.18
+                ->setFecTraslado(new DateTime())
+                // ->setCodPuerto('123')
+                ->setIndTransbordo(false)
+                ->setPesoTotal($peso_total)
+                ->setUndPesoTotal('KGM')    //unidad de medida
+                // ->setNumContenedor('XD-2232')
+                ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))   //arreglar el ubigeo de llegada  salida
+                ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion));    //arreglar el ubigeo de llegada  salida
+        }else{
+            $envio = new Shipment();
+            $envio
+                ->setCodTraslado('01') // Cat.20
+                ->setDesTraslado('VENTA')
+                ->setModTraslado('01') // Cat.18
+                ->setFecTraslado(new DateTime())
+                // ->setCodPuerto('123')
+                ->setIndTransbordo(false)
+                ->setPesoTotal($peso_total)
+                ->setUndPesoTotal('KGM')    //unidad de medida
+                // ->setNumContenedor('XD-2232')
+                ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))    //arreglar el ubigeo de llegada  salida
+                ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion))    //arreglar el ubigeo de llegada  salida
+                ->setTransportista($transp);
+        }
+
+        //codigo correlaativo
+        $codigo_guia=$guia->cod_guia;
+        $serie=explode("-",$codigo_guia);
+
+        $correlativo=$serie[1];
+        $serie_g=$serie[0];
+
+
+        $despatch = new Despatch();
+        $despatch->setTipoDoc('09')
+            ->setSerie($serie_g)      //cambiar codigo de guia
+            ->setCorrelativo($correlativo)
+            ->setFechaEmision(new DateTime())
+            ->setCompany($company)
+            ->setDestinatario((new Client())
+                ->setTipoDoc('6')
+                ->setNumDoc($guia->cliente->numero_documento)
+                ->setRznSocial($guia->cliente->empresa))
+            ->setObservacion($guia->observacion)
+            ->setDocBaja($baja)
+            ->setEnvio($envio);
+
+        foreach($guias_registros as $cont => $guia_registro){
+            $detail[$cont] = new DespatchDetail();
+            $detail[$cont]->setCantidad(2)
+                ->setUnidad('ZZ')
+                ->setDescripcion($guia_registro->producto->nombre)
+                ->setCodigo($guia_registro->producto->codigo_producto)
+                ->setCodProdSunat($guia_registro->producto->codigo_producto);
+        }
+
+        $despatch->setDetails($detail);
+
+        return $despatch;
+    }
 
         public static function send($see, $invoice){
 
