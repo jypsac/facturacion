@@ -205,7 +205,7 @@ use App\Personal;
                                     <div class="col-lg-6">
                                         <div class="form-group">
                                             <label>Codigo Postal *</label>
-                                            <input value="01" name="cod_postal" type="text" class="form-control required ">
+                                            <input value="150101" name="cod_postal" type="text" class="form-control required ">
                                         </div>
                                         <div class="form-group">
                                             <label>Fecha Registro *</label>
