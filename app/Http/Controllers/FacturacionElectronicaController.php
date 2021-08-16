@@ -74,6 +74,8 @@ class FacturacionElectronicaController extends Controller
         if($factura->tipo=="producto"){
             //factura
             $invoice=Config_fe::factura($factura, $factura_registro,$guia);
+            // dd($invoice);
+            // return response()->json($invoice);
         }elseif($factura->tipo=="servicio"){
             //factura
             $invoice=Config_fe::factura_servicio($factura, $factura_registro,$guia);
