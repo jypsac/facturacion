@@ -74,11 +74,13 @@ class FacturacionElectronicaController extends Controller
         if($factura->tipo=="producto"){
             //factura
             $invoice=Config_fe::factura($factura, $factura_registro,$guia);
-            // dd($invoice);
-            // return response()->json($invoice);
+            dd($invoice);
+            return response()->json($invoice);
         }elseif($factura->tipo=="servicio"){
             //factura
             $invoice=Config_fe::factura_servicio($factura, $factura_registro,$guia);
+            dd($invoice);
+            return response()->json($invoice);
         }
         
         //envio a SUNAT    
@@ -106,6 +108,8 @@ class FacturacionElectronicaController extends Controller
 
         //boleta
         $invoice=Config_fe::boleta($boleta, $boleta_registro);
+        dd($invoice);
+        return response()->json($invoice);
         
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
@@ -133,6 +137,8 @@ class FacturacionElectronicaController extends Controller
 
         //guia
         $invoice=Config_fe::guia_remision($guia,$guias_registros,$tipo_transporte);
+        dd($invoice);
+        return response()->json($invoice);
         
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
@@ -160,6 +166,8 @@ class FacturacionElectronicaController extends Controller
 
         //guia
         $invoice=Config_fe::guia_remision_baja($guia,$guias_registros,$tipo_transporte);
+        dd($invoice);
+        return response()->json($invoice);
         
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
