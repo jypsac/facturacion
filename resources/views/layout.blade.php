@@ -133,8 +133,6 @@
                                             <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc_cli" required  autocomplete="off" type="text">
                                             <datalist id="browserdoc" >
                                                 <?php use  App\Cliente; ?>
-
-use App\Personal;
                                                 <?php $clientes=Cliente::all();?>
                                                 @foreach($clientes as $cliente)
                                                 <option id="a">{{$cliente->numero_documento}} - existente</option>

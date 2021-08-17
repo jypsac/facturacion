@@ -62,51 +62,58 @@ class AgregadoRapidoController extends Controller
 
 //FUNCION PARA CREAR CLIENTE Y CONTACTO CON PARAMETROS POR DEFECTO
     public function cliente_cotizado(Request $request){
+        // return $request;
         $documento_identificacion=$request->get('numero_documento');
-         if(strstr($documento_identificacion,' ',true) == true){
+        $ruta_retorno=$request->get('ruta_retorno');
+        if(strstr($documento_identificacion,' ',true) == true){
           $doc_ruc = strstr($documento_identificacion,' ',true);
           // return "1";
-         }else{
+      }else{
           $doc_ruc = $documento_identificacion;
           // return "2";
-         }
-        $cliente_existe=Cliente::where('numero_documento',$doc_ruc)->count();
+      }
+      $cliente_existe=Cliente::where('numero_documento',$doc_ruc)->count();
         // return $cliente_existe;
-        if ($cliente_existe==0) {
-           $cliente= new Cliente;
-           $cliente->nombre=$request->get('nombre');
-           $cliente->direccion=$request->get('direccion');
-           $cliente->email=$request->get('email');
-           $cliente->telefono=$request->get('telefono');
-           $cliente->celular=$request->get('celular');
-           $cliente->documento_identificacion=$request->get('documento_identificacion');
-           $cliente->numero_documento=$request->get('numero_documento');
-           $cliente->ciudad=$request->get('ciudad');
-           $cliente->departamento=$request->get('departamento');
-           $cliente->pais=$request->get('pais');
-           $cliente->tipo_cliente=$request->get('tipo_cliente');
-           $cliente->aniversario=$request->get('aniversario');
-           $cliente->cod_postal=$request->get('cod_postal');
-           $cliente->fecha_registro=$request->get('fecha_registro');
-           $cliente->save();
+      if ($cliente_existe==0) {
+         $cliente= new Cliente;
+         $cliente->nombre=$request->get('nombre');
+         $cliente->direccion=$request->get('direccion');
+         $cliente->email=$request->get('email');
+         $cliente->telefono=$request->get('telefono');
+         $cliente->celular=$request->get('celular');
+         $cliente->documento_identificacion=$request->get('documento_identificacion');
+         $cliente->numero_documento=$request->get('numero_documento');
+         $cliente->ciudad=$request->get('ciudad');
+         $cliente->departamento=$request->get('departamento');
+         $cliente->pais=$request->get('pais');
+         $cliente->tipo_cliente=$request->get('tipo_cliente');
+         $cliente->aniversario=$request->get('aniversario');
+         $cliente->cod_postal=$request->get('cod_postal');
+         $cliente->fecha_registro=$request->get('fecha_registro');
+         $cliente->save();
 
-           $contacto=new Contacto;
-           $contacto->nombre=$request->get('nombre_contacto');
-           $contacto->primer_contacto=1;
-           $contacto->cargo=$request->get('cargo_contacto');
-           $contacto->telefono=$request->get('telefono_contacto');
-           $contacto->celular=$request->get('celular_contacto');
-           $contacto->email=$request->get('email_contacto');
-           $contacto->clientes_id=$cliente->id;
-           $contacto->save();
-           return "ee";
-       }else{
-          return back()->withErrors(['Cliente ya Agregado!']);
-       }
-   }
+         $contacto=new Contacto;
+         $contacto->nombre=$request->get('nombre_contacto');
+         $contacto->primer_contacto=1;
+         $contacto->cargo=$request->get('cargo_contacto');
+         $contacto->telefono=$request->get('telefono_contacto');
+         $contacto->celular=$request->get('celular_contacto');
+         $contacto->email=$request->get('email_contacto');
+         $contacto->clientes_id=$cliente->id;
+         $contacto->save();
+         // return redirect()->route('cotizacion.create_factura');
+        // return back();
+        return redirect()->route($ruta_retorno.'.index');
+     }else{
+
+        // return back();
+        // return redirect()->route($ruta_retorno.'.index');
+          return redirect()->route($ruta_retorno.'.index')->withErrors(['Cliente ya Agregado!']);
+    }
+}
 
 //FUNCION PARA CREAR MARCAS
-   public function marcas_store(Request $request){
+public function marcas_store(Request $request){
 
     $marca=new Marca;
     $marca->nombre=$request->get('nombre');
