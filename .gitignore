@@ -14,3 +14,4 @@ yarn-error.log
 /nbproject/private/
 /.idea
 /.vscode
+/public/facturas_electronicas
