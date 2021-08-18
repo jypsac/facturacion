@@ -3,7 +3,7 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-// use Illuminate\Support\Facades\Schema;
+use Illuminate\Support\Facades\Schema;
 use App\TipoCambio;
 use App\Stock_producto;
 use App\kardex_entrada_registro;
@@ -34,6 +34,6 @@ class AppServiceProvider extends ServiceProvider
         Stock_producto::observe(StockProductosObserver::class);
         // kardex_entrada_registro::observe(KardexEntradaRegistroObserver::class);
         // TipoCambio::observe(new TipoCambioObserver());
-        // Schema::defaultStringLength(191);
+        Schema::defaultStringLength(191);
     }
 }
