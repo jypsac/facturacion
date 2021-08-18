@@ -52,30 +52,28 @@ class Config_fe extends Model
 
     public static function guia_electronica(){
 
-        $see = new See();
-        $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
-        $see->setService(SunatEndpoints::GUIA_BETA);
-        $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
-        // ...
+      $see = new See();
+        //$see->setCertificate(file_get_contents(public_path('certificado/certificado.p12')));
 
-        // $pfx = file_get_contents('mycert.pfx');
-        // $password = 'YOUR-PASSWORD';
+      $pfx = file_get_contents(public_path('certificado/certificado.p12'));
+      $password = 'FILTER2021';
 
-        // $certificate = new X509Certificate($pfx, $password);
+      $certificate = new X509Certificate($pfx, $password);
 
-        // $see->setCertificate($certificate->export(X509ContentType::PEM));
+      $see->setCertificate($certificate->export(X509ContentType::PEM));
 
-// ...
+        // $see->setService(SunatEndpoints::GUIA_PRODUCCION);
+      $see->setService(SunatEndpoints::GUIA_BETA);
+      $see->setClaveSOL('20608175963', 'FILTER21', 'Filter21');
+      return $see;
+  }
 
-        return $see;
-    }
-
-    public static function factura($factura,$facturas_registros,$guia){
+  public static function factura($factura,$facturas_registros,$guia){
 
         //libro: https://cpe.sunat.gob.pe/sites/default/files/inline-files/guia%2Bxml%2Bfactura%2Bversion%202-1%2B1%2B0%20%282%29_0.pdf
         // return $guia;
-        if($guia==1){
-            $guiaRemision = (new Document())
+    if($guia==1){
+        $guiaRemision = (new Document())
             ->setTipoDoc('09') // Guia de Remision remitente: 09, catalogo 01
             ->setNroDoc($factura->guia_remision); // Serie y correlativo de la guia de remision
 
@@ -675,16 +673,16 @@ class Config_fe extends Model
         }
 
 
-    public static function guia_remision_baja($guia, $guias_registros,$tipo_transporte){
+        public static function guia_remision_baja($guia, $guias_registros,$tipo_transporte){
 
-        $baja = new Document();
-        $baja->setTipoDoc('09')
+            $baja = new Document();
+            $baja->setTipoDoc('09')
             ->setNroDoc($guia->cod_guia);
 
-        $empresa=Empresa::first();
+            $empresa=Empresa::first();
 
         // Emisor
-        $address = (new Address())
+            $address = (new Address())
             ->setUbigueo('150101')
             ->setDepartamento($empresa->region_provincia)
             ->setProvincia($empresa->region_provincia)
@@ -693,7 +691,7 @@ class Config_fe extends Model
             ->setDireccion($empresa->calle)
             ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.
 
-        $company = (new Company())
+            $company = (new Company())
             ->setRuc($empresa->ruc)
             ->setRazonSocial($empresa->razon_social)
             ->setNombreComercial($empresa->nombre)
@@ -720,18 +718,18 @@ class Config_fe extends Model
                 ->setPlaca($guia->vehiculo->placa)
                 ->setChoferTipoDoc('1')     //ayuda
                 ->setChoferDoc($empleado->numero_documento);         //doc chofer
-        }
+            }
 
 
         //obtencion del peso total
-        $peso_total=0;
-        foreach($guias_registros as $guia_electronica){
-            $peso_total=$peso_total + $guia_electronica->peso;
-        }
+            $peso_total=0;
+            foreach($guias_registros as $guia_electronica){
+                $peso_total=$peso_total + $guia_electronica->peso;
+            }
 
-        if($tipo_transporte==0){
-            $envio = new Shipment();
-            $envio
+            if($tipo_transporte==0){
+                $envio = new Shipment();
+                $envio
                 ->setCodTraslado('01') // Cat.20
                 ->setDesTraslado('VENTA')
                 ->setModTraslado('01') // Cat.18
@@ -743,9 +741,9 @@ class Config_fe extends Model
                 // ->setNumContenedor('XD-2232')
                 ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))   //arreglar el ubigeo de llegada  salida
                 ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion));    //arreglar el ubigeo de llegada  salida
-        }else{
-            $envio = new Shipment();
-            $envio
+            }else{
+                $envio = new Shipment();
+                $envio
                 ->setCodTraslado('01') // Cat.20
                 ->setDesTraslado('VENTA')
                 ->setModTraslado('01') // Cat.18
@@ -758,18 +756,18 @@ class Config_fe extends Model
                 ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))    //arreglar el ubigeo de llegada  salida
                 ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion))    //arreglar el ubigeo de llegada  salida
                 ->setTransportista($transp);
-        }
+            }
 
         //codigo correlaativo
-        $codigo_guia=$guia->cod_guia;
-        $serie=explode("-",$codigo_guia);
+            $codigo_guia=$guia->cod_guia;
+            $serie=explode("-",$codigo_guia);
 
-        $correlativo=$serie[1];
-        $serie_g=$serie[0];
+            $correlativo=$serie[1];
+            $serie_g=$serie[0];
 
 
-        $despatch = new Despatch();
-        $despatch->setTipoDoc('09')
+            $despatch = new Despatch();
+            $despatch->setTipoDoc('09')
             ->setSerie($serie_g)      //cambiar codigo de guia
             ->setCorrelativo($correlativo)
             ->setFechaEmision(new DateTime())
@@ -782,19 +780,19 @@ class Config_fe extends Model
             ->setDocBaja($baja)
             ->setEnvio($envio);
 
-        foreach($guias_registros as $cont => $guia_registro){
-            $detail[$cont] = new DespatchDetail();
-            $detail[$cont]->setCantidad(2)
+            foreach($guias_registros as $cont => $guia_registro){
+                $detail[$cont] = new DespatchDetail();
+                $detail[$cont]->setCantidad(2)
                 ->setUnidad('ZZ')
                 ->setDescripcion($guia_registro->producto->nombre)
                 ->setCodigo($guia_registro->producto->codigo_producto)
                 ->setCodProdSunat($guia_registro->producto->codigo_producto);
+            }
+
+            $despatch->setDetails($detail);
+
+            return $despatch;
         }
-
-        $despatch->setDetails($detail);
-
-        return $despatch;
-    }
 
         public static function send($see, $invoice){
 
