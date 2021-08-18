@@ -46,8 +46,8 @@ class FacturacionElectronicaController extends Controller
     public function index_guia_remision(){
 
         $guia_remisiones=Guia_remision::where('g_electronica',0)->get();
-        $guia_remision_anulado=Guia_remision::where('g_electronica',1)->get();
-        $guia_remision_enviados=Guia_remision::where('g_electronica',1)->where('estado_anulado',1)->get();
+        $guia_remision_anulado=Guia_remision::where('g_electronica',1)->where('estado_anulado',1)->get();
+        $guia_remision_enviados=Guia_remision::where('g_electronica',1)->get();
         return view('facturacion_electronica.guia_remision.index',compact('guia_remisiones','guia_remision_enviados','guia_remision_anulado'));
     }
 
