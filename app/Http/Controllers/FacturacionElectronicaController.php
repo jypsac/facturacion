@@ -45,9 +45,9 @@ class FacturacionElectronicaController extends Controller
 
     public function index_guia_remision(){
 
-        $guia_remisiones=Guia_remision::where('g_electronica',0)->get();
+        $guia_remisiones=Guia_remision::where('g_electronica',0)->where('estado_anulado',0)->get();
         $guia_remision_anulado=Guia_remision::where('g_electronica',1)->where('estado_anulado',1)->get();
-        $guia_remision_enviados=Guia_remision::where('g_electronica',1)->get();
+        $guia_remision_enviados=Guia_remision::where('g_electronica',1)->where('estado_anulado',0)->get();
         return view('facturacion_electronica.guia_remision.index',compact('guia_remisiones','guia_remision_enviados','guia_remision_anulado'));
     }
 
@@ -139,8 +139,8 @@ class FacturacionElectronicaController extends Controller
 
         //guia
         $invoice=Config_fe::guia_remision($guia,$guias_registros,$tipo_transporte);
-        dd($invoice);
-        return response()->json($invoice);
+        // dd($invoice);
+        // return response()->json($invoice);
         
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
@@ -159,7 +159,7 @@ class FacturacionElectronicaController extends Controller
     public function guia_remision_baja(Request $request)
     {   
 
-        $guia=Guia_remision::where('g_electronica',0)->where('id',$request->factura_id)->first();
+        $guia=Guia_remision::where('g_electronica',1)->where('id',$request->factura_id)->first();
         $guias_registros=g_remision_registro::where('guia_remision_id',$request->factura_id)->get();
         $tipo_transporte=$guia->tipo_transporte;
 
@@ -168,17 +168,18 @@ class FacturacionElectronicaController extends Controller
 
         //guia
         $invoice=Config_fe::guia_remision_baja($guia,$guias_registros,$tipo_transporte);
-        dd($invoice);
-        return response()->json($invoice);
+        // dd($invoice);
+        // return response()->json($invoice);
         
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
-
         //lectura CDR
         $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+        // return $msg;
+
 
         //cambio de guia electronica - en caso sea exitodo
-        $guia->g_electronica=1;
+        $guia->estado_anulado=1;
         $guia->save();
 
         return redirect()->route('facturacion_electronica.index_guia_remision')->with('successMsg',$msg);

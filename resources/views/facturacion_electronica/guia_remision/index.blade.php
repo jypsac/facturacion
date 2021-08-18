@@ -13,7 +13,7 @@
                 @if(Session::has('successMsg'))
                 <div class="ibox-content">
                     <div class="alert alert-success">
-                        <a class="alert-link" href="#">{{ session('successMsg') }}</a>.
+                     <b> {{ session('successMsg') }}.</b>
                     </div>
                 </div>
                 @endif
