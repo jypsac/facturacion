@@ -63,8 +63,8 @@ class Config_fe extends Model
 
       $see->setCertificate($certificate->export(X509ContentType::PEM));
 
-      $see->setService(SunatEndpoints::GUIA_PRODUCCION);
-      // $see->setService(SunatEndpoints::GUIA_BETA);
+      // $see->setService(SunatEndpoints::GUIA_PRODUCCION);
+      $see->setService(SunatEndpoints::GUIA_BETA);
       $see->setClaveSOL('20608175963', 'FILTER21', 'Filter21');
       return $see;
   }
