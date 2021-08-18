@@ -30,7 +30,8 @@ use App\Cuotas_Credito;
 use App\Guia_remision;
 use App\TransportePublico;
 
-use App\X509Certificate;
+use Greenter\XMLSecLibs\Certificate\X509Certificate;
+use Greenter\XMLSecLibs\Certificate\X509ContentType;
 // DATOS DE PRUEBA
 // RUC: 20000000001
 // Usuario: MODDATOS
