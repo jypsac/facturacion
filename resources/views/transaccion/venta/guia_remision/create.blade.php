@@ -4,24 +4,32 @@
 @section('breadcrumb2', 'Guia Remision')
 @section('href_accion', route('guia_remision.index'))
 @section('value_accion', 'Atras')
-@section('content')
-<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<head>
-    <script type="text/javascript">
-        $(document).ready(function() {
+@extends('layout_agregado_rapido')
 
-            $("form").keypress(function(e) {
-                if (e.which == 13) {
-                    setTimeout(function() {
-                        e.target.value += ' | ';
-                    }, 4);
-                    e.preventDefault();
-                }
-            });
+<script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script type="text/javascript">
+    $(document).ready(function() {
+
+        $("#pro").keypress(function(e) {
+            if (e.which == 13) {
+                setTimeout(function() {
+                    e.target.value += ' | ';
+                }, 4);
+                e.preventDefault();
+            }
         });
-    </script>
-</head>
-<form action="{{route('guia_remision.store')}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
+    });
+</script>
+@section('content')
+
+
+@section('form_action_modal_cliente',  route('agregado_rapido.cliente_cotizado'))
+@section('ruta_retorno', 'guia_remision')
+<div class="social-bar">
+    <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target="#ModalCliente"><i class="fa fa-user-o" aria-hidden="true"></i>cliente </a>
+</div>
+
+<form action="{{route('guia_remision.store')}}"  id="pro" enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
     @csrf
     <div class="wrapper wrapper-content animated fadeInRight">
         <div class="row">
@@ -74,7 +82,7 @@
                         </div>
 
                         <div class="col-sm-12" >
-                         <div class="row">
+                           <div class="row">
                             <label class="col-sm-1">Tipo de Transporte:</label>
                             <div class="col-sm-5">
                                 <select class="form-control m-b" name="tipo_transporte" autocomplete="off" onchange="test(this)" id="select_id">
@@ -100,106 +108,106 @@
                     </div>
                 </div>
 
-                    <div class="col-sm-12" id="transporte_privado" hidden="hidden">
-                        <div class="row">
-                            <label class="col-sm-1">Vehiculo Privado:</label>
-                            <div class="col-sm-5">
-                                <select class="form-control m-b" name="vehiculo" autocomplete="off" id="vehiculo_privado">
-                                    <option value="">Ningún Vehículo</option>
-                                    @foreach($vehiculo as $vehiculos)
-                                    <option value="{{$vehiculos->id}}">{{$vehiculos->placa}} /{{$vehiculos->marca}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label class="col-sm-1">Conductor:</label>
-                            <div class="col-sm-5">
-                                <select class="form-control m-b" name="conductor" autocomplete="off" id="conductor">
-                                    <option value="">Ningún Conductor</option>
-                                    <option disabled="disabled">------------------------------</option>
-                                    @foreach($personal as $ersonals)
-                                    <option value="{{$ersonals->id}}">{{$ersonals->nombres}} </option>
-                                    @endforeach
-                                </select>
-                            </div>
+                <div class="col-sm-12" id="transporte_privado" hidden="hidden">
+                    <div class="row">
+                        <label class="col-sm-1">Vehiculo Privado:</label>
+                        <div class="col-sm-5">
+                            <select class="form-control m-b" name="vehiculo" autocomplete="off" id="vehiculo_privado">
+                                <option value="">Ningún Vehículo</option>
+                                @foreach($vehiculo as $vehiculos)
+                                <option value="{{$vehiculos->id}}">{{$vehiculos->placa}} /{{$vehiculos->marca}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <label class="col-sm-1">Conductor:</label>
+                        <div class="col-sm-5">
+                            <select class="form-control m-b" name="conductor" autocomplete="off" id="conductor">
+                                <option value="">Ningún Conductor</option>
+                                <option disabled="disabled">------------------------------</option>
+                                @foreach($personal as $ersonals)
+                                <option value="{{$ersonals->id}}">{{$ersonals->nombres}} </option>
+                                @endforeach
+                            </select>
                         </div>
                     </div>
-                    <div class="col-sm-12" >
-                        <div class="row">
-                            <label class="col-sm-1">Motivo Traslado:</label>
-                            <div class="col-sm-5">
-                                <select name="motivo_traslado"  class="form-control m-b">
-                                    @foreach($motivo_traslado as $motivo_traslad)
+                </div>
+                <div class="col-sm-12" >
+                    <div class="row">
+                        <label class="col-sm-1">Motivo Traslado:</label>
+                        <div class="col-sm-5">
+                            <select name="motivo_traslado"  class="form-control m-b">
+                                @foreach($motivo_traslado as $motivo_traslad)
 
-                                    <option id="{{$motivo_traslad->id}}">{{$motivo_traslad->nombre}}</option>
-                                    @endforeach
-                                </select>
-                            </div>
-                            <label class="col-sm-1">Observaciones:</label>
-                            <div class="col-sm-5">
-                               <textarea name="observacion" class="form-control">Guía Electrónica Emitida para el Cliente  </textarea>
-                           </div>
-                       </div>
-                   </div>
-               </div>
-               {{-- Fin Cabecera --}}
-               {{-- Tabla Mostrito --}}
-               <table   cellspacing="0" class="table table-striped ">
-                <thead>
-                    <tr>
-                        <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
-                        <th style="width: 600px;font-size: 13px">Articulo</th>
-                        <th style="width: 100px;font-size: 13px">Stock</th>
-                        <th style="width: 100px;font-size: 13px">Cantidad</th>
-                        <th style="width: 500px;font-size: 13px">Numeros Series</th>
-                        <th style="width: 100px;font-size: 13px">peso</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>
-                            <input type='checkbox' class="case">
+                                <option id="{{$motivo_traslad->id}}">{{$motivo_traslad->nombre}}</option>
+                                @endforeach
+                            </select>
+                        </div>
+                        <label class="col-sm-1">Observaciones:</label>
+                        <div class="col-sm-5">
+                         <textarea name="observacion" class="form-control">Guía Electrónica Emitida para el Cliente  </textarea>
+                     </div>
+                 </div>
+             </div>
+         </div>
+         {{-- Fin Cabecera --}}
+         {{-- Tabla Mostrito --}}
+         <table   cellspacing="0" class="table table-striped ">
+            <thead>
+                <tr>
+                    <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+                    <th style="width: 600px;font-size: 13px">Articulo</th>
+                    <th style="width: 100px;font-size: 13px">Stock</th>
+                    <th style="width: 100px;font-size: 13px">Cantidad</th>
+                    <th style="width: 500px;font-size: 13px">Numeros Series</th>
+                    <th style="width: 100px;font-size: 13px">peso</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>
+                        <input type='checkbox' class="case">
+                    </td>
+                    <td>
+                        <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0)" onclick="Clear(this);" autocomplete="off">
+                        <datalist id="browsers2" >
+                            @foreach($productos as $index => $producto)
+                            <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$producto->peso}} {{$producto->peso}} {{$array_cantidad[$index]}} {{$array_cantidad[$index]}}">
+                                @endforeach
+                            </datalist>
+
                         </td>
                         <td>
-                            <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0)" onclick="Clear(this);" autocomplete="off">
-                            <datalist id="browsers2" >
-                                @foreach($productos as $index => $producto)
-                                <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$producto->peso}} {{$producto->peso}} {{$array_cantidad[$index]}} {{$array_cantidad[$index]}}">
-                                    @endforeach
-                                </datalist>
+                            <input type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
+                        </td>
+                        <td>
+                            <input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"   required  autocomplete="off" />
+                        </td>
+                        <td>
+                            <textarea name="series[]" id="series0" required="" class="form-control" placeholder="escanear N/S"></textarea>
+                        </td>
+                        <td>
+                            <input id='peso0' name='peso[]' type="text" class="form-control" value="" readonly="readonly">
+                        </td>
 
-                            </td>
-                            <td>
-                                <input type='text' id='stock0' readonly="readonly" name='stock[]' class="form-control" required  autocomplete="off"/>
-                            </td>
-                            <td>
-                                <input type='text' id='cantidad0' name='cantidad[]' max="" class="monto0 form-control"   required  autocomplete="off" />
-                            </td>
-                            <td>
-                                <textarea name="series[]" id="series0" required="" class="form-control" placeholder="escanear N/S"></textarea>
-                            </td>
-                            <td>
-                                <input id='peso0' name='peso[]' type="text" class="form-control" value="" readonly="readonly">
-                            </td>
+                        <span id="spTotal"></span>
+                    </tr>
 
-                            <span id="spTotal"></span>
-                        </tr>
+                </tbody><br>
 
-                    </tbody><br>
+            </table>
 
-                </table>
-
-                <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
-                <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
-                {{-- <a onclick="print()"><button class="btn btn-warning float-right" ><i class="fa fa-cloud" aria-hidden="true">Imprimir</i></button></a> --}}
-                <button class="btn btn-primary float-right" type="submit" id="boton"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
-                {{-- Fin de Tabla Mostrito --}}
+            <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
+            <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
+            {{-- <a onclick="print()"><button class="btn btn-warning float-right" ><i class="fa fa-cloud" aria-hidden="true">Imprimir</i></button></a> --}}
+            <button class="btn btn-primary float-right" type="submit" id="boton"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
+            {{-- Fin de Tabla Mostrito --}}
 
 
 
 
-            </div>
         </div>
     </div>
+</div>
 </div>
 </form>
 
@@ -217,6 +225,12 @@
 <!-- Custom and plugin javascript -->
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+
+<!-- Steps -->
+<script src="{{ asset('js/plugins/steps/jquery.steps.min.js') }}"></script>
+
+<!-- Jquery Validate -->
+<script src="{{ asset('js/plugins/validate/jquery.validate.min.js') }}"></script>
 {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 <script>
     function valida(f) {
@@ -224,9 +238,9 @@
         var completo = true;
         var incompleto = false;
         if( f.elements[0].value == "" )
-           { alert(incompleto); }
-       else{boton.type = 'button';}
-   }
+         { alert(incompleto); }
+     else{boton.type = 'button';}
+ }
 </script>
 {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 <script>

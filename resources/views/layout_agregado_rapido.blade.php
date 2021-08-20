@@ -1,6 +1,6 @@
 
- {{-- Modal Cliente --}}
- <div class="modal fade" id="ModalCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+{{-- Modal Cliente --}}
+<div class="modal fade" id="ModalCliente" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
   <div class="modal-dialog" role="document" style="margin-left: 22%;">
     <div class="modal-content" style="width: 880px;">
       <div class="modal-header">
@@ -210,75 +210,73 @@
       </button>
   </div>
   <div>
-     <div class="ibox-content" style="padding-bottom: 0px;">
-        <form>
-            {{ csrf_field() }}
-            <div class="form-group  row"><label class="col-sm-3 col-form-label">Introducir Ruc (Inestable):</label>
-                <div class="col-sm-7">
-                    <input type="text" class="form-control" class="ruc_provedor" id="ruc_provedor" name="ruc_provedor" required="required">
-                </div>
-                <div class="col-sm-2"> <button class="btn btn-primary" id="submit_provedor" class="submit_provedor"><i class="fa fa-search"></i> Buscar</button></div>
+   <div class="ibox-content" style="padding-bottom: 0px;">
+    <form>
+        {{ csrf_field() }}
+        <div class="form-group  row"><label class="col-sm-3 col-form-label">Introducir Ruc (Inestable):</label>
+            <div class="col-sm-7">
+                <input type="text" class="form-control" class="ruc_provedor" id="ruc_provedor" name="ruc_provedor" required="required">
             </div>
+            <div class="col-sm-2"> <button class="btn btn-primary" id="submit_provedor" class="submit_provedor"><i class="fa fa-search"></i> Buscar</button></div>
+        </div>
 
-        </form>
-        <script>
-            $(function(){
-                $('#submit_provedor').on('click', function(){
-                    var ruc_provedor = $('#ruc_provedor').val();
-                    var url = "{{ url('provedorruc') }}";
-                    $.ajax({
-                        type:'GET',
-                        url:url,
-                        data:'ruc='+ruc_provedor,
-                        success: function(datos_dni){
-                            var datos = eval(datos_dni);
-                            $('#numero_ruc_prov').val(datos[0]);
-                            $('#razon_social_prov').val(datos[1]);
-                            $('#direccion_prov').val(datos[2]);
-                        }
-                    });
-                    return false;
+    </form>
+    <script>
+        $(function(){
+            $('#submit_provedor').on('click', function(){
+                var ruc_provedor = $('#ruc_provedor').val();
+                var url = "{{ url('provedorruc') }}";
+                $.ajax({
+                    type:'GET',
+                    url:url,
+                    data:'ruc='+ruc_provedor,
+                    success: function(datos_dni){
+                        var datos = eval(datos_dni);
+                        $('#numero_ruc_prov').val(datos[0]);
+                        $('#razon_social_prov').val(datos[1]);
+                        $('#direccion_prov').val(datos[2]);
+                    }
                 });
+                return false;
             });
-        </script>
-    </div>
+        });
+    </script>
+</div>
 
-    <form enctype="multipart/form-data" id="form1" class="wizard-big" method="post" action="{{route('provedor.store')}}" > {{-- Yiel form- es para colocar una ruta alterna  --}}
-        @csrf
-        <h1>Datos Personales</h1>
-        <fieldset>
-            <div class="row">
-             <div class="col-lg-6">
-                <label>Nombre *</label>
-                <input type="text" class="form-control" name="nombre" class="form-control required" id="razon_social_prov" required="required">
-            </div>
-            <div class="col-lg-6">
-               <label>Numero de Documento *</label>
-               <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc_prov" required  autocomplete="off" type="number">
-           </div>
+<form enctype="multipart/form-data" id="form1" class="wizard-big" method="post" action="{{route('provedor.store')}}" > {{-- Yiel form- es para colocar una ruta alterna  --}}
+    @csrf
+    <h1>Datos Personales</h1>
+    <fieldset>
+        <div class="row">
            <div class="col-lg-6">
-               <label>Direccion *</label>
-               <input type="text" class="form-control required" name="direccion" id="direccion_prov" required="required">
-           </div>
-           <div class="col-lg-6">
-               <label>Correo *</label>
-               <input  type="text"  class="form-control required " name="correo" value="sincorreo@gmail.com" required="required">
-           </div>
-            <div class="col-lg-6" style="padding-top: 5px">
-               <label>Telefono *</label>
-               <input  type="text"  class="form-control required " name="telefono" value="95000000" required="required">
-           </div>
+            <label>Nombre *</label>
+            <input type="text" class="form-control" name="nombre" class="form-control required" id="razon_social_prov" required="required">
+        </div>
+        <div class="col-lg-6">
+         <label>Numero de Documento *</label>
+         <input list="browserdoc" class="form-control m-b" name="numero_documento" id="numero_ruc_prov" required  autocomplete="off" type="number">
+     </div>
+     <div class="col-lg-6">
+         <label>Direccion *</label>
+         <input type="text" class="form-control required" name="direccion" id="direccion_prov" required="required">
+     </div>
+     <div class="col-lg-6">
+         <label>Correo *</label>
+         <input  type="text"  class="form-control required " name="correo" value="sincorreo@gmail.com" required="required">
+     </div>
+     <div class="col-lg-6" style="padding-top: 5px">
+         <label>Telefono *</label>
+         <input  type="text"  class="form-control required " name="telefono" value="95000000" required="required">
+     </div>
 
-       </div>
-   </fieldset>
+ </div>
+</fieldset>
 </form>
 </div>
 </div>
 </div>
 </div>
 {{-- Fin Modal Provedor --}}
-
-
 <script>
     $(document).ready(function(){
         $("#wizard").steps();
@@ -359,7 +357,7 @@
 <script >
     function seleccionado(){
         var opt = $('#cliente_doc').val();
-            if(opt=="DNI" || opt == "pasaporte"){
+        if(opt=="DNI" || opt == "pasaporte"){
                 // $('#consulta_p_input').prop('disabled', false);
                 $('#botoncito_cliente').prop('disabled', true);
                 $('#numero_ruc_cli').val('');
@@ -377,5 +375,5 @@
                 $('#razon_social_cli').val('');
                 // $('#consulta_s').show();
             }
-    }
-</script>
+        }
+    </script>

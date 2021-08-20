@@ -23,50 +23,50 @@
                             </div>
                             <div class="col-sm-6">
                                 @if($conteo_almacen==1 and $user_login->name=='Administrador' )
-                                        <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
-                                            @csrf
-                                            <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
-                                            <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
-                                        </form>
+                                <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" method="post">
+                                    @csrf
+                                    <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
+                                    <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
+                                </form>
                                 @elseif($conteo_almacen==1 and $user_login->almacen->estado==1 and $user_login->name=='Colaborador' )
-                                        <input id="auto" onclick="divAuto()" type="submit" class="btn btn-sm btn-info"  value="Crear una Nueva Guia">
-                                        <div id="div-mostrar" style="color: black">
-                                            <div id="texto" style="opacity:0;transition: .4s ;text-align: center;padding-top: 10px;" >Almacen Asignado esta Desactivado, Activelo o cambie de Almacen.</div>
-                                        </div>
+                                <input id="auto" onclick="divAuto()" type="submit" class="btn btn-sm btn-info"  value="Crear una Nueva Guia">
+                                <div id="div-mostrar" style="color: black">
+                                    <div id="texto" style="opacity:0;transition: .4s ;text-align: center;padding-top: 10px;" >Almacen Asignado esta Desactivado, Activelo o cambie de Almacen.</div>
+                                </div>
                                 @elseif($conteo_almacen==1 and $user_login->almacen->estado==0 and $user_login->name=='Colaborador' )
-                                       <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
-                                            @csrf
-                                            <input type="text" value="{{$user_login->almacen_id}}" hidden="hidden" name="almacen">
-                                            <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
-                                        </form>
+                                <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
+                                    @csrf
+                                    <input type="text" value="{{$user_login->almacen_id}}" hidden="hidden" name="almacen">
+                                    <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
+                                </form>
 
                                 @elseif($conteo_almacen > 1 and $user_login->name =='Administrador')
-                                            <div class="dropdown">
-                                              <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Crear una Nueva Guia</button>
-                                                <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                                    <form action="{{ route('guia_remision.create')}}"enctype="multipart/form-data" >
-                                                        @csrf
-                                                        @foreach($almacen as $almacens)
-                                                        <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
-                                                        @endforeach
-                                                    </form>
-                                                </div>
-                                            </div>
-                                    @elseif($conteo_almacen > 1 and $user_login->name=='Colaborador')
-                                            @if($user_login->almacen->estado==1  )
-                                                <input id="auto" onclick="divAuto()" type="submit" class="btn btn-sm btn-info"  value="Crear una Nueva Guia">
-                                                <div id="div-mostrar" style="color: black">
-                                                    <div id="texto" style="opacity:0;transition: .4s ;text-align: center;padding-top: 10px;" >Almacen Asignado esta Desactivado, Activelo o cambie de Almacen.</div>
-                                                </div>
-                                            @elseif($user_login->almacen->estado==0 )
-                                                    <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
-                                                    @csrf
-                                                    <input type="text" value="{{$user_login->almacen_id}}" hidden="hidden" name="almacen">
-                                                    <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
-                                                    </form>
+                                <div class="dropdown">
+                                  <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Crear una Nueva Guia</button>
+                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                                    <form action="{{ route('guia_remision.create')}}"enctype="multipart/form-data" >
+                                        @csrf
+                                        @foreach($almacen as $almacens)
+                                        <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
+                                        @endforeach
+                                    </form>
+                                </div>
+                            </div>
+                            @elseif($conteo_almacen > 1 and $user_login->name=='Colaborador')
+                            @if($user_login->almacen->estado==1  )
+                            <input id="auto" onclick="divAuto()" type="submit" class="btn btn-sm btn-info"  value="Crear una Nueva Guia">
+                            <div id="div-mostrar" style="color: black">
+                                <div id="texto" style="opacity:0;transition: .4s ;text-align: center;padding-top: 10px;" >Almacen Asignado esta Desactivado, Activelo o cambie de Almacen.</div>
+                            </div>
+                            @elseif($user_login->almacen->estado==0 )
+                            <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
+                                @csrf
+                                <input type="text" value="{{$user_login->almacen_id}}" hidden="hidden" name="almacen">
+                                <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
+                            </form>
 
-                                             @endif
-                                 @endif
+                            @endif
+                            @endif
                         </div>
                     </div>
                 </div>
@@ -108,50 +108,50 @@
                                     <td><center><a href="{{route('guia_remision.show' , $guias_remision->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
 
 
-                </tr>
-                @endforeach
-            </tbody>
-        </table>
+                                </tr>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-</div>
-</div>
-</div>
-</div>
 </div>
 
 
 <style type="text/css">
-    .a{width: 200px}
+.a{width: 200px}
 
-    #auto{
-        /*padding: -100px;*/
-        /*background: orange;*/
-        /*width: 95px;*/
-        cursor: pointer;
-        /*margin-top: 10px;*/
-        /*margin-bottom: 10px;*/
-        box-shadow: 0px 0px 1px #000;
-        display: inline-block;
-    }
+#auto{
+    /*padding: -100px;*/
+    /*background: orange;*/
+    /*width: 95px;*/
+    cursor: pointer;
+    /*margin-top: 10px;*/
+    /*margin-bottom: 10px;*/
+    box-shadow: 0px 0px 1px #000;
+    display: inline-block;
+}
 
-    #auto:hover{
-        opacity: .8;
-    }
+#auto:hover{
+    opacity: .8;
+}
 
-    #div-mostrar{
-        /*width: 50%;*/
-        margin: auto;
-        height: 0px;
-        /*margin-top: -5px*/
-        /*background: #000;*/
-        /*box-shadow: 10px 10px 3px #D8D8D8;*/
-        transition: height .4s;
-        color:white;
-        text-align: right;
-    }
-    #auto:hover{
-        opacity: .8;
-    }
+#div-mostrar{
+    /*width: 50%;*/
+    margin: auto;
+    height: 0px;
+    /*margin-top: -5px*/
+    /*background: #000;*/
+    /*box-shadow: 10px 10px 3px #D8D8D8;*/
+    transition: height .4s;
+    color:white;
+    text-align: right;
+}
+#auto:hover{
+    opacity: .8;
+}
 /*#auto:hover + #div-mostrar{
     height: 50px;
     }*/
@@ -176,11 +176,11 @@
 <script>
     var clic = 1;
     function divAuto(){
-     if(clic==1){
-         document.getElementById("div-mostrar").style.height = "50px";
-         document.getElementById("texto").style.opacity = "1";
-         clic = clic + 1;
-     } else{
+       if(clic==1){
+           document.getElementById("div-mostrar").style.height = "50px";
+           document.getElementById("texto").style.opacity = "1";
+           clic = clic + 1;
+       } else{
         document.getElementById("div-mostrar").style.height = "0px";
         document.getElementById("texto").style.opacity = "0";
 
@@ -196,7 +196,7 @@
             dom: '<"html5buttons"B>lTfgitp',
             buttons: []
 
-    });
+        });
 
     });
 
