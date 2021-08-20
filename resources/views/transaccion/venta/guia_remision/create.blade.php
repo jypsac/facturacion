@@ -1,13 +1,10 @@
-
 @extends('layout')
-
 @section('title', 'Guia Remision Agregar')
 @section('breadcrumb', 'Guia Remision')
 @section('breadcrumb2', 'Guia Remision')
 @section('href_accion', route('guia_remision.index'))
 @section('value_accion', 'Atras')
 @section('content')
-
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head>
     <script type="text/javascript">

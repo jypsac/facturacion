@@ -6,6 +6,7 @@
 @section('href_accion', route('cotizacion.index') )
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+@extends('layout_agregado_rapido')
 @section('content')
 @if (session('repite'))
 <div class="alert alert-success">

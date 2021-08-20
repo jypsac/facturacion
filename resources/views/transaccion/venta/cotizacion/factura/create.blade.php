@@ -1,10 +1,10 @@
 @extends('layout')
-
 @section('title', 'Cotizacion - Factura M.Principal')
 @section('breadcrumb', 'Cotizacion - Factura M.Principal')
 @section('breadcrumb2', 'Cotizacion - Factura M.Principal')
 @section('href_accion', route('cotizacion.index') )
 @section('value_accion', 'Atras')
+@extends('layout_agregado_rapido')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head>
     <script type="text/javascript">

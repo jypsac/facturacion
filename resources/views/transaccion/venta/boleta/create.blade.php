@@ -4,6 +4,7 @@
 @section('breadcrumb', 'Boleta M.Principal')
 @section('breadcrumb2', 'Boleta M.Principal')
 @section('href_accion', route('boleta.index'))
+@extends('layout_agregado_rapido')
 @section('value_accion', 'Atras')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head>

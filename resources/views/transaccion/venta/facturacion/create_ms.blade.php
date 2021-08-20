@@ -4,6 +4,7 @@
 @section('breadcrumb2', 'Facturacion M.Secundaria')
 @section('href_accion', route('facturacion.index'))
 @section('value_accion', 'Atras')
+@extends('layout_agregado_rapido')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head>
     <script type="text/javascript">

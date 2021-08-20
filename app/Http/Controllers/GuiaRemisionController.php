@@ -186,130 +186,130 @@ class GuiaRemisionController extends Controller
             // return $nueva_v;
             $cantidad_entrada=$request->get('cantidad')[$i];
             if($cantidad_v<$cantidad_entrada){
-               return "cantidad mayor al stock";
-            }
+             return "cantidad mayor al stock";
+         }
 
-        }
+     }
 
-        $guia_remision=new Guia_remision;
-        $guia_remision->cod_guia=$codigo_guia;
-        $guia_remision->cliente_id=$cliente_id;
-        $guia_remision->almacen_id=$id_almacen->id;
-        $guia_remision->fecha_emision=$request->get('fecha_emision');
-        $guia_remision->fecha_entrega=$request->get('fecha_entrega');
+     $guia_remision=new Guia_remision;
+     $guia_remision->cod_guia=$codigo_guia;
+     $guia_remision->cliente_id=$cliente_id;
+     $guia_remision->almacen_id=$id_almacen->id;
+     $guia_remision->fecha_emision=$request->get('fecha_emision');
+     $guia_remision->fecha_entrega=$request->get('fecha_entrega');
 
-        if ($tipo_transporte==1) {
-            $guia_remision->vehiculo_publico=$request->get('vehiculo_publico');
-        }elseif ($tipo_transporte==2) {
-            $guia_remision->vehiculo_id=$request->get('vehiculo');
-            $guia_remision->conductor_id=$request->get('conductor');
-        }
-        $guia_remision->tipo_transporte=$tipo_transporte;
+     if ($tipo_transporte==1) {
+        $guia_remision->vehiculo_publico=$request->get('vehiculo_publico');
+    }elseif ($tipo_transporte==2) {
+        $guia_remision->vehiculo_id=$request->get('vehiculo');
+        $guia_remision->conductor_id=$request->get('conductor');
+    }
+    $guia_remision->tipo_transporte=$tipo_transporte;
 
         //0= sin transporte 
         //1= transporte publico 
         //2= transporte privado
 
-        $guia_remision->motivo_traslado=$request->get('motivo_traslado');
-        $guia_remision->observacion=$request->get('observacion');
-        $guia_remision->estado_anulado='0';
-        $guia_remision->estado_registrado='0';
-        $guia_remision->user_id=auth()->user()->id;
-        $guia_remision->save();
+    $guia_remision->motivo_traslado=$request->get('motivo_traslado');
+    $guia_remision->observacion=$request->get('observacion');
+    $guia_remision->estado_anulado='0';
+    $guia_remision->estado_registrado='0';
+    $guia_remision->user_id=auth()->user()->id;
+    $guia_remision->save();
 
-        $almacen=Almacen::find($id_almacen->id);
-        $almacen->cod_guia='NN';
-        $almacen->save();
+    $almacen=Almacen::find($id_almacen->id);
+    $almacen->cod_guia='NN';
+    $almacen->save();
 
-        if (isset($id_cliente)) {
-            $cotizacion_estado_aprobado=Cotizacion::find($id_cotizacion);
-            $cotizacion_estado_aprobado->estado_aprobado='1';
-            $cotizacion_estado_aprobado->save();
-        }
+    if (isset($id_cliente)) {
+        $cotizacion_estado_aprobado=Cotizacion::find($id_cotizacion);
+        $cotizacion_estado_aprobado->estado_aprobado='1';
+        $cotizacion_estado_aprobado->save();
+    }
 
-        
 
-        $stock = $request->input('stock');
-        $count_stock=count($stock);
 
-        $cantidad = $request->input('cantidad');
-        $count_cantidad=count($cantidad);
+    $stock = $request->input('stock');
+    $count_stock=count($stock);
 
-        $series = $request->input('series');
-        $count_series=count($series);
+    $cantidad = $request->input('cantidad');
+    $count_cantidad=count($cantidad);
 
-        $peso = $request->input('peso');
-        $count_peso=count($peso);
+    $series = $request->input('series');
+    $count_series=count($series);
 
-        for($i=0 ; $i<$count_articulo;$i++){
-            $articulos[$i]= $request->input('articulo')[$i];
-            $producto_id[$i]=strstr($articulos[$i], ' ', true);
-        }
+    $peso = $request->input('peso');
+    $count_peso=count($peso);
 
-        if($count_articulo = $count_stock  = $count_cantidad = $count_series = $count_peso){
-            for($i=0;$i<$count_articulo;$i++){
-                $guia_remision_registro=new g_remision_registro;
-                $guia_remision_registro->producto_id=$producto_id[$i];
-                $guia_remision_registro->cantidad=$request->get('cantidad')[$i];
-                $guia_remision_registro->numero_serie=$request->get('series')[$i];
-                $guia_remision_registro->guia_remision_id=$guia_remision->id;
-                $guia_remision_registro->estado=1;
-                $guia_remision_registro->peso=$request->get('peso')[$i];
-                $guia_remision_registro->save();
+    for($i=0 ; $i<$count_articulo;$i++){
+        $articulos[$i]= $request->input('articulo')[$i];
+        $producto_id[$i]=strstr($articulos[$i], ' ', true);
+    }
 
-                $nueva=Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('almacen_id',$guia_remision->almacen_id)->where('estado',1)->get();
+    if($count_articulo = $count_stock  = $count_cantidad = $count_series = $count_peso){
+        for($i=0;$i<$count_articulo;$i++){
+            $guia_remision_registro=new g_remision_registro;
+            $guia_remision_registro->producto_id=$producto_id[$i];
+            $guia_remision_registro->cantidad=$request->get('cantidad')[$i];
+            $guia_remision_registro->numero_serie=$request->get('series')[$i];
+            $guia_remision_registro->guia_remision_id=$guia_remision->id;
+            $guia_remision_registro->estado=1;
+            $guia_remision_registro->peso=$request->get('peso')[$i];
+            $guia_remision_registro->save();
 
-                $comparacion=$nueva;
+            $nueva=Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('almacen_id',$guia_remision->almacen_id)->where('estado',1)->get();
+
+            $comparacion=$nueva;
                 //buble para la cantidad
-                $cantidad=0;
-                foreach($comparacion as $comparaciones){
-                    $cantidad=$comparaciones->cantidad+$cantidad;
-                }
-                if(isset($comparacion)){
-                    $var_cantidad_entrada=$guia_remision_registro->cantidad;
-                    $contador=0;
-                    foreach ($comparacion as $p) {
-                        if($p->cantidad>$var_cantidad_entrada){
-                            $cantidad_mayor=$p->cantidad;
-                            $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
-                            $p->cantidad=$cantidad_final;
-                            if($cantidad_final==0){
-                                $p->estado=0;
-                                $p->save();
-                                break;
-                            }else{
-                                $p->save();
-                                break;
-                            }
-                        }elseif($p->cantidad==$var_cantidad_entrada){
-                            $p->cantidad=0;
+            $cantidad=0;
+            foreach($comparacion as $comparaciones){
+                $cantidad=$comparaciones->cantidad+$cantidad;
+            }
+            if(isset($comparacion)){
+                $var_cantidad_entrada=$guia_remision_registro->cantidad;
+                $contador=0;
+                foreach ($comparacion as $p) {
+                    if($p->cantidad>$var_cantidad_entrada){
+                        $cantidad_mayor=$p->cantidad;
+                        $cantidad_final=$cantidad_mayor-$var_cantidad_entrada;
+                        $p->cantidad=$cantidad_final;
+                        if($cantidad_final==0){
                             $p->estado=0;
                             $p->save();
                             break;
-                        }
-                        else{
-                            $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
-                            $p->cantidad=0;
-                            $p->estado=0;
+                        }else{
                             $p->save();
+                            break;
                         }
+                    }elseif($p->cantidad==$var_cantidad_entrada){
+                        $p->cantidad=0;
+                        $p->estado=0;
+                        $p->save();
+                        break;
+                    }
+                    else{
+                        $var_cantidad_entrada=$var_cantidad_entrada-$p->cantidad;
+                        $p->cantidad=0;
+                        $p->estado=0;
+                        $p->save();
                     }
                 }
-                //Resta en la tabla stock almacen
-                Stock_almacen::egreso($guia_remision->almacen_id,$producto_id[$i],$guia_remision_registro->cantidad);
-                //resta de cantidades de productos para la tabla stock productos
-                    $stock_productos=Stock_producto::where('producto_id',$producto_id[$i])->first();
-                    $stock_productos->stock=$stock_productos->stock-$guia_remision_registro->cantidad;
-                    $stock_productos->save();
-
             }
-        }else{
-            return "campos no completados";
-        }
-        
-        return redirect()->route('guia_remision.show',$guia_remision->id);
+                //Resta en la tabla stock almacen
+            Stock_almacen::egreso($guia_remision->almacen_id,$producto_id[$i],$guia_remision_registro->cantidad);
+                //resta de cantidades de productos para la tabla stock productos
+            $stock_productos=Stock_producto::where('producto_id',$producto_id[$i])->first();
+            $stock_productos->stock=$stock_productos->stock-$guia_remision_registro->cantidad;
+            $stock_productos->save();
 
+        }
+    }else{
+        return "campos no completados";
     }
+
+    return redirect()->route('guia_remision.show',$guia_remision->id);
+
+}
 
     /**
      * Display the specified resource.
@@ -340,6 +340,12 @@ class GuiaRemisionController extends Controller
     }
 
     public function show($id){
+
+        $user_login =auth()->user();
+        $almacen=Almacen::where('estado',0)->get();
+        $almacen_primero=Almacen::where('estado',0)->first();
+        $conteo_almacen=Almacen::where('estado',0)->count();
+
         $banco_count=Banco::where('estado','0')->count();
         $guia_remision=Guia_remision::find($id);
         $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
@@ -348,7 +354,7 @@ class GuiaRemisionController extends Controller
         $banco=Banco::where('estado','0')->get();
         $empresa=Empresa::first();
 
-        return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision','guia_registro','banco_count'));
+        return view('transaccion.venta.guia_remision.show',compact('empresa','banco','guia_remision','guia_registro','banco_count','user_login','almacen','almacen_primero','conteo_almacen'));
     }
 
     /**
@@ -415,4 +421,4 @@ class GuiaRemisionController extends Controller
     }
 
 
-  }
+}

@@ -5,6 +5,7 @@
 @section('breadcrumb2', 'Cotizacion - Boleta M.principal')
 @section('href_accion', route('cotizacion.index') )
 @section('value_accion', 'Atras')
+@extends('layout_agregado_rapido')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 
 @section('content')
