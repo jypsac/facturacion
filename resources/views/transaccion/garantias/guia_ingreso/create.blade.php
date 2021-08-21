@@ -5,6 +5,7 @@
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_guia_ingreso.index') )
 @section('value_accion', 'Atras')
+    @extends('layout_agregado_rapido')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 {{-- @section('vue_js',  asset('js/app.js') ) --}}
 @section('content')

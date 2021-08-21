@@ -1,10 +1,11 @@
 @extends('layout')
 
-@section('title', 'Cotizacion Servicio - Boleta')
-@section('breadcrumb', 'Cotizacion Servicio - Boleta')
-@section('breadcrumb2', 'Cotizacion Servicio - Boleta')
+@section('title', 'Boleta-Servicio ')
+@section('breadcrumb', 'Boleta-Servicio ')
+@section('breadcrumb2', 'Boleta-Servicio ')
 @section('href_accion', route('cotizacion_servicio.index') )
 @section('value_accion', 'Atras')
+@extends('layout_agregado_rapido')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head>
     <script type="text/javascript">
@@ -36,22 +37,9 @@
 </div>
 @endif
 
-@if($errors->any())
-<div style="padding-top: 20px;">
-    <div class="alert alert-danger">
-        <a class="alert-link" href="#">
-            @foreach ($errors->all() as $error)
-            <li style="color: red">{{ $error }}</li>
-            @endforeach
-        </a>
-    </div>
-</div>
-@endif
-
-
 {{-- Boton para modal de Clientes --}}
 @section('form_action_modal_cliente',  route('agregado_rapido.cliente_cotizado'))
-@section('ruta_retorno', 'cotizacion_servicio')
+@section('ruta_retorno', 'boleta')
 <div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target="#ModalCliente"><i class="fa fa-user-o" aria-hidden="true"></i>cliente </a>
 </div>
@@ -70,19 +58,19 @@
 
                 <div class="ibox-content">
                     <form action="{{route('boleta_servicio.store')}}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
-                       @csrf
-                       {{-- @method('put') --}}
-                       {{-- Cabecera --}}
-                       <div class="row">
+                     @csrf
+                     {{-- @method('put') --}}
+                     {{-- Cabecera --}}
+                     <div class="row">
                         <div class="col-sm-4 text-left" align="left">
                             <address class="col-sm-4" align="left">
-                               <img src="{{asset('img/logos/'.$empresa->foto)}}" alt="" width="300px">
-                           </address>
-                       </div>
-                       <div class="col-sm-4"></div>
-                       <div class="col-sm-4">
+                             <img src="{{asset('img/logos/'.$empresa->foto)}}" alt="" width="300px">
+                         </address>
+                     </div>
+                     <div class="col-sm-4"></div>
+                     <div class="col-sm-4">
 
-                           <div class="form-control" align="center" style="height: auto;">
+                         <div class="form-control" align="center" style="height: auto;">
                             <h3 style="padding-top:10px ">R.U.C {{$empresa->ruc}}</h3>
                             <h2 style="font-size: 19px">BOLETA ELECTRONICA</h2>
                             <h5>{{$boleta_numero}}</h5>
@@ -227,11 +215,11 @@
                                                     <div style="position: relative; " > <input class="text_des"type='text' id='descuento0' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
                                                     </div>
                                                     <div class="div_check" >
-                                                       <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
-                                                   </div>
-                                                   <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
-                                               </td>
-                                               <td>
+                                                     <input class="check"  type='checkbox' id='check0' name='check[]' onclick="multi(0)" style="" autocomplete="off"/>
+                                                 </div>
+                                                 <input type='hidden' id='check_descuento0' name='check_descuento[]'  class="form-control"  required >
+                                             </td>
+                                             <td>
                                                 <input type='text' id='descuento_unitario0' name='descuento_unitario[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
                                             </td>
                                             {{-- <td> --}}
@@ -275,187 +263,106 @@
             </div>
         </div>
         <style>
-            .form-control{border-radius: 10px}
-            .text_des{border-radius: 10px;border: 1px solid #e5e6e7;width: 80px;padding: 6px 12px;}
-            .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
-            .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
-            .check:checked {background: #0375bd6b;}
-        </style>
+        .form-control{border-radius: 10px}
+        .text_des{border-radius: 10px;border: 1px solid #e5e6e7;width: 80px;padding: 6px 12px;}
+        .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
+        .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
+        .check:checked {background: #0375bd6b;}
+    </style>
 
-                <!-- Mainly scripts -->
-                <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-                <script src="{{ asset('js/popper.min.js') }}"></script>
-                <script src="{{ asset('js/bootstrap.js') }}"></script>
-                <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-                <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+    <!-- Mainly scripts -->
+    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+    <script src="{{ asset('js/popper.min.js') }}"></script>
+    <script src="{{ asset('js/bootstrap.js') }}"></script>
+    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-                <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
-                <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
-                <!-- Custom and plugin javascript -->
-                <script src="{{ asset('js/inspinia.js') }}"></script>
-                <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+    <!-- Custom and plugin javascript -->
+    <script src="{{ asset('js/inspinia.js') }}"></script>
+    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-                <!-- Jquery Validate -->
-                <script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
+    <!-- Jquery Validate -->
+    <script src="{{asset('js/plugins/validate/jquery.validate.min.js')}}"></script>
 
-                <!-- Steps -->
-                <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
-                {{-- scritp de modal agregar --}}
-                <script>
-                    $(document).ready(function(){
-                        $("#wizard").steps();
-                        $("#form").steps({
-                            bodyTag: "fieldset",
-                            onStepChanging: function (event, currentIndex, newIndex)
-                            {
-                    // ¡Siempre permita retroceder incluso si el paso actual contiene campos no válidos!
-                    if (currentIndex > newIndex)
-                    {
-                        return true;
-                    }
+    <!-- Steps -->
+    <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
 
-                    // Prohibir suprimir el paso "Advertencia" si el usuario es demasiado joven
-                    if (newIndex === 3 && Number($("#age").val()) < 18)
-                    {
-                        return false;
-                    }
-
-                    var form = $(this);
-
-                    // Limpie si el usuario retrocedió antes
-                    if (currentIndex < newIndex)
-                    {
-                        // Para eliminar estilos de error
-                        $(".body:eq(" + newIndex + ") label.error", form).remove();
-                        $(".body:eq(" + newIndex + ") .error", form).removeClass("error");
-                    }
-
-                    // Deshabilite la validación en los campos que están deshabilitados u ocultos.
-                    form.validate().settings.ignore = ":disabled,:hidden";
-
-                    // Iniciar validación; Evite avanzar si es falso
-                    return form.valid();
-                },
-                onStepChanged: function (event, currentIndex, priorIndex)
-                {
-                    // Suprima (omita) el paso "Advertencia" si el usuario tiene edad suficiente.
-                    if (currentIndex === 2 && Number($("#age").val()) >= 18)
-                    {
-                        $(this).steps("next");
-                    }
-
-                    // Suprima (omita) el paso "Advertencia" si el usuario tiene la edad suficiente y quiere el paso anterior.
-                    if (currentIndex === 2 && priorIndex === 3)
-                    {
-                        $(this).steps("previous");
-                    }
-                },
-                onFinishing: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Deshabilita la validación en los campos que están deshabilitados.
-                    // En este punto, se recomienda hacer una verificación general (significa ignorar solo los campos deshabilitados)
-                    form.validate().settings.ignore = ":disabled";
-
-                    // Iniciar validación; Evitar el envío del formulario si es falso
-                    return form.valid();
-                },
-                onFinished: function (event, currentIndex)
-                {
-                    var form = $(this);
-
-                    // Enviar entrada de formulario
-                    form.submit();
-                }
-            }).validate({
-                errorPlacement: function (error, element)
-                {
-                    element.before(error);
-                },
-                rules: {
-                    confirm: {
-                        equalTo: "#password"
-                    }
-                }
-            });
-        });
-    </script>
-    {{-- / --}}
-        {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
-        <script>
-            function valida(f) {
-                var boton=document.getElementById("boton");
-                var completo = true;
-                var incompleto = false;
-                if( f.elements[0].value == "" )
-                   { alert(incompleto); }
-               else{boton.type = 'button';}
-           }
-       </script>
-       {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
-
-       <script>
-        var i = 2;
-        $(".addmore").on('click', function () {
-            var data = `[
-            <tr>
-            <td>
-            <input type='checkbox' class='case'/>
-            </td>";
-            <td>
-            <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i});ajax(${i})" onclick="Clear(this);" autocomplete="off" >
-            <datalist id="browsers" >
-            @foreach($servicios as $index => $servicio)
-            <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$igv_precio[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
-            @endforeach
-            </datalist>
-            <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
-            </td>
-
-
-
-            <td>
-            <input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
-            </td>
-             <input type="hidden" hidden="" id="prom_ori${i}" name="prom_ori[]" onclick="multi(${i})">
-            <td>
-            <input type='text' id='cantidad${i}' name='cantidad[]' class="monto0 form-control" onkeyup="multi(${i})" required  autocomplete="off" />
-            </td>
-
-            <td>
-            {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
-            <div style="position: relative; " > <input class="text_des"type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
-            </div>
-            <div class="div_check" >
-            <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
-            </div>
-            <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
-            </td>
-
-            <td>
-            <input type='text' id='descuento_unitario${i}' name='descuento_unitario[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
-            </td>
-
-            <input type='hidden' name="comision[]" id='comision${i}'  style="width: 76px"  readonly="readonly" class="form-control"  required  autocomplete="off" />
-
-            <td>
-                <input type='text' id='precio_unitario_comision${i}' name="precio_unitario_comision[]" disabled="disabled" class="form-control"  required  autocomplete="off" />
-            </td>
-            <td>
-            <input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
-            </td>
-
-            </tr>`;
-            $('.tables').append(data);
-            i++;
-        });
-    </script>
+    {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
     <script>
-        $('#articulo').change(function(e){
-            e.preventDefault();
+        function valida(f) {
+            var boton=document.getElementById("boton");
+            var completo = true;
+            var incompleto = false;
+            if( f.elements[0].value == "" )
+             { alert(incompleto); }
+         else{boton.type = 'button';}
+     }
+ </script>
+ {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 
-            var articulo = $('[id="articulo"]').val();
+ <script>
+    var i = 2;
+    $(".addmore").on('click', function () {
+        var data = `[
+        <tr>
+        <td>
+        <input type='checkbox' class='case'/>
+        </td>";
+        <td>
+        <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i});ajax(${i})" onclick="Clear(this);" autocomplete="off" >
+        <datalist id="browsers" >
+        @foreach($servicios as $index => $servicio)
+        <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$igv_precio[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
+        @endforeach
+        </datalist>
+        <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
+        </td>
+
+
+
+        <td>
+        <input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+        </td>
+        <input type="hidden" hidden="" id="prom_ori${i}" name="prom_ori[]" onclick="multi(${i})">
+        <td>
+        <input type='text' id='cantidad${i}' name='cantidad[]' class="monto0 form-control" onkeyup="multi(${i})" required  autocomplete="off" />
+        </td>
+
+        <td>
+        {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
+        <div style="position: relative; " > <input class="text_des"type='text' id='descuento${i}' name='descuento[]' readonly="readonly" class="" required  autocomplete="off"/>
+        </div>
+        <div class="div_check" >
+        <input class="check"  type='checkbox' id='check${i}' name='check[]' onclick="multi(${i})" style="" autocomplete="off"/>
+        </div>
+        <input style="width: 76px" type='hidden'id='check_descuento${i}' name='check_descuento[]'  class="form-control"  required >
+        </td>
+
+        <td>
+        <input type='text' id='descuento_unitario${i}' name='descuento_unitario[]' readonly="readonly" class="form-control"  required  autocomplete="off" />
+        </td>
+
+        <input type='hidden' name="comision[]" id='comision${i}'  style="width: 76px"  readonly="readonly" class="form-control"  required  autocomplete="off" />
+
+        <td>
+        <input type='text' id='precio_unitario_comision${i}' name="precio_unitario_comision[]" disabled="disabled" class="form-control"  required  autocomplete="off" />
+        </td>
+        <td>
+        <input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
+        </td>
+
+        </tr>`;
+        $('.tables').append(data);
+        i++;
+    });
+</script>
+<script>
+    $('#articulo').change(function(e){
+        e.preventDefault();
+
+        var articulo = $('[id="articulo"]').val();
                             // var data={articulo:articulo,_token:token};
                             $.ajax({
                                 type: "post",
@@ -473,28 +380,28 @@
                         });
 
 
-        function ajax (a){
-            var articulo2 = $(`[id='articulo${a}']`).val();
-            $.ajax({
-                type: "post",
-                url: "{{ route('descripcion_ajax_serv') }}",
-                data: {
-                    '_token': $('input[name=_token]').val(),
-                    'articulo': articulo2
-                },
-                success: function (msg) {
+    function ajax (a){
+        var articulo2 = $(`[id='articulo${a}']`).val();
+        $.ajax({
+            type: "post",
+            url: "{{ route('descripcion_ajax_serv') }}",
+            data: {
+                '_token': $('input[name=_token]').val(),
+                'articulo': articulo2
+            },
+            success: function (msg) {
                                             // console.log(msg);
 
                                             $(`#descripcion${a}`).val(msg);
                                         }
                                     });
-        }
-    </script>
-    <script>
-        function print(){
-            var print_input=1;
-            document.getElementById("prints").value = print_input;
-            var estado = document.querySelector("#prints").value;
+    }
+</script>
+<script>
+    function print(){
+        var print_input=1;
+        document.getElementById("prints").value = print_input;
+        var estado = document.querySelector("#prints").value;
             // console.log(estado);
         }
 
@@ -742,8 +649,8 @@
         });
     </script>
     <style type="text/css">
-        .a{color: red}
-    </style>
+    .a{color: red}
+</style>
 
 
-    @stop
+@stop

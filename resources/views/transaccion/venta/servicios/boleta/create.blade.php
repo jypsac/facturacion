@@ -1,10 +1,11 @@
 @extends('layout')
 
-@section('title', 'Cotizacion Servicio - Boleta')
-@section('breadcrumb', 'Cotizacion Servicio - Boleta')
-@section('breadcrumb2', 'Cotizacion Servicio - Boleta')
+@section('title', ' Boleta- Servicio')
+@section('breadcrumb', ' Boleta- Servicio')
+@section('breadcrumb2', ' Boleta- Servicio')
 @section('href_accion', route('cotizacion_servicio.index') )
 @section('value_accion', 'Atras')
+@extends('layout_agregado_rapido')
 <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
 <head>
     <script type="text/javascript">
@@ -51,7 +52,7 @@
 
 {{-- Boton para modal de Clientes --}}
 @section('form_action_modal_cliente',  route('agregado_rapido.cliente_cotizado'))
-@section('ruta_retorno', 'cotizacion_servicio')
+@section('ruta_retorno', 'boleta')
 <div class="social-bar">
     <a class="icon icon-facebook" target="_blank" data-toggle="modal" data-target="#ModalCliente"><i class="fa fa-user-o" aria-hidden="true"></i>cliente </a>
 </div>
