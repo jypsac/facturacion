@@ -53,28 +53,28 @@ class Config_fe extends Model
 
     public static function guia_electronica(){
 
-      $see = new See();
-        //$see->setCertificate(file_get_contents(public_path('certificado/certificado.p12')));
+        $see = new See();
+            //$see->setCertificate(file_get_contents(public_path('certificado/certificado.p12')));
 
-      $pfx = file_get_contents(public_path('certificado/certificado.p12'));
-      $password = 'FILTER2021';
+        $pfx = file_get_contents(public_path('certificado/certificado.p12'));
+        $password = 'FILTER2021';
 
-      $certificate = new X509Certificate($pfx, $password);
+        $certificate = new X509Certificate($pfx, $password);
 
-      $see->setCertificate($certificate->export(X509ContentType::PEM));
+        $see->setCertificate($certificate->export(X509ContentType::PEM));
 
-      // $see->setService(SunatEndpoints::GUIA_PRODUCCION);
-      $see->setService(SunatEndpoints::GUIA_BETA);
-      $see->setClaveSOL('20608175963', 'FILTER21', 'Filter21');
-      return $see;
-  }
+        // $see->setService(SunatEndpoints::GUIA_PRODUCCION);
+        $see->setService(SunatEndpoints::GUIA_BETA);
+        $see->setClaveSOL('20608175963', 'FILTER21', 'Filter21');
+        return $see;
+    }
 
-  public static function factura($factura,$facturas_registros,$guia){
+    public static function factura($factura,$facturas_registros,$guia){
 
         //libro: https://cpe.sunat.gob.pe/sites/default/files/inline-files/guia%2Bxml%2Bfactura%2Bversion%202-1%2B1%2B0%20%282%29_0.pdf
         // return $guia;
-    if($guia==1){
-        $guiaRemision = (new Document())
+        if($guia==1){
+            $guiaRemision = (new Document())
             ->setTipoDoc('09') // Guia de Remision remitente: 09, catalogo 01
             ->setNroDoc($factura->guia_remision); // Serie y correlativo de la guia de remision
 
@@ -328,7 +328,7 @@ class Config_fe extends Model
             ->setCompany($company)
             ->setClient($client)
             //--------------------------estados de obtencion
-            ->setMtoOperGravadas($factura->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+            ->setMtoOperGravadas($gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
             ->setMtoOperInafectas($factura->op_inafecta)
             ->setMtoOperExoneradas($factura->op_exonerada)
             //--------------------------
@@ -406,7 +406,7 @@ class Config_fe extends Model
     }
 
     public static function boleta($boleta,$boletas_registros){
-
+        
         $empresa=Empresa::first();
         $igv=Igv::first();
 
@@ -488,6 +488,149 @@ class Config_fe extends Model
             ->setClient($client)
             //--------------------------estados de obtencion
             ->setMtoOperGravadas($boleta->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+            //--------------------------
+            //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
+            ->setMtoIGV($igv_f)
+            ->setTotalImpuestos($igv_f)
+            ->setValorVenta($precio)
+            ->setSubTotal($total)
+            ->setMtoImpVenta($total)
+            ;
+
+            $formatter = new NumeroALetras();
+            $valor=$formatter->toInvoice($total, 2, 'soles');
+
+            $legend = (new Legend())
+            ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
+            ->setValue($valor);
+
+            $invoice->setDetails($item)
+            ->setLegends([$legend]);
+
+            return $invoice;
+        }else{
+            //credito
+            $cuotas=Cuotas_Credito::where('boleta_id',$boleta->id)->get();
+
+            $invoice = (new Invoice())
+            ->setUblVersion('2.1')
+            ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
+            ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
+            ->setSerie($serie)// numero de serie
+            ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
+            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
+            ->setCuotas([
+                // $cuotas_credito
+                (new Cuota()) //->                   meterlo en un foreach exlusivo de array
+                ->setMonto(59)
+                ->setFechaPago(new DateTime('+7days'))
+            ])
+            ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
+            ->setCompany($company)
+            ->setClient($client)
+            //--------------------------estados de obtencion
+            ->setMtoOperGravadas($boleta->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+            //--------------------------
+            //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
+            ->setMtoIGV($igv_f)
+            ->setTotalImpuestos($igv_f)
+            ->setValorVenta($precio)
+            ->setSubTotal($total)
+            ->setMtoImpVenta($total)
+            ;
+
+            $formatter = new NumeroALetras();
+            $valor=$formatter->toInvoice($total, 2, 'soles');
+
+            $legend = (new Legend())
+            ->setCode('1000') // Monto en letras - Catalog. 52 // pagina 33 pdf sunat
+            ->setValue($valor);
+
+            $invoice->setDetails($item)
+            ->setLegends([$legend]);
+
+            return $invoice;
+        }
+    }
+
+    public static function boleta_servicio($boleta,$boletas_registros){
+        $empresa=Empresa::first();
+        $igv=Igv::first();
+
+        // Cliente
+        $client = (new Client())
+        ->setTipoDoc('6')   //pagina 42 del pdf sunat 2.1
+        ->setNumDoc($boleta->cliente->numero_documento) //ruc del receptor
+        ->setRznSocial($boleta->cliente->empresa); //nombre empresa
+
+        // Emisor
+        $address = new Address();
+        $address->setUbigueo('150101')
+        ->setDepartamento($empresa->region_provincia)
+        ->setProvincia($empresa->region_provincia)
+        ->setDistrito($empresa->ciudad)
+        ->setUrbanizacion('-')
+        ->setDireccion($empresa->calle);
+
+        $company = (new Company())
+        ->setRuc($empresa->ruc)
+        ->setRazonSocial($empresa->razon_social)
+        ->setNombreComercial($empresa->nombre)
+        ->setAddress($address);
+
+        $igv_f=0;
+        $gravada=0;
+        $precio=0;
+
+        foreach($boletas_registros as $cont => $boleta_registro){
+            $item[$cont] = (new SaleDetail())
+            ->setCodProducto($boleta_registro->servicio->codigo_producto)//codigo del producto
+            ->setUnidad('ZZ') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
+            ->setCantidad($boleta_registro->cantidad)
+            ->setMtoValorUnitario($boleta_registro->precio)
+            ->setDescripcion($boleta_registro->servicio->nombre)
+            ->setMtoBaseIgv($boleta_registro->precio*$boleta_registro->cantidad)
+            ->setPorcentajeIgv($igv->igv_total) // 18%
+            ->setIgv($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100))
+            ->setTipAfeIgv('10') // Gravado Op. Onerosa - Catalog. 07
+            ->setTotalImpuestos($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)) // Suma de impuestos en el detalle
+            ->setMtoValorVenta($boleta_registro->precio*$boleta_registro->cantidad)
+            ->setMtoPrecioUnitario($boleta_registro->precio+($boleta_registro->precio*(($igv->igv_total)/100)))
+            ;
+            //sumatorias
+            $igv_f=$boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)+$igv_f;
+            $precio=$boleta_registro->precio*$boleta_registro->cantidad+$precio;
+            if($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)!=0){
+                $gravada=$gravada+$boleta_registro->precio*$boleta_registro->cantidad;
+            }
+        }
+        $total=$igv_f+$precio;
+        // return $gravada;
+
+        //codigo factura
+        $codigo_boleta=$boleta->codigo_boleta;
+        $serie=explode("-",$codigo_boleta);
+
+        $correlativo=$serie[1];
+        $serie=$serie[0];
+
+        if($boleta->forma_pago_id==1){
+            //contado
+            $invoice = (new Invoice())
+            ->setUblVersion('2.1')
+            ->setTipoOperacion('0101') // Venta - Catalog. 51 // pagina 51 del pdf sunat 2.1
+            ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
+            ->setSerie($serie)// numero de serie
+            ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
+            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
+
+            ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
+            ->setCompany($company)
+            ->setClient($client)
+            //--------------------------estados de obtencion
+            ->setMtoOperGravadas($gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
             //--------------------------
             //Contiene a la sumatoria de los valores de venta gravados por ítem - // pagina 45 del pdf sunat 2.1
             ->setMtoIGV($igv_f)

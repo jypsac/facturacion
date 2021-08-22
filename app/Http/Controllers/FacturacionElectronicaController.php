@@ -68,21 +68,17 @@ class FacturacionElectronicaController extends Controller
             $guia=1;
         }
         
-        // return $guia;
-        
         //configuracion de conexion
         $see=Config_fe::facturacion_electronica();
 
         if($factura->tipo=="producto"){
             //factura
             $invoice=Config_fe::factura($factura, $factura_registro,$guia);
-            dd($invoice);
-            return response()->json($invoice);
+            
         }elseif($factura->tipo=="servicio"){
             //factura
             $invoice=Config_fe::factura_servicio($factura, $factura_registro,$guia);
-            dd($invoice);
-            return response()->json($invoice);
+            
         }
         
         //envio a SUNAT    
@@ -109,9 +105,18 @@ class FacturacionElectronicaController extends Controller
         $see=Config_fe::facturacion_electronica();
 
         //boleta
-        $invoice=Config_fe::boleta($boleta, $boleta_registro);
-        dd($invoice);
-        return response()->json($invoice);
+        
+        if($boleta->tipo=="producto"){
+            //boleta
+            
+            $invoice=Config_fe::boleta($boleta, $boleta_registro);
+            
+        }elseif($boleta->tipo=="servicio"){
+            //boleta
+            
+            $invoice=Config_fe::boleta_servicio($boleta, $boleta_registro);
+            
+        }
         
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);

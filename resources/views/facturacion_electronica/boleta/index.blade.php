@@ -49,7 +49,6 @@
                                         <th>Cliente</th>
                                         <th>Ruc/DNI</th>
                                         <th>Fecha Vencimiento</th>
-
                                         <th>Enviar A Sunat</th>
                                     </tr>
                                 </thead>
