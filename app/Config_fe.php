@@ -146,6 +146,7 @@ class Config_fe extends Model
                 ->setMtoValorVenta($factura_registro->precio*$factura_registro->cantidad)
                 ->setMtoPrecioUnitario($factura_registro->precio+($factura_registro->precio*(($igv->igv_total)/100)))
                 ;
+                $precio=$factura_registro->precio*$factura_registro->cantidad+$precio;
             }
             
             //sumatorias
