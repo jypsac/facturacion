@@ -112,29 +112,49 @@ class Config_fe extends Model
 
 
         foreach($facturas_registros as $cont => $factura_registro){
-            $item[$cont] = (new SaleDetail())
-            ->setCodProducto($factura_registro->producto->codigo_producto)//codigo del producto
-            ->setUnidad('NIU') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
-            ->setCantidad($factura_registro->cantidad)
-            ->setMtoValorUnitario($factura_registro->precio)
-            ->setDescripcion($factura_registro->producto->nombre)
-            ->setMtoBaseIgv($factura_registro->precio*$factura_registro->cantidad)
-            ->setPorcentajeIgv($igv->igv_total) // 18%
-            ->setIgv($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100))
-            ->setTipAfeIgv('10') // Gravado Op. Onerosa - Catalog. 07
-            ->setTotalImpuestos($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)) // Suma de impuestos en el detalle
-            ->setMtoValorVenta($factura_registro->precio*$factura_registro->cantidad)
-            ->setMtoPrecioUnitario($factura_registro->precio+($factura_registro->precio*(($igv->igv_total)/100)))
-            ;
+            //gravada
+            if( in_array($factura_registro->producto->tipo_afec_i_producto->codigo, array("10", "11", "12", "13", "14", "15", "16", "17")) ){
+                $item[$cont] = (new SaleDetail())
+                ->setCodProducto($factura_registro->producto->codigo_producto)
+                ->setUnidad('NIU') 
+                ->setCantidad($factura_registro->cantidad)
+                ->setMtoValorUnitario($factura_registro->precio)
+                ->setDescripcion($factura_registro->producto->nombre)
+                ->setMtoBaseIgv($factura_registro->precio*$factura_registro->cantidad)
+                ->setPorcentajeIgv($igv->igv_total) 
+                ->setIgv($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100))
+                ->setTipAfeIgv($factura_registro->producto->tipo_afec_i_producto->codigo) 
+                ->setTotalImpuestos($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)) 
+                ->setMtoValorVenta($factura_registro->precio*$factura_registro->cantidad)
+                ->setMtoPrecioUnitario($factura_registro->precio+($factura_registro->precio*(($igv->igv_total)/100)))
+                ;
+
+                $igv_f=$factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)+$igv_f;
+                $precio=$factura_registro->precio*$factura_registro->cantidad+$precio;
+            }else{
+                $item[$cont] = (new SaleDetail())
+                ->setCodProducto($factura_registro->producto->codigo_producto)
+                ->setUnidad('NIU') 
+                ->setCantidad($factura_registro->cantidad)
+                ->setMtoValorUnitario($factura_registro->precio)
+                ->setDescripcion($factura_registro->producto->nombre)
+                ->setMtoBaseIgv($factura_registro->precio*$factura_registro->cantidad)
+                ->setPorcentajeIgv(0) 
+                ->setIgv(0)
+                ->setTipAfeIgv($factura_registro->producto->tipo_afec_i_producto->codigo) 
+                ->setTotalImpuestos($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)) 
+                ->setMtoValorVenta($factura_registro->precio*$factura_registro->cantidad)
+                ->setMtoPrecioUnitario($factura_registro->precio+($factura_registro->precio*(($igv->igv_total)/100)))
+                ;
+            }
+            
             //sumatorias
-            $igv_f=$factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)+$igv_f;
-            $precio=$factura_registro->precio*$factura_registro->cantidad+$precio;
             if($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)!=0){
                 $gravada=$gravada+$factura_registro->precio*$factura_registro->cantidad;
             }
         }
         $total=$igv_f+$precio;
-        // return $gravada;
+        
 
         //codigo factura
         $codigo_factura=$factura->codigo_fac;
