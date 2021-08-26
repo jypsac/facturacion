@@ -13,23 +13,6 @@
                     <div class="ibox ">
                         <div class="ibox-title">
                             <h5>Vista Previa</h5>
-                            <div class="ibox-tools">
-                                <a class="collapse-link">
-                                    <i class="fa fa-chevron-up"></i>
-                                </a>
-                                <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                                    <i class="fa fa-wrench"></i>
-                                </a>
-                                <ul class="dropdown-menu dropdown-user">
-                                    <li><a href="#" class="dropdown-item">Config option 1</a>
-                                    </li>
-                                    <li><a href="#" class="dropdown-item">Config option 2</a>
-                                    </li>
-                                </ul>
-                                <a class="close-link">
-                                    <i class="fa fa-times"></i>
-                                </a>
-                            </div>
                         </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
@@ -45,7 +28,7 @@
                                             <th>Orden servicio</th>
                                             <th>Asunto</th>
                                             <th>Cliente</th>
-                                            <th>Ver</th>
+                                            <th></th>
                                         </tr>
                                     </thead>
                                     {{-- <tbody>
@@ -123,7 +106,7 @@ $(document).ready(function(){
                 searchable: false,
                 render: function (data) {
                     var actions = '';
-                    actions += '<center><a href="{{ route('garantia_guia_egreso.show', ':id') }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>';
+                    actions += '<center><a href="{{ route('garantia_guia_egreso.show', ':id') }}"><button type="button" class="btn btn-success"><i class="fa fa-eye"></i></button></a></center>';
                     return actions.replace(/:id/g, data.egreso_id);
                 }
              }

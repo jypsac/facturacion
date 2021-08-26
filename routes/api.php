@@ -49,6 +49,21 @@ Route::get('garantia_ingreso',function(){
         ->join('personal', 'garantia_guia_ingreso.personal_lab_id', '=', 'personal.id')
 
         ->get();
+    return Datatables($garantia_ingreso_q)->toJson();;
+});
+// GARANTIA GUIA INGRESO para Egreso
+Route::get('garantia_ingreso_guias',function(){
+
+    $garantia_ingreso_q = DB::table('garantia_guia_ingreso')
+        ->select('*','garantia_guia_ingreso.id as gar_ing_id','garantia_guia_ingreso.created_at as gar_ing_ct_at', 'marcas.nombre as nombre_marca','clientes.nombre as cliente_nom', 'personal.nombres as personal_as', 'garantia_guia_ingreso.estado as estado_ga_ing')
+        ->where('garantia_guia_ingreso.estado','!=',0)
+        ->where('garantia_guia_ingreso.egresado',0)
+        ->orderby('garantia_guia_ingreso.id', 'DESC')
+        ->join('marcas', 'garantia_guia_ingreso.marca_id', '=', 'marcas.id')
+        ->join('clientes', 'garantia_guia_ingreso.cliente_id', '=', 'clientes.id')
+        ->join('personal', 'garantia_guia_ingreso.personal_lab_id', '=', 'personal.id')
+
+        ->get();
     return Datatables($garantia_ingreso_q)
         ->addColumn('tiempo', function ($garantia_ingreso_q) {
             $valor = $garantia_ingreso_q->gar_ing_ct_at;

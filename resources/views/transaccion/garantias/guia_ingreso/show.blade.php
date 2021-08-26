@@ -13,150 +13,141 @@
 @section('content')
 
 <div id="modal-form" class="modal fade" aria-hidden="true">
-<div class="modal-dialog">
-    <div class="modal-content">
-        <div class="modal-body">
-            <div class="row">
-                <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-body">
+                <div class="row">
+                    <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Agregar</h3>
 
-                    <p>Selecciona marca a agregar</p>
+                        <p>Selecciona marca a agregar</p>
 
-                    <form action="{{ route('garantia_guia_ingreso.create') }}"  enctype="multipart/form-data" method="get">
-                        <div class="form-group">{{-- <label>Marca</label> --}}
-                            <div class="form-group row"><label class="col-sm-2 col-form-label">Marca:</label>
-                                <div class="col-sm-10">
-                                    <select class="form-control m-b" name="familia">
-                                    @foreach($marcas as $marca)
-                                    <option value="{{$marca->id}}" >{{$marca->nombre}}</option>
-                                    @endforeach
-                                    </select>
+                         <form action="{{ route('garantia_guia_ingreso.create')}}" enctype="multipart/form-data" method="post">
+                            @csrf
+                            <div class="form-group">{{-- <label>Marca</label> --}}
+                                <div class="form-group row"><label class="col-sm-2 col-form-label">Marca:</label>
+                                    <div class="col-sm-10">
+                                        <select class="form-control m-b" name="marca">
+                                            @foreach($marcas as $marca)
+                                            <option value="{{$marca->id}}" >{{$marca->nombre}}</option>
+                                            @endforeach
+                                        </select>
+                                    </div>
                                 </div>
                             </div>
-                        </div>
 
                             <button class="btn btn-sm btn-primary float-right m-t-n-xs" type="submit"><strong>Grabar</strong></button>
-                    </form>
+                        </form>
 
-                        </div>
+                    </div>
                 </div>
 
             </div>
-    </div>
+        </div>
     </div>
 </div>
 <div class="wrapper wrapper-content animated fadeInRight">
-    {{-- @if ( tiempo($garantia_guia_ingreso->created_at) == 1 )
-        <div class="alert alert-danger">
-            Codigo Interno
-        </div>
-    @endif --}}
-    <div class="row ibox-title" style="padding-right: 3.1%;margin: 0" >
-        {{-- <div class="ibox-tools"> --}}
-            {{-- <a class="btn btn-success"  href="" >Imprimir --}}
-            <div class="col-sm-6">
-                @if(tiempo($garantia_guia_ingreso->created_at) == 1)
-                    @if($garantia_guia_ingreso->estado == 1)
-                      <a href="{{ route('garantia_guia_ingreso.edit', $garantia_guia_ingreso->id) }}"><button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button></a>
-                    @endif
-                @endif
-            </div>
-
-            <div class="col-sm-6 tooltip-demo "align="right"  >
-            <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}">
-                <input type="text" name="archivo" id="texto2"  maxlength="50" value="{{$garantia_guia_ingreso->orden_servicio}}" oninput="actualizatext()" />
-                <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg" ></i>  </button>
-            </form>
-
-            @if(Auth::user()->email_creado == 0)
-                 <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
-            @else
-                <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
-                    @csrf
-                    <input type="text" hidden="hidden" name="tipo" value="App\GarantiaGuiaIngreso"/>
-                    <input type="text" hidden="hidden" name="id" value="{{$garantia_guia_ingreso->id}}"/>
-                    <input type="text" hidden="hidden" name="redict" value="garantia_guia_ingreso">
-                    <input type="text" hidden="hidden" name="cliente" value="{{$garantia_guia_ingreso->clientes_i->email}}">
-                    <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por correo"><i class="fa fa-envelope fa-lg"  ></i> </button>
-                </form>
-            @endif
-            <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i>   </a>
-            <div id="auto" onclick="divAuto()">
-                <a class="btn  btn-success" style="background: green;border-color: green;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-whatsapp fa-lg" style="color: white"></i>  </a>
-            </div>
-            <div id="div-mostrar">
-               <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
-                @csrf
-                 <input type="tel" name="numero"  value="{{$garantia_guia_ingreso->clientes_i->celular}}"   />
-                 <input type="text" name="mensaje" id="texto_orden" hidden="" />
-                 <input type="text" hidden="" name="url" value="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}?archivo=">
-                 <input type="text" name="name_sin_cambio" hidden="" value="{{$garantia_guia_ingreso->orden_servicio}}" />
-                <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-send fa-lg"></i>  </button>
-            </form>
-            </div>
-            </div>
-    </div>
-    <div class="row" >
-        <div class="col-lg-12" style="margin-top: -2px">
-            <div class="ibox-content p-xl" style=" margin-bottom: 2px;padding-bottom: 50px;">
-                <div class="row" style="height: 120px">
-                    <div class="col-sm-4 text-left" align="left">
-                        <div class="form-control" align="center" style="height: 79%;" align="left">
-                            <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="height: 70px;width: 90%;margin-top: 5px">
-                        </div>
+        <div class="row ibox-title" style="padding-right: 3.1%;margin: 0" >
+                    <div class="col-sm-6">
+                        @if($garantia_guia_ingreso->estado == 1 and $garantia_guia_ingreso->egresado == 0 )
+                        <a href="{{ route('garantia_guia_ingreso.edit', $garantia_guia_ingreso->id) }}"><button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button></a>
+                        @endif
                     </div>
-                    <div class="col-sm-4" align="center">
-                        <div class="form-control" align="center" style="height: 79%;" align="center"  >
-                            <img align="center" src="{{asset('archivos/imagenes/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="height: 70px;width: 90%;margin-top: 5px">
-                         </div>
-                    </div>
-                    <div class="col-sm-4" align="right" >
-                        <div class="form-control" align="center" style="height: 79%;"align="right">
-                            <h3 style="">R.U.C {{$empresa->ruc}}</h3>
-                            <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
-                            <h5>{{$garantia_guia_ingreso->orden_servicio}}</h5>
+                    <div class="col-sm-6 tooltip-demo "align="right"  >
+                        <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}">
+                            <input type="text" name="archivo" id="texto2"  maxlength="50" value="{{$garantia_guia_ingreso->orden_servicio}}" oninput="actualizatext()" />
+                            <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg" ></i>  </button>
+                        </form>
+
+                        @if(Auth::user()->email_creado == 0)
+                        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#config" ><i class="fa fa-envelope fa-lg " ></i>  </button>
+                        @else
+                        <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
+                            @csrf
+                            <input type="text" hidden="hidden" name="tipo" value="App\GarantiaGuiaIngreso"/>
+                            <input type="text" hidden="hidden" name="id" value="{{$garantia_guia_ingreso->id}}"/>
+                            <input type="text" hidden="hidden" name="redict" value="garantia_guia_ingreso">
+                            <input type="text" hidden="hidden" name="cliente" value="{{$garantia_guia_ingreso->clientes_i->email}}">
+                            <button type="submit" class="btn btn-secondary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por correo"><i class="fa fa-envelope fa-lg"  ></i> </button>
+                        </form>
+                        @endif
+                        <a href="{{route('impresiones_ingreso' ,$garantia_guia_ingreso->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i>   </a>
+                        <div id="auto" onclick="divAuto()">
+                            <a class="btn  btn-success" style="background: green;border-color: green;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-whatsapp fa-lg" style="color: white"></i>  </a>
                         </div>
+                        <div id="div-mostrar">
+                         <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
+                            @csrf
+                            <input type="tel" name="numero"  value="{{$garantia_guia_ingreso->clientes_i->celular}}"   />
+                            <input type="text" name="mensaje" id="texto_orden" hidden="" />
+                            <input type="text" hidden="" name="url" value="{{route('pdf_ingreso' ,$garantia_guia_ingreso->id)}}?archivo=">
+                            <input type="text" name="name_sin_cambio" hidden="" value="{{$garantia_guia_ingreso->orden_servicio}}" />
+                            <button type="submit" class="btn  btn-success" style="background: green;border-color: green;" formtarget="_blank" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar por Whatsapp"><i class="fa fa-send fa-lg"></i>  </button>
+                        </form>
                     </div>
                 </div>
-                <br>
-                <div class="row" align="center" style="padding-bottom: 5px">
-                    <div class="col-sm-6" align="center">
-                        <div class="form-control" style="height: 100%;">
-                            <h3>Contacto Cliente</h3>
-                            <div align="left" style="height: 100%;">
-                                <strong>Señor(es):</strong> &nbsp;{{$garantia_guia_ingreso->clientes_i->nombre}}<br>
-                                <strong>{{$garantia_guia_ingreso->clientes_i->documento_identificacion}} :</strong> &nbsp;{{$garantia_guia_ingreso->clientes_i->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <strong>Fecha:</strong> &nbsp;{{$garantia_guia_ingreso->fecha}}<br>
-                                <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-                                <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
-                                <strong>Direccion:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->direccion}}<br>
-                                <strong>Contacto:&nbsp;</strong>
-                                @if($garantia_guia_ingreso->contacto_cliente_id == null)
-                                <em>Sin Registro</em>
-                                @else
-                                {{$contacto->where('id','=',$garantia_guia_ingreso->contacto_cliente_id)->pluck('nombre')->first()}} &nbsp;
-                                @endif
-                                <br>
+            </div>
+            <div class="row" >
+                <div class="col-lg-12" style="margin-top: -2px">
+                    <div class="ibox-content p-xl" style=" margin-bottom: 2px;padding-bottom: 50px;">
+                        <div class="row" style="height: 120px">
+                            <div class="col-sm-4 text-left" align="left">
+                                <div class="form-control" align="center" style="height: 79%;" align="left">
+                                    <img align="center" src="{{asset('img/logos/'.$empresa->foto)}}" style="height: 70px;width: 90%;margin-top: 5px">
+                                </div>
+                            </div>
+                            <div class="col-sm-4" align="center">
+                                <div class="form-control" align="center" style="height: 79%;" align="center"  >
+                                    <img align="center" src="{{asset('archivos/imagenes/marcas/'.$garantia_guia_ingreso->marcas_i->imagen)}}" style="height: 70px;width: 90%;margin-top: 5px">
+                                </div>
+                            </div>
+                            <div class="col-sm-4" align="right" >
+                                <div class="form-control" align="center" style="height: 79%;"align="right">
+                                    <h3 style="">R.U.C {{$empresa->ruc}}</h3>
+                                    <h2 style="font-size: 19px">GUIA DE INGRESO</h2>
+                                    <h5>{{$garantia_guia_ingreso->orden_servicio}}</h5>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-sm-6" align="center" style="height: 100%;">
-                         <div class="form-control" style="height: 100%;">
-                             <h3>Condiciones Generales</h3>
-                             <div align="left" style="height: 100%;">
-                                <strong>Ing. Asignado:</strong>&nbsp;{{$garantia_guia_ingreso->personal_laborales->nombres}} {{$garantia_guia_ingreso->personal_laborales->apellidos}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
-                                <strong>Motivo:</strong>&nbsp;{{$garantia_guia_ingreso->motivo}}<br>
-                                <strong>Marca :</strong>&nbsp;{{$garantia_guia_ingreso->marcas_i->nombre}} &nbsp;<br>
+                        <br>
+                        <div class="row" align="center" style="padding-bottom: 5px">
+                            <div class="col-sm-6" align="center">
+                                <div class="form-control" style="height: 100%;">
+                                    <h3>Contacto Cliente</h3>
+                                    <div align="left" style="height: 100%;">
+                                        <strong>Señor(es):</strong> &nbsp;{{$garantia_guia_ingreso->clientes_i->nombre}}<br>
+                                        <strong>{{$garantia_guia_ingreso->clientes_i->documento_identificacion}} :</strong> &nbsp;{{$garantia_guia_ingreso->clientes_i->numero_documento}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <strong>Fecha:</strong> &nbsp;{{$garantia_guia_ingreso->fecha}}<br>
+                                        <strong>Telefono:</strong>&nbsp;{{$garantia_guia_ingreso->clientes_i->telefono}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                        <strong>Correo:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->email}}<br>
+                                        <strong>Direccion:</strong>&nbsp; {{$garantia_guia_ingreso->clientes_i->direccion}}<br>
+                                        <strong>Contacto:&nbsp;</strong>
+                                        @if($garantia_guia_ingreso->contacto_cliente_id == null)
+                                        <em>Sin Registro</em>
+                                        @else
+                                        {{$contacto->where('id','=',$garantia_guia_ingreso->contacto_cliente_id)->pluck('nombre')->first()}} &nbsp;
+                                        @endif
+                                        <br>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-sm-6" align="center" style="height: 100%;">
+                               <div class="form-control" style="height: 100%;">
+                                   <h3>Condiciones Generales</h3>
+                                   <div align="left" style="height: 100%;">
+                                    <strong>Ing. Asignado:</strong>&nbsp;{{$garantia_guia_ingreso->personal_laborales->nombres}} {{$garantia_guia_ingreso->personal_laborales->apellidos}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                    <strong>Motivo:</strong>&nbsp;{{$garantia_guia_ingreso->motivo}}<br>
+                                    <strong>Marca :</strong>&nbsp;{{$garantia_guia_ingreso->marcas_i->nombre}} &nbsp;<br>
 
-                                <strong>Asunto:</strong>&nbsp;{{$garantia_guia_ingreso->asunto}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                    <strong>Asunto:</strong>&nbsp;{{$garantia_guia_ingreso->asunto}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
+                                </div>
                             </div>
                         </div>
-                    </div>
-                    <br>
-                   <div class="col-sm-12" align="center" style="padding-top: 15px;">
-                        <div class="form-control" style="height: 100%">
-                             <h3>Datos del Equipo</h3>
-                             <div class="row" style="padding-bottom: 1px">
-                                 <div align="left" class="col-sm-6">
+                        <br>
+                        <div class="col-sm-12" align="center" style="padding-top: 15px;">
+                            <div class="form-control" style="height: 100%">
+                               <h3>Datos del Equipo</h3>
+                               <div class="row" style="padding-bottom: 1px">
+                                   <div align="left" class="col-sm-6">
                                     <strong>Modelo:</strong> &nbsp;{{$garantia_guia_ingreso->nombre_equipo}}<br>
                                     <strong>Número de serie:</strong> &nbsp;{{$garantia_guia_ingreso->numero_serie}}<br>
                                 </div>
@@ -168,13 +159,13 @@
                         </div>
                     </div>
 
-            </div><br>
-                   <div class="row" align="center" style="padding-bottom: 5px">
+                </div><br>
+                <div class="row" align="center" style="padding-bottom: 5px">
                     <div class="col-sm-4" align="center">
                         <div class="form-control" style="height: 100%"><h3>Descripcion del Problema:</h3>
                             <div align="left" style="font-size: 13px;" >
                                 <p>{{$garantia_guia_ingreso->descripcion_problema}}</p>
-                           </div>
+                            </div>
                         </div>
                     </div>
                     <div class="col-sm-4" align="center">
@@ -197,8 +188,8 @@
                 </div>
 
 
-            <br>
-            <!-- Fin Totales de Productos -->
+                <br>
+                <!-- Fin Totales de Productos -->
             {{-- <div class="row">
                 @foreach($banco as $bancos)
                 <div class="col-sm-3 " align="center">
@@ -216,35 +207,35 @@
           </div> --}}
 
           <footer style="padding-top: 10px">
-          <br>
-          <div class="row">
-            <div class="col-sm-4">
-                <strong><p><u>Centro de Atencion : </strong></u></p>
-                <strong>Direccion:</strong> {{$usuario->almacen->direccion}}<br>
-                <strong>Telefonos :</strong>  {{$empresa->telefono}} / {{$usuario->celular}} &nbsp;<br>
-                <strong>{{$garantia_guia_ingreso->marcas_i->nombre_empresa}}:</strong> {{$garantia_guia_ingreso->marcas_i->telefono}}<br>
-                <strong>Email:</strong> {{$usuario->email}}<br>
-                <strong>Web:</strong> {{$empresa->pagina_web}}<br>
-            </div>
-            <div class="col-sm-2"></div>
-            <div class="col-sm-3"></div>
-            <div class="col-sm-3"><br><br>
+              <br>
+              <div class="row">
+                <div class="col-sm-4">
+                    <strong><p><u>Centro de Atencion : </strong></u></p>
+                    <strong>Direccion:</strong> {{$usuario->almacen->direccion}}<br>
+                    <strong>Telefonos :</strong>  {{$empresa->telefono}} / {{$usuario->celular}} &nbsp;<br>
+                    <strong>{{$garantia_guia_ingreso->marcas_i->nombre_empresa}}:</strong> {{$garantia_guia_ingreso->marcas_i->telefono}}<br>
+                    <strong>Email:</strong> {{$usuario->email}}<br>
+                    <strong>Web:</strong> {{$empresa->pagina_web}}<br>
+                </div>
+                <div class="col-sm-2"></div>
+                <div class="col-sm-3"></div>
+                <div class="col-sm-3"><br><br>
                 {{-- <hr>
                 <center>adm</center> --}}
             </div>
 
         </div>
-         </footer>
-    </div>
+    </footer>
+</div>
 </div>
 </div>
 
 </div>
 <style type="text/css">
-    .form-control{border-radius: 10px; height: 150px;}
-    .ibox-tools a{color: white !important}
-    .a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
-    .table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {border-top-width: 0px;}
+.form-control{border-radius: 10px; height: 150px;}
+.ibox-tools a{color: white !important}
+.a{height: 30px; margin:0;border-radius: 0px;text-align: center;}
+.table > thead > tr > th, .table > tbody > tr > th, .table > tfoot > tr > th, .table > thead > tr > td, .table > tbody > tr > td, .table > tfoot > tr > td {border-top-width: 0px;}
 
 </style>
 {{-- Modal Configuracion --}}
@@ -316,13 +307,13 @@
                                         </div>
                                         <div class="row">
                                             <label class="col-sm-2 col-form-label">Ancho(px)</label>
-                                                <div class="col-sm-4">
-                                                    <input type="number" class="form-control" name="ancho_firma">
-                                                </div>
+                                            <div class="col-sm-4">
+                                                <input type="number" class="form-control" name="ancho_firma">
+                                            </div>
                                             <label class="col-sm-2 col-form-label" >Alto(px)</label>
-                                                <div class="col-sm-4">
-                                                    <input type="number" class="form-control" name="alto_firma">
-                                                </div>
+                                            <div class="col-sm-4">
+                                                <input type="number" class="form-control" name="alto_firma">
+                                            </div>
                                         </div>
                                         <br>
                                     </div>
@@ -336,9 +327,9 @@
             </div>
         </div>
     </div>
-{{-- Fin de modal configuracion --}}
+    {{-- Fin de modal configuracion --}}
 
-<style>
+    <style>
     .form-control{margin-top: 5px; border-radius: 5px}
     p#texto{
         text-align: center;
@@ -390,7 +381,7 @@
 #auto:hover + #div-mostrar{
     height: 50px;
 }
-    </style>
+</style>
 <script type="text/javascript">
     function mostrarPassword(){
         var cambio = document.getElementById("txtPassword");
@@ -418,7 +409,7 @@
         }
 
         else
-                                        {
+        {
         //PRevio del PDF
         if (archivoInput.files && archivoInput.files[0])
         {
@@ -436,14 +427,14 @@
 <script>
     var clic = 1;
     function divAuto(){
-       if(clic==1){
-       document.getElementById("div-mostrar").style.height = "50px";
-       clic = clic + 1;
-       } else{
+     if(clic==1){
+         document.getElementById("div-mostrar").style.height = "50px";
+         clic = clic + 1;
+     } else{
         document.getElementById("div-mostrar").style.height = "0px";
         clic = 1;
-       }
     }
+}
 </script>
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -466,8 +457,8 @@ function printExternal(url) {
 </script> --}}
 <script  type="text/javascript">
     function actualizatext() {
-            let action = document.getElementById("texto2").value;
-            document.getElementById("texto_orden").value = action;
-        }
+        let action = document.getElementById("texto2").value;
+        document.getElementById("texto_orden").value = action;
+    }
 </script>
 @endsection

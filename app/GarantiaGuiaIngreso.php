@@ -22,9 +22,9 @@ class GarantiaGuiaIngreso extends Model
         return $this->belongsTo(Cliente::class,'cliente_id');
     }
 
-    // public function contactos(){
-    //     return $this->belongsTo(Contacto::class,'contacto_cliente_id');
-    // }
+    public function contactos(){
+        return $this->belongsTo(Contacto::class,'contacto_cliente_id');
+    }
 
 
 }

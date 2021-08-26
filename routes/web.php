@@ -178,8 +178,8 @@ Route::group(
 
 		Route::get('garantia_guia_ingreso/impresionIngreso/{id}' , 'GarantiaGuiaIngresoController@print')->name('impresiones_ingreso');
 		Route::put('garantia_guia_ingreso/{guia}', 'GarantiaGuiaIngresoController@actualizar')->name('garantia_guia_ingreso.actualizar');
-		Route::resource('/garantia_guia_ingreso','GarantiaGuiaIngresoController');
-
+		Route::resource('/garantia_guia_ingreso','GarantiaGuiaIngresoController')->except(['create']);
+		Route::post('/garantia_guia_ingreso/create' , 'GarantiaGuiaIngresoController@create')->name('garantia_guia_ingreso.create');
 
 		Route::POST('garantia_guia_egreso/email/enviar','GarantiaGuiaEgresoController@enviar')->name('garantia_egreso.enviar');
 		Route::get('garantia_guia_egreso/email/{id}','GarantiaGuiaEgresoController@email')->name('guia_egreso.email');

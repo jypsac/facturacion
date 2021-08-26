@@ -35,7 +35,7 @@ class GarantiaGuiaEgresoController extends Controller
     public function guias()
     {
         $marcas=Marca::all();
-        $garantias_guias_ingresos=GarantiaGuiaIngreso::all();
+        $garantias_guias_ingresos=GarantiaGuiaIngreso::where('estado',1)->where('egresado',0)->get();
         return view('transaccion.garantias.guia_egreso.ingresos',compact('marcas','garantias_guias_ingresos'));
 
     }
@@ -70,7 +70,7 @@ class GarantiaGuiaEgresoController extends Controller
         // //GUIA INGRESO
         $garantia_guia_ingreso=GarantiaGuiaIngreso::where('orden_servicio',$orden_servicio)->first();
         $garantia_guia_ingreso->egresado=1;
-        $garantia_guia_ingreso->estado=0;
+        // $garantia_guia_ingreso->estado=0;
         $garantia_guia_ingreso->save();
 
 

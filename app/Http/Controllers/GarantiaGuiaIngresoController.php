@@ -16,6 +16,7 @@ use App\Pais;
 use App\User;
 use App\Producto;
 use Barryvdh\DomPDF\Facade as PDF;
+use Illuminate\Support\Facades\Redirect;
 use DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -35,11 +36,24 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function index()
     {
+      // 0=Anulado
+      // 1=Activo
+      // 2=Fuera Funcion
       $marcas=Marca::where('estado',0)->get();
       $garantias_guias_ingresos=GarantiaGuiaIngreso::all();
-      $contacto = Contacto::all();
-      return view('transaccion.garantias.guia_ingreso.index',compact('marcas','garantias_guias_ingresos','contacto'));
-    }
+      $garantias_guias=GarantiaGuiaIngreso::where('estado',1)->get();
+      foreach ($garantias_guias as $ingreso ) {
+        $date = $ingreso->created_at."+ 2 days";
+        $datework = Carbon::createFromDate($date);
+        $now = Carbon::now();
+        if ($datework<$now){
+         $garantia_guia_ingreso=GarantiaGuiaIngreso::find($ingreso->id);
+         $garantia_guia_ingreso->estado=2;
+         $garantia_guia_ingreso->save();
+       }
+     }
+     return view('transaccion.garantias.guia_ingreso.index',compact('marcas','garantias_guias_ingresos'));
+   }
 
     /**
      * Show the form for creating a new resource.
@@ -48,37 +62,30 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function create(Request $request)
     {
+      $clientes=Cliente::all();
+      $empresa = Empresa::first();
       $tiempo_actual = Carbon::now();
       $tiempo_actual = $tiempo_actual->format('Y-m-d');
 
-      $name = $request->input('familia');
-      $marca_t = Marca::where("id","=",$name)->first();
-      $marca_nombre=(string)$marca_t->nombre_empresa;
-      $marca=(string)$marca_t->abreviatura;
-      $guion='-';
-      $marca_cantidad= GarantiaGuiaIngreso::where("marca_id","=",$name)->count();
+      // Cod-Guia
+      $marca_id = $request->input('marca');
+      $marca_cantidad= GarantiaGuiaIngreso::where("marca_id","=",$marca_id)->count();
+
+      $marca_t = Marca::where("id",$marca_id)->first();
       $marca_cantidad++;
       $contador=1000000;
       $marca_cantidad=$contador+$marca_cantidad;
       $marca_cantidad=(string)$marca_cantidad;
       $marca_cantidad=substr($marca_cantidad,1);
-      $orden_servicio=$marca.$guion.$marca_cantidad;
-      $paises = Pais::all();
-      $empresa = Empresa::first();
-      // Producto que no esten anulados
+      $orden_servicio=$marca_t->abreviatura.'-'.$marca_cantidad;
+      // Cod-Guia
+
       $productos = Producto::where('estado_anular',1)->where('marca_id',$marca_t->id)->get();
+
       if(count($productos) == 0){
         return redirect()->route('garantia_guia_ingreso.index')->with('repite', 'La marca escogida no cuenta con productos relacionados');
       }
-      // return $productos;
-      $clientes=Cliente::all();
-        // $personales=Personal_datos_laborales::where("cargo","=","ingeniero")->get();
-      $personales=Personal_datos_laborales::all();
-        // $personales=Personal::join("personal_datos_laborales","id","=","personal_datos_laborales.personal_id")->get();
-        // $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
-
-        return view('transaccion.garantias.guia_ingreso.create',compact('name','marca','orden_servicio','tiempo_actual','clientes','marca_nombre','personales','paises','productos','empresa','marca_t'));
-        //llamar la abreviartura deacuerdo con el nombre del name separarlo por coma en el imput
+      return view('transaccion.garantias.guia_ingreso.create',compact('marca_id','orden_servicio','tiempo_actual','clientes','productos','empresa','marca_t'));
     }
 
     /**
@@ -100,16 +107,32 @@ class GarantiaGuiaIngresoController extends Controller
           foreach ($contacto as $key => $contactos) {
             $output.='<option>'.$contactos->nombre.'</option>';
           }
-        return Response($output);
-           }
+          return Response($output);
+        }
       }
     }
 
     public function store(Request $request){
+       // Cod-Guia
+      $marca_id = $request->input('marca_id');
+      $marca_cantidad= GarantiaGuiaIngreso::where("marca_id","=",$marca_id)->count();
+
+      $marca_t = Marca::where("id",$marca_id)->first();
+      $marca_cantidad++;
+      $contador=1000000;
+      $marca_cantidad=$contador+$marca_cantidad;
+      $marca_cantidad=(string)$marca_cantidad;
+      $marca_cantidad=substr($marca_cantidad,1);
+      $orden_servicio=$marca_t->abreviatura.'-'.$marca_cantidad;
+      // Cod-Guia
+
          // Obtner ID
       $cliente=$request->get('cliente_id');
       $nombre = strstr($cliente, '-',true);
       $cliente_id_nombre=Cliente::where("numero_documento","=",$nombre)->first();
+      if (empty($cliente_id_nombre)) {
+        return Redirect::to('/garantia_guia_ingreso')->withErrors(['Cliente no encontrado en Registro']);
+}
       //Contacto
       $contacto = $request->get('contacto_cliente');
 
@@ -120,62 +143,56 @@ class GarantiaGuiaIngresoController extends Controller
         if(!isset($contacto_nombre)){
           $contacto_id = null;
         }else{
-           $contacto_id = $contacto_nombre->id;
-        }
-      }
+         $contacto_id = $contacto_nombre->id;
+       }
+     }
         // $cliente=$request->get('cliente_id');
         // $cliente_id_nombre=Cliente::where("nombre","=",$cliente)->first();
-      $cliente_id=$cliente_id_nombre->id;
+     $cliente_id=$cliente_id_nombre->id;
 
-      $ingeniero=$request->get('personal_lab_id');
-      $ingeniero_nombre_id=Personal::where("nombres","=",$ingeniero)->first();
-      $personal_lab_id=$ingeniero_nombre_id->id;
+     $ingeniero=$request->get('personal_lab_id');
+     $ingeniero_nombre_id=Personal::where("nombres","=",$ingeniero)->first();
+     $personal_lab_id=$ingeniero_nombre_id->id;
 
         // $nombre_cliente=$request->get('nombre_cliente');
         // $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
         // $numero_doc=$cliente->numero_documento;
-      $nombre_equipo = $request->get('nombre_equipos');
+     $nombre_equipo = $request->get('nombre_equipos');
       // $nombre_equipo = substr(strstr($equipo, '-'),1);
 
         //TRAANSFORMNADO CON VALUE DE MARCA A UN ID
-      $marca_nombre=$request->get('marca_id');
+     $garantia_guia_ingreso=new GarantiaGuiaIngreso;
+     $garantia_guia_ingreso->motivo=$request->get('motivo');
+     $garantia_guia_ingreso->fecha=$request->get('fecha');
+     $garantia_guia_ingreso->orden_servicio=$orden_servicio;
+     $garantia_guia_ingreso->estado=1;
+     $garantia_guia_ingreso->egresado=0;
+     $garantia_guia_ingreso->asunto=$request->get('asunto');
 
-      $marca= Marca::where("nombre_empresa","=",$marca_nombre)->first();
-      // return $marca;
-      $marca_id_var=$marca->id;
+     $garantia_guia_ingreso->nombre_equipo=$nombre_equipo;
 
-      $garantia_guia_ingreso=new GarantiaGuiaIngreso;
-      $garantia_guia_ingreso->motivo=$request->get('motivo');
-      $garantia_guia_ingreso->fecha=$request->get('fecha');
-      $garantia_guia_ingreso->orden_servicio=$request->get('orden_servicio');
-      $garantia_guia_ingreso->estado=1;
-      $garantia_guia_ingreso->egresado=0;
-      $garantia_guia_ingreso->asunto=$request->get('asunto');
+     $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
+     $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
+     $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
+     $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
+     $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
+     $garantia_guia_ingreso->estetica=$request->get('estetica');
 
-      $garantia_guia_ingreso->nombre_equipo=$nombre_equipo;
-
-      $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
-      $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
-      $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
-      $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
-      $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
-      $garantia_guia_ingreso->estetica=$request->get('estetica');
-
-      $garantia_guia_ingreso->marca_id=$marca_id_var;
+     $garantia_guia_ingreso->marca_id=$marca_id;
 
         // $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
-      $garantia_guia_ingreso->cliente_id=$cliente_id;
-      $garantia_guia_ingreso->personal_lab_id=$personal_lab_id;
+     $garantia_guia_ingreso->cliente_id=$cliente_id;
+     $garantia_guia_ingreso->personal_lab_id=$personal_lab_id;
         // $garantia_guia_ingreso->contacto_id=$request->get('cliente_id');
-      $garantia_guia_ingreso->contacto_cliente_id = $contacto_id;
+     $garantia_guia_ingreso->contacto_cliente_id = $contacto_id;
 
-      $garantia_guia_ingreso->save();
+     $garantia_guia_ingreso->save();
         // $contar=GarantiaGuiaIngreso::all()->count();
-      $contar=$garantia_guia_ingreso->id;
+     $contar=$garantia_guia_ingreso->id;
 
-      return redirect()->route('garantia_guia_ingreso.show',$contar);
+     return redirect()->route('garantia_guia_ingreso.show',$contar);
 
-    }
+   }
 
     /**
      * Display the specified resource.
@@ -201,11 +218,23 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function edit($id)
     {
-       $contacto = Contacto::all();
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
+
+      //Validacion
+      if(empty($garantia_guia_ingreso)) {
+        return redirect()->route('garantia_guia_ingreso.index');
+      }
+      if ($garantia_guia_ingreso->estado==2 or $garantia_guia_ingreso->estado==0 or $garantia_guia_ingreso->egresado==1 ) {
+        return redirect()->route('garantia_guia_ingreso.index');
+      }
+      //Validacion
+
+      $empresa =Empresa::first();
+      $contacto =Contacto::all();
+      $contactos_cli=Contacto::where('clientes_id',$garantia_guia_ingreso->cliente_id)->get();
       $clientes=Cliente::all();
       $personales=DB::table('personal_datos_laborales')->join("personal","personal.id","=","personal_datos_laborales.personal_id")->get();
-      return view('transaccion.garantias.guia_ingreso.edit',compact('garantia_guia_ingreso','clientes','personales','contacto'));
+      return view('transaccion.garantias.guia_ingreso.edit',compact('garantia_guia_ingreso','clientes','personales','contacto','empresa','contactos_cli'));
     }
 
     /**
@@ -237,8 +266,8 @@ class GarantiaGuiaIngresoController extends Controller
           foreach ($contacto as $key => $contactos) {
             $output.='<option>'.$contactos->nombre.'</option>';
           }
-        return Response($output);
-           }
+          return Response($output);
+        }
       }
     }
     public function actualizar(Request $request, $id)

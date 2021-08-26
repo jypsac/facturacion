@@ -14,7 +14,7 @@
             $("form").keypress(function(e) {
                 if (e.which == 13) {
                     setTimeout(function() {
-                        e.target.value += ' | ';
+                        e.target.value += '';
                     }, 4);
                     e.preventDefault();
                 }
@@ -64,14 +64,13 @@
                 <br>
                 <form action="{{route('garantia_guia_ingreso.store')}}"  enctype="multipart/form-data" 	method="post" onsubmit="return valida(this)">
             	@csrf
-            		<input type="hidden" name="orden_servicio" value="{{$orden_servicio}}">
+            		<input type="hidden" name="marca_id" value="{{$marca_id}}">
             		<div class="row" >
             			<div class="col-sm-6" align="center" >
 	                        <div class="form-control for">
 	                            <h3>Datos Generales </h3>
 	                            <br>
 	                            <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
-	                        		<input type="text" class="form-control for" name="marca_id" value="{{$marca_nombre}}" readonly hidden="">
 	                        		<label class="col-sm-2 col-form-label">Asunto:</label>
 	                        		<div class="col-sm-4">
 		                         		<input type="text" class="form-control for" name="asunto" value="Ingreso de Equipo" required/>
@@ -116,7 +115,7 @@
 	                            <h3>Datos del Equipo</h3>
 	                            <br>
 	                            <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
-                        		{{-- <strong>Marca</strong><input type="text" class="form-control for" name="marca_id" value="{{$marca_nombre}}" readonly> --}}
+
 	                        		<label class="col-sm-2 col-form-label">Modelo:</label>
 		                            <div class="col-sm-10">
 		                              	<input name="nombre_equipos" list="browserprod"   class="form-control for" autocomplete="off" />
