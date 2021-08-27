@@ -37,7 +37,7 @@ class CreateServiciosTable extends Migration
             $table->string('foto');
             $table->string('estado_anular');
             $table->string('estado_activo');
-            $table->timestamps();
+            // $table->timestamps();
         });
     }
 
