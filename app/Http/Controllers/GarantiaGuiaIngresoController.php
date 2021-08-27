@@ -132,7 +132,7 @@ class GarantiaGuiaIngresoController extends Controller
       $cliente_id_nombre=Cliente::where("numero_documento","=",$nombre)->first();
       if (empty($cliente_id_nombre)) {
         return Redirect::to('/garantia_guia_ingreso')->withErrors(['Cliente no encontrado en Registro']);
-}
+      }
       //Contacto
       $contacto = $request->get('contacto_cliente');
 
@@ -246,68 +246,53 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        // ACTUALIZACION DE ESTADO
+        // ACTUALIZACION DE ESTADO - ANULADO
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
       $garantia_guia_ingreso->estado=0;
       $garantia_guia_ingreso->save();
-
       return redirect()->route('garantia_guia_ingreso.index');
     }
     public function contacto_cliente_actualizar(Request $request){
-      $output="";
-      if($request->ajax()){
+      // $output="";
+      // if($request->ajax()){
 
-        $cliente=$request->get('cliente_id');
-        // $nombre = strstr($cliente, '-',true);
-        $cliente_id_nombre = Cliente::where("nombre","=",$cliente)->pluck('id');
-        $contacto = Contacto::where('clientes_id','=',$cliente_id_nombre)->get();
+      //   $cliente=$request->get('cliente_id');
+      //   // $nombre = strstr($cliente, '-',true);
+      //   $cliente_id_nombre = Cliente::where("nombre","=",$cliente)->pluck('id');
+      //   $contacto = Contacto::where('clientes_id','=',$cliente_id_nombre)->get();
 
-        if($contacto){
-          foreach ($contacto as $key => $contactos) {
-            $output.='<option>'.$contactos->nombre.'</option>';
-          }
-          return Response($output);
-        }
-      }
+      //   if($contacto){
+      //     foreach ($contacto as $key => $contactos) {
+      //       $output.='<option>'.$contactos->nombre.'</option>';
+      //     }
+      //     return Response($output);
+      //   }
+      // }
     }
     public function actualizar(Request $request, $id)
     {
+      $ga_ingreso=GarantiaGuiaIngreso::where('id',$id)->first();
+      $contacto=$request->get('contacto');
+      if(empty($contacto)) {$contacto=NULL;}
 
-      $cliente=$request->get('cliente_id');
-      $cliente_nombre=Cliente::where("nombre","=",$cliente)->first();
-      $cliente_id = $cliente_nombre->id;
-      //Contacto
-      $contacto = $request->get('contacto_cliente');
-      $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
-      if($contacto == ""){
-        $contacto_id = null;
-      }else{
-        $contacto_id = $contacto_nombre->id;
-      }
-
-      // $contacto_id = $contacto_nombre->id;
-
-        // ACTUALIZACION DE GUIA DE INGRESO
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
-
-      $garantia_guia_ingreso->motivo=$request->get('motivo');
-
-      $garantia_guia_ingreso->asunto=$request->get('asunto');
-      $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipo');
       $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
       $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
-      $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
       $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
       $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
       $garantia_guia_ingreso->estetica=$request->get('estetica');
+      if (empty($ga_ingreso->contacto_cliente_id)){ $garantia_guia_ingreso->contacto_cliente_id=$contacto; }
 
-      $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
-      $garantia_guia_ingreso->cliente_id=$cliente_id;
-      $garantia_guia_ingreso->contacto_cliente_id = $contacto_id;
+      //si no esta egresado y si no esta anulado
+      if ($ga_ingreso->egresado==0 and $ga_ingreso->estado==1 ) {
+        $garantia_guia_ingreso->save();
+        return redirect()->route('garantia_guia_ingreso.show',$garantia_guia_ingreso->id);
+      }
+      //si esta egresado
+      elseif($ga_ingreso->egresado==1 or $ga_ingreso->estado!=1 ) {
+        return redirect()->route('garantia_guia_ingreso.show',$ga_ingreso->id)->withErrors(['Esta guia no puede ser Modificada.']);
+      }
 
-      $garantia_guia_ingreso->save();
-
-      return redirect()->route('garantia_guia_ingreso.index');
     }
 
     /**

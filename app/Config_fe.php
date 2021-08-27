@@ -311,7 +311,7 @@ class Config_fe extends Model
             ->setMtoBaseIgv($factura_registro->precio*$factura_registro->cantidad)
             ->setPorcentajeIgv($igv->igv_total) // 18%
             ->setIgv($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100))
-            ->setTipAfeIgv('10') // Gravado Op. Onerosa - Catalog. 07
+            ->setTipAfeIgv($factura_registro->producto->tipo_afec_i_producto->codigo) 
             ->setTotalImpuestos($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)) // Suma de impuestos en el detalle
             ->setMtoValorVenta($factura_registro->precio*$factura_registro->cantidad)
             ->setMtoPrecioUnitario($factura_registro->precio+($factura_registro->precio*(($igv->igv_total)/100)))
@@ -462,23 +462,44 @@ class Config_fe extends Model
         $precio=0;
 
         foreach($boletas_registros as $cont => $boleta_registro){
-            $item[$cont] = (new SaleDetail())
-            ->setCodProducto($boleta_registro->producto->codigo_producto)//codigo del producto
-            ->setUnidad('NIU') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
-            ->setCantidad($boleta_registro->cantidad)
-            ->setMtoValorUnitario($boleta_registro->precio)
-            ->setDescripcion($boleta_registro->producto->nombre)
-            ->setMtoBaseIgv($boleta_registro->precio*$boleta_registro->cantidad)
-            ->setPorcentajeIgv($igv->igv_total) // 18%
-            ->setIgv($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100))
-            ->setTipAfeIgv('10') // Gravado Op. Onerosa - Catalog. 07
-            ->setTotalImpuestos($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)) // Suma de impuestos en el detalle
-            ->setMtoValorVenta($boleta_registro->precio*$boleta_registro->cantidad)
-            ->setMtoPrecioUnitario($boleta_registro->precio+($boleta_registro->precio*(($igv->igv_total)/100)))
-            ;
+            
+                $item[$cont] = (new SaleDetail())
+                ->setCodProducto($boleta_registro->producto->codigo_producto)//codigo del producto
+                ->setUnidad('NIU') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
+                ->setCantidad($boleta_registro->cantidad)
+                ->setMtoValorUnitario($boleta_registro->precio)
+                ->setDescripcion($boleta_registro->producto->nombre)
+                ->setMtoBaseIgv($boleta_registro->precio*$boleta_registro->cantidad)
+                ->setPorcentajeIgv($igv->igv_total) // 18%
+                ->setIgv($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100))
+                ->setTipAfeIgv('10') // Gravado Op. Onerosa - Catalog. 07
+                ->setTotalImpuestos($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)) // Suma de impuestos en el detalle
+                ->setMtoValorVenta($boleta_registro->precio*$boleta_registro->cantidad)
+                ->setMtoPrecioUnitario($boleta_registro->precio+($boleta_registro->precio*(($igv->igv_total)/100)))
+                ;
+                $igv_f=$boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)+$igv_f;
+                $precio=$boleta_registro->precio*$boleta_registro->cantidad+$precio;
+
+                // $item[$cont] = (new SaleDetail())
+                // ->setCodProducto($boleta_registro->producto->codigo_producto)//codigo del producto
+                // ->setUnidad('NIU') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
+                // ->setCantidad($boleta_registro->cantidad)
+                // ->setMtoValorUnitario($boleta_registro->precio)
+                // ->setDescripcion($boleta_registro->producto->nombre)
+                // ->setMtoBaseIgv($boleta_registro->precio*$boleta_registro->cantidad)
+                // ->setPorcentajeIgv($igv->igv_total) // 18%
+                // ->setIgv($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100))
+                
+                // ->setTotalImpuestos($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)) // Suma de impuestos en el detalle
+                // ->setMtoValorVenta($boleta_registro->precio*$boleta_registro->cantidad)
+                // ->setMtoPrecioUnitario($boleta_registro->precio+($boleta_registro->precio*(($igv->igv_total)/100)))
+                // ;
+                // $igv_f=$boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)+$igv_f;
+                // $precio=$boleta_registro->precio*$boleta_registro->cantidad+$precio;
+            
+            
             //sumatorias
-            $igv_f=$boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)+$igv_f;
-            $precio=$boleta_registro->precio*$boleta_registro->cantidad+$precio;
+            
             if($boleta_registro->precio*$boleta_registro->cantidad*(($igv->igv_total)/100)!=0){
                 $gravada=$gravada+$boleta_registro->precio*$boleta_registro->cantidad;
             }

@@ -42,7 +42,6 @@
 							<h3>Datos Generales </h3>
 							<br>
 							<div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
-								{{-- <input type="text" class="form-control for" name="marca_id" value="{{$marca_nombre}}" readonly hidden=""> --}}
 								<label class="col-sm-2 col-form-label">Asunto:</label>
 								<div class="col-sm-4">
 									<input type="text" class="form-control" value="{{$garantia_guia_ingreso->asunto}}" disabled="disabled">
@@ -57,7 +56,7 @@
 								</div>
 								<label class="col-sm-2 col-form-label">Fecha:</label>
 								<div class="col-sm-4">
-									<input type="text" class="form-control" name="fecha" value="{{$garantia_guia_ingreso->fecha}}" disabled="disabled">
+									<input type="text" class="form-control" value="{{$garantia_guia_ingreso->fecha}}" disabled="disabled">
 								</div>
 
 								<label class="col-sm-2 col-form-label">Cliente:</label>
@@ -69,8 +68,8 @@
 									@if(isset($garantia_guia_ingreso->contacto_cliente_id))
 									<input type="text" class="form-control for m-b" disabled="disabled" value="{{$garantia_guia_ingreso->contactos->nombre}}" >
 									@else
-										<select name="" id="" class="form-control for m-b" >
-											<option > Selecciona un Contacto</option>
+									<select name="contacto" class="form-control for m-b" >
+										<option  value=""> Selecciona un Contacto</option>
 										@foreach($contactos_cli as $cliente_contac)
 										<option value="{{$cliente_contac->id}}">{{$cliente_contac->nombre}}</option>
 										@endforeach
@@ -91,11 +90,11 @@
 								</div>
 								<label class="col-sm-2 col-form-label">Nr Serie:</label>
 								<div class="col-sm-10">
-									<input list="contacto_cliente" type="text" class="form-control for m-b" value="{{$garantia_guia_ingreso->numero_serie}}"  autocomplete="off"  >
+									<input  type="text" class="form-control for m-b" name="numero_serie" value="{{$garantia_guia_ingreso->numero_serie}}"  autocomplete="off"  >
 								</div>
 								<label class="col-sm-2 col-form-label">Codigo Interno:</label>
 								<div class="col-sm-10">
-									<input list="contacto_cliente" type="text" class="form-control for m-b" value="{{$garantia_guia_ingreso->codigo_interno}}"  autocomplete="off"  >
+									<input type="text" class="form-control for m-b" name="codigo_interno" value="{{$garantia_guia_ingreso->codigo_interno}}"  autocomplete="off"  >
 								</div>
 								<label class="col-sm-2 col-form-label">Fecha de Compra:</label>
 								<div class="col-sm-10">
@@ -104,7 +103,7 @@
 							</div>
 						</div>
 					</div>
-					<div class="col-sm-12" align="center">
+					<div class="col-sm-12" align="center" style="margin-top: 10px;">
 						<div class="form-control for">
 							<center><h3>Informe del Problema</h3></center>
 							<br>
@@ -112,26 +111,26 @@
 								<div class="col-sm-4">
 									<center><h4>Descripcion del Problema</h4></center>
 									<div class="input-group m-b">
-										<textarea class="form-control for" rows="5" id="comment" name="descripcion_problema" maxlength="1230" required style="resize: none;height: 300px;">{{$garantia_guia_ingreso->descripcion_problema}}</textarea>
+										<textarea class="form-control for" rows="5" name="descripcion_problema" maxlength="1230" required style="resize: none;height: 300px;">{{$garantia_guia_ingreso->descripcion_problema}}</textarea>
 									</div>
 								</div>
 								<div class="col-sm-4">
 									<center><h4>Revisión y diganostico</h4></center>
 									<div class="input-group m-b">
-										<textarea class="form-control for" rows="5" id="comment" name="revision_diagnostico" maxlength="1230" required style="resize: none;height: 300px;">{{$garantia_guia_ingreso->revision_diagnostico}}</textarea>
+										<textarea class="form-control for" rows="5"  name="revision_diagnostico" maxlength="1230" required style="resize: none;height: 300px;">{{$garantia_guia_ingreso->revision_diagnostico}}</textarea>
 									</div>
 								</div>
 								<div class="col-sm-4">
 									<center><h4>Estética</h4></center>
 									<div class="input-group m-b">
-										<textarea class="form-control for" rows="5" id="comment" name="estetica" maxlength="1230" required style="resize: none;height: 300px;">{{$garantia_guia_ingreso->estetica}}</textarea>
+										<textarea class="form-control for" rows="5" name="estetica" maxlength="1230" required style="resize: none;height: 300px;">{{$garantia_guia_ingreso->estetica}}</textarea>
 									</div>
+								</div>
+								<div class="col-sm-12">
+									<button class="ladda-button btn btn-primary" data-style="zoom-in">Submit</button>
 								</div>
 							</div>
 						</div>
-						{{-- <div align="ibox" align="right"> --}}
-							<button style="align: left" class="btn btn-xl btn-primary float-right m-t-n-xs" type="submit" id="boton"><strong>Grabar</strong></button>
-						{{-- </div> --}}
 					</div>
 				</div>
 			</form>
@@ -139,38 +138,6 @@
 	</div>
 
 </div>
-
-<style>
-.form-control.for{border-radius: 10px; border: 1px solid #e5e6e7;margin-bottom: 15px}
-.text_des{border-radius: 10px;border: 1px solid #e5e6e7;width: 80px;padding: 6px 12px;}
-.check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
-.div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
-.check:checked {background: #0375bd6b;}
-input[type=number]::-webkit-inner-spin-button,
-input[type=number]::-webkit-outer-spin-button {
-	-webkit-appearance: none;
-	margin: 0;
-}
-
-input[type=number] { -moz-appearance:textfield; }
-</style>
-
-<style>
-.form-control{
-	border-radius: 10px;border: 1px solid #e5e6e7;
-}
-legend
-{
-	font-size:14px;
-	font-weight:bold;
-	margin-bottom: 0px;
-	width: 35%;
-	border: 1px solid #ddd;
-	border-radius: 4px;
-	padding: 5px 5px 5px 10px;
-	background-color: #ffffff;
-}
-</style>
 
 <!-- Mainly scripts -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
@@ -190,6 +157,25 @@ legend
 
 <!-- Steps -->
 <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
+
+<!-- Ladda -->
+<script src="{{asset('js/plugins/ladda/spin.min.js')}}"></script>
+<script src="{{asset('js/plugins/ladda/ladda.min.js')}}"></script>
+<script src="{{asset('js/plugins/ladda/ladda.jquery.min.js')}}"></script>
+<!-- Ladda style -->
+<link href="{{asset('css/plugins/ladda/ladda-themeless.min.css')}}" rel="stylesheet">
+
+<script>
+
+	$(document).ready(function (){
+
+        // Bind normal buttons
+        Ladda.bind( '.ladda-button',{ timeout: 9000 });
+
+
+    });
+
+</script>
 
 
 @stop

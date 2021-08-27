@@ -11,7 +11,7 @@
 @section('config',route('garantia_guia_ingreso.index'))
 
 @section('content')
-
+{{-- Modal Agregar --}}
 <div id="modal-form" class="modal fade" aria-hidden="true">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -45,7 +45,19 @@
         </div>
     </div>
 </div>
+{{-- Modal Agregar --}}
 <div class="wrapper wrapper-content animated fadeInRight">
+     @if($errors->any())
+    <div style="padding-top: 20px;">
+        <div class="alert alert-danger">
+            <a class="alert-link" href="#">
+                @foreach ($errors->all() as $error)
+                <li style="color: red">{{ $error }}</li>
+                @endforeach
+            </a>
+        </div>
+    </div>
+    @endif
         <div class="row ibox-title" style="padding-right: 3.1%;margin: 0" >
                     <div class="col-sm-6">
                         @if($garantia_guia_ingreso->estado == 1 and $garantia_guia_ingreso->egresado == 0 )
