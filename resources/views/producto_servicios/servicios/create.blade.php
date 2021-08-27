@@ -120,18 +120,22 @@
   <label class="col-sm-2 col-form-label">Precio:</label>
   <div class="col-sm-4"><div class="input-group m-b">
     <div class="input-group-prepend">
-      <span class="input-group-addon">$$</span>
+      <select class="input-group-addon"  name="moneda">
+      @foreach($monedas as $moneda)
+      <option value="{{$moneda->id}}">{{$moneda->simbolo}}</option>
+      @endforeach
+    </select>
     </div>
-    <input type="text" class="form-control" name="precio" required="required" value="0">
+    <input type="number" min="1" class="form-control" name="precio" required="required" value="0">
   </div>
 </div>
-<label class="col-sm-2 col-form-label">Moneda:</label>
+<label class="col-sm-2 col-form-label">Afectacion:</label>
 <div class="col-sm-4">
-  <select class="form-control" name="moneda">
-    @foreach($monedas as $moneda)
-    <option value="{{$moneda->id}}">{{$moneda->nombre}}</option>
-    @endforeach
-  </select>
+    <select class="form-control"  name="afectacion">
+      @foreach($afectacion as $afecta)
+      <option value="{{$afecta->id}}">{{$afecta->informacion}}</option>
+      @endforeach
+    </select>
 </div>
 
 </div>
@@ -211,6 +215,13 @@ legend
   padding: 5px 5px 5px 10px;
   background-color: #ffffff;
 }
+input[type=number]::-webkit-inner-spin-button,
+input[type=number]::-webkit-outer-spin-button {
+-webkit-appearance: none;
+margin: 0;
+}
+
+input[type=number] { -moz-appearance:textfield; }
 </style>
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>

@@ -114,7 +114,13 @@
   <label class="col-sm-2 col-form-label">Precio:</label>
   <div class="col-sm-4"><div class="input-group m-b">
     <div class="input-group-prepend">
-      <span class="input-group-addon">S/.</span>
+      <select class="input-group-addon" name="moneda">
+      <option value="{{$servicios->moneda->id}}">{{$servicios->moneda->simbolo}}</option>
+      <option disabled="">-----</option>
+      @foreach($monedas as $moneda)
+      <option value="{{$moneda->id}}">{{$moneda->simbolo}}</option>
+      @endforeach
+    </select>
     </div>
     @if($moneda_principal_id==$servicios->moneda->id)
     <input type="text" class="form-control" name="precio" required="required"  value="{{$servicios->precio_nacional}}" >
@@ -123,15 +129,15 @@
     @endif
   </div>
 </div>
-<label class="col-sm-2 col-form-label">Moneda:</label>
+<label class="col-sm-2 col-form-label">Afectacion:</label>
 <div class="col-sm-4">
-  <select class="form-control" name="moneda">
-    <option value="{{$servicios->moneda->id}}">{{$servicios->moneda->nombre}}</option>
-    <option disabled="">---------------------</option>
-    @foreach($monedas as $moneda)
-    <option value="{{$moneda->id}}">{{$moneda->nombre}}</option>
-    @endforeach
-  </select>
+  <select class="form-control"  name="afectacion">
+      <option value="{{$servicios->tipo_afec_i_serv->id}}">{{$servicios->tipo_afec_i_serv->informacion}}</option>
+      <option disabled="">-----</option>
+      @foreach($afectacion as $afecta)
+      <option value="{{$afecta->id}}">{{$afecta->informacion}}</option>
+      @endforeach
+    </select>
 </div>
 
 </div>

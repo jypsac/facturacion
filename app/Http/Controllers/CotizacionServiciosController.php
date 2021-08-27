@@ -350,6 +350,19 @@ class CotizacionServiciosController extends Controller
             }else{
                 $cotizacion_registro->precio_unitario_comi=$array+($array*$comi/100);
             }
+            //TIPO DE AFECTACION
+            $cotizacion_2=Cotizacion_Servicios::find($cotizacion->id);
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Gravado') !== false){
+                $cotizacion_2->op_gravada += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
+            }
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Exonerado') !== false){
+                $cotizacion_2->op_exonerada += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
+            }
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Inafecto') !== false){
+                $cotizacion_2->op_inafecta += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
+            }
+            $cotizacion_2->save();
+
             $cotizacion_registro->save();
 
             }

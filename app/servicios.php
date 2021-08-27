@@ -19,4 +19,7 @@ class Servicios extends Model
      public function marca(){
         return $this->belongsTo(Marca::class,'marca_id');
     }
+    public function tipo_afec_i_serv(){
+        return $this->belongsTo(Tipo_afectacion::class,'tipo_afectacion_id');
+    }
 }
