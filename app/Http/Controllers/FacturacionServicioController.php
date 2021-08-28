@@ -40,6 +40,14 @@ class FacturacionServicioController extends Controller
     {
 
         $servicios=Servicios::where('estado_anular',0)->get();
+
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+
+        if(count($servicios) == 0){
+            return back()->withErrors(['No hay Servicios Agregados: '.$sucursal->nombre.'']);
+        }
+
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','1')->first();
 
@@ -115,6 +123,16 @@ class FacturacionServicioController extends Controller
     {
 
         $servicios=Servicios::where('estado_anular',0)->get();
+
+        $almacen=$request->get('almacen');
+
+        //obtencion del almacen
+        $sucursal=Almacen::where('id', $almacen)->first();
+
+        if(count($servicios) == 0){
+            return back()->withErrors(['No hay Servicios Agregados: '.$sucursal->nombre.'']);
+        }
+
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','0')->first();
 
@@ -157,10 +175,7 @@ class FacturacionServicioController extends Controller
         }else{
             $almacenes=Almacen::where('id',$user_id->almacen_id)->get();
         }
-        $almacen=$request->get('almacen');
-
-        //obtencion del almacen
-        $sucursal=Almacen::where('id', $almacen)->first();
+        
 
         $factura_cod_fac=$sucursal->cod_fac;
         if (is_numeric($factura_cod_fac)) {
@@ -402,10 +417,24 @@ class FacturacionServicioController extends Controller
                 }else{
                     $facturacion_registro->precio_unitario_comi=$array+($array*$comi/100);
                 }
+
+                $facturacion_2=Facturacion::find($facturacion->id);
+                if(strpos($servicio->tipo_afec_i_serv->informacion,'Gravado') !== false){
+                    $facturacion_2->op_gravada += round($facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad,2);
+                }
+                if(strpos($servicio->tipo_afec_i_serv->informacion,'Exonerado') !== false){
+                    $facturacion_2->op_exonerada += round($facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad,2);
+                }
+                if(strpos($servicio->tipo_afec_i_serv->informacion,'Inafecto') !== false){
+                    $facturacion_2->op_inafecta += round($facturacion_registro->precio_unitario_comi*$facturacion_registro->cantidad,2);
+                }
+                // return $cotizacion_registro->precio_unitario_comi;
+                $facturacion_2->save();
+
                 $facturacion_registro->save();
             }
         }else {
-            return redirect()->route('facturacion_servicio.create')->with('campo', 'Falto introducir un campo de la tabla productos');
+            return redirect()->route('facturacion_servicio.create')->with('campo', 'Falto introducir un campo de la tabla Servicios');
         }
         return redirect()->route('facturacion_servicio.show',$facturacion->id);
     }

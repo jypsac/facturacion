@@ -53,7 +53,7 @@ class AddForeignKeyCotizacionServicioTable extends Migration
             $table->string('op_gravada')->default('0');
             $table->string('op_inafecta')->default('0');
             $table->string('op_exonerada')->default('0');
-            $table->string('op_gratuita')->default('0');
+            // $table->string('op_gratuita')->default('0');
             $table->boolean('estado');
             $table->boolean('estado_vigente');
             $table->string('tipo');

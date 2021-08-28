@@ -65,7 +65,14 @@ class CotizacionServiciosController extends Controller
 
     public function create_factura(Request $request)
     {
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+
         $servicios=Servicios::where('estado_anular',0)->get();
+        // return $servicios;
+        if(count($servicios) == 0){
+            return back()->withErrors(['No hay Servicios Agregados: '.$sucursal->nombre.'']);
+        }
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','1')->first();
 
@@ -100,8 +107,8 @@ class CotizacionServiciosController extends Controller
 
         $empresa  = Empresa::first();
          //CODIGO COTIZACION
-        $sucursal=$request->get('almacen');
-        $sucursal=Almacen::where('id',$sucursal)->first();
+        
+       
         $ultima_factura=Cotizacion_Servicios::where('almacen_id',$sucursal->id)->where('tipo','factura')->count();
         if($ultima_factura){
             $code=$ultima_factura;
@@ -123,6 +130,14 @@ class CotizacionServiciosController extends Controller
     public function create_factura_ms(Request $request)
     {
         $servicios=Servicios::where('estado_anular',0)->get();
+
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        
+        if(count($servicios) == 0){
+            return back()->withErrors(['No hay Servicios Agregados: '.$sucursal->nombre.'']);
+        }
+
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','0')->first();
 
@@ -155,8 +170,7 @@ class CotizacionServiciosController extends Controller
         }
         $empresa  = Empresa::first();
           //CODIGO COTIZACION
-        $sucursal=$request->get('almacen');
-        $sucursal=Almacen::where('id',$sucursal)->first();
+        
         $ultima_factura=Cotizacion_Servicios::where('almacen_id',$sucursal->id)->where('tipo','factura')->count();
         if($ultima_factura){
             $code=$ultima_factura;

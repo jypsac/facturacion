@@ -535,12 +535,12 @@
 
                 // document.getElementById(`total${a}`).value = final_decimal;
                 if(afec.toString() == "Gravado"){
-                    console.log('a');
+                    // console.log('a');
 
                     document.getElementById(`total${a}`).value = final_decimal;
                     document.getElementById(`afectacion${a}`).value = final_decimal;
                }else{
-                    console.log('b');
+                    // console.log('b');
                     document.getElementById(`total${a}`).value = final_decimal;
                    document.getElementById(`afectacion${a}`).value = 0;
                }
@@ -562,11 +562,11 @@
                 document.getElementById(`precio_unitario_comision${a}`).value = end;
                 // document.getElementById(`total${a}`).value = final_decimal;
                 if(afec.toString() == "Gravado"){
-                    console.log('c');
+                    // console.log('c');
                     document.getElementById(`total${a}`).value = final_decimal;
                     document.getElementById(`afectacion${a}`).value = final_decimal;
                }else{
-                    console.log('d');
+                    // console.log('d');
                     document.getElementById(`total${a}`).value = final_decimal;
                    document.getElementById(`afectacion${a}`).value = 0;
                }
