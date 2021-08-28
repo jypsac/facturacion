@@ -109,91 +109,88 @@
                                                 <label>Telefono *</label>
                                                 <input value="00000" type="number" class="form-control" name="telefono" class="form-control required">
                                             </div>
-                                            <div class="form-group col-lg-6">
+                                            <div class="form-group col-lg-3">
                                                 <label>Departamento *</label>
                                                 <input value="Lima" type="text" class="form-control" name="departamento" id="provincia_cli" class="form-control required">
                                             </div>
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-12">
-                                        <div class="row">
-                                            <div class="form-group col-lg-6 ">
-                                                <label>Celular *</label>
-                                                <input value="0000000" type="number" class="form-control" name="celular" class="form-control required">
-                                            </div>
-                                            <div class="form-group col-lg-6">
+                                            <div class="form-group col-lg-3">
                                                 <label>Pais *</label>
                                                 <input value="Perú" type="text" class="form-control" name="pais" class="form-control required">
                                             </div>
                                         </div>
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Tipo Cliente *</label>
-                                            <select class="form-control" name="tipo_cliente">
-                                                <option value="Cliente Frecuente">Cliente Frecuente</option>
-                                                <option value="Cliente Revendedor">Cliente Revendedor</option>
-                                                <option value="Cliente VIP">Cliente VIP</option>
-                                            </select>
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Aniversario *</label>
-                                            <input value="2020-07-22" type="date" class="form-control" name="aniversario" class="form-control required">
-                                        </div>
-                                    </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Codigo Postal *</label>
-                                            <input value="150101" name="cod_postal" type="text" class="form-control required ">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Fecha Registro *</label>
-                                            <input  type="date" class="form-control" id="fechaInscripcion_cli" name="fecha_registro" class="form-control required" value="2020-07-22">
-                                        </div>
+                                    <div class="col-lg-12">
+                                        <div class="row">
+                                            <div class="form-group col-lg-3 ">
+                                                <label>Celular *</label>
+                                                <input value="0000000" type="number" class="form-control" name="celular" class="form-control required">
+                                            </div>
+                                            <div class="form-group col-lg-3 ">
+                                               <label>Codigo Postal *</label>
+                                               <input value="150101" name="cod_postal" type="text" class="form-control required ">
+                                           </div>
+                                           <div class="form-group col-lg-3 ">
+                                               <label>Aniversario *</label>
+                                               <input value="{{ date('Y-m-d') }}" type="date" class="form-control" name="aniversario" class="form-control required">
+                                           </div>
+                                           <div class="form-group col-lg-3 ">
+                                              <label>Fecha Registro *</label>
+                                              <input  type="date" class="form-control" id="fechaInscripcion_cli" name="fecha_registro" class="form-control required" value="{{date('Y-m-d') }}">
+                                          </div>
+                                      </div>
+                                  </div>
+                                  <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Tipo Cliente *</label>
+                                        <select class="form-control" name="tipo_cliente">
+                                            <option value="Cliente Frecuente">Cliente Frecuente</option>
+                                            <option value="Cliente Revendedor">Cliente Revendedor</option>
+                                            <option value="Cliente VIP">Cliente VIP</option>
+                                        </select>
                                     </div>
                                 </div>
-                            </fieldset>
-                            <h1>Contacto</h1>
-                            <fieldset>
-                                <h2>Informacion I</h2>
-                                <div class="row">
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label>Nombre *</label>
-                                            <input id="name" name="nombre_contacto" type="text" class="form-control required" value="Contacto">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Cargo *</label>
-                                            <input id="surname" name="cargo_contacto" type="text" class="form-control required" value="Cargo">
-                                        </div>
+                            </div>
+                        </fieldset>
+                        <h1>Contacto</h1>
+                        <fieldset>
+                            <div class="row">
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label>Nombre *</label>
+                                        <input id="name" name="nombre_contacto" type="text" class="form-control required" value="Contacto">
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label> Telefono *</label>
-                                            <input  name="telefono_contacto" type="text" class="form-control required" value="0050000">
-                                        </div>
-                                        <div class="form-group">
-                                            <label>Celular *</label>
-                                            <input id="address" name="celular_contacto" type="text" class="form-control required" value="951000000">
-                                        </div>
+                                    <div class="form-group">
+                                        <label>Cargo *</label>
+                                        <input id="surname" name="cargo_contacto" type="text" class="form-control required" value="Cargo">
                                     </div>
-                                    <div class="col-lg-6">
-                                        <div class="form-group">
-                                            <label> Correo *</label>
-                                            <input name="email_contacto" type="text" class="form-control required email" value="correo@contanto.com">
-                                        </div>
-                                    </div>
-                                    {{--  --}}
-                                    <input type="text" name="ruta_retorno" hidden="hidden" value="@yield('ruta_retorno','cotizacion')">
-                                    {{--  --}}
                                 </div>
-                            </fieldset>
-                        </form>
-                    </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> Telefono *</label>
+                                        <input  name="telefono_contacto" type="text" class="form-control required" value="0050000">
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Celular *</label>
+                                        <input id="address" name="celular_contacto" type="text" class="form-control required" value="951000000">
+                                    </div>
+                                </div>
+                                <div class="col-lg-6">
+                                    <div class="form-group">
+                                        <label> Correo *</label>
+                                        <input name="email_contacto" type="text" class="form-control required email" value="correo@contanto.com">
+                                    </div>
+                                </div>
+                                {{--  --}}
+                                <input type="text" name="ruta_retorno" hidden="hidden" value="@yield('ruta_retorno','cotizacion')">
+                                {{--  --}}
+                            </div>
+                        </fieldset>
+                    </form>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 </div>
 </div>

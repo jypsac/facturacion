@@ -87,8 +87,11 @@
                 </div>
             </div>
         </div>
+
+
     </div>
 </div>
+
 
 <!-- Mainly scripts -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
@@ -170,7 +173,7 @@
                 }else if(data.estado_ga_ing == 2 && data.egresado == 0){
                     var actions2 = '';
                     data: 'id';
-                    actions2 += '<center><button style="background: #02b721ab;" class="btn btn-circle btn-ls"><i class="fa fa-history"></i></button></center>';
+                    actions2 += '<center><button style="background: gray;" class="btn btn-circle btn-ls"><i style="color: white;" class="fa fa-history"></i></button></center>';
                     return actions2.replace(/:id/g, data.gar_ing_id);/*FUERA DE FUNCION*/
                 }
             }
