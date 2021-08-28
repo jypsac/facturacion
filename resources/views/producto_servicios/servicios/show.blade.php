@@ -1,4 +1,4 @@
-@extends('layout')
+  @extends('layout')
 
 @section('title', 'Servicios/Ver')
 @section('breadcrumb', 'Servicios/Ver')
@@ -110,6 +110,10 @@
     <input type="text" class="form-control" name="precio" required="required"  value="{{$servicios->precio_extranjero}}" readonly="">
   </div>
 </div>
+<label class="col-sm-3 col-form-label">Tipo de Afectacion</label>
+<div class="col-sm-8"><div class="input-group m-b">
+    <input type="text" class="form-control" name="afectacion" required="required"  value="{{$servicios->tipo_afec_i_producto->informacion}}" readonly="">
+  </div>
 </div>
 <div class="row">
 </div>

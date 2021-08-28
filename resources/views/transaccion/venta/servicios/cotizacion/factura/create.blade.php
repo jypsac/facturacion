@@ -228,10 +228,11 @@
                                                     <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)" onclick="Clear(this);" autocomplete="off">
                                                     <datalist id="browsers2" >
                                                         @foreach($servicios as $index => $servicio)
-                                                        <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
+                                                        <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($servicio->tipo_afec_i_serv->informacion," ")}} {{$array_promedio[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
                                                             @endforeach
                                                         </datalist>
                                                         <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
+                                                        <input style="width: 76px" hidden="" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off"  />
                                                     </td>
                                                     <td>
                                                         <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
@@ -261,6 +262,7 @@
                                                     </td>
                                                     <td>
                                                         <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
+                                                       <input type='text' id='afectacion0'  style="width: 76px"  name='afectacion' disabled="disabled" class="afectacion form-control " hidden=""  required  autocomplete="off"/>
                                                     </td>
                                                     <span id="spTotal"></span>
                                                 </tr>
@@ -364,10 +366,11 @@
                 <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i});ajax(${i})" onclick="Clear(this);" autocomplete="off" >
                 <datalist id="browsers" >
                 @foreach($servicios as $index => $servicio)
-                <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
+                <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($servicio->tipo_afec_i_serv->informacion," ")}} {{$array_promedio[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
                 @endforeach
                 </datalist>
                 <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
+                <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required hidden  autocomplete="off" />
                 </td>
                 <td>
                 <input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
@@ -401,6 +404,7 @@
 
                 <td>
                 <input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
+                <input type='text' id='afectacion${i}'  style="width: 76px" hidden  name='afectacion' disabled="disabled" class="afectacion form-control "  required  autocomplete="off"/>
                 </td>
 
                 </tr>`;
@@ -510,8 +514,8 @@
             var descuento = document.querySelector(`#descuento${a}`).value;
 
             var prom_ori = document.querySelector(`#prom_ori${a}`).value;
-
-            if (checkBox.checked == true){
+            var afec = document.querySelector(`#tipo_afec${a}`).value;
+            if (checkBox.checked == true && descuento > 0){
                 var precio = document.querySelector(`#precio${a}`).value;
                 var promedio_original=document.querySelector(`#prom_ori${a}`).value;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
@@ -529,8 +533,17 @@
                 var final=comisiones*cantidad;
                 var final_decimal = Math.round(final * multiplier) / multiplier;
 
-                document.getElementById(`total${a}`).value = final_decimal;
+                // document.getElementById(`total${a}`).value = final_decimal;
+                if(afec.toString() == "Gravado"){
+                    // console.log('a');
 
+                    document.getElementById(`total${a}`).value = final_decimal;
+                    document.getElementById(`afectacion${a}`).value = final_decimal;
+               }else{
+                    // console.log('b');
+                    document.getElementById(`total${a}`).value = final_decimal;
+                   document.getElementById(`afectacion${a}`).value = 0;
+               }
             }else{
                 var multiplier = 100;
                 var descuento = 0;
@@ -545,15 +558,23 @@
                 var final_decimal = Math.round(final2 * multiplier) / multiplier;
 
                 document.getElementById(`check_descuento${a}`).value = 0;
-                document.getElementById(`total${a}`).value = final_decimal;
                 document.getElementById(`descuento_unitario${a}`).value = precio;
                 document.getElementById(`precio_unitario_comision${a}`).value = end;
-
+                // document.getElementById(`total${a}`).value = final_decimal;
+                if(afec.toString() == "Gravado"){
+                    // console.log('c');
+                    document.getElementById(`total${a}`).value = final_decimal;
+                    document.getElementById(`afectacion${a}`).value = final_decimal;
+               }else{
+                    // console.log('d');
+                    document.getElementById(`total${a}`).value = final_decimal;
+                   document.getElementById(`afectacion${a}`).value = 0;
+               }
             }
 
 
 
-            var totalInp = $('[name="total"]');
+            var totalInp = $('[name="afectacion"]');
             var total_t = 0;
 
             totalInp.each(function(){
@@ -622,7 +643,14 @@
             var prom_r=prom_v_r[0];
             var prom_v =reverseString(prom_v_r[0]);
 
-            // console.log("el promedio original es: "+prom_v);
+            //tipo de afectacion
+            var caracteres_space_4 = reverse4.replace(prom_r,"");
+            var reverse5 = caracteres_space_4.slice(1);
+            // tipo de afectacion
+            var afec_prec_tot=reverse5.split(separador,1);
+            var afec_pre_r=afec_prec_tot[0];
+            var afec_pre_v =reverseString(afec_prec_tot[0]);
+            document.getElementById(`tipo_afec${a}`).value =  afec_pre_v;
 
             document.getElementById(`prom_ori${a}`).value = prom_v;
             document.getElementById(`precio${a}`).value = precio_v;
@@ -650,7 +678,7 @@
     <script>
         $(".delete").on('click', function () {
             $('.case:checkbox:checked').parents("tr").remove();
-            var totalInp = $('[name="total"]');
+            var totalInp = $('[name="afectacion"]');
             var total_t = 0;
 
             totalInp.each(function(){

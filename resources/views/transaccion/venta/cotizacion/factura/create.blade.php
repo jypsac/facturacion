@@ -685,7 +685,7 @@
     <script>
         $(".delete").on('click', function () {
             $('.case:checkbox:checked').parents("tr").remove();
-            var totalInp = $('[name="total"]');
+            var totalInp = $('[name="afectacion"]');
             var total_t = 0;
 
             totalInp.each(function(){

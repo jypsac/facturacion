@@ -6,6 +6,7 @@ use App\Marca;
 use App\Moneda;
 use App\Servicios;
 use App\TipoCambio;
+use App\Tipo_afectacion;
 use Illuminate\Http\Request;
 
 class ServiciosController extends Controller
@@ -31,7 +32,8 @@ class ServiciosController extends Controller
         $marcas=Marca::all();
         $familias=Familia::all();
         $monedas=Moneda::all();
-        return view('producto_servicios.servicios.create',compact('monedas','marcas','familias'));
+        $afectacion=Tipo_afectacion::all();
+        return view('producto_servicios.servicios.create',compact('monedas','marcas','familias','afectacion'));
         //
     }
 
@@ -43,6 +45,7 @@ class ServiciosController extends Controller
      */
     public function store(Request $request)
     {
+        // return $request;
         if($request->hasfile('foto')){
             $image1 =$request->file('foto');
             $name =time().$image1->getClientOriginalName();
@@ -95,6 +98,7 @@ class ServiciosController extends Controller
         $servicios->foto=$name;
         $servicios->estado_anular='0';
         $servicios->estado_activo='0';
+        $servicios->tipo_afectacion_id=$request->get('afectacion');
         $servicios->save();
         return redirect()->route('servicios.index');
 
@@ -126,12 +130,13 @@ class ServiciosController extends Controller
        $marcas=Marca::all();
        $familias=Familia::all();
        $moneda_principal=Moneda::where('tipo','nacional')->first();
+        $afectacion=Tipo_afectacion::all();
        $moneda_principal_id=$moneda_principal->id;
         // $moneda_id=$request->get('moneda');
 
        $monedas=Moneda::all();
        $servicios=Servicios::find($id);
-       return view('producto_servicios.servicios.edit',compact('servicios','monedas','moneda_principal_id','marcas','familias'));
+       return view('producto_servicios.servicios.edit',compact('servicios','monedas','moneda_principal_id','marcas','familias','afectacion'));
    }
 
     /**
@@ -186,6 +191,7 @@ class ServiciosController extends Controller
         $servicio->precio_nacional=round($precio_nacional,2);
         $servicio->precio_extranjero=round($precio_extranjero,2);
         $servicio->foto=$name;
+        $servicio->tipo_afectacion_id=$request->get('afectacion');
         $servicio->save();
         return redirect()->route('servicios.show', $id);
     }

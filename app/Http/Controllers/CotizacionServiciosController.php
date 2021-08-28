@@ -65,7 +65,14 @@ class CotizacionServiciosController extends Controller
 
     public function create_factura(Request $request)
     {
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+
         $servicios=Servicios::where('estado_anular',0)->get();
+        // return $servicios;
+        if(count($servicios) == 0){
+            return back()->withErrors(['No hay Servicios Agregados: '.$sucursal->nombre.'']);
+        }
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','1')->first();
 
@@ -100,8 +107,8 @@ class CotizacionServiciosController extends Controller
 
         $empresa  = Empresa::first();
          //CODIGO COTIZACION
-        $sucursal=$request->get('almacen');
-        $sucursal=Almacen::where('id',$sucursal)->first();
+        
+       
         $ultima_factura=Cotizacion_Servicios::where('almacen_id',$sucursal->id)->where('tipo','factura')->count();
         if($ultima_factura){
             $code=$ultima_factura;
@@ -123,6 +130,14 @@ class CotizacionServiciosController extends Controller
     public function create_factura_ms(Request $request)
     {
         $servicios=Servicios::where('estado_anular',0)->get();
+
+        $sucursal=$request->get('almacen');
+        $sucursal=Almacen::where('id',$sucursal)->first();
+        
+        if(count($servicios) == 0){
+            return back()->withErrors(['No hay Servicios Agregados: '.$sucursal->nombre.'']);
+        }
+
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','0')->first();
 
@@ -155,8 +170,7 @@ class CotizacionServiciosController extends Controller
         }
         $empresa  = Empresa::first();
           //CODIGO COTIZACION
-        $sucursal=$request->get('almacen');
-        $sucursal=Almacen::where('id',$sucursal)->first();
+        
         $ultima_factura=Cotizacion_Servicios::where('almacen_id',$sucursal->id)->where('tipo','factura')->count();
         if($ultima_factura){
             $code=$ultima_factura;
@@ -350,6 +364,19 @@ class CotizacionServiciosController extends Controller
             }else{
                 $cotizacion_registro->precio_unitario_comi=$array+($array*$comi/100);
             }
+            //TIPO DE AFECTACION
+            $cotizacion_2=Cotizacion_Servicios::find($cotizacion->id);
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Gravado') !== false){
+                $cotizacion_2->op_gravada += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
+            }
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Exonerado') !== false){
+                $cotizacion_2->op_exonerada += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
+            }
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Inafecto') !== false){
+                $cotizacion_2->op_inafecta += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
+            }
+            $cotizacion_2->save();
+
             $cotizacion_registro->save();
 
             }
