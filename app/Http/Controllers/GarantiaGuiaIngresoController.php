@@ -154,6 +154,7 @@ class GarantiaGuiaIngresoController extends Controller
      $ingeniero_nombre_id=Personal::where("nombres","=",$ingeniero)->first();
      $personal_lab_id=$ingeniero_nombre_id->id;
 
+
         // $nombre_cliente=$request->get('nombre_cliente');
         // $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
         // $numero_doc=$cliente->numero_documento;
