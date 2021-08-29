@@ -51,7 +51,14 @@ class KardexEntradaController extends Controller
           }
         }
         $array_final[$value]=$validador;
+
       }
+      if(count($kardex_entradas) == 0){
+          $validador=0;
+          $array_final[1]=$validador;
+      }
+      // return $array_final;
+      
       return view('inventario.kardex.entrada.entrada_producto.index' ,compact('kardex_entradas','almacenes','clasificaciones','array_final'));
 
     }
