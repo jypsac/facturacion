@@ -735,16 +735,15 @@ class CotizacionServiciosController extends Controller
                $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
            }
            $nueva_cot='cotizacion_servicio.create_'.$regla;
-           return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','nueva_cot','almacen'));
-       }
-       else{
+           return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro' ,'sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','nueva_cot','almacen'));
+       } else{
             //BOLETA
         $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
         foreach ($cotizacion_registro as $cotizacion_registros) {
             $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
         }
         $nueva_cot='cotizacion_servicio.create_'.$regla;
-        return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','nueva_cot','almacen'));
+        return view('transaccion.venta.servicios.cotizacion.show', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','nueva_cot','almacen'));
     }
 }
 
@@ -795,7 +794,7 @@ public function facturar($id){
 }
 if ($cotizacion->estado==0) {
 
-    return view('transaccion.venta.servicios.cotizacion.facturar', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','cod_fac'));
+    return view('transaccion.venta.servicios.cotizacion.facturar', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','cod_fac'));
 }
 elseif ($cotizacion->estado==1) {
     return redirect()->route('cotizacion_servicio.show',$cotizacion->id);
@@ -971,7 +970,7 @@ public function boletear($id){
         $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
     }
     if ($cotizacion->estado==0) {
-         return view('transaccion.venta.servicios.cotizacion.boletear', compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','boleta_codigo'));#
+         return view('transaccion.venta.servicios.cotizacion.boletear', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','boleta_codigo'));#
      }
      elseif ($cotizacion->estado==1) {
         return redirect()->route('cotizacion_servicio.show',$cotizacion->id);
