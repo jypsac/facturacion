@@ -995,7 +995,14 @@ public function show($id)
     //     $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
 
     // }
-    $sub_total = $cotizacion->op_gravada;
+    // if($cotizacion->tipo == "factura"){
+        $sub_total = $cotizacion->op_gravada;
+    // }else{
+    //      foreach ($cotizacion_registro as $cotizacion_registros) {
+    //         $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
+    //         $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
+    //     }
+    // }
     $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
         if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
     /* Finde numeros a Letras*/

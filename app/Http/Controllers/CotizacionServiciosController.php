@@ -699,6 +699,20 @@ class CotizacionServiciosController extends Controller
                 $precio_comi = $array+($array*($comi/100));
                 $cotizacion_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv->igv_total/100));
             }
+
+            //TIPO DE AFECTACION
+            $cotizacion_2=Cotizacion_Servicios::find($cotizacion->id);
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Gravado') !== false){
+                $cotizacion_2->op_gravada += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
+            }
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Exonerado') !== false){
+                $cotizacion_2->op_exonerada += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
+            }
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Inafecto') !== false){
+                $cotizacion_2->op_inafecta += round($cotizacion_registro->precio_unitario_comi*$cotizacion_registro->cantidad,2);
+            }
+            $cotizacion_2->save();
+
             $cotizacion_registro->save();
             }
         }else {
@@ -858,6 +872,9 @@ public function facturar_store(Request $request){
    $facturar->user_id =auth()->user()->id;
    $facturar->estado='0';
    $facturar->tipo='servicio';
+   $facturar->op_gravada=$cotizacion->op_gravada;
+   $facturar->op_inafecta=$cotizacion->op_inafecta;
+   $facturar->op_exonerada=$cotizacion->op_exonerada;
    if ($cotizacion->estado==0) {
     $facturar->save();
 }
@@ -1040,6 +1057,9 @@ public function boletear_store(Request $request){
     $boletear->fecha_emision=$request->get('fecha_emision');
     $boletear->fecha_vencimiento=$request->get('fecha_vencimiento');
     $boletear->estado='0';
+    $boletear->op_gravada = $cotizacion->op_gravada;
+    $boletear->op_inafecta = $cotizacion->op_inafecta;
+    $boletear->op_exonerada = $cotizacion->op_exonerada;
     $boletear->tipo='servicio';
     $boletear->user_id =auth()->user()->id;
 
