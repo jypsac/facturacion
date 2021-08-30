@@ -95,17 +95,14 @@ class GarantiaGuiaIngresoController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function contacto_cliente(Request $request){
-      $output="";
+      $output=NULL;
       if($request->ajax()){
-
         $cliente=$request->get('cliente_id');
-        $nombre = strstr($cliente, '-',true);
-        $cliente_id_nombre = Cliente::where("numero_documento","=",$nombre)->pluck('id');
-        $contacto = Contacto::where('clientes_id','=',$cliente_id_nombre)->get();
+        $contacto=Contacto::where('clientes_id',$cliente)->get();
 
         if($contacto){
           foreach ($contacto as $key => $contactos) {
-            $output.='<option>'.$contactos->nombre.'</option>';
+            $output.='<option value="'.$contactos->id.'">'.$contactos->nombre.'</option>';
           }
           return Response($output);
         }
@@ -126,74 +123,44 @@ class GarantiaGuiaIngresoController extends Controller
       $orden_servicio=$marca_t->abreviatura.'-'.$marca_cantidad;
       // Cod-Guia
 
-         // Obtner ID
       $cliente=$request->get('cliente_id');
-      $nombre = strstr($cliente, '-',true);
-      $cliente_id_nombre=Cliente::where("numero_documento","=",$nombre)->first();
-      if (empty($cliente_id_nombre)) {
-        return Redirect::to('/garantia_guia_ingreso')->withErrors(['Cliente no encontrado en Registro']);
+      $buscador_cli=Cliente::where('id',$cliente)->first();
+      /*Validando Existencia del Cliente*/
+      if (empty($buscador_cli)) {
+        return redirect()->route('garantia_guia_ingreso.index')->withErrors(['Cliente no encontrado en los Registros.']);
       }
-      //Contacto
-      $contacto = $request->get('contacto_cliente');
 
-      if($contacto == "" ){
-        $contacto_id = null;
-      }else{
-        $contacto_nombre = Contacto::where('nombre','=',$contacto)->first();
-        if(!isset($contacto_nombre)){
-          $contacto_id = null;
-        }else{
-         $contacto_id = $contacto_nombre->id;
-       }
-     }
-        // $cliente=$request->get('cliente_id');
-        // $cliente_id_nombre=Cliente::where("nombre","=",$cliente)->first();
-     $cliente_id=$cliente_id_nombre->id;
-
-     $ingeniero=$request->get('personal_lab_id');
-     $ingeniero_nombre_id=Personal::where("nombres","=",$ingeniero)->first();
-     $personal_lab_id=$ingeniero_nombre_id->id;
-
-
-        // $nombre_cliente=$request->get('nombre_cliente');
-        // $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
-        // $numero_doc=$cliente->numero_documento;
-     $nombre_equipo = $request->get('nombre_equipos');
-      // $nombre_equipo = substr(strstr($equipo, '-'),1);
+      $contacto=$request->get('contacto_cliente');
+      if(empty($contacto) ){$contacto = null;}
+      else{
+        $buscador_contact=Contacto::where('id',$contacto)->where('clientes_id',$cliente)->first();
+        if (empty($buscador_contact)) {$contacto = null;}//Validar si Existe y si es su cliente REspectivo
+      }
 
         //TRAANSFORMNADO CON VALUE DE MARCA A UN ID
-     $garantia_guia_ingreso=new GarantiaGuiaIngreso;
-     $garantia_guia_ingreso->motivo=$request->get('motivo');
-     $garantia_guia_ingreso->fecha=$request->get('fecha');
-     $garantia_guia_ingreso->orden_servicio=$orden_servicio;
-     $garantia_guia_ingreso->estado=1;
-     $garantia_guia_ingreso->egresado=0;
-     $garantia_guia_ingreso->asunto=$request->get('asunto');
+      $garantia_guia_ingreso=new GarantiaGuiaIngreso;
+      $garantia_guia_ingreso->motivo=$request->get('motivo');
+      $garantia_guia_ingreso->fecha=date('Y-m-d');
+      $garantia_guia_ingreso->orden_servicio=$orden_servicio;
+      $garantia_guia_ingreso->estado=1;
+      $garantia_guia_ingreso->egresado=0;
+      $garantia_guia_ingreso->asunto=$request->get('asunto');
+      $garantia_guia_ingreso->nombre_equipo=$request->get('nombre_equipos');
+      $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
+      $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
+      $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
+      $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
+      $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
+      $garantia_guia_ingreso->estetica=$request->get('estetica');
+      $garantia_guia_ingreso->marca_id=$marca_id;
+      $garantia_guia_ingreso->cliente_id=$cliente;
+      $garantia_guia_ingreso->personal_lab_id=Auth::user()->personal->id;
+      $garantia_guia_ingreso->contacto_cliente_id=$contacto;
+      $garantia_guia_ingreso->save();
 
-     $garantia_guia_ingreso->nombre_equipo=$nombre_equipo;
+      return redirect()->route('garantia_guia_ingreso.show',$garantia_guia_ingreso->id);
 
-     $garantia_guia_ingreso->numero_serie=$request->get('numero_serie');
-     $garantia_guia_ingreso->codigo_interno=$request->get('codigo_interno');
-     $garantia_guia_ingreso->fecha_compra=$request->get('fecha_compra');
-     $garantia_guia_ingreso->descripcion_problema=$request->get('descripcion_problema');
-     $garantia_guia_ingreso->revision_diagnostico=$request->get('revision_diagnostico');
-     $garantia_guia_ingreso->estetica=$request->get('estetica');
-
-     $garantia_guia_ingreso->marca_id=$marca_id;
-
-        // $garantia_guia_ingreso->personal_lab_id=$request->get('personal_lab_id');
-     $garantia_guia_ingreso->cliente_id=$cliente_id;
-     $garantia_guia_ingreso->personal_lab_id=$personal_lab_id;
-        // $garantia_guia_ingreso->contacto_id=$request->get('cliente_id');
-     $garantia_guia_ingreso->contacto_cliente_id = $contacto_id;
-
-     $garantia_guia_ingreso->save();
-        // $contar=GarantiaGuiaIngreso::all()->count();
-     $contar=$garantia_guia_ingreso->id;
-
-     return redirect()->route('garantia_guia_ingreso.show',$contar);
-
-   }
+    }
 
     /**
      * Display the specified resource.
