@@ -429,7 +429,18 @@ class BoletaServicioController extends Controller
                 $precio_comi = $array+($array*($comi/100));
                 $boleta_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv->igv_total/100));
             }
-
+                 //TIPO DE AFECTACION
+                $cotizacion_2=Boleta::find($boleta->id);
+                if(strpos($servicio->tipo_afec_i_serv->informacion,'Gravado') !== false){
+                    $cotizacion_2->op_gravada += round($boleta_registro->precio_unitario_comi*$boleta_registro->cantidad,2);
+                }
+                if(strpos($servicio->tipo_afec_i_serv->informacion,'Exonerado') !== false){
+                    $cotizacion_2->op_exonerada += round($boleta_registro->precio_unitario_comi*$boleta_registro->cantidad,2);
+                }
+                if(strpos($servicio->tipo_afec_i_serv->informacion,'Inafecto') !== false){
+                    $cotizacion_2->op_inafecta += round($boleta_registro->precio_unitario_comi*$boleta_registro->cantidad,2);
+                }
+                $cotizacion_2->save();
 
                 $boleta_registro->save();
             }
