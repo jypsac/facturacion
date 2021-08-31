@@ -302,23 +302,44 @@ class Config_fe extends Model
 
 
         foreach($facturas_registros as $cont => $factura_registro){
-            $item[$cont] = (new SaleDetail())
-            ->setCodProducto($factura_registro->servicio->codigo_servicio)//codigo del producto
-            ->setUnidad('ZZ') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
-            ->setCantidad($factura_registro->cantidad)
-            ->setMtoValorUnitario($factura_registro->precio)
-            ->setDescripcion($factura_registro->servicio->nombre)
-            ->setMtoBaseIgv($factura_registro->precio*$factura_registro->cantidad)
-            ->setPorcentajeIgv($igv->igv_total) // 18%
-            ->setIgv($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100))
-            ->setTipAfeIgv($factura_registro->producto->tipo_afec_i_producto->codigo) 
-            ->setTotalImpuestos($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)) // Suma de impuestos en el detalle
-            ->setMtoValorVenta($factura_registro->precio*$factura_registro->cantidad)
-            ->setMtoPrecioUnitario($factura_registro->precio+($factura_registro->precio*(($igv->igv_total)/100)))
-            ;
-            //sumatorias
-            $igv_f=$factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)+$igv_f;
-            $precio=$factura_registro->precio*$factura_registro->cantidad+$precio;
+            //grabada
+            if( in_array($factura_registro->servicio->tipo_afec_i_serv->codigo, array("10", "11", "12", "13", "14", "15", "16", "17")) ){
+                $item[$cont] = (new SaleDetail())
+                ->setCodProducto($factura_registro->servicio->codigo_servicio)//codigo del producto
+                ->setUnidad('ZZ') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
+                ->setCantidad($factura_registro->cantidad)
+                ->setMtoValorUnitario($factura_registro->precio)
+                ->setDescripcion($factura_registro->servicio->nombre)
+                ->setMtoBaseIgv($factura_registro->precio*$factura_registro->cantidad)
+                ->setPorcentajeIgv($igv->igv_total) // 18%
+                ->setIgv($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100))
+                ->setTipAfeIgv($factura_registro->servicio->tipo_afec_i_serv->codigo) 
+                ->setTotalImpuestos($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)) // Suma de impuestos en el detalle
+                ->setMtoValorVenta($factura_registro->precio*$factura_registro->cantidad)
+                ->setMtoPrecioUnitario($factura_registro->precio+($factura_registro->precio*(($igv->igv_total)/100)))
+                ;
+                //sumatorias
+                $igv_f=$factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)+$igv_f;
+                $precio=$factura_registro->precio*$factura_registro->cantidad+$precio;
+            }else{
+                $item[$cont] = (new SaleDetail())
+                ->setCodProducto($factura_registro->servicio->codigo_servicio)//codigo del producto
+                ->setUnidad('ZZ') // Unidad - Catalog. 03 -> expecificacion de la unidad de medida
+                ->setCantidad($factura_registro->cantidad)
+                ->setMtoValorUnitario($factura_registro->precio)
+                ->setDescripcion($factura_registro->servicio->nombre)
+                ->setMtoBaseIgv($factura_registro->precio*$factura_registro->cantidad)
+                ->setPorcentajeIgv(0) // 18%
+                ->setIgv(0)
+                ->setTipAfeIgv($factura_registro->servicio->tipo_afec_i_serv->codigo) 
+                ->setTotalImpuestos($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)) // Suma de impuestos en el detalle
+                ->setMtoValorVenta($factura_registro->precio*$factura_registro->cantidad)
+                ->setMtoPrecioUnitario($factura_registro->precio+($factura_registro->precio*(($igv->igv_total)/100)))
+                ;
+                //sumatorias
+                $precio=$factura_registro->precio*$factura_registro->cantidad+$precio;
+            }
+            
             if($factura_registro->precio*$factura_registro->cantidad*(($igv->igv_total)/100)!=0){
                 $gravada=$gravada+$factura_registro->precio*$factura_registro->cantidad;
             }
@@ -349,7 +370,7 @@ class Config_fe extends Model
             ->setCompany($company)
             ->setClient($client)
             //--------------------------estados de obtencion
-            ->setMtoOperGravadas($gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
+            ->setMtoOperGravadas($factura->op_gravada) //Este elemento es usado solo si al menos una línea de ítem está gravada con el IGV.
             ->setMtoOperInafectas($factura->op_inafecta)
             ->setMtoOperExoneradas($factura->op_exonerada)
             //--------------------------
