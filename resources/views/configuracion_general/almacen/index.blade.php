@@ -261,8 +261,8 @@
                                                                          <div class="col-sm-12 input-group">
                                                                             <label class="col-form-label">F00 &nbsp; </label>
                                                                             <input type="text" value="{{$almacen->serie_factura}}" class="form-control col-sm-3" name="serie_factura" autocomplete="off" required="required" readonly="" style="border-radius: 5px">
+                                                                             <label class="col-form-label"> - 000 </label>
                                                                         @if(is_numeric($almacen->cod_fac))
-                                                                         <label class="col-form-label"> - 000 </label>
                                                                          <input type="text" value="{{$almacen->cod_fac}}" name="cod_fac" class="form-control col-sm-3">
                                                                          @endif
                                                                          </div>

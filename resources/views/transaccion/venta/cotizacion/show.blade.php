@@ -190,8 +190,9 @@
     ?>
     Son : {{$letra_final}} {{$end_final}}/100 {{$cotizacion->moneda->nombre }}
 </h3>
+@if($cotizacion->tipo == "boleta")
 {{-- //POSIBLE CONDICIONAL PARA LA VISTA, 1ERO EN BOLETA, 2DO EN FACTURA POR OP GRAVADA --}}
-{{-- <div class="row">
+<div class="row">
     <div class="col-sm-3 ">
         <p class="form-control a"> Sub Total</p>
         <p class="form-control a">{{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}</p>
@@ -208,18 +209,19 @@
         <p class="form-control a"> Importe Total</p>
         <p class="form-control a"> @if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif</p>
     </div>
-</div> --}}
+</div>
+@else
 <div class="row">
     <div class="col-sm-8">
-        
+
     </div>
     <div class="col-sm-4 form-control" >
         <span style="display: block;float: left"> Sub Total:</span>
         <span style="display: block;float: right;"> {{$simbologia=$cotizacion->moneda->simbolo}}. {{number_format($sub_total, 2)}}</span>
         <br>
-        <span style="display: block;float: left"> Op. Agravada: </span> 
+        <span style="display: block;float: left"> Op. Agravada: </span>
         <span style="display: block;float: right">{{$simbologia}}. {{number_format($cotizacion->op_gravada,2)}}</span><br>
-        <span style="display: block;float: left"> Op. Inafecta: </span> 
+        <span style="display: block;float: left"> Op. Inafecta: </span>
         <span style="display: block;float: right">{{$simbologia}} {{ number_format($cotizacion->op_inafecta,2)}}</span><br>
         <span style="display: block;float: left"> Op. Exonerada: </span>
         <span style="display: block;float: right">{{$simbologia}}. {{number_format($cotizacion->op_exonerada,2)}} </span><br>
@@ -229,6 +231,7 @@
          <span style="display: block;float: right">@if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif</span>
     </div>
 </div>
+@endif
 </footer>
 
 <br>

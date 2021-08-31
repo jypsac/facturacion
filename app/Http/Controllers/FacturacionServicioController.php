@@ -100,8 +100,10 @@ class FacturacionServicioController extends Controller
         if (is_numeric($factura_cod_fac)) {
             // exprecion del numero de fatura
             $factura_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->serie_factura, 3, "0", STR_PAD_LEFT);
             $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+            // return $factura_nr;
+
         }else{
             // exprecion del numero de fatura
             // GENERACION DE NUMERO DE FACTURA
@@ -110,9 +112,24 @@ class FacturacionServicioController extends Controller
             $factura_num_string_porcion= explode("-", $factura_num);
             $factura_num_string=$factura_num_string_porcion[1];
             $factura_num=(int)$factura_num_string;
+            // return $factura_num;
+            $almacen_codigo = Almacen::orderBy('serie_factura','DESC')->latest()->first();
+            //CONDICIONAL PARA QUE EMPIEZE DE NUEVO EN 0001 PARA EL NUMERO DE SERIE Y EL CORRELATIVO -> FALTA PULIR/IDEA GENERAL
+            if($factura_num == 99999999){
+                $ultima_factura = $almacen_codigo->serie_factura+1;
+                // $almacen_l = Almacen::find($almacen_codigo->id);
+                // $almacen_l->serie_factura = $ultima_factura;
+                // $almacen_l->save();
+                $factura_num = 00000000;
+
+            }else{
+                $ultima_factura = $sucursal->serie_factura;
+            }
+
             $factura_num++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($ultima_factura, 3, "0", STR_PAD_LEFT);
             $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+
         }
 
         $factura_numero="F".$sucursal_nr."-".$factura_nr;
@@ -354,6 +371,12 @@ class FacturacionServicioController extends Controller
         // return $request;
         // return '1';
 
+        //cambio de almacen para factura
+        $factura_primera=Almacen::where('id', $sucursal->id)->first();
+        $factura_primera->cod_fac='NN';
+        $factura_primera->save();
+
+
         $check = $request->input('descuento_unitario');
         $count_check=count($check);
         $tipo_cambio=TipoCambio::latest('created_at')->first();
@@ -380,7 +403,7 @@ class FacturacionServicioController extends Controller
                         $facturacion_registro->promedio_original=$precio_prom;
                         $utilidad=$servicio->precio_extranjero*($servicio->utilidad)/100;
                         $array=$servicio->precio_extranjero+$utilidad;
-                        return '1';
+                        // return '1';
                     }
                 }else{
                     if ($moneda->tipo == 'extranjera'){
@@ -388,7 +411,7 @@ class FacturacionServicioController extends Controller
                         $facturacion_registro->promedio_original=$precio_prom;
                         $utilidad=$servicio->precio_extranjero*($servicio->utilidad)/100;
                         $array=round(($servicio->precio_extranjero+$utilidad)*$tipo_cambio->paralelo,2);
-                        return '2';
+                        // return '2';
                     }else{
                         $precio_prom = $servicio->precio_nacional/$tipo_cambio->paralelo;
                         $facturacion_registro->promedio_original=$precio_prom;

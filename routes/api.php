@@ -27,7 +27,9 @@ use App\Providers\RouteServiceProvider;
 });
 */
 // PRODUCTOS
-
+Route::group(['middleware' => ['auth:api']], function () {
+        // your protected routes.
+});
 Route::get('productos',function(){
     $producto = DB::table('productos')
         ->select('*','productos.id as prod_id' ,'marcas.nombre as nombre_marca','familias.descripcion as familia_desc', 'tipo_afectacion.informacion as afectacion_info','estado.nombre as estado_nom' )
@@ -123,5 +125,5 @@ Route::get('clientes',function(){
     return Datatables($cliente)
         ->toJson();
 });
-Auth::routes();
+
 //TIPO DE CAMBIO
