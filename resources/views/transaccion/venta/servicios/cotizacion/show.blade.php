@@ -234,8 +234,8 @@
                 @else
                         <div style="display: none">
                             {{$sub_total=($cotizacion->op_gravada )}}
-                            S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
-                            {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                            {{-- S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}} --}}
+                            {{$end=round($sub_total, 2)}}
                         </div>
                             <?php $v=new CifrasEnLetras() ;
                             $letra=($v->convertirEurosEnLetras($end));

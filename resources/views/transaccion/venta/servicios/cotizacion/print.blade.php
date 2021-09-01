@@ -162,15 +162,20 @@
                 <footer style="padding-top: 100px"></footer>
 
         @if ($regla=="factura")
-            <h3 align="left">
-                    <?php $v=new CifrasEnLetras() ;
-                    $letra=($v->convertirEurosEnLetras($end));
-                    $letra_final = strstr($letra, 'soles',true);
-                    $end_final=strstr($end, '.');
-                    ?>
-                    Son : {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
-            </h3>
-            <div class="row">
+               <h3 align="left">
+                        <div style="display: none">
+                            {{$sub_total=($cotizacion->op_gravada )}}
+                            S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                            {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                        </div>
+                            <?php $v=new CifrasEnLetras() ;
+                            $letra=($v->convertirEurosEnLetras($end));
+                            $letra_final = strstr($letra, 'soles',true);
+                            $end_final=strstr($end, '.');
+                            ?>
+                            Son : {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
+                    </h3>
+            {{-- <div class="row">
                 <div class="col-sm-3 ">
                     <p class="form-control a"> Sub Total</p>
                     <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}</p>
@@ -187,27 +192,58 @@
                     <p class="form-control a"> Importe Total</p>
                     <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end}}</p>
                 </div>
-            </div>
-        @else
-
+            </div> --}}
             <div class="row">
-                <div class="col-sm-3 ">
-                    <p class="form-control a"> Sub Total</p>
-                    <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}}</p>
-                </div>
-                <div class="col-sm-3 ">
-                    <p class="form-control a"> Op. Agravada</p>
-                    <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
-                </div>
-                <div class="col-sm-3 ">
-                    <p class="form-control a"> IGV</p>
-                    <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
-                </div>
-                <div class="col-sm-3 ">
-                    <p class="form-control a"> Importe Total</p>
-                    <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}}</p>
-                </div>
-            </div>
+                        <div class="col-sm-8">
+
+                    </div>
+
+                    <div class="col-sm-4 form-control" >
+                        <span style="display: block;float: left"> Sub Total:</span>
+                        <span style="display: block;float: right;"> {{$simbologia=$cotizacion->moneda->simbolo}}. {{number_format($sub_total, 2)}}</span>
+                        <br>
+                        <span style="display: block;float: left"> Op. Agravada: </span>
+                        <span style="display: block;float: right">{{$simbologia}}. {{number_format($cotizacion->op_gravada,2)}}</span><br>
+                        <span style="display: block;float: left"> Op. Inafecta: </span>
+                        <span style="display: block;float: right">{{$simbologia}} {{ number_format($cotizacion->op_inafecta,2)}}</span><br>
+                        <span style="display: block;float: left"> Op. Exonerada: </span>
+                        <span style="display: block;float: right">{{$simbologia}}. {{number_format($cotizacion->op_exonerada,2)}} </span><br>
+                        <span style="display: block;float: left"> I.G.V.: </span>
+                        <span style="display: block;float: right">@if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{number_format(round($igv_p, 2),2)}} @else  {{$cotizacion->moneda->simbolo}}.00 @endif</span><br>
+                        <span style="display: block;float: left"> Importe Total: </span>
+                         <span style="display: block;float: right">@if ($regla=="factura"){{$cotizacion->moneda->simbolo}}.{{$end}} @else  {{$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}} @endif</span>
+                    </div>
+                    </div>
+        @else
+                        <div style="display: none">
+                            {{$sub_total=($cotizacion->op_gravada )}}
+                            S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                            {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+                        </div>
+                            <?php $v=new CifrasEnLetras() ;
+                            $letra=($v->convertirEurosEnLetras($end));
+                            $letra_final = strstr($letra, 'soles',true);
+                            $end_final=strstr($end, '.');
+                            ?>
+                            Son : {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
+                    <div class="row">
+                        <div class="col-sm-3 ">
+                            <p class="form-control a"> Sub Total</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}}</p>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <p class="form-control a"> Op. Agravada</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <p class="form-control a"> IGV</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
+                        </div>
+                        <div class="col-sm-3 ">
+                            <p class="form-control a"> Importe Total</p>
+                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end=round($sub_total, 2)}}</p>
+                        </div>
+                    </div>
         @endif
         <br>
                     <div class="row">

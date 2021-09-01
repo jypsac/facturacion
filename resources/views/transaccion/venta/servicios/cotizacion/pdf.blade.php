@@ -139,16 +139,9 @@
 
 <footer style="padding-top: 120px">
 @if ($regla=="factura")
- <h3 align="left">
-    <?php $v=new CifrasEnLetras() ;
-    $letra=($v->convertirEurosEnLetras($end));
-    $letra_final = strstr($letra, 'soles',true);
-    $end_final=strstr($end, '.');
-    ?>
-    Son : {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
-</h3>
 
-<table style="border: white 0px solid;text-align: center;" >
+
+{{-- <table style="border: white 0px solid;text-align: center;" >
     <tr style="border: white 0px solid" >
             <td style="border: 1px #e5e6e7 solid;border-radius: 4px;width: 25%">
                 Subtotal <br style="height: 2px;">
@@ -183,6 +176,51 @@
                {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end}}
             </td>
     </tr>
+</table> --}}
+<div style="display: none">
+    {{$sub_total=($cotizacion->op_gravada )}}
+    S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+    {{$end=round($sub_total, 2)+round($igv_p, 2)}}
+</div>
+<h3 align="left">
+    <?php $v=new CifrasEnLetras() ;
+    $letra=($v->convertirEurosEnLetras($end));
+    $letra_final = strstr($letra, 'soles',true);
+    $end_final=strstr($end, '.');
+    ?>
+    Son : {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
+</h3>
+<table  style="width: 100%;border-collapse:collapse;margin-bottom: -10px">
+     <tr>
+         <td style="width: 70%;border: none"></td>
+         <td   style="width: auto; ;border: 1px #e5e6e7 solid;border-top-right-radius: 8px 0 0 8px;margin-top: 0px;border-right: none;margin-right: 15px;border-collapse:collapse;" align="left">
+            <span > Sub Total:</span>
+            <br>
+            <span > Op. Agravada:</span> <br>
+            <span > Op. Inafecta:</span> <br>
+            <span > Op. Exonerada:</span> <br>
+            <span > I.G.V.:</span> <br>
+            <span > Importe Total:</span> <br>
+        </td>
+        <td   style="width: auto; ;border: 1px #e5e6e7 solid;border-top-left-radius: 8px 0 0 8px;margin-top: 0px;border-left: none;border-collapse:collapse;" align="right">
+            <span>{{$simbologia=$cotizacion->moneda->simbolo}}. {{number_format($sub_total, 2)}}</span><br>
+            <span>{{$simbologia}}. {{number_format($cotizacion->op_gravada,2)}}</span><br>
+            <span>{{$simbologia}}. {{number_format($cotizacion->op_inafecta,2)}}</span><br>
+            <span>{{$simbologia}}. {{number_format($cotizacion->op_exonerada,2)}}</span><br>
+            <span>@if($regla=="factura")
+                {{$simbologia}}. {{number_format(round($igv_p, 2),2)}}
+                @else
+                {{$simbologia}}. 0.00
+            @endif</span><br>
+            <span>
+            @if ($regla=="factura")
+                {{$simbologia}}. {{$end}}
+            @else
+                {{$simbologia}}. {{$end=round($sub_total, 2)}}
+            @endif
+        </span>
+        </td>
+     </tr>
 </table>
 @else
 <table style="border: white 0px solid;text-align: center;" >

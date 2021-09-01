@@ -112,7 +112,7 @@
 </div>
 <label class="col-sm-3 col-form-label">Tipo de Afectacion</label>
 <div class="col-sm-8"><div class="input-group m-b">
-    <input type="text" class="form-control" name="afectacion" required="required"  value="{{$servicios->tipo_afec_i_producto->informacion}}" readonly="">
+    <input type="text" class="form-control" name="afectacion" required="required"  value="{{$servicios->tipo_afec_i_serv->informacion}}" readonly="">
   </div>
 </div>
 <div class="row">
