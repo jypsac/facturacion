@@ -170,11 +170,11 @@ class GarantiaGuiaIngresoController extends Controller
      */
     public function show($id)
     {
-      $contacto = Contacto::all();
+      $contacto=Contacto::all();
       $empresa=Empresa::first();
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
       $marcas=Marca::all();
-      $usuario = User::where('personal_id',$garantia_guia_ingreso->personal_lab_id)->first();
+      $usuario=User::where('personal_id',$garantia_guia_ingreso->personal_lab_id)->first();
       return view('transaccion.garantias.guia_ingreso.show',compact('garantia_guia_ingreso','empresa','contacto','marcas','usuario'));
     }
 
