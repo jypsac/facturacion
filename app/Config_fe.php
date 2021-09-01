@@ -57,15 +57,15 @@ class Config_fe extends Model
             //$see->setCertificate(file_get_contents(public_path('certificado/certificado.p12')));
 
         $pfx = file_get_contents(public_path('certificado/certificado.p12'));
-        $password = 'FILTER2021';
+        $password = 'Tecnologia20';
 
         $certificate = new X509Certificate($pfx, $password);
 
         $see->setCertificate($certificate->export(X509ContentType::PEM));
 
-        // $see->setService(SunatEndpoints::GUIA_PRODUCCION);
-        $see->setService(SunatEndpoints::GUIA_BETA);
-        $see->setClaveSOL('20608175963', 'FILTER21', 'Filter21');
+        $see->setService(SunatEndpoints::GUIA_PRODUCCION);
+        // $see->setService(SunatEndpoints::GUIA_BETA);
+        $see->setClaveSOL('20545122520', 'JYPSACFA', 'P@@@W0RDs');
         return $see;
     }
 
