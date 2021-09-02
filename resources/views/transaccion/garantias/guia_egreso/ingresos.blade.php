@@ -74,7 +74,7 @@
                 searchable: false,
                 render: function (data) {
                     var actions = '';
-                    actions += '<center><a href="{{ route('garantia_guia_egreso.edit', ':id') }}"><button type="button" class="btn btn-info"><i class="fa fa-sign-in"></i></button></a></center>';
+                    actions += '<center><a href="{{route('garantia_guia_egreso.create_egreso', ':id') }}"><button type="button" class="btn btn-info"><i class="fa fa-sign-in"></i></button></a></center>';
                     return actions.replace(/:id/g, data.gar_ing_id);
                 }
             }

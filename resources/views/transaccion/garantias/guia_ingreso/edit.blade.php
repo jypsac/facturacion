@@ -127,7 +127,7 @@
 									</div>
 								</div>
 								<div class="col-sm-12">
-									<button class="ladda-button btn btn-primary" data-style="zoom-in">Submit</button>
+									<button class="ladda-button btn btn-primary" data-style="zoom-in">Guardar</button>
 								</div>
 							</div>
 						</div>

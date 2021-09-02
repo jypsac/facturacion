@@ -103,12 +103,12 @@ class GarantiaGuiaEgresoController extends Controller
      */
     public function show($id)
     {
-         $contacto = Contacto::all();
-        $empresa=Empresa::first();
-        $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
-        $usuario = User::where('personal_id',$garantias_guias_egreso->garantia_ingreso_i->personal_lab_id)->first();
-        return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso','empresa','contacto','usuario'));
-    }
+     $contacto = Contacto::all();
+     $empresa=Empresa::first();
+     $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
+     $usuario = User::where('personal_id',$garantias_guias_egreso->garantia_ingreso_i->personal_lab_id)->first();
+     return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso','empresa','contacto','usuario'));
+ }
 
     /**
      * Show the form for editing the specified resource.
@@ -125,6 +125,19 @@ class GarantiaGuiaEgresoController extends Controller
         $garantias_guias_ingresos=GarantiaGuiaIngreso::find($id);
         return view('transaccion.garantias.guia_egreso.edit',compact('garantias_guias_ingresos','tiempo_actual','empresa'));
     }
+
+    public function create_egreso($id)
+    {
+        $garantias_guias_ingresos=GarantiaGuiaIngreso::find($id);
+        if(empty($garantias_guias_ingresos)){return redirect()->route('garantia_guia_egreso.guias');}
+        elseif($garantias_guias_ingresos->egresado!=0 or $garantias_guias_ingresos->estado==0){
+            return redirect()->route('garantia_guia_egreso.guias');}
+            $empresa = Empresa::first();
+            $tiempo_actual = Carbon::now();
+            $tiempo_actual = $tiempo_actual->format('Y-m-d');
+        // Enviando vista para crear guia de egreso con datos de ingreso para egresar
+            return view('transaccion.garantias.guia_egreso.edit',compact('garantias_guias_ingresos','tiempo_actual','empresa'));
+        }
 
     /**
      * Update the specified resource in storage.
@@ -149,7 +162,7 @@ class GarantiaGuiaEgresoController extends Controller
         //
     }
 
-      public function print($id){
+    public function print($id){
         $contacto = Contacto::all();
         $mi_empresa=Empresa::first();
         $garantias_guias_egreso=GarantiaGuiaEgreso::find($id);
@@ -187,8 +200,8 @@ class GarantiaGuiaEgresoController extends Controller
 
     public function enviar(Request $request){
        $smtpAddress = 'smtp.gmail.com'; // = $request->smtp
-        $port = 465;
-        $encryption = 'ssl';
+       $port = 465;
+       $encryption = 'ssl';
         $yourEmail = 'danielrberru@gmail.com'; // = $request->yourmail
         $yourPassword = 'digimonheroes@1'; //colocar el password,
 
@@ -213,7 +226,7 @@ class GarantiaGuiaEgresoController extends Controller
                 $news[] = storage_path().'/app/public/'.$nombre;
                 $message = (new \Swift_Message($yourEmail)) ->setFrom([ $yourEmail => $titulo])->setTo([ $sendto ])->setBody($mensaje, 'text/html');
                 $message->attach(\Swift_Attachment::fromPath($pdfile));
-                 foreach ($news as $attachment) {
+                foreach ($news as $attachment) {
                     $message->attach(\Swift_Attachment::fromPath($attachment));
                 }
             }
@@ -225,11 +238,11 @@ class GarantiaGuiaEgresoController extends Controller
 
         if($mailer->send($message)){
            return redirect()->route('garantia_guia_egreso.index');
-        }
-           return "Something went wrong :(";
+       }
+       return "Something went wrong :(";
 
 
 
-    }
+   }
 
 }
