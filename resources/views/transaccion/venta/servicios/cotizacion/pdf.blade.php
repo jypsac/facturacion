@@ -121,7 +121,7 @@
                 <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
 
                 <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
-                <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
+                <td style="display: none">{{$sub_total=$cotizacion->op_gravada}}
                     @if ($regla=="factura")
                         S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
                         {{$end=round($sub_total, 2)+round($igv_p, 2)}}
