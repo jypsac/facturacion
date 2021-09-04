@@ -115,7 +115,7 @@
         <hr>
       </div>
       <div class="col-lg-4"><h4>Numero Documento</h4><input type="text" name="numero_documento" class="form-control"  value=" {{$personales->numero_documento}}"><hr></div>
-      <div class="col-lg-4"> <h4>Fecha Nacimiento</h4><input type="date" name="fecha_nacimiento" class="form-control"  value=" {{$personales->fecha_nacimiento}}"><hr></div>
+      <div class="col-lg-4"> <h4>Fecha Nacimiento</h4><input type="date" name="fecha_nacimiento" class="form-control"  value="{{$personales->fecha_nacimiento}}"><hr></div>
       <div class="col-lg-4">
         <h4>Genero</h4>
         <select class="form-control m-b" name="genero">

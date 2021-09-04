@@ -17,7 +17,7 @@ class CreatePersonalTable extends Migration
             $table->bigIncrements('id');
             $table->string('nombres');
             $table->string('apellidos');
-            $table->date('fecha_nacimiento');
+            $table->date('fecha_nacimiento')->nullable();
             $table->string('celular')->nullable();
             $table->string('telefono')->nullable();
             $table->string('email');
