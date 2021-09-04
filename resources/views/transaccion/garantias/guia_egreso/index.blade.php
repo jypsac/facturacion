@@ -31,30 +31,6 @@
                                             <th></th>
                                         </tr>
                                     </thead>
-                                    {{-- <tbody>
-                                        @foreach($garantias_guias_egresos as $garantias_guias_egreso)
-                                        <tr class="gradeX">
-                                            <td>{{$garantias_guias_egreso->id}}</td>
-                                            <td>{{$garantias_guias_egreso->garantia_ingreso_i->marcas_i->nombre}}</td>
-                                            <td>
-                                                @if($garantias_guias_egreso->estado==1)
-                                                    Activo
-                                                @else
-                                                    Anulado
-                                                @endif
-                                            </td>
-                                            <td>{{$garantias_guias_egreso->garantia_ingreso_i->motivo}}</td>
-                                            <td>{{$garantias_guias_egreso->garantia_ingreso_i->personal_laborales->nombres}}</td>
-                                            <td> {{$garantias_guias_egreso->fecha}} </td>
-                                            <td>{{$garantias_guias_egreso->orden_servicio}}</td>
-                                            <td>{{$garantias_guias_egreso->garantia_ingreso_i->asunto}}</td>
-                                            <td>{{$garantias_guias_egreso->garantia_ingreso_i->clientes_i->nombre}}</td>
-                                            <td>
-                                                <center><a href="{{ route('garantia_guia_egreso.show', $garantias_guias_egreso->id) }}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center>
-                                            </td>
-                                        </tr>
-                                        @endforeach
-                                    </tbody> --}}
                                 </table>
                             </div>
                         </div>
@@ -62,12 +38,6 @@
                 </div>
             </div>
     </div>
-
-
-
-
-
-
     <!-- Mainly scripts -->
     <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
     <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -80,8 +50,6 @@
  <!-- Custom and plugin javascript -->
     <script src="{{ asset('js/inspinia.js') }}"></script>
     <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-
-
 
 <script>    
 $(document).ready(function(){
@@ -115,34 +83,4 @@ $(document).ready(function(){
 });
 
 </script>
-    <!-- Page-Level Scripts -->
-    {{-- <script>
-        $(document).ready(function(){
-            $('.dataTables-example').DataTable({
-                pageLength: 25,
-                responsive: true,
-                dom: '<"html5buttons"B>lTfgitp',
-                buttons: [
-                    { extend: 'copy'},
-                    {extend: 'csv'},
-                    {extend: 'excel', title: 'ExampleFile'},
-                    {extend: 'pdf', title: 'ExampleFile'},
-
-                    {extend: 'print',
-                     customize: function (win){
-                            $(win.document.body).addClass('white-bg');
-                            $(win.document.body).css('font-size', '10px');
-
-                            $(win.document.body).find('table')
-                                    .addClass('compact')
-                                    .css('font-size', 'inherit');
-                    }
-                    }
-                ]
-
-            });
-
-        });
-
-    </script> --}}
 @endsection

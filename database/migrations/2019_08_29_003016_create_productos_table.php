@@ -23,6 +23,7 @@ class CreateProductosTable extends Migration
             $table->integer('descuento2');
             $table->integer('descuento_maximo');
             $table->text('descripcion')->nullable();
+            $table->text('detalle')->nullable();
             $table->text('origen');
             $table->text('garantia');
             $table->string('peso');

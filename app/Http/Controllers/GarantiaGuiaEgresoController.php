@@ -58,41 +58,34 @@ class GarantiaGuiaEgresoController extends Controller
      */
     public function store(Request $request)
     {
-
-        $nombre_cliente=$request->get('nombre_cliente');
-        $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
-        $numero_doc=$cliente->numero_documento;
-
-        $orden_servicio=$request->get('orden_servicio');
-        // return $orden_servicio;
-        $orden_servicio=(string)$orden_servicio;
-        // return $orden_servicio;
-        // //GUIA INGRESO
-        $garantia_guia_ingreso=GarantiaGuiaIngreso::where('orden_servicio',$orden_servicio)->first();
-        $garantia_guia_ingreso->egresado=1;
-        // $garantia_guia_ingreso->estado=0;
-        $garantia_guia_ingreso->save();
-
-
+        $id=$request->get('id');
         //consulta
-        $id_garantia_ingreso=$garantia_guia_ingreso->id;
+        $guia_ingreso=GarantiaGuiaIngreso::where('id',$id)->first();
+
+        //Validacion
+        if (empty($guia_ingreso)){return redirect()->route('garantia_guia_egreso.guias')->withErrors(['Numero de Guia no existe en Registro.']);}
+        if ($guia_ingreso->egresado==1){return redirect()->route('garantia_guia_egreso.guias')->withErrors(['Guia de Ingreso ya fue Egresada.']);}
+        if ($guia_ingreso->estado==0){return redirect()->route('garantia_guia_egreso.guias')->withErrors(['Guia de Ingreso a sido anulada. por ello no puede ser Egresada.']);}
+        //Validacion
+
         //GUIA EGRESO
         $garantia_guia_egreso=new GarantiaGuiaEgreso;
-
-        $garantia_guia_egreso->garantia_ingreso_id=$id_garantia_ingreso;
+        $garantia_guia_egreso->garantia_ingreso_id=$guia_ingreso->id;
         $garantia_guia_egreso->estado=1;
         $garantia_guia_egreso->egresado=1;
         $garantia_guia_egreso->informe_tecnico=0;
-        $garantia_guia_egreso->orden_servicio=$request->get('orden_servicio');
-        $garantia_guia_egreso->fecha=$request->get('fecha_uno');
+        $garantia_guia_egreso->orden_servicio=$guia_ingreso->orden_servicio;
+        $garantia_guia_egreso->fecha=date('Y-m-d');
         $garantia_guia_egreso->descripcion_problema=$request->get('descripcion_problema');
         $garantia_guia_egreso->diagnostico_solucion=$request->get('diagnostico_solucion');
         $garantia_guia_egreso->recomendaciones=$request->get('recomendaciones');
         $garantia_guia_egreso->save();
+        //GUIA INGRESO
+        $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
+        $garantia_guia_ingreso->egresado=1;
+        $garantia_guia_ingreso->save();
 
-        return redirect()->route('garantia_guia_egreso.index');
-
-
+        return redirect()->route('garantia_guia_egreso.show',$garantia_guia_egreso->id);
     }
 
     /**
@@ -118,26 +111,16 @@ class GarantiaGuiaEgresoController extends Controller
      */
     public function edit($id)
     {
-        $empresa = Empresa::first();
-        $tiempo_actual = Carbon::now();
-        $tiempo_actual = $tiempo_actual->format('Y-m-d');
-        // Enviando vista para crear guia de egreso con datos de ingreso para egresar
-        $garantias_guias_ingresos=GarantiaGuiaIngreso::find($id);
-        return view('transaccion.garantias.guia_egreso.edit',compact('garantias_guias_ingresos','tiempo_actual','empresa'));
     }
 
     public function create_egreso($id)
     {
+        $empresa=Empresa::first();
         $garantias_guias_ingresos=GarantiaGuiaIngreso::find($id);
         if(empty($garantias_guias_ingresos)){return redirect()->route('garantia_guia_egreso.guias');}
-        elseif($garantias_guias_ingresos->egresado!=0 or $garantias_guias_ingresos->estado==0){
-            return redirect()->route('garantia_guia_egreso.guias');}
-            $empresa = Empresa::first();
-            $tiempo_actual = Carbon::now();
-            $tiempo_actual = $tiempo_actual->format('Y-m-d');
-        // Enviando vista para crear guia de egreso con datos de ingreso para egresar
-            return view('transaccion.garantias.guia_egreso.edit',compact('garantias_guias_ingresos','tiempo_actual','empresa'));
-        }
+        if($garantias_guias_ingresos->egresado!=0 or $garantias_guias_ingresos->estado==0){return redirect()->route('garantia_guia_egreso.guias');}
+        return view('transaccion.garantias.guia_egreso.create_egreso',compact('garantias_guias_ingresos','empresa','id'));
+    }
 
     /**
      * Update the specified resource in storage.
@@ -148,7 +131,12 @@ class GarantiaGuiaEgresoController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $guia_egreso=GarantiaGuiaEgreso::find($id);
+        $guia_egreso->descripcion_problema=$request->get('descripcion_problema');
+        $guia_egreso->diagnostico_solucion=$request->get('diagnostico_solucion');
+        $guia_egreso->recomendaciones=$request->get('recomendaciones');
+        $guia_egreso->save();
+        return redirect()->route('garantia_guia_egreso.show',$guia_egreso->id);
     }
 
     /**

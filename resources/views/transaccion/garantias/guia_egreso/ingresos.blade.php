@@ -8,35 +8,46 @@
 
 @section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row">
-        <div class="col-lg-12">
-            <div class="ibox ">
-                <div class="ibox-title">
-                    <h5>Guias</h5>
-                </div>
-                <div class="ibox-content">
-                    <div class="table-responsive">
-                        <table class="table table-striped table-bordered table-hover dataTables-example" id="table_egreso" >
-                            <thead>
-                                <tr>
-                                    <th>ID</th>
-                                    <th>Marca</th>
-                                    <th>Motivo</th>
-                                    <th>Ing Asignado</th>
-                                    <th>fecha</th>
-                                    <th>Orden servicio</th>
-                                    <th>Asunto</th>
-                                    <th>Cliente</th>
-                                    <th></th>
+ @if($errors->any())
+ <div style="padding-top: 20px;">
+    <div class="alert alert-danger">
+        <a class="alert-link" href="#">
+            @foreach ($errors->all() as $error)
+            <li style="color: red">{{ $error }}</li>
+            @endforeach
+        </a>
+    </div>
+</div>
+@endif
+<div class="row">
+    <div class="col-lg-12">
+        <div class="ibox ">
+            <div class="ibox-title">
+                <h5>Guias</h5>
+            </div>
+            <div class="ibox-content">
+                <div class="table-responsive">
+                    <table class="table table-striped table-bordered table-hover dataTables-example" id="table_egreso" >
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Marca</th>
+                                <th>Motivo</th>
+                                <th>Ing Asignado</th>
+                                <th>fecha</th>
+                                <th>Orden servicio</th>
+                                <th>Asunto</th>
+                                <th>Cliente</th>
+                                <th></th>
 
-                                </tr>
-                            </thead>
-                        </table>
-                    </div>
+                            </tr>
+                        </thead>
+                    </table>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </div>
 <!-- Mainly scripts -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>

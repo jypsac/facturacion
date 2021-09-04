@@ -215,6 +215,8 @@ class GarantiaGuiaIngresoController extends Controller
     public function update(Request $request, $id)
     {
         // ACTUALIZACION DE ESTADO - ANULADO
+      $guia_ingreso=GarantiaGuiaIngreso::where('id',$id)->first();
+      if ($guia_ingreso->egresado==1) {return redirect()->route('garantia_guia_ingreso.index')->withErrors(['Guia no se puede anular porque ya fue Egresada.']);}
       $garantia_guia_ingreso=GarantiaGuiaIngreso::find($id);
       $garantia_guia_ingreso->estado=0;
       $garantia_guia_ingreso->save();
