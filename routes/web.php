@@ -2,7 +2,7 @@
 // DB::listen(function($query){
 // 	echo "<pre>{$query->sql}</pre>";
 // });
-
+// a
 Route::group(
 	[ 'middleware' => ['auth','api','cambio_diario']],
 	function(){
