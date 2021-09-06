@@ -32,6 +32,10 @@ use App\Stock_producto;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
+use Mike42\Escpos\Printer;
+// require __DIR__ . '/ticket/autoload.php'; //Nota: si renombraste la carpeta a algo diferente de "ticket" cambia el nombre en esta línea
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
 class FacturacionController extends Controller
 {
@@ -772,6 +776,92 @@ class FacturacionController extends Controller
         $fac->save();
 
         return redirect()->route('facturacion.index');
+    }
+    public function ticket($id){
+        $ids = $id;
+      //   $empresa=Empresa::first();
+      // return public_path('img/logos/'.$empresa->foto);
+
+        return view('transaccion.venta.facturacion.ticket',compact('ids'));
+    }
+    public function ticket_ajax(Request $request){
+    $ids = $request->get('id');
+    $facturacion=Facturacion::find($ids);
+    $facturacion_registro=Facturacion_registro::where('facturacion_id',$ids)->get();
+    $empresa=Empresa::first();
+    $moneda = Moneda::where('id',$facturacion->moneda_id)->first();
+    $igv=Igv::first();
+
+    $nombre_impresora = "EPSONTICKET";
+
+    $connector = new WindowsPrintConnector($nombre_impresora);
+    $printer = new Printer($connector);
+    #Mando un numero de respuesta para saber que se conecto correctamente.
+    echo 1;
+
+    # Vamos a alinear al centro lo próximo que imprimamos
+    // $printer->setJustification(Printer::JUSTIFY_CENTER);
+
+    $fd=Empresa::first();
+    $emp = $fd->nombre;
+
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
+    $printer->setEmphasis(true);
+    $printer->text("Ticket de venta\n");
+    $logo = EscposImage::load(public_path('img/logos/').$empresa->foto, false);
+    $printer->graphics($logo);
+    $printer->text($facturacion->created_at . "\n");
+    $printer->text($empresa->nombre."\n");
+    $printer->setEmphasis(false);
+    $printer->text("\n===============================\n");
+
+    $total = 0;
+     foreach($facturacion_registro as $fag_regs){
+        $subtotal = ($fag_regs->precio_unitario_comi * $fag_regs->cantidad);
+        $printer->setJustification(Printer::JUSTIFY_LEFT);
+        $printer->text(sprintf("%.2fx%s\n", $fag_regs->cantidad, $fag_regs->producto->nombre));
+        $printer->setJustification(Printer::JUSTIFY_RIGHT);
+        $printer->text($moneda->simbolo." ". number_format($subtotal, 2) . "\n");
+        // $total += $subtotal;
+    }
+    $sub_total=($facturacion->op_gravada);
+    $igv_p=round($sub_total, 2)*$igv->igv_total/100;
+    $end=round($sub_total, 2)+round($igv_p, 2);
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
+    $printer->text("\n===============================\n");
+    $printer->setJustification(Printer::JUSTIFY_RIGHT);
+    $printer->text("SUBTOTAL: ".$moneda->simbolo." ".$sub_total."\n");
+    $printer->text("IGV: ".($moneda->simbolo." ".$igv_p."\n"));
+    $printer->text("TOTAL: ".($moneda->simbolo." ".$end."\n"));
+
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
+    $printer->text("\n===============================\n");
+    // $printer->text("Muchas gracias por su compra\n");
+
+
+
+/*Alimentamos el papel 3 veces*/
+$printer->feed(3);
+
+/*
+    Cortamos el papel. Si nuestra impresora
+    no tiene soporte para ello, no generará
+    ningún error
+*/
+$printer->cut();
+
+/*
+    Por medio de la impresora mandamos un pulso.
+    Esto es útil cuando la tenemos conectada
+    por ejemplo a un cajón
+*/
+$printer->pulse();
+
+/*
+    Para imprimir realmente, tenemos que "cerrar"
+    la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+*/
+$printer->close();
     }
 
 }
