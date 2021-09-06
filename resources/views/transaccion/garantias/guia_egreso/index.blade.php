@@ -1,7 +1,7 @@
 @extends('layout')
 
-@section('title', 'Garantia - Guia de egreso')
-@section('breadcrumb', 'Guia de egreso')
+@section('title', ' Guias Egreso')
+@section('breadcrumb', 'Guias de egreso')
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_guia_egreso.guias'))
 @section('value_accion', 'Agregar')
@@ -11,21 +11,16 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="ibox ">
-                        <div class="ibox-title">
-                            <h5>Vista Previa</h5>
-                        </div>
                         <div class="ibox-content">
                             <div class="table-responsive">
                                 <table class="table table-striped table-bordered table-hover dataTables-example" id="table_egreso" >
                                     <thead>
                                         <tr>
                                             <th>ID</th>
-                                            <th>Marca</th>
-                                            <th>Estado</th>
-                                            <th>Motivo</th>
-                                            <th>Ing Asignado</th>
-                                            <th>fecha</th>
                                             <th>Orden servicio</th>
+                                            <th>Marca</th>
+                                            <th>fecha</th>
+                                            <th>Motivo</th>
                                             <th>Asunto</th>
                                             <th>Cliente</th>
                                             <th></th>
@@ -59,12 +54,10 @@ $(document).ready(function(){
         "ajax":"{{url('api/garantia_egreso')}}",
         "columns":[
             {data : 'egreso_id'},
-            {data : 'nombre_marca'},
-            {data : 'estado'},
-            {data : 'motivo'},
-            {data : 'personal_as'},
-            {data : 'fecha'},
             {data : 'orden_servicio'},
+            {data : 'nombre_marca'},
+            {data : 'fecha'},
+            {data : 'motivo'},
             {data : 'asunto'},
             {data : 'cliente_nom'},
             {

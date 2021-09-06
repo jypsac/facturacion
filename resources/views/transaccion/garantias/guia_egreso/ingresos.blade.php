@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', ' Elegir Garantia - Guia de Egreso')
+@section('title', ' Guias de Ingreso Disponibles')
 @section('breadcrumb', 'Elegir Guia de egreso')
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_guia_egreso.index'))
@@ -22,9 +22,6 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="ibox ">
-            <div class="ibox-title">
-                <h5>Guias</h5>
-            </div>
             <div class="ibox-content">
                 <div class="table-responsive">
                     <table class="table table-striped table-bordered table-hover dataTables-example" id="table_egreso" >

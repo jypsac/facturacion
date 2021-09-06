@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Ver - Guia de Ingreso')
+@section('title', 'Ver Guia de Ingreso')
 @section('breadcrumb', 'Ver Guia de Ingreso')
 @section('breadcrumb2', 'Garantia')
 @section('data-toggle', 'modal')

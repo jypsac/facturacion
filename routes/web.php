@@ -186,7 +186,7 @@ Route::group(
 
 		Route::get('garantia_guia_egreso/impresionEgreso/{id}' , 'GarantiaGuiaEgresoController@print')->name('impresiones_egreso');
 		Route::get('garantia_guia_egreso/guias', 'GarantiaGuiaEgresoController@guias')->name('garantia_guia_egreso.guias');
-		Route::resource('/garantia_guia_egreso','GarantiaGuiaEgresoController');
+		Route::resource('/garantia_guia_egreso','GarantiaGuiaEgresoController')->except(['create','edit','destroy']);
 
 		Route::get('garantia_guia_egreso/create_egreso/{id}', 'GarantiaGuiaEgresoController@create_egreso')->name('garantia_guia_egreso.create_egreso');
 
@@ -195,7 +195,8 @@ Route::group(
 		Route::get('garantia_informe_tecnico/{id}/actualizar', 'GarantiaInformeTecnicoController@actualizar')->name('garantia_informe_tecnico.actualizar');
 		Route::get('garantia_informe_tecnico/guias', 'GarantiaInformeTecnicoController@guias')->name('garantia_informe_tecnico.guias');
 
-		Route::resource('/garantia_informe_tecnico','GarantiaInformeTecnicoController');
+		Route::resource('/garantia_informe_tecnico','GarantiaInformeTecnicoController')->except(['create','edit','destroy']);
+		Route::get('garantia_informe_tecnico/create_tecnico/{id}', 'GarantiaInformeTecnicoController@create_tecnico')->name('garantia_informe_tecnico.create_tecnico');
 
 		//Consultas
 		Route::get('consultas/garantias-guias-ingreso', 'ConsultasController@garantias_guias_ingreso')->name('consultas.garantias.guias_ingreso');

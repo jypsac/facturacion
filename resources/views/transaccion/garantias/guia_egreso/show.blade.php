@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Ver - Guia de Egreso')
+@section('title', 'Ver Guia de Egreso')
 @section('breadcrumb', 'Ver Guia de Egreso')
 @section('breadcrumb2', 'Garantia')
 @section('href_accion', route('garantia_guia_egreso.guias'))

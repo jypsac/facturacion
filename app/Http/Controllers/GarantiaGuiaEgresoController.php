@@ -40,22 +40,6 @@ class GarantiaGuiaEgresoController extends Controller
 
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
-     */
     public function store(Request $request)
     {
         $id=$request->get('id');
@@ -103,24 +87,15 @@ class GarantiaGuiaEgresoController extends Controller
      return view('transaccion.garantias.guia_egreso.show',compact('garantias_guias_egreso','empresa','contacto','usuario'));
  }
 
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-    }
 
-    public function create_egreso($id)
-    {
-        $empresa=Empresa::first();
-        $garantias_guias_ingresos=GarantiaGuiaIngreso::find($id);
-        if(empty($garantias_guias_ingresos)){return redirect()->route('garantia_guia_egreso.guias');}
-        if($garantias_guias_ingresos->egresado!=0 or $garantias_guias_ingresos->estado==0){return redirect()->route('garantia_guia_egreso.guias');}
-        return view('transaccion.garantias.guia_egreso.create_egreso',compact('garantias_guias_ingresos','empresa','id'));
-    }
+ public function create_egreso($id)
+ {
+    $empresa=Empresa::first();
+    $garantias_guias_ingresos=GarantiaGuiaIngreso::find($id);
+    if(empty($garantias_guias_ingresos)){return redirect()->route('garantia_guia_egreso.guias');}
+    if($garantias_guias_ingresos->egresado!=0 or $garantias_guias_ingresos->estado==0){return redirect()->route('garantia_guia_egreso.guias');}
+    return view('transaccion.garantias.guia_egreso.create_egreso',compact('garantias_guias_ingresos','empresa','id'));
+}
 
     /**
      * Update the specified resource in storage.
@@ -137,17 +112,6 @@ class GarantiaGuiaEgresoController extends Controller
         $guia_egreso->recomendaciones=$request->get('recomendaciones');
         $guia_egreso->save();
         return redirect()->route('garantia_guia_egreso.show',$guia_egreso->id);
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function destroy($id)
-    {
-        //
     }
 
     public function print($id){

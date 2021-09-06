@@ -27,7 +27,7 @@
         <div class="form-control" align="center" style="height: 79%;" align="right">
           <h3 style="">R.U.C {{$empresa->ruc}}</h3>
           <h2 style="font-size: 19px">GUIA DE INFORME TECNICO</h2>
-          <h5>{{$garantia_guia_egreso->garantia_ingreso_i->orden_servicio}} <input type="hidden" name="orden_servicio" value="{{$garantia_guia_egreso->garantia_ingreso_i->orden_servicio}}"> </h5>
+          <h5>{{$garantia_guia_egreso->garantia_ingreso_i->orden_servicio}}</h5>
         </div>
       </div>
       <br>
@@ -35,22 +35,21 @@
           <div class="form-control">
               <h3>Datos Generales </h3>
               <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
-                {{-- <input type="text" class="form-control" name="marca_id" value="{{$marca_nombre}}" readonly hidden=""> --}}
                 <label class="col-sm-2 col-form-label">Asunto:</label>
                 <div class="col-sm-4">
-                    <input type="text" class="form-control" name="asunto" value="{{$garantia_guia_egreso->garantia_ingreso_i->asunto}}" readonly>
+                    <input type="text" class="form-control" value="{{$garantia_guia_egreso->garantia_ingreso_i->asunto}}" disabled="disabled">
                 </div>
                   <label class="col-sm-2 col-form-label">Ing. Asignado:</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" name="ing_asignado" value="{{$garantia_guia_egreso->garantia_ingreso_i->personal_laborales->nombres}}" readonly>
+                      <input type="text" class="form-control" value="{{$garantia_guia_egreso->garantia_ingreso_i->personal_laborales->nombres}}" disabled="disabled">
                 </div>
                 <label class="col-sm-2 col-form-label">Motivo:</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" name="motivo" value="{{$garantia_guia_egreso->garantia_ingreso_i->motivo}}" readonly>
+                  <input type="text" class="form-control"  value="{{$garantia_guia_egreso->garantia_ingreso_i->motivo}}" disabled="disabled">
                 </div>
                 <label class="col-sm-2 col-form-label">Fecha:</label>
                 <div class="col-sm-4">
-                  <input type="text" class="form-control" name="fecha_uno" value="{{$tiempo_actual}}" readonly>
+                  <input type="text" class="form-control"  value="{{$tiempo_actual}}" disabled="disabled">
                 </div>
               </div>
           </div>
@@ -61,19 +60,15 @@
           <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
             <label class="col-sm-2 col-form-label">Nombre:</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" name="nombre_cliente" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->nombre}}" readonly>
+                      <input type="text" class="form-control" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->nombre}}"  disabled="disabled">
                     </div>
-                    {{-- <label class="col-sm-2 col-form-label"> Direccion:</label>
-                    <div class="col-sm-10">
-                      <input type="text" class="form-control" name="direccion" value="{{$garantias_guias_ingresos->clientes_i->direccion}}" readonly>
-                    </div> --}}
                     <label class="col-sm-2 col-form-label">Telefono:</label>
                   <div class="col-sm-4">
-                <input type="text" class="form-control" name="telefono" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->telefono}}" readonly>
+                <input type="text" class="form-control" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->telefono}}"  disabled="disabled">
                     </div>
                     <label class="col-sm-2 col-form-label">Correo:</label>
                   <div class="col-sm-10">
-                    <input type="text" class="form-control" name="correo" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->email}}" readonly>
+                    <input type="text" class="form-control" value="{{$garantia_guia_egreso->garantia_ingreso_i->clientes_i->email}}" disabled="disabled">
                 </div>
           </div>
         </div>
@@ -86,19 +81,19 @@
           <div align="left" class="row" style="padding-right:10px; padding-left: 10px;">
             <label class="col-sm-2 col-form-label">Modelo:</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" name="nombre_equipo" value="{{$garantia_guia_egreso->garantia_ingreso_i->nombre_equipo}}" readonly>
+                      <input type="text" class="form-control"value="{{$garantia_guia_egreso->garantia_ingreso_i->nombre_equipo}}" disabled="disabled">
                     </div>
                     <label class="col-sm-2 col-form-label"> Nr Serie:</label>
                     <div class="col-sm-4">
-                      <input type="text" class="form-control" name="numero_serie" value="{{$garantia_guia_egreso->garantia_ingreso_i->numero_serie}}" readonly>
+                      <input type="text" class="form-control"  value="{{$garantia_guia_egreso->garantia_ingreso_i->numero_serie}}" disabled="disabled">
                     </div>
                     <label class="col-sm-2 col-form-label">Codigo Interno:</label>
                   <div class="col-sm-4">
-                <input type="text" class="form-control" name="codigo_interno" value="{{$garantia_guia_egreso->garantia_ingreso_i->codigo_interno}}" readonly>
+                <input type="text" class="form-control"  value="{{$garantia_guia_egreso->garantia_ingreso_i->codigo_interno}}" disabled="disabled">
                     </div>
                     <label class="col-sm-2 col-form-label">Fecha Compra:</label>
                   <div class="col-sm-4">
-                    <input type="text" class="form-control" name="fecha_compra" value="{{$garantia_guia_egreso->garantia_ingreso_i->fecha_compra}}" readonly>
+                    <input type="text" class="form-control" value="{{$garantia_guia_egreso->garantia_ingreso_i->fecha_compra}}" disabled="disabled">
                 </div>
           </div>
           {{-- <br> --}}
