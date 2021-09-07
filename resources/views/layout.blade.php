@@ -71,7 +71,7 @@
                         </a>
                     </div>
                     <div class="logo-element">
-                        ---
+                        
                     </div>
                 </li>
                 <!-- MENU DESPELEGABLE -->
@@ -208,7 +208,7 @@
                                 <li><a href="{{route('facturacion_electronica.index')}}">Facturas</a></li>
                                 <li><a href="{{route('facturacion_electronica.index_boleta')}}">Boletas</a></li>
                                 <li><a href="{{route('facturacion_electronica.index_guia_remision')}}">Guia Remision</a></li>
-                                <li><a href="#">Resumen diario</a></li>
+                                <li><a href="{{route('facturacion_electronica.index')}}">Nota de creditos</a></li>
                             </ul>
                         </li>
                         <li>
