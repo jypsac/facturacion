@@ -1,19 +1,19 @@
 @extends('layout')
-@section('title', 'Cantidades y Precios de Productos')
-@section('breadcrumb', 'Cantidades y Precios de Productos')
-@section('breadcrumb2', 'Cantidades y Precios de Productos')
+@section('title', 'Consulta de Productos')
+@section('breadcrumb', 'Consulta de Productos')
+@section('breadcrumb2', 'Consulta de Productos')
 @section('data-toggle', 'modal')
 @section('href_accion', '#modal-form')
-@section('value_accion', 'Cantidades Minimas')
+@section('value_accion', 'Reabastecer')
 
 @section('content')
 
 
 <div class="modal fade bd-example-modal-lg" tabindex="-1" role="dialog" aria-labelledby="myLargeModalLabel" aria-hidden="true" id="modal-form">
-  <div class="modal-dialog modal-lg">
-    <div class="modal-content">
+  <div class="modal-dialog modal-lg" style="width: 120%">
+    <div class="modal-content" style="width: 120%">
       <div class="modal-header">
-        <h3 class="modal-title" id="exampleModalLongTitle">Productos con bajo Stock</h3>
+        <h3 class="modal-title" id="exampleModalLongTitle">Productos para Reabastecer </h3>
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
@@ -23,22 +23,22 @@
             @method('post')
           <div class="modal-body" style="padding-bottom: 0px">
             <div class="table-responsive">
-
-                <input type="text" class="form-control form-control-sm m-b-xs" id="filter2"
-                placeholder="Buscar">
+                <input type="hidden" value="{{ $i = 1 }}" name="" id="">
+                <input type="text" class="form-control form-control-sm m-b-xs" id="filter2" placeholder="Buscar" onkeyup="display_check()" >
                 <table class="footable3 table table-responsive toggle-arrow-tiny" data-page-size="10" data-filter=#filter2>
                     <thead >
                         <tr>
                             <a id="null" class="null" style="display:inline-block; ">
                                 <div>
-                                    <input style="position:absolute;display:block;margin-top: 15px;margin-left: 8px;" class='check_all' type='checkbox' onclick="select_all()" />
+                                    <input style="position:absolute;display:block;margin-top: 15px;margin-left: 10px;" class='check_all' type='checkbox' onclick="select_all()" id="select_all_cheak" />
                                 </div>
                             </a>
                             <th></th>
                             <th colspan="1" data-toggle="true" style="clear: right;text-align: end">Id</th>
-                            <th>Nombre de Produto</th>
-                            <th>Stock</th>
+                            <th>Producto</th>
+                            <th>Stock Actual</th>
                             <th>Stock Mínimo</th>
+                            <th style="width: 100px">Stock Nuevo</th>
                             <th>Precio Nacional </th>
                             <th>Precio Extranjero </th>
                         </tr>
@@ -47,8 +47,8 @@
                      @foreach($stock_producto as $index => $producto_min)
                         @if($producto_min->stock < $producto_min->producto->stock_minimo)
                         <tr class="gradeX">
-                            <td><input type="checkbox" class="case" name="producto_id[]" id="producto_id" value="{{$producto_min->id}}" onclick="mostrar_check()"></td>
-                            <td>{{$producto_min->id}}</td>
+                            <td><input type="checkbox" class="case" name="producto_id[]" id="producto_id{{$producto_min->id}}" value="{{$producto_min->id}}" onclick="mostrar_check()" d1|qq></td>
+                            <td>{{$id_t2++}}</td>
                             <td>
                                 <a href="{{ route('productos.show', $producto_min->producto_id) }}" target="_blank">
                                     {{$producto_min->producto->nombre}}
@@ -56,6 +56,10 @@
                             </td>
                             <td style="color: red">{{$producto_min->stock}}</td>
                             <td>{{$producto_min->producto->stock_minimo}}</td>
+                            <td style="width: 100px">
+
+                                <input type="number" class="form-table-input"  name="stock_nuevo[]" id="nuevo_stock{{$producto_min->id}}" disabled=""  >
+                            </td>
                             <td>{{$moneda_nacional->simbolo}}. {{$precio_nacional[$index] }}</td>
                             <td>{{$moneda_extranjera->simbolo}}. {{$precio_extranjero[$index] }}</td>
                         </tr>
@@ -132,10 +136,10 @@
                             </thead>
                             <tbody>
 
-                             @foreach($stock_producto as $index => $stock_productos)
+                             @foreach($stock_producto->sortByDesc('updated_at') as $index => $stock_productos)
                                 @if($producto_count == 0 )
 
-                                @elseif($stock_productos->stock > $stock_productos->producto->stock_minimo)
+                                @else
                                 <tr class="gradeX">
                                     <td>{{$id_t1++}}</td>
                                     <td>
@@ -145,18 +149,16 @@
                                     </td>
                                     @if($stock_productos->stock > 0)
                                         <td>{{$stock_productos->stock}}</td>
-                                        <td>{{$moneda_nacional->simbolo}}. {{$precio_nacional[$index] }}</td>
-                                        <td>{{$moneda_nacional->simbolo}}. {{round($precio_nacional[$index] + ($precio_nacional[$index] * ($igv->igv_total/100)),2)}}</td>
-                                        <td>{{$moneda_extranjera->simbolo}}. {{$precio_extranjero[$index] }}</td>
-                                        <td>{{$moneda_nacional->simbolo}}. {{round($precio_extranjero[$index] + ($precio_extranjero[$index] * ($igv->igv_total/100)),2)}}</td>
+
                                     {{-- data-all --}}
                                     @else
-                                        <td>Sin stock</td>
-                                        <td>{{$moneda_nacional->simbolo}}. 0.00</td>
-                                        <td>{{$moneda_extranjera->simbolo}}. 0.00</td>
-                                        <td>{{$moneda_nacional->simbolo}}. 0.00</td>
-                                        <td>{{$moneda_extranjera->simbolo}}. 0.00</td>
+                                        <td style="color: red">SIN STOCK</td>
+
                                     @endif
+                                    <td>{{$moneda_nacional->simbolo}}. {{$precio_nacional[$index] }}</td>
+                                    <td>{{$moneda_nacional->simbolo}}. {{round($precio_nacional[$index] + ($precio_nacional[$index] * ($igv->igv_total/100)),2)}}</td>
+                                    <td>{{$moneda_extranjera->simbolo}}. {{$precio_extranjero[$index] }}</td>
+                                    <td>{{$moneda_extranjera->simbolo}}. {{round($precio_extranjero[$index] + ($precio_extranjero[$index] * ($igv->igv_total/100)),2)}}</td>
                                     <td >{{$stock_productos->producto->codigo_producto}}</td>
                                     <td>{{$stock_productos->producto->descripcion}} </td>
                                     <td>{{$stock_productos->producto->garantia}} </td>
@@ -191,6 +193,24 @@
     .table-responsive{
         display: revert;
     }
+    .form-table-input {
+    background-image: none;
+    border: 1px solid #e5e6e7;
+    border-radius: 5px;
+    background-color: #FFFFFF;
+    color: inherit;
+    /*display: block;*/
+    padding: 3px 6px;
+    transition: border-color 0.15s ease-in-out 0s, box-shadow 0.15s ease-in-out 0s;
+    width: 100px;
+    }
+    input[type=number]::-webkit-inner-spin-button,
+    input[type=number]::-webkit-outer-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+    }
+
+    input[type=number] { -moz-appearance:textfield; }
 </style>
 <!-- Mainly scripts -->
 
@@ -214,17 +234,51 @@
         element.classList.remove("null footable-sort-indicator");
     }
     function mostrar_check() {
-      var elementos = $('input.case');
-      var algunoMarcado = elementos.toArray().find(function(elemento) {
-         return $(elemento).prop('checked');
-      });
+        var arr = $('[name="producto_id[]"]:checked').map(function(){
+          return this.value;
+        }).get();
+        if(arr.length == 0){
+            $('#miBoton').hide();
+            $('input[type=number]').attr('disabled','true');
+            $('input[type=number]').val('');
+        }else{
 
-      if(algunoMarcado) {
-        $('#miBoton').show();
-      } else {
-        $('#miBoton').hide();
-      }
+            for (var i = 0 ; i < arr.length; i++) {
+                $('#miBoton').show();
+                $('#nuevo_stock'+arr[i]).prop('disabled', false);
+            };
+
+        }
+        var arr2 = $('[name="producto_id[]"]:not(:checked)').map(function(){
+          return this.value;
+        }).get();
+        // console.log(arr2);
+        if(arr2.length == 0){
+            // $('#miBoton').hide();
+            // $('input[type=number]').attr('disabled','true');
+            // $('input[type=number]').val('');
+        }else{
+            for (var i = 0 ; i < arr2.length; i++) {
+                // $('#miBoton').hide();
+                $('#nuevo_stock'+arr2[i]).prop('disabled', true);
+                $('#nuevo_stock'+arr2[i]).prop('value', '');
+            };
+
+        }
     }
+    function display_check(){
+        //Siempre que salgamos de un campo de texto, se chequeará esta función
+        // $('#filter2').keyup(function() {
+             if($('#filter2').val().length > 0) {
+                $('#select_all_cheak').attr('disabled', true);
+            }else{
+                $('#select_all_cheak').attr('disabled', false);
+            }
+
+        // });
+
+    };
+
 </script>
 <script>
     $(document).ready(function(){
@@ -273,26 +327,42 @@
         });
 </script>
 <script>
-function select_all() {
-    $('input[class=case]:checkbox').each(function () {
-        if ($('input[class=check_all]:checkbox:checked').length == 0) {
-            $(this).prop("checked", false);
-        } else {
-            $(this).prop("checked", true);
-        }
-        var elementos = $('input.check_all');
-    var algunoMarcado = elementos.toArray().find(function(elemento) {
-         return $(elemento).prop('checked');
+    function select_all() {
+        $('input[class=case]:checkbox').each(function () {
+            if ($('input[class=check_all]:checkbox:checked').length == 0) {
+                $(this).prop("checked", false);
+            } else {
+                $(this).prop("checked", true);
+            }
+
+            var elementos = $('input.check_all');
+            var algunoMarcado = elementos.toArray().find(function(elemento) {
+             return $(elemento).prop('checked');
+            });
+
+          if(algunoMarcado) {
+            $('#miBoton').show();
+          } else {
+            $('#miBoton').hide();
+          }
+
+          var arr = $('[name="producto_id[]"]:checked').map(function(){
+            return this.value;
+            }).get();
+            if(arr.length == 0){
+                $('#miBoton').hide();
+                $('input[type=number]').attr('disabled',true);
+                $('input[type=number]').val('');
+            }else{
+                for (var i = 0 ; i < arr.length; i++) {
+                    $('#miBoton').show();
+                    $('#nuevo_stock'+arr[i]).prop('disabled', false);
+                };
+            }
         });
 
-      if(algunoMarcado) {
-        $('#miBoton').show();
-      } else {
-        $('#miBoton').hide();
-      }
-    });
 
-
-}
+    }
 </script>
+
 @endsection

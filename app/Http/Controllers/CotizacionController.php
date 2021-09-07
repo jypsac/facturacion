@@ -997,7 +997,7 @@ public function facturar(Request $request,$id)
         if ($moneda1->tipo == 'nacional') {
             foreach ($productos as $index => $producto) {
                 $p[]=$producto->producto_id;
-                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                 $array[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index];
                 $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
                 $array_promedio[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional');
@@ -1010,7 +1010,7 @@ public function facturar(Request $request,$id)
         }else{
             foreach ($productos as $index => $producto) {
                 $p[]=$producto->producto_id;
-                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                 $array[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index];
                 $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
                 $array_promedio[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero');
@@ -1025,7 +1025,7 @@ public function facturar(Request $request,$id)
         if ($moneda2->tipo == 'extranjera'){
             foreach ($productos as $index => $producto) {
                 $p[]=$producto->producto_id;
-                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                 $array[]=round((Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo,2);
                 $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
                 $array_promedio[]=round(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')/$tipo_cambio->paralelo,2);
@@ -1038,9 +1038,9 @@ public function facturar(Request $request,$id)
         }else{
             foreach ($productos as $index => $producto) {
                 $p[]=$producto->producto_id;
-                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                 $array[]=round((Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo,2);
-                $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('cantidad');
+                $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
                 $array_promedio[]=round(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*$tipo_cambio->paralelo,2);
                 if($array_cantidad[$index]>=$producto->producto_id){
                     $validor[]=1;
@@ -1050,6 +1050,7 @@ public function facturar(Request $request,$id)
             }
         }
     }
+    // return  $producto[$index];
     $comisionista=$cotizacion->comisionista_id;
     if($comisionista!="" and $comisionista!="Sin comision - 0"){
         // $numero = strstr($comisionista, '-',true);
@@ -1211,7 +1212,7 @@ public function facturar_store(Request $request)
         if ($moneda1->tipo == 'nacional') {
             foreach ($productos as $index => $producto) {
                 $p[]=$producto->producto_id;
-                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                 $array[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index];
                 $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
                 $array_promedio[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional');
@@ -1224,7 +1225,7 @@ public function facturar_store(Request $request)
         }else{
             foreach ($productos as $index => $producto) {
                 $p[]=$producto->producto_id;
-                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                 $array[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index];
                 $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
                 $array_promedio[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero');
@@ -1239,7 +1240,7 @@ public function facturar_store(Request $request)
         if ($moneda2->tipo == 'extranjera'){
             foreach ($productos as $index => $producto) {
                 $p[]=$producto->producto_id;
-                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                 $array[]=round((Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo,2);
                 $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
                 $array_promedio[]=round(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')/$tipo_cambio->paralelo,2);
@@ -1252,7 +1253,7 @@ public function facturar_store(Request $request)
         }else{
             foreach ($productos as $index => $producto) {
                 $p[]=$producto->producto_id;
-                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                 $array[]=round((Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo,2);
                 $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
                 $array_promedio[]=round(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*$tipo_cambio->paralelo,2);
@@ -1555,7 +1556,7 @@ public function facturar_store(Request $request)
             if ($moneda1->tipo == 'nacional') {
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
-                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                     $igv_p[]=(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index]);
                     $array[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index];
                     $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
@@ -1569,7 +1570,7 @@ public function facturar_store(Request $request)
             }else{
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
-                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                     $igv_p[]=(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index]);
                     $array[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index];
                     $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
@@ -1585,7 +1586,7 @@ public function facturar_store(Request $request)
             if ($moneda2->tipo == 'extranjera'){
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
-                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                     $igv_p[]=(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index]);
                     $array[]=round((Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo,2);
                     $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
@@ -1599,7 +1600,7 @@ public function facturar_store(Request $request)
             }else{
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
-                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                     $igv_p[]=(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index]);
                     $array[]=round((Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo,2);
                     $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
@@ -1760,7 +1761,7 @@ public function facturar_store(Request $request)
             if ($moneda1->tipo == 'nacional') {
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
-                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                     $igv_p[]=(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index]);
                     $array[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index];
                     $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
@@ -1774,7 +1775,7 @@ public function facturar_store(Request $request)
             }else{
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
-                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                     $igv_p[]=(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index]);
                     $array[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index];
                     $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
@@ -1790,7 +1791,7 @@ public function facturar_store(Request $request)
             if ($moneda2->tipo == 'extranjera'){
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
-                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                     $igv_p[]=(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index]);
                     $array[]=round((Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_nacional')+$utilidad[$index])/$tipo_cambio->paralelo,2);
                     $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');
@@ -1804,7 +1805,7 @@ public function facturar_store(Request $request)
             }else{
                 foreach ($productos as $index => $producto) {
                     $p[]=$producto->producto_id;
-                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$producto->descuento1)/100;
+                    $utilidad[]=Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')*($produc[$index]->utilidad-$produc[$index]->descuento1)/100;
                     $igv_p[]=(Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index]);
                     $array[]=round((Stock_producto::where('producto_id',$producto->producto_id)->avg('precio_extranjero')+$utilidad[$index])*$tipo_cambio->paralelo,2);
                     $array_cantidad[]=Stock_almacen::where('producto_id',$producto->producto_id)->where('almacen_id',$cotizacion->almacen_id)->sum('stock');

@@ -28,14 +28,15 @@ class CantidadPrecioController extends Controller
         foreach ($stock_producto as $stock_productos) {
             $stock_produ[] = $stock_productos->id;
         }
-        for ($x=0; $x < $count_stock_prod ; $x++) {
-            // foreach ($producto as $prod) {
-                $productos[]=Stock_producto::where('id',$stock_produ[$x])->first();
-            // }
-        }
+        // return $stock_producto;
+        // for ($x=0; $x < $count_stock_prod ; $x++) {
+        //     // foreach ($producto as $prod) {
+        //         $productos[]=Stock_producto::where('id',$stock_produ[$x])->first();
+        //     // }
+        // }
         // return $stock_producto;
         $id_t1 = 1;
-        $id_t2 = 1;
+        $id_t2 = intval(1);
 
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         // return view('inventario.cantidades-precios.index',compact('stock_producto','i','tipo_cambio'));
@@ -110,11 +111,14 @@ class CantidadPrecioController extends Controller
         $producto_id = $request->input('producto_id');
         $prod_count = count($producto_id);
         $x = '1';
+
+        $nuevo_stock = $request->input('stock_nuevo');
+        // retu1rn $nuevo_stock;
         for ($i=0; $i <  $prod_count ; $i++) {
             $producto[] = Stock_producto::where('id',$producto_id[$i])->first();
         }
-        // return view('consulta.cantidades-precios.show_pdf',compact('producto','x','empresa'));
-        $pdf=PDF::loadView('consulta.cantidades-precios.show_pdf',compact('producto','x','empresa'));
+        // return view('consulta.cantidades-precios.show_pdf',compact('producto','x','empresa','nuevo_stock'));
+        $pdf=PDF::loadView('consulta.cantidades-precios.show_pdf',compact('producto','x','empresa','nuevo_stock'));
         return $pdf->download('Productos.pdf');
     }
 

@@ -401,9 +401,10 @@ class BoletaController extends Controller
         $boleta->save();
 
         $total_comi=$request->get('total_comi');
-        $comisionista_porcentaje=Personal_venta::where('id',$comision_id)->first();
 
-        if($comision_id != 0){
+
+        if(isset($comision_id)){
+            $comisionista_porcentaje=Personal_venta::where('id',$comision_id)->first();
             $comisionista=new Ventas_registro;
             $comisionista->comisionista=$comision_id;
             $comisionista->tipo_moneda=$id_moneda;
