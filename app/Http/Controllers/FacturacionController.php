@@ -777,14 +777,8 @@ class FacturacionController extends Controller
 
         return redirect()->route('facturacion.index');
     }
-    public function ticket($id){
-        $ids = $id;
-      //   $empresa=Empresa::first();
-      // return public_path('img/logos/'.$empresa->foto);
-
-        return view('transaccion.venta.facturacion.ticket',compact('ids'));
-    }
     public function ticket_ajax(Request $request){
+
     $ids = $request->get('id');
     $facturacion=Facturacion::find($ids);
     $facturacion_registro=Facturacion_registro::where('facturacion_id',$ids)->get();
@@ -804,14 +798,13 @@ class FacturacionController extends Controller
 
     $fd=Empresa::first();
     $emp = $fd->nombre;
-
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->setEmphasis(true);
     $printer->text("Ticket de venta\n");
-    $logo = EscposImage::load(public_path('img/logos/').$empresa->foto, false);
-    $printer->graphics($logo);
     $printer->text($facturacion->created_at . "\n");
     $printer->text($empresa->nombre."\n");
+    $printer -> setEmphasis(true);
+    $printer->text("RUC: ".$empresa->ruc."\n");
     $printer->setEmphasis(false);
     $printer->text("\n===============================\n");
 
@@ -822,6 +815,8 @@ class FacturacionController extends Controller
         $printer->text(sprintf("%.2fx%s\n", $fag_regs->cantidad, $fag_regs->producto->nombre));
         $printer->setJustification(Printer::JUSTIFY_RIGHT);
         $printer->text($moneda->simbolo." ". number_format($subtotal, 2) . "\n");
+        $printer -> selectPrintMode(Printer::MODE_UNDERLINE);
+        $printer -> selectPrintMode();
         // $total += $subtotal;
     }
     $sub_total=($facturacion->op_gravada);
@@ -830,9 +825,12 @@ class FacturacionController extends Controller
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text("\n===============================\n");
     $printer->setJustification(Printer::JUSTIFY_RIGHT);
-    $printer->text("SUBTOTAL: ".$moneda->simbolo." ".$sub_total."\n");
-    $printer->text("IGV: ".($moneda->simbolo." ".$igv_p."\n"));
-    $printer->text("TOTAL: ".($moneda->simbolo." ".$end."\n"));
+    $printer->text("SUBTOTAL: ".$moneda->simbolo." ".number_format($sub_total,2)."\n");
+    $printer->text("OP. GRAVADA: ".$moneda->simbolo." ".number_format($sub_total,2)."\n");
+    $printer->text("OP. INAFECTA: ".$moneda->simbolo." ".number_format($facturacion->op_inafecta,2)."\n");
+    $printer->text("OP. EXONERADA: ".$moneda->simbolo." ".number_format($facturacion->op_exonerada,2)."\n");
+    $printer->text("IGV: ".($moneda->simbolo." ".number_format($igv_p,2)."\n"));
+    $printer->text("TOTAL: ".($moneda->simbolo." ".number_format($end,2)."\n"));
 
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text("\n===============================\n");
