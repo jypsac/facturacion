@@ -17,6 +17,8 @@ class TipoCambioController extends Controller
      */
     public function index()
     {
+        // return CierrePeriodo::cierre_periodo(3.5);
+
         $consulta=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();/*Consulta .sí se hizo hoy el cambio*/
         $moneda1=Moneda::where('principal',1)->first();
         $moneda2=Moneda::where('principal',0)->first();
@@ -52,6 +54,11 @@ class TipoCambioController extends Controller
         //verificacion de la ultima vez que se hizo el cieere de periodo
 
         $periodo=CierrePeriodo::latest('id')->first();
+        if(empty($periodo)){
+            CierrePeriodo::cierre_periodo($compra_tipo_cambio);
+            goto salto;
+        }
+        
         $periodo_fecha=$periodo->created_at;
         $periodo_fecha= $periodo_fecha->format('m');
         //aqui va la fecha de la consulta
@@ -59,6 +66,7 @@ class TipoCambioController extends Controller
              CierrePeriodo::cierre_periodo($compra_tipo_cambio);
         }
 
+        salto:
         /*varaibles del Index*/
         $moneda1=Moneda::where('principal',1)->first();
         $moneda2=Moneda::where('principal',0)->first();

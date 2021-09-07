@@ -15,14 +15,22 @@ class CierrePeriodo extends Model
 
     public static function cierre_periodo($compra_tipo_cambio){
         $fecha=Carbon::now();
+        $fecha2=Carbon::now();
         $fecha_mes_anterior = $fecha->subMonth();
         $moneda_principal=Moneda::where('principal',1)->first();
 
         $cierre_periodo_buscar=CierrePeriodo::latest('id')->first();
 
+        //prueba
+
+        // $fecha_diferencia = Carbon::create(2021,07)
+        // $diferencia_mes=$fecha_mes_anterior->diffInMonths($fecha_diferencia);
+        // $cont=intval($diferencia_mes);
+        // return $cont;
+        
         if(empty($cierre_periodo_buscar)){
-            $fecha_y=$fecha_mes_anterior->format("y");
-            $fecha_m=$fecha_mes_anterior->format("m");
+            $fecha_y=$fecha->format("Y");
+            $fecha_m=$fecha->format("m");
             //primer registro en cierre periodo
             $cierre_periodo=New CierrePeriodo;
             $cierre_periodo->año=$fecha_y;
@@ -42,11 +50,15 @@ class CierrePeriodo extends Model
                 $cierre_periodo_r->costo_extranjero=$stock_producto->precio_extranjero;
                 $cierre_periodo_r->save();
             }
+            
         }else{
+        //  $fecha_diferencia = Carbon::createFromDate(         2021             ,              4             );
             $fecha_diferencia = Carbon::createFromDate($cierre_periodo_buscar->año,$cierre_periodo_buscar->mes);
             $diferencia_mes=$fecha_mes_anterior->diffInMonths($fecha_diferencia);
-            for($contador=0;$contador<$diferencia_mes;$contador++){
-                $fecha_y=$fecha_diferencia->format("y");
+            $cont=intval($diferencia_mes);
+            for($contador=0;$contador<=$cont;$contador++){
+                $fecha_diferencia = Carbon::createFromDate($cierre_periodo_buscar->año,$cierre_periodo_buscar->mes)->addMonths($contador+1);
+                $fecha_y=$fecha_diferencia->format("Y");
                 $fecha_m=$fecha_diferencia->format("m");
 
                 $cierre_periodo=New CierrePeriodo;
@@ -67,7 +79,7 @@ class CierrePeriodo extends Model
                     $cierre_periodo_r->costo_extranjero=$stock_producto->precio_extranjero;
                     $cierre_periodo_r->save();
                 }
-                $fecha_diferencia = Carbon::createFromDate($cierre_periodo->año,$cierre_periodo->mes)->addMonths(1);
+                
             }
         }
     }
