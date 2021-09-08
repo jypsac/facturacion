@@ -809,10 +809,15 @@ class FacturacionController extends Controller
     $printer->text("\n===============================\n");
 
     $total = 0;
+
+    $leyenda = sprintf('%-18.18s %-10.10s  %-9.9s', 'Producto', 'Cantidad', 'Subtotal');
+    $printer->text( $leyenda);
+    // $printer->text("\n"); 
      foreach($facturacion_registro as $fag_regs){
         // $printer -> selectPrintMode(Printer::MODE_UNDERLINE);
         $subtotal = ($fag_regs->precio_unitario_comi * $fag_regs->cantidad);
-        $line = sprintf('%-20.20s %5.0d %13.2f', $fag_regs->producto->nombre, $fag_regs->cantidad, number_format($subtotal, 2));
+        // %-4.2s $facturacion->moneda->simbolo, 
+        $line = sprintf('%-18.18s %5.0d %10.2F', $fag_regs->producto->nombre, $fag_regs->cantidad, $subtotal);
         // $printer->setJustification(Printer::JUSTIFY_LEFT);
         // $printer->text( ("%.2fx%s\n", , ));
         // $printer->setJustification(Printer::JUSTIFY_RIGHT);
@@ -821,8 +826,6 @@ class FacturacionController extends Controller
         // $printer -> selectPrintMode();
         // $total += $subtotal;
     }
-
-    
 
     $sub_total=($facturacion->op_gravada);
     $igv_p=round($sub_total, 2)*$igv->igv_total/100;
