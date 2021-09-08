@@ -803,22 +803,27 @@ class FacturacionController extends Controller
     $printer->text("Ticket de venta\n");
     $printer->text($facturacion->created_at . "\n");
     $printer->text($empresa->nombre."\n");
-    $printer -> setEmphasis(true);
+    $printer ->setEmphasis(true);
     $printer->text("RUC: ".$empresa->ruc."\n");
     $printer->setEmphasis(false);
     $printer->text("\n===============================\n");
 
     $total = 0;
      foreach($facturacion_registro as $fag_regs){
+        // $printer -> selectPrintMode(Printer::MODE_UNDERLINE);
         $subtotal = ($fag_regs->precio_unitario_comi * $fag_regs->cantidad);
-        $printer->setJustification(Printer::JUSTIFY_LEFT);
-        $printer->text(sprintf("%.2fx%s\n", $fag_regs->cantidad, $fag_regs->producto->nombre));
-        $printer->setJustification(Printer::JUSTIFY_RIGHT);
-        $printer->text($moneda->simbolo." ". number_format($subtotal, 2) . "\n");
-        $printer -> selectPrintMode(Printer::MODE_UNDERLINE);
-        $printer -> selectPrintMode();
+        $line = sprintf('%-20.20s %5.0d %13.2f', $fag_regs->producto->nombre, $fag_regs->cantidad, number_format($subtotal, 2));
+        // $printer->setJustification(Printer::JUSTIFY_LEFT);
+        // $printer->text( ("%.2fx%s\n", , ));
+        // $printer->setJustification(Printer::JUSTIFY_RIGHT);
+        $printer->text( $line);
+        $printer->text("\n"); 
+        // $printer -> selectPrintMode();
         // $total += $subtotal;
     }
+
+    
+
     $sub_total=($facturacion->op_gravada);
     $igv_p=round($sub_total, 2)*$igv->igv_total/100;
     $end=round($sub_total, 2)+round($igv_p, 2);
