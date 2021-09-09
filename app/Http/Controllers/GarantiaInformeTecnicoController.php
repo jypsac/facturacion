@@ -35,11 +35,8 @@ class GarantiaInformeTecnicoController extends Controller
     public function create_tecnico($id)
     {
      $empresa = Empresa::first();
-     $tiempo_actual = Carbon::now();
-     $contacto = Contacto::all();
-     $tiempo_actual = $tiempo_actual->format('Y-m-d');
      $garantia_guia_egreso=GarantiaGuiaEgreso::find($id);
-     return view('transaccion.garantias.informe_tecnico.create_tecnico',compact('garantia_guia_egreso','tiempo_actual','contacto','empresa'));
+     return view('transaccion.garantias.informe_tecnico.create_tecnico',compact('garantia_guia_egreso','empresa','id'));
  }
 
     /**
@@ -50,27 +47,17 @@ class GarantiaInformeTecnicoController extends Controller
      */
     public function store(Request $request)
     {
-        $nombre_cliente=$request->get('nombre_cliente');
-        $cliente= Cliente::where("nombre","=",$nombre_cliente)->first();
-        $numero_doc=$cliente->numero_documento;
-
-        //Informe tecnico Listo en Egresado
-        $orden_servicio_egreso=$request->get('orden_servicio');
-        $orden_servicio_egreso=(string)$orden_servicio_egreso;
-
+        $id_egreso=$request->get('id_egreso');
         //consulta
-        $egreso=GarantiaGuiaEgreso::where('orden_servicio',$orden_servicio_egreso)->first();
-        $id_garantia_egreso=$egreso->id;
+        $egreso=GarantiaGuiaEgreso::where('id',$id_egreso)->first();
 
         $garantia_informe_tecnico= new GarantiaInformeTecnico;
-        $garantia_informe_tecnico->garantia_egreso_id=$id_garantia_egreso;
-        $garantia_informe_tecnico->orden_servicio=$request->get('orden_servicio');
+        $garantia_informe_tecnico->garantia_egreso_id=$egreso->id;
+        $garantia_informe_tecnico->orden_servicio=$egreso->orden_servicio;
         $garantia_informe_tecnico->estado=1;
-        $garantia_informe_tecnico->egresado=1;
-        $garantia_informe_tecnico->informe_tecnico=1;
-
-        //$garantia_informe_tecnico->descripcion_problema=$request->get('descripcion_problema');
-        $garantia_informe_tecnico->fecha=$request->get('fecha_uno');
+        $garantia_informe_tecnico->egresado=0;
+        $garantia_informe_tecnico->informe_tecnico=0;
+        $garantia_informe_tecnico->fecha=date('Y-m-d');
         $garantia_informe_tecnico->estetica=$request->get('estetica');
         $garantia_informe_tecnico->revision_diagnostico=$request->get('revision_diagnostico');
         $garantia_informe_tecnico->causas_del_problema=$request->get('causas_del_problema');
@@ -78,7 +65,7 @@ class GarantiaInformeTecnicoController extends Controller
         $garantia_informe_tecnico->save();
 
          // //GUIA EGRESO
-        $garantia_guia_egreso=GarantiaGuiaEgreso::where('orden_servicio',$orden_servicio_egreso)->first();
+        $garantia_guia_egreso=GarantiaGuiaEgreso::find($id_egreso);
         $garantia_guia_egreso->informe_tecnico=1;
         $garantia_guia_egreso->save();
 
@@ -102,7 +89,7 @@ class GarantiaInformeTecnicoController extends Controller
         }
         /* /
         new*/
-        return redirect()->route('garantia_informe_tecnico.index');
+      return redirect()->route('garantia_informe_tecnico.show',$garantia_informe_tecnico->id);
     }
 
     /**
