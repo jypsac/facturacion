@@ -793,11 +793,8 @@ class FacturacionController extends Controller
     #Mando un numero de respuesta para saber que se conecto correctamente.
     echo 1;
 
-    # Vamos a alinear al centro lo próximo que imprimamos
-    // $printer->setJustification(Printer::JUSTIFY_CENTER);
-
-    $fd=Empresa::first();
-    $emp = $fd->nombre;
+     //EMPRESA
+    $empresa=Empresa::first();
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->setEmphasis(true);
     $printer->text("Ticket de venta\n");
@@ -805,19 +802,28 @@ class FacturacionController extends Controller
     $printer->text($empresa->nombre."\n");
     $printer ->setEmphasis(true);
     $printer->text("RUC: ".$empresa->ruc."\n");
+    // $printer->setEmphasis(false);
+    $printer->text($empresa->calle." - ".$empresa->ciudad." - ".$empresa->region_provincia."\n");
+    $printer->text("Telefono: ".$empresa->telefono);
     $printer->setEmphasis(false);
     $printer->text("\n===============================\n");
 
-    $total = 0;
+    //Cliente    
+    $cliente_dato = sprintf('%-15.15s %-2.2s %-21.21s', "Cliente", ':', $facturacion->cliente->nombre);
+    $printer->text($cliente_dato."\n");
+    $cliente_id= sprintf('%-15.20s %-2.2s %-21.21s', $facturacion->cliente->documento_identificacion, ':', $facturacion->cliente->numero_documento);
+    $printer->text($cliente_id);
+    $printer->text("\n===============================\n");
 
-    $leyenda = sprintf('%-18.18s %-10.10s  %-9.9s', 'Producto', 'Cantidad', 'Subtotal');
+    //Productos
+    $leyenda = sprintf('%-14.14s %6.6s %8.8s  %8.8s', 'Producto', 'Cant.', 'P.Unit', 'Total');
     $printer->text( $leyenda);
-    // $printer->text("\n"); 
+    $printer->text("\n"); 
      foreach($facturacion_registro as $fag_regs){
         // $printer -> selectPrintMode(Printer::MODE_UNDERLINE);
         $subtotal = ($fag_regs->precio_unitario_comi * $fag_regs->cantidad);
         // %-4.2s $facturacion->moneda->simbolo, 
-        $line = sprintf('%-18.18s %5.0d %10.2F', $fag_regs->producto->nombre, $fag_regs->cantidad, $subtotal);
+        $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $fag_regs->producto->nombre, $fag_regs->precio_unitario_comi, $fag_regs->cantidad, $subtotal);
         // $printer->setJustification(Printer::JUSTIFY_LEFT);
         // $printer->text( ("%.2fx%s\n", , ));
         // $printer->setJustification(Printer::JUSTIFY_RIGHT);
@@ -833,13 +839,20 @@ class FacturacionController extends Controller
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text("\n===============================\n");
     $printer->setJustification(Printer::JUSTIFY_RIGHT);
-    $printer->text("SUBTOTAL: ".$moneda->simbolo." ".number_format($sub_total,2)."\n");
-    $printer->text("OP. GRAVADA: ".$moneda->simbolo." ".number_format($sub_total,2)."\n");
-    $printer->text("OP. INAFECTA: ".$moneda->simbolo." ".number_format($facturacion->op_inafecta,2)."\n");
-    $printer->text("OP. EXONERADA: ".$moneda->simbolo." ".number_format($facturacion->op_exonerada,2)."\n");
-    $printer->text("IGV: ".($moneda->simbolo." ".number_format($igv_p,2)."\n"));
-    $printer->text("TOTAL: ".($moneda->simbolo." ".number_format($end,2)."\n"));
 
+    $subtotal = sprintf('%20.20s %-2.2s %15.2F', "SUBTOTAL ".$moneda->simbolo, " : ", $sub_total);
+    $printer->text($subtotal."\n");
+    $op_gravada = sprintf('%20.20s %-2.2s %15.2F', "OP. Gravada ".$moneda->simbolo, " : ", $sub_total);
+    $printer->text($op_gravada."\n");
+    $op_inafecta = sprintf('%20.20s %-2.2s %15.2F', "OP. Inafecta ".$moneda->simbolo, " : ", $facturacion->op_inafecta);
+    $printer->text($op_inafecta."\n");
+    $op_exonerada = sprintf('%20.20s %-2.2s %15.2F', "OP. Exonerada ".$moneda->simbolo, " : ", $facturacion->op_exonerada);
+    $printer->text($op_exonerada."\n");
+    $igv = sprintf('%20.20s %-2.2s %15.2F', "I.G.V ".$moneda->simbolo, " : ", $igv_p);
+    $printer->text($igv."\n");
+    $total = sprintf('%20.20s %-2.2s %15.2F', "TOTAL ".$moneda->simbolo, " : ", $end);
+    $printer->text($total."\n");
+ 
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text("\n===============================\n");
     // $printer->text("Muchas gracias por su compra\n");
