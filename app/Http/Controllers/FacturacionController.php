@@ -30,10 +30,10 @@ use App\kardex_entrada_registro;
 use App\Stock_almacen;
 use App\Stock_producto;
 use Carbon\Carbon;
+use Luecano\NumeroALetras\NumeroALetras;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
 use Mike42\Escpos\Printer;
-// require __DIR__ . '/ticket/autoload.php'; //Nota: si renombraste la carpeta a algo diferente de "ticket" cambia el nombre en esta línea
 use Mike42\Escpos\EscposImage;
 use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
@@ -853,6 +853,12 @@ class FacturacionController extends Controller
     $total = sprintf('%20.20s %-2.2s %15.2F', "TOTAL ".$moneda->simbolo, " : ", $end);
     $printer->text($total."\n");
  
+    //NUMEROS A LETRAS
+    $formatter = new NumeroALetras();
+    $num_let = $formatter->toInvoice($end);
+    $printer->setJustification(Printer::JUSTIFY_LEFT);
+    $printer->text("Son: ".$num_let." ".$moneda->nombre."\n");
+
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text("\n===============================\n");
     // $printer->text("Muchas gracias por su compra\n");

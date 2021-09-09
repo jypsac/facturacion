@@ -310,7 +310,10 @@
                                                             <td></td>
                                                             <td></td>
                                                             <td>Subtotal :</td>
-                                                            <td colspan="2"><input id='sub_total' type="text" name="sub_total_sin_igv" readonly class="form-control" required /></td>
+                                                            <td colspan="2">
+                                                                <input id='sub_total' type="text" name="sub_total_sin_igv" readonly class="form-control" required />
+                                                                <input id='subtotal_gravado' type="text" name="subtotal_gravado" readonly class="form-control" required hidden="" /></td>
+
                                                         </tr>
                                                         <tr style="background-color: #f5f5f500;" align="center">
                                                             <td></td>
@@ -409,7 +412,7 @@
 
                             <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                             <textarea type='text' id='numero_serie0'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
-                            <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})"  hidden  autocomplete="off" />
+                            <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" hidden   autocomplete="off" />
 
                             </td>
                             <td>
@@ -605,6 +608,10 @@
             }
 
             var totalInp = $('[name="afectacion"]');
+
+            //SUMA SUBTOTAL SIN IGV
+            // var totalInp = $('[name="total"]');
+
             var total_t = 0;
 
             totalInp.each(function(){
@@ -616,9 +623,28 @@
 
             $('#sub_total').val(total_tt);
 
+            //SOLO GRAVADO
+            // var totalInpG = $('[name="afectacion"]');
+            // var total_tg = 0;
+
+            // totalInpG.each(function(){
+            //     total_tg += parseFloat($(this).val());
+            // });
+
+            // var multiplier3 = 100;
+            // var total_ttg = Math.round(total_tg * multiplier3) / multiplier3;
+
+            // $('#subtotal_gravado').val(total_ttg);
+
+
             var igv_valor={{$igv->renta}};
+
             var subtotal = document.querySelector(`#sub_total`).value;
             var igv=subtotal*igv_valor/100;
+
+            //GRAVADO
+            // var subtotal_gravado = document.querySelector(`#subtotal_gravado`).value;
+            // var igv=subtotal_gravado*igv_valor/100;
 
             var igv_decimal = Math.round(igv * multiplier2) / multiplier2;
             var end=igv_decimal+parseFloat(subtotal);
