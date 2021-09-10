@@ -138,8 +138,9 @@
                                 <td>{{$facturacion_registros->precio_unitario_desc}}</td>
                                 <td>{{$facturacion_registros->precio_unitario_desc * $facturacion_registros->cantidad }}</td>
                                 <td style="display: none">
-                                    {{$sub_total=($facturacion_registros->cantidad*$facturacion_registros->precio_unitario_desc)+$sub_total}}
-                                    {{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                                    {{$sub_total_gravado=($facturacion->op_gravada)}}
+                                    {{$sub_total=($facturacion->op_gravada)+($facturacion->op_inafecta)+($facturacion->op_exonerada)}}
+                                    {{$igv_p=round($sub_total_gravado, 2)*$igv->igv_total/100}}
                                     {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                 </td>
                             </tr>

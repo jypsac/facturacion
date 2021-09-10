@@ -835,8 +835,8 @@ class FacturacionController extends Controller
         // $total += $subtotal;
     }
 
-    $sub_total=($facturacion->op_gravada);
-    $sub_total_gravado=($facturacion->op_gravada)+($facturacion->op_inafecta)+($facturacion->op_exonerada);
+    $sub_total=($facturacion->op_gravada)+($facturacion->op_inafecta)+($facturacion->op_exonerada);
+    $sub_total_gravado=($facturacion->op_gravada);
     $igv_p=round($sub_total_gravado, 2)*$igv->igv_total/100;
     $end=round($sub_total, 2)+round($igv_p, 2);
     $printer->setJustification(Printer::JUSTIFY_CENTER);
