@@ -32,6 +32,10 @@ use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Almacen;
 use Illuminate\Http\Request;
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Luecano\NumeroALetras\NumeroALetras;
 
 class BoletaController extends Controller
 {
@@ -736,13 +740,13 @@ class BoletaController extends Controller
 
         return redirect()->route('facturacion.index');
     }
-    public function ticket_ajax(Request $request){
+    public function ticket_ajax_boleta(Request $request){
 
     $ids = $request->get('id');
-    $facturacion=Facturacion::find($ids);
-    $facturacion_registro=Facturacion_registro::where('facturacion_id',$ids)->get();
+    $boleta=Boleta::find($ids);
+    $boleta_registro= Boleta_registro::where('boleta_id',$ids)->get();
     $empresa=Empresa::first();
-    $moneda = Moneda::where('id',$facturacion->moneda_id)->first();
+    $moneda = Moneda::where('id',$boleta->moneda_id)->first();
     $igv=Igv::first();
 
     $nombre_impresora = "EPSONTICKET";
@@ -756,10 +760,10 @@ class BoletaController extends Controller
     $empresa=Empresa::first();
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->setEmphasis(true);
-    $printer->text("FACTURA ELECTRONICA\n");
-    $printer->text($facturacion->codigo_fac."\n");
+    $printer->text("BOLETA ELECTRONICA\n");
+    $printer->text($boleta->codigo_boleta."\n");
     $printer->text("===============================\n");
-    $printer->text($facturacion->created_at."\n");
+    $printer->text($boleta->created_at."\n");
     $printer->text($empresa->nombre."\n");
     $printer->setEmphasis(true);
     $printer->text("RUC: ".$empresa->ruc."\n");
@@ -770,28 +774,28 @@ class BoletaController extends Controller
     $printer->text("\n===============================\n");
 
     //Cliente
-    $cliente_dato = sprintf('%-15.15s %-2.2s %-21.21s', "Cliente", ':', $facturacion->cliente->nombre);
+    $cliente_dato = sprintf('%-15.15s %-2.2s %-21.21s', "Cliente", ':', $boleta->cliente->nombre);
     $printer->text($cliente_dato."\n");
-    $cliente_id= sprintf('%-15.20s %-2.2s %-21.21s', $facturacion->cliente->documento_identificacion, ':', $facturacion->cliente->numero_documento);
+    $cliente_id= sprintf('%-15.20s %-2.2s %-21.21s', $boleta->cliente->documento_identificacion, ':', $boleta->cliente->numero_documento);
     $printer->text($cliente_id);
     $printer->text("\n===============================\n");
 
     //Productos
-    if($facturacion->tipo == "producto"){
+    if($boleta->tipo == "producto"){
         $leyenda = sprintf('%-14.14s %6.6s %8.8s  %8.8s', 'Producto', 'Cant.', 'P.Unit', 'Total');
     }else{
         $leyenda = sprintf('%-14.14s %6.6s %8.8s  %8.8s', 'Servicio', 'Cant.', 'P.Unit', 'Total');
     }
     $printer->text( $leyenda);
     $printer->text("\n");
-     foreach($facturacion_registro as $fag_regs){
+     foreach($boleta_registro as $bol_regs){
         // $printer -> selectPrintMode(Printer::MODE_UNDERLINE);
-        $subtotal = ($fag_regs->precio_unitario_comi * $fag_regs->cantidad);
+        $subtotal = ($bol_regs->precio_unitario_comi * $bol_regs->cantidad);
         // %-4.2s $facturacion->moneda->simbolo,
-        if($facturacion->tipo == "producto"){
-            $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $fag_regs->producto->nombre, $fag_regs->cantidad, $fag_regs->precio_unitario_comi, $subtotal);
+        if($boleta->tipo == "producto"){
+            $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $bol_regs->producto->nombre, $bol_regs->cantidad, $bol_regs->precio_unitario_comi, $subtotal);
         }else{
-            $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $fag_regs->servicio->nombre, $fag_regs->cantidad, $fag_regs->precio_unitario_comi, $subtotal);
+            $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $bol_regs->servicio->nombre, $bol_regs->cantidad, $bol_regs->precio_unitario_comi, $subtotal);
         }
         // $printer->setJustification(Printer::JUSTIFY_LEFT);
         // $printer->text( ("%.2fx%s\n", , ));
@@ -802,9 +806,9 @@ class BoletaController extends Controller
         // $total += $subtotal;
     }
 
-    $sub_total=($facturacion->op_gravada)+($facturacion->op_inafecta)+($facturacion->op_exonerada);
-    $sub_total_gravado=($facturacion->op_gravada);
-    $igv_p=round($sub_total_gravado, 2)*$igv->igv_total/100;
+    $sub_total=($boleta->op_gravada)+($boleta->op_inafecta)+($boleta->op_exonerada);
+    $sub_total_gravado=($boleta->op_gravada);
+    // $igv_p=round($sub_total_gravado, 2)*$igv->igv_total/100;
     $end=round($sub_total, 2)+round($igv_p, 2);
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text("\n===============================\n");
@@ -812,11 +816,11 @@ class BoletaController extends Controller
 
     $subtotal = sprintf('%20.20s %-2.2s %15.2F', "SUBTOTAL ".$moneda->simbolo, " : ", $sub_total);
     $printer->text($subtotal."\n");
-    $op_gravada = sprintf('%20.20s %-2.2s %15.2F', "OP. Gravada ".$moneda->simbolo, " : ", $facturacion->op_gravada);
+    $op_gravada = sprintf('%20.20s %-2.2s %15.2F', "OP. Gravada ".$moneda->simbolo, " : ", $boleta->op_gravada);
     $printer->text($op_gravada."\n");
-    $op_inafecta = sprintf('%20.20s %-2.2s %15.2F', "OP. Inafecta ".$moneda->simbolo, " : ", $facturacion->op_inafecta);
+    $op_inafecta = sprintf('%20.20s %-2.2s %15.2F', "OP. Inafecta ".$moneda->simbolo, " : ", $boleta->op_inafecta);
     $printer->text($op_inafecta."\n");
-    $op_exonerada = sprintf('%20.20s %-2.2s %15.2F', "OP. Exonerada ".$moneda->simbolo, " : ", $facturacion->op_exonerada);
+    $op_exonerada = sprintf('%20.20s %-2.2s %15.2F', "OP. Exonerada ".$moneda->simbolo, " : ", $boleta->op_exonerada);
     $printer->text($op_exonerada."\n");
     $igv = sprintf('%20.20s %-2.2s %15.2F', "I.G.V ".$moneda->simbolo, " : ", $igv_p);
     $printer->text($igv."\n");

@@ -23,6 +23,8 @@
                     <input type="text" name="name" maxlength="50" hidden="" value="{{$boleta->codigo_boleta}}"  >
                     <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
                 </form>
+                <button id="btnImprimir" class="btn btn-info"><i class="fa fa-ticket fa-lg"></i></button>
+                <input type="text" value="{{$boleta->id}}" name="id" id="id" hidden="">
                 <a class="btn btn-success" href="{{route('boleta.print',$boleta->id)}}" target="_blank" class="btn btn-primary" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Imprimir"><i class="fa fa-print fa-lg" ></i></a>
                 @if(Auth::user()->email_creado == 1)
                     <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
@@ -440,5 +442,27 @@
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-
+{{-- <script src="//ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script> --}}
+<script>
+    $(document).ready(function() {
+        $('#btnImprimir').click(function(){
+            var id_fac =  $(`[id='id']`).val();
+           $.ajax({
+               type: "post",
+                url: "{{ route('ticket_ajax_boleta') }}",
+                 data: {
+                    '_token': $('input[name=_token]').val(),
+                    'id' : id_fac
+                    },
+               success: function(response){
+                   if(response==1){
+                       // alert('Imprimiendo Ticket');
+                   }else{
+                       alert('Error');
+                   }
+               }
+           });
+        });
+    });
+</script>
 @endsection
