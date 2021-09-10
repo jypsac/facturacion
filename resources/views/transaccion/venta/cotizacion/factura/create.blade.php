@@ -176,13 +176,6 @@
                                                 @endforeach
                                                 </select>
                                             </td>
-                                            {{-- <td>Fecha de cotizacion</td>
-                                            <td>:</td>
-                                            <td>
-                                                <input type="text" name="fecha_emision" class="form-control" value="{{date("d-m-Y")}}" readonly="readonly">
-                                            </td> --}}
-                                        </tr>
-                                        <tr>
                                             <td>Observacion</td>
                                             <td>:</td>
                                             <td colspan="4">

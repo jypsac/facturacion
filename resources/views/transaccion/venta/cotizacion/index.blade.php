@@ -10,14 +10,14 @@
 
 <!-- modal -->
 @if($errors->any())
-       <div class="alert alert-danger" style="margin-top: 10px;margin-bottom: 0px;">
-            <a class="alert-link" href="#">
-            @foreach ($errors->all() as $error)
-                <li class="error" style="color: red">{{ $error }}</li>
-            @endforeach
-            </a>
-        </div>
-    @endif
+<div class="alert alert-danger" style="margin-top: 10px;margin-bottom: 0px;">
+    <a class="alert-link" href="#">
+        @foreach ($errors->all() as $error)
+        <li class="error" style="color: red">{{ $error }}</li>
+        @endforeach
+    </a>
+</div>
+@endif
 <div class="row">
     <div class="col-lg-12">
         <div id="modal-form" class="modal fade" aria-hidden="true">
@@ -37,15 +37,16 @@
                                 </form>
                                 @else
                                 @if($user_login->name=='Administrador')
-                                <div class="dropdown">
+                                <div class="dropdown ">
                                   <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Factura</button>
-                                  <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                                    <form action="{{ route('cotizacion.create_factura')}}"enctype="multipart/form-data" method="post">
+                                  <div class="dropdown-menu"  aria-labelledby="dropdownMenuButton">
+                                    @foreach($almacen as $almacens)
+                                    <form action="{{ route('cotizacion.create_factura')}}" enctype="multipart/form-data" method="post">
                                         @csrf
-                                        @foreach($almacen as $almacens)
-                                        <input type="submit" class="dropdown-item" name="almacen"  value="{{$almacens->id}} - {{$almacens->nombre}}">
-                                        @endforeach
+                                        <input type="hidden" class="dropdown-item" name="almacen"  value="{{$almacens->id}}">
+                                        <input type="submit" class="dropdown-item" value="{{$almacens->nombre}}">
                                     </form>
+                                    @endforeach
                                 </div>
                             </div>
                             @elseif($user_login->name=='Colaborador')
@@ -95,32 +96,13 @@
 </div>
 </div>
 {{-- fimodal --}}
+<style> .dropdown-menu{left: 70px; padding: 20px 0;}</style>
 
 <div class="wrapper wrapper-content animated fadeInRight">
 
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
-                <div class="ibox-title">
-                    <h5>Creacion de cotizacion</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#" class="dropdown-item">Config option 1</a>
-                            </li>
-                            <li><a href="#" class="dropdown-item">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
                 <div class="ibox-content">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example" >
