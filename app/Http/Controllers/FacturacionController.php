@@ -797,10 +797,12 @@ class FacturacionController extends Controller
     $empresa=Empresa::first();
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->setEmphasis(true);
-    $printer->text("Ticket de venta\n");
-    $printer->text($facturacion->created_at . "\n");
+    $printer->text("FACTURA ELECTORNICA\n");
+    $printer->text($facturacion->codigo_fac."\n");
+    $printer->text("===============================\n");
+    $printer->text($facturacion->created_at."\n");
     $printer->text($empresa->nombre."\n");
-    $printer ->setEmphasis(true);
+    $printer->setEmphasis(true);
     $printer->text("RUC: ".$empresa->ruc."\n");
     // $printer->setEmphasis(false);
     $printer->text($empresa->calle." - ".$empresa->ciudad." - ".$empresa->region_provincia."\n");
@@ -823,7 +825,7 @@ class FacturacionController extends Controller
         // $printer -> selectPrintMode(Printer::MODE_UNDERLINE);
         $subtotal = ($fag_regs->precio_unitario_comi * $fag_regs->cantidad);
         // %-4.2s $facturacion->moneda->simbolo, 
-        $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $fag_regs->producto->nombre, $fag_regs->precio_unitario_comi, $fag_regs->cantidad, $subtotal);
+        $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $fag_regs->producto->nombre, $fag_regs->cantidad, $fag_regs->precio_unitario_comi, $subtotal);
         // $printer->setJustification(Printer::JUSTIFY_LEFT);
         // $printer->text( ("%.2fx%s\n", , ));
         // $printer->setJustification(Printer::JUSTIFY_RIGHT);
@@ -834,7 +836,8 @@ class FacturacionController extends Controller
     }
 
     $sub_total=($facturacion->op_gravada);
-    $igv_p=round($sub_total, 2)*$igv->igv_total/100;
+    $sub_total_gravado=($facturacion->op_gravada)+($facturacion->op_inafecta)+($facturacion->op_exonerada);
+    $igv_p=round($sub_total_gravado, 2)*$igv->igv_total/100;
     $end=round($sub_total, 2)+round($igv_p, 2);
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text("\n===============================\n");
@@ -842,7 +845,7 @@ class FacturacionController extends Controller
 
     $subtotal = sprintf('%20.20s %-2.2s %15.2F', "SUBTOTAL ".$moneda->simbolo, " : ", $sub_total);
     $printer->text($subtotal."\n");
-    $op_gravada = sprintf('%20.20s %-2.2s %15.2F', "OP. Gravada ".$moneda->simbolo, " : ", $sub_total);
+    $op_gravada = sprintf('%20.20s %-2.2s %15.2F', "OP. Gravada ".$moneda->simbolo, " : ", $facturacion->op_gravada);
     $printer->text($op_gravada."\n");
     $op_inafecta = sprintf('%20.20s %-2.2s %15.2F', "OP. Inafecta ".$moneda->simbolo, " : ", $facturacion->op_inafecta);
     $printer->text($op_inafecta."\n");
@@ -850,8 +853,11 @@ class FacturacionController extends Controller
     $printer->text($op_exonerada."\n");
     $igv = sprintf('%20.20s %-2.2s %15.2F', "I.G.V ".$moneda->simbolo, " : ", $igv_p);
     $printer->text($igv."\n");
+    $printer->setEmphasis(true);
     $total = sprintf('%20.20s %-2.2s %15.2F', "TOTAL ".$moneda->simbolo, " : ", $end);
     $printer->text($total."\n");
+    $printer->setEmphasis(false);
+
  
     //NUMEROS A LETRAS
     $formatter = new NumeroALetras();
