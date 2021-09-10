@@ -797,7 +797,7 @@ class FacturacionController extends Controller
     $empresa=Empresa::first();
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->setEmphasis(true);
-    $printer->text("FACTURA ELECTORNICA\n");
+    $printer->text("FACTURA ELECTRONICA\n");
     $printer->text($facturacion->codigo_fac."\n");
     $printer->text("===============================\n");
     $printer->text($facturacion->created_at."\n");
@@ -818,14 +818,22 @@ class FacturacionController extends Controller
     $printer->text("\n===============================\n");
 
     //Productos
-    $leyenda = sprintf('%-14.14s %6.6s %8.8s  %8.8s', 'Producto', 'Cant.', 'P.Unit', 'Total');
+    if($facturacion->tipo == "producto"){
+        $leyenda = sprintf('%-14.14s %6.6s %8.8s  %8.8s', 'Producto', 'Cant.', 'P.Unit', 'Total');
+    }else{
+        $leyenda = sprintf('%-14.14s %6.6s %8.8s  %8.8s', 'Servicio', 'Cant.', 'P.Unit', 'Total');
+    }
     $printer->text( $leyenda);
     $printer->text("\n"); 
      foreach($facturacion_registro as $fag_regs){
         // $printer -> selectPrintMode(Printer::MODE_UNDERLINE);
         $subtotal = ($fag_regs->precio_unitario_comi * $fag_regs->cantidad);
         // %-4.2s $facturacion->moneda->simbolo, 
-        $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $fag_regs->producto->nombre, $fag_regs->cantidad, $fag_regs->precio_unitario_comi, $subtotal);
+        if($facturacion->tipo == "producto"){
+            $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $fag_regs->producto->nombre, $fag_regs->cantidad, $fag_regs->precio_unitario_comi, $subtotal);
+        }else{
+            $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $fag_regs->servicio->nombre, $fag_regs->cantidad, $fag_regs->precio_unitario_comi, $subtotal);
+        }
         // $printer->setJustification(Printer::JUSTIFY_LEFT);
         // $printer->text( ("%.2fx%s\n", , ));
         // $printer->setJustification(Printer::JUSTIFY_RIGHT);
@@ -868,31 +876,28 @@ class FacturacionController extends Controller
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text("\n===============================\n");
     // $printer->text("Muchas gracias por su compra\n");
+    /*Alimentamos el papel 3 veces*/
+    $printer->feed(3);
 
+    /*
+        Cortamos el papel. Si nuestra impresora
+        no tiene soporte para ello, no generará
+        ningún error
+    */
+    $printer->cut();
 
+    /*
+        Por medio de la impresora mandamos un pulso.
+        Esto es útil cuando la tenemos conectada
+        por ejemplo a un cajón
+    */
+    $printer->pulse();
 
-/*Alimentamos el papel 3 veces*/
-$printer->feed(3);
-
-/*
-    Cortamos el papel. Si nuestra impresora
-    no tiene soporte para ello, no generará
-    ningún error
-*/
-$printer->cut();
-
-/*
-    Por medio de la impresora mandamos un pulso.
-    Esto es útil cuando la tenemos conectada
-    por ejemplo a un cajón
-*/
-$printer->pulse();
-
-/*
-    Para imprimir realmente, tenemos que "cerrar"
-    la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
-*/
-$printer->close();
+    /*
+        Para imprimir realmente, tenemos que "cerrar"
+        la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+    */
+    $printer->close();
     }
 
 }

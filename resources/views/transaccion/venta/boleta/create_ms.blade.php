@@ -263,11 +263,12 @@
                                                 <datalist id="browsers2">
                                                     @foreach($productos as $index => $producto)
                                                     <option
-                                                    value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
+                                                    value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
                                                     @endforeach
                                                 </datalist>
                                                 <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                                 <textarea id='numero_serie0'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px"></textarea>
+                                                <input style="width: 76px" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" hidden="" required  autocomplete="off"  />
 
                                             </td>
                                             <td>
@@ -299,6 +300,7 @@
                                                 </td>
                                                 <td>
                                                     <input type='text' id='total0' name='total' disabled="disabled" class="total form-control " required  autocomplete="off" />
+                                                    <input type='text' id='afectacion0'  style="width: 76px"  name='afectacion' disabled="disabled" class="afectacion form-control " hidden=""  required  autocomplete="off"/>
                                                 </td>
                                                 <span id="spTotal"></span>
                                             </tr>
@@ -389,13 +391,13 @@
         <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i});ajax(${i})" autocomplete="off">
         <datalist id="browsers" >
         @foreach($productos as $index => $producto)
-        <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}" >
+        <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}" >
         @endforeach
         </datalist>
 
         <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
         <textarea  id='numero_serie${i}'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px"></textarea>
-
+        <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required hidden   autocomplete="off" />
         </td>
         <td>
         <input type='text' id='stock${i}' name='stock[]' disabled="disabled" class="form-control" required  autocomplete="off"/>
@@ -428,6 +430,7 @@
 
         <td>
         <input type='text' id='total${i}' name='total' disabled="disabled" class="total form-control "  required  autocomplete="off"/>
+        <input type='text' id='afectacion${i}'  style="width: 76px" hidden  name='afectacion' disabled="disabled" class="afectacion form-control "  required  autocomplete="off"/>
         </td>
 
         </tr>`;
@@ -529,56 +532,68 @@
             var promedio_origina_descuento1=document.querySelector(`#precio_unitario_descuento${a}`).value;
             var promedio_original2=document.querySelector(`#promedio_original${a}`).value;
             var descuento = document.querySelector(`#descuento${a}`).value;
+            var afec = document.querySelector(`#tipo_afec${a}`).value;
             var igv = {{$igv->renta}};
-            console.log (igv);
-            if (checkBox.checked == true && descuento > 0){
+
+           if (checkBox.checked == true && descuento > 0){
 
                 var precio = document.querySelector(`#precio${a}`).value;
                 var promedio_original=document.querySelector(`#promedio_original${a}`).value;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var multiplier = 100;
                 var precio_uni=precio-(promedio_original*descuento/100);
-                var precio_uni_dec = Math.round((precio_uni+(precio_uni*(igv/100))) * multiplier) / multiplier;
 
-                document.getElementById(`check_descuento${a}`).value = descuento;
-                document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
+                if(afec.toString() == "Gravado"){
 
-                var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
-                var comisiones = Math.round((comisiones9+(comisiones9*(igv/100))) * multiplier) / multiplier;
-                document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
-
-                var final=comisiones*cantidad;
-                var final_decimal = Math.round(final * multiplier) / multiplier;
-                console.log(final_decimal);
-
-
-                document.getElementById(`total${a}`).value = final_decimal;
+                    var precio_uni_dec = Math.round((precio_uni+(precio_uni*(igv/100)) * multiplier) / multiplier);
+                    var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
+                    var comisiones = Math.round((comisiones9+(comisiones9*(igv/100))) * multiplier) / multiplier;
+                    var final=comisiones*cantidad;
+                    var final_decimal = Math.round(final * multiplier) / multiplier;
+                    document.getElementById(`total${a}`).value = final_decimal;
+                    document.getElementById(`afectacion${a}`).value = final_decimal;
+               }else{
+                    var precio_uni_dec = Math.round((precio_uni+(precio_uni) * multiplier) / multiplier);
+                    var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
+                    var comisiones = Math.round((comisiones9) * multiplier) / multiplier;
+                    var final=comisiones*cantidad;
+                    var final_decimal = Math.round(final * multiplier) / multiplier;
+                    document.getElementById(`total${a}`).value = final_decimal;
+                    document.getElementById(`afectacion${a}`).value = 0;
+               }
+               document.getElementById(`check_descuento${a}`).value = descuento;
+               document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
+               document.getElementById(`precio_unitario_descuento${a}`).value = precio_uni_dec;
             } else {
                 var multiplier = 100;
                 var descuento = 0;
                 var precio = document.querySelector(`#precio${a}`).value;
-                // var precio_igv = (Math.round(precio * multiplier) / multiplier)+(precio*igv/100);
-                var precio_igv = Math.round((parseFloat(precio)+(precio*(igv/100)))*multiplier)/multiplier;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
-                var final= cantidad*precio;
-                var end9=parseFloat(precio)+((parseFloat(precio)*parseInt(comision_porcentaje)/100));
-
-                var end = Math.round((end9+(end9*(igv/100)))*multiplier)/multiplier;
-                var final2=cantidad*end;
-                var final_decimal = Math.round(final2 * multiplier) / multiplier;
-
-                console.log("la promedio_origina_descuento1 es:"+  promedio_origina_descuento1);
-                console.log("la comision procentaje es:"+  comision_porcentaje);
-                console.log("la promedio_original2 procentaje es:"+   promedio_original2);
-                console.log("la end es:"+  end);
-
+                if(afec.toString() == "Gravado"){
+                    var precio_igv = Math.round((parseFloat(precio)+(precio*(igv/100)))*multiplier)/multiplier;
+                    var final= cantidad*precio;
+                    var end9=parseFloat(precio)+((parseFloat(precio)*parseInt(comision_porcentaje)/100));
+                    var end = Math.round((end9+(end9*(igv/100)))*multiplier)/multiplier;
+                    var final2=cantidad*end;
+                    var final_decimal = Math.round(final2 * multiplier) / multiplier;
+                    document.getElementById(`total${a}`).value = final_decimal;
+                    document.getElementById(`afectacion${a}`).value = final_decimal;
+               }else{
+                    var precio_igv = (Math.round(precio * multiplier) / multiplier);
+                    var final= cantidad*precio;
+                    var end9=parseFloat(precio)+((parseFloat(precio)*parseInt(comision_porcentaje)/100));
+                    var end = Math.round((end9)*multiplier)/multiplier;
+                    var final2=cantidad*end;
+                    var final_decimal = Math.round(final2 * multiplier) / multiplier;
+                    document.getElementById(`total${a}`).value = final_decimal;
+                    document.getElementById(`afectacion${a}`).value = final_decimal;
+               }
                 document.getElementById(`check_descuento${a}`).value = 0;
-                document.getElementById(`total${a}`).value = final_decimal;
                 document.getElementById(`precio_unitario_descuento${a}`).value = precio_igv;
                 document.getElementById(`precio_unitario_comision${a}`).value = end;
             }
 
-            var totalInp = $('[name="total"]');
+            var totalInp = $('[name="afectacion"]');
             var total_t = 0;
 
             totalInp.each(function () {
@@ -594,7 +609,7 @@
             // $(`#monto_pago0`).attr('max', total_tt);
             // document.getElementById("monto_pago0").value = total_tt;
             var monto_c = document.getElementsByClassName('monto_pago');
-            
+
             var inp_mont = document.getElementsByClassName('monto_pago').length;
             for (var i = 0; i < inp_mont; i++) {
                 var monto = monto_c[i].id;
@@ -603,7 +618,6 @@
                 document.getElementById("monto_pago0").value = Math.round(total_tt * multiplier2)/ multiplier2;
                 // document.getElementById(`${monto}`).value = total_tt;
             }
-
         }
     </script>
 
@@ -649,6 +663,14 @@
             var prom_v_r=reverse4.split(separador,1);
             var prom_r=prom_v_r[0];
             var prom_v =reverseString(prom_v_r[0]);
+            //tipo de afectacion
+            var caracteres_space_4 = reverse4.replace(prom_r,"");
+            var reverse5 = caracteres_space_4.slice(1);
+            // tipo de afectacion
+            var afec_prec_tot=reverse5.split(separador,1);
+            var afec_pre_r=afec_prec_tot[0];
+            var afec_pre_v =reverseString(afec_prec_tot[0]);
+            document.getElementById(`tipo_afec${a}`).value =  afec_pre_v;
 
             console.log("el promedio original es: "+prom_v);
             console.log("el strock es: "+stock_v+"-------------")
@@ -684,18 +706,18 @@
     <script>
         $(".delete").on('click', function () {
             $('.case:checkbox:checked').parents("tr").remove();
-            var totalInp = $('[name="total"]');
+            var totalInp = $('[name="afectacion"]');
             var total_t = 0;
 
             totalInp.each(function () {
                 total_t += parseFloat($(this).val());
             });
-            $('#sub_total').val(total_t);
+            $('#total_final').val(total_t);
 
             var igv_valor ={{$igv->renta}};
-            var subtotal = document.querySelector(`#sub_total`).value;
+            var subtotal = document.querySelector(`#total_final`).value;
             var igv = parseFloat(subtotal) * igv_valor / 100;
-            var end = parseFloat(igv) + parseFloat(subtotal);
+            var end = Math.round(parseFloat(igv) + parseFloat(subtotal),2);
 
             // console.log(typeof igv);
             // console.log(typeof end);

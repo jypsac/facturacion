@@ -736,4 +736,126 @@ class BoletaController extends Controller
 
         return redirect()->route('facturacion.index');
     }
+    public function ticket_ajax(Request $request){
+
+    $ids = $request->get('id');
+    $facturacion=Facturacion::find($ids);
+    $facturacion_registro=Facturacion_registro::where('facturacion_id',$ids)->get();
+    $empresa=Empresa::first();
+    $moneda = Moneda::where('id',$facturacion->moneda_id)->first();
+    $igv=Igv::first();
+
+    $nombre_impresora = "EPSONTICKET";
+
+    $connector = new WindowsPrintConnector($nombre_impresora);
+    $printer = new Printer($connector);
+    #Mando un numero de respuesta para saber que se conecto correctamente.
+    echo 1;
+
+     //EMPRESA
+    $empresa=Empresa::first();
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
+    $printer->setEmphasis(true);
+    $printer->text("FACTURA ELECTRONICA\n");
+    $printer->text($facturacion->codigo_fac."\n");
+    $printer->text("===============================\n");
+    $printer->text($facturacion->created_at."\n");
+    $printer->text($empresa->nombre."\n");
+    $printer->setEmphasis(true);
+    $printer->text("RUC: ".$empresa->ruc."\n");
+    // $printer->setEmphasis(false);
+    $printer->text($empresa->calle." - ".$empresa->ciudad." - ".$empresa->region_provincia."\n");
+    $printer->text("Telefono: ".$empresa->telefono);
+    $printer->setEmphasis(false);
+    $printer->text("\n===============================\n");
+
+    //Cliente
+    $cliente_dato = sprintf('%-15.15s %-2.2s %-21.21s', "Cliente", ':', $facturacion->cliente->nombre);
+    $printer->text($cliente_dato."\n");
+    $cliente_id= sprintf('%-15.20s %-2.2s %-21.21s', $facturacion->cliente->documento_identificacion, ':', $facturacion->cliente->numero_documento);
+    $printer->text($cliente_id);
+    $printer->text("\n===============================\n");
+
+    //Productos
+    if($facturacion->tipo == "producto"){
+        $leyenda = sprintf('%-14.14s %6.6s %8.8s  %8.8s', 'Producto', 'Cant.', 'P.Unit', 'Total');
+    }else{
+        $leyenda = sprintf('%-14.14s %6.6s %8.8s  %8.8s', 'Servicio', 'Cant.', 'P.Unit', 'Total');
+    }
+    $printer->text( $leyenda);
+    $printer->text("\n");
+     foreach($facturacion_registro as $fag_regs){
+        // $printer -> selectPrintMode(Printer::MODE_UNDERLINE);
+        $subtotal = ($fag_regs->precio_unitario_comi * $fag_regs->cantidad);
+        // %-4.2s $facturacion->moneda->simbolo,
+        if($facturacion->tipo == "producto"){
+            $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $fag_regs->producto->nombre, $fag_regs->cantidad, $fag_regs->precio_unitario_comi, $subtotal);
+        }else{
+            $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $fag_regs->servicio->nombre, $fag_regs->cantidad, $fag_regs->precio_unitario_comi, $subtotal);
+        }
+        // $printer->setJustification(Printer::JUSTIFY_LEFT);
+        // $printer->text( ("%.2fx%s\n", , ));
+        // $printer->setJustification(Printer::JUSTIFY_RIGHT);
+        $printer->text( $line);
+        $printer->text("\n");
+        // $printer -> selectPrintMode();
+        // $total += $subtotal;
+    }
+
+    $sub_total=($facturacion->op_gravada)+($facturacion->op_inafecta)+($facturacion->op_exonerada);
+    $sub_total_gravado=($facturacion->op_gravada);
+    $igv_p=round($sub_total_gravado, 2)*$igv->igv_total/100;
+    $end=round($sub_total, 2)+round($igv_p, 2);
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
+    $printer->text("\n===============================\n");
+    $printer->setJustification(Printer::JUSTIFY_RIGHT);
+
+    $subtotal = sprintf('%20.20s %-2.2s %15.2F', "SUBTOTAL ".$moneda->simbolo, " : ", $sub_total);
+    $printer->text($subtotal."\n");
+    $op_gravada = sprintf('%20.20s %-2.2s %15.2F', "OP. Gravada ".$moneda->simbolo, " : ", $facturacion->op_gravada);
+    $printer->text($op_gravada."\n");
+    $op_inafecta = sprintf('%20.20s %-2.2s %15.2F', "OP. Inafecta ".$moneda->simbolo, " : ", $facturacion->op_inafecta);
+    $printer->text($op_inafecta."\n");
+    $op_exonerada = sprintf('%20.20s %-2.2s %15.2F', "OP. Exonerada ".$moneda->simbolo, " : ", $facturacion->op_exonerada);
+    $printer->text($op_exonerada."\n");
+    $igv = sprintf('%20.20s %-2.2s %15.2F', "I.G.V ".$moneda->simbolo, " : ", $igv_p);
+    $printer->text($igv."\n");
+    $printer->setEmphasis(true);
+    $total = sprintf('%20.20s %-2.2s %15.2F', "TOTAL ".$moneda->simbolo, " : ", $end);
+    $printer->text($total."\n");
+    $printer->setEmphasis(false);
+
+
+    //NUMEROS A LETRAS
+    $formatter = new NumeroALetras();
+    $num_let = $formatter->toInvoice($end);
+    $printer->setJustification(Printer::JUSTIFY_LEFT);
+    $printer->text("Son: ".$num_let." ".$moneda->nombre."\n");
+
+    $printer->setJustification(Printer::JUSTIFY_CENTER);
+    $printer->text("\n===============================\n");
+    // $printer->text("Muchas gracias por su compra\n");
+    /*Alimentamos el papel 3 veces*/
+    $printer->feed(3);
+
+    /*
+        Cortamos el papel. Si nuestra impresora
+        no tiene soporte para ello, no generará
+        ningún error
+    */
+    $printer->cut();
+
+    /*
+        Por medio de la impresora mandamos un pulso.
+        Esto es útil cuando la tenemos conectada
+        por ejemplo a un cajón
+    */
+    $printer->pulse();
+
+    /*
+        Para imprimir realmente, tenemos que "cerrar"
+        la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+    */
+    $printer->close();
+    }
 }
