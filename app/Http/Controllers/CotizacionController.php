@@ -611,7 +611,7 @@ class CotizacionController extends Controller
 
         //LLAMADO DE TABLAS PARA EL RETURN
     $forma_pagos=Forma_pago::all();
-    $clientes=Cliente::all();
+    $clientes=Cliente::where('documento_identificacion','!=','RUC')->get();
     $moneda=Moneda::where('principal','1')->first();
     $personales=Personal::all();
     $p_venta=Personal_venta::where('estado','0')->get();
@@ -707,7 +707,7 @@ public function create_boleta_ms(Request $request)
 
         //LLAMADO PARA EL LLENADO DE CAMPOS
     $forma_pagos=Forma_pago::all();
-    $clientes=Cliente::all();
+    $clientes=Cliente::where('documento_identificacion','!=','RUC')->get();
     $personales=Personal::all();
     $p_venta=Personal_venta::where('estado','0')->get();
     $empresa=Empresa::first();
