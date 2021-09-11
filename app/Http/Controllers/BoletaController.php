@@ -416,7 +416,6 @@ class BoletaController extends Controller
         $operacion=$request->get('tipo_operacion');
         $nombre = strstr($operacion, '-',true);
         $busca_ope=Tipo_operacion_f::where('codigo',$nombre)->first();
-        $igv=Igv::first();
         $boleta=new Boleta;
         $boleta->codigo_boleta=$boleta_numero;
         $boleta->almacen_id =$request->get('almacen');
@@ -556,22 +555,29 @@ class BoletaController extends Controller
                 $boleta_registro->comision=$comi;
                     //precio unitario descuento ----------------------------------------
                 $desc_comprobacion=$request->get('check_descuento')[$i];
+                if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
+                    $igv=Igv::first();
+                    $igv_ac = $igv->igv_total;
+                }else{
+                    $igv_ac = 0;
+                }
+
                 if($desc_comprobacion <> 0){
                     $precio_uni = $array - ($array2*$desc_comprobacion/100);
-                    $boleta_registro->precio_unitario_desc=$precio_uni+($precio_uni*($igv->igv_total/100));
+                    $boleta_registro->precio_unitario_desc=$precio_uni+($precio_uni*($igv_ac/100));
                     // return $array*($igv->igv_total/100);
                 }else{
-                    $boleta_registro->precio_unitario_desc=$array+($array*($igv->igv_total/100));
+                    $boleta_registro->precio_unitario_desc=$array+($array*($igv_ac/100));
                     // return $array_pre_prom;
                 }
                     //precio unitario comision ----------------------------------------
                 if($desc_comprobacion <> 0){
                      $precio_uni = $array - ($array2*$desc_comprobacion/100);
                      $precio_comi = $precio_uni+($precio_uni*($comi/100));
-                     $boleta_registro->precio_unitario_comi=$precio_comi+($precio_comi*($igv->igv_total/100));
+                     $boleta_registro->precio_unitario_comi=$precio_comi+($precio_comi*($igv_ac/100));
                 }else{
                     $precio_comi = $array+($array*($comi/100));
-                    $boleta_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv->igv_total/100));
+                    $boleta_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv_ac/100));
             }
              //TIPO DE AFECTACION
             $boleta_2=Boleta::find($boleta->id);

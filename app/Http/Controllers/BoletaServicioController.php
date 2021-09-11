@@ -410,12 +410,20 @@ class BoletaServicioController extends Controller
             $boleta_registro->comision=$comi;
                 //precio unitario descuento ----------------------------------------
             $desc_comprobacion=$request->get('check_descuento')[$i];
+
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Gravado') !== false){
+                $igv=Igv::first();
+                $igv_ac = $igv->igv_total;
+            }else{
+                $igv_ac = 0;
+            }
+                
             if($desc_comprobacion <> 0){
                 $precio_uni = $array - ($pre_prome*$desc_comprobacion/100);
-                $boleta_registro->precio_unitario_desc=$precio_uni+($precio_uni*($igv->igv_total/100));
+                $boleta_registro->precio_unitario_desc=$precio_uni+($precio_uni*($igv_ac/100));
                 // return $array*($igv->igv_total/100);
             }else{
-                $precio_uni = $array + ($array*($igv->igv_total/100));
+                $precio_uni = $array + ($array*($igv_ac/100));
                 $boleta_registro->precio_unitario_desc=$precio_uni;
                 // return $array_pre_prom;
             }
@@ -424,10 +432,10 @@ class BoletaServicioController extends Controller
             if($desc_comprobacion <> 0){
                  $precio_uni = $array - ($pre_prome*$desc_comprobacion/100);
                  $precio_comi = $precio_uni+($precio_uni*($comi/100));
-                 $boleta_registro->precio_unitario_comi=$precio_comi+($precio_comi*($igv->igv_total/100));
+                 $boleta_registro->precio_unitario_comi=$precio_comi+($precio_comi*($igv_ac/100));
             }else{
                 $precio_comi = $array+($array*($comi/100));
-                $boleta_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv->igv_total/100));
+                $boleta_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv_ac/100));
             }
                  //TIPO DE AFECTACION
                 $cotizacion_2=Boleta::find($boleta->id);

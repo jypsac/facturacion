@@ -168,7 +168,8 @@
                                 <td>{{$boleta_registros->comision }}</td>
                                 <td>{{$boleta_registros->precio_unitario_comi}}</td>
                                 <td>{{$boleta_registros->precio_unitario_comi * $boleta_registros->cantidad }}</td>
-                                <td style="display: none">{{$sub_total=$boleta->op_gravada}}
+                                <td style="display: none">
+                                    {{$sub_total=($boleta->op_gravada)+($boleta->op_exonerada)+($boleta->op_inafecta)}}
                                     </td>
                             </tr>
                             <span hidden="hidden">{{$i++}}</span>
