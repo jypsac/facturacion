@@ -813,9 +813,9 @@ class BoletaController extends Controller
     }
 
     $sub_total=($boleta->op_gravada)+($boleta->op_inafecta)+($boleta->op_exonerada);
-    $sub_total_gravado=($boleta->op_gravada);
-    // $igv_p=round($sub_total_gravado, 2)*$igv->igv_total/100;
-    $end=round($sub_total, 2)+round($igv_p, 2);
+    // $sub_total_gravado=($boleta->op_gravada);
+    $igv_p= 0;
+    // $end=round($sub_total, 2)+round$igv_p, 2);
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text("\n===============================\n");
     $printer->setJustification(Printer::JUSTIFY_RIGHT);
@@ -831,14 +831,14 @@ class BoletaController extends Controller
     $igv = sprintf('%20.20s %-2.2s %15.2F', "I.G.V ".$moneda->simbolo, " : ", $igv_p);
     $printer->text($igv."\n");
     $printer->setEmphasis(true);
-    $total = sprintf('%20.20s %-2.2s %15.2F', "TOTAL ".$moneda->simbolo, " : ", $end);
+    $total = sprintf('%20.20s %-2.2s %15.2F', "TOTAL ".$moneda->simbolo, " : ", $sub_total);
     $printer->text($total."\n");
     $printer->setEmphasis(false);
 
 
     //NUMEROS A LETRAS
     $formatter = new NumeroALetras();
-    $num_let = $formatter->toInvoice($end);
+    $num_let = $formatter->toInvoice($sub_total);
     $printer->setJustification(Printer::JUSTIFY_LEFT);
     $printer->text("Son: ".$num_let." ".$moneda->nombre."\n");
 
