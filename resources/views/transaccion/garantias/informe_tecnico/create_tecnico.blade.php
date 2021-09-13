@@ -106,7 +106,7 @@
                   <div class="col-sm-6">
                     <center><h4>Estética</h4></center>
                     <div class="input-group m-b">
-                      <input type="text" value="{{$id}}" name="id_egreso">
+                      <input type="hidden" value="{{$id}}" name="id_egreso" hidden="">
                       <textarea class="form-control" rows="5" id="comment" name="estetica" maxlength="1230" required style="resize: none;height: 200px;"></textarea>
                     </div>
                   </div>

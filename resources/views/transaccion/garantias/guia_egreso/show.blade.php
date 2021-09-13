@@ -17,7 +17,6 @@
            <a href="{{ route('garantia_guia_ingreso.edit', $garantia_guia_ingreso->id) }}"><button type="button" class="btn btn-success"><i class="fa fa-edit"></i></button></a>
            @endif
            <a href="#form_egreso" onclick="Formulario_edit()"  id="click" class="btn btn-info"><i class="fa fa-edit"></i></a>
-
        </div>
        <div class="col-sm-6 tooltip-demo "align="right"  >
         <form class="btn" style="text-align: none;padding: 0 0 0 0" action="{{route('pdf_egreso' ,$garantias_guias_egreso->id)}}">
@@ -90,7 +89,7 @@
                             @if($garantias_guias_egreso->garantia_ingreso_i->contacto_cliente_id == null)
                             <em>Sin Registro</em>
                             @else
-                            {{$contacto->where('id','=',$garantias_guias_egreso->garantia_ingreso_i->contacto_cliente_id)->pluck('nombre')->first()}} &nbsp;
+                            {{$garantias_guias_egreso->garantia_ingreso_i->contactos->nombre }}
                             @endif
                             <br>
                         </div>
