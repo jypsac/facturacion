@@ -506,7 +506,7 @@
                }else{
                     // console.log('b');
                     document.getElementById(`total${a}`).value = final_decimal;
-                   document.getElementById(`afectacion${a}`).value = 0;
+                   document.getElementById(`afectacion${a}`).value = final_decimal;
                }
             } else {
                 var multiplier = 100;
@@ -530,7 +530,7 @@
                }else{
                     // console.log('d');
                     document.getElementById(`total${a}`).value = final_decimal;
-                   document.getElementById(`afectacion${a}`).value = 0;
+                   document.getElementById(`afectacion${a}`).value = final_decimal;
                }
             }
 
