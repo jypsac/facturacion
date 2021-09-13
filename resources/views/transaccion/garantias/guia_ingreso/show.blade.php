@@ -47,8 +47,8 @@
 </div>
 {{-- Modal Agregar --}}
 <div class="wrapper wrapper-content animated fadeInRight">
- @if($errors->any())
- <div style="padding-top: 20px;">
+   @if($errors->any())
+   <div style="padding-top: 20px;">
     <div class="alert alert-danger">
         <a class="alert-link" href="#">
             @foreach ($errors->all() as $error)
@@ -85,7 +85,7 @@
             <a class="btn  btn-success" style="background: green;border-color: green;" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Enviar a"><i class="fa fa-whatsapp fa-lg" style="color: white"></i>  </a>
         </div>
         <div id="div-mostrar">
-         <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
+           <form action="{{route('agregado.whatsapp_send')}}" method="post" class="btn" style="text-align: none;padding-right: 0;padding-left: 0;">
             @csrf
             <input type="tel" name="numero"  value="{{$garantia_guia_ingreso->clientes_i->celular}}"   />
             <input type="text" name="mensaje" id="texto_orden" hidden="" />
@@ -134,16 +134,16 @@
                             @if($garantia_guia_ingreso->contacto_cliente_id == null)
                             <em>Sin Registro</em>
                             @else
-                            {{$contacto->where('id','=',$garantia_guia_ingreso->contacto_cliente_id)->pluck('nombre')->first()}} &nbsp;
+                            {{$garantia_guia_ingreso->contactos->nombre }}
                             @endif
                             <br>
                         </div>
                     </div>
                 </div>
                 <div class="col-sm-6" align="center" style="height: 100%;">
-                   <div class="form-control" style="height: 100%;">
-                       <h3>Condiciones Generales</h3>
-                       <div align="left" style="height: 100%;">
+                 <div class="form-control" style="height: 100%;">
+                     <h3>Condiciones Generales</h3>
+                     <div align="left" style="height: 100%;">
                         <strong>Ing. Asignado:</strong>&nbsp;{{$garantia_guia_ingreso->personal_laborales->nombres}} {{$garantia_guia_ingreso->personal_laborales->apellidos}}&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;<br>
                         <strong>Motivo:</strong>&nbsp;{{$garantia_guia_ingreso->motivo}}<br>
                         <strong>Marca :</strong>&nbsp;{{$garantia_guia_ingreso->marcas_i->nombre}} &nbsp;<br>
@@ -155,9 +155,9 @@
             <br>
             <div class="col-sm-12" align="center" style="padding-top: 15px;">
                 <div class="form-control" style="height: 100%">
-                   <h3>Datos del Equipo</h3>
-                   <div class="row" style="padding-bottom: 1px">
-                       <div align="left" class="col-sm-6">
+                 <h3>Datos del Equipo</h3>
+                 <div class="row" style="padding-bottom: 1px">
+                     <div align="left" class="col-sm-6">
                         <strong>Modelo:</strong> &nbsp;{{$garantia_guia_ingreso->nombre_equipo}}<br>
                         <strong>Número de serie:</strong> &nbsp;{{$garantia_guia_ingreso->numero_serie}}<br>
                     </div>
@@ -195,20 +195,20 @@
     <div>
     </div>
     <br>
-          <footer style="padding-top: 10px">
-              <br>
-              <div class="row">
-                <div class="col-sm-4">
-                    <strong><p><u>Centro de Atencion : </strong></u></p>
-                    <strong>Direccion:</strong> {{$usuario->almacen->direccion}}<br>
-                    <strong>Telefonos :</strong>  {{$empresa->telefono}} / {{$usuario->celular}} &nbsp;<br>
-                    <strong>{{$garantia_guia_ingreso->marcas_i->nombre_empresa}}:</strong> {{$garantia_guia_ingreso->marcas_i->telefono}}<br>
-                    <strong>Email:</strong> {{$usuario->email}}<br>
-                    <strong>Web:</strong> {{$empresa->pagina_web}}<br>
-                </div>
-                <div class="col-sm-2"></div>
-                <div class="col-sm-3"></div>
-                <div class="col-sm-3"><br><br>
+    <footer style="padding-top: 10px">
+      <br>
+      <div class="row">
+        <div class="col-sm-4">
+            <strong><p><u>Centro de Atencion : </strong></u></p>
+            <strong>Direccion:</strong> {{$usuario->almacen->direccion}}<br>
+            <strong>Telefonos :</strong>  {{$empresa->telefono}} / {{$usuario->celular}} &nbsp;<br>
+            <strong>{{$garantia_guia_ingreso->marcas_i->nombre_empresa}}:</strong> {{$garantia_guia_ingreso->marcas_i->telefono}}<br>
+            <strong>Email:</strong> {{$usuario->email}}<br>
+            <strong>Web:</strong> {{$empresa->pagina_web}}<br>
+        </div>
+        <div class="col-sm-2"></div>
+        <div class="col-sm-3"></div>
+        <div class="col-sm-3"><br><br>
                 {{-- <hr>
                 <center>adm</center> --}}
             </div>
@@ -321,10 +321,10 @@ input#archivoInput{
 <script>
     var clic = 1;
     function divAuto(){
-     if(clic==1){
-         document.getElementById("div-mostrar").style.height = "50px";
-         clic = clic + 1;
-     } else{
+       if(clic==1){
+           document.getElementById("div-mostrar").style.height = "50px";
+           clic = clic + 1;
+       } else{
         document.getElementById("div-mostrar").style.height = "0px";
         clic = 1;
     }
