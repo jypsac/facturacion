@@ -1019,15 +1019,19 @@ public function show($id)
 
     // }
     // if($cotizacion->tipo == "factura"){
-    $sub_total = $cotizacion->op_gravada;
+    $sub_total = $cotizacion->op_gravada+$cotizacion->op_exonerada+$cotizacion->op_inafecta;
     // }else{
     //      foreach ($cotizacion_registro as $cotizacion_registros) {
     //         $sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total;
     //         $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
     //     }
     // }
-    $simbologia=$cotizacion->moneda->simbolo.$igv_p=round($sub_total, 2)*$igv->igv_total/100;
-    if ($regla=='factura') {$end=round($sub_total, 2)+round($igv_p, 2);} elseif ($regla=='boleta') {$end=round($sub_total, 2);}
+    $igv_p=round($cotizacion->op_gravada, 2)*$igv->igv_total/100;
+    if ($regla=='factura') {
+        $end=round($sub_total, 2)+round($igv_p, 2);
+    }elseif ($regla=='boleta'){
+        $end=round($sub_total, 2);
+    }
     /* Finde numeros a Letras*/
 
     $firma= EmailConfiguraciones::where('id_usuario',$cotizacion->user_id)->pluck('firma_digital')->first();
