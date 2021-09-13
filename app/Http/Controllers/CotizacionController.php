@@ -1976,7 +1976,7 @@ public function facturar_store(Request $request)
         $moneda1=Moneda::where('principal',1)->first();
         $moneda2=Moneda::where('principal',0)->first();
 
-        $igv=Igv::first();
+
         if($boletear->moneda_id==$moneda1->id){
             if ($moneda1->tipo == 'nacional') {
                 foreach ($productos as $index => $producto) {
@@ -2096,22 +2096,28 @@ public function facturar_store(Request $request)
                 $boleta_registro->descuento=$cotizacion_boleta->descuento;
                 $boleta_registro->comision=$cotizacion_boleta->comision;
 
+                if(strpos($boleta_registro->producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
+                    $igv=Igv::first();
+                    $igv_tot = $igv->igv_total;
+                }else{
+                    $igv_tot = 0;
+                }
                 //precio unitario descuento ----------------------------------------
                 $desc_comprobacion=$cotizacion_boleta->descuento;
                 if($desc_comprobacion <> 0){
                     $array_desc = ($array-($array2*$desc_comprobacion/100));
-                    $boleta_registro->precio_unitario_desc=$array_desc+($array_desc*$igv->igv_total/100);
+                    $boleta_registro->precio_unitario_desc=$array_desc+($array_desc*$igv_tot /100);
                 }else{
-                    $boleta_registro->precio_unitario_desc=$array+($array*$igv->igv_total/100);
+                    $boleta_registro->precio_unitario_desc=$array+($array*$igv_tot /100);
                 }
                 //precio unitario comision ----------------------------------------
                 if($desc_comprobacion <> 0){
                     $array_desc = ($array-($array2*$desc_comprobacion/100));
                     $array_comi = $array_desc+($array_desc*$comi/100);
-                    $boleta_registro->precio_unitario_comi=$array_comi+($array_comi*$igv->igv_total/100);
+                    $boleta_registro->precio_unitario_comi=$array_comi+($array_comi*$igv_tot /100);
                 }else{
                     $array_comi = $array+($array*$comi/100);
-                    $boleta_registro->precio_unitario_comi=$array_comi+($array_comi*$igv->igv_total/100);
+                    $boleta_registro->precio_unitario_comi=$array_comi+($array_comi*$igv_tot /100);
                 }
                 $boleta_registro->save();
 
