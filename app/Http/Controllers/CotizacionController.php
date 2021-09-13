@@ -902,8 +902,13 @@ public function create_boleta_ms(Request $request)
             $cotizacion_registro->cotizacion_id=$cotizacion->id;
             $cotizacion_registro->producto_id=$producto_id[$i];
             $producto=Producto::where('id',$producto_id[$i])->where('estado_id',1)->first();
-
-                //stock --------------------------------------------------------
+            if(strpos($producto->tipo_afec_i_producto->informacion,'Gravado') !== false ){
+                $igv=Igv::first();
+                $igv_tot = $igv->igv_total;
+            }else{
+                $igv_tot = 0;
+            }
+            //stock --------------------------------------------------------
             $stock=Stock_almacen::where('producto_id',$producto_id[$i])->where('almacen_id',$sucursal->id)->sum('stock');
             $cotizacion_registro->stock=$stock;
 
@@ -916,7 +921,7 @@ public function create_boleta_ms(Request $request)
                     $utilidad=Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                     $igv_p=(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional')+$utilidad);
                     $array=(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional')+$utilidad);
-                    $array_pre_prom=$array+($array*($igv->igv_total/100));
+                    $array_pre_prom=$array+($array*($igv_tot/100));
                     $cotizacion_registro->precio = $array_pre_prom;
                 }else{
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
@@ -925,7 +930,7 @@ public function create_boleta_ms(Request $request)
                     $utilidad=Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                     $igv_p=(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero')+$utilidad);
                     $array=(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero')+$utilidad);
-                    $array_pre_prom=$array+($array*($igv->igv_total/100));
+                    $array_pre_prom=$array+($array*($igv_tot/100));
                     $cotizacion_registro->precio = $array_pre_prom;
                 }
             }else{
@@ -936,7 +941,7 @@ public function create_boleta_ms(Request $request)
                     $utilidad=Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                     $igv_p=(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero')+$utilidad);
                     $array=round((Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_extranjero')+$utilidad)*$cambio->paralelo,2);
-                    $array_pre_prom=($array)+($array*($igv->igv_total/100));
+                    $array_pre_prom=($array)+($array*($igv_tot/100));
                     $cotizacion_registro->precio = $array_pre_prom;
                 }else{
                         //promedio original ojo revisar que es precio nacional --------------------------------------------------------
@@ -945,7 +950,7 @@ public function create_boleta_ms(Request $request)
                     $utilidad=Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
                     $igv_p=(Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional')+$utilidad);
                     $array=round(((Stock_producto::where('producto_id',$producto_id[$i])->avg('precio_nacional')+$utilidad)/$cambio->paralelo),2);
-                    $array_pre_prom=($array)+($array*($igv->igv_total/100));
+                    $array_pre_prom=($array)+($array*($igv_tot/100));
                     $cotizacion_registro->precio = $array_pre_prom;
                 }
             }
@@ -956,20 +961,20 @@ public function create_boleta_ms(Request $request)
             $desc_comprobacion=$request->get('check_descuento')[$i];
             if($desc_comprobacion <> 0){
                 $precio_uni = $array - ($array2*$desc_comprobacion/100);
-                $cotizacion_registro->precio_unitario_desc=$precio_uni+($precio_uni*($igv->igv_total/100));
+                $cotizacion_registro->precio_unitario_desc=$precio_uni+($precio_uni*($igv_tot/100));
                 // return $array*($igv->igv_total/100);
             }else{
-                $cotizacion_registro->precio_unitario_desc=$array+($array*($igv->igv_total/100));
+                $cotizacion_registro->precio_unitario_desc=$array+($array*($igv_tot/100));
                 // return $array_pre_prom;
             }
                 //precio unitario comision ----------------------------------------
             if($desc_comprobacion <> 0){
                $precio_uni = $array - ($array2*$desc_comprobacion/100);
                $precio_comi = $precio_uni+($precio_uni*($comi/100));
-               $cotizacion_registro->precio_unitario_comi=$precio_comi+($precio_comi*($igv->igv_total/100));
+               $cotizacion_registro->precio_unitario_comi=$precio_comi+($precio_comi*($igv_tot/100));
            }else{
             $precio_comi = $array+($array*($comi/100));
-            $cotizacion_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv->igv_total/100));
+            $cotizacion_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv_tot/100));
         }
 
              //TIPO DE AFECTACION
