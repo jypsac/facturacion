@@ -121,11 +121,15 @@
                                     </td>
                                     <td>{{$cotizacion->moneda->simbolo }}. {{$coti_comi}}</td>
                                     <td>{{$cotizacion->moneda->simbolo }}. {{($coti_comi)*$cotizacion_registros->cantidad}}</td>
-                                    <td style="display: none;">
-
+                                    <td  style="display: none">
+                                        @if(strpos($cotizacion_registros->servicio->tipo_afec_i_serv->informacion,'Gravado') !== false)
+                                            {{$sub_total_gravado = ($coti_comi+$sub_total_gravado)*$cotizacion_registros->cantidad}}
+                                        @endif
                                         <br>
-                                        {{$sub_total=($coti_comi+$sub_total)*$cotizacion_registros->cantidad}}
-                                        {{$cotizacion->moneda->simbolo }}.{{$igv_p=round($sub_total*$igv->igv_total/100, 2)}}
+                                        {{$sub_total = ($coti_comi+$sub_total)*$cotizacion_registros->cantidad}}
+                                        <br>
+                                        {{$igv_p = round($sub_total_gravado*$igv->igv_total/100, 2)}}
+                                        <br>
                                         {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                     </td>
                                 </tr>

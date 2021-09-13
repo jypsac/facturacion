@@ -780,6 +780,7 @@ public function facturar($id){
     $sum=0;
     $igv=Igv::first();
     $sub_total=0;
+    $sub_total_gravado=0;
     $regla=$cotizacion->tipo;
     $i=1;
 
@@ -815,7 +816,7 @@ public function facturar($id){
 }
 if ($cotizacion->estado==0) {
 
-    return view('transaccion.venta.servicios.cotizacion.facturar', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','cod_fac'));
+    return view('transaccion.venta.servicios.cotizacion.facturar', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','cod_fac','sub_total_gravado'));
 }
 elseif ($cotizacion->estado==1) {
     return redirect()->route('cotizacion_servicio.show',$cotizacion->id);

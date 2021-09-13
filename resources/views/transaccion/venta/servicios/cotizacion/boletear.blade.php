@@ -116,7 +116,12 @@
                                             <td style="display: none">
                                                 {{$precio_array = ($cotizacion_registros->precio-($cotizacion_registros->promedio_original*($cotizacion_registros->descuento/100)))}}
                                                 {{$precio_array_comi = $precio_array+($precio_array*($cotizacion_registros->comision/100))}}
-                                                {{$precio_array_comi_igv = round($precio_array_comi+($precio_array_comi*($igv->igv_total/100)),2)}}
+                                                @if(strpos($cotizacion_registros->servicio->tipo_afec_i_serv->informacion,'Gravado') !== false)
+                                                    {{$precio_array_comi_igv = round($precio_array_comi+($precio_array_comi*($igv->igv_total/100)),2)}}
+                                                @else
+                                                    {{$precio_array_comi_igv = round($precio_array_comi,2)}}
+                                                @endif
+
                                             </td>
                                             <td>{{$cotizacion->moneda->simbolo }}. {{$precio_array_comi_igv}}</td>
                                             <td>{{$cotizacion->moneda->simbolo }}. {{$precio_array_comi_igv*$cotizacion_registros->cantidad}}</td>

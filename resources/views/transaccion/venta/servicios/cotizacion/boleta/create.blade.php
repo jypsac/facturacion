@@ -505,7 +505,7 @@
                     var final_decimal = Math.round(final * multiplier) / multiplier;
 
                     document.getElementById(`total${a}`).value = final_decimal;
-                    document.getElementById(`afectacion${a}`).value = 0;
+                    document.getElementById(`afectacion${a}`).value = final_decimal;
                }
                 document.getElementById(`check_descuento${a}`).value = descuento;
                 document.getElementById(`descuento_unitario${a}`).value = precio_uni_dec;
@@ -536,7 +536,7 @@
                     var final_decimal = Math.round(final2 * multiplier) / multiplier;
 
                     document.getElementById(`total${a}`).value = final_decimal;
-                   document.getElementById(`afectacion${a}`).value = 0;
+                   document.getElementById(`afectacion${a}`).value = final_decimal;
                }
                 document.getElementById(`descuento_unitario${a}`).value = precio_igv;
                 document.getElementById(`precio_unitario_comision${a}`).value = end;
