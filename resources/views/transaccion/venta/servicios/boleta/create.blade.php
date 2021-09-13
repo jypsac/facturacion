@@ -649,18 +649,22 @@
     <script>
         $(".delete").on('click', function () {
             $('.case:checkbox:checked').parents("tr").remove();
+            var multiplier = 100;
             var totalInp = $('[name="afectacion"]');
             var total_t = 0;
 
             totalInp.each(function(){
                 total_t += parseFloat($(this).val());
             });
-            $('#total_final').val(total_t);
+            var tot_rou = Math.round(total_t * multiplier)/multiplier;
+            $('#total_final').val(tot_rou);
 
             var igv_valor={{$igv->renta}};
             var subtotal = document.querySelector(`#total_final`).value;
-            var igv=parseFloat(subtotal)*igv_valor/100;
-            var end=parseFloat(igv)+parseFloat(subtotal);
+            var igv1=parseFloat(subtotal)*igv_valor/100;
+            var igv= Math.round(igv1 * multiplier)/ multiplier;
+            var end1=parseFloat(igv)+parseFloat(subtotal);
+            var end=Math.round(end1 * multiplier)/ multiplier;
 
             // console.log(typeof igv);
             // console.log(typeof end);

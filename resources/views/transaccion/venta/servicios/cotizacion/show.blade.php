@@ -129,9 +129,9 @@
                                 <th style="width: 200px">Codigo </th>
                                 <th>Descripcion</th>
                                 <th>Cantidad</th>
-                                <th style="width: 86px">P.Unitario</th>
-                                <th>Total</th>
-                                <th style="display: none">S/.</th>
+                                <th style="width: 186px">P.Unitario</th>
+                                <th style="width: 180px;">Total</th>
+                                {{-- <th style="display: none">S/.</th> --}}
                             </tr>
                         </thead>
                         <tbody>
@@ -144,12 +144,6 @@
                                     <td>{{$cotizacion_registros->cantidad}}</td>
                                     <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
                                     <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}}</td>
-                                    <td style="display: none">{{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
-                                        @if ($regla=="factura")
-                                            S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
-                                            {{$end=round($sub_total, 2)+round($igv_p, 2)}}
-                                        @endif
-                                    </td>
                                 </tr>
                                     <span hidden="hidden">{{$i++}}</span>
                                 @endforeach
@@ -162,12 +156,6 @@
                                     <td>{{$cotizacion_registros->cantidad}}</td>
                                     <td>{{$cotizacion_registros->precio_unitario_comi}}</td>
                                     <td>{{$cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi}} </td>
-                                    <td style="display: none"> {{$sub_total=($cotizacion_registros->cantidad*$cotizacion_registros->precio_unitario_comi)+$sub_total}}
-                                        @if ($regla=="factura")
-                                            S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
-                                            {{$end=round($sub_total, 2)+round($igv_p, 2)}}
-                                        @endif
-                                    </td>
                                 </tr>
                                     <span hidden="hidden">{{$i++}}</span>
                                 @endforeach
@@ -181,8 +169,9 @@
                 @if ($regla=="factura")
                     <h3 align="left">
                         <div style="display: none">
-                            {{$sub_total=($cotizacion->op_gravada )}}
-                            S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}}
+                            {{$sub_total=($cotizacion->op_gravada)+($cotizacion->op_exonerada)+($cotizacion->op_inafecta)}}
+                            {{$sub_total_gravado=($cotizacion->op_gravada)}}
+                            {{$igv_p=round($sub_total_gravado, 2)*$igv->igv_total/100}}
                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                         </div>
                             <?php $v=new CifrasEnLetras() ;
@@ -192,24 +181,6 @@
                             ?>
                             Son : {{$letra_final}} {{$end_final}}/100 {{$moneda->nombre}}
                     </h3>
-                  {{--   <div class="row">
-                        <div class="col-sm-3 ">
-                            <p class="form-control a"> Sub Total</p>
-                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($sub_total, 2)}}</p>
-                        </div>
-                        <div class="col-sm-3 ">
-                            <p class="form-control a"> Op. Agravada</p>
-                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.00</p>
-                        </div>
-                        <div class="col-sm-3 ">
-                            <p class="form-control a"> IGV</p>
-                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{round($igv_p, 2)}}</p>
-                        </div>
-                        <div class="col-sm-3 ">
-                            <p class="form-control a"> Importe Total</p>
-                            <p class="form-control a"> {{$simbologia=$cotizacion->moneda->simbolo}}.{{$end}}</p>
-                        </div>
-                    </div> --}}
                     <div class="row">
                         <div class="col-sm-8">
 
@@ -233,7 +204,7 @@
                     </div>
                 @else
                         <div style="display: none">
-                            {{$sub_total=($cotizacion->op_gravada )}}
+                            {{$sub_total=($cotizacion->op_gravada)+($cotizacion->op_inafecta)+($cotizacion->op_exonerada)}}
                             {{-- S/.{{$igv_p=round($sub_total, 2)*$igv->igv_total/100}} --}}
                             {{$end=round($sub_total, 2)}}
                         </div>

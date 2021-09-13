@@ -255,7 +255,10 @@
                                                     <td></td>
                                                     <td></td>
                                                     <td>Subtotal :</td>
-                                                    <td><input id='sub_total'  disabled="disabled" class="form-control" required /></td>
+                                                    <td>
+                                                        <input id='sub_total'  disabled="disabled" class="form-control" required />
+                                                        <input id='subtotal_gravado' type="text" name="subtotal_gravado" readonly class="form-control" required hidden="" >
+                                                    </td>
                                                 </tr>
                                                 <tr style="background-color: #f5f5f500;" align="center">
                                                     <td></td>
@@ -549,11 +552,9 @@
                    document.getElementById(`afectacion${a}`).value = 0;
                }
             }
+            //SUMA SUBTOTAL SIN IGV
+            var totalInp = $('[name="total"]');
 
-
-
-
-            var totalInp = $('[name="afectacion"]');
             var total_t = 0;
 
             totalInp.each(function(){
@@ -565,9 +566,23 @@
 
             $('#sub_total').val(total_tt);
 
+
+            var totalInpG = $('[name="afectacion"]');
+            var total_tg = 0;
+
+            totalInpG.each(function(){
+                total_tg += parseFloat($(this).val());
+            });
+
+            var multiplier2 = 100;
+            var total_ttg = Math.round(total_tg * multiplier2) / multiplier2;
+
+            $('#subtotal_gravado').val(total_ttg);
+
             var igv_valor={{$igv->renta}};
             var subtotal = document.querySelector(`#sub_total`).value;
-            var igv=subtotal*igv_valor/100;
+            var subtotal_gravado = document.querySelector(`#subtotal_gravado`).value;
+            var igv=subtotal_gravado*igv_valor/100;
 
             var igv_decimal = Math.round(igv * multiplier2) / multiplier2;
             var end=igv_decimal+parseFloat(subtotal);
@@ -576,7 +591,6 @@
 
             document.getElementById("igv").value = igv_decimal;
             document.getElementById("total_final").value = end2;
-
         }
     </script>
 
@@ -660,18 +674,32 @@
     <script>
         $(".delete").on('click', function () {
             $('.case:checkbox:checked').parents("tr").remove();
-            var totalInp = $('[name="afectacion"]');
+            var multiplier = 100;
+            var totalInpG = $('[name="afectacion"]');
+            var total_tg = 0;
+
+            totalInpG.each(function(){
+                total_tg += parseFloat($(this).val());
+            });
+            var total_ttg = Math.round(total_tg * multiplier2) / multiplier2;
+            $('#subtotal_gravado').val(total_ttg);
+
+            var totalInp = $('[name="total"]');
             var total_t = 0;
 
             totalInp.each(function(){
                 total_t += parseFloat($(this).val());
             });
-            $('#sub_total').val(total_t);
+            var total_tttg = Math.round(total_t * multiplier2) / multiplier2;
+            $('#sub_total').val(total_tttg);
 
             var igv_valor={{$igv->renta}};
+            var subtotal_gravado = document.querySelector(`#subtotal_gravado`).value;
             var subtotal = document.querySelector(`#sub_total`).value;
-            var igv=parseFloat(subtotal)*igv_valor/100;
-            var end=parseFloat(igv)+parseFloat(subtotal);
+            var igv1 = parseFloat(subtotal_gravado)*igv_valor/100;
+            var igv = Math.round(igv1 * multiplier)/ multiplier;
+            var end1=parseFloat(igv)+parseFloat(subtotal);
+            var end =  Math.round(end1 * multiplier)/ multiplier;
 
             // console.log(typeof igv);
             // console.log(typeof end);

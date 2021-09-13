@@ -680,12 +680,19 @@ class CotizacionServiciosController extends Controller
             $cotizacion_registro->comision=$comi;
                 //precio unitario descuento ----------------------------------------
             $desc_comprobacion=$request->get('check_descuento')[$i];
+
+            if(strpos($servicio->tipo_afec_i_serv->informacion,'Gravado') !== false){
+                $igv_f = Igv::first();
+                $igv_tot = $igv->igv_total;
+            }else{
+                $igv_tot = 0;
+            }
             if($desc_comprobacion <> 0){
                 $precio_uni = $array - ($array2*$desc_comprobacion/100);
-                $cotizacion_registro->precio_unitario_desc=$precio_uni+($precio_uni*($igv->igv_total/100));
+                $cotizacion_registro->precio_unitario_desc=$precio_uni+($precio_uni*($igv_tot/100));
                 // return $array*($igv->igv_total/100);
             }else{
-                $precio_uni = $array + ($array*($igv->igv_total/100));
+                $precio_uni = $array + ($array*($igv_tot/100));
                 $cotizacion_registro->precio_unitario_desc=$precio_uni;
                 // return $array_pre_prom;
             }
@@ -694,10 +701,10 @@ class CotizacionServiciosController extends Controller
             if($desc_comprobacion <> 0){
                  $precio_uni = $array - ($array2*$desc_comprobacion/100);
                  $precio_comi = $precio_uni+($precio_uni*($comi/100));
-                 $cotizacion_registro->precio_unitario_comi=$precio_comi+($precio_comi*($igv->igv_total/100));
+                 $cotizacion_registro->precio_unitario_comi=$precio_comi+($precio_comi*($igv_tot/100));
             }else{
                 $precio_comi = $array+($array*($comi/100));
-                $cotizacion_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv->igv_total/100));
+                $cotizacion_registro->precio_unitario_comi=($precio_comi)+($precio_comi*($igv_tot/100));
             }
 
             //TIPO DE AFECTACION
