@@ -278,7 +278,7 @@
                                                 <td>Subtotal :</td>
                                                 <td>
                                                     <input id='sub_total' name="sub_total_sin_igv" readonly="" class="form-control" required />
-                                                     <input id='subtotal_gravado' type="text" name="subtotal_gravado" readonly class="form-control" required hidden="" />
+                                                    <input id='subtotal_gravado' type="text" name="subtotal_gravado" readonly class="form-control" required hidden="" />
                                                 </td>
                                             </tr>
                                             <tr style="background-color: #f5f5f500;" align="center">

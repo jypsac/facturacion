@@ -506,7 +506,7 @@
                }else{
                     // console.log('b');
                     document.getElementById(`total${a}`).value = final_decimal;
-                   document.getElementById(`afectacion${a}`).value = 0;
+                   document.getElementById(`afectacion${a}`).value = final_decimal;
                }
             } else {
                 var multiplier = 100;
@@ -530,7 +530,7 @@
                }else{
                     // console.log('d');
                     document.getElementById(`total${a}`).value = final_decimal;
-                   document.getElementById(`afectacion${a}`).value = 0;
+                   document.getElementById(`afectacion${a}`).value = final_decimal;
                }
             }
 
@@ -641,16 +641,18 @@
     <script>
         $(".delete").on('click', function () {
             $('.case:checkbox:checked').parents("tr").remove();
+            var multiplier = 100;
             var totalInp = $('[name="afectacion"]');
             var total_t = 0;
 
             totalInp.each(function(){
                 total_t += parseFloat($(this).val());
             });
-            $('#sub_total').val(total_t);
+            var tot_rou = Math.round(total_t * multiplier)/multiplier;
+            $('#total_final').val(tot_rou);
 
             var igv_valor={{$igv->renta}};
-            var subtotal = document.querySelector(`#sub_total`).value;
+            var subtotal = document.querySelector(`#total_final`).value;
             var igv=parseFloat(subtotal)*igv_valor/100;
             var end=parseFloat(igv)+parseFloat(subtotal);
 

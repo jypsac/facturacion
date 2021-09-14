@@ -171,14 +171,22 @@
                                      </td>
                                      <td>{{$array_cantidad[$index]}}</td>
                                      {{-- MODIFICAR ESTA PARTE CON LOGICA DE REPROGRAMACION PARA UN NUEVO PRODUCTO DIRECTAMENTE DESDE KARDEX --}}
-                                      <td style="display: none;">
-                                        {{$desc_array=$array[$index]-($array_promedio[$index]*$cotizacion_registros->descuento/100)}}
-                                        {{$comis_array= $desc_array+($desc_array*($comi/100))}}
+                                     {{-- [$comi] = porcentaje de comision --}}
+                                      <td  style="display: none">
+                                        @if(strpos($cotizacion_registros->producto->tipo_afec_i_producto->informacion,'Gravado') !== false)
+                                            {{$descu = $array[$index]-($array_promedio[$index]*$cotizacion_registros->descuento/100)}}
+                                            {{$comici = $descu+($descu*($comi/100))}}
+                                            {{$comis_array = round(($comici)+($comici)*($igv->igv_total/100),2)}}
+                                        @else
+                                            {{$descu =$array[$index]-($array_promedio[$index]*$cotizacion_registros->descuento/100)}}
+                                            {{$comici = $descu+($descu*($comi/100))}}
+                                            {{$comis_array = round(($comici),2)}}
+                                        @endif
                                     </td>
-                                    <td>{{$cotizacion->moneda->simbolo}}. {{round(($comis_array)+($comis_array)*($igv->igv_total/100),2)}}</td>
-                                    <td>{{$cotizacion->moneda->simbolo}}. {{round($comis_array+($comis_array)*($igv->igv_total/100),2)*$cotizacion_registros->cantidad}}</td>
+                                    <td>{{$cotizacion->moneda->simbolo}}. {{round(($comis_array),2)}}</td>
+                                    <td>{{$cotizacion->moneda->simbolo}}. {{round($comis_array,2)*$cotizacion_registros->cantidad}}</td>
 
-                                    <td style="display: none">{{$sub_total=$cotizacion->op_gravada}}
+                                    <td style="display: none">{{$sub_total=$cotizacion->op_gravada+$cotizacion->op_exonerada+$cotizacion->op_inafecta}}
                                     </td>
                                  </tr>
                                  {{-- @endif --}}

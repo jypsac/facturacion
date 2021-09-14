@@ -486,57 +486,61 @@
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
                 var multiplier = 100;
                 var precio_uni=precio-(promedio_original*descuento/100);
-                var precio_uni_dec = Math.round((precio_uni+(precio_uni*(igv/100)))*multiplier) / multiplier;
 
-                document.getElementById(`check_descuento${a}`).value = descuento;
-
-                var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
-                var comisiones = Math.round((comisiones9+(comisiones9*(igv/100)))* multiplier) / multiplier;
-
-
-                var final=comisiones*cantidad;
-                var final_decimal = Math.round(final * multiplier) / multiplier;
-                console.log(final_decimal);
-
-                document.getElementById(`descuento_unitario${a}`).value = precio_uni_dec;
-                document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
-                // document.getElementById(`total${a}`).value = final_decimal;
                 if(afec.toString() == "Gravado"){
-                    // console.log('a');
+                    var precio_uni_dec = Math.round((precio_uni+(precio_uni*(igv/100)))*multiplier) / multiplier;
+                    var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
+                    var comisiones = Math.round((comisiones9+(comisiones9*(igv/100)))* multiplier) / multiplier;
+                    var final=comisiones*cantidad;
+                    var final_decimal = Math.round(final * multiplier) / multiplier;
 
                     document.getElementById(`total${a}`).value = final_decimal;
                     document.getElementById(`afectacion${a}`).value = final_decimal;
                }else{
-                    // console.log('b');
+
+                    var precio_uni_dec = Math.round((precio_uni)*multiplier) / multiplier;
+                    var comisiones9=precio_uni+(precio_uni*comision_porcentaje/100);
+                    var comisiones = Math.round((comisiones9)* multiplier) / multiplier;
+                    var final=comisiones*cantidad;
+                    var final_decimal = Math.round(final * multiplier) / multiplier;
+
                     document.getElementById(`total${a}`).value = final_decimal;
-                   document.getElementById(`afectacion${a}`).value = 0;
+                    document.getElementById(`afectacion${a}`).value = final_decimal;
                }
+                document.getElementById(`check_descuento${a}`).value = descuento;
+                document.getElementById(`descuento_unitario${a}`).value = precio_uni_dec;
+                document.getElementById(`precio_unitario_comision${a}`).value = comisiones;
             }else{
 
                 var multiplier = 100;
                 var descuento = 0;
                 var precio = document.querySelector(`#precio${a}`).value;
-                var precio_igv = Math.round((parseFloat(precio)+(parseFloat(precio)*(igv/100)))*multiplier) /multiplier;
                 var comision_porcentaje=document.querySelector(`#comision${a}`).value;
-                var final= cantidad*precio;
-                var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
 
-                var end = Math.round((end9+(end9*(igv/100)))* multiplier) / multiplier;
-                var final2=cantidad*end;
-                var final_decimal = Math.round(final2 * multiplier) / multiplier;
-                document.getElementById(`descuento_unitario${a}`).value = precio_igv;
-                document.getElementById(`precio_unitario_comision${a}`).value = end;
-                document.getElementById(`check_descuento${a}`).value = 0;
-                // document.getElementById(`total${a}`).value = final_decimal;
                 if(afec.toString() == "Gravado"){
-                    // console.log('c');
+                    var precio_igv = Math.round((parseFloat(precio)+(parseFloat(precio)*(igv/100)))*multiplier) /multiplier;
+                    var final= cantidad*precio;
+                    var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
+
+                    var end = Math.round((end9+(end9*(igv/100)))* multiplier) / multiplier;
+                    var final2=cantidad*end;
+                    var final_decimal = Math.round(final2 * multiplier) / multiplier;
                     document.getElementById(`total${a}`).value = final_decimal;
                     document.getElementById(`afectacion${a}`).value = final_decimal;
                }else{
-                    // console.log('d');
+                    var precio_igv = Math.round((parseFloat(precio))*multiplier) /multiplier;
+                    var final= cantidad*precio;
+                    var end9=parseFloat(precio)+(parseFloat(precio)*parseInt(comision_porcentaje)/100);
+                    var end = Math.round((end9)* multiplier) / multiplier;
+                    var final2=cantidad*end;
+                    var final_decimal = Math.round(final2 * multiplier) / multiplier;
+
                     document.getElementById(`total${a}`).value = final_decimal;
-                   document.getElementById(`afectacion${a}`).value = 0;
+                   document.getElementById(`afectacion${a}`).value = final_decimal;
                }
+                document.getElementById(`descuento_unitario${a}`).value = precio_igv;
+                document.getElementById(`precio_unitario_comision${a}`).value = end;
+                document.getElementById(`check_descuento${a}`).value = 0;
             }
 
 
@@ -646,16 +650,18 @@
     <script>
         $(".delete").on('click', function () {
             $('.case:checkbox:checked').parents("tr").remove();
+            var multiplier = 100;
             var totalInp = $('[name="afectacion"]');
             var total_t = 0;
 
             totalInp.each(function(){
                 total_t += parseFloat($(this).val());
             });
-            $('#sub_total').val(total_t);
+            var tot_rou = Math.round(total_t * multiplier)/multiplier;
+            $('#total_final').val(tot_rou);
 
             var igv_valor={{$igv->renta}};
-            var subtotal = document.querySelector(`#sub_total`).value;
+            var subtotal = document.querySelector(`#total_final`).value;
             var igv=parseFloat(subtotal)*igv_valor/100;
             var end=parseFloat(igv)+parseFloat(subtotal);
 
