@@ -102,6 +102,7 @@ class KardexEntradaController extends Controller
       $user_login =auth()->user()->id;
       $usuario=User::where('id',$user_login)->first();
 
+      return view('inventario.kardex.entrada.entrada_producto.create_inventario_inicial',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
       return view('inventario.kardex.entrada.entrada_producto.create',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
     }
 
