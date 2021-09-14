@@ -93,7 +93,9 @@ Route::group(
 
 		Route::resource('/facturacion_electronica','FacturacionElectronicaController');
 
+		Route::get('/nota-credito-create-nota-credito','NotaCreditoController@create_nota_credito')->name('nota-credito.create_nota_credito');
 		Route::resource('/nota-credito','NotaCreditoController');
+		
 		Route::resource('/debito','DebitoController');
 		Route::resource('/documento','DocumentoController');
 		Route::resource('/empresa','EmpresaController')->only(['index','update']);

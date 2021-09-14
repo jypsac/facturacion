@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Facturacion;
 use Illuminate\Http\Request;
 
 class NotaCreditoController extends Controller
@@ -13,7 +14,8 @@ class NotaCreditoController extends Controller
      */
     public function index()
     {
-        return view('transaccion.venta.nota_credito.index');
+        $Notas_creditos=Facturacion::where('f_electronica',0)->where('estado',1)->get();
+        return view('transaccion.venta.nota_credito.index',compact('Notas_creditos'));
     }
 
     /**
@@ -23,7 +25,12 @@ class NotaCreditoController extends Controller
      */
     public function create()
     {
-        //
+        $facturas=Facturacion::where('f_electronica',1)->where('estado',0)->get();
+        return view('transaccion.venta.nota_credito.index',compact('facturas'));
+    }
+
+    public function create_nota_credito(){
+        return "hola mundo";
     }
 
     /**

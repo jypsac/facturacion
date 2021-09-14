@@ -25,16 +25,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach($guia_remision as $guias_remision)
+                                 @foreach($facturas as $factura)
                                 <tr class="gradeX">
-                                    <td>{{$guias_remision->id}}</td>
-                                    <td>{{$guias_remision->cod_guia}}</td>
-                                    <td>{{$guias_remision->cliente->nombre}}</td>
-                                    <td>{{$guias_remision->cliente->numero_documento}}</td>
-                                    <td>{{$guias_remision->fecha_emision}}</td>
-                                    <td><center><a href="{{route('guia_remision.show' , $guias_remision->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                    <td>{{$factura->id}}</td>
+                                    <td>{{$factura->cod_guia}}</td>
+                                    <td>{{$factura->cliente->nombre}}</td>
+                                    <td>{{$factura->cliente->numero_documento}}</td>
+                                    <td>{{$factura->fecha_emision}}</td>
+                                    <td><center><a href="{{route('facturacion.show' , $factura->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                 </tr>
-                                @endforeach --}}
+                                @endforeach 
                             </tbody>
                         </table>
                     </div>
