@@ -1126,6 +1126,9 @@ class Config_fe extends Model
 
             $note->setDetails([$detail1, $detail2])
                 ->setLegends([$legend]);
+
+                $note->setDetails([$detail1, $detail2])
+                ->setLegends([$legend]);
         }
     }
 

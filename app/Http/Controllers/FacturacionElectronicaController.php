@@ -191,6 +191,36 @@ class FacturacionElectronicaController extends Controller
 
     }
 
+    public function nota_credito(Request $request)
+    {   
+
+        $guia=Guia_remision::where('g_electronica',1)->where('id',$request->factura_id)->first();
+        $guias_registros=g_remision_registro::where('guia_remision_id',$request->factura_id)->get();
+        $tipo_transporte=$guia->tipo_transporte;
+
+        //configuracion
+        $see=Config_fe::guia_electronica();
+
+        //guia
+        $invoice=Config_fe::guia_remision_baja($guia,$guias_registros,$tipo_transporte);
+        // dd($invoice);
+        // return response()->json($invoice);
+        
+        //envio a SUNAT    
+        $result=Config_fe::send($see, $invoice);
+        //lectura CDR
+        $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+        // return $msg;
+
+
+        //cambio de guia electronica - en caso sea exitodo
+        $guia->estado_anulado=1;
+        $guia->save();
+
+        return redirect()->route('facturacion_electronica.index_guia_remision')->with('successMsg',$msg);
+
+    }
+
     /**
      * Store a newly created resource in storage.
      *
