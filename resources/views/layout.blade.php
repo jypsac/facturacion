@@ -105,6 +105,8 @@
                                     @can('transacciones-ventas-guia_remision.index')
                                     <li><a href="{{route('guia_remision.index')}}">Guia Remision</a></li>
                                     @endcan
+                                    <li><a href="{{route('nota-credito.index')}}">Nota Credito</a></li>
+                                    <li><a href="{{route('nota-credito.index')}}">Nota Debito</a></li>
                                 </ul>
                             </li>
                             @endcan

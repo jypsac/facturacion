@@ -93,7 +93,7 @@ Route::group(
 
 		Route::resource('/facturacion_electronica','FacturacionElectronicaController');
 
-		Route::resource('/credito','CreditoController');
+		Route::resource('/nota-credito','NotaCreditoController');
 		Route::resource('/debito','DebitoController');
 		Route::resource('/documento','DocumentoController');
 		Route::resource('/empresa','EmpresaController')->only(['index','update']);
