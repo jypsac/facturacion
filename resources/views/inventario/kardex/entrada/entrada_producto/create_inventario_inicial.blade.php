@@ -114,23 +114,33 @@
 {{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 <!-- Typehead -->
 <script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
-
+<script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
+<script type="text/javascript">
+	$(".select2_demo_4").select2({
+	            placeholder: "Select a state",
+	            allowClear: true
+        });
+</script>
 <script>
 	var i = 2;
 	$(".addmore").on('click', function () {
+
+		$(".select2_demo_4").select2({
+	            placeholder: "Select a state",
+	            allowClear: true
+        });
 		var data = `[
 		<tr>
+			<td>
+				<input type='checkbox' class='case'/>
+			</td>;
 		<td>
-		<input type='checkbox' class='case'/>
-		</td>";
-		<td>
-		<select class="select2_demo_1 form-control">
-		<option value="1">Option 1</option>
-		<option value="2">Option 2</option>
-		<option value="3">Option 3</option>
-		<option value="4">Option 4</option>
-		<option value="5">Option 5</option>
-		</select>
+			<select class="select2_demo_4 form-control " name="articulo[]" >
+			<option></option>
+			@foreach($productos as $producto)
+			<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
+			@endforeach
+			</select>
 		</td>
 		<td>
 		<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
@@ -169,7 +179,11 @@
 
 		});
 	</script>
+{{-- 	<script type="text/javascript">
+        function append(a){
 
+        }
+    </script> --}}
 	<script>
 		function select_all() {
 			$('input[class=case]:checkbox').each(function () {
@@ -181,15 +195,12 @@
 			});
 		}
 	</script>
-
-	<!-- Select2 -->
-	<script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
-	<script>
-		$(".select2_demo_1").select2();
-		$(".select2_demo_2").select2();
+	<script type="text/javascript">
 		$(".select2_demo_3").select2({
-			placeholder: "Select a state",
-			allowClear: true
-		});
+		        placeholder: "Select a state",
+		        allowClear: true
+	        });
 	</script>
+
+
 	@endsection
