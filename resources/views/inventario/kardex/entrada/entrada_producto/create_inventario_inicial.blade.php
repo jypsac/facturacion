@@ -125,10 +125,7 @@
 	var i = 2;
 	$(".addmore").on('click', function () {
 
-		$(".select2_demo_4").select2({
-	            placeholder: "Select a state",
-	            allowClear: true
-        });
+
 		var data = `[
 		<tr>
 			<td>
@@ -154,6 +151,10 @@
 		</tr> `;
 		$('table').append(data);
 		i++;
+		$(".select2_demo_4").select2({
+	            placeholder: "Select a state",
+	            allowClear: true
+        });
 	});
 </script>
 
