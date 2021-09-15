@@ -1,10 +1,10 @@
 @extends('layout')
 
-@section('title', 'Nota Credito')
-@section('breadcrumb', 'Nota Credito')
-@section('breadcrumb2', 'Nota Credito')
-@section('href_accion', '#modal-form')
-@section('value_accion', 'Agregar')
+@section('title', 'Nota Credito - lista')
+@section('breadcrumb', 'Nota Credito - lista')
+@section('breadcrumb2', 'Nota Credito - lista')
+@section('href_accion', route('nota-credito.index'))
+@section('value_accion', 'Atras')
 
 @section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -21,7 +21,7 @@
                                     <th>Cliente</th>
                                     <th>Ruc/DNI</th>
                                     <th>Fecha emision</th>
-                                    <th>Ver</th>
+                                    <th>Opciones</th>
                                 </tr>
                             </thead>
                             <tbody>
@@ -32,7 +32,7 @@
                                     <td>{{$factura->cliente->nombre}}</td>
                                     <td>{{$factura->cliente->numero_documento}}</td>
                                     <td>{{$factura->fecha_emision}}</td>
-                                    <td><center><a href="{{route('facturacion.show' , $factura->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                    <td><center><a href="{{route('nota-credito.create_nota_credito' , $factura->id)}}"><button type="button" class="btn btn-w-m btn-primary">Aplicar</button></a></center></td>
                                 </tr>
                                 @endforeach 
                             </tbody>
