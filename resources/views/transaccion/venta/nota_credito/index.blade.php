@@ -3,7 +3,7 @@
 @section('title', 'Nota Credito')
 @section('breadcrumb', 'Nota Credito')
 @section('breadcrumb2', 'Nota Credito')
-@section('href_accion', '#modal-form')
+@section('href_accion', route('nota-credito.create'))
 @section('value_accion', 'Agregar')
 
 @section('content')
@@ -25,16 +25,16 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                {{-- @foreach($guia_remision as $guias_remision)
+                                @foreach($notas_creditos as $nota_credito)
                                 <tr class="gradeX">
-                                    <td>{{$guias_remision->id}}</td>
-                                    <td>{{$guias_remision->cod_guia}}</td>
-                                    <td>{{$guias_remision->cliente->nombre}}</td>
-                                    <td>{{$guias_remision->cliente->numero_documento}}</td>
-                                    <td>{{$guias_remision->fecha_emision}}</td>
-                                    <td><center><a href="{{route('guia_remision.show' , $guias_remision->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                    <td>{{$nota_credito->id}}</td>
+                                    <td>{{$nota_credito->cod_guia}}</td>
+                                    <td>{{$nota_credito->cliente->nombre}}</td>
+                                    <td>{{$nota_credito->cliente->numero_documento}}</td>
+                                    <td>{{$nota_credito->fecha_emision}}</td>
+                                    <td><center><a href="{{route('nota-credito-create-nc' , $nota_credito->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                 </tr>
-                                @endforeach --}}
+                                @endforeach 
                             </tbody>
                         </table>
                     </div>
