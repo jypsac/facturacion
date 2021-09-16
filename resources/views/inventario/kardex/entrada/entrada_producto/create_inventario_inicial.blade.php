@@ -19,25 +19,26 @@
 		<div class="col-lg-12">
 			<div class="ibox">
 				<div class="ibox-content">
-					<form action="{{ route('kardex-entrada.store') }}"  enctype="multipart/form-data" method="post" onsubmit="return valida(this)">
-						@csrf
-						<div class="form-group row ">
-							<label class="col-sm-1 col-form-label" >Motivos:</label>
-							<div class="col-sm-3">
-								<input type="text" class="form-control" disabled="" value="Inventario Inicial">
-							</div>
 
-							<label class="col-sm-1 col-form-label" >Almacen:</label>
-							<div class="col-sm-3">
-								<input type="text" disabled="" value="Almacen Principal" class="form-control">
-							</select>
-						</div>
-
-						<label class="col-sm-1 col-form-label" >Moneda:</label>
+					<div class="form-group row ">
+						<label class="col-sm-1 col-form-label" >Motivos:</label>
 						<div class="col-sm-3">
-							<input type="text" class="form-control" disabled="" value="Soles (PEN)">
+							<input type="text" class="form-control" disabled="" value="Inventario Inicial">
 						</div>
+
+						<label class="col-sm-1 col-form-label" >Almacen:</label>
+						<div class="col-sm-3">
+							<input type="text" disabled="" value="Almacen Principal" class="form-control">
+						</select>
 					</div>
+
+					<label class="col-sm-1 col-form-label" >Moneda:</label>
+					<div class="col-sm-3">
+						<input type="text" class="form-control" disabled="" value="Soles (PEN)">
+					</div>
+				</div>
+				<form action="{{ route('kardex-entrada.i_inicial') }}"  enctype="multipart/form-data" method="post">
+					@csrf
 					<table cellspacing="0" class="table table-striped " width="100%">
 						<thead>
 							<tr>
@@ -54,43 +55,48 @@
 										<input type='checkbox' class="case">
 									</td>
 									<td>
-										<select class="select2_demo_3 form-control" name="articulo[]" >
+										<select class="select2_demo_3" name="articulo[]" required="" id="producto1" >
 											<option></option>
 											@foreach($productos as $producto)
 											<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 											@endforeach
 										</select>
 									</td>
-									<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
-									<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
-									<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
+									<td><input type='text'  name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
+									<td><input type='text' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
+									<td><input disabled="disabled" type='text' id='total0' name='total[]' class="form-control" required/></td>
 									<span id="spTotal"></span>
 								</tr>
 
 							</tbody>
 						</table>
-
-
 						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
 						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
 						<button class="btn btn-primary float-right" type="submit" id="boton"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
-
 					</form>
-
-					<tr>
-						<style type="text/css">
-						.form-control{
-							border-radius: 5px;
-						}
-					</style>
-				</tr>
-
+				</div>
 			</div>
 		</div>
 	</div>
 </div>
-</div>
-
+<style>
+.form-control{border-radius: 5px;}
+.select2-container--default .select2-selection--single .select2-selection__rendered {
+	font-size: 12px;
+}
+.select2-container--default .select2-selection--single {
+	border: none;
+}
+span.select2.select2-container.select2-container--default{
+	width: 100%!important;
+	background-color: #FFFFFF;
+	background-image: none;
+	border-radius: 1px;
+	display: block;
+	padding: 3px 12px;
+	border: 1px solid #e5e6e7;
+}
+</style>
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
 <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -99,63 +105,53 @@
 
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-
-{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
-<script>
-	function valida(f) {
-		var boton=document.getElementById("boton");
-		var completo = true;
-		var incompleto = false;
-		if( f.elements[0].value == "" )
-			{ alert(incompleto); }
-		else{boton.type = 'button';}
-	}
-</script>
-{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 <!-- Typehead -->
 <script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
 <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
 <script type="text/javascript">
-	$(".select2_demo_4").select2({
-	            placeholder: "Select a state",
-	            allowClear: true
-        });
+
+</script>
+<script type="text/javascript">
+	$(".select2_demo_3").select2({
+		placeholder: "Seleccionar Producto",
+		allowClear: true
+	});
 </script>
 <script>
 	var i = 2;
 	$(".addmore").on('click', function () {
-
-
-		var data = `[
+		var data = `
 		<tr>
-			<td>
-				<input type='checkbox' class='case'/>
-			</td>;
 		<td>
-			<select class="select2_demo_4 form-control " name="articulo[]" >
-			<option></option>
-			@foreach($productos as $producto)
-			<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
-			@endforeach
-			</select>
+		<input type='checkbox' class='case'/>
+		</td>;
+		<td>
+		<select class="select2_demo_3" name="articulo[]" required="" id="producto${i}">
+		<option></option>
+		@foreach($productos as $producto)
+		<option value="{{$producto->id}}" >{{$producto->nombre}}- {{$producto->codigo_original}}</option>
+		@endforeach
+		</select>
 		</td>
 		<td>
-		<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
+		<input type='text' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
 		</td>
 		<td>
-		<input type='text' id='precio" + i + "' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});" required/>
+		<input type='text' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});"  required/>
 		</td>
 		<td>
-		<input type='text' id='total${i}' name='total[]' class="form-control" required/>
+		<input type='text' id='total${i}' name='total[]' class="form-control" disabled="disabled" required/>
 		</td>
 		</tr> `;
 		$('table').append(data);
 		i++;
-		$(".select2_demo_4").select2({
-	            placeholder: "Select a state",
-	            allowClear: true
-        });
+		$(".select2_demo_3").select2({
+			placeholder: "Seleccionar Producto",
+			allowClear: true
+		});
+
 	});
+
 </script>
 
 <script>
@@ -180,11 +176,7 @@
 
 		});
 	</script>
-{{-- 	<script type="text/javascript">
-        function append(a){
 
-        }
-    </script> --}}
 	<script>
 		function select_all() {
 			$('input[class=case]:checkbox').each(function () {
@@ -196,12 +188,4 @@
 			});
 		}
 	</script>
-	<script type="text/javascript">
-		$(".select2_demo_3").select2({
-		        placeholder: "Select a state",
-		        allowClear: true
-	        });
-	</script>
-
-
 	@endsection

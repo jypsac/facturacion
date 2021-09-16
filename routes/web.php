@@ -228,6 +228,8 @@ Route::group(
 
 		Route::resource('/kardex-entrada-Distribucion','KardexEntradaDistribucionController');
 		Route::resource('/kardex-entrada','KardexEntradaController');
+		Route::post('/kardex-entrada/inventario-inicial','KardexEntradaController@InventarioInicial')->name('kardex-entrada.i_inicial');
+
 
 		Route::post('/kardex-entrada-Traslado-almacen/create','KardexEntradaTrasladoAlmacenController@create')->name('kardex-entrada-Traslado-almacen.create');
 		Route::resource('/kardex-entrada-Traslado-almacen','KardexEntradaTrasladoAlmacenController')->except(['create']);
