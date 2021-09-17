@@ -16,13 +16,13 @@ class AddForeignKeyKardexEntradaTable extends Migration
         Schema::table('kardex_entrada', function (Blueprint $table) {
 
 
-            $table->unsignedBigInteger('motivo_id');
+            $table->unsignedBigInteger('motivo_id')->nullable();
             $table->foreign('motivo_id')->references('id')->on('motivos')->onDelete('cascade');
 
-            $table->unsignedBigInteger('provedor_id');
+            $table->unsignedBigInteger('provedor_id')->nullable();
             $table->foreign('provedor_id')->references('id')->on('provedores')->onDelete('cascade');
 
-            $table->unsignedBigInteger('categoria_id');
+            $table->unsignedBigInteger('categoria_id')->nullable();
             $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('cascade');
 
             $table->unsignedBigInteger('almacen_id');
@@ -34,9 +34,9 @@ class AddForeignKeyKardexEntradaTable extends Migration
             $table->unsignedBigInteger('moneda_id');
             $table->foreign('moneda_id')->references('id')->on('monedas')->onDelete('cascade');
 
-            $table->string('guia_remision');
-            $table->string('factura');
-            $table->string('informacion');
+            $table->string('guia_remision')->nullable();
+            $table->string('factura')->nullable();
+            $table->string('informacion')->nullable();
             $table->string('estado');
 
             $table->unsignedBigInteger('tipo_registro_id')->nullable();
