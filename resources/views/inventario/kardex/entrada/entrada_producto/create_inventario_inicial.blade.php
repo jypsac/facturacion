@@ -55,10 +55,10 @@
 										<input type='checkbox' class="case">
 									</td>
 									<td>
-										<select class="select2_demo_3" name="articulo[]" required="" id="producto1" >
+										<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" onchange="disabled_a(1);" >
 											<option></option>
 											@foreach($productos as $producto)
-											<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
+											<option value="{{$producto->id}}" >{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 											@endforeach
 										</select>
 									</td>
@@ -126,10 +126,10 @@ span.select2.select2-container.select2-container--default{
 		<input type='checkbox' class='case'/>
 		</td>;
 		<td>
-		<select class="select2_demo_3" name="articulo[]" required="" id="producto${i}">
+		<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto${i}" onchange="disabled_a(${i});">
 		<option></option>
 		@foreach($productos as $producto)
-		<option value="{{$producto->id}}" >{{$producto->nombre}}- {{$producto->codigo_original}}</option>
+		<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 		@endforeach
 		</select>
 		</td>
@@ -151,7 +151,6 @@ span.select2.select2-container.select2-container--default{
 		});
 
 	});
-
 </script>
 
 <script>
@@ -188,4 +187,10 @@ span.select2.select2-container.select2-container--default{
 			});
 		}
 	</script>
-	@endsection
+	<script >
+		function disabled_a(a){
+			var estado = $(`#producto${a}`).val();
+			$("option[value='"+estado+"']").attr("disabled", "disabled");
+		}
+	</script>
+@endsection
