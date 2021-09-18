@@ -34,7 +34,7 @@
 
 					<label class="col-sm-1 col-form-label" >Moneda:</label>
 					<div class="col-sm-3">
-						<input type="text" class="form-control" disabled="" value="Soles (PEN)">
+						<input type="text" class="form-control" disabled="" value="{{$moneda_principal->nombre}} ({{$moneda_principal->simbolo}})">
 					</div>
 				</div>
 				<form action="{{ route('kardex-entrada.i_inicial') }}"  enctype="multipart/form-data" method="post">
@@ -55,7 +55,7 @@
 										<input type='checkbox' class="case">
 									</td>
 									<td>
-										<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" onchange="disabled_a(1);" >
+										<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" {{-- onchange="disabled_a(1);"  --}}>
 											<option></option>
 											@foreach($productos as $producto)
 											<option value="{{$producto->id}}" >{{$producto->nombre}}- {{$producto->codigo_original}}</option>
@@ -126,7 +126,7 @@ span.select2.select2-container.select2-container--default{
 		<input type='checkbox' class='case'/>
 		</td>;
 		<td>
-		<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto${i}" onchange="disabled_a(${i});">
+		<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto${i}" >
 		<option></option>
 		@foreach($productos as $producto)
 		<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
