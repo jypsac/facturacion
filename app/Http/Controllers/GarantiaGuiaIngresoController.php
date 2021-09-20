@@ -388,7 +388,7 @@ class GarantiaGuiaIngresoController extends Controller
 
         $nombre_impresora = "EPSONTICKET";
 
-        $connector = new NetworkPrintConnector ($nombre_impresora);
+        $connector = new NetworkPrintConnector("192.168.0.253", 9100, true);
         $printer = new Printer($connector);
         #Mando un numero de respuesta para saber que se conecto correctamente.
         echo 1;
