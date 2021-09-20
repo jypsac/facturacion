@@ -185,6 +185,8 @@ Route::group(
 		Route::put('garantia_guia_ingreso/{guia}', 'GarantiaGuiaIngresoController@actualizar')->name('garantia_guia_ingreso.actualizar');
 		Route::resource('/garantia_guia_ingreso','GarantiaGuiaIngresoController')->except(['create']);
 		Route::post('/garantia_guia_ingreso/create' , 'GarantiaGuiaIngresoController@create')->name('garantia_guia_ingreso.create');
+		//AJAX DE TICKETS
+		Route::post('ticket_ajax_ingreso', 'GarantiaGuiaIngresoController@ticket_guia_ingreso')->name('ticket_ajax_ingreso');
 
 		Route::POST('garantia_guia_egreso/email/enviar','GarantiaGuiaEgresoController@enviar')->name('garantia_egreso.enviar');
 		Route::get('garantia_guia_egreso/email/{id}','GarantiaGuiaEgresoController@email')->name('guia_egreso.email');
@@ -194,7 +196,8 @@ Route::group(
 		Route::resource('/garantia_guia_egreso','GarantiaGuiaEgresoController')->except(['create','edit','destroy']);
 
 		Route::get('garantia_guia_egreso/create_egreso/{id}', 'GarantiaGuiaEgresoController@create_egreso')->name('garantia_guia_egreso.create_egreso');
-
+		//AJAX DE TICKETS
+		Route::post('ticket_ajax_egreso', 'GarantiaGuiaEgresoController@ticket_guia_egreso')->name('ticket_ajax_egreso');
 
 		Route::get('garantia_informe_tecnico/impresionInformeTecnico/{id}' , 'GarantiaInformeTecnicoController@print')->name('impresiones_informe');
 		Route::get('garantia_informe_tecnico/{id}/actualizar', 'GarantiaInformeTecnicoController@actualizar')->name('garantia_informe_tecnico.actualizar');
@@ -202,6 +205,8 @@ Route::group(
 
 		Route::resource('/garantia_informe_tecnico','GarantiaInformeTecnicoController')->except(['create','edit','destroy']);
 		Route::get('garantia_informe_tecnico/create_tecnico/{id}', 'GarantiaInformeTecnicoController@create_tecnico')->name('garantia_informe_tecnico.create_tecnico');
+		//AJAX DE TICKETS
+		Route::post('ticket_ajax_tecnico', 'GarantiaInformeTecnicoController@ticket_infome_tecnico')->name('ticket_ajax_tecnico');
 
 		//Consultas
 		Route::get('consultas/garantias-guias-ingreso', 'ConsultasController@garantias_guias_ingreso')->name('consultas.garantias.guias_ingreso');

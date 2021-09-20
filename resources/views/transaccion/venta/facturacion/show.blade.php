@@ -491,7 +491,7 @@
             var id_fac =  $(`[id='id']`).val();
            $.ajax({
                type: "post",
-                url: "{{ route('ticket_ajax') }}",
+                url: "{{ route('ticket_ajax_ingreso') }}",
                  data: {
                     '_token': $('input[name=_token]').val(),
                     'id' : id_fac

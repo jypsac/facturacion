@@ -17,6 +17,9 @@ use Swift_Mailer;
 use Swift_MailTransport;
 use Swift_Message;
 use Swift_Attachment;
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 use Auth;
 
 class GarantiaGuiaEgresoController extends Controller
@@ -193,8 +196,69 @@ class GarantiaGuiaEgresoController extends Controller
        }
        return "Something went wrong :(";
 
-
-
    }
+   public function ticket_guia_egreso(Request $request){
+        $ids = $request->get('id');
+        // $facturacion=Facturacion::find($ids);
+        $garantia_egreso = GarantiaGuiaEgreso::find($ids);
+        $empresa=Empresa::first();
 
+        $nombre_impresora = "EPSONTICKET";
+
+        $connector = new WindowsPrintConnector($nombre_impresora);
+        $printer = new Printer($connector);
+        #Mando un numero de respuesta para saber que se conecto correctamente.
+        echo 1;
+
+         //EMPRESA
+        $empresa=Empresa::first();
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->setEmphasis(true);
+        $printer->text("GUIA DE EGRESO\n");
+        $printer->text($garantia_egreso->orden_servicio."\n");
+        $printer->text("===============================\n");
+        $printer->text($garantia_egreso->created_at."\n");
+        $printer->text($empresa->nombre."\n");
+        $printer->setEmphasis(true);
+        $printer->text("RUC: ".$empresa->ruc."\n");
+        // $printer->setEmphasis(false);
+        $printer->text($empresa->calle." - ".$empresa->ciudad." - ".$empresa->region_provincia."\n");
+        $printer->text("Telefono: ".$empresa->telefono);
+        $printer->setEmphasis(false);
+        $printer->text("\n===============================\n");
+        //CLIENTE
+        $cliente_dato = sprintf('%-15.15s %-2.2s %-21.21s', "Cliente", ':', $garantia_egreso->garantia_ingreso_i->clientes_i->nombre);
+        $printer->text($cliente_dato."\n");
+        $cliente_id= sprintf('%-15.20s %-2.2s %-21.21s', $garantia_egreso->garantia_ingreso_i->clientes_i->documento_identificacion, ':', $garantia_egreso->garantia_ingreso_i->clientes_i->numero_documento);
+        $printer->text($cliente_id);
+        $printer->text("\n===============================\n");
+        //TRABAJADOR
+        $trabajador_dato = sprintf('%-15.15s %-2.2s %-21.21s', "Ing. Asignado", ':', $garantia_egreso->garantia_ingreso_i->personal_laborales->nombres);
+        $printer->text($trabajador_dato."\n");
+        $motivo= sprintf('%-15.15s %-2.2s %-21.21s', "Motivo", ':', $garantia_egreso->garantia_ingreso_i->motivo);
+        $printer->text($motivo."\n");
+        $marca= sprintf('%-15.15s %-2.2s %-21.21s', "Marca", ':', $garantia_egreso->garantia_ingreso_i->marcas_i->nombre);
+        $printer->text($marca."\n");
+        $asunto= sprintf('%-15.15s %-2.2s %-21.21s', "Asunto", ':', $garantia_egreso->garantia_ingreso_i->asunto);
+        $printer->text($asunto);
+        $printer->text("\n===============================\n");
+        //DATOS DEL EQUIPO
+        $modelo= sprintf('%-15.15s %-2.2s %-21.21s', "Modelo", ':', $garantia_egreso->garantia_ingreso_i->nombre_equipo);
+        $printer->text($modelo."\n");
+        $n_serie= sprintf('%-15.15s %-2.2s %-21.21s', "Nro.  Serie", ':', $garantia_egreso->garantia_ingreso_i->numero_serie);
+        $printer->text($n_serie."\n");
+        $codigo_int= sprintf('%-15.15s %-2.2s %-21.21s', "Codigo Interno", ':', $garantia_egreso->garantia_ingreso_i->codigo_interno);
+        $printer->text($codigo_int."\n");
+        $fecha_compra= sprintf('%-15.15s %-2.2s %-21.21s', "Fecha Compra", ':', $garantia_egreso->garantia_ingreso_i->fecha_compra);
+        $printer->text($fecha_compra);
+
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->text("\n===============================\n");
+
+
+        $printer->feed(3);
+        $printer->cut();
+        $printer->pulse();
+        $printer->close();
+      }
 }

@@ -23,6 +23,9 @@
             <input type="text" name="archivo" maxlength="50" value="{{$garantias_guias_egreso->garantia_ingreso_i->orden_servicio}}" oninput="actualizatext()" id="texto2">
             <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
         </form>
+        {{-- TICKET --}}
+        <button id="btnImprimir" class="btn btn-info"><i class="fa fa-ticket fa-lg"></i></button>
+        <input type="text" value="{{$garantias_guias_egreso->id}}" name="id" id="id" hidden="">
         @if(Auth::user()->email_creado == 1)
         <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn" >
             @csrf
@@ -263,5 +266,26 @@
 
   }
 </script>
-
+<script>
+    $(document).ready(function() {
+        $('#btnImprimir').click(function(){
+            var id_guia =  $(`[id='id']`).val();
+           $.ajax({
+               type: "post",
+                url: "{{ route('ticket_ajax_egreso') }}",
+                 data: {
+                    '_token': $('input[name=_token]').val(),
+                    'id' : id_guia
+                    },
+               success: function(response){
+                   if(response==1){
+                       // alert('Imprimiendo Ticket');
+                   }else{
+                       alert('Error');
+                   }
+               }
+           });
+        });
+    });
+</script>
 @endsection
