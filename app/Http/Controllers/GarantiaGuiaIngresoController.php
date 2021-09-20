@@ -26,7 +26,7 @@ use Swift_Message;
 use Swift_Attachment;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
-use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
+use Mike42\Escpos\PrintConnectors\NetworkPrintConnector;
 use Auth;
 
 
@@ -388,7 +388,7 @@ class GarantiaGuiaIngresoController extends Controller
 
         $nombre_impresora = "EPSONTICKET";
 
-        $connector = new WindowsPrintConnector($nombre_impresora);
+        $connector = new NetworkPrintConnector ($nombre_impresora);
         $printer = new Printer($connector);
         #Mando un numero de respuesta para saber que se conecto correctamente.
         echo 1;
