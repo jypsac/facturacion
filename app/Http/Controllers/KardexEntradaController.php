@@ -29,8 +29,9 @@ class KardexEntradaController extends Controller
      */
     public function index()
     {
-      $primer_registro_kardex=Kardex_entrada::first();if (empty($primer_registro_kardex)){$primer_registro_kardex=1;}
-      $inventario_inicial=Kardex_entrada::where('id',1)->where('id','!=',1)->get();
+      $primer_registro=Kardex_entrada::first();
+      if(empty($primer_registro)){$primer_registro_kardex=1;}else{ $primer_registro_kardex=$primer_registro->id;}
+      $inventario_inicial=Kardex_entrada::where('id',1)->where('id','!=',$primer_registro_kardex)->get();
       $user_login =auth()->user();
       $almacenes=Almacen::all();
       $clasificaciones=Categoria::all();
@@ -60,7 +61,7 @@ class KardexEntradaController extends Controller
       }
       // return $array_final;
       
-      return view('inventario.kardex.entrada.entrada_producto.index' ,compact('kardex_entradas','almacenes','clasificaciones','array_final'));
+      return view('inventario.kardex.entrada.entrada_producto.index' ,compact('primer_registro','kardex_entradas','almacenes','clasificaciones','array_final'));
 
     }
 
@@ -103,9 +104,11 @@ class KardexEntradaController extends Controller
       $moneda_principal=Moneda::where('principal',1)->first();
       $user_login =auth()->user()->id;
       $usuario=User::where('id',$user_login)->first();
-
-      return view('inventario.kardex.entrada.entrada_producto.create_inventario_inicial',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario','moneda_principal'));
-      // return view('inventario.kardex.entrada.entrada_producto.create',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
+      // if ($count_kardex_e==0) {
+        return view('inventario.kardex.entrada.entrada_producto.create_inventario_inicial',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario','moneda_principal'));
+      // }else{
+        // return view('inventario.kardex.entrada.entrada_producto.create',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
+      // }
     }
 
     /**
@@ -318,12 +321,19 @@ class KardexEntradaController extends Controller
      */
     public function show($id)
     {
+      $inventario_inicial=Kardex_entrada::first();
+      $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
       $igv = Igv::first();
       $mi_empresa=Empresa::first();
       $moneda_nacional=Moneda::where('id','1')->first();
       $moneda_extranjera=Moneda::where('id','2')->first();
       $kardex_entradas=Kardex_entrada::find($id);
       $kardex_entradas_registros=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
+
+      if ($inventario_inicial->id==$id) {
+
+        return view('inventario.kardex.entrada.entrada_producto.show_inventario_inicial',compact('inventario_inicial','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera','igv','productos'));
+      }
       return view('inventario.kardex.entrada.entrada_producto.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera','igv'));
     }
 

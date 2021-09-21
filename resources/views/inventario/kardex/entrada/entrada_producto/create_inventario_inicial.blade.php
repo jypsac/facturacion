@@ -108,9 +108,7 @@ span.select2.select2-container.select2-container--default{
 <!-- Typehead -->
 <script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
 <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
-<script type="text/javascript">
 
-</script>
 <script type="text/javascript">
 	$(".select2_demo_3").select2({
 		placeholder: "Seleccionar Producto",
