@@ -7,6 +7,9 @@ use App\Facturacion_registro;
 use App\Empresa;
 use App\Igv;
 use App\Banco;
+use App\Nota_Credito;
+use App\Nota_Credito_registro;
+
 use Illuminate\Http\Request;
 
 class NotaCreditoController extends Controller

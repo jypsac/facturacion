@@ -1137,4 +1137,3 @@ class Config_fe extends Model
             return $note;
         }
     }
-

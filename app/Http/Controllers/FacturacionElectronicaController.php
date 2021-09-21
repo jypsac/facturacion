@@ -9,6 +9,8 @@ use App\Boleta;
 use App\Boleta_registro; 
 use App\Guia_remision;
 use App\g_remision_registro;
+use App\Nota_Credito;
+use App\Nota_Credito_registro;
 use DateTime;
 
 use Greenter\Model\Client\Client;
@@ -200,22 +202,31 @@ class FacturacionElectronicaController extends Controller
         $see=Config_fe::facturacion_electronica();
 
         //guia
-         $invoice=Config_fe::nota_credito($factura,$factura_registro,$request);
-        // dd($invoice);
-        // return response()->json($invoice);
+        $invoice=Config_fe::nota_credito($factura,$factura_registro,$request);
         
         //envio a SUNAT    
         $result=Config_fe::send($see, $invoice);
         //lectura CDR
         $msg=Config_fe::lectura_cdr($result->getCdrResponse());
-        // return $msg;
+        
+        $nota_credito=new Nota_Credito();
+        $nota_credito->facturacion_id=$factura->id;
+        $nota_credito->save();
 
-
-        //cambio de guia electronica - en caso sea exitodo
-        // $guia->estado_anulado=1;
-        // $guia->save();
-        // return "todo correcto";
-        // return redirect()->route('facturacion_electronica.index_guia_remision')->with('successMsg',$msg);
+        $contador=count($factura_registro);
+        for($p=0;$p<$contador;$p++){
+            $string=(string)$p;
+            $nombre="input_disabled_".$string;
+            if($request->$nombre==NULL){
+            }else{
+                $nota_creditos_r=new Nota_Credito_registro();
+                $nota_creditos_r->nota_credito_id=$nota_credito->id;
+                $nota_creditos_r->producto_id=$factura_registro[$p]->producto_id;
+                $nota_creditos_r->precio=$factura_registro[$p]->precio;
+                $nota_creditos_r->cantidad=$request->$nombre;
+                $nota_creditos_r->save();
+            }
+        }
 
     }
 
