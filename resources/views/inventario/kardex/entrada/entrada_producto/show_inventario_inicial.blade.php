@@ -16,19 +16,12 @@
         <div class="col-lg-12">
             <div class="ibox-content p-xl">
                 <div class="row">
-                    <div class="col-sm-6">
-                       <div style="height:  140px"></div>
-                       <address class="col-sm-6">
-                        <h5>De:</h5>
-                        <i class=" fa fa-user">:</i><strong > </strong><br>
-                        <i class=" fa fa-building">:</i> <br>
-                        <i class="fa fa-phone">:</i>
-                    </address>
-                </div>
-                <div class="col-sm-3">
-                </div>
-
-                <div class="col-sm-3 text-right">
+                    <div class="col-sm-4 ">
+                      <img src="{{asset('img/logos/'.$mi_empresa->foto)}}" style="width: 300px;margin-bottom: 15px;">
+                  </div>
+                  <div class="col-sm-4 ">
+                  </div>
+                  <div class="col-sm-4 text-right">
                     <div class="form-control ruc" >
                         <center>
                             <h3 style="padding-top:10px ">RUC : {{$mi_empresa->ruc}}</h3>
@@ -36,13 +29,10 @@
                             <h4 class="text-navy">{{$inventario_inicial->codigo_guia}}</h4>
                         </center>
                     </div><br>
-                    <address>
-                        <img src="https://www.flaticon.es/svg/static/icons/svg/2897/2897818.svg" width="13px" alt="">:<strong>{{$inventario_inicial->almacen->nombre}} - {{$inventario_inicial->almacen->abreviatura}}</strong><br>
-                        <i class=" fa fa-building">:</i>{{$inventario_inicial->almacen->direccion}}<br>
-                        <i class="fa fa-phone">:</i> {{$mi_empresa->telefono}} / {{$mi_empresa->movil}} <br>
-                        <strong><i class="fa fa-clock-o" aria-hidden="true"></i></strong> {{$inventario_inicial->created_at}}</span> <br>
-                        <strong><i class="fa fa-shopping-cart" aria-hidden="true"></i></strong>  {{$inventario_inicial->fecha_compra}}</span>
-                    </address>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-sm-12">
                 </div>
             </div>
 
@@ -50,15 +40,18 @@
                 <table class="table invoice-table" >
                     <thead>
                         <tr>
-                            <th>Codigo</th>
+                            <th></th>
+                            <th align="left">Producto</th>
                             <th style="width:150px">Cantidad</th>
                             <th style="width:150px">Precio </th>
                             <th style="background: #f3f3f4;width:150px">Precio Total</th>
                         </tr>
                     </thead>
                     <tbody>
-                     @foreach($kardex_entradas_registros as $kardex_entradas_registro)
-                     <tr>
+                       @foreach($kardex_entradas_registros as $kardex_entradas_registro)
+                       <tr>
+                        <td> <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
+                        </td>
                         <td>
                             <select class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" >
                                 <option></option>
@@ -79,74 +72,15 @@
 
             <p aling="right"><b>Nota:</b> Guia Emitada en {{$inventario_inicial->moneda->nombre}}</p>
         </div>
-        <div>
-            <h3>Precio Nacional Total</h3>
-        </div>
-        <div class="row" style="text-align: center;">
-            <div class="col-sm-3 ">
-                <p class="form-control a"> Sub Total</p>
-                <p class="form-control a">{{$moneda_nacional->simbolo}}. {{$inventario_inicial->precio_nacional_total}}</p>
-            </div>
-            <div class="col-sm-3 ">
-                <p class="form-control a"> Op. Agravada</p>
-                <p class="form-control a">{{$moneda_nacional->simbolo}}. 00</p>
-            </div>
-            <div class="col-sm-3 ">
-                <p class="form-control a"> IGV</p>
-                <p class="form-control a">{{$moneda_nacional->simbolo}}. {{round(($inventario_inicial->precio_nacional_total*($igv->igv_total/100)),2)}}</p>
-            </div>
-            <div class="col-sm-3 ">
-                <p class="form-control a"> Importe Total</p>
-                <p class="form-control a">{{$moneda_nacional->simbolo}}. {{round($inventario_inicial->precio_nacional_total+($inventario_inicial->precio_nacional_total*($igv->igv_total/100)),2)}}</p>
-            </div>
-        </div>
         <br>
-        <div>
-            <h3>Precio Extranjero Total </h3>
-        </div>
-        <div class="row" style="text-align: center;">
-
-            <div class="col-sm-3 ">
-                <p class="form-control a"> Sub Total</p>
-                <p class="form-control a">{{$moneda_extranjera->simbolo}}. {{$inventario_inicial->precio_extranjero_total}}</p>
-            </div>
-            <div class="col-sm-3 ">
-                <p class="form-control a"> Op. Agravada</p>
-                <p class="form-control a">{{$moneda_extranjera->simbolo}}. 00</p>
-            </div>
-            <div class="col-sm-3 ">
-                <p class="form-control a"> IGV</p>
-                <p class="form-control a">{{$moneda_extranjera->simbolo}}. {{round(($inventario_inicial->precio_extranjero_total*($igv->igv_total/100)),2)}}</p>
-            </div>
-            <div class="col-sm-3 ">
-                <p class="form-control a"> Importe Total</p>
-                <p class="form-control a">{{$moneda_extranjera->simbolo}}. {{round($inventario_inicial->precio_extranjero_total+($inventario_inicial->precio_extranjero_total*($igv->igv_total/100)),2)}}</p>
-            </div>
-        </div>
-        <br>
-
     </div>
-
 </div>
 </div>
 </div>
-
 <style type="text/css">
-.form-control{margin-top: 5px; border-radius: 5px}
-p#texto{
-    text-align: center;
-    color:black;
-}
-p.form-control.a{
-    margin-bottom: 0px;
-}
-.form-control{border-radius: 5px;}
-.select2-container--default .select2-selection--single .select2-selection__rendered {
-    font-size: 12px;
-}
-.select2-container--default .select2-selection--single {
-    border: none;
-}
+.select2-container--default .select2-selection--single .select2-selection__rendered {font-size: 12px;}
+.select2-container--default .select2-selection--single { border: none;}
+
 span.select2.select2-container.select2-container--default{
     width: 100%!important;
     background-color: #FFFFFF;
