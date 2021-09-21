@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Facturacion;
 use App\Facturacion_registro;
+use App\Empresa;
+use App\Igv;
+use App\Banco;
 use Illuminate\Http\Request;
 
 class NotaCreditoController extends Controller
@@ -26,15 +29,22 @@ class NotaCreditoController extends Controller
      */
     public function create()
     {
-        $facturas=Facturacion::where('f_electronica',1)->where('estado',0)->get();
+        //cambiar de 0 a 1 en f_electronica
+        $facturas=Facturacion::where('f_electronica',0)->where('estado',0)->get();
         return view('transaccion.venta.nota_credito.lista_facturacion',compact('facturas'));
     }
 
     public function create_nota_credito(Request $request){
-
-        $factura=Facturacion::where('id',$request->id)->first();
-        $factura_registro=Facturacion_registro::where('facturacion_id',$request->id)->first();
-        return view('transaccion.venta.nota_credito.create',compact('factura'));
+        
+        $facturacion=Facturacion::find($request->factura_id);
+        $facturacion_registro=Facturacion_registro::where('facturacion_id',$request->factura_id)->get();
+        
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $banco=Banco::where('estado',0)->get();
+        return view('transaccion.venta.nota_credito.create',compact('facturacion','facturacion_registro','empresa','igv','sub_total','banco'));
     }
 
     /**
@@ -45,7 +55,7 @@ class NotaCreditoController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        
     }
 
     /**

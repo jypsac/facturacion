@@ -191,18 +191,16 @@ class FacturacionElectronicaController extends Controller
 
     }
 
-    public function nota_credito(Request $request)
+    public function nota_credito(Request $request, $id)
     {   
-
-        $guia=Guia_remision::where('g_electronica',1)->where('id',$request->factura_id)->first();
-        $guias_registros=g_remision_registro::where('guia_remision_id',$request->factura_id)->get();
-        $tipo_transporte=$guia->tipo_transporte;
-
+        // return $request;
+        $factura=Facturacion::where('id',$id)->first();
+        $factura_registro=Facturacion_registro::where('facturacion_id',$id)->get();
         //configuracion
-        $see=Config_fe::guia_electronica();
+        $see=Config_fe::facturacion_electronica();
 
         //guia
-        $invoice=Config_fe::guia_remision_baja($guia,$guias_registros,$tipo_transporte);
+         $invoice=Config_fe::nota_credito($factura,$factura_registro,$request);
         // dd($invoice);
         // return response()->json($invoice);
         
@@ -214,10 +212,10 @@ class FacturacionElectronicaController extends Controller
 
 
         //cambio de guia electronica - en caso sea exitodo
-        $guia->estado_anulado=1;
-        $guia->save();
-
-        return redirect()->route('facturacion_electronica.index_guia_remision')->with('successMsg',$msg);
+        // $guia->estado_anulado=1;
+        // $guia->save();
+        // return "todo correcto";
+        // return redirect()->route('facturacion_electronica.index_guia_remision')->with('successMsg',$msg);
 
     }
 

@@ -25,14 +25,20 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                 @foreach($facturas as $factura)
+                                @foreach($facturas as $factura)
                                 <tr class="gradeX">
                                     <td>{{$factura->id}}</td>
-                                    <td>{{$factura->cod_guia}}</td>
+                                    <td>{{$factura->codigo_fac}}</td>
                                     <td>{{$factura->cliente->nombre}}</td>
                                     <td>{{$factura->cliente->numero_documento}}</td>
                                     <td>{{$factura->fecha_emision}}</td>
-                                    <td><center><a href="{{route('nota-credito.create_nota_credito' , $factura->id)}}"><button type="button" class="btn btn-w-m btn-primary">Aplicar</button></a></center></td>
+                                    <td>
+                                        <form method="POST" action="{{route('nota-credito.create_nota_credito')}}">
+                                          @csrf
+                                          <input type="hidden" name="factura_id" value="{{$factura->id}}">
+                                          <button type="submit" class="btn btn-sm btn-primary">Aplicar</button>
+                                        </form>
+                                    </td>
                                 </tr>
                                 @endforeach 
                             </tbody>

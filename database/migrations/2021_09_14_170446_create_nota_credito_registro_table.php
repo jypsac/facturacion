@@ -15,6 +15,12 @@ class CreateNotaCreditoRegistroTable extends Migration
     {
         Schema::create('nota_credito_registro', function (Blueprint $table) {
             $table->bigIncrements('id');
+            $table->unsignedBigInteger('nota_credito_id');
+            $table->foreign('nota_credito_id')->references('id')->on('nota_credito')->onDelete('cascade');
+            $table->unsignedBigInteger('producto_id');
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
+            $table->double('precio',17,2);
+            $table->integer('cantidad');
             $table->timestamps();
         });
     }
