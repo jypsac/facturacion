@@ -40,8 +40,8 @@
                 <table class="table invoice-table" >
                     <thead>
                         <tr>
-                            <th></th>
-                            <th align="left">Producto</th>
+                            <th style="width:50px"></th>
+                            <th >Producto</th>
                             <th style="width:150px">Cantidad</th>
                             <th style="width:150px">Precio </th>
                             <th style="background: #f3f3f4;width:150px">Precio Total</th>
@@ -50,10 +50,9 @@
                     <tbody>
                        @foreach($kardex_entradas_registros as $kardex_entradas_registro)
                        <tr>
-                        <td> <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
-                        </td>
-                        <td>
-                            <select class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" >
+                        <td> <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
+                        <td >
+                            <select align="left" class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" >
                                 <option></option>
                                 @foreach($productos as $producto)
                                 <option value="{{$producto->id}}" @if($producto->id==$kardex_entradas_registro->id) selected=""@endif >{{$producto->nombre}}- {{$producto->codigo_original}}</option>
@@ -70,7 +69,7 @@
 
             </table>
 
-            <p aling="right"><b>Nota:</b> Guia Emitada en {{$inventario_inicial->moneda->nombre}}</p>
+            <div style="text-align: right;"><button class="btn btn-info">Guardar</button> <button class="btn btn-secondary">Guardar y Finalizar</button></div>
         </div>
         <br>
     </div>
@@ -78,7 +77,7 @@
 </div>
 </div>
 <style type="text/css">
-.select2-container--default .select2-selection--single .select2-selection__rendered {font-size: 12px;}
+.select2-container--default .select2-selection--single .select2-selection__rendered {font-size: 12px;text-align: left;}
 .select2-container--default .select2-selection--single { border: none;}
 
 span.select2.select2-container.select2-container--default{
