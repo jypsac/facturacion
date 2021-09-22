@@ -12,7 +12,7 @@
 @section('content')
 
 <div class="wrapper wrapper-content animated fadeInRight">
-    <div class="row ibox-title" style="padding-right: 3.1%;margin: 0;padding-bottom: 0px;" >
+    <div class="row ibox-title" style="padding-right: 3.1%;margin: 0;" >
         <div class="col-sm-6">
            <a href="#punto" onclick="Formulario_edit()"  id="click" class="btn btn-info"><i class="fa fa-edit"></i></a>
        </div>
@@ -22,9 +22,6 @@
                 <input type="text" name="archivo" maxlength="50" value="{{$garantias_informe_tecnico->orden_servicio}}" oninput="actualizatext()" id="texto2">
                 <button type="submit" class="btn btn-success" data-toggle="tooltip" data-placement="bottom" title="" data-original-title="Descargar PDF" ><i class="fa fa-file-pdf-o fa-lg"></i>  </button>
             </form>
-            {{-- TICKET --}}
-            <button id="btnImprimir" class="btn btn-info"><i class="fa fa-ticket fa-lg"></i></button>
-            <input type="text" value="{{$garantias_informe_tecnico->id}}" name="id" id="id" hidden="">
             @if(Auth::user()->email_creado ==1)
             <form action="{{route('email.save')}}" method="post" style="text-align: none;padding-right: 0;padding-left: 0;" class="btn">
                 @csrf
@@ -358,27 +355,5 @@
       }
 
   }
-</script>
-<script>
-    $(document).ready(function() {
-        $('#btnImprimir').click(function(){
-            var id_guia =  $(`[id='id']`).val();
-           $.ajax({
-               type: "post",
-                url: "{{ route('ticket_ajax_tecnico') }}",
-                 data: {
-                    '_token': $('input[name=_token]').val(),
-                    'id' : id_guia
-                    },
-               success: function(response){
-                   if(response==1){
-                       // alert('Imprimiendo Ticket');
-                   }else{
-                       alert('Error');
-                   }
-               }
-           });
-        });
-    });
 </script>
 @endsection
