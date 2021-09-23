@@ -48,8 +48,8 @@
                         </tr>
                     </thead>
                     <tbody>
-                       @foreach($kardex_entradas_registros as $kardex_entradas_registro)
-                       <tr>
+                     @foreach($kardex_entradas_registros as $kardex_entradas_registro)
+                     <tr>
                         <td> <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
                         <td >
                             <select align="left" class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" >
@@ -69,7 +69,8 @@
 
             </table>
 
-            <div style="text-align: right;"><button class="btn btn-info">Guardar</button> <button class="btn btn-secondary">Guardar y Finalizar</button></div>
+            <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+            <button class="btn btn-secondary float-right">Guardar y Finalizar</button> <button class="btn btn-info float-right">Guardar</button>
         </div>
         <br>
     </div>
@@ -110,5 +111,41 @@ span.select2.select2-container.select2-container--default{
         allowClear: true
     });
 </script>
+<script>
+    var i = 2;
+    $(".addmore").on('click', function () {
+        var data = `
+        <tr>
+        <td>
+       <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
+        </td>;
+        <td>
+        <select class="select2_demo_3 asf" name="articulo[]" required="" id="producto${i}" >
+        <option></option>
+        @foreach($productos as $producto)
+        <option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
+        @endforeach
+        </select>
+        </td>
+        <td>
+        <input type='text' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
+        </td>
+        <td>
+        <input type='text' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});"  required/>
+        </td>
+        <td>
+        <input type='text' id='total${i}' name='total[]' class="form-control" disabled="disabled" required/>
+        </td>
+        </tr> `;
+        $('table').append(data);
+        i++;
+        $(".select2_demo_3").select2({
+            placeholder: "Seleccionar Producto",
+            allowClear: true
+        });
+
+    });
+</script>
+
 
 @endsection
