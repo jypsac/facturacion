@@ -36,42 +36,46 @@
                 </div>
             </div>
 
-            <div class="table-responsive m-t">
-                <table class="table invoice-table" >
-                    <thead>
-                        <tr>
-                            <th style="width:50px"></th>
-                            <th >Producto</th>
-                            <th style="width:150px">Cantidad</th>
-                            <th style="width:150px">Precio </th>
-                            <th style="background: #f3f3f4;width:150px">Precio Total</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                     @foreach($kardex_entradas_registros as $kardex_entradas_registro)
-                     <tr>
-                        <td> <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
-                        <td >
-                            <select align="left" class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" >
-                                <option></option>
-                                @foreach($productos as $producto)
-                                <option value="{{$producto->id}}" @if($producto->id==$kardex_entradas_registro->id) selected=""@endif >{{$producto->nombre}}- {{$producto->codigo_original}}</option>
-                                @endforeach
-                            </select>
-                        </td>
-                        <td style="background: #f3f3f4"><input type="text" class="form-control" value="{{$kardex_entradas_registro->cantidad_inicial}}"></td>
-
-                        <td><input type="text" class="form-control" value="{{$kardex_entradas_registro->id}}"></td>
-                        <td style="background: #f3f3f4"><input type="text" class="form-control" value="{{$kardex_entradas_registro->id}}"></td>
+            <table class="table invoice-table" >
+                <thead>
+                    <tr>
+                        <th style="width:50px"></th>
+                        <th >Producto</th>
+                        <th style="width:150px">Cantidad</th>
+                        <th style="width:150px">Precio </th>
+                        <th style="background: #f3f3f4;width:150px">Precio Total</th>
                     </tr>
-                    @endforeach
-                </tbody>
+                </thead>
+                <tbody id="assas">
+                 @foreach($kardex_entradas_registros as $kardex_entradas_registro)
+                 <tr>
+                    <td> <button type="button" class='borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
+                    <td >
+                        <select align="left" class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" >
+                            <option></option>
+                            @foreach($productos as $producto)
+                            <option value="{{$producto->id}}" @if($producto->id==$kardex_entradas_registro->id) selected=""@endif >{{$producto->nombre}}- {{$producto->codigo_original}}</option>
+                            @endforeach
+                        </select>
+                    </td>
+                    <td>
+                        <input type='text'  name='cantidad[]' class="monto{{$kardex_entradas_registro->id}} form-control" value="{{$kardex_entradas_registro->cantidad_inicial}}"  onkeyup="multi({{$kardex_entradas_registro->id}});"  required/>
+                    </td>
+                    <td>
+                        <input type='text' name='precio[]' class="monto{{$kardex_entradas_registro->id}} form-control" onkeyup="multi({{$kardex_entradas_registro->id}});" value="{{$kardex_entradas_registro->precio_nacional}}" required/>
+                    </td>
+                    <td>
+                        <input disabled="disabled"  value="{{$kardex_entradas_registro->cantidad_inicial*$kardex_entradas_registro->precio_nacional}}" type='text' id='total{{$kardex_entradas_registro->id}}' name='total[]' class="form-control" required/>
+                    </td>
+                    <span id="spTotal"></span>
+                </tr>
+                @endforeach
+            </tbody>
 
-            </table>
-
-            <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
-            <button class="btn btn-secondary float-right">Guardar y Finalizar</button> <button class="btn btn-info float-right">Guardar</button>
-        </div>
+        </table>
+        <span hidden="hidden">{{$ultimo_numero=$kardex_entradas_registro->id}}</span>
+        <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+        <button class="btn btn-secondary float-right">Guardar y Finalizar</button> <button class="btn btn-info float-right">Guardar</button>
         <br>
     </div>
 </div>
@@ -104,48 +108,66 @@ span.select2.select2-container.select2-container--default{
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
-
-<script type="text/javascript">
-    $(".select2_demo_3").select2({
-        placeholder: "Seleccionar Producto",
-        allowClear: true
-    });
-</script>
 <script>
-    var i = 2;
-    $(".addmore").on('click', function () {
-        var data = `
-        <tr>
-        <td>
-       <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
-        </td>;
-        <td>
-        <select class="select2_demo_3 asf" name="articulo[]" required="" id="producto${i}" >
-        <option></option>
-        @foreach($productos as $producto)
-        <option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
-        @endforeach
-        </select>
-        </td>
-        <td>
-        <input type='text' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
-        </td>
-        <td>
-        <input type='text' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});"  required/>
-        </td>
-        <td>
-        <input type='text' id='total${i}' name='total[]' class="form-control" disabled="disabled" required/>
-        </td>
-        </tr> `;
-        $('table').append(data);
-        i++;
+    function multi(a){
+        console.log(a);
+        var total = 1;
+            var change= false; //
+            $(`.monto${a}`).each(function(){
+                if (!isNaN(parseFloat($(this).val()))) {
+                    change= true;
+                    total *= parseFloat($(this).val());
+                }
+            });
+            total = (change)? total:0;
+            document.getElementById(`total${a}`).value = total;
+        }
+    </script>
+    <script type="text/javascript">
         $(".select2_demo_3").select2({
             placeholder: "Seleccionar Producto",
             allowClear: true
         });
+    </script>
+    <script>
+        var i =  {{$ultimo_numero}}+1;
+        $(".addmore").on('click', function () {
+            var data = `
+            <tr>
+            <td> <button type="button" class='borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
+            <td>
+            <select class="select2_demo_3 asf" name="articulo[]" required="" id="producto${i}" >
+            <option></option>
+            @foreach($productos as $producto)
+            <option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
+            @endforeach
+            </select>
+            </td>
+            <td>
+            <input type='text' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
+            </td>
+            <td>
+            <input type='text' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});"  required/>
+            </td>
+            <td>
+            <input type='text' id='total${i}' name='total[]' class="form-control" disabled="disabled" required/>
+            </td>
+            </tr> `;
+            $('#assas').append(data);
+            i++;
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Producto",
+                allowClear: true
+            });
 
+        });
+    </script>
+
+    <script>
+       $(document).on('click', '.borrar', function (event) {
+        event.preventDefault();
+        $(this).closest('tr').remove();
     });
 </script>
-
 
 @endsection

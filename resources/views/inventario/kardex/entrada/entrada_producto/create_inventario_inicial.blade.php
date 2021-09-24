@@ -42,20 +42,19 @@
 					<table cellspacing="0" class="table table-striped " width="100%">
 						<thead>
 							<tr>
-								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()"  /></th>
+								<th style="width: 10px"></th>
 								<th style="width: 600px">Producto  <a href="{{route('productos.create')}}" class="btn btn-warning" target="blanck" style="padding-top: 0px;padding-bottom: 0px; padding-left: 4px;padding-right: 4px;" ><i class="fa fa-plus-square" aria-hidden="true" ></a></th>
 									<th style="width: 100px">Cantidad</th>
 									<th style="width: 100px">Precio</th>
 									<th style="width: 100px">Total</th>
 								</tr>
 							</thead>
-							<tbody>
+							<tbody id="tbody">
 								<tr>
+									<td> <button type="button" class='borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
+
 									<td>
-										<input type='checkbox' class="case">
-									</td>
-									<td>
-										<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" {{-- onchange="disabled_a(1);"  --}}>
+										<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" >
 											<option></option>
 											@foreach($productos as $producto)
 											<option value="{{$producto->id}}" >{{$producto->nombre}}- {{$producto->codigo_original}}</option>
@@ -70,7 +69,6 @@
 
 							</tbody>
 						</table>
-						<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
 						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
 						<button class="btn btn-primary float-right" type="submit" id="boton"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
 					</form>
@@ -121,7 +119,7 @@ span.select2.select2-container.select2-container--default{
 		var data = `
 		<tr>
 		<td>
-		<input type='checkbox' class='case'/>
+		<button type="button" class='borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i>
 		</td>;
 		<td>
 		<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto${i}" >
@@ -141,7 +139,7 @@ span.select2.select2-container.select2-container--default{
 		<input type='text' id='total${i}' name='total[]' class="form-control" disabled="disabled" required/>
 		</td>
 		</tr> `;
-		$('table').append(data);
+		$('#tbody').append(data);
 		i++;
 		$(".select2_demo_3").select2({
 			placeholder: "Seleccionar Producto",
@@ -168,9 +166,9 @@ span.select2.select2-container.select2-container--default{
 	</script>
 
 	<script>
-		$(".delete").on('click', function () {
-			$('.case:checkbox:checked').parents("tr").remove();
-
+		$(document).on('click', '.borrar', function (event) {
+			event.preventDefault();
+			$(this).closest('tr').remove();
 		});
 	</script>
 
@@ -185,10 +183,4 @@ span.select2.select2-container.select2-container--default{
 			});
 		}
 	</script>
-	<script >
-		function disabled_a(a){
-			var estado = $(`#producto${a}`).val();
-			$("option[value='"+estado+"']").attr("disabled", "disabled");
-		}
-	</script>
-@endsection
+	@endsection
