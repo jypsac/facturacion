@@ -329,9 +329,10 @@ class KardexEntradaController extends Controller
       $moneda_extranjera=Moneda::where('id','2')->first();
       $kardex_entradas=Kardex_entrada::find($id);
       $kardex_entradas_registros=kardex_entrada_registro::where('kardex_entrada_id',$id)->get();
+      $cantidad_registro=count($kardex_entradas_registros);
 
       if ($inventario_inicial->id==$id) {
-        return view('inventario.kardex.entrada.entrada_producto.show_inventario_inicial',compact('inventario_inicial','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera','igv','productos'));
+        return view('inventario.kardex.entrada.entrada_producto.show_inventario_inicial',compact('inventario_inicial','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera','igv','productos','cantidad_registro'));
       }
       return view('inventario.kardex.entrada.entrada_producto.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera','igv'));
     }
@@ -357,17 +358,34 @@ class KardexEntradaController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $update=Kardex_entrada::find($id);
-      $update->nombre=$request->get('nombre');
-      $update->precio=$request->get('precio');
-      $update->serie_producto=$request->get('serie_producto');
-      $update->cantidad=$request->get('cantidad');
-      $update->provedor=$request->get('provedor');
-      $update->almacen=$request->get('almacen');
-      $update->informacion=$request->get('informacion');
-      $update->save();
+      $update_kardx_regis = kardex_entrada_registro::findOrFail($id);
+      $update_kardx_regis->delete();
 
-      return redirect()->route('kardex-entrada.index');
+      return response()->json(['mensaje'=>'Se Eliminó Correctamente el Registro']);
+      // $articulo $cantidad $precio
+     //  $registros=kardex_entrada_registro::all();
+     //  $id_registro= $request->get('id_registro');
+     //  $count_articulo= count($id_registro);
+
+     //  for($i=0;$i<$count_articulo;$i++){
+     //   $update_kardx_regis=kardex_entrada_registro::find($id_registro[$i]);
+     //   $update_kardx_regis->cantidad_inicial=$request->get('cantidad')[$i];
+     //   $update_kardx_regis->cantidad=$request->get('cantidad')[$i];
+     //   $update_kardx_regis->precio_nacional=$request->get('precio')[$i];
+     //   $update_kardx_regis->save();
+     // }
+
+     // $update=Kardex_entrada::find($id);
+     // $update->nombre=$request->get('nombre');
+     // $update->precio=$request->get('precio');
+     // $update->serie_producto=$request->get('serie_producto');
+     // $update->cantidad=$request->get('cantidad');
+     // $update->provedor=$request->get('provedor');
+     // $update->almacen=$request->get('almacen');
+     // $update->informacion=$request->get('informacion');
+     // $update->save();
+
+      return redirect()->route('kardex-entrada.show','1');
     }
 
     /**
