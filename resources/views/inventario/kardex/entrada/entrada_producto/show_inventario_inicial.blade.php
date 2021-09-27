@@ -33,54 +33,71 @@
             </div>
             <div class="row">
                 <div class="col-sm-12">
+                    <div id="divmsg" style="display:none"  role="alert"></div>
+                    <div class="form-group row ">
+                        <label class="col-sm-1 col-form-label" >Motivos:</label>
+                        <div class="col-sm-3">
+                            <input type="text" class="form-control" disabled="" value="Inventario Inicial">
+                        </div>
+
+                        <label class="col-sm-1 col-form-label" >Almacen:</label>
+                        <div class="col-sm-3">
+                            <input type="text" disabled="" value="Almacen Principal" class="form-control">
+                        </select>
+                    </div>
+
+                    <label class="col-sm-1 col-form-label" >Moneda:</label>
+                    <div class="col-sm-3">
+                       <div class="tooltip-demo">
+                        <input type="text" class="form-control" disabled="" value="{{$inventario_inicial->moneda->nombre}} ({{$inventario_inicial->moneda->simbolo}})"  data-toggle="tooltip" data-placement="top" title="Si Deseas cambiar la Moneda, Puedes cambiarla en 'Monedas'">
+                    </div>
                 </div>
             </div>
-            <form action="{{ route('kardex-entrada.update',$inventario_inicial->id) }}"  enctype="multipart/form-data" method="post">
-              @csrf
-              @method('PATCH')
-              <table class="table invoice-table" >
-                <thead>
-                    <tr>
-                        <th style="width:50px"></th>
-                        <th >Producto</th>
-                        <th style="width:150px">Cantidad</th>
-                        <th style="width:150px">Precio </th>
-                        <th style="background: #f3f3f4;width:150px">Precio Total</th>
-                    </tr>
-                </thead>
-                <tbody id="assas">
-                    @if($cantidad_registro == 0) @else
-                    @foreach($kardex_entradas_registros as $kardex_entradas_registro)
-                    <tr>
-                        <td> <button type="button" class='borrar btnenviar{{$kardex_entradas_registro->id}} btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
-                        <td >
-                            <p  align="left" class="form-control">{{$kardex_entradas_registro->producto->codigo_original}} -  {{$kardex_entradas_registro->producto->nombre}}</p>
-                            <input type='hidden'  name='id_registro[]' readonly="readonly" value="{{$kardex_entradas_registro->id}}" required hidden="hidden" />
-                        </td>
-                        <td>
-                            <input type='text'  name='cantidad[]' class="monto{{$kardex_entradas_registro->id}} form-control" value="{{$kardex_entradas_registro->cantidad_inicial}}"  onkeyup="multi({{$kardex_entradas_registro->id}});"  required/>
-                        </td>
-                        <td>
-                            <input type='text' name='precio[]' class="monto{{$kardex_entradas_registro->id}} form-control" onkeyup="multi({{$kardex_entradas_registro->id}});" value="{{$kardex_entradas_registro->precio_nacional}}" required/>
-                        </td>
-                        <td>
-                            <input disabled="disabled"  value="{{$kardex_entradas_registro->cantidad_inicial*$kardex_entradas_registro->precio_nacional}}" type='text' id='total{{$kardex_entradas_registro->id}}' name='total[]' class="form-control" required/>
-                        </td>
-                        <span id="spTotal"></span>
-                    </tr>
-                    @endforeach
-                    @endif
-                </tbody>
-
-            </table>
-            <span hidden="hidden"> @if($cantidad_registro == 0) {{$ultimo_numero=0}}@else{{$ultimo_numero=$kardex_entradas_registro->id}}@endif</span>
-            <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
-            <button class="btn btn-secondary ladda-button finalizar float-right" data-style="zoom-out" style="margin-left: 10px;"  >Guardar y Finalizar</button><button  data-style="zoom-out" class="guardar ladda-button btn btn-info float-right" >Guardar</button>
-            <div id="divmsg" style="display:none" class="alert alert-primary" role="alert">
-            </div>
-        </form>
-        <br>
+        </div>
     </div>
+    <form action="{{ route('kardex-entrada.update',$inventario_inicial->id) }}"  enctype="multipart/form-data" method="post">
+      @csrf
+      @method('PATCH')
+      <table class="table invoice-table" >
+        <thead>
+            <tr>
+                <th style="width:50px"></th>
+                <th >Producto</th>
+                <th style="width:150px">Cantidad</th>
+                <th style="width:150px">Precio </th>
+                <th style="background: #f3f3f4;width:150px">Precio Total</th>
+            </tr>
+        </thead>
+        <tbody id="assas">
+            @if($cantidad_registro == 0) @else
+            @foreach($kardex_entradas_registros as $kardex_entradas_registro)
+            <tr>
+                <td> <button type="button" class='delete{{$kardex_entradas_registro->id}} borrar e btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
+                <td >
+                    <p  align="left" class="form-control">{{$kardex_entradas_registro->producto->codigo_original}} -  {{$kardex_entradas_registro->producto->nombre}}</p>
+                    <input type='hidden'  name='id_registro[]' readonly="readonly" value="{{$kardex_entradas_registro->id}}" required hidden="hidden" />
+                </td>
+                <td>
+                    <input type='text'  name='cantidad[]' class="monto{{$kardex_entradas_registro->id}} form-control" value="{{$kardex_entradas_registro->cantidad_inicial}}"  onkeyup="multi({{$kardex_entradas_registro->id}});"  required/>
+                </td>
+                <td>
+                    <input type='text' name='precio[]' class="monto{{$kardex_entradas_registro->id}} form-control" onkeyup="multi({{$kardex_entradas_registro->id}});" value="{{$kardex_entradas_registro->precio_nacional}}" required/>
+                </td>
+                <td>
+                    <input disabled="disabled"  value="{{$kardex_entradas_registro->cantidad_inicial*$kardex_entradas_registro->precio_nacional}}" type='text' id='total{{$kardex_entradas_registro->id}}' name='total[]' class="form-control" required/>
+                </td>
+                <span id="spTotal"></span>
+            </tr>
+            @endforeach
+            @endif
+        </tbody>
+    </table>
+    <span hidden="hidden"> @if($cantidad_registro == 0) {{$ultimo_numero=0}}@else{{$ultimo_numero=$kardex_entradas_registro->id}}@endif</span>
+    <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+    <button class="btn btn-secondary ladda-button finalizar float-right" data-style="zoom-out" style="margin-left: 10px;"  >Guardar y Finalizar</button><button  data-style="zoom-out" class="guardar ladda-button btn btn-info float-right" >Guardar</button>
+</form>
+<br>
+</div>
 </div>
 </div>
 </div>
@@ -98,6 +115,7 @@ span.select2.select2-container.select2-container--default{
     border: 1px solid #e5e6e7;
 }
 </style>
+
 
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -117,49 +135,37 @@ span.select2.select2-container.select2-container--default{
 <script src="{{ asset('js/plugins/ladda/spin.min.js')}}"></script>
 <script src="{{ asset('js/plugins/ladda/ladda.min.js')}}"></script>
 <script>
-    $(document).ready(function (){
+
+
+$(document).ready(function (){
         // Bind normal buttons
         Ladda.bind( '.ladda-button',{ timeout: 10000 });
     });
 </script>
 <script type="text/javascript">
-
-
-   function mostrarMensaje(mensaje){
-       $("#divmsg").empty(); //limpiar div
-       $("#divmsg").append("<p>"+mensaje+"</p>");
-       $("#divmsg").show(500);
-       $("#divmsg").hide(3000);
-   }
-
-   $.ajaxSetup({
-    headers: {
-        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-    }
-});
-
-   @if($cantidad_registro == 0) @else
-   @foreach($kardex_entradas_registros as $kardex_entradas_registro)
-   $(".btnenviar{{$kardex_entradas_registro->id}}").click(function(e){
-
+ $.ajaxSetup({ headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
+ @if($cantidad_registro == 0) @else
+ @foreach($kardex_entradas_registros as $kardex_entradas_registro)
+ $(".delete{{$kardex_entradas_registro->id}}").click(function(e){
     e.preventDefault();
-
-    var nombres = {{$kardex_entradas_registro->id}};
-    // alert( nombres);
+    var accion = 'delete';
     $.ajax({
      type:'PUT',
      url:"{{ route('kardex-entrada.update', $kardex_entradas_registro->id) }}",
-     data:{nombres:nombres},
+     data:{accion:accion},
      success:function(data){
-
       mostrarMensaje(data.mensaje);
-
   }
 });
-
 });
-   @endforeach
-   @endif
+ @endforeach
+ @endif
+ function mostrarMensaje(mensaje){
+       $("#divmsg").empty(); //limpiar div
+       $("#divmsg").append(mensaje);
+       $("#divmsg").show(200);
+       $("#divmsg").hide(3000);
+   }
 </script>
 <script>
     {{-- Sumar --}}
@@ -183,17 +189,15 @@ span.select2.select2-container.select2-container--default{
             allowClear: true
         });
     </script>
-
     <script>
         {{-- Darle valor a cada Boton si es Finalizar o solo Guardar --}}
         $(".guardar").on('click', function () {
-            var data = `<input value="1" type='hidden' name='action' class="form-control" required/>`;
+            var data = `<input value="1" type='hidden' name='submit' class="form-control" required/>  <input type='hidden' name='accion' readonly="readonly" value="guardar"  hidden="hidden" />`;
             $('#assas').append(data);
             $(".finalizar").remove();
         });
-
         $(".finalizar").on('click', function () {
-            var data = `<input value="2" type='hidden' name='action' class="form-control" required/>`;
+            var data = `<input value="2" type='hidden' name='submit' class="form-control" required/>   <input type='hidden' name='accion' readonly="readonly" value="guardar"  hidden="hidden" />`;
             $('#assas').append(data);
             $(".guardar").remove();
         });
@@ -231,12 +235,14 @@ span.select2.select2-container.select2-container--default{
 
         });
     </script>
-
     <script>
        $(document).on('click', '.borrar', function (event) {
         event.preventDefault();
-        $(this).closest('tr').remove();
+        var e = document.getElementsByClassName("e").length;
+        // alert(e);
+        if (e>1) {
+            $(this).closest('tr').remove();
+        }
     });
 </script>
-
 @endsection

@@ -104,6 +104,7 @@ class KardexEntradaController extends Controller
       $moneda_principal=Moneda::where('principal',1)->first();
       $user_login =auth()->user()->id;
       $usuario=User::where('id',$user_login)->first();
+
       if ($count_kardex_e==0) {
         return view('inventario.kardex.entrada.entrada_producto.create_inventario_inicial',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario','moneda_principal'));
       }else{
@@ -358,22 +359,65 @@ class KardexEntradaController extends Controller
      */
     public function update(Request $request, $id)
     {
-      $update_kardx_regis = kardex_entrada_registro::findOrFail($id);
-      $update_kardx_regis->delete();
+     $accion=$request->get('accion');
 
-      return response()->json(['mensaje'=>'Se Eliminó Correctamente el Registro']);
-      // $articulo $cantidad $precio
-     //  $registros=kardex_entrada_registro::all();
-     //  $id_registro= $request->get('id_registro');
-     //  $count_articulo= count($id_registro);
+     if ($accion=='delete'){
+      $registros = kardex_entrada_registro::all();
+      $count_regis = count($registros);
+      if($count_regis==1){
+        return response()->json(['mensaje'=>'<div class="alert alert-danger">No puedes Quedarte sin Registros</div> ']);
+      }
+      $delete_regis = kardex_entrada_registro::findOrFail($id);
+      $delete_regis->delete();
+      return response()->json(['mensaje'=>'<div class="alert alert-success">Se Eliminó Correctamente el Registro</div> ']);
+    }
+    else{
 
-     //  for($i=0;$i<$count_articulo;$i++){
-     //   $update_kardx_regis=kardex_entrada_registro::find($id_registro[$i]);
-     //   $update_kardx_regis->cantidad_inicial=$request->get('cantidad')[$i];
-     //   $update_kardx_regis->cantidad=$request->get('cantidad')[$i];
-     //   $update_kardx_regis->precio_nacional=$request->get('precio')[$i];
-     //   $update_kardx_regis->save();
-     // }
+      if ($request->get('id_registro')==true) {
+        $id_registro= $request->get('id_registro');
+        $count_articulo= count($id_registro);
+
+        for($i=0;$i<$count_articulo;$i++){
+         $update_kardx_regis=kardex_entrada_registro::find($id_registro[$i]);
+         $update_kardx_regis->cantidad_inicial=$request->get('cantidad')[$i];
+         $update_kardx_regis->cantidad=$request->get('cantidad')[$i];
+         $update_kardx_regis->precio_nacional=$request->get('precio')[$i];
+         $update_kardx_regis->save();}
+       }
+
+       if ($request->get('articulo_nuevo')==true) {
+         $articulo_nuevo=$request->get('articulo_nuevo');
+         $coun_articulo_nuevo=count($articulo_nuevo);
+
+         $kardex_entrada=Kardex_entrada::first();
+         $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+
+         for($i=0;$i<$coun_articulo_nuevo;$i++){
+          $kardex_entrada_registro=new kardex_entrada_registro();
+          $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
+          $kardex_entrada_registro->producto_id=$articulo_nuevo[$i];
+          $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad_nuevo')[$i];
+          $kardex_entrada_registro->tipo_registro_id = 1;
+          $kardex_entrada_registro->almacen_id=$kardex_entrada->almacen_id;
+          $kardex_entrada_registro->cantidad=$request->get('cantidad_nuevo')[$i];
+          $kardex_entrada_registro->cambio= $cambio->compra;
+        // if ($moneda_principal->id==1) {
+          $kardex_entrada_registro->precio_nacional= $request->get('precio_nuevo')[$i];
+          $kardex_entrada_registro->precio_extranjero= $request->get('precio_nuevo')[$i]/$cambio->venta;
+        // }elseif($moneda_principal->id==2){
+        //   $kardex_entrada_registro->precio_nacional= $request->get('precio_nuevo')[$i]*$cambio->compra;
+        //   $kardex_entrada_registro->precio_extranjero= $request->get('precio_nuevo')[$i];
+        // }
+          $kardex_entrada_registro->estado=1;
+          $kardex_entrada_registro->save();
+        }
+
+
+
+      }
+
+      return redirect()->route('kardex-entrada.show','1');
+    }
 
      // $update=Kardex_entrada::find($id);
      // $update->nombre=$request->get('nombre');
@@ -385,8 +429,7 @@ class KardexEntradaController extends Controller
      // $update->informacion=$request->get('informacion');
      // $update->save();
 
-      return redirect()->route('kardex-entrada.show','1');
-    }
+  }
 
     /**
      * Remove the specified resource from storage.
