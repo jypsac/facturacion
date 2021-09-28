@@ -5,9 +5,6 @@
 @section('breadcrumb2', 'INVENTARIO INICIAL')
 @section('href_accion', route('kardex-entrada.index') )
 @section('value_accion', 'Atras')
-@section('button2', 'Nueva Entrada')
-@section('config',route('kardex-entrada.create'))
-
 @section('content')
 
 <link href="{{ asset('css/plugins/select2/select2.min.css') }}" rel="stylesheet">
@@ -94,6 +91,7 @@
     </table>
     <span hidden="hidden"> @if($cantidad_registro == 0) {{$ultimo_numero=0}}@else{{$ultimo_numero=$kardex_entradas_registro->id}}@endif</span>
     <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+     <button class="btn btn-warning btn-sm demo3" type="button">Run example</button>
     <button class="btn btn-secondary ladda-button finalizar float-right" data-style="zoom-out" style="margin-left: 10px;"  >Guardar y Finalizar</button><button  data-style="zoom-out" class="guardar ladda-button btn btn-info float-right" >Guardar</button>
 </form>
 <br>
@@ -134,6 +132,27 @@ span.select2.select2-container.select2-container--default{
 <!-- Ladda -->
 <script src="{{ asset('js/plugins/ladda/spin.min.js')}}"></script>
 <script src="{{ asset('js/plugins/ladda/ladda.min.js')}}"></script>
+  <!-- Sweet alert -->
+  <link href="{{ asset('css/plugins/sweetalert/sweetalert.css')}}" rel="stylesheet">
+    <script src="{{ asset('js/plugins/sweetalert/sweetalert.min.js')}}"></script>
+
+<script>
+    $(document).ready(function () {
+        $('.demo3').click(function () {
+            swal({
+                title: "Are you sure?",
+                text: "You will not be able to recover this imaginary file!",
+                type: "warning",
+                showCancelButton: true,
+                confirmButtonColor: "#DD6B55",
+                confirmButtonText: "Yes, delete it!",
+                closeOnConfirm: false
+            }, function () {
+                swal("Deleted!", "Your imaginary file has been deleted.", "success");
+            });
+        });
+    });
+</script>
 <script>
 
 

@@ -89,6 +89,12 @@ class KardexEntradaController extends Controller
      */
     public function create()
     {
+      $inventario_inicial=Kardex_entrada::first();
+      if (isset($inventario_inicial)) {
+        if ( $inventario_inicial->estado==1) {
+          return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+        }
+      }
       $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
       $provedores=Provedor::all();
       $almacenes=Almacen::where('estado','0')->where('id',1)->get();
@@ -322,6 +328,8 @@ class KardexEntradaController extends Controller
      */
     public function show($id)
     {
+      $existe_id=Kardex_entrada::where('id',$id)->first();
+      if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
       $inventario_inicial=Kardex_entrada::first();
       $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
       $igv = Igv::first();
@@ -333,6 +341,9 @@ class KardexEntradaController extends Controller
       $cantidad_registro=count($kardex_entradas_registros);
 
       if ($inventario_inicial->id==$id) {
+        if ($inventario_inicial->estado==2) {
+          return view('inventario.kardex.entrada.entrada_producto.show_inventario_inicial_finalizado',compact('inventario_inicial','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera','igv','productos','cantidad_registro'));
+        }
         return view('inventario.kardex.entrada.entrada_producto.show_inventario_inicial',compact('inventario_inicial','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera','igv','productos','cantidad_registro'));
       }
       return view('inventario.kardex.entrada.entrada_producto.show',compact('kardex_entradas','kardex_entradas_registros','mi_empresa','moneda_nacional','moneda_extranjera','igv'));
@@ -360,6 +371,7 @@ class KardexEntradaController extends Controller
     public function update(Request $request, $id)
     {
      $accion=$request->get('accion');
+     $submit=$request->get('submit');
 
      if ($accion=='delete'){
       $registros = kardex_entrada_registro::all();
@@ -411,9 +423,11 @@ class KardexEntradaController extends Controller
           $kardex_entrada_registro->estado=1;
           $kardex_entrada_registro->save();
         }
-
-
-
+      }
+      if ($submit==2) {
+        $kar_entrada=Kardex_entrada::first();
+        $kar_entrada->estado='2';
+        $kar_entrada->save();
       }
 
       return redirect()->route('kardex-entrada.show','1');
@@ -462,12 +476,14 @@ class KardexEntradaController extends Controller
     function InventarioInicial(Request $request)
     {
       // return $request;
+      $kardex_entrada=Kardex_entrada::first();
+      if (empty($kardex_entrada)) {
 
       //     //contador de valores de articulos
-      $moneda_principal=Moneda::where('principal',1)->first();
-      $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
-      $articulo = $request->input('articulo');
-      $count_articulo=count($articulo);
+        $moneda_principal=Moneda::where('principal',1)->first();
+        $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+        $articulo = $request->input('articulo');
+        $count_articulo=count($articulo);
       // return $articulo;
       //   //validacion para la no incersion de dobles articulos
       // for ($e=0; $e < $count_articulo; $e++){
@@ -484,45 +500,43 @@ class KardexEntradaController extends Controller
 
       //   }
       // }
-      $kardex_entrada=new Kardex_entrada();
-      $kardex_entrada->motivo_id='5';
-      $kardex_entrada->codigo_guia="INVENTARIO INICIAL";
-      $kardex_entrada->categoria_id='2';
-      $kardex_entrada->almacen_id=1;
-      $kardex_entrada->almacen_emisor_id=1;
-      $kardex_entrada->almacen_receptor_id=1;
-      $kardex_entrada->moneda_id=$moneda_principal->id;
-      $kardex_entrada->tipo_registro_id=1;
-      $kardex_entrada->estado=1;
-      $kardex_entrada->user_id=auth()->user()->id;
-      $kardex_entrada->informacion="Guia Emitida para Inventario Inicial";
-      $kardex_entrada->save();
+        $kardex_entrada=new Kardex_entrada();
+        $kardex_entrada->motivo_id='5';
+        $kardex_entrada->codigo_guia="INVENTARIO INICIAL";
+        $kardex_entrada->categoria_id='2';
+        $kardex_entrada->almacen_id=1;
+        $kardex_entrada->almacen_emisor_id=1;
+        $kardex_entrada->almacen_receptor_id=1;
+        $kardex_entrada->moneda_id=$moneda_principal->id;
+        $kardex_entrada->tipo_registro_id=1;
+        $kardex_entrada->estado=1;
+        $kardex_entrada->user_id=auth()->user()->id;
+        $kardex_entrada->informacion="Guia Emitida para Inventario Inicial";
+        $kardex_entrada->save();
 
       // if($count_articulo = $count_cantidad = $count_precio){
-      for($i=0;$i<$count_articulo;$i++){
-        $kardex_entrada_registro=new kardex_entrada_registro();
-        $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
-        $kardex_entrada_registro->producto_id=$articulo[$i];
-        $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
-        $kardex_entrada_registro->tipo_registro_id = 1;
-        $kardex_entrada_registro->almacen_id=$kardex_entrada->almacen_id;
-        $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
-        $kardex_entrada_registro->cambio= $cambio->compra;
-        if ($moneda_principal->id==1) {
-          $kardex_entrada_registro->precio_nacional= $request->get('precio')[$i];
-          $kardex_entrada_registro->precio_extranjero= $request->get('precio')[$i]/$cambio->venta;
-        }elseif($moneda_principal->id==2){
-          $kardex_entrada_registro->precio_nacional= $request->get('precio')[$i]*$cambio->compra;
-          $kardex_entrada_registro->precio_extranjero= $request->get('precio')[$i];
+        for($i=0;$i<$count_articulo;$i++){
+          $kardex_entrada_registro=new kardex_entrada_registro();
+          $kardex_entrada_registro->kardex_entrada_id=$kardex_entrada->id;
+          $kardex_entrada_registro->producto_id=$articulo[$i];
+          $kardex_entrada_registro->cantidad_inicial=$request->get('cantidad')[$i];
+          $kardex_entrada_registro->tipo_registro_id = 1;
+          $kardex_entrada_registro->almacen_id=$kardex_entrada->almacen_id;
+          $kardex_entrada_registro->cantidad=$request->get('cantidad')[$i];
+          $kardex_entrada_registro->cambio= $cambio->compra;
+          if ($moneda_principal->id==1) {
+            $kardex_entrada_registro->precio_nacional= $request->get('precio')[$i];
+            $kardex_entrada_registro->precio_extranjero= $request->get('precio')[$i]/$cambio->venta;
+          }elseif($moneda_principal->id==2){
+            $kardex_entrada_registro->precio_nacional= $request->get('precio')[$i]*$cambio->compra;
+            $kardex_entrada_registro->precio_extranjero= $request->get('precio')[$i];
+          }
+          $kardex_entrada_registro->estado=1;
+          $kardex_entrada_registro->save();
         }
-
-        $kardex_entrada_registro->estado=1;
-        $kardex_entrada_registro->save();
-      }
       // }
-
-
-
+      }
+      return redirect()->route('kardex-entrada.show',$kardex_entrada->id);
     }
 
   }
