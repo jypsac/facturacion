@@ -115,7 +115,7 @@
 					<table cellspacing="0" class="table table-striped " width="100%">
 						<thead>
 							<tr>
-								<th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()"  /></th>
+								<th style="width: 10px"></th>
 								<th style="width: 600px">Producto  <a href="{{route('productos.create')}}" class="btn btn-warning" target="blanck" style="padding-top: 0px;padding-bottom: 0px; padding-left: 4px;padding-right: 4px;" ><i class="fa fa-plus-square" aria-hidden="true" ></a></th>
 									<th style="width: 100px">Cantidad</th>
 									<th style="width: 100px">Precio</th>
@@ -125,7 +125,7 @@
 							<tbody>
 								<tr>
 									<td>
-										<input type='checkbox' class="case">
+										<button type="button" class='delete borrar e btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
 									</td>
 									<td>
 										<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
@@ -152,77 +152,77 @@
 
 						<tr>
 							<style type="text/css">
-								.form-control{
-									border-radius: 5px;
-								}
-							</style>
-						</tr>
+							.form-control{
+								border-radius: 5px;
+							}
+						</style>
+					</tr>
 
-					</div>
 				</div>
 			</div>
 		</div>
 	</div>
+</div>
 
-	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-	<script src="{{ asset('js/popper.min.js') }}"></script>
-	<script src="{{ asset('js/bootstrap.js') }}"></script>
-	<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-	<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-	<script src="{{ asset('js/inspinia.js') }}"></script>
-	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+<script src="{{ asset('js/inspinia.js') }}"></script>
+<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
-	{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
-	<script>
-		function valida(f) {
-			var boton=document.getElementById("boton");
-			var completo = true;
-			var incompleto = false;
-			if( f.elements[0].value == "" )
-				{ alert(incompleto); }
-			else{boton.type = 'button';}
-		}
-	</script>
-	{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
-	<!-- Typehead -->
-	<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
+{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<script>
+	function valida(f) {
+		var boton=document.getElementById("boton");
+		var completo = true;
+		var incompleto = false;
+		if( f.elements[0].value == "" )
+			{ alert(incompleto); }
+		else{boton.type = 'button';}
+	}
+</script>
+{{-- FIN Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
+<!-- Typehead -->
+<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
 
-	<script>
-		var i = 2;
-		$(".addmore").on('click', function () {
-			var data = `[
-			<tr>
-			<td>
-			<input type='checkbox' class='case'/>
-			</td>";
-			<td>
-			<input list="browsers" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
-			<datalist id="browsers" >
-			@foreach($productos as $producto)
-			<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
-			@endforeach
-			</datalist>
-			</td>
-			<td>
-			<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
-			</td>
-			<td>
-			<input type='text' id='precio" + i + "' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});" required/>
-			</td>
-			<td>
-			<input type='text' id='total${i}' name='total[]' class="form-control" required/>
-			</td>
-			</tr>`;
-			$('table').append(data);
-			i++;
-		});
-	</script>
+<script>
+	var i = 2;
+	$(".addmore").on('click', function () {
+		var data = `[
+		<tr>
+		<td>
+		<button type="button" class='delete e borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
+		</td>
+		<td>
+		<input list="browsers" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
+		<datalist id="browsers" >
+		@foreach($productos as $producto)
+		<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+		@endforeach
+		</datalist>
+		</td>
+		<td>
+		<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
+		</td>
+		<td>
+		<input type='text' id='precio" + i + "' name='precio[]' class="monto${i} form-control"  onkeyup="multi(${i});" required/>
+		</td>
+		<td>
+		<input type='text' id='total${i}' name='total[]' class="form-control" required/>
+		</td>
+		</tr>`;
+		$('table').append(data);
+		i++;
+	});
+</script>
 
-	<script>
-		function multi(a){
-			console.log(a);
-			var total = 1;
+<script>
+	function multi(a){
+		console.log(a);
+		var total = 1;
 			var change= false; //
 			$(`.monto${a}`).each(function(){
 				if (!isNaN(parseFloat($(this).val()))) {
@@ -243,60 +243,13 @@
 	</script>
 
 	<script>
-		function select_all() {
-			$('input[class=case]:checkbox').each(function () {
-				if ($('input[class=check_all]:checkbox:checked').length == 0) {
-					$(this).prop("checked", false);
-				} else {
-					$(this).prop("checked", true);
-				}
-			});
-		}
-	</script>
-
-	<script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
-
-	<script>
-		$(document).ready(function () {
-			$('.i-checks').iCheck({
-				checkboxClass: 'icheckbox_square-green',
-				radioClass: 'iradio_square-green',
-			});
-		});
-	</script>
-
-	<script src="{{ asset('js/plugins/typehead/bootstrap3-typeahead.min.js') }}"></script>
-
-	<script>
-		$(document).ready(function(){
-
-			$('.typeahead_1').typeahead({
-				source: ["item 1","item 2","item 3"]
-			});
-		});
-		function Clear(elem)
-		{
-			elem.value='';
-		}
-	</script>
-	<script >
-		$(document).ready(function(){
-
-			$('#motivo').on('change',function(){
-				var valor = $(this).val();
-
-				if(valor != 5){
-					$('#factura').val('');
-					$('#guia_remision').val(' ');
-					$('#factura').prop('readonly',false);
-					$('#guia_remision').prop('readonly',false);
-				}else{
-					$('#factura').val('Inventario Inicial');
-					$('#factura').prop('readonly',true);
-					$('#guia_remision').val('Inventario Inicial');
-					$('#guia_remision').prop('readonly',true);
-				}
-			});
-		});
-	</script>
-	@endsection
+		$(document).on('click', '.borrar', function (event) {
+			event.preventDefault();
+        var e = document.getElementsByClassName("e").length;
+        // alert(e);
+       if (e>1) {
+        	$(this).closest('tr').remove();
+      }
+   });
+</script>
+@endsection
