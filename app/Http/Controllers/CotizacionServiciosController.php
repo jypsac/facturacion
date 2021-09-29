@@ -29,8 +29,12 @@ use App\Ventas_registro;
 use App\kardex_entrada_registro;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
+use Luecano\NumeroALetras\NumeroALetras;
+use Illuminate\Http\Request;
+use Mike42\Escpos\Printer;
+use Mike42\Escpos\EscposImage;
+use Mike42\Escpos\PrintConnectors\WindowsPrintConnector;
 
 class CotizacionServiciosController extends Controller
 {
@@ -825,280 +829,280 @@ elseif ($cotizacion->estado==1) {
 }
 
     //GUARDADO DE COTIZACION A FACTURA
-public function facturar_store(Request $request){
-    $date_sp = Carbon::now();
-    $data_g = str_replace(' ', '_',$date_sp);
-    $carbon_sp = str_replace(':','-',$data_g);
-    $id = $request->get('id');
-        // cambio de Estado Cotizador
-    $id_cotizador=$request->get('id_cotizador');
-    $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
+    public function facturar_store(Request $request){
+        $date_sp = Carbon::now();
+        $data_g = str_replace(' ', '_',$date_sp);
+        $carbon_sp = str_replace(':','-',$data_g);
+        $id = $request->get('id');
+            // cambio de Estado Cotizador
+        $id_cotizador=$request->get('id_cotizador');
+        $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
 
-        //buscador al cambio
-    $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
-    if(!$cambio){
-        return "error por no hacer el cambio diario";
+            //buscador al cambio
+        $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
+        if(!$cambio){
+            return "error por no hacer el cambio diario";
+        }
+              // obtencion de la sucursal
+        $almacen=$cotizacion->almacen_id;
+               //obtencion del almacen
+        $sucursal=Almacen::where('id', $almacen)->first();
+
+        $factura_cod_fac=$sucursal->cod_fac;
+        if (is_numeric($factura_cod_fac)) {
+                // exprecion del numero de fatura
+            $factura_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
+        }else{
+               // exprecion del numero de fatura
+               // GENERACION DE NUMERO DE FACTURA
+            $ultima_factura=Facturacion::where('almacen_id',$sucursal->id)->latest()->first();
+            $factura_num=$ultima_factura->codigo_fac;
+            $factura_num_string_porcion= explode("-", $factura_num);
+            $factura_num_string=$factura_num_string_porcion[1];
+            $factura_num=(int)$factura_num_string;
+            $factura_num++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
+        }
+        $factura_numero="F".$sucursal_nr."-".$factura_nr;
+                // Creacion de Facturacion
+       $facturar=new Facturacion;
+       $facturar->codigo_fac=$factura_numero;
+       $facturar->almacen_id =$almacen;
+       $facturar->id_cotizador_servicio=$request->get('id_cotizador');
+       $facturar->orden_compra=$request->get('orden_compra');
+       $facturar->guia_remision=$request->get('guia_remision');
+       $facturar->cliente_id=$cotizacion->cliente_id;
+       $facturar->moneda_id=$cotizacion->moneda_id;
+       $facturar->forma_pago_id=$cotizacion->forma_pago_id;
+       $facturar->fecha_emision=$request->get('fecha_emision');
+       $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
+       $facturar->cambio=$cambio->paralelo;
+       $facturar->comisionista=$cotizacion->comisionista_id;
+       $facturar->user_id =auth()->user()->id;
+       $facturar->estado='0';
+       $facturar->tipo='servicio';
+       $facturar->op_gravada=$cotizacion->op_gravada;
+       $facturar->op_inafecta=$cotizacion->op_inafecta;
+       $facturar->op_exonerada=$cotizacion->op_exonerada;
+       if ($cotizacion->estado==0) {
+        $facturar->save();
+        }
+        elseif ($cotizacion->estado==1) {
+           return redirect()->route('cotizacion_servicio.show',$cotizacion->id);
+        }
+        /*cambio de estado del cotizador*/
+        $cotizacion->estado=1;
+        $cotizacion->save();
+        /* cambio de estado del cotizador*/
+
+
+
+        $buscador_id=Cotizacion_Servicios::where('id',$facturar->id_cotizador_servicio)->first();
+
+        $cotizaciones_facturaciones=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$buscador_id->id)->get();
+
+        foreach ($cotizaciones_facturaciones as $index => $cotizacion_facturacion) {
+            $facturacion_registro=new Facturacion_registro;
+            $facturacion_registro->facturacion_id=$facturar->id;
+            $facturacion_registro->servicio_id=$cotizacion_facturacion->servicio_id;
+            $facturacion_registro->promedio_original=$cotizacion_facturacion->promedio_original;
+            $facturacion_registro->precio=$cotizacion_facturacion->precio;
+            $facturacion_registro->cantidad=$cotizacion_facturacion->cantidad;
+            $facturacion_registro->descuento=$cotizacion_facturacion->descuento;
+            $facturacion_registro->precio_unitario_desc=$cotizacion_facturacion->precio_unitario_desc;
+            $facturacion_registro->comision=$cotizacion_facturacion->comision;
+            $facturacion_registro->precio_unitario_comi=$cotizacion_facturacion->precio_unitario_comi;
+            $facturacion_registro->save();
+        }
+        /**/
+         // Creacion de Ventas Registros del Comisinista
+        $cotizador=$request->get('id_cotizador');
+        $precio_final_igv=$request->get('precio_final_igv');
+        $sub_total_sin_igv=$request->get('sub_total_sin_igv');
+        $tipo_moneda=$request->get('tipo_moneda');
+        $id_comisionista=$request->get('id_comisionista');
+        $comisionista=Cotizacion_Servicios::where('id',$cotizador)->first();
+        $comisionista_porcentaje=Personal_venta::where('id',$id_comisionista)->first();
+        $id_comi=$comisionista->comisionista_id;
+        if(isset($id_comi)){
+           $comisionista=new Ventas_registro;
+           $comisionista->comisionista=$id_comisionista;
+           $comisionista->tipo_moneda=$tipo_moneda;
+           $comisionista->estado_aprobado='0';
+           $comisionista->estado_pagado='0';
+           $comisionista->estado_anular_fac_bol='0';
+           $comisionista->monto_final_fac_bol=$precio_final_igv;
+           $porcentaje=100+$comisionista_porcentaje->comision;
+           $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
+           // $comisionista->id_coti_produc=$cotizador;
+           $comisionista->id_coti_servicio=$cotizador;
+           $comisionista->id_fac=$facturar->id;
+           $comisionista->observacion='Viene del Cotizador';
+           $comisionista->save();
+        }
+        return redirect()->route('facturacion_servicio.show',$facturar->id);
     }
-          // obtencion de la sucursal
-    $almacen=$cotizacion->almacen_id;
-           //obtencion del almacen
-    $sucursal=Almacen::where('id', $almacen)->first();
-
-    $factura_cod_fac=$sucursal->cod_fac;
-    if (is_numeric($factura_cod_fac)) {
-            // exprecion del numero de fatura
-        $factura_cod_fac++;
-        $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
-        $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
-    }else{
-           // exprecion del numero de fatura
-           // GENERACION DE NUMERO DE FACTURA
-        $ultima_factura=Facturacion::where('almacen_id',$sucursal->id)->latest()->first();
-        $factura_num=$ultima_factura->codigo_fac;
-        $factura_num_string_porcion= explode("-", $factura_num);
-        $factura_num_string=$factura_num_string_porcion[1];
-        $factura_num=(int)$factura_num_string;
-        $factura_num++;
-        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
-        $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
-    }
-    $factura_numero="F".$sucursal_nr."-".$factura_nr;
-            // Creacion de Facturacion
-   $facturar=new Facturacion;
-   $facturar->codigo_fac=$factura_numero;
-   $facturar->almacen_id =$almacen;
-   $facturar->id_cotizador_servicio=$request->get('id_cotizador');
-   $facturar->orden_compra=$request->get('orden_compra');
-   $facturar->guia_remision=$request->get('guia_remision');
-   $facturar->cliente_id=$cotizacion->cliente_id;
-   $facturar->moneda_id=$cotizacion->moneda_id;
-   $facturar->forma_pago_id=$cotizacion->forma_pago_id;
-   $facturar->fecha_emision=$request->get('fecha_emision');
-   $facturar->fecha_vencimiento=$request->get('fecha_vencimiento');
-   $facturar->cambio=$cambio->paralelo;
-   $facturar->comisionista=$cotizacion->comisionista_id;
-   $facturar->user_id =auth()->user()->id;
-   $facturar->estado='0';
-   $facturar->tipo='servicio';
-   $facturar->op_gravada=$cotizacion->op_gravada;
-   $facturar->op_inafecta=$cotizacion->op_inafecta;
-   $facturar->op_exonerada=$cotizacion->op_exonerada;
-   if ($cotizacion->estado==0) {
-    $facturar->save();
-}
-elseif ($cotizacion->estado==1) {
-   return redirect()->route('cotizacion_servicio.show',$cotizacion->id);
-}
-/*cambio de estado del cotizador*/
-$cotizacion->estado=1;
-$cotizacion->save();
-/* cambio de estado del cotizador*/
-
-
-
-$buscador_id=Cotizacion_Servicios::where('id',$facturar->id_cotizador_servicio)->first();
-
-$cotizaciones_facturaciones=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$buscador_id->id)->get();
-
-foreach ($cotizaciones_facturaciones as $index => $cotizacion_facturacion) {
-    $facturacion_registro=new Facturacion_registro;
-    $facturacion_registro->facturacion_id=$facturar->id;
-    $facturacion_registro->servicio_id=$cotizacion_facturacion->servicio_id;
-    $facturacion_registro->promedio_original=$cotizacion_facturacion->promedio_original;
-    $facturacion_registro->precio=$cotizacion_facturacion->precio;
-    $facturacion_registro->cantidad=$cotizacion_facturacion->cantidad;
-    $facturacion_registro->descuento=$cotizacion_facturacion->descuento;
-    $facturacion_registro->precio_unitario_desc=$cotizacion_facturacion->precio_unitario_desc;
-    $facturacion_registro->comision=$cotizacion_facturacion->comision;
-    $facturacion_registro->precio_unitario_comi=$cotizacion_facturacion->precio_unitario_comi;
-    $facturacion_registro->save();
-}
-/**/
- // Creacion de Ventas Registros del Comisinista
-$cotizador=$request->get('id_cotizador');
-$precio_final_igv=$request->get('precio_final_igv');
-$sub_total_sin_igv=$request->get('sub_total_sin_igv');
-$tipo_moneda=$request->get('tipo_moneda');
-$id_comisionista=$request->get('id_comisionista');
-$comisionista=Cotizacion_Servicios::where('id',$cotizador)->first();
-$comisionista_porcentaje=Personal_venta::where('id',$id_comisionista)->first();
-$id_comi=$comisionista->comisionista_id;
-if(isset($id_comi)){
-   $comisionista=new Ventas_registro;
-   $comisionista->comisionista=$id_comisionista;
-   $comisionista->tipo_moneda=$tipo_moneda;
-   $comisionista->estado_aprobado='0';
-   $comisionista->estado_pagado='0';
-   $comisionista->estado_anular_fac_bol='0';
-   $comisionista->monto_final_fac_bol=$precio_final_igv;
-   $porcentaje=100+$comisionista_porcentaje->comision;
-   $comisionista->monto_comision=(100*$sub_total_sin_igv/$porcentaje)*$comisionista_porcentaje->comision/100;
-   // $comisionista->id_coti_produc=$cotizador;
-   $comisionista->id_coti_servicio=$cotizador;
-   $comisionista->id_fac=$facturar->id;
-   $comisionista->observacion='Viene del Cotizador';
-   $comisionista->save();
-}
-return redirect()->route('facturacion_servicio.show',$facturar->id);
-}
 
 //ENVIO DE BOLETEAR A VISTA
-public function boletear($id){
-    $facturacion=Facturacion::where('id_cotizador',$id)->first();
-    $boleta=Boleta::where('id_cotizador',$id)->first();
-    $banco=Banco::where('estado','0')->get();
-    $moneda=Moneda::where('principal',1)->first();
-    $cotizacion=Cotizacion_Servicios::find($id);
+    public function boletear($id){
+        $facturacion=Facturacion::where('id_cotizador',$id)->first();
+        $boleta=Boleta::where('id_cotizador',$id)->first();
+        $banco=Banco::where('estado','0')->get();
+        $moneda=Moneda::where('principal',1)->first();
+        $cotizacion=Cotizacion_Servicios::find($id);
 
-    $empresa=Empresa::first();
-    $sum=0;
-    $igv=Igv::first();
-    $sub_total=0;
-    $regla=$cotizacion->tipo;
-    $i=1;
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $regla=$cotizacion->tipo;
+        $i=1;
 
-    $boleta_contador= Boleta::all()->count();
-    $suma=$boleta_contador+1;
-    // $boleta_codigo='BO-0000'.$suma;
+        $boleta_contador= Boleta::all()->count();
+        $suma=$boleta_contador+1;
+        // $boleta_codigo='BO-0000'.$suma;
 
-        // obtencion de la sucursal
-    $cotizacion_almacen=Cotizacion_Servicios::where('id',$id)->first();
-    $almacen=$cotizacion_almacen->almacen_id;
-        //obtencion del almacen
-    $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-    $boleta_cod_fac=$sucursal->cod_bol;
-    if (is_numeric($boleta_cod_fac)) {
-            // exprecion del numero de fatura
-        $boleta_cod_fac++;
-        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
-        $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
+            // obtencion de la sucursal
+        $cotizacion_almacen=Cotizacion_Servicios::where('id',$id)->first();
+        $almacen=$cotizacion_almacen->almacen_id;
+            //obtencion del almacen
+        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
+        $boleta_cod_fac=$sucursal->cod_bol;
+        if (is_numeric($boleta_cod_fac)) {
+                // exprecion del numero de fatura
+            $boleta_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
 
-    }else{
-            // exprecion del numero de fatura
-            // GENERACION DE NUMERO DE FACTURA
-        $ultima_boleta=Boleta::latest()->first();
-        $boleta_num=$ultima_boleta->codigo_boleta;
-        $boleta_num_string_porcion= explode("-", $boleta_num);
-        $boleta_num_string=$boleta_num_string_porcion[1];
-        $boleta_num=(int)$boleta_num_string;
-        $boleta_num++;
-        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
-        $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
+        }else{
+                // exprecion del numero de fatura
+                // GENERACION DE NUMERO DE FACTURA
+            $ultima_boleta=Boleta::latest()->first();
+            $boleta_num=$ultima_boleta->codigo_boleta;
+            $boleta_num_string_porcion= explode("-", $boleta_num);
+            $boleta_num_string=$boleta_num_string_porcion[1];
+            $boleta_num=(int)$boleta_num_string;
+            $boleta_num++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
+        }
+        $boleta_codigo="B".$sucursal_nr."-".$boleta_nr;
+
+
+
+
+        $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+        foreach ($cotizacion_registro as $cotizacion_registros) {
+            $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+        }
+        if ($cotizacion->estado==0) {
+             return view('transaccion.venta.servicios.cotizacion.boletear', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','boleta_codigo'));#
+         }
+         elseif ($cotizacion->estado==1) {
+            return redirect()->route('cotizacion_servicio.show',$cotizacion->id);
+        }
+
+
+
     }
-    $boleta_codigo="B".$sucursal_nr."-".$boleta_nr;
+    //GUARDADO DE COTIZACION A BOLETA
+    public function boletear_store(Request $request){
+        $date_sp = Carbon::now();
+        $data_g = str_replace(' ', '_',$date_sp);
+        $carbon_sp = str_replace(':','-',$data_g);
+        $id = $request->get('id');
+
+        $id_cotizador=$request->get('id_cotizador');
+        $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
+
+          // obtencion de la sucursal
+        $cotizacion_almacen=Cotizacion_Servicios::where('id',$id)->first();
+        $almacen=$cotizacion_almacen->almacen_id;
+            //obtencion del almacen
+        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
+        $boleta_cod_fac=$sucursal->cod_bol;
+        if (is_numeric($boleta_cod_fac)) {
+                // exprecion del numero de fatura
+            $boleta_cod_fac++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
+
+            $sucursal=auth()->user()->almacen->codigo_sunat;
+            //obtencion del almacen
+            $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
+            $factura_primera->cod_bol='NN';
+            $factura_primera->save();
+        }else{
+                // exprecion del numero de fatura
+                // GENERACION DE NUMERO DE FACTURA
+            $ultima_boleta=Boleta::latest()->first();
+            $boleta_num=$ultima_boleta->codigo_boleta;
+            $boleta_num_string_porcion= explode("-", $boleta_num);
+            $boleta_num_string=$boleta_num_string_porcion[1];
+            $boleta_num=(int)$boleta_num_string;
+            $boleta_num++;
+            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
+        }
+        $cod_bol="B".$sucursal_nr."-".$boleta_nr;
 
 
 
+        $almacen = $request->get('almacen');
+        $tipo_cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
 
-    $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
-    foreach ($cotizacion_registro as $cotizacion_registros) {
-        $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
-    }
-    if ($cotizacion->estado==0) {
-         return view('transaccion.venta.servicios.cotizacion.boletear', compact('cotizacion','empresa','cotizacion_registro','sum','igv',"array","sub_total","moneda","regla",'banco','facturacion','boleta','i','boleta_codigo'));#
-     }
-     elseif ($cotizacion->estado==1) {
-        return redirect()->route('cotizacion_servicio.show',$cotizacion->id);
-    }
+            // Creacion de Facturacion
+        $boletear=new Boleta;
+        $boletear->codigo_boleta=$cod_bol;
+        $boletear->almacen_id = $almacen;
+        $boletear->id_cotizador_servicio=$request->get('id_cotizador');
+        $boletear->orden_compra=$request->get('orden_compra');
+        $boletear->guia_remision=$request->get('guia_remision');
+        $boletear->cliente_id=$cotizacion->cliente_id;
+        $boletear->moneda_id=$cotizacion->moneda_id;
+        $boletear->forma_pago_id=$cotizacion->forma_pago_id;
+        $boletear->comisionista=$cotizacion->comisionista_id;
+        $boletear->cambio = $tipo_cambio->paralelo;
+        $boletear->fecha_emision=$request->get('fecha_emision');
+        $boletear->fecha_vencimiento=$request->get('fecha_vencimiento');
+        $boletear->estado='0';
+        $boletear->op_gravada = $cotizacion->op_gravada;
+        $boletear->op_inafecta = $cotizacion->op_inafecta;
+        $boletear->op_exonerada = $cotizacion->op_exonerada;
+        $boletear->tipo='servicio';
+        $boletear->user_id =auth()->user()->id;
 
+        if ($cotizacion->estado==0) {
+            $boletear->save();
+        }
+        elseif ($cotizacion->estado==1) {
+           return redirect()->route('cotizacion_servicio.show',$cotizacion->id);
+       }
 
+       $cotizacions=Cotizacion_Servicios::where('id',$id_cotizador)->first();
+       $cotizacions->estado=1;
+       $cotizacions->save();
 
-}
-//GUARDADO DE COTIZACION A BOLETA
-public function boletear_store(Request $request){
-    $date_sp = Carbon::now();
-    $data_g = str_replace(' ', '_',$date_sp);
-    $carbon_sp = str_replace(':','-',$data_g);
-    $id = $request->get('id');
+       $buscador_id=Cotizacion_Servicios::where('id',$boletear->id_cotizador_servicio)->first();
 
-    $id_cotizador=$request->get('id_cotizador');
-    $cotizacion=Cotizacion_Servicios::where('id',$id_cotizador)->first();
+       $cotizaciones_boletaciones=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$buscador_id->id)->get();
 
-      // obtencion de la sucursal
-    $cotizacion_almacen=Cotizacion_Servicios::where('id',$id)->first();
-    $almacen=$cotizacion_almacen->almacen_id;
-        //obtencion del almacen
-    $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-    $boleta_cod_fac=$sucursal->cod_bol;
-    if (is_numeric($boleta_cod_fac)) {
-            // exprecion del numero de fatura
-        $boleta_cod_fac++;
-        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
-        $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
-
-        $sucursal=auth()->user()->almacen->codigo_sunat;
-        //obtencion del almacen
-        $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
-        $factura_primera->cod_bol='NN';
-        $factura_primera->save();
-    }else{
-            // exprecion del numero de fatura
-            // GENERACION DE NUMERO DE FACTURA
-        $ultima_boleta=Boleta::latest()->first();
-        $boleta_num=$ultima_boleta->codigo_boleta;
-        $boleta_num_string_porcion= explode("-", $boleta_num);
-        $boleta_num_string=$boleta_num_string_porcion[1];
-        $boleta_num=(int)$boleta_num_string;
-        $boleta_num++;
-        $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
-        $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
-    }
-    $cod_bol="B".$sucursal_nr."-".$boleta_nr;
-
-
-
-    $almacen = $request->get('almacen');
-    $tipo_cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
-
-        // Creacion de Facturacion
-    $boletear=new Boleta;
-    $boletear->codigo_boleta=$cod_bol;
-    $boletear->almacen_id = $almacen;
-    $boletear->id_cotizador_servicio=$request->get('id_cotizador');
-    $boletear->orden_compra=$request->get('orden_compra');
-    $boletear->guia_remision=$request->get('guia_remision');
-    $boletear->cliente_id=$cotizacion->cliente_id;
-    $boletear->moneda_id=$cotizacion->moneda_id;
-    $boletear->forma_pago_id=$cotizacion->forma_pago_id;
-    $boletear->comisionista=$cotizacion->comisionista_id;
-    $boletear->cambio = $tipo_cambio->paralelo;
-    $boletear->fecha_emision=$request->get('fecha_emision');
-    $boletear->fecha_vencimiento=$request->get('fecha_vencimiento');
-    $boletear->estado='0';
-    $boletear->op_gravada = $cotizacion->op_gravada;
-    $boletear->op_inafecta = $cotizacion->op_inafecta;
-    $boletear->op_exonerada = $cotizacion->op_exonerada;
-    $boletear->tipo='servicio';
-    $boletear->user_id =auth()->user()->id;
-
-    if ($cotizacion->estado==0) {
-        $boletear->save();
-    }
-    elseif ($cotizacion->estado==1) {
-       return redirect()->route('cotizacion_servicio.show',$cotizacion->id);
-   }
-
-   $cotizacions=Cotizacion_Servicios::where('id',$id_cotizador)->first();
-   $cotizacions->estado=1;
-   $cotizacions->save();
-
-   $buscador_id=Cotizacion_Servicios::where('id',$boletear->id_cotizador_servicio)->first();
-
-   $cotizaciones_boletaciones=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$buscador_id->id)->get();
-
-   foreach ($cotizaciones_boletaciones as $index => $cotizacion_boleta) {
-        $boleta_registro=new Boleta_registro();
-        $boleta_registro->boleta_id=$boletear->id;
-        $boleta_registro->servicio_id=$cotizacion_boleta->servicio_id;
-        $boleta_registro->promedio_original=$cotizacion_boleta->promedio_original;
-        $boleta_registro->precio=$cotizacion_boleta->precio;
-        $boleta_registro->cantidad=$cotizacion_boleta->cantidad;
-        $boleta_registro->descuento=$cotizacion_boleta->descuento;
-        $boleta_registro->precio_unitario_desc=$cotizacion_boleta->precio_unitario_desc;
-        $boleta_registro->comision=$cotizacion_boleta->comision;
-        $boleta_registro->precio_unitario_comi=$cotizacion_boleta->precio_unitario_comi;
-        $boleta_registro->save();
-    }
+       foreach ($cotizaciones_boletaciones as $index => $cotizacion_boleta) {
+            $boleta_registro=new Boleta_registro();
+            $boleta_registro->boleta_id=$boletear->id;
+            $boleta_registro->servicio_id=$cotizacion_boleta->servicio_id;
+            $boleta_registro->promedio_original=$cotizacion_boleta->promedio_original;
+            $boleta_registro->precio=$cotizacion_boleta->precio;
+            $boleta_registro->cantidad=$cotizacion_boleta->cantidad;
+            $boleta_registro->descuento=$cotizacion_boleta->descuento;
+            $boleta_registro->precio_unitario_desc=$cotizacion_boleta->precio_unitario_desc;
+            $boleta_registro->comision=$cotizacion_boleta->comision;
+            $boleta_registro->precio_unitario_comi=$cotizacion_boleta->precio_unitario_comi;
+            $boleta_registro->save();
+        }
 
         // Creacion de Ventas Registros del Comisinista
      // Creacion de Ventas Registros del Comisinista
@@ -1126,9 +1130,9 @@ public function boletear_store(Request $request){
              $comisionista->observacion='Viene del Cotizador';
              $comisionista->save();
          }
-    return redirect()->route('boleta_servicio.show',$boletear->id);
+        return redirect()->route('boleta_servicio.show',$boletear->id);
 
-}
+    }
 
     /**
      * Remove the specified resource from storage.
@@ -1176,49 +1180,191 @@ public function boletear_store(Request $request){
         
         }
        // return view('transaccion.venta.servicios.cotizacion.print' ,compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','regla','sum','igv',"array","sub_total","moneda",'banco','end','igv_p'));
-}
-
-public function pdf(Request $request,$id){
-    $name = $request->get('name');
-    $banco=Banco::where('estado','0')->get();
-    $banco_count=Banco::where('estado','0')->count();
-    $moneda=Moneda::where('principal',1)->first();
-    $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
-    $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
-       //  foreach ($cotizacion_registro as $cotizacion_registros) {
-       //     $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
-       // }
-
-        // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
-    $cotizacion=Cotizacion_Servicios::find($id);
-    $empresa=Empresa::first();
-    $sum=0;
-    $igv=Igv::first();
-    $sub_total=0;
-    $end=0;
-    $regla=$cotizacion->tipo;
-    $i=1;
-
-    if($cotizacion->tipo=="factura"){
-            //FACTURA
-        $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
-        foreach ($cotizacion_registro as $cotizacion_registros) {
-           $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
-       }
-       $archivo=$name.$regla.$id;
-       $pdf=PDF::loadView('transaccion.venta.servicios.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','i','banco_count'));
-       return $pdf->download('Cotizacion Servicios - '.$archivo.'.pdf');
-   }else{
-            //BOLETA
-    $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
-    foreach ($cotizacion_registro as $cotizacion_registros) {
-        $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
     }
-    $archivo=$name.$regla.$id;
-    $pdf=PDF::loadView('transaccion.venta.servicios.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','i','banco_count'));
-    return $pdf->download('Cotizacion Servicios - '.$archivo.'.pdf');
-}
 
+    public function pdf(Request $request,$id){
+        $name = $request->get('name');
+        $banco=Banco::where('estado','0')->get();
+        $banco_count=Banco::where('estado','0')->count();
+        $moneda=Moneda::where('principal',1)->first();
+        $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
+        $cotizacion_registro2=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+           //  foreach ($cotizacion_registro as $cotizacion_registros) {
+           //     $array[]=kardex_entrada_registro::where('producto_id',$cotizacion_registros->producto_id)->avg('precio');
+           // }
 
-}
+            // $cotizacion_registro=Cotizacion_registro::where('cotizacion_id',$id)->get();
+        $cotizacion=Cotizacion_Servicios::find($id);
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $end=0;
+        $regla=$cotizacion->tipo;
+        $i=1;
+
+        if($cotizacion->tipo=="factura"){
+                //FACTURA
+            $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
+            foreach ($cotizacion_registro as $cotizacion_registros) {
+               $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+           }
+           $archivo=$name.$regla.$id;
+           $pdf=PDF::loadView('transaccion.venta.servicios.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','i','banco_count'));
+           return $pdf->download('Cotizacion Servicios - '.$archivo.'.pdf');
+       }else{
+                //BOLETA
+            $cotizacion_registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$id)->get();
+            foreach ($cotizacion_registro as $cotizacion_registros) {
+                $array[]=Servicios::where('id',$cotizacion_registros->servicio_id)->first();
+            }
+            $archivo=$name.$regla.$id;
+            $pdf=PDF::loadView('transaccion.venta.servicios.cotizacion.pdf',compact('cotizacion','empresa','cotizacion_registro','cotizacion_registro2','sum','igv',"array","sub_total","moneda","regla",'banco','i','banco_count'));
+            return $pdf->download('Cotizacion Servicios - '.$archivo.'.pdf');
+        }
+    }
+
+    public function ticket_ajax_cotizacion(Request $request){
+        $ids = $request->get('id');
+        $cotizacion=Cotizacion_Servicios::find($ids);
+        if($cotizacion->tipo == "factura"){
+            $tipo_coti = "FACTURA";
+            $registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$ids)->get();
+        }else{
+            $tipo_coti = "BOLETA";
+            $registro=Cotizacion_Servicios_boleta_registro::where('cotizacion_servicio_id',$ids)->get();
+        }
+
+        $empresa=Empresa::first();
+        $moneda = Moneda::where('id',$cotizacion->moneda_id)->first();
+        $igv=Igv::first();
+
+        $nombre_impresora = "EPSONTICKET";
+
+        $connector = new WindowsPrintConnector($nombre_impresora);
+        $printer = new Printer($connector);
+        #Mando un numero de respuesta para saber que se conecto correctamente.
+        echo 1;
+
+         //EMPRESA
+        $empresa=Empresa::first();
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->setEmphasis(true);
+        $printer->text("COTIZACION SERVICIO ".$tipo_coti." ELECTRONICA\n");
+        $printer->text($cotizacion->cod_cotizacion."\n");
+        $printer->text("===============================\n");
+        $printer->text($cotizacion->created_at."\n");
+        $printer->text($empresa->nombre."\n");
+        $printer->setEmphasis(true);
+        $printer->text("RUC: ".$empresa->ruc."\n");
+        // $printer->setEmphasis(false);
+        $printer->text($empresa->calle." - ".$empresa->ciudad." - ".$empresa->region_provincia."\n");
+        $printer->text("Telefono: ".$empresa->telefono);
+        $printer->setEmphasis(false);
+        $printer->text("\n===============================\n");
+
+        //Cliente
+        $cliente_dato = sprintf('%-15.15s %-2.2s %-21.21s', "Cliente", ':', $cotizacion->cliente->nombre);
+        $printer->text($cliente_dato."\n");
+        $cliente_id= sprintf('%-15.20s %-2.2s %-21.21s', $cotizacion->cliente->documento_identificacion, ':', $cotizacion->cliente->numero_documento);
+        $printer->text($cliente_id);
+        $printer->text("\n===============================\n");
+
+        //Productos
+        $leyenda = sprintf('%-14.14s %6.6s %8.8s  %8.8s', 'SERVICIO', 'Cant.', 'P.Unit', 'Total');
+
+        $printer->text( $leyenda);
+        $printer->text("\n");
+         foreach($registro as $data_regs){
+            // $printer -> selectPrintMode(Printer::MODE_UNDERLINE);
+            $subtotal = ($data_regs->precio_unitario_comi * $data_regs->cantidad);
+            // %-4.2s $facturacion->moneda->simbolo,
+            $line = sprintf('%-14.14s %6.0d %8.2F %8.2F', $data_regs->servicio->nombre, $data_regs->cantidad, $data_regs->precio_unitario_comi, $subtotal);
+            // $printer->setJustification(Printer::JUSTIFY_LEFT);
+            // $printer->text( ("%.2fx%s\n", , ));
+            // $printer->setJustification(Printer::JUSTIFY_RIGHT);
+            $printer->text( $line);
+            $printer->text("\n");
+            // $printer -> selectPrintMode();
+            // $total += $subtotal;
+        }
+
+        $sub_total=($cotizacion->op_gravada)+($cotizacion->op_inafecta)+($cotizacion->op_exonerada);
+        $sub_total_gravado=($cotizacion->op_gravada);
+
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->text("\n===============================\n");
+        $printer->setJustification(Printer::JUSTIFY_RIGHT);
+
+        if($cotizacion->tipo == "factura"){
+            $igv_p=round($sub_total_gravado, 2)*$igv->igv_total/100;
+            $end=round($sub_total, 2)+round($igv_p, 2);
+
+            $subtotal = sprintf('%20.20s %-2.2s %15.2F', "SUBTOTAL ".$moneda->simbolo, " : ", $sub_total);
+            $printer->text($subtotal."\n");
+            $op_gravada = sprintf('%20.20s %-2.2s %15.2F', "OP. Gravada ".$moneda->simbolo, " : ", $cotizacion->op_gravada);
+            $printer->text($op_gravada."\n");
+            $op_inafecta = sprintf('%20.20s %-2.2s %15.2F', "OP. Inafecta ".$moneda->simbolo, " : ", $cotizacion->op_inafecta);
+            $printer->text($op_inafecta."\n");
+            $op_exonerada = sprintf('%20.20s %-2.2s %15.2F', "OP. Exonerada ".$moneda->simbolo, " : ", $cotizacion->op_exonerada);
+            $printer->text($op_exonerada."\n");
+            $igv = sprintf('%20.20s %-2.2s %15.2F', "I.G.V ".$moneda->simbolo, " : ", $igv_p);
+            $printer->text($igv."\n");
+            $printer->setEmphasis(true);
+            $total = sprintf('%20.20s %-2.2s %15.2F', "TOTAL ".$moneda->simbolo, " : ", $end);
+            $printer->text($total."\n");
+            $printer->setEmphasis(false);
+        }else{
+            $end=round($sub_total, 2);
+
+            $subtotal = sprintf('%20.20s %-2.2s %15.2F', "SUBTOTAL ".$moneda->simbolo, " : ", $sub_total);
+            $printer->text($subtotal."\n");
+            $igv = sprintf('%20.20s %-2.2s %15.2F', "I.G.V ".$moneda->simbolo, " : ", "0.00");
+            $printer->text($igv."\n");
+            $total = sprintf('%20.20s %-2.2s %15.2F', "TOTAL ".$moneda->simbolo, " : ", $end);
+            $printer->text($total."\n");
+            $printer->setEmphasis(false);
+        }
+        $end = $end;
+
+        //NUMEROS A LETRAS
+        $formatter = new NumeroALetras();
+        $num_let = $formatter->toInvoice($end);
+        $printer->setJustification(Printer::JUSTIFY_LEFT);
+        $printer->text("Son: ".$num_let." ".$moneda->nombre."\n");
+
+        $printer->setJustification(Printer::JUSTIFY_CENTER);
+        $printer->text("\n===============================\n");
+        $printer->text("Atendido por: ".$cotizacion->user_personal->name."\n");
+        $printer->text("Autorizado mediante resolucion\n");
+        $printer->text("N° RS 018-005-0002243/SUNAT\n");
+        $printer->text("Representación impresa de la \n");
+        $printer->text("Boleta de Venta Electronica\n");
+        $printer->text("Para consultar el documento\n");
+        $printer->text("Ingrese a:\n");
+        $printer->text("https://ww2.todasmisfacturas.com.pe\n");
+        // $printer->text("Muchas gracias por su compra\n");
+        /*Alimentamos el papel 3 veces*/
+        $printer->feed(3);
+
+        /*
+            Cortamos el papel. Si nuestra impresora
+            no tiene soporte para ello, no generará
+            ningún error
+        */
+        $printer->cut();
+
+        /*
+            Por medio de la impresora mandamos un pulso.
+            Esto es útil cuando la tenemos conectada
+            por ejemplo a un cajón
+        */
+        $printer->pulse();
+
+        /*
+            Para imprimir realmente, tenemos que "cerrar"
+            la conexión con la impresora. Recuerda incluir esto al final de todos los archivos
+        */
+        $printer->close();
+        }
 }

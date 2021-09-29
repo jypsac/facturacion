@@ -875,6 +875,15 @@ class FacturacionController extends Controller
 
     $printer->setJustification(Printer::JUSTIFY_CENTER);
     $printer->text("\n===============================\n");
+    $usuario = User::where('id',$facturacion->user_id)->first();
+    $printer->text("Atendido por: ".$usuario->name."\n");
+    $printer->text("Autorizado mediante resolucion\n");
+    $printer->text("N° RS 018-005-0002243/SUNAT\n");
+    $printer->text("Representación impresa de la \n");
+    $printer->text("Boleta de Venta Electronica\n");
+    $printer->text("Para consultar el documento\n");
+    $printer->text("Ingrese a:\n");
+    $printer->text("https://ww2.todasmisfacturas.com.pe\n");
     // $printer->text("Muchas gracias por su compra\n");
     /*Alimentamos el papel 3 veces*/
     $printer->feed(3);

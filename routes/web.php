@@ -42,9 +42,12 @@ Route::group(
 		Route::get('/cotizacion/print_cotizacion/{id}' , 'CotizacionController@print')->name('cotizacion.print');
 		Route::post('/cotizacion/facturar/{id}' , 'CotizacionController@facturar')->name('cotizacion.facturar');
 		Route::post('/cotizacion/facturar_store' , 'CotizacionController@facturar_store')->name('cotizacion.facturar_store');
+
+		//BOLETA
 		Route::post('/cotizacion/boletear/{id}' , 'CotizacionController@boletear')->name('cotizacion.boletear');
 		Route::post('/cotizacion/boletear_store' , 'CotizacionController@boletear_store')->name('cotizacion.boletear_store');
 		Route::get('/cotizacion/print_cotizacion_servicio/{id}' , 'CotizacionServiciosController@print')->name('cotizacion_servicio.print');
+		Route::post('ticket_ajax_coti', 'CotizacionController@ticket_ajax_cotizacion')->name('ticket_ajax_coti');
 
 		Route::resource('/cotizacion','CotizacionController');
 		// Route::put('/cotizacion/store/{id_moneda}','CotizacionController@store')->name('cotizacion.store');
@@ -67,7 +70,7 @@ Route::group(
 
 		Route::resource('/cotizacion_servicio','CotizacionServiciosController')->except(['store']);
 		Route::put('/cotizacion_servicio/store/{id_moneda}','CotizacionServiciosController@store')->name('cotizacion.store');
-
+		Route::post('ticket_ajax_coti_serv', 'CotizacionServiciosController@ticket_ajax_cotizacion')->name('ticket_ajax_coti_serv');
 //FACTURACION SERVICIOS
 		Route::post('/facturacion_servicio/create_ms','FacturacionServicioController@create_ms')->name('facturacion_servicio.create_ms');
 		Route::post('/facturacion_servicio/create','FacturacionServicioController@create')->name('facturacion_servicio.create');
