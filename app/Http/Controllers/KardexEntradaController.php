@@ -428,10 +428,37 @@ class KardexEntradaController extends Controller
         $kar_entrada=Kardex_entrada::first();
         $kar_entrada->estado='2';
         $kar_entrada->save();
+
+        $kardexregistro=kardex_entrada_registro::all();
+
+        foreach ($kardexregistro as $kardexregistros) {
+
+          $producto_stock=Stock_producto::where('producto_id',$kardexregistros->producto_id)->first();
+
+        //buscador de producto en la tabla stock productos
+          if($producto_stock){
+           $stock_productos=Stock_producto::find($kardexregistros->producto_id);
+           $stock_productos->stock=$kardexregistros->cantidad_inicial;
+           $stock_productos->precio_nacional=$kardexregistros->precio_nacional;
+           $stock_productos->precio_extranjero=$kardexregistros->precio_extranjero;
+           $stock_productos->save();
+
+         }else{
+            //Agregado de cantidades para la tabla stock productos
+          $stock_productos=new Stock_producto();
+          $stock_productos->producto_id=$kardexregistros->producto_id;
+          $stock_productos->stock=$kardexregistros->cantidad_inicial;
+          $stock_productos->precio_nacional=$kardexregistros->precio_nacional;
+          $stock_productos->precio_extranjero=$kardexregistros->precio_extranjero;
+          $stock_productos->save();
+        }
+        Stock_almacen::ingreso($kardexregistros->almacen_id,$kardexregistros->producto_id,$kardexregistros->cantidad_inicial);
       }
 
-      return redirect()->route('kardex-entrada.show','1');
     }
+
+    return redirect()->route('kardex-entrada.show','1');
+  }
 
      // $update=Kardex_entrada::find($id);
      // $update->nombre=$request->get('nombre');
@@ -443,7 +470,7 @@ class KardexEntradaController extends Controller
      // $update->informacion=$request->get('informacion');
      // $update->save();
 
-  }
+}
 
     /**
      * Remove the specified resource from storage.
