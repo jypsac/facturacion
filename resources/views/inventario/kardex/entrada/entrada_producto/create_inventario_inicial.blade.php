@@ -60,7 +60,7 @@
 											<option value="{{$producto->id}}" >{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 											@endforeach
 										</select>
-										<input type="text"  name="prod_number[]" id="input_prod1">
+										<input type="text"  name="prod_number[]" id="input_prod1" class="celda">
 									</td>
 									<td><input type='text'  name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
 									<td><input type='text' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
@@ -129,7 +129,7 @@ span.select2.select2-container.select2-container--default{
 		<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 		@endforeach
 		</select>
-		<input type="text"  name="prod_number[]" id="input_prod${i}">
+		<input type="text" class="celda"  name="prod_number[]" id="input_prod${i}">
 		</td>
 		<td>
 		<input type='text' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
@@ -176,14 +176,14 @@ span.select2.select2-container.select2-container--default{
 	<script>
 		$(document).on('click', '.borrar', function (event) {
 			event.preventDefault();
+			var fila = $(this).parents("tr");
+			var input_text_opt = fila.find('input[class="celda"]').val();
+			console.log(input_text_opt);
+			if(input_text_opt != ""){
+				$('option[value="'+input_text_opt+'"]').removeAttr("disabled");
+			}
 			$(this).closest('tr').remove();
-			var input_ds = [];
-			var number_tot = document.getElementsByName('prod_number[]').length;
-			for( j = 0; j < number_tot; j++){
-				input_ds[j]  = document.getElementsByName('prod_number[]')[j].value;
-				$('option[value="'+input_ds[j]+'"]').attr("disabled", "disabled");
 
-			};
 		});
 	</script>
 
