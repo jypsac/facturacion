@@ -4,6 +4,7 @@
 @section('value_accion', 'Atras')
 
 @section('content')
+<link href="{{ asset('css/plugins/select2/select2.min.css') }}" rel="stylesheet">
 
 @if (session('repite'))
 <div class="alert alert-danger">
@@ -128,41 +129,49 @@
 										<button type="button" class='delete borrar e btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
 									</td>
 									<td>
-										<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
-										<datalist id="browsers2" >
+										<select class="select2_demo_3 asf" name="articulo[]" required="" id="articulo" >
+											<option></option>
 											@foreach($productos as $producto)
-											<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
-												@endforeach
-											</datalist>
-										</td>
-										<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
-										<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
-										<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
-										<span id="spTotal"></span>
-									</tr>
-								</tbody>
-							</table>
+											<option value="{{$producto->id}}"> {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}</option>
+											@endforeach
+										</select>
+									</td>
 
+									<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
+									<td><input type='text' id='precio' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
+									<td><input type='text' id='total0' name='total[]' class="form-control" required/></td>
+									<span id="spTotal"></span>
+								</tr>
+							</tbody>
+						</table>
 
-							<button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
-							<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
-							<button class="btn btn-primary float-right" type="submit" id="boton"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
-
-						</form>
-
-						<tr>
-							<style type="text/css">
-							.form-control{
-								border-radius: 5px;
-							}
-						</style>
-					</tr>
-
-				</div>
+						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+						<button class="btn btn-primary float-right" type="submit" id="boton"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
+					</form>
+					<tr>
+						<style type="text/css">
+						.form-control{border-radius: 5px;}
+					</style>
+				</tr>
 			</div>
 		</div>
 	</div>
 </div>
+</div>
+<style type="text/css">
+.select2-container--default .select2-selection--single .select2-selection__rendered {font-size: 12px;text-align: left;}
+.select2-container--default .select2-selection--single { border: none;}
+.select2-container--default .select2-selection--single .select2-selection__rendered {font-size: 0.9rem;padding-left: 0px;color: inherit;}
+span.select2.select2-container.select2-container--default{
+	width: 100%!important;
+	background-color: #FFFFFF;
+	background-image: none;
+	border-radius: 1px;
+	display: block;
+	padding: 3px 12px;
+	border: 1px solid #e5e6e7;
+}
+</style>
 
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>
@@ -173,6 +182,13 @@
 <script src="{{ asset('js/inspinia.js') }}"></script>
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
+<script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
+<script type="text/javascript">
+	$(".select2_demo_3").select2({
+		placeholder: "Seleccionar Producto",
+		allowClear: true
+	});
+</script>
 {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 <script>
 	function valida(f) {
@@ -197,12 +213,12 @@
 		<button type="button" class='delete e borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
 		</td>
 		<td>
-		<input list="browsers" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
-		<datalist id="browsers" >
+		<select class="select2_demo_3 asf" name="articulo[]" required="" id="articulo" >
+		<option></option>
 		@foreach($productos as $producto)
-		<option value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}">
+		<option value="{{$producto->id}}"> {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}</option>
 		@endforeach
-		</datalist>
+		</select>
 		</td>
 		<td>
 		<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
@@ -216,6 +232,10 @@
 		</tr>`;
 		$('table').append(data);
 		i++;
+		$(".select2_demo_3").select2({
+			placeholder: "Seleccionar Producto",
+			allowClear: true
+		});
 	});
 </script>
 
@@ -234,22 +254,14 @@
 			document.getElementById(`total${a}`).value = total;
 		}
 	</script>
-
-	<script>
-		$(".delete").on('click', function () {
-			$('.case:checkbox:checked').parents("tr").remove();
-
-		});
-	</script>
-
 	<script>
 		$(document).on('click', '.borrar', function (event) {
 			event.preventDefault();
-        var e = document.getElementsByClassName("e").length;
+			var e = document.getElementsByClassName("e").length;
         // alert(e);
-       if (e>1) {
+        if (e>1) {
         	$(this).closest('tr').remove();
-      }
-   });
+        }
+    });
 </script>
 @endsection

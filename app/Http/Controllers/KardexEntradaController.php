@@ -148,7 +148,8 @@ class KardexEntradaController extends Controller
 
       for($i=0 ; $i<$count_cantidad_p;$i++){
         $articulos[$i]= $request->input('articulo')[$i];
-        $producto_id[$i]=strstr($articulos[$i], ' ', true);
+        // $producto_id[$i]=strstr($articulos[$i], ' ', true);
+        $producto_id[$i]=$articulos[$i];
       }
         //contador de valores de articulos
       $articulo = $request->input('articulo');
