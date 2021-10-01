@@ -1,7 +1,7 @@
 @extends('layout')
 @section('title', 'Inventario Inicial')
 @section('content')
-<link href="{{ asset('css/plugins/select2/select2.min.css') }}" rel="stylesheet">
+
 
 @if($errors->any())
 <div style="padding-top: 20px;">
@@ -51,16 +51,16 @@
 							</thead>
 							<tbody id="tbody">
 								<tr>
-									<td> <button type="button" class='borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
+									<td> <button type="button" class='borrar btn btn-danger' disabled=""  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
 
 									<td>
-										<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto1" onchange="select_type(1)" >
-											<option></option>
+										<select class="select2_demo_3 select_change" name="articulo[]" required="" id="select_prod1"  >
+											<option disabled="" >a</option>
 											@foreach($productos as $producto)
-											<option value="{{$producto->id}}" >{{$producto->nombre}}- {{$producto->codigo_original}}</option>
+											<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 											@endforeach
 										</select>
-										<input type="text"  name="prod_number[]" id="input_prod1" class="celda">
+										<input type="text" style="display:none" class="celda"  name="prod_number[]" id="input_prod1" >
 									</td>
 									<td><input type='text'  name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
 									<td><input type='text' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
@@ -123,13 +123,13 @@ span.select2.select2-container.select2-container--default{
 		<button type="button" class='borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i>
 		</td>;
 		<td>
-		<select class="select2_demo_3 asf" name="articulo[]" required="" id="producto${i}" onchange="select_type(${i})" >
+		<select class="select2_demo_3 select_change" name="articulo[]" required="" id="select_prod${i}"   >
 		<option></option>
 		@foreach($productos as $producto)
 		<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 		@endforeach
 		</select>
-		<input type="text" class="celda"  name="prod_number[]" id="input_prod${i}">
+		<input type="text" style="display:none" class="celda "  name="prod_number[]" id="input_prod${i}">
 		</td>
 		<td>
 		<input type='text' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
@@ -151,9 +151,9 @@ span.select2.select2-container.select2-container--default{
 		var number_tot = document.getElementsByName('prod_number[]').length;
 		for( j = 0; j < number_tot; j++){
 			input_ds[j]  = document.getElementsByName('prod_number[]')[j].value;
-			$('option[value="'+input_ds[j]+'"]').attr("disabled", "disabled");
-
+			$('option[value="'+input_ds[j]+'"]').prop("disabled", true);
 		};
+		$(".addmore").prop("disabled", true);
 	});
 </script>
 
@@ -179,11 +179,17 @@ span.select2.select2-container.select2-container--default{
 			var fila = $(this).parents("tr");
 			var input_text_opt = fila.find('input[class="celda"]').val();
 			console.log(input_text_opt);
-			if(input_text_opt != ""){
+			// if(input_text_opt != ""){
 				$('option[value="'+input_text_opt+'"]').removeAttr("disabled");
-			}
-			$(this).closest('tr').remove();
+			// }
 
+			$(this).closest('tr').remove();
+			var divs = $(".borrar").length;
+			if(divs == 1){
+				$(".borrar").prop("disabled", true);
+			}else{
+				$(".borrar").prop("disabled", false);
+			}
 		});
 	</script>
 
@@ -199,25 +205,44 @@ span.select2.select2-container.select2-container--default{
 		}
 	</script>
 	<script>
-		function select_type(b){
+		// function select_type(b){
+			$('.select_change').on('change',function(){
+				var option = $(this).val();
+				$('option[value="'+option+'"]').prop( "disabled", true).attr("disabled");
+			});
+
+			// var variable = option.value;
+
+			// console.log("a");
 			// var i = 1;
-			var option = document.getElementById(`producto${b}`);
-			var strUser = option.value;
-			document.getElementById(`input_prod${b}`).value = strUser;
+			// var option = document.getElementById(`producto${b}`);
+			// var strUser = option.value;
+			// document.getElementById(`input_prod${b}`).value = strUser;
 
-
-			var input_ds = [];
-			var number_tot = document.getElementsByName('prod_number[]').length;
-			for( j = 0; j < number_tot; j++){
-				input_ds[j]  = document.getElementsByName('prod_number[]')[j].value;
-				$('option[value="'+input_ds[j]+'"]').attr("disabled", "disabled");
-
-			};
-			console.log(input_ds);
-		}
+			// var input_ds = [];
+			// var number_tot = document.getElementsByName('prod_number[]').length;
+			// for( j = 0; j < number_tot; j++){
+			// 	input_ds[j]  = document.getElementsByName('prod_number[]')[j].value;
+			// 	// if(input_ds[j] == ""){
+			// 		$('option[value="'+input_ds[j]+'"]').prop("disabled", true);
+			// 	// }
+			// 	console.log(input_ds[j])
+			// };
+			// $(".addmore").prop("disabled", false);
+		// }
+	</script>
+	<script type="text/javascript">
+		$(document.body).click(function(){
+			var divs = $(".borrar").length;
+			if(divs == 1){
+				$(".borrar").prop("disabled", true);
+			}else{
+				$(".borrar").prop("disabled", false);
+			}
+		});
 	</script>
 {{-- 	<script type="text/javascript">
-		$(document).ready(function(){
-		});
-	</script> --}}
+	$('')
+	</script>
+ --}}
 	@endsection
