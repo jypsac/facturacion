@@ -201,32 +201,64 @@ class FacturacionElectronicaController extends Controller
         //configuracion
         $see=Config_fe::facturacion_electronica();
 
-        //guia
-        $invoice=Config_fe::nota_credito($factura,$factura_registro,$request);
-        
-        //envio a SUNAT    
-        $result=Config_fe::send($see, $invoice);
-        //lectura CDR
-        $msg=Config_fe::lectura_cdr($result->getCdrResponse());
-        
-        $nota_credito=new Nota_Credito();
-        $nota_credito->facturacion_id=$factura->id;
-        $nota_credito->save();
+        if($boleta->tipo=="producto"){
+            
+            $invoice=Config_fe::nota_credito($factura,$factura_registro,$request);
+            //envio a SUNAT    
+            $result=Config_fe::send($see, $invoice);
+            //lectura CDR
+            $msg=Config_fe::lectura_cdr($result->getCdrResponse());
 
-        $contador=count($factura_registro);
-        for($p=0;$p<$contador;$p++){
-            $string=(string)$p;
-            $nombre="input_disabled_".$string;
-            if($request->$nombre==NULL){
-            }else{
-                $nota_creditos_r=new Nota_Credito_registro();
-                $nota_creditos_r->nota_credito_id=$nota_credito->id;
-                $nota_creditos_r->producto_id=$factura_registro[$p]->producto_id;
-                $nota_creditos_r->precio=$factura_registro[$p]->precio;
-                $nota_creditos_r->cantidad=$request->$nombre;
-                $nota_creditos_r->save();
+            $nota_credito=new Nota_Credito();
+            $nota_credito->facturacion_id=$factura->id;
+            $nota_credito->tipo="producto";
+            $nota_credito->save();
+
+            $contador=count($factura_registro);
+            for($p=0;$p<$contador;$p++){
+                $string=(string)$p;
+                $nombre="input_disabled_".$string;
+                if($request->$nombre==NULL){
+                }else{
+                    $nota_creditos_r=new Nota_Credito_registro();
+                    $nota_creditos_r->nota_credito_id=$nota_credito->id;
+                    $nota_creditos_r->producto_id=$factura_registro[$p]->producto_id;
+                    $nota_creditos_r->precio=$factura_registro[$p]->precio;
+                    $nota_creditos_r->cantidad=$request->$nombre;
+                    $nota_creditos_r->save();
+                }
+            }
+
+        }elseif($boleta->tipo=="servicio"){
+            
+            $invoice=Config_fe::nota_credito_servicio($factura,$factura_registro,$request);
+            //envio a SUNAT    
+            $result=Config_fe::send($see, $invoice);
+            //lectura CDR
+            $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+            
+            $nota_credito=new Nota_Credito();
+            $nota_credito->facturacion_id=$factura->id;
+            $nota_credito->tipo="servicio";
+            $nota_credito->save();
+
+            $contador=count($factura_registro);
+            for($p=0;$p<$contador;$p++){
+                $string=(string)$p;
+                $nombre="input_disabled_".$string;
+                if($request->$nombre==NULL){
+                }else{
+                    $nota_creditos_r=new Nota_Credito_registro();
+                    $nota_creditos_r->nota_credito_id=$nota_credito->id;
+                    $nota_creditos_r->servicio_id=$factura_registro[$p]->servicio_id;
+                    $nota_creditos_r->precio=$factura_registro[$p]->precio;
+                    $nota_creditos_r->cantidad=$request->$nombre;
+                    $nota_creditos_r->save();
+                }
             }
         }
+
+        
 
     }
 
