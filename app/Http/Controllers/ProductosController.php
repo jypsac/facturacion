@@ -32,8 +32,6 @@ class ProductosController extends Controller
     }
 
     public function index_ajax(){
-
-        
     }
 
     /**
@@ -241,7 +239,7 @@ class ProductosController extends Controller
             // NO ANULA EL PRODUCTO
             // $errors = "Para anular un producto, haga la salida de todo el stock en kardex";
             // return route('productos.index',compact('errors'));
-            return redirect()->route('productos.index')->with('anulacion', 'Para anular un producto, haga la salida de todo el stock en kardex');
+            return redirect()->route('productos.index')->with('anulacion', 'Producto registrado en almacen, retire todo con una Guia de Salida para poder anular dicho producto.');
             // return "Error por tener producto en kardex, no se puede eliminar";
             // return $kardex_entrada;
         }else{

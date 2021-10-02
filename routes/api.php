@@ -32,7 +32,13 @@ Route::group(['middleware' => ['auth:api']], function () {
 });
 Route::get('productos',function(){
     $producto = DB::table('productos')
-    ->select('*','productos.id as prod_id' ,'marcas.nombre as nombre_marca','familias.descripcion as familia_desc', 'tipo_afectacion.informacion as afectacion_info','estado.nombre as estado_nom' )
+    ->select('*',
+        'productos.id as prod_id' ,
+        'productos.nombre as prod_nomnre' ,
+        'marcas.nombre as nombre_marca',
+        'familias.descripcion as familia_desc',
+        'tipo_afectacion.informacion as afectacion_info',
+        'estado.nombre as estado_nom' )
     ->join('familias', 'productos.familia_id', '=', 'familias.id')
     ->join('marcas', 'productos.marca_id', '=', 'marcas.id')
     ->join('tipo_afectacion', 'productos.tipo_afectacion_id', '=', 'tipo_afectacion.id')

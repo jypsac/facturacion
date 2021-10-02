@@ -14,58 +14,36 @@
     <div class="alert alert-danger">
         {{ session('anulacion') }}
     </div>
-@endif
+    @endif
     <div class="row">
         <div class="col-lg-12">
             <div class="ibox ">
-                <div class="ibox-title">
-                    <h5>Creacion de Almacen</h5>
-                    <div class="ibox-tools">
-                        <a class="collapse-link">
-                            <i class="fa fa-chevron-up"></i>
-                        </a>
-                        <a class="dropdown-toggle" data-toggle="dropdown" href="#">
-                            <i class="fa fa-wrench"></i>
-                        </a>
-                        <ul class="dropdown-menu dropdown-user">
-                            <li><a href="#" class="dropdown-item">Config option 1</a>
-                            </li>
-                            <li><a href="#" class="dropdown-item">Config option 2</a>
-                            </li>
-                        </ul>
-                        <a class="close-link">
-                            <i class="fa fa-times"></i>
-                        </a>
-                    </div>
-                </div>
                 <div class="ibox-content">
                     <div class="table-responsive">
                         <table class="table table-striped table-bordered table-hover dataTables-example " id="table_prod">
                             <thead>
-                            <tr><!--
-                                <th>COD. GENERAL</th> -->
-                                <th>N° Registro</th>
-                                <th>Codigo Producto</th>
-                                <th>Codigo Original</th>
-                                <th>Nombre</th>
-                                <th>Familia</th>
-                                <th>Marca</th>
-                                <th>Estado</th>
-                                <th>Afectacion</th>
-                                <th>Foto</th>
-                                <th>Ver</th>
-                                {{-- <th>Editar</th> - --}}
-                                <th>Anular</th>
-                            </tr>
-                        </thead>
+                                <tr>
+                                    <th>Item</th>
+                                    <th>Nombre</th>
+                                    <th>Codigo Producto</th>
+                                    <th>Codigo Original</th>
+                                    {{-- <th>Familia</th> --}}
+                                    <th>Marca</th>
+                                    <th>Estado</th>
+                                    <th>Afectacion</th>
+                                    <th>Foto</th>
+                                    <th>Ver</th>
+                                    <th>Anular</th>
+                                </tr>
+                            </thead>
 
-   
-</table>
-</div>
-</div>
-</div>
-</div>
-</div>
+
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
 
 </div>
 
@@ -83,16 +61,16 @@
 <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
 <script>
-$(document).ready(function(){
-    $('#table_prod').DataTable({
-        "serverSide":true,
-        "ajax":"{{url('api/productos')}}",
-        "columns":[
+    $(document).ready(function(){
+        $('#table_prod').DataTable({
+            "serverSide":true,
+            "ajax":"{{url('api/productos')}}",
+            "columns":[
             {data : 'prod_id'},
+            {data : 'prod_nomnre'},
             {data : 'codigo_producto'},
             {data : 'codigo_original'},
-            {data : 'nombre'},
-            {data : 'familia_desc'},
+            // {data : 'familia_desc'},
             {data : 'nombre_marca'},
             {data : 'estado_nom'},
             {data : 'afectacion_info'},
@@ -114,7 +92,7 @@ $(document).ready(function(){
                 searchable: false,
                 render: function (data) {
                     var actions = '';
-                    actions += '<a href="{{ route('productos.show',':id') }}" target="_blank"><span class="btn btn-success" ><img src="{{asset('img/icons/ver.svg')}}" width="20px" ></span></a>';
+                    actions += '<a href="{{ route('productos.show',':id') }}" target="_blank"><button type="button" class="btn btn-success"><i class="fa fa-eye"></i></button></a>';
                     return actions.replace(/:id/g, data.prod_id);
                 }
             },
@@ -128,32 +106,33 @@ $(document).ready(function(){
                         data: null;
                         var actions = '';
                         actions +=
-                            '<button type="button" class="btn btn-s-m btn-danger" data-toggle="modal" data-target="#:id">Anular</button>'+
-                            '<div class="modal fade" id=":id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'+
-                                '<div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">'+
-                                    '<div class="modal-content" >'+
-                                    '<div class="modal-body" style="padding: 0px;">'+
-                                        '<div class="ibox-content float-e-margins">'+
-                                        '<h3 class="font-bold col-lg-12" align="center">'+
-                                            '¿Esta Seguro que Deseas Anular el Producto: :id".?<br>'+
-                                            '<h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4>'+
-                                        '</h3><p align="center"><form action="{{ route('productos.destroy',':id')}}" method="POST">'+
-                                            '@csrf @method('delete')'+
-                                            '<center><button type="submit" class="btn btn-w-m btn-primary">Anular</button></form>'+
-                                        '</p></div></div></div></div></div>';
+                        '<button type="button" class="btn btn-s-m btn-danger" data-toggle="modal" data-target="#:id"><i class="fa fa-trash-o" aria-hidden="true"></i></button>'+
+                        '<div class="modal fade" id=":id" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">'+
+                        '<div class="modal-dialog" style="margin-top: 12%; border-radius: 20px">'+
+                        '<div class="modal-content" >'+
+                        '<div class="modal-body" style="padding: 0px;">'+
+                        '<div class="ibox-content float-e-margins">'+
+                        '<h3 class="font-bold col-lg-12" align="center">'+
+                        '¿Esta Seguro que Deseas Anular el Producto: :id".?<br>'+
+                        '<h4 align="center"> <strong>Nota: Una vez Anulado no hay opcion de devolver la accion </strong></h4>'+
+                        '</h3><p align="center"><form action="{{ route('productos.destroy',':id')}}" method="POST">'+
+                        '@csrf @method('delete')'+
+
+                        '<center><button type="submit" class="btn btn-w-m btn-primary">Anular</button></form>'+
+                        '</p></div></div></div></div></div>';
                         return actions.replace(/:id/g, data.prod_id);
                     }else{
                         var actions2 = '';
                         data: 'id';
-                        actions2 += '<a href="#"><span class="btn btn-secondary" >ANULADO</span></a>';
-                         return actions2.replace(/:id/g, data.prod_id);
+                        actions2 += '<a href="#"><span class="btn btn-secondary" ><i class="fa fa-times-circle" aria-hidden="true"></i></span></a>';
+                        return actions2.replace(/:id/g, data.prod_id);
                     }
 
                 }
             }
-        ]
+            ]
+        });
     });
-});
 
 </script>
 
