@@ -20,7 +20,7 @@
     <link href="{{asset('css/plugins/steps/jquery.steps.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/footable/footable.core.css')}}" rel="stylesheet">
     <link href="{{asset('css/plugins/switchery/switchery.css')}}" rel="stylesheet">
-
+    <link href="{{ asset('css/plugins/select2/select2.min.css') }}" rel="stylesheet">
     <link href="{{ asset('main.css') }}" rel="stylesheet">
     <link rel="icon" type="image/svg+xml" href="{{ asset('img/icono.svg') }}" sizes="any">
 

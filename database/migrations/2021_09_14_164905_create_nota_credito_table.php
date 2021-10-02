@@ -17,6 +17,7 @@ class CreateNotaCreditoTable extends Migration
             $table->bigIncrements('id');
             $table->unsignedBigInteger('facturacion_id');
             $table->foreign('facturacion_id')->references('id')->on('facturacion')->onDelete('cascade');
+            $table->string('tipo')->nullable();
             $table->timestamps();
         });
     }
