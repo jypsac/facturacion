@@ -54,13 +54,13 @@
 									<td> <button type="button" class='borrar btn btn-danger' disabled=""  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
 
 									<td>
-										<select class="select2_demo_3 select_change" name="articulo[]" required="" id="select_prod1"  onchange="seleccion_options(0)">
+										<select class="select2_demo_3 select_change" name="articulo[]" required="" id="select_prod1"  onchange="seleccion_options(1)">
 											<option></option>
 											@foreach($productos as $producto)
 											<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 											@endforeach
 										</select>
-										<input type="text"  class="celda"  name="prod_number[]" id="input_prod1" >
+										<input type="text" style="display:none"  class="celda"  name="prod_number[]" id="input_prod1" >
 									</td>
 									<td><input type='text'  name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
 									<td><input type='text' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
@@ -123,13 +123,13 @@ span.select2.select2-container.select2-container--default{
 		<button type="button" class='borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i>
 		</td>;
 		<td>
-		<select class="select2_demo_3 select_change" name="articulo[]" required="" id="seleccion_options${i}"   >
+		<select class="select2_demo_3 select_change" id="select_prod${i}"   name="articulo[]" required="" onchange="seleccion_options(${i})"  >
 		<option></option>
 		@foreach($productos as $producto)
 		<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 		@endforeach
 		</select>
-		<input type="text"   class="celda"  name="prod_number[]" id="input_prod${i}">
+		<input type="text" style="display:none"  class="celda"  name="prod_number[]" id="input_prod${i}">
 		</td>
 		<td>
 		<input type='text' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
@@ -160,13 +160,22 @@ span.select2.select2-container.select2-container--default{
 
 	<script>
 		function seleccion_options(b){
-			var fila = $(this).parents("tr").val();
-			console.log(fila);
-			// if(){
-
-			// }else{
-
-			// }
+			var option = document.getElementById(`select_prod${b}`);
+			var valor_select = option.value;
+			if(valor_select == ""){
+				document.getElementById(`input_prod${b}`).value = valor_select;
+				$('option[value="'+valor_select+'"]').prop( "disabled", true);
+			}else{
+				var ant_val = document.getElementById(`input_prod${b}`).value;
+				$('option[value="'+ant_val+'"]').prop( "disabled", false);
+				$('option[value="'+valor_select+'"]').prop( "disabled", true);
+				document.getElementById(`input_prod${b}`).value = valor_select;
+				$(".addmore").prop("disabled", false);
+			}
+			$(".select2_demo_3").select2({
+				placeholder: "Seleccionar Producto",
+				allowClear: true
+			});
 		}
 	</script>
 	
@@ -191,45 +200,8 @@ span.select2.select2-container.select2-container--default{
 			event.preventDefault();
 			var fila = $(this).parents("tr");
 			var input_text_opt = fila.find('input[class="celda"]').val();
-			console.log(input_text_opt);
-			// if(input_text_opt != ""){
-				$('option[value="'+input_text_opt+'"]').removeAttr("disabled");
-			// }
-
+			$('option[value="'+input_text_opt+'"]').prop("disabled", false);
 			$(this).closest('tr').remove();
-			var divs = $(".borrar").length;
-			if(divs == 1){
-				$(".borrar").prop("disabled", true);
-			}else{
-				$(".borrar").prop("disabled", false);
-			}
 		});
 	</script>
-
-	<script>
-		function select_all() {
-			$('input[class=case]:checkbox').each(function () {
-				if ($('input[class=check_all]:checkbox:checked').length == 0) {
-					$(this).prop("checked", false);
-				} else {
-					$(this).prop("checked", true);
-				}
-			});
-		}
-	</script>
-
-	<script type="text/javascript">
-		$(document.body).click(function(){
-			var divs = $(".borrar").length;
-			if(divs == 1){
-				$(".borrar").prop("disabled", true);
-			}else{
-				$(".borrar").prop("disabled", false);
-			}
-		});
-	</script>
-{{-- 	<script type="text/javascript">
-	$('')
-	</script>
- --}}
 	@endsection
