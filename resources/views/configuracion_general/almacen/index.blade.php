@@ -193,27 +193,25 @@
                                                                     <div class="col-sm-6"><textarea class="form-control" name="descripcion" autocomplete="off" required="required" >{{$almacen->descripcion}}</textarea></div>
 
                                                                     <label class="col-sm-2 col-form-label">Activo/desactivo:</label>
-                                                                    <input type="checkbox" class="js-switch{{$almacen->id}}" checked />
+                                                                    {{-- <input type="checkbox" class="js-switch{{$almacen->id}}" checked /> --}}
 
                                                                     <div class="col-sm-1">
                                                                         @if($almacen->estado == 0)
                                                                         @if($conteo_almacen == 1)
                                                                         <div class="switch-button">
                                                                             <input type="text" name="estado" value="on" hidden="hidden">
-                                                                            <input type="checkbox" name="estado" id="switch-label{{$almacen->id}}" class="switch-button__checkbox" checked="" disabled="disabled" >
-                                                                            <label for="switch-label{{$almacen->id}} " class="switch-button__label " ></label>
+                                                                              <input type="checkbox" name="estado" class="js-switch{{$almacen->id}}" checked  disabled="disabled" />
                                                                         </div>
                                                                         @elseif($conteo_almacen >1)
                                                                         <div class="switch-button">
-                                                                            <input type="checkbox" name="estado" id="switch-label{{$almacen->id}}" class="switch-button__checkbox" checked="" >
-                                                                            <label for="switch-label{{$almacen->id}}" class="switch-button__label"></label>
+                                                                             <input type="checkbox" name="estado" class="js-switch{{$almacen->id}}" checked   />
                                                                         </div>
                                                                         @endif
 
                                                                         @elseif($almacen->estado == 1)
                                                                         <div class="switch-button">
-                                                                            <input type="checkbox" name="estado" id="aswitch-label{{$almacen->id}}" class="switch-button__checkbox" >
-                                                                            <label for="aswitch-label{{$almacen->id}}" class="switch-button__label"></label>
+                                                                             <input type="checkbox" name="estado" class="js-switch{{$almacen->id}}" />
+
                                                                         </div>
                                                                         @endif
                                                                     </div>
