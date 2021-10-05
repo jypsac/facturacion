@@ -111,11 +111,11 @@ class KardexEntradaController extends Controller
       $user_login =auth()->user()->id;
       $usuario=User::where('id',$user_login)->first();
 
-      if ($count_kardex_e==0) {
-        return view('inventario.kardex.entrada.entrada_producto.create_inventario_inicial',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario','moneda_principal'));
-      }else{
+      // if ($count_kardex_e==0) {
+      //   return view('inventario.kardex.entrada.entrada_producto.create_inventario_inicial',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario','moneda_principal'));
+      // }else{
         return view('inventario.kardex.entrada.entrada_producto.create',compact('almacenes','provedores','productos','motivos','categorias','moneda','usuario'));
-      }
+      // }
     }
 
     /**
