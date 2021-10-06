@@ -110,8 +110,7 @@ span.select2.select2-container.select2-container--default{
 
 <script type="text/javascript">
 	$(".select2_demo_3").select2({
-		placeholder: "Seleccionar Producto",
-		allowClear: true
+		placeholder: "Seleccionar Producto"
 	});
 </script>
 <script>
@@ -145,7 +144,6 @@ span.select2.select2-container.select2-container--default{
 		i++;
 		$(".select2_demo_3").select2({
 			placeholder: "Seleccionar Producto",
-			allowClear: true
 		});
 
 		var input_ds = [];
@@ -174,7 +172,6 @@ span.select2.select2-container.select2-container--default{
 			}
 			$(".select2_demo_3").select2({
 				placeholder: "Seleccionar Producto",
-				allowClear: true
 			});
 		}
 	</script>
@@ -201,6 +198,9 @@ span.select2.select2-container.select2-container--default{
 			var fila = $(this).parents("tr");
 			var input_text_opt = fila.find('input[class="celda"]').val();
 			$('option[value="'+input_text_opt+'"]').prop("disabled", false);
+			$(".select2_demo_3").select2({
+				placeholder: "Seleccionar Producto",
+			});
 			$(this).closest('tr').remove();
 		});
 	</script>

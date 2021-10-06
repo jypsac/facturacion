@@ -424,7 +424,7 @@ class FacturacionController extends Controller
             foreach($kardex_entrada_v as $kardex_entradas_v){
                 $kadex_entrada_id_v[]=$kardex_entradas_v->id;
             }
-            // return $kardex_entrada;
+            // return $kadex_entrada_id_v;
             for($x=0;$x<$kardex_entrada_count_v;$x++){
                 if(Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first()){
                     $nueva_v[]=Kardex_entrada_registro::where('producto_id',$producto_id[$i])->where('kardex_entrada_id',$kadex_entrada_id_v[$x])->first();
