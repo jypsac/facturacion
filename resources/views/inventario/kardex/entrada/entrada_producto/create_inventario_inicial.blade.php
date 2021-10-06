@@ -51,7 +51,7 @@
 							</thead>
 							<tbody id="tbody">
 								<tr>
-									<td> <button type="button" class='borrar btn btn-danger' disabled=""  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
+									<td> <button type="button" class='borrar btn btn-danger' disabled="" > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
 
 									<td>
 										<select class="select2_demo_3 select_change" name="articulo[]" required="" id="select_prod1"  onchange="seleccion_options(1)">
@@ -153,6 +153,7 @@ span.select2.select2-container.select2-container--default{
 			$('option[value="'+input_ds[j]+'"]').prop("disabled", true);
 		};
 		$(".addmore").prop("disabled", true);
+		$(".borrar").prop("disabled", false);
 	});
 </script>
 
@@ -202,6 +203,15 @@ span.select2.select2-container.select2-container--default{
 				placeholder: "Seleccionar Producto",
 			});
 			$(this).closest('tr').remove();
+
+			var count_input = document.getElementsByClassName('celda').length;
+			console.log(count_input);
+			if(count_input == 1){
+				$(".borrar").prop("disabled", true);
+				$(".addmore").prop("disabled", false);
+			}else{
+				$(".borrar").prop("disabled", false);
+			}
 		});
 	</script>
 	@endsection
