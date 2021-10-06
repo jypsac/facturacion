@@ -795,6 +795,7 @@
 
     <script>
         $(".delete").on('click', function () {
+            // DESACTIVAR OPTIONS
             var fila = $('.case:checkbox:checked').parents("tr");
             var input_text_opt = fila.find('input[class="celda"]').val();
             console.log(input_text_opt);
@@ -802,7 +803,7 @@
             $(".select2_demo_3").select2({
                 placeholder: "Seleccionar Producto",
             });
-
+            // ELIMINAR TR
            fila.remove();
             //SUMA SUBTOTAL SIN IGV
             var totalInp = $('[name="total"]');
