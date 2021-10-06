@@ -412,7 +412,6 @@
                     <script type="text/javascript">
                         $(".select2_demo_3").select2({
                             placeholder: "Seleccionar Producto",
-                            allowClear: true
                         });
                     </script>
                       {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
@@ -496,7 +495,6 @@
                             };
                             $(".select2_demo_3").select2({
                                 placeholder: "Seleccionar Producto",
-                                allowClear: true
                             });
                         });
                     </script>
@@ -803,7 +801,6 @@
             $('option[value="'+input_text_opt+'"]').prop("disabled", false);
             $(".select2_demo_3").select2({
                 placeholder: "Seleccionar Producto",
-                allowClear: true
             });
 
            fila.remove();
@@ -1056,7 +1053,6 @@
             }
             $(".select2_demo_3").select2({
                 placeholder: "Seleccionar Producto",
-                allowClear: true
             });
         }
   </script>
@@ -1079,7 +1075,6 @@
             }
             $(".select2_demo_3").select2({
                 placeholder: "Seleccionar Producto",
-                allowClear: true
             });
         }
 

@@ -153,6 +153,7 @@ class KardexEntradaController extends Controller
       }
         //contador de valores de articulos
       $articulo = $request->input('articulo');
+      return  $articulo;
       $count_articulo=count($articulo);
         //validacion para la no incersion de dobles articulos
       for ($e=0; $e < $count_articulo; $e++){
@@ -501,7 +502,7 @@ class KardexEntradaController extends Controller
 
     }
 
-    function InventarioInicial(Request $request)
+    public function InventarioInicial(Request $request)
     {
       // return $request;
       $kardex_entrada=Kardex_entrada::first();
@@ -511,6 +512,7 @@ class KardexEntradaController extends Controller
         $moneda_principal=Moneda::where('principal',1)->first();
         $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
         $articulo = $request->input('articulo');
+        // return $articulo;
         $count_articulo=count($articulo);
       // return $articulo;
       //   //validacion para la no incersion de dobles articulos

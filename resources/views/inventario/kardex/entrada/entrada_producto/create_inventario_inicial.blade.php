@@ -60,7 +60,7 @@
 											<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 											@endforeach
 										</select>
-										<input type="text" style="display:none"  class="celda"  name="prod_number[]" id="input_prod1" >
+										<input type="text" style="display:none"  class="celda"  name="articulo[]" id="input_prod1" >
 									</td>
 									<td><input type='text'  name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
 									<td><input type='text' name='precio[]' class="monto0 form-control" onkeyup="multi(0);" required/></td>
@@ -122,13 +122,13 @@ span.select2.select2-container.select2-container--default{
 		<button type="button" class='borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i>
 		</td>;
 		<td>
-		<select class="select2_demo_3 select_change" id="select_prod${i}"   name="articulo[]" required="" onchange="seleccion_options(${i})"  >
+		<select class="select2_demo_3 select_change" name="articulo[]" id="select_prod${i}"    required="" onchange="seleccion_options(${i})"  >
 		<option></option>
 		@foreach($productos as $producto)
 		<option value="{{$producto->id}}">{{$producto->nombre}}- {{$producto->codigo_original}}</option>
 		@endforeach
 		</select>
-		<input type="text" style="display:none"  class="celda"  name="prod_number[]" id="input_prod${i}">
+		<input type="text" style="display:none"  class="celda"  name="articulo[]" id="input_prod${i}">
 		</td>
 		<td>
 		<input type='text' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
@@ -147,9 +147,9 @@ span.select2.select2-container.select2-container--default{
 		});
 
 		var input_ds = [];
-		var number_tot = document.getElementsByName('prod_number[]').length;
+		var number_tot = document.getElementsByName('articulo[]').length;
 		for( j = 0; j < number_tot; j++){
-			input_ds[j]  = document.getElementsByName('prod_number[]')[j].value;
+			input_ds[j]  = document.getElementsByName('articulo[]')[j].value;
 			$('option[value="'+input_ds[j]+'"]').prop("disabled", true);
 		};
 		$(".addmore").prop("disabled", true);
@@ -159,6 +159,9 @@ span.select2.select2-container.select2-container--default{
 
 	<script>
 		function seleccion_options(b){
+			var cant_opt = document.getElementById(`select_prod${b}`).length;
+			var count_input = document.getElementsByClassName('celda').length;
+
 			var option = document.getElementById(`select_prod${b}`);
 			var valor_select = option.value;
 			if(valor_select == ""){
@@ -169,11 +172,17 @@ span.select2.select2-container.select2-container--default{
 				$('option[value="'+ant_val+'"]').prop( "disabled", false);
 				$('option[value="'+valor_select+'"]').prop( "disabled", true);
 				document.getElementById(`input_prod${b}`).value = valor_select;
-				$(".addmore").prop("disabled", false);
+				if(cant_opt-1 == count_input ){
+					$(".addmore").prop("disabled", true);
+				}
+				else{
+					$(".addmore").prop("disabled", false);
+				}
 			}
 			$(".select2_demo_3").select2({
 				placeholder: "Seleccionar Producto",
 			});
+
 		}
 	</script>
 	
@@ -211,6 +220,9 @@ span.select2.select2-container.select2-container--default{
 				$(".addmore").prop("disabled", false);
 			}else{
 				$(".borrar").prop("disabled", false);
+				$(".addmore").prop("disabled", false);
+
+
 			}
 		});
 	</script>
