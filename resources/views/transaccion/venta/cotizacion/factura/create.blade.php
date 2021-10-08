@@ -422,7 +422,6 @@
 <script>
     $('#articulo').change(function(e){
         e.preventDefault();
-
         var articulo = $('[id="articulo"]').val();
         // var data={articulo:articulo,_token:token};
         $.ajax({
@@ -433,10 +432,9 @@
                 'articulo': articulo
             },
             success: function (msg) {
-                        // console.log(msg);
                 $('#descripcion0').val(msg);
-     }
-                });
+            }
+        });
     });
 
 

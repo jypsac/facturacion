@@ -164,7 +164,7 @@
 .select2-container--default .select2-selection--single { border: none;}
 .select2-container--default .select2-selection--single .select2-selection__rendered {font-size: 0.9rem;padding-left: 0px;color: inherit;}
 span.select2.select2-container.select2-container--default{
-	width: 100%!important;
+	width: 100% !important;
 	background-color: #FFFFFF;
 	background-image: none;
 	border-radius: 1px;

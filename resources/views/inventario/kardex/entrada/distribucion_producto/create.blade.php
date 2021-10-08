@@ -56,6 +56,12 @@
 								<tr>
 									<td><input type='checkbox' class="case" id="form_distribucion"></td>
 									<td>
+								{{-- 		<select class="select2_demo_3 asf" name="articulo[]" required="" id="articulo1" onchange="select_opt(1)">
+											<option></option>
+											@foreach($productos as $producto)
+											<option value="{{$producto->id}}"> {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}</option>
+											@endforeach
+										</select> --}}
 										<input list="browsers2" class="form-control " name="articulo[]" required id='articulo' onclick="Clear(this);" autocomplete="off">
 										<datalist id="browsers2" >
 											@foreach($productos as $producto)
@@ -88,6 +94,18 @@
         -webkit-appearance: none;
         margin: 0;
     }
+	.select2-container--default .select2-selection--single .select2-selection__rendered {font-size: 12px;text-align: left;}
+	.select2-container--default .select2-selection--single { border: none;}
+	.select2-container--default .select2-selection--single .select2-selection__rendered {font-size: 0.9rem;padding-left: 0px;color: inherit;}
+	span.select2.select2-container.select2-container--default{
+		width: 100% !important;
+		background-color: #FFFFFF;
+		background-image: none;
+		border-radius: 1px;
+		display: block;
+		padding: 3px 12px;
+		border: 1px solid #e5e6e7;
+	}
 	</style>
 	<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 	<script src="{{ asset('js/popper.min.js') }}"></script>
@@ -97,7 +115,12 @@
 
 	<script src="{{ asset('js/inspinia.js') }}"></script>
 	<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
-
+	<script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
+	<script type="text/javascript">
+		$(".select2_demo_3").select2({
+			placeholder: "Seleccionar Producto",
+		});
+	</script>
 	{{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
 	<script>
 		function valida(f) {
