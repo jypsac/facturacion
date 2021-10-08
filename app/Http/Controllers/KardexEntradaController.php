@@ -386,7 +386,7 @@ class KardexEntradaController extends Controller
       return response()->json(['mensaje'=>'<div class="alert alert-success">Se Eliminó Correctamente el Registro</div> ']);
     }
     else{
-
+      // return $request;
       if ($request->get('id_registro')==true) {
         $id_registro= $request->get('id_registro');
         $count_articulo= count($id_registro);

@@ -72,7 +72,8 @@
                 <td> <button type="button" class='delete{{$kardex_entradas_registro->id}} borrar e btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
                 <td >
                     <p  align="left" class="form-control">{{$kardex_entradas_registro->producto->codigo_original}} -  {{$kardex_entradas_registro->producto->nombre}}</p>
-                    <input type='hidden'  name='id_registro[]' readonly="readonly" value="{{$kardex_entradas_registro->id}}" required hidden="hidden" />
+                    <input type='hidden'  name='id_registro[]' id="id_registro" readonly="readonly" value="{{$kardex_entradas_registro->id}}" required hidden="hidden" class="id_registro" />
+                    <input type='hidden'  name='registro_opt[]' id="registro_opt" readonly="readonly" value="{{$kardex_entradas_registro->producto->id}}" required  class="registro_opt" />
                 </td>
                 <td>
                     <input type='text'  name='cantidad[]' class="monto{{$kardex_entradas_registro->id}} form-control" value="{{$kardex_entradas_registro->cantidad_inicial}}"  onkeyup="multi({{$kardex_entradas_registro->id}});"  required/>
@@ -89,8 +90,9 @@
             @endif
         </tbody>
     </table>
+    <input type="hidden" name="" id="total_registros" value="{{count($productos)}}">
     <span hidden="hidden"> @if($cantidad_registro == 0) {{$ultimo_numero=0}}@else{{$ultimo_numero=$kardex_entradas_registro->id}}@endif</span>
-    <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+    <button type="button" class='addmore btn btn-success'> <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
     <button class="btn btn-warning  demo3 float-right" style="margin-left: 10px;" type="button">Guardar y Finalizar</button>
     <button class="btn btn-secondary ladda-button finalizar float-right" id="finalizar" hidden="" data-style="zoom-out" ></button><button  data-style="zoom-out" class="guardar ladda-button btn btn-info float-right" >Guardar</button>
 </form>
@@ -164,27 +166,28 @@ span.select2.select2-container.select2-container--default{
 <script>
     $(document).ready(function (){
         // Bind normal buttons
-        Ladda.bind( '.ladda-button',{ timeout: 10000 });
+        Ladda.bind( '.ladda-button',{ timeout: 8000 });
     });
 </script>
 <script type="text/javascript">
  $.ajaxSetup({ headers: {'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')}});
- @if($cantidad_registro == 0) @else
- @foreach($kardex_entradas_registros as $kardex_entradas_registro)
- $(".delete{{$kardex_entradas_registro->id}}").click(function(e){
-    e.preventDefault();
-    var accion = 'delete';
-    $.ajax({
-     type:'PUT',
-     url:"{{ route('kardex-entrada.update', $kardex_entradas_registro->id) }}",
-     data:{accion:accion},
-     success:function(data){
-      mostrarMensaje(data.mensaje);
-  }
-});
-});
- @endforeach
- @endif
+     @if($cantidad_registro == 0) 
+     @else
+        @foreach($kardex_entradas_registros as $kardex_entradas_registro)
+            $(".delete{{$kardex_entradas_registro->id}}").click(function(e){
+                e.preventDefault();
+                var accion = 'delete';
+                $.ajax({
+                    type:'PUT',
+                    url:"{{ route('kardex-entrada.update', $kardex_entradas_registro->id) }}",
+                    data:{accion:accion},
+                    success:function(data){
+                        mostrarMensaje(data.mensaje);
+                    }
+                });
+            });
+        @endforeach
+    @endif
  function mostrarMensaje(mensaje){
        $("#divmsg").empty(); //limpiar div
        $("#divmsg").append(mensaje);
@@ -229,16 +232,20 @@ span.select2.select2-container.select2-container--default{
     </script>
     <script>
         var i =  {{$ultimo_numero}}+1;
+
         $(".addmore").on('click', function () {
             var data = `
             <tr>
             <td> <button type="button" class='borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
             <td>
-            <select class="select2_demo_3 asf" name="articulo_nuevo[]" required="" id="producto${i}" >
+            <select class="select2_demo_3 asf" name="articulo_nuevo[]" required="" id="producto${i}" onchange="select_option(${i})" >
             <option></option>
             @foreach($productos as $producto)
             <option value="{{$producto->id}}">{{$producto->codigo_original}}- {{$producto->nombre}}</option>
             @endforeach
+            <input type='hidden'  name='registro_opt[]' id="registro_opt${i}" readonly="readonly" value="" required  class="registro_opt" />
+            </select>
+            <input type='text'  name='articulo_nuevo[]' id="articulo_nuevo${i}" readonly="readonly" value="" required hidden  class="articulo_nuevo" />
             </select>
             </td>
             <td>
@@ -253,20 +260,85 @@ span.select2.select2-container.select2-container--default{
             </tr> `;
             $('#assas').append(data);
             i++;
+            var input_ds = [];
+            var number_tot = document.getElementsByName('registro_opt[]').length;
+            for( j = 0; j < number_tot; j++){
+                input_ds[j]  = document.getElementsByName('registro_opt[]')[j].value;
+                $('option[value="'+input_ds[j]+'"]').prop("disabled", true);
+                
+                
+            };
+
             $(".select2_demo_3").select2({
                 placeholder: "Seleccionar Producto",
                 allowClear: true
             });
-
+            $(".addmore").prop("disabled", true);
+            
         });
     </script>
     <script>
        $(document).on('click', '.borrar', function (event) {
         event.preventDefault();
+
         var e = document.getElementsByClassName("e").length;
+
+        var fila = $(this).parents("tr");
+        var input_text_opt = fila.find('input[class="registro_opt"]').val();
+        console.log(input_text_opt)
+        $('option[value="'+input_text_opt+'"]').prop("disabled", false);
+        
         // alert(e);
         if (e>1) {
-            $(this).closest('tr').remove();
+            fila.remove();
+        }
+        
+        $(".addmore").prop("disabled", false);
+    });
+</script>
+<script >
+    function select_option(b){
+        var cant_opt = document.getElementById(`producto${b}`).length;
+
+        var count_input = document.getElementsByClassName('registro_opt').length;
+
+        var option = document.getElementById(`producto${b}`);
+        var valor_select = option.value;
+
+
+        if(valor_select == ""){
+            document.getElementById(`registro_opt${b}`).value = valor_select;
+            document.getElementById(`articulo_nuevo${b}`).value = valor_select;
+            $('option[value="'+valor_select+'"]').prop( "disabled", true);
+        }else{
+            var ant_val = document.getElementById(`registro_opt${b}`).value;
+            // var ant_val = document.getElementById(`articulo_nuevo${b}`).value;
+            $('option[value="'+ant_val+'"]').prop( "disabled", false);
+            $('option[value="'+valor_select+'"]').prop( "disabled", true);
+            document.getElementById(`registro_opt${b}`).value = valor_select;
+            document.getElementById(`articulo_nuevo${b}`).value = valor_select;
+            if(cant_opt-1 == count_input ){
+                $(".addmore").prop("disabled", true);
+            }
+            else{
+                $(".addmore").prop("disabled", false);
+            }
+        }
+        $(".select2_demo_3").select2({
+            placeholder: "Seleccionar Producto",
+        });
+    }
+</script>
+<script >
+    $(document).ready(function (){
+        
+        var cant_opt = document.getElementById('total_registros').value;
+        var count_input = document.getElementsByName('registro_opt[]').length;
+        if(cant_opt == count_input ){
+            $(".addmore").prop("disabled", true);
+        }
+        else{
+            $(".addmore").prop("disabled", false);
         }
     });
 </script>
