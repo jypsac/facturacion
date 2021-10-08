@@ -235,7 +235,7 @@ span.select2.select2-container.select2-container--default{
         $(".addmore").on('click', function () {
             var data = `
             <tr>
-            <td> <button type="button" class='borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
+            <td> <button type="button" class='borrar e btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button></td>
             <td>
             <select class="select2_demo_3 asf" name="articulo_nuevo[]" required="" id="producto${i}" onchange="select_option(${i})" >
             <option></option>
@@ -284,7 +284,7 @@ span.select2.select2-container.select2-container--default{
 
         var fila = $(this).parents("tr");
         var input_text_opt = fila.find('input[class="registro_opt"]').val();
-        console.log(input_text_opt)
+        console.log(input_text_opt);
         $('option[value="'+input_text_opt+'"]').prop("disabled", false);
         
         // alert(e);
