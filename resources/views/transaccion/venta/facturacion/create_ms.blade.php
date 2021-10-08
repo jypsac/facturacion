@@ -282,16 +282,22 @@
                                                         <input type='checkbox' class="case">
                                                     </td>
                                                     <td>
-                                                        <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)"  autocomplete="off">
+                                                        <select class="monto0 select2_demo_3 select_change" name="articulo[]" required="" id="articulo"  onchange="calcular(this,0);multi(0);selet_one()"  autocomplete="off">
+                                                            <option></option>
+                                                            @foreach($productos as $index => $producto)
+                                                            <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}</option>
+                                                            @endforeach
+                                                        </select>
+                                                   {{--      <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)"  autocomplete="off">
                                                         <datalist id="browsers2" >
                                                             @foreach($productos as $index => $producto)
                                                             <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
                                                                 @endforeach
-                                                            </datalist>
+                                                            </datalist> --}}
                                                             <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                                             <textarea type='text' id='numero_serie0'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                                             <input style="width: 76px" hidden="" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off"  />
-
+                                                            <input type="hidden" class="celda"  name="articulo[]" id="input_prod1" >
                                                         </td>
 
                                                         <td>
@@ -388,7 +394,23 @@
                         -webkit-appearance: none;
                         margin: 0;
                         }
+                        .select2-container--default .select2-selection--single .select2-selection__rendered {
+                            font-size: 12px;
+                        }
+                        .select2-container--default .select2-selection--single {
+                            border: none;
+                        }
+                        span.select2.select2-container.select2-container--default{
+                            width: 100%!important;
+                            background-color: #FFFFFF;
+                            background-image: none;
+                            border-radius: 1px;
+                            display: block;
+                            padding: 3px 12px;
+                            border: 1px solid #e5e6e7;
+                        }
                     </style>
+
                      <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
                     <script src="{{ asset('js/popper.min.js') }}"></script>
                     <script src="{{ asset('js/bootstrap.js') }}"></script>
@@ -406,6 +428,12 @@
 
                     <!-- Steps -->
                     <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
+                    <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
+                    <script type="text/javascript">
+                        $(".select2_demo_3").select2({
+                            placeholder: "Seleccionar Producto",
+                        });
+                    </script>
                     {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
                     <script>
                         function valida(f) {
@@ -430,12 +458,13 @@
                             <input type='checkbox' class='case'/>
                             </td>";
                             <td>
-                            <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i});ajax(${i})" autocomplete="off">
-                            <datalist id="browsers" >
+                            <select class="monto0 select2_demo_3 select_change" id='articulo${i}' onchange="calcular(this,${i});multi(${i});ajax(${i});seleccion_options(${i})"  autocomplete="off">
+                            <option></option>
                             @foreach($productos as $index => $producto)
-                            <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}" >
+                            <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}" >{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}</option>
                             @endforeach
-                            </datalist>
+                            </select>
+                            <input type="hidden"    class="celda"  name="articulo[]" id="input_prod${i}">
                             <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                             <textarea type='text' id='numero_serie0'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                             <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required hidden  autocomplete="off" />
@@ -480,6 +509,16 @@
                             </tr>`;
                             $('.tables').append(data);
                             i++;
+                            var input_ds = [];
+                            var number_tot = document.getElementsByName('articulo[]').length;
+                            for( j = 0; j < number_tot; j++){
+                                input_ds[j]  = document.getElementsByName('articulo[]')[j].value;
+                                $('option[value="'+input_ds[j]+'"]').prop("disabled", true);
+                            };
+                            $(".select2_demo_3").select2({
+                                placeholder: "Seleccionar Producto",
+                            });
+                            $(".addmore").prop("disabled", true);
                         });
                     </script>
                     <script>
@@ -768,7 +807,16 @@
 
     <script>
         $(".delete").on('click', function () {
-            $('.case:checkbox:checked').parents("tr").remove();
+            // DESACTIVAR OPTIONS
+            var fila = $('.case:checkbox:checked').parents("tr");
+            var input_text_opt = fila.find('input[class="celda"]').val();
+            $('option[value="'+input_text_opt+'"]').prop("disabled", false);
+            $(".addmore").prop("disabled", false);
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Producto",
+            });
+            // ELIMINAR TR
+           fila.remove();
             var totalInp = $('[name="total"]');
             var total_t = 0;
 
@@ -977,6 +1025,65 @@
             document.getElementById('suma_campos').style.display = "none";
         }
     </script>
+        <script>
 
+        function seleccion_options(b){
+            var cant_opt = document.getElementById(`articulo${b}`).length;
+            var count_input = document.getElementsByClassName('celda').length;
+
+            var option = document.getElementById(`articulo${b}`);
+            var valor_select = option.value;
+            if(valor_select == ""){
+                document.getElementById(`input_prod${b}`).value = valor_select;
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+            }else{
+                var ant_val = document.getElementById(`input_prod${b}`).value;
+                $('option[value="'+ant_val+'"]').prop( "disabled", false);
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+                document.getElementById(`input_prod${b}`).value = valor_select;
+
+                $(".addmore").prop("disabled", false);
+            }
+            if(cant_opt-1 == count_input ){
+                    $(".addmore").prop("disabled", true);
+                }else{
+                    $(".addmore").prop("disabled", false);
+                }
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Producto",
+            });
+        }
+  </script>
+
+    {{-- @endif --}}
+
+    <script  >
+        function selet_one(){
+            var cant_opt = document.getElementById(`articulo`).length;
+            var count_input = document.getElementsByClassName('celda').length;
+            var option = document.getElementById(`articulo`);
+            var valor_select = option.value;
+            if(valor_select == ""){
+                document.getElementById(`input_prod1`).value = valor_select;
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+            }else{
+                var ant_val = document.getElementById(`input_prod1`).value;
+                $('option[value="'+ant_val+'"]').prop( "disabled", false);
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+                document.getElementById(`input_prod1`).value = valor_select;
+                $(".addmore").prop("disabled", false);
+                if(cant_opt-1 == count_input ){
+                    $(".addmore").prop("disabled", true);
+                }else{
+                    $(".addmore").prop("disabled", false);
+                }
+
+            }
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Producto",
+            });
+        }
+
+    </script>
 
     @stop

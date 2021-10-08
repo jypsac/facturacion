@@ -47,7 +47,7 @@
 								<select class="form-control" name="motivo" id="motivo" required="required">
 									<option value="">Selccionar Motivo</option>
 									@foreach($motivos as $motivo)
-									<option value="{{$motivo->id}}" >{{$motivo->nombre}}</option>
+									<option value="{{$motivo->nombre}}" >{{$motivo->nombre}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -68,7 +68,7 @@
 							<div class="col-sm-4">
 								<select class="form-control" name="provedor" required="required">
 									@foreach($provedores as $provedor)
-									<option value="{{$provedor->id}}" >{{$provedor->empresa}}</option>
+									<option value="{{$provedor->empresa}}" >{{$provedor->empresa}}</option>
 									@endforeach
 								</select>
 							</div>
@@ -101,7 +101,7 @@
 							<select class="form-control" name="moneda" required="">
 								<option value="" >Seleccionar Moneda</option>
 								@foreach($moneda as $monedas)
-								<option value="{{$monedas->id}}">{{$monedas->nombre}}</option>
+								<option value="{{$monedas->nombre}}">{{$monedas->nombre}}</option>
 								@endforeach
 							</select>
 						</div>
@@ -129,12 +129,13 @@
 										<button type="button" class='delete borrar e btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
 									</td>
 									<td>
-										<select class="select2_demo_3 asf" name="articulo[]" required="" id="articulo" >
+										<select class="select2_demo_3 asf" name="articulo[]" required="" id="articulo1" onchange="select_opt(1)">
 											<option></option>
 											@foreach($productos as $producto)
 											<option value="{{$producto->id}}"> {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}</option>
 											@endforeach
 										</select>
+										<input type="hidden" value="" id="registro_opt1" name="registro_opt[]" class="registro_opt">
 									</td>
 
 									<td><input type='text' id='cantidad' name='cantidad[]' class="monto0 form-control"  onkeyup="multi(0);"  required/></td>
@@ -145,7 +146,7 @@
 							</tbody>
 						</table>
 
-						<button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
+						<button type="button" class='addmore btn btn-success' disabled="" > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
 						<button class="btn btn-primary float-right" type="submit" id="boton"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>
 					</form>
 					<tr>
@@ -186,7 +187,6 @@ span.select2.select2-container.select2-container--default{
 <script type="text/javascript">
 	$(".select2_demo_3").select2({
 		placeholder: "Seleccionar Producto",
-		allowClear: true
 	});
 </script>
 {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
@@ -213,12 +213,13 @@ span.select2.select2-container.select2-container--default{
 		<button type="button" class='delete e borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
 		</td>
 		<td>
-		<select class="select2_demo_3 asf" name="articulo[]" required="" id="articulo" >
+		<select class="select2_demo_3 asf" name="articulo[]" required="" id="articulo${i}" onchange="select_opt(${i})" >
 		<option></option>
 		@foreach($productos as $producto)
 		<option value="{{$producto->id}}"> {{$producto->nombre}} | {{$producto->codigo_original}} | {{$producto->codigo_producto}}</option>
 		@endforeach
 		</select>
+		<input type="hidden"  name='registro_opt[]' id="registro_opt${i}" readonly="readonly" value="" required  class="registro_opt" />
 		</td>
 		<td>
 		<input type='text' id='cantidad" + i + "' name='cantidad[]' class="monto${i} form-control" onkeyup="multi(${i});" required/>
@@ -232,9 +233,17 @@ span.select2.select2-container.select2-container--default{
 		</tr>`;
 		$('table').append(data);
 		i++;
+		var input_ds = [];
+		var number_tot = document.getElementsByName('articulo[]').length;
+		for( j = 0; j < number_tot; j++){
+			input_ds[j]  = document.getElementsByName('articulo[]')[j].value;
+			$('option[value="'+input_ds[j]+'"]').prop("disabled", true);
+		};
+		$(".addmore").prop("disabled", true);
+		$(".borrar").prop("disabled", false);
+
 		$(".select2_demo_3").select2({
 			placeholder: "Seleccionar Producto",
-			allowClear: true
 		});
 	});
 </script>
@@ -259,9 +268,48 @@ span.select2.select2-container.select2-container--default{
 			event.preventDefault();
 			var e = document.getElementsByClassName("e").length;
         // alert(e);
-        if (e>1) {
-        	$(this).closest('tr').remove();
+        var fila = $(this).parents("tr");
+        var input_text_opt = fila.find('input[class="registro_opt"]').val();
+        console.log(input_text_opt);
+		$('option[value="'+input_text_opt+'"]').prop("disabled", false);
+		if (e>1) {
+        	fila.closest('tr').remove();
+        	$(".borrar").prop("disabled", true);
+        	$(".addmore").prop("disabled", false);
+        }else{
+        	$(".borrar").prop("disabled", false);
+			$(".addmore").prop("disabled", false);
         }
     });
+</script>
+<script >
+	function select_opt(b){
+		var cant_opt = document.getElementById(`articulo${b}`).length;
+		var count_input = document.getElementsByClassName('registro_opt').length;
+
+		var option = document.getElementById(`articulo${b}`);
+
+		var valor_select = option.value;
+		console.log(valor_select);
+		if(valor_select == ""){
+			document.getElementById(`registro_opt${b}`).value = valor_select;
+			$('option[value="'+valor_select+'"]').prop( "disabled", true);
+		}else{
+			var ant_val = document.getElementById(`registro_opt${b}`).value;
+			$('option[value="'+ant_val+'"]').prop( "disabled", false);
+			$('option[value="'+valor_select+'"]').prop( "disabled", true);
+			document.getElementById(`registro_opt${b}`).value = valor_select;
+			if(cant_opt-1 == count_input ){
+				$(".addmore").prop("disabled", true);
+			}
+			else{
+				$(".addmore").prop("disabled", false);
+			}
+		}
+		$(".select2_demo_3").select2({
+			placeholder: "Seleccionar Producto",
+		});
+
+	}
 </script>
 @endsection

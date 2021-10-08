@@ -256,23 +256,16 @@
                                                         <select class="monto0 select2_demo_3 select_change" name="articulo[]" required="" id="articulo"  onchange="calcular(this,0);multi(0);selet_one()"  autocomplete="off">
                                                             <option></option>
                                                             @foreach($productos as $index => $producto)
-                                                            <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
-                                                                {{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}
-                                                            </option>
+                                                                <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
+                                                                    {{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}
+                                                                </option>
                                                             @endforeach
                                                         </select>
-                                                     <!--    <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)"  autocomplete="off">
-                                                        <datalist id="browsers2" > -->
-                                                          <!--   @foreach($productos as $index => $producto)
-                                                            <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
 
-                                                            </option>
-                                                            @endforeach -->
-                                                            <!-- </datalist> -->
                                                             <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                                             <textarea type='text' id='numero_serie0'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px;" placeholder="N° de Serie"></textarea>
                                                             <input style="width: 76px" hidden="" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)"   autocomplete="off"  />
-                                                            <input type="text" {{-- style="display:none" --}}  class="celda"  name="prod_number[]" id="input_prod1" >
+                                                            <input type="hidden" class="celda"  name="articulo[]" id="input_prod1" >
 
                                                         </td>
 
@@ -350,7 +343,7 @@
                                                 </table>
                                             </div>
                                             <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
-                                            <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
+                                            <button type="button" class='addmore btn btn-success' disabled=""> <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
                                             <button class="btn btn-primary float-right" type="submit" id="boton" name="boton" ><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
                                         </form>
 
@@ -445,7 +438,7 @@
                             <textarea type='text' id='descripcion${i}'   name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                             <textarea type='text' id='numero_serie0' placeholder="N° de Serie" name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                             <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" hidden   autocomplete="off" />
-                            <input type="text"    class="celda"  name="prod_number[]" id="input_prod${i}">
+                            <input type="hidden"    class="celda"  name="articulo[]" id="input_prod${i}">
                             </td>
                             <td>
                             <input type='text' style="width: 76px"  id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
@@ -488,14 +481,15 @@
                             $('.tables').append(data);
                             i++;
                             var input_ds = [];
-                            var number_tot = document.getElementsByName('prod_number[]').length;
+                            var number_tot = document.getElementsByName('articulo[]').length;
                             for( j = 0; j < number_tot; j++){
-                                input_ds[j]  = document.getElementsByName('prod_number[]')[j].value;
+                                input_ds[j]  = document.getElementsByName('articulo[]')[j].value;
                                 $('option[value="'+input_ds[j]+'"]').prop("disabled", true);
                             };
                             $(".select2_demo_3").select2({
                                 placeholder: "Seleccionar Producto",
                             });
+                            $(".addmore").prop("disabled", true);
                         });
                     </script>
                     <script>
@@ -798,8 +792,8 @@
             // DESACTIVAR OPTIONS
             var fila = $('.case:checkbox:checked').parents("tr");
             var input_text_opt = fila.find('input[class="celda"]').val();
-            console.log(input_text_opt);
             $('option[value="'+input_text_opt+'"]').prop("disabled", false);
+            $(".addmore").prop("disabled", false);
             $(".select2_demo_3").select2({
                 placeholder: "Seleccionar Producto",
             });
@@ -1040,6 +1034,9 @@
     <script>
 
         function seleccion_options(b){
+            var cant_opt = document.getElementById(`articulo${b}`).length;
+            var count_input = document.getElementsByClassName('celda').length;
+
             var option = document.getElementById(`articulo${b}`);
             var valor_select = option.value;
             if(valor_select == ""){
@@ -1050,8 +1047,14 @@
                 $('option[value="'+ant_val+'"]').prop( "disabled", false);
                 $('option[value="'+valor_select+'"]').prop( "disabled", true);
                 document.getElementById(`input_prod${b}`).value = valor_select;
+
                 $(".addmore").prop("disabled", false);
             }
+            if(cant_opt-1 == count_input ){
+                    $(".addmore").prop("disabled", true);
+                }else{
+                    $(".addmore").prop("disabled", false);
+                }
             $(".select2_demo_3").select2({
                 placeholder: "Seleccionar Producto",
             });
@@ -1062,6 +1065,8 @@
 
     <script  >
         function selet_one(){
+            var cant_opt = document.getElementById(`articulo`).length;
+            var count_input = document.getElementsByClassName('celda').length;
             var option = document.getElementById(`articulo`);
             var valor_select = option.value;
             if(valor_select == ""){
@@ -1073,6 +1078,12 @@
                 $('option[value="'+valor_select+'"]').prop( "disabled", true);
                 document.getElementById(`input_prod1`).value = valor_select;
                 $(".addmore").prop("disabled", false);
+                if(cant_opt-1 == count_input ){
+                    $(".addmore").prop("disabled", true);
+                }else{
+                    $(".addmore").prop("disabled", false);
+                }
+
             }
             $(".select2_demo_3").select2({
                 placeholder: "Seleccionar Producto",

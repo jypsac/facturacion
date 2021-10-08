@@ -214,7 +214,6 @@ span.select2.select2-container.select2-container--default{
     <script type="text/javascript">
         $(".select2_demo_3").select2({
             placeholder: "Seleccionar Producto",
-            allowClear: true
         });
     </script>
     <script>

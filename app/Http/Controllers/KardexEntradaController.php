@@ -128,17 +128,17 @@ class KardexEntradaController extends Controller
     {
       // return $request;
       $this->validate($request,[
-        'motivo' => ['required','exists:motivos,id'],
+        'motivo' => ['required','exists:motivos,nombre'],
         'factura' => ['required'],
         'almacen' => ['required','exists:almacen,id'],
             // 'clasificacion' => ['required','exists:categorias,id'],
         // 'guia_remision' => ['required'],
-        'provedor' => ['required','exists:provedores,id'],
-        'moneda' => ['required','exists:monedas,id'],
+        'provedor' => ['required','exists:provedores,empresa'],
+        'moneda' => ['required','exists:monedas,nombre'],
       ]
     );
       $data = $request->all();
-
+      // return $data;
         //codigo para convertir nombre a producto
       $cantidad_p = $request->input('cantidad');
       $count_cantidad_p=count($cantidad_p);
@@ -147,22 +147,22 @@ class KardexEntradaController extends Controller
       $count_precio_p=count($precio_p);
 
       for($i=0 ; $i<$count_cantidad_p;$i++){
-        $articulos[$i]= $request->input('articulo')[$i];
+        $articulos[$i]= $request->input('registro_opt')[$i];
         // $producto_id[$i]=strstr($articulos[$i], ' ', true);
         $producto_id[$i]=$articulos[$i];
       }
         //contador de valores de articulos
-      $articulo = $request->input('articulo');
-      return  $articulo;
+      $articulo = $request->input('registro_opt');
+      // return  $articulo;
       $count_articulo=count($articulo);
         //validacion para la no incersion de dobles articulos
       for ($e=0; $e < $count_articulo; $e++){
-        $articulo_comparacion_inicial=$request->get('articulo')[$e];
+        $articulo_comparacion_inicial=$request->get('registro_opt')[$e];
         for ($a=0; $a< $count_articulo ; $a++) {
           if ($a==$e) {
             $a++;
           }else {
-            $articulo_comparacion=$request->get('articulo')[$a];
+            $articulo_comparacion=$request->get('registro_opt')[$a];
             if ($articulo_comparacion_inicial==$articulo_comparacion) {
               return redirect()->route('kardex-entrada.create')->with('repite', 'Datos repetidos - No permitidos!');
             }
@@ -200,14 +200,15 @@ class KardexEntradaController extends Controller
       }else{
         $guia_re=$request->get('guia_remision');
       }
-      $provedor = $request->get('provedor');
+      $provedor_totc = Provedor::where('empresa',$request->get('provedor'))->first();
+      $provedor = $provedor_totc->id;
       $factura = $request->get('factura');
       $guia_remision = $request->get('guia_remision');
 
       $busc_prove_fac = Kardex_entrada::where('provedor_id',$provedor)->where('factura',$factura)->where('motivo_id','!=', '5')->first();
       // return $busc_prove_fac;
       if(isset($busc_prove_fac)){
-        // return redirect()->route('kardex-entrada.create')->with('repite', 'El numero de factura ya está en uso');
+        return redirect()->route('kardex-entrada.create')->with('repite', 'El numero de factura ya está en uso');
        $this->validate($request,[
         'factura' => ['required','unique:kardex_entrada'],
       ]);
@@ -224,10 +225,14 @@ class KardexEntradaController extends Controller
       $guia_remision = $request->get('factura');
     }
 
+    // MOTIVO
+    $motivo = Motivo::where('nombre',$request->get('motivo'))->first();
+    // MONEDA
+    $moneda = Moneda::where('nombre',$request->get('moneda'))->first();
 
 
     $kardex_entrada=new Kardex_entrada();
-    $kardex_entrada->motivo_id=$request->get('motivo');
+    $kardex_entrada->motivo_id=$motivo->id;
     $kardex_entrada->codigo_guia=$codigo_guia;
     $kardex_entrada->provedor_id=$provedor;
     $kardex_entrada->guia_remision=$guia_remision;
@@ -236,7 +241,7 @@ class KardexEntradaController extends Controller
     $kardex_entrada->almacen_id=$request->get('almacen');
     $kardex_entrada->almacen_emisor_id=$request->get('almacen');
     $kardex_entrada->almacen_receptor_id=$request->get('almacen');
-    $kardex_entrada->moneda_id=$request->get('moneda');
+    $kardex_entrada->moneda_id=$moneda->id;
     $kardex_entrada->tipo_registro_id=1;
     $kardex_entrada->estado=1;
     $kardex_entrada->user_id=auth()->user()->id;
