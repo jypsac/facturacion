@@ -69,7 +69,7 @@ class CotizacionController extends Controller
         $id=explode(" ",$articulo);
         $producto=Producto::where('id',$id[0])->first();
         $descripcion= $producto->descripcion;
-        return $descripcion;
+        echo $descripcion;
     }
 
     public function create_factura(Request $request)

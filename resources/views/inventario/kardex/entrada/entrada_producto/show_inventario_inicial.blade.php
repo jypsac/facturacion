@@ -272,7 +272,7 @@ span.select2.select2-container.select2-container--default{
                 placeholder: "Seleccionar Producto",
                 allowClear: true
             });
-            $(".addmore").prop("disabled", true);
+            $(".addmore").prop("hidden", true);
             
         });
     </script>
@@ -292,7 +292,7 @@ span.select2.select2-container.select2-container--default{
             fila.remove();
         }
         
-        $(".addmore").prop("disabled", false);
+        $(".addmore").prop("hidden", false);
     });
 </script>
 <script >
@@ -317,10 +317,10 @@ span.select2.select2-container.select2-container--default{
             document.getElementById(`registro_opt${b}`).value = valor_select;
             document.getElementById(`articulo_nuevo${b}`).value = valor_select;
             if(cant_opt-1 == count_input ){
-                $(".addmore").prop("disabled", true);
+                $(".addmore").prop("hidden", true);
             }
             else{
-                $(".addmore").prop("disabled", false);
+                $(".addmore").prop("hidden", false);
             }
         }
         $(".select2_demo_3").select2({
@@ -334,10 +334,10 @@ span.select2.select2-container.select2-container--default{
         var cant_opt = document.getElementById('total_registros').value;
         var count_input = document.getElementsByName('registro_opt[]').length;
         if(cant_opt == count_input ){
-            $(".addmore").prop("disabled", true);
+            $(".addmore").prop("hidden", true);
         }
         else{
-            $(".addmore").prop("disabled", false);
+            $(".addmore").prop("hidden", false);
         }
     });
 </script>
