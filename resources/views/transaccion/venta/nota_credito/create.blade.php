@@ -88,38 +88,38 @@
                         <table class="table ">
                             <thead>
                                 <tr>
-                                    <th>x</th>
+                                    <th></th>
                                     <th>ITEM</th>
                                     <th>Codigo Producto</th>
-                                    <th>Cantidad</th>
-                                    <th>Cantidad Nueva</th>
-                                    <th>Unid.Medida</th>
+                                    <th  style="width:30px">Cantidad</th>
+                                    <th style="width:30px">Cantidad Nueva</th>
+                                    {{-- <th>Unid.Medida</th> --}}
                                     <th>Descripción</th>
-                                    <th>Valor Unitario</th>
-                                    <th>Dscto.%</th>
-                                    <th>P. Unitario Desc</th>
-                                    <th>Comision</th>
-                                    <th>P. Unitario Com.</th>
-                                    <th>Valor Venta</th>
+                                    <th>Precio unitario</th>
+                                    {{-- <th>Dscto.%</th> --}}
+                                    {{-- <th>P. Unitario Desc</th> --}}
+                                    {{-- <th>Comision</th> --}}
+                                    {{-- <th>P. Unitario Com.</th> --}}
+                                    <th>Total</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <span hidden="hidden">{{$u=0}} </span>
                                 <tr>
                                     @foreach($facturacion_registro as $e => $facturacion_registros)
-                                    <span hidden="hidden">{{$i=1}} </span>
                                     <tr>
                                         <td><input class="form-check-input" type="checkbox" id="inlineCheckbox_{{$e}}" name="inlineCheckbox_{{$e}}"  onclick="check('{{$e}}')"></td>
-                                        <td >{{$i}}</td>
+                                        <td >{{$u++}}</td>
                                         <td>{{$facturacion_registros->producto->codigo_producto}}</td>
                                         <td>{{$facturacion_registros->cantidad}}</td>
-                                        <td><input type="text" id="input_disabled_{{$e}}" name="input_disabled_{{$e}}" value="0" disabled></td>
-                                        <td>{{$facturacion_registros->producto->unidad_i_producto->medida}}</td>
+                                        <td><input required="required" class="form-control" type="text" id="input_disabled_{{$e}}" name="input_disabled_{{$e}}" value="0" disabled></td>
+                                        {{-- <td>{{$facturacion_registros->producto->unidad_i_producto->medida}}</td> --}}
                                         <td>{{$facturacion_registros->producto->nombre}} <br><strong>N/S:</strong> {{$facturacion_registros->numero_serie}}</td>
                                         <td>{{$facturacion_registros->precio}}</td>
-                                        <td>{{$facturacion_registros->descuento}}%</td>
-                                        <td>{{$facturacion_registros->precio_unitario_desc}}</td>
-                                        <td>{{$facturacion_registros->comision}}%</td>
-                                        <td>{{$facturacion_registros->precio_unitario_comi}}</td>
+                                        {{-- <td>{{$facturacion_registros->descuento}}%</td> --}}
+                                        {{-- <td>{{$facturacion_registros->precio_unitario_desc}}</td> --}}
+                                        {{-- <td>{{$facturacion_registros->comision}}%</td> --}}
+                                        {{-- <td>{{$facturacion_registros->precio_unitario_comi}}</td> --}}
                                         <td>{{$facturacion_registros->precio_unitario_comi* $facturacion_registros->cantidad }}</td>
                                         <td style="display: none">
                                             {{$sub_total=($facturacion_registros->factura_ids->op_gravada)+($facturacion_registros->factura_ids->op_inafecta)+($facturacion_registros->factura_ids->op_exonerada)}}
@@ -128,45 +128,51 @@
                                             {{$end=round($sub_total, 2)+round($igv_p, 2)}}
                                         </td>
                                     </tr>
-                                    <span hidden="hidden">{{$i++}}</span>
-                                    @endforeach
-                                </tr>
-                                <tr>
-                                    <td colspan="13" align="right"><button type="submit" class="btn btn-w-m btn-primary">Enviar</button>
-                                    </td>
-                                </tr>
-                            </tbody>
-                        </table>
-                    </div>
-                    <br><br><br><br>
-                </form>
-            </div>
+                                   {{--  <span hidden="hidden">{{$i=1}}</span>
+                                   <span hidden="hidden">{{$i++}}</span> --}}
+                                   @endforeach
+                               </tr>
+
+                               <tr>
+                                <td colspan="13" align="right"><button type="submit" class="btn btn-w-m btn-primary">Enviar</button>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <br><br><br><br>
+            </form>
         </div>
     </div>
-    <!-- Mainly scripts -->
-    <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
-    <script src="{{ asset('js/popper.min.js') }}"></script>
-    <script src="{{ asset('js/bootstrap.js') }}"></script>
-    <script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
-    <script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
+</div>
+<form action="{{route('nota-credito.store')}}"  enctype="multipart/form-data" method="post" >
+    @csrf
+    <button type="submit" class="btn btn-w-m btn-primary">Enviar</button>
+</form>
+<!-- Mainly scripts -->
+<script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
+<script src="{{ asset('js/popper.min.js') }}"></script>
+<script src="{{ asset('js/bootstrap.js') }}"></script>
+<script src="{{ asset('js/plugins/metisMenu/jquery.metisMenu.js') }}"></script>
+<script src="{{ asset('js/plugins/slimscroll/jquery.slimscroll.min.js') }}"></script>
 
-    <script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
-    <script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
-    <!-- Custom and plugin javascript -->
-    <script src="{{ asset('js/inspinia.js') }}"></script>
-    <script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/datatables.min.js') }}"></script>
+<script src="{{ asset('js/plugins/dataTables/dataTables.bootstrap4.min.js') }}"></script>
+<!-- Custom and plugin javascript -->
+<script src="{{ asset('js/inspinia.js') }}"></script>
+<script src="{{ asset('js/plugins/pace/pace.min.js') }}"></script>
 
 
-    <script>
-        var estado=1;
-        function check(i){
-            if(document.getElementById(`inlineCheckbox_${i}`).value == "false"){
-                document.getElementById(`input_disabled_${i}`).disabled = true;
-                document.getElementById(`inlineCheckbox_${i}`).value = "true"
-            }else{
-                document.getElementById(`input_disabled_${i}`).disabled = false;
-                document.getElementById(`inlineCheckbox_${i}`).value = "false"
-            }
+<script>
+    var estado=1;
+    function check(i){
+        if(document.getElementById(`inlineCheckbox_${i}`).value == "false"){
+            document.getElementById(`input_disabled_${i}`).disabled = true;
+            document.getElementById(`inlineCheckbox_${i}`).value = "true"
+        }else{
+            document.getElementById(`input_disabled_${i}`).disabled = false;
+            document.getElementById(`inlineCheckbox_${i}`).value = "false"
         }
-    </script>
-    @endsection
+    }
+</script>
+@endsection
