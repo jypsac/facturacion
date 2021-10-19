@@ -58,17 +58,21 @@ class NotaCreditoController extends Controller
      */
     public function store(Request $request)
     {
-        $nombre="5465656565";
-        $fh = fopen("C:\Users\Desarrollo\Desktop\puntobat.bat", 'w') or die("Se produjo un error al crear el archivo");
-        $texto='robocopy C:\laragon\www\facturacion C:\Users\Desarrollo\Desktop'.'/'.$nombre.' /e';
+
+        $nombre="12121";
+    //1- Crear directorio de Laravel
+        //A-Crear archivo Bat
+        $fh = fopen("C:\laragon\www/".$nombre.".bat", 'w') or die("Se produjo un error al crear el archivo");
+        $texto='robocopy C:\laragon\www\facturacion  C:\laragon\www/'.$nombre.' /e';
         fwrite($fh,$texto) or die("No se pudo escribir en el archivo");
 
-        // fclose($fh);
-
-        $c='start /b C:\Users\Desarrollo\Desktop\puntobat.bat';
-        // $c='robocopy C:\laragon\www\facturacion C:\Users\Desarrollo\Desktop\123 /e';/*Clonar archivos*/
+        //B-Correr el Archivo Bat
+        $c='start /b  C:\laragon\www/'.$nombre.'.bat';
         $r=pclose(popen($c, 'r'));
-        return json_encode(array('result'=>$r));
+        $a=unlink('C:\laragon\www/'.$nombre.'.bat');
+        // return json_encode(array('result'=>$r)).json_encode(array('result'=>$a));
+    //2- Cambiar Nombre del ".env"
+
     }
 
     /**
