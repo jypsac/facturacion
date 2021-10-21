@@ -52,7 +52,7 @@ class kardex_entrada_registro extends Model
             while($cantidad[$x] > $contador){
                 $kardex_almacen_principal_desc=kardex_entrada_registro::where('producto_id',$prod[$x])
                     ->where('estado',1)
-                    ->where('precio_nacional',"!=",0)
+                    //>where('precio_nacional',"!=",0)
                     ->orderBy('id', 'DESC')
                     ->whereNotIn('id',$array_registros)
                     ->first();
