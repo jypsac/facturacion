@@ -62,15 +62,25 @@ class NotaCreditoController extends Controller
         $nombre="12121";
     //1- Crear directorio de Laravel
         //A-Crear archivo Bat
-        $fh = fopen("C:\laragon\www/".$nombre.".bat", 'w') or die("Se produjo un error al crear el archivo");
+        $copy_page = fopen("C:\laragon\www/".$nombre.".bat", 'a');
         $texto='robocopy C:\laragon\www\facturacion  C:\laragon\www/'.$nombre.' /e';
-        fwrite($fh,$texto) or die("No se pudo escribir en el archivo");
+        fwrite($copy_page,$texto);
+        // fclose($copy_page);
 
         //B-Correr el Archivo Bat
         $c='start /b  C:\laragon\www/'.$nombre.'.bat';
         $r=pclose(popen($c, 'r'));
-        $a=unlink('C:\laragon\www/'.$nombre.'.bat');
+
+    //2- Crear Base de Datos
+        $bdatos = fopen("C:\laragon\www/dd.bat", 'a');
+        $texto2='cd/
+        cd laragon\bin\mysql\mysql-5.7.24-winx64\bin
+        mysql -u root -e " create DATABASE prueba_bd;"';
+        fwrite($bdatos,$texto2);
+        // sleep(90);
+        // unlink('C:\laragon\www/'.$nombre.'.bat');
         // return json_encode(array('result'=>$r)).json_encode(array('result'=>$a));
+
     //2- Cambiar Nombre del ".env"
 
     }
