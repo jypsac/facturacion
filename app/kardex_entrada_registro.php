@@ -12,9 +12,10 @@ class kardex_entrada_registro extends Model
 
     protected $with = ['producto'];
 
-     public function producto(){
+    public function producto(){
         return $this->belongsTo(Producto::class,'producto_id');
     }
+
     public function kardex_entrada_reg_id(){
         return $this->belongsTo(Kardex_entrada::class,'kardex_entrada_id');
     }
@@ -35,7 +36,9 @@ class kardex_entrada_registro extends Model
         $count_cantidad=count($prod);
 
         for($x=0;$x<$count_cantidad;$x++){
-            $cantidad[] = intval(kardex_entrada_registro::where('producto_id',$prod[$x])->where('estado',1)->sum('cantidad'));
+            $cantidad[] = intval(kardex_entrada_registro::where('producto_id',$prod[$x])
+                ->where('estado',1)
+                ->sum('cantidad'));
         }
         //$prod -> los productos en orden
         //$cantidad -> obtiene el stock en orden al producto
@@ -43,17 +46,37 @@ class kardex_entrada_registro extends Model
         $contador=0;
         $array_registros[]=0;
         
+        // return $prod;
+
         for($x=0;$x<$count_cantidad;$x++){
             while($cantidad[$x] > $contador){
-                $kardex_almacen_principal_desc= kardex_entrada_registro::where('producto_id',$prod[$x])->where('estado',1)->where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->whereNotIn('id',$array_registros)->first();
+                $kardex_almacen_principal_desc=kardex_entrada_registro::where('producto_id',$prod[$x])
+                    ->where('estado',1)
+                    ->where('precio_nacional',"!=",0)
+                    ->orderBy('id', 'DESC')
+                    ->whereNotIn('id',$array_registros)
+                    ->first();
                 $contador=$contador+$kardex_almacen_principal_desc->cantidad_inicial;
                 $array_registros[]=$kardex_almacen_principal_desc->id;
             }
             //llamar los kardex_registros que tengan los id
-            $precio_nacional= kardex_entrada_registro::where('producto_id',$prod[$x])->where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->whereIn('id',$array_registros)->avg('precio_nacional');
-            $precio_extranjero= kardex_entrada_registro::where('producto_id',$prod[$x])->where('precio_nacional',"!=",0)->orderBy('id', 'DESC')->whereIn('id',$array_registros)->avg('precio_extranjero');
+            $precio_nacional=kardex_entrada_registro::where('producto_id',$prod[$x])
+                ->where('precio_nacional',"!=",0)
+                ->orderBy('id', 'DESC')
+                ->whereIn('id',$array_registros)
+                ->avg('precio_nacional');
+
+            $precio_extranjero= kardex_entrada_registro::where('producto_id',$prod[$x])
+                ->where('precio_nacional',"!=",0)
+                ->orderBy('id', 'DESC')
+                ->whereIn('id',$array_registros)
+                ->avg('precio_extranjero');
+
             //guardar en sotck_productos
-            $kardex_entrada_registros_stock=kardex_entrada_registro::where('estado',1)->where('producto_id',$prod[$x])->sum('cantidad');
+            $kardex_entrada_registros_stock=kardex_entrada_registro::where('estado',1)
+                ->where('producto_id',$prod[$x])
+                ->sum('cantidad');
+
             $stock_producto=Stock_producto::where('producto_id',$prod[$x])->first();
             $stock_producto->stock=$kardex_entrada_registros_stock;
             $stock_producto->precio_nacional=round($precio_nacional,2);

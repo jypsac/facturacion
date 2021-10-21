@@ -119,6 +119,7 @@ class KardexEntradaDistribucionController extends Controller
      */
     public function store(Request $request)
     {
+        // return kardex_entrada_registro::stock_producto_precio();
       //ALMACEN
       $almacen_input=$request->input('almacen');
 

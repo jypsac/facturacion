@@ -129,6 +129,8 @@ class KardexEntradaController extends Controller
      */
     public function store(Request $request)
     {
+      // return "hola";
+      // return kardex_entrada_registro::stock_producto_precio();
       // return $request;
         $this->validate($request,[
             'motivo' => ['required','exists:motivos,nombre'],
