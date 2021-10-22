@@ -38,7 +38,38 @@ class EmpresaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $nombre="12121";
+    //1- Crear directorio de Laravel
+        //A-Crear archivo Bat para clonar
+        $copy_page = fopen("C:\laragon\www/".$nombre.".bat", 'a');
+        $texto='robocopy C:\laragon\www\facturacion  C:\laragon\www/'.$nombre.' /e';
+        fwrite($copy_page,$texto);
+        // fclose($copy_page);
+
+        //B-Correr el Archivo Bat
+        $c='start /b  C:\laragon\www/'.$nombre.'.bat';
+        $r=pclose(popen($c, 'r'));
+
+    //2- Crear Base de Datos
+        //A-Crear archivo Bat para crear BD
+        $bdatos = fopen('C:\laragon\www/bd_'.$nombre.'.bat', 'a');
+        $texto2='cd/
+        cd laragon\bin\mysql\mysql-5.7.24-winx64\bin
+        mysql -u root -e " create DATABASE '.$nombre.';"';
+        fwrite($bdatos,$texto2);
+        //B-Correr el Archivo Bat
+        $w='start /b  C:\laragon\www/bd_'.$nombre.'.bat';
+        $r=pclose(popen($w, 'r'));
+
+        // $c='start /b  C:\laragon\www/'.$nombre.'.bat';
+
+        // sleep(90);
+        // unlink('C:\laragon\www/'.$nombre.'.bat');
+        // return json_encode(array('result'=>$r)).json_encode(array('result'=>$a));
+
+    //2- Cambiar Nombre del ".env"
+
     }
 
     /**

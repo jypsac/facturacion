@@ -145,10 +145,7 @@
         </div>
     </div>
 </div>
-<form action="{{route('nota-credito.store')}}"  enctype="multipart/form-data" method="post" >
-    @csrf
-    <button type="submit" class="btn btn-w-m btn-primary">Enviar</button>
-</form>
+
 <!-- Mainly scripts -->
 <script src="{{ asset('js/jquery-3.1.1.min.js') }}"></script>
 <script src="{{ asset('js/popper.min.js') }}"></script>

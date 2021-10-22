@@ -102,7 +102,7 @@ Route::group(
 		
 		Route::resource('/debito','DebitoController');
 		Route::resource('/documento','DocumentoController');
-		Route::resource('/empresa','EmpresaController')->only(['index','update']);
+		Route::resource('/empresa','EmpresaController')->only(['index','update','store']);
 
 		// Route::get('facturacion/boleta/{id}' , 'FacturacionController@show_boleta')->name('boleta');
 		// Route::get('facturacion/create_boleta/' , 'FacturacionController@create_boleta')->name('create.boleta');
