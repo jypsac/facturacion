@@ -45,9 +45,16 @@ class Config_fe extends Model
 
     public static function facturacion_electronica(){
         $see = new See();
-        $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
+        $pfx = file_get_contents(public_path('certificado/certificado.p12'));
+        $password = '@Claveso1';
+
+        $certificate = new X509Certificate($pfx, $password);
+
+        $see->setCertificate($certificate->export(X509ContentType::PEM));
+        // $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
         $see->setService(SunatEndpoints::FE_BETA);
-        $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
+        // $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
+        $see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
         return $see;
     }
 
@@ -56,7 +63,7 @@ class Config_fe extends Model
         $see = new See();
             //$see->setCertificate(file_get_contents(public_path('certificado/certificado.p12')));
 
-        $pfx = file_get_contents(public_path('certificado/certificado.p12'));
+        $pfx = file_get_contents(public_path('certificado/certificado.p12')); 
         $password = 'Tecnologia20';
 
         $certificate = new X509Certificate($pfx, $password);
@@ -926,32 +933,32 @@ class Config_fe extends Model
         if($tipo_transporte==0){
             $envio = new Shipment();
             $envio
-            ->setCodTraslado('01') // Cat.20
-            ->setDesTraslado('VENTA')
-            ->setModTraslado('01') // Cat.18
-            ->setFecTraslado(new DateTime())
-            // ->setCodPuerto('123')
-            ->setIndTransbordo(false)
-            ->setPesoTotal($peso_total)
-            ->setUndPesoTotal('KGM')    //unidad de medida
-            // ->setNumContenedor('XD-2232')
-            ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))   //arreglar el ubigeo de llegada  salida
-            ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion));    //arreglar el ubigeo de llegada  salida
+                ->setCodTraslado('01') // Cat.20
+                ->setDesTraslado('VENTA')
+                ->setModTraslado('01') // Cat.18
+                ->setFecTraslado(new DateTime())
+                // ->setCodPuerto('123')
+                ->setIndTransbordo(false)
+                ->setPesoTotal($peso_total)
+                ->setUndPesoTotal('KGM')    //unidad de medida
+                // ->setNumContenedor('XD-2232')
+                ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))   //arreglar el ubigeo de llegada  salida
+                ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion));    //arreglar el ubigeo de llegada  salida
         }else{
             $envio = new Shipment();
             $envio
-            ->setCodTraslado('01') // Cat.20
-            ->setDesTraslado('VENTA')
-            ->setModTraslado('01') // Cat.18
-            ->setFecTraslado(new DateTime())
-            // ->setCodPuerto('123')
-            ->setIndTransbordo(false)
-            ->setPesoTotal($peso_total)
-            ->setUndPesoTotal('KGM')    //unidad de medida
-            // ->setNumContenedor('XD-2232')
-            ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))    //arreglar el ubigeo de llegada  salida
-            ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion))    //arreglar el ubigeo de llegada  salida
-            ->setTransportista($transp);
+                ->setCodTraslado('01') // Cat.20
+                ->setDesTraslado('VENTA')
+                ->setModTraslado('01') // Cat.18
+                ->setFecTraslado(new DateTime())
+                // ->setCodPuerto('123')
+                ->setIndTransbordo(false)
+                ->setPesoTotal($peso_total)
+                ->setUndPesoTotal('KGM')    //unidad de medida
+                // ->setNumContenedor('XD-2232')
+                ->setLlegada(new Direction($guia->cliente->cod_postal, $guia->cliente->direccion))    //arreglar el ubigeo de llegada  salida
+                ->setPartida(new Direction($guia->almacen->cod_postal, $guia->almacen->direccion))    //arreglar el ubigeo de llegada  salida
+                ->setTransportista($transp);
         }
 
         //codigo correlaativo
@@ -993,7 +1000,7 @@ class Config_fe extends Model
 
 //NOTA DE CREDITO - FACTURA
 
-    public static function nota_credito($factura, $factura_registro, $request){
+    public static function nota_credito($factura, $factura_registro, $request,$notas_creditos_count){
 
         $empresa=Empresa::first();
         $igv=Igv::first();
@@ -1054,6 +1061,8 @@ class Config_fe extends Model
             }
         }
 
+        
+
         $total=$igv_f+$precio;
 
         $note = new Note();
@@ -1061,7 +1070,7 @@ class Config_fe extends Model
             ->setUblVersion('2.1')
             ->setTipoDoc('07')
             ->setSerie('FF01')
-            ->setCorrelativo('123')
+            ->setCorrelativo($notas_creditos_count)
             ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
             ->setTipDocAfectado('01') // Tipo Doc: Factura
             ->setNumDocfectado($factura->codigo_fac) // Factura: Serie-Correlativo
@@ -1089,7 +1098,7 @@ class Config_fe extends Model
         return $note;
     }
 
-    public static function nota_credito_servicio($factura, $factura_registro, $request){
+    public static function nota_credito_servicio($factura, $factura_registro, $request,$notas_creditos_count){
 
         $empresa=Empresa::first();
         $igv=Igv::first();
@@ -1157,7 +1166,7 @@ class Config_fe extends Model
             ->setUblVersion('2.1')
             ->setTipoDoc('07')
             ->setSerie('FF01')
-            ->setCorrelativo('123')
+            ->setCorrelativo($notas_creditos_count)
             ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
             ->setTipDocAfectado('01') // Tipo Doc: Factura
             ->setNumDocfectado($factura->codigo_fac) // Factura: Serie-Correlativo
@@ -1186,12 +1195,195 @@ class Config_fe extends Model
     }
 
 //NOTA DE CREDITO - BOLETA
-    public static function nota_credito_boleta($boleta,$boleta_registro,$request){
+    public static function nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count){
+        $empresa=Empresa::first();
+        $igv=Igv::first();
+
+        // Cliente
+        $client = (new Client())
+            ->setTipoDoc('6')   //pagina 42 del pdf sunat 2.1
+            ->setNumDoc($boleta->cliente->numero_documento) //ruc del receptor
+            ->setRznSocial($boleta->cliente->empresa); //nombre empresa
+
+        // Emisor
+        $address = (new Address())
+            ->setUbigueo('150101')
+            ->setDepartamento($empresa->region_provincia)
+            ->setProvincia($empresa->region_provincia)
+            ->setDistrito($empresa->ciudad)
+            ->setUrbanizacion('-')
+            ->setDireccion($empresa->calle)
+            ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.
+
+        $company = (new Company())
+            ->setRuc($empresa->ruc)
+            ->setRazonSocial($empresa->razon_social)
+            ->setNombreComercial($empresa->nombre)
+            ->setAddress($address);
+
+        $contador=count($boleta_registro);
+            
+        $cont=0;
+        $igv_f=0;
+        $precio=0;
+        $op_g=0;
+
+        for($p=0;$p<$contador;$p++){
+            $string=(string)$p;
+            
+            $nombre="input_disabled_".$string;
+            
+            if($request->$nombre==NULL){
+            }else{
+                $item[$cont]=new SaleDetail();
+                $item[$cont]
+                    ->setCodProducto($boleta_registro[$p]->producto->codigo_producto)
+                    ->setUnidad('NIU')
+                    ->setCantidad($request->$nombre)
+                    ->setDescripcion($boleta_registro[$p]->producto->nombre)
+                    ->setMtoBaseIgv($boleta_registro[$p]->precio*$request->$nombre)
+                    ->setPorcentajeIgv($igv->igv_total)
+                    ->setIgv($boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
+                    ->setTipAfeIgv($boleta_registro[$p]->producto->tipo_afec_i_producto->codigo)
+                    ->setTotalImpuestos($boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
+                    ->setMtoValorVenta($boleta_registro[$p]->precio*$request->$nombre)
+                    ->setMtoValorUnitario($boleta_registro[$p]->precio)
+                    ->setMtoPrecioUnitario($boleta_registro[$p]->precio+($boleta_registro[$p]->precio*(($igv->igv_total)/100)));
+
+                $igv_f=$boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100)+$igv_f;
+                $precio=$boleta_registro[$p]->precio*$request->$nombre+$precio;
+            }
+        }
+
+        $total=$igv_f+$precio;
+
+        $note = new Note();
+        $note
+            ->setUblVersion('2.1')
+            ->setTipoDoc('07')
+            ->setSerie('FF01')
+            ->setCorrelativo($notas_creditos_count)
+            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
+            ->setTipDocAfectado('01') // Tipo Doc: boleta
+            ->setNumDocfectado($boleta->codigo_fac) // boleta: Serie-Correlativo
+            ->setCodMotivo('07') // Catalogo. 09
+            ->setDesMotivo('DEVOLUCION POR ITEM')
+            ->setTipoMoneda($boleta->moneda->codigo)
+            ->setCompany($company)
+            ->setClient($client)
+            ->setMtoOperGravadas($precio)
+            ->setMtoIGV($igv_f)
+            ->setTotalImpuestos($igv_f)
+            ->setMtoImpVenta($total)
+            ;
+
+        $formatter = new NumeroALetras();
+        $valor=$formatter->toInvoice($total, 2, 'soles');
+        
+        $legend = new Legend();
+        $legend->setCode('1000')
+            ->setValue($valor);
+
+        $note->setDetails($item)
+            ->setLegends([$legend]);
+        
+        return $note;
 
     }
 
-    public static function nota_credito_boleta_servicio($boleta,$boleta_registro,$request){
+    public static function nota_credito_boleta_servicio($boleta,$boleta_registro,$request,$notas_creditos_count){
+        $empresa=Empresa::first();
+        $igv=Igv::first();
+
+        // Cliente
+        $client = (new Client())
+            ->setTipoDoc('6')   //pagina 42 del pdf sunat 2.1
+            ->setNumDoc($boleta->cliente->numero_documento) //ruc del receptor
+            ->setRznSocial($boleta->cliente->empresa); //nombre empresa
+
+        // Emisor
+        $address = (new Address())
+            ->setUbigueo('150101')
+            ->setDepartamento($empresa->region_provincia)
+            ->setProvincia($empresa->region_provincia)
+            ->setDistrito($empresa->ciudad)
+            ->setUrbanizacion('-')
+            ->setDireccion($empresa->calle)
+            ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.
+
+        $company = (new Company())
+            ->setRuc($empresa->ruc)
+            ->setRazonSocial($empresa->razon_social)
+            ->setNombreComercial($empresa->nombre)
+            ->setAddress($address);
+
+        $contador=count($boleta_registro);
+            
+        $cont=0;
+        $igv_f=0;
+        $precio=0;
+        $op_g=0;
+
+        for($p=0;$p<$contador;$p++){
+            $string=(string)$p;
+            
+            $nombre="input_disabled_".$string;
+            
+            if($request->$nombre==NULL){
+            }else{
+                $item[$cont]=new SaleDetail();
+                $item[$cont]
+                ->setCodProducto($boleta_registro[$p]->servicio->codigo_servicio)
+                ->setUnidad('ZZ')
+                ->setCantidad($request->$nombre)
+                ->setDescripcion($boleta_registro[$p]->servicio->nombre)
+                ->setMtoBaseIgv($boleta_registro[$p]->precio*$request->$nombre)
+                ->setPorcentajeIgv($igv->igv_total)
+                ->setIgv($boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
+                ->setTipAfeIgv($boleta_registro[$p]->servicio->tipo_afec_i_serv->codigo)
+                ->setTotalImpuestos($boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
+                ->setMtoValorVenta($boleta_registro[$p]->precio*$request->$nombre)
+                ->setMtoValorUnitario($boleta_registro[$p]->precio)
+                ->setMtoPrecioUnitario($boleta_registro[$p]->precio+($boleta_registro[$p]->precio*(($igv->igv_total)/100)));
+
+                $igv_f=$boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100)+$igv_f;
+                $precio=$boleta_registro[$p]->precio*$request->$nombre+$precio;
+            }
+        }
+
+        $total=$igv_f+$precio;
+
+        $note = new Note();
+        $note
+            ->setUblVersion('2.1')
+            ->setTipoDoc('07')
+            ->setSerie('FF01')
+            ->setCorrelativo($notas_creditos_count)
+            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
+            ->setTipDocAfectado('01') // Tipo Doc: boleta
+            ->setNumDocfectado($boleta->codigo_fac) // boleta: Serie-Correlativo
+            ->setCodMotivo('07') // Catalogo. 09
+            ->setDesMotivo('DEVOLUCION POR ITEM')
+            ->setTipoMoneda($boleta->moneda->codigo)
+            ->setCompany($company)
+            ->setClient($client)
+            ->setMtoOperGravadas($precio)
+            ->setMtoIGV($igv_f)
+            ->setTotalImpuestos($igv_f)
+            ->setMtoImpVenta($total)
+            ;
+
+        $formatter = new NumeroALetras();
+        $valor=$formatter->toInvoice($total, 2, 'soles');
         
+        $legend = new Legend();
+        $legend->setCode('1000')
+            ->setValue($valor);
+
+        $note->setDetails($item)
+            ->setLegends([$legend]);
+        
+        return $note;
     }
 
     public static function send($see, $invoice){

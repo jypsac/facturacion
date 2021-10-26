@@ -195,7 +195,9 @@ class FacturacionElectronicaController extends Controller
 
     public function nota_credito(Request $request, $id)
     {   
-        // return $request;
+        //contador nota de creditos
+        $notas_creditos_count=Nota_Credito_registro::count();
+        $notas_creditos_count++;
         $factura=Facturacion::where('id',$id)->first();
         $factura_registro=Facturacion_registro::where('facturacion_id',$id)->get();
         //configuracion
@@ -203,7 +205,7 @@ class FacturacionElectronicaController extends Controller
 
         if($factura->tipo=="producto"){
             
-            $invoice=Config_fe::nota_credito($factura,$factura_registro,$request);
+            $invoice=Config_fe::nota_credito($factura,$factura_registro,$request,$notas_creditos_count);
             //envio a SUNAT    
             $result=Config_fe::send($see, $invoice);
             //lectura CDR
@@ -231,7 +233,7 @@ class FacturacionElectronicaController extends Controller
 
         }else if($factura->tipo=="servicio"){
             
-            $invoice=Config_fe::nota_credito_servicio($factura,$factura_registro,$request);
+            $invoice=Config_fe::nota_credito_servicio($factura,$factura_registro,$request,$notas_creditos_count);
             //envio a SUNAT    
             $result=Config_fe::send($see, $invoice);
             //lectura CDR
@@ -262,7 +264,70 @@ class FacturacionElectronicaController extends Controller
 
     public function nota_credito_boleta(Request $request, $id)
     {   
-        //nota de credito boleta
+        //contador nota de creditos
+        $notas_creditos_count=Nota_Credito_registro::count();
+        $notas_creditos_count++;
+        $boleta=Boleta::where('id',$id)->first();
+        $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
+        //configuracion
+        $see=Config_fe::facturacion_electronica();
+
+        if($boleta->tipo=="producto"){
+            
+            $invoice=Config_fe::nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count);
+            //envio a SUNAT    
+            $result=Config_fe::send($see, $invoice);
+            //lectura CDR
+            $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+
+            $nota_credito=new Nota_Credito();
+            $nota_credito->boleta_id=$boleta->id;
+            $nota_credito->tipo="producto";
+            $nota_credito->save();
+
+            $contador=count($boleta_registro);
+            for($p=0;$p<$contador;$p++){
+                $string=(string)$p;
+                $nombre="input_disabled_".$string;
+                if($request->$nombre==NULL){
+                }else{
+                    $nota_creditos_r=new Nota_Credito_registro();
+                    $nota_creditos_r->nota_credito_id=$nota_credito->id;
+                    $nota_creditos_r->producto_id=$boleta_registro[$p]->producto_id;
+                    $nota_creditos_r->precio=$boleta_registro[$p]->precio;
+                    $nota_creditos_r->cantidad=$request->$nombre;
+                    $nota_creditos_r->save();
+                }
+            }
+
+        }else if($boleta->tipo=="servicio"){
+            
+            $invoice=Config_fe::nota_credito_boleta_servicio($boleta,$boleta_registro,$request,$notas_creditos_count);
+            //envio a SUNAT    
+            $result=Config_fe::send($see, $invoice);
+            //lectura CDR
+            $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+            
+            $nota_credito=new Nota_Credito();
+            $nota_credito->boleta_id=$boleta->id;
+            $nota_credito->tipo="servicio";
+            $nota_credito->save();
+
+            $contador=count($boleta_registro);
+            for($p=0;$p<$contador;$p++){
+                $string=(string)$p;
+                $nombre="input_disabled_".$string;
+                if($request->$nombre==NULL){
+                }else{
+                    $nota_creditos_r=new Nota_Credito_registro();
+                    $nota_creditos_r->nota_credito_id=$nota_credito->id;
+                    $nota_creditos_r->servicio_id=$boleta_registro[$p]->servicio_id;
+                    $nota_creditos_r->precio=$boleta_registro[$p]->precio;
+                    $nota_creditos_r->cantidad=$request->$nombre;
+                    $nota_creditos_r->save();
+                }
+            }
+        }
     }
 
     /**

@@ -21,7 +21,7 @@ class NotaCreditoController extends Controller
      */
     public function index()
     {
-        $notas_creditos=Facturacion::where('f_electronica',0)->where('estado',1)->get();
+        $notas_creditos=Facturacion::where('f_electronica',1)->where('estado',1)->get();
         return view('transaccion.venta.nota_credito.index',compact('notas_creditos'));
     }
 
@@ -33,7 +33,7 @@ class NotaCreditoController extends Controller
     public function create()
     {
         //cambiar de 0 a 1 en f_electronica
-        $facturas=Facturacion::where('f_electronica',0)->where('estado',0)->get();
+        $facturas=Facturacion::where('f_electronica',1)->where('estado',0)->get();
         return view('transaccion.venta.nota_credito.lista_facturacion',compact('facturas'));
     }
 
