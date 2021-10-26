@@ -201,7 +201,7 @@ class FacturacionElectronicaController extends Controller
         //configuracion
         $see=Config_fe::facturacion_electronica();
 
-        if($boleta->tipo=="producto"){
+        if($factura->tipo=="producto"){
             
             $invoice=Config_fe::nota_credito($factura,$factura_registro,$request);
             //envio a SUNAT    
@@ -229,7 +229,7 @@ class FacturacionElectronicaController extends Controller
                 }
             }
 
-        }elseif($boleta->tipo=="servicio"){
+        }else if($factura->tipo=="servicio"){
             
             $invoice=Config_fe::nota_credito_servicio($factura,$factura_registro,$request);
             //envio a SUNAT    
@@ -258,8 +258,11 @@ class FacturacionElectronicaController extends Controller
             }
         }
 
-        
+    }
 
+    public function nota_credito_boleta(Request $request, $id)
+    {   
+        //nota de credito boleta
     }
 
     /**
