@@ -94,7 +94,8 @@
     <span hidden="hidden"> @if($cantidad_registro == 0) {{$ultimo_numero=0}}@else{{$ultimo_numero=$kardex_entradas_registro->id}}@endif</span>
     <button type="button" class='addmore btn btn-success'> <i class="fa fa-plus-square" aria-hidden="true"></i> </button>
     <button class="btn btn-warning  demo3 float-right" style="margin-left: 10px;" type="button">Guardar y Finalizar</button>
-    <button class="btn btn-secondary ladda-button finalizar float-right" id="finalizar" hidden="" data-style="zoom-out" ></button><button  data-style="zoom-out" class="guardar ladda-button btn btn-info float-right" >Guardar</button>
+    <button class="btn btn-secondary ladda-button finalizar float-right" id="finalizar" hidden="" data-style="zoom-out" ></button>
+    <button  data-style="zoom-out" class="guardar ladda-button btn btn-info float-right" >Guardar</button>
 </form>
 <br>
 </div>
@@ -208,7 +209,7 @@ span.select2.select2-container.select2-container--default{
                 }
             });
             total = (change)? total:0;
-            document.getElementById(`total${a}`).value = total;
+            document.getElementById(`total${a}`).value = Math.round(total*100)/100;
         }
     </script>
     <script type="text/javascript">

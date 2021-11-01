@@ -264,10 +264,11 @@ class KardexEntradaController extends Controller
 
 
         //convertido a moneda principal
-        $moneda_principal=Moneda::where('tipo','nacional')->first();
+        $moneda_principal=Moneda::where('principal','1')->first();
         $moneda_principal_id=$moneda_principal->id;
 
-        $kardex_entrada_moneda_id=$request->get('moneda');
+
+        $kardex_entrada_moneda_id=$moneda->id;
 
 
         //cuando la moneda es la principal
@@ -280,6 +281,7 @@ class KardexEntradaController extends Controller
                 $kardex_entrada_registro->tipo_registro_id = 1;
                 //monedas
                 if($moneda_principal_id==$kardex_entrada_moneda_id){
+                    // return "A";
                     $kardex_entrada_registro->precio_nacional=$request->get('precio')[$i];
                     $precio_nacional=$request->get('precio')[$i];
 
@@ -291,6 +293,7 @@ class KardexEntradaController extends Controller
 
                     $kardex_entrada_registro->cambio=$cambio->compra;
                 }else{
+                    // return "B";
                     $kardex_entrada_registro->precio_extranjero=$request->get('precio')[$i];
                     $precio_extranjero=$request->get('precio')[$i];
 
@@ -390,7 +393,7 @@ class KardexEntradaController extends Controller
      $accion=$request->get('accion');
      $submit=$request->get('submit');
 
-     if ($accion=='delete'){
+    if ($accion=='delete'){
       $registros = kardex_entrada_registro::all();
       $count_regis = count($registros);
       if($count_regis==1){
@@ -405,12 +408,13 @@ class KardexEntradaController extends Controller
       if ($request->get('id_registro')==true) {
         $id_registro= $request->get('id_registro');
         $count_articulo= count($id_registro);
-
+        $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
         for($i=0;$i<$count_articulo;$i++){
          $update_kardx_regis=kardex_entrada_registro::find($id_registro[$i]);
          $update_kardx_regis->cantidad_inicial=$request->get('cantidad')[$i];
          $update_kardx_regis->cantidad=$request->get('cantidad')[$i];
          $update_kardx_regis->precio_nacional=$request->get('precio')[$i];
+         $update_kardx_regis->precio_extranjero=$request->get('precio')[$i]/$cambio->venta;
          $update_kardx_regis->save();}
        }
 

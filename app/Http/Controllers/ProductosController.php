@@ -82,7 +82,7 @@ class ProductosController extends Controller
             $destinationPath = public_path('/archivos/imagenes/productos/');
             $image1->move($destinationPath,$name);
         }else{
-            $name=$request->get('foto');
+            $name='defecto.png';
         }
 
         $peso=$request->get('peso');

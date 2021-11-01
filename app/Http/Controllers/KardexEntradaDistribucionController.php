@@ -58,7 +58,7 @@ class KardexEntradaDistribucionController extends Controller
         }
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
-            return "no hay prodcutos en el almacen seleccionado";
+             return redirect()->route('kardex-entrada-Distribucion.index')->with('repite', 'No hay productos en el almacen principal!');
         }
 
         $lista=array_values(array_unique($prod));
@@ -155,7 +155,7 @@ class KardexEntradaDistribucionController extends Controller
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
                     if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return "dobles articulos error";
+                    return redirect()->route('kardex-entrada-Distribucion.create')->with('repite', 'Error de insercion de articulos doble!');
                     }
                 }
             }
@@ -169,7 +169,8 @@ class KardexEntradaDistribucionController extends Controller
             $consulta_cantidad=kardex_entrada_registro::where('producto_id',$articulo_c)->where('estado','1')->sum('cantidad');
             if ($cantidad_c > $consulta_cantidad) {
                 // return redirect()->route('kardex-salida.create')->with('cantidad', 'no hay cantidad deseada para el articulos');
-              return "validacion en cantidad";
+                return redirect()->route('kardex-entrada-Distribucion.create')->with('repite', 'Cantidad mayor al Stock!');
+              // return "validacion en cantidad";
             }
         }
 
