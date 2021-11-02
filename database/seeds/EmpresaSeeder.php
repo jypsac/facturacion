@@ -13,9 +13,9 @@ class EmpresaSeeder extends Seeder
     {
         DB::table('empresa')->insert([
 			'id' => 1 ,
-			'nombre' => 'HIDROMAXFILTER E.I.R.L.',
-			'razon_social' => 'HIDROMAXFILTER E.I.R.L.',
-			'ruc' => '20608175963',
+			'nombre' => 'IAM CONSULTORES & SERVICIOS GENERALES S.A.C. - ICSG S.A.C.',
+			'razon_social' => 'IAM CONSULTORES & SERVICIOS GENERALES S.A.C. - ICSG S.A.C.',
+			'ruc' => '20601021081',
 			'telefono' => '902502550',
 			'movil' => '946026042',
 			'correo' => 'ventas@hidromaxfilter.com',
@@ -23,7 +23,7 @@ class EmpresaSeeder extends Seeder
 			'region_provincia' => 'Lima',
 			'ciudad' => 'Lima',
 			'calle' => 'Calle Felix Tello Rojas Mz H Lote 25Urb Honor y Lealtad de Surco',
-			'codigo_postal' => '0000',
+			'codigo_postal' => '150101',
 			'rubro' => ' VentaS.',
 			'moneda_principal' => '1',
 			'descripcion' => 'Nos especializamos comercialización de Filtros; hidráulicos de calidad nueva y de las mejores marca líder en el mercado.Por ese motivo ofrecemos y contamos en stock&nbsp; productos&nbsp; de calidad de marcas internacionales como: Rexroth, Parker, Vickers, Hydac, Hilco, Internormen.',
