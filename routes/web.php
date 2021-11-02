@@ -92,12 +92,16 @@ Route::group(
 		Route::post('/facturacion_electronica_guia_remision_baja_prueba','FacturacionElectronicaController@guia_remision_baja')->name('facturacion_electronica.guia_remision_baja_sunat');
 		//Nota Credito
 		Route::post('/facturacion_electronica_nota_credito/{id}','FacturacionElectronicaController@nota_credito')->name('facturacion_electronica.nota_credito');
+		Route::post('/facturacion_electronica_nota_credito_boleta/{id}','FacturacionElectronicaController@nota_credito_boleta')->name('facturacion_electronica.nota_credito_bol');
 		Route::get('/facturacion_electronica_boleta','FacturacionElectronicaController@index_boleta')->name('facturacion_electronica.index_boleta');
 		Route::get('/facturacion_electronica_guia_remision','FacturacionElectronicaController@index_guia_remision')->name('facturacion_electronica.index_guia_remision');
 
 		Route::resource('/facturacion_electronica','FacturacionElectronicaController');
 
 		Route::post('/nota-credito-create-nc','NotaCreditoController@create_nota_credito')->name('nota-credito.create_nota_credito');
+		Route::post('/nota-credito-create_boleta-nc','NotaCreditoController@create_boleta_nota_credito')->name('nota-credito.create_nota_credito_boleta');
+
+		Route::get('/nota-credito/create_boleta','NotaCreditoController@create_boleta')->name('nota-credito.create_boleta');
 		Route::resource('/nota-credito','NotaCreditoController');
 		
 		Route::resource('/debito','DebitoController');

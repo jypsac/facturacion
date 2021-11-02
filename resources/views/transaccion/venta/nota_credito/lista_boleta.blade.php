@@ -1,8 +1,8 @@
 @extends('layout')
 
-@section('title', 'Nota Credito - lista Factura')
-@section('breadcrumb', 'Nota Credito Factura- lista')
-@section('breadcrumb2', 'Nota Credito Factura - lista')
+@section('title', 'Nota Credito Boleta - lista')
+@section('breadcrumb', 'Nota Credito Boleta - lista')
+@section('breadcrumb2', 'Nota Credito Boleta - lista')
 @section('href_accion', route('nota-credito.index'))
 @section('value_accion', 'Atras')
 
@@ -25,17 +25,17 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($facturas as $factura)
+                                @foreach($boletas as $boleta)
                                 <tr class="gradeX">
-                                    <td>{{$factura->id}}</td>
-                                    <td>{{$factura->codigo_fac}}</td>
-                                    <td>{{$factura->cliente->nombre}}</td>
-                                    <td>{{$factura->cliente->numero_documento}}</td>
-                                    <td>{{$factura->fecha_emision}}</td>
+                                    <td>{{$boleta->id}}</td>
+                                    <td>{{$boleta->codigo_bol}}</td>
+                                    <td>{{$boleta->cliente->nombre}}</td>
+                                    <td>{{$boleta->cliente->numero_documento}}</td>
+                                    <td>{{$boleta->fecha_emision}}</td>
                                     <td>
-                                        <form method="POST" action="{{route('nota-credito.create_nota_credito')}}">
+                                        <form method="POST" action="{{route('nota-credito.create_nota_credito_boleta')}}">
                                           @csrf
-                                          <input type="hidden" name="factura_id" value="{{$factura->id}}">
+                                          <input type="hidden" name="boleta_id" value="{{$boleta->id}}">
                                           <button type="submit" class="btn btn-sm btn-primary">Aplicar</button>
                                         </form>
                                     </td>

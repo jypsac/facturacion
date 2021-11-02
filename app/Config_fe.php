@@ -32,6 +32,7 @@ use App\TransportePublico;
 
 use Greenter\XMLSecLibs\Certificate\X509Certificate;
 use Greenter\XMLSecLibs\Certificate\X509ContentType;
+
 // DATOS DE PRUEBA
 // RUC: 20000000001
 // Usuario: MODDATOS
@@ -45,16 +46,16 @@ class Config_fe extends Model
 
     public static function facturacion_electronica(){
         $see = new See();
-        $pfx = file_get_contents(public_path('certificado/certificado.p12'));
-        $password = '@Claveso1';
+    //    $pfx = file_get_contents(public_path('certificado/certificado.p12'));
+        //$password = '@Claveso1';
 
-        $certificate = new X509Certificate($pfx, $password);
+       // $certificate = new X509Certificate($pfx, $password);
 
-        $see->setCertificate($certificate->export(X509ContentType::PEM));
-        // $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
+        //$see->setCertificate($certificate->export(X509ContentType::PEM));
+     $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
         $see->setService(SunatEndpoints::FE_BETA);
-        // $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
-        $see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
+         $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
+        //$see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
         return $see;
     }
 
@@ -1071,7 +1072,7 @@ class Config_fe extends Model
             ->setTipoDoc('07')
             ->setSerie('FF01')
             ->setCorrelativo($notas_creditos_count)
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
+            ->setFechaEmision($factura->created_at)
             ->setTipDocAfectado('01') // Tipo Doc: Factura
             ->setNumDocfectado($factura->codigo_fac) // Factura: Serie-Correlativo
             ->setCodMotivo('07') // Catalogo. 09
@@ -1167,7 +1168,7 @@ class Config_fe extends Model
             ->setTipoDoc('07')
             ->setSerie('FF01')
             ->setCorrelativo($notas_creditos_count)
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
+            ->setFechaEmision($factura->created_at)
             ->setTipDocAfectado('01') // Tipo Doc: Factura
             ->setNumDocfectado($factura->codigo_fac) // Factura: Serie-Correlativo
             ->setCodMotivo('07') // Catalogo. 09
@@ -1261,11 +1262,11 @@ class Config_fe extends Model
         $note
             ->setUblVersion('2.1')
             ->setTipoDoc('07')
-            ->setSerie('FF01')
+            ->setSerie('BB01')
             ->setCorrelativo($notas_creditos_count)
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
-            ->setTipDocAfectado('01') // Tipo Doc: boleta
-            ->setNumDocfectado($boleta->codigo_fac) // boleta: Serie-Correlativo
+            ->setFechaEmision($boleta->created_at)
+            ->setTipDocAfectado('03') // Tipo Doc: boleta
+            ->setNumDocfectado($boleta->codigo_boleta) // boleta: Serie-Correlativo
             ->setCodMotivo('07') // Catalogo. 09
             ->setDesMotivo('DEVOLUCION POR ITEM')
             ->setTipoMoneda($boleta->moneda->codigo)
@@ -1357,11 +1358,11 @@ class Config_fe extends Model
         $note
             ->setUblVersion('2.1')
             ->setTipoDoc('07')
-            ->setSerie('FF01')
+            ->setSerie('BB01')
             ->setCorrelativo($notas_creditos_count)
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
-            ->setTipDocAfectado('01') // Tipo Doc: boleta
-            ->setNumDocfectado($boleta->codigo_fac) // boleta: Serie-Correlativo
+            ->setFechaEmision($boleta->created_at)
+            ->setTipDocAfectado('03') // Tipo Doc: boleta
+            ->setNumDocfectado($boleta->codigo_bol) // boleta: Serie-Correlativo
             ->setCodMotivo('07') // Catalogo. 09
             ->setDesMotivo('DEVOLUCION POR ITEM')
             ->setTipoMoneda($boleta->moneda->codigo)

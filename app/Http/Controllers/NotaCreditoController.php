@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 
 use App\Facturacion;
 use App\Facturacion_registro;
+use App\Boleta;
+use App\Boleta_registro;
 use App\Empresa;
 use App\Igv;
 use App\Banco;
@@ -21,7 +23,7 @@ class NotaCreditoController extends Controller
      */
     public function index()
     {
-        $notas_creditos=Facturacion::where('f_electronica',1)->where('estado',1)->get();
+        $notas_creditos=Nota_Credito::get();
         return view('transaccion.venta.nota_credito.index',compact('notas_creditos'));
     }
 
@@ -33,8 +35,15 @@ class NotaCreditoController extends Controller
     public function create()
     {
         //cambiar de 0 a 1 en f_electronica
-        $facturas=Facturacion::where('f_electronica',1)->where('estado',0)->get();
+        $facturas=Facturacion::where('f_electronica',1)->where('estado',0)->where('nota_credito',0)->get();
         return view('transaccion.venta.nota_credito.lista_facturacion',compact('facturas'));
+    }
+
+    public function create_boleta()
+    {
+        //cambiar de 0 a 1 en f_electronica
+        $boletas=Boleta::where('b_electronica',1)->where('estado',0)->where('nota_credito',0)->get();
+        return view('transaccion.venta.nota_credito.lista_boleta',compact('boletas'));
     }
 
     public function create_nota_credito(Request $request){
@@ -48,6 +57,20 @@ class NotaCreditoController extends Controller
         $sub_total=0;
         $banco=Banco::where('estado',0)->get();
         return view('transaccion.venta.nota_credito.create',compact('facturacion','facturacion_registro','empresa','igv','sub_total','banco'));
+    }
+
+    public function create_boleta_nota_credito(Request $request){
+
+        $boleta=Boleta::find($request->boleta_id);
+        $boleta_registro=Boleta_registro::where('boleta_id',$request->boleta_id)->get();
+        
+        $empresa=Empresa::first();
+        $sum=0;
+        $igv=Igv::first();
+        $sub_total=0;
+        $banco=Banco::where('estado',0)->get();
+        // return $boleta;
+        return view('transaccion.venta.nota_credito.create_boleta',compact('boleta','boleta_registro','empresa','igv','sub_total','banco'));
     }
 
     /**
