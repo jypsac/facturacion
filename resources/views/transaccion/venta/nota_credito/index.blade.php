@@ -1,10 +1,40 @@
 @extends('layout')
 
-@section('title', 'Nota Credito')
+{{-- @section('title', 'Nota Credito')
 @section('breadcrumb', 'Nota Credito')
 @section('breadcrumb2', 'Nota Credito')
 @section('href_accion', route('nota-credito.create'))
+@section('value_accion', 'Agregar') --}}
+
+@section('title', 'Nota Credito')
+@section('breadcrumb', 'Nota Credito')
+@section('breadcrumb2', 'Nota Credito')
+@section('data-toggle', 'modal')
+@section('href_accion', '#modal-form')
 @section('value_accion', 'Agregar')
+
+<div class="row">
+    <div class="col-lg-12">
+        <div id="modal-form" class="modal fade" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-body">
+                        <div class="row" align="center">
+                            <!--FACTURA-->
+                            <div class="col-sm-6">
+                                <a href="{{route('nota-credito.create')}}"><button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" >Factura</button></a> 
+                            </div>
+                            <!--BOLETA-->
+                            <div class="col-sm-6">
+                                <a href="{{route('nota-credito.create_boleta')}}"><button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" >Boleta</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 @section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
@@ -17,22 +47,24 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Codigo de Guia</th>
-                                    <th>Cliente</th>
-                                    <th>Ruc/DNI</th>
+                                    <th>Factura</th>
+                                    <th>Boleta</th>
+                                    <th>Tipo</th>
                                     <th>Fecha emision</th>
                                     <th>Ver</th>
                                 </tr>
                             </thead>
+
                             <tbody>
                                 @foreach($notas_creditos as $nota_credito)
                                 <tr class="gradeX">
                                     <td>{{$nota_credito->id}}</td>
-                                    <td>{{$nota_credito->cod_guia}}</td>
-                                    <td>{{$nota_credito->cliente->nombre}}</td>
-                                    <td>{{$nota_credito->cliente->numero_documento}}</td>
-                                    <td>{{$nota_credito->fecha_emision}}</td>
-                                    <td><center><a href="{{route('nota-credito-create-nc' , $nota_credito->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                    <td>{{$nota_credito->facturacion_id}}</td>
+                                    <td>{{$nota_credito->boleta_id}}</td>
+                                    <td>{{$nota_credito->tipo}}</td>
+                                    <td>{{$nota_credito->created_at}}</td>
+                                    {{-- <td><center><a href="{{route('nota-credito-create-nc' , $nota_credito->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td> --}}
+                                    <td><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                 </tr>
                                 @endforeach 
                             </tbody>

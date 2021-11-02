@@ -7,6 +7,7 @@
 @section('value_accion', 'Agregar')
 
 @section('content')
+
 <div class="modal fade" id="Modal_Select_Almacen" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
     <div class="modal-dialog" role="document" >
         <div class="modal-content" >
@@ -34,9 +35,15 @@
 </div>
 </div>
 </div>
+
 <div >
 
     <div class="wrapper wrapper-content animated fadeInRight">
+        @if (session('repite'))
+        <div class="alert alert-danger">
+            {{ session('repite') }}
+        </div>
+        @endif
         <div class="row">
             <div class="col-lg-12">
                 <div class="ibox ">
@@ -58,8 +65,8 @@
                                  <tr class="gradeX">
                                     <td> {{$i=$i+1}}</td>
                                     <td>{{$kardex_distribuciones->codigo_guia}}</td>
-                                    <td>{{$kardex_distribuciones->almacen->nombre}}</td>
-                                    <td>{{$kardex_distribuciones->almacen->nombre}}</td>
+                                    <td>{{$kardex_distribuciones->almacen_emisor->nombre}}</td>
+                                    <td>{{$kardex_distribuciones->almacen_receptor->nombre}}</td>
                                     <td><a href="{{ route('kardex-entrada-Traslado-almacen.show', $kardex_distribuciones->id) }}"><button type="button" class="btn btn-s-m btn-info">VER</button></a></td>
                                     <td><button class="btn btn-secondary">Anular</button></td>
                                 </tr>

@@ -32,6 +32,7 @@ use App\TransportePublico;
 
 use Greenter\XMLSecLibs\Certificate\X509Certificate;
 use Greenter\XMLSecLibs\Certificate\X509ContentType;
+
 // DATOS DE PRUEBA
 // RUC: 20000000001
 // Usuario: MODDATOS
@@ -45,16 +46,16 @@ class Config_fe extends Model
 
     public static function facturacion_electronica(){
         $see = new See();
-        $pfx = file_get_contents(public_path('certificado/certificado.p12'));
-        $password = '@Claveso1';
+       $pfx = file_get_contents(public_path('certificado/certificado.p12'));
+        $password = 'Ndalmaten81';
 
         $certificate = new X509Certificate($pfx, $password);
-
+        
         $see->setCertificate($certificate->export(X509ContentType::PEM));
-        // $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
+    //  $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
         $see->setService(SunatEndpoints::FE_BETA);
-        // $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
-        $see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
+        //  $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
+            $see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
         return $see;
     }
 
@@ -235,7 +236,7 @@ class Config_fe extends Model
             ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($factura->created_at)
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
             ->setCuotas(
                 $cuotas_credito
@@ -370,7 +371,7 @@ class Config_fe extends Model
             ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($factura->created_at)
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
 
             ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
@@ -419,7 +420,7 @@ class Config_fe extends Model
             ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($factura->created_at)
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
             ->setCuotas(
                 $cuotas_credito
@@ -551,7 +552,7 @@ class Config_fe extends Model
             ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($boleta->created_at)
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
 
             ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
@@ -589,7 +590,7 @@ class Config_fe extends Model
             ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($boleta->created_at)
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
             ->setCuotas([
                 // $cuotas_credito
@@ -694,7 +695,7 @@ class Config_fe extends Model
             ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($boleta->created_at)
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
 
             ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
@@ -732,7 +733,7 @@ class Config_fe extends Model
             ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($boleta->created_at)
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
             ->setCuotas([
                 // $cuotas_credito
@@ -1071,7 +1072,7 @@ class Config_fe extends Model
             ->setTipoDoc('07')
             ->setSerie('FF01')
             ->setCorrelativo($notas_creditos_count)
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
+            ->setFechaEmision($factura->created_at)
             ->setTipDocAfectado('01') // Tipo Doc: Factura
             ->setNumDocfectado($factura->codigo_fac) // Factura: Serie-Correlativo
             ->setCodMotivo('07') // Catalogo. 09
@@ -1167,7 +1168,7 @@ class Config_fe extends Model
             ->setTipoDoc('07')
             ->setSerie('FF01')
             ->setCorrelativo($notas_creditos_count)
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
+            ->setFechaEmision($factura->created_at)
             ->setTipDocAfectado('01') // Tipo Doc: Factura
             ->setNumDocfectado($factura->codigo_fac) // Factura: Serie-Correlativo
             ->setCodMotivo('07') // Catalogo. 09
@@ -1261,11 +1262,11 @@ class Config_fe extends Model
         $note
             ->setUblVersion('2.1')
             ->setTipoDoc('07')
-            ->setSerie('FF01')
+            ->setSerie('BB01')
             ->setCorrelativo($notas_creditos_count)
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
-            ->setTipDocAfectado('01') // Tipo Doc: boleta
-            ->setNumDocfectado($boleta->codigo_fac) // boleta: Serie-Correlativo
+            ->setFechaEmision($boleta->created_at)
+            ->setTipDocAfectado('03') // Tipo Doc: boleta
+            ->setNumDocfectado($boleta->codigo_boleta) // boleta: Serie-Correlativo
             ->setCodMotivo('07') // Catalogo. 09
             ->setDesMotivo('DEVOLUCION POR ITEM')
             ->setTipoMoneda($boleta->moneda->codigo)
@@ -1357,11 +1358,11 @@ class Config_fe extends Model
         $note
             ->setUblVersion('2.1')
             ->setTipoDoc('07')
-            ->setSerie('FF01')
+            ->setSerie('BB01')
             ->setCorrelativo($notas_creditos_count)
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
-            ->setTipDocAfectado('01') // Tipo Doc: boleta
-            ->setNumDocfectado($boleta->codigo_fac) // boleta: Serie-Correlativo
+            ->setFechaEmision($boleta->created_at)
+            ->setTipDocAfectado('03') // Tipo Doc: boleta
+            ->setNumDocfectado($boleta->codigo_bol) // boleta: Serie-Correlativo
             ->setCodMotivo('07') // Catalogo. 09
             ->setDesMotivo('DEVOLUCION POR ITEM')
             ->setTipoMoneda($boleta->moneda->codigo)
@@ -1428,250 +1429,4 @@ class Config_fe extends Model
 
         return $cdr->getDescription().PHP_EOL;
     }
-}
-///////////////////////asddasdasdasdas
-//NOTA DE CREDITO - FACTURA
-
-public static function nota_credito($factura, $factura_registro, $request){
-
-    $empresa=Empresa::first();
-    $igv=Igv::first();
-
-    // Cliente
-    $client = (new Client())
-        ->setTipoDoc('6')   //pagina 42 del pdf sunat 2.1
-        ->setNumDoc($factura->cliente->numero_documento) //ruc del receptor
-        ->setRznSocial($factura->cliente->empresa); //nombre empresa
-
-    // Emisor
-    $address = (new Address())
-        ->setUbigueo('150101')
-        ->setDepartamento($empresa->region_provincia)
-        ->setProvincia($empresa->region_provincia)
-        ->setDistrito($empresa->ciudad)
-        ->setUrbanizacion('-')
-        ->setDireccion($empresa->calle)
-        ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.
-
-    $company = (new Company())
-        ->setRuc($empresa->ruc)
-        ->setRazonSocial($empresa->razon_social)
-        ->setNombreComercial($empresa->nombre)
-        ->setAddress($address);
-
-    $contador=count($factura_registro);
-        
-    $cont=0;
-    $igv_f=0;
-    $precio=0;
-    $op_g=0;
-
-    for($p=0;$p<$contador;$p++){
-        $string=(string)$p;
-        
-        $nombre="input_disabled_".$string;
-        
-        if($request->$nombre==NULL){
-        }else{
-            $item[$cont]=new SaleDetail();
-            $item[$cont]
-                ->setCodProducto($factura_registro[$p]->producto->codigo_producto)
-                ->setUnidad('NIU')
-                ->setCantidad($request->$nombre)
-                ->setDescripcion($factura_registro[$p]->producto->nombre)
-                ->setMtoBaseIgv($factura_registro[$p]->precio*$request->$nombre)
-                ->setPorcentajeIgv($igv->igv_total)
-                ->setIgv($factura_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
-                ->setTipAfeIgv($factura_registro[$p]->producto->tipo_afec_i_producto->codigo)
-                ->setTotalImpuestos($factura_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
-                ->setMtoValorVenta($factura_registro[$p]->precio*$request->$nombre)
-                ->setMtoValorUnitario($factura_registro[$p]->precio)
-                ->setMtoPrecioUnitario($factura_registro[$p]->precio+($factura_registro[$p]->precio*(($igv->igv_total)/100)));
-
-            $igv_f=$factura_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100)+$igv_f;
-            $precio=$factura_registro[$p]->precio*$request->$nombre+$precio;
-        }
-    }
-
-    $total=$igv_f+$precio;
-
-    $note = new Note();
-    $note
-        ->setUblVersion('2.1')
-        ->setTipoDoc('07')
-        ->setSerie('FF01')
-        ->setCorrelativo('123')
-        ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
-        ->setTipDocAfectado('01') // Tipo Doc: Factura
-        ->setNumDocfectado($factura->codigo_fac) // Factura: Serie-Correlativo
-        ->setCodMotivo('07') // Catalogo. 09
-        ->setDesMotivo('DEVOLUCION POR ITEM')
-        ->setTipoMoneda($factura->moneda->codigo)
-        ->setCompany($company)
-        ->setClient($client)
-        ->setMtoOperGravadas($precio)
-        ->setMtoIGV($igv_f)
-        ->setTotalImpuestos($igv_f)
-        ->setMtoImpVenta($total)
-        ;
-
-    $formatter = new NumeroALetras();
-    $valor=$formatter->toInvoice($total, 2, 'soles');
-    
-    $legend = new Legend();
-    $legend->setCode('1000')
-        ->setValue($valor);
-
-    $note->setDetails($item)
-        ->setLegends([$legend]);
-    
-    return $note;
-}
-
-public static function nota_credito_servicio($factura, $factura_registro, $request){
-
-    $empresa=Empresa::first();
-    $igv=Igv::first();
-
-    // Cliente
-    $client = (new Client())
-        ->setTipoDoc('6')   //pagina 42 del pdf sunat 2.1
-        ->setNumDoc($factura->cliente->numero_documento) //ruc del receptor
-        ->setRznSocial($factura->cliente->empresa); //nombre empresa
-
-    // Emisor
-    $address = (new Address())
-        ->setUbigueo('150101')
-        ->setDepartamento($empresa->region_provincia)
-        ->setProvincia($empresa->region_provincia)
-        ->setDistrito($empresa->ciudad)
-        ->setUrbanizacion('-')
-        ->setDireccion($empresa->calle)
-        ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.
-
-    $company = (new Company())
-        ->setRuc($empresa->ruc)
-        ->setRazonSocial($empresa->razon_social)
-        ->setNombreComercial($empresa->nombre)
-        ->setAddress($address);
-
-    $contador=count($factura_registro);
-        
-    $cont=0;
-    $igv_f=0;
-    $precio=0;
-    $op_g=0;
-
-    for($p=0;$p<$contador;$p++){
-        $string=(string)$p;
-        
-        $nombre="input_disabled_".$string;
-        
-        if($request->$nombre==NULL){
-        }else{
-            $item[$cont]=new SaleDetail();
-            $item[$cont]
-            ->setCodProducto($factura_registro[$p]->servicio->codigo_servicio)
-            ->setUnidad('ZZ')
-            ->setCantidad($request->$nombre)
-            ->setDescripcion($factura_registro[$p]->servicio->nombre)
-            ->setMtoBaseIgv($factura_registro[$p]->precio*$request->$nombre)
-            ->setPorcentajeIgv($igv->igv_total)
-            ->setIgv($factura_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
-            ->setTipAfeIgv($factura_registro[$p]->servicio->tipo_afec_i_serv->codigo)
-            ->setTotalImpuestos($factura_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
-            ->setMtoValorVenta($factura_registro[$p]->precio*$request->$nombre)
-            ->setMtoValorUnitario($factura_registro[$p]->precio)
-            ->setMtoPrecioUnitario($factura_registro[$p]->precio+($factura_registro[$p]->precio*(($igv->igv_total)/100)));
-
-            $igv_f=$factura_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100)+$igv_f;
-            $precio=$factura_registro[$p]->precio*$request->$nombre+$precio;
-        }
-    }
-
-    $total=$igv_f+$precio;
-
-    $note = new Note();
-    $note
-        ->setUblVersion('2.1')
-        ->setTipoDoc('07')
-        ->setSerie('FF01')
-        ->setCorrelativo('123')
-        ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00'))
-        ->setTipDocAfectado('01') // Tipo Doc: Factura
-        ->setNumDocfectado($factura->codigo_fac) // Factura: Serie-Correlativo
-        ->setCodMotivo('07') // Catalogo. 09
-        ->setDesMotivo('DEVOLUCION POR ITEM')
-        ->setTipoMoneda($factura->moneda->codigo)
-        ->setCompany($company)
-        ->setClient($client)
-        ->setMtoOperGravadas($precio)
-        ->setMtoIGV($igv_f)
-        ->setTotalImpuestos($igv_f)
-        ->setMtoImpVenta($total)
-        ;
-
-    $formatter = new NumeroALetras();
-    $valor=$formatter->toInvoice($total, 2, 'soles');
-    
-    $legend = new Legend();
-    $legend->setCode('1000')
-        ->setValue($valor);
-
-    $note->setDetails($item)
-        ->setLegends([$legend]);
-    
-    return $note;
-}
-
-//NOTA DE CREDITO - BOLETA
-public static function nota_credito_boleta($boleta,$boleta_registro,$request){
-
-}
-
-public static function nota_credito_boleta_servicio($boleta,$boleta_registro,$request){
-    
-}
-
-public static function send($see, $invoice){
-
-    $result = $see->send($invoice);
-
-    // Guardar XML firmado digitalmente.
-    Storage::disk('facturas_electronicas')->put($invoice->getName().'.xml',$see->getFactory()->getLastXml());
-
-    // Verificamos que la conexión con SUNAT fue exitosa.
-    if (!$result->isSuccess()) {
-        // Mostrar error al conectarse a SUNAT.
-        echo 'Codigo Error: '.$result->getError()->getCode();
-        echo 'Mensaje Error: '.$result->getError()->getMessage();
-        exit();
-    }
-
-    // Guardamos el CDR [pregunats si se guardan las boletas]
-    Storage::disk('facturas_electronicas')->put('R-'.$invoice->getName().'.zip', $result->getCdrZip());
-
-    return $result;
-}
-
-public static function lectura_cdr($cdr){
-
-    $code = (int)$cdr->getCode();
-
-    if ($code === 0) {
-        echo 'ESTADO: ACEPTADA'.PHP_EOL;
-        if (count($cdr->getNotes()) > 0) {
-            echo 'OBSERVACIONES:'.PHP_EOL;
-        // Corregir estas observaciones en siguientes emisiones.
-            var_dump($cdr->getNotes());
-        }
-    }else if ($code >= 2000 && $code <= 3999) {
-        echo 'ESTADO: RECHAZADA'.PHP_EOL;
-    }else{
-        /* Esto no debería darse, pero si ocurre, es un CDR inválido que debería tratarse como un error-excepción. */
-        /*code: 0100 a 1999 */
-        echo 'Excepción';
-    }
-
-    return $cdr->getDescription().PHP_EOL;
 }

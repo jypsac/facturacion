@@ -47,6 +47,7 @@ class GuiaRemisionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request){
+        // return "a";
         /*Codigo*/
         //Guardado de almacen para inventario-inicial
         $almacen=$request->get('almacen');
@@ -340,7 +341,6 @@ class GuiaRemisionController extends Controller
     }
 
     public function show($id){
-
         $user_login =auth()->user();
         $almacen=Almacen::where('estado',0)->get();
         $almacen_primero=Almacen::where('estado',0)->first();

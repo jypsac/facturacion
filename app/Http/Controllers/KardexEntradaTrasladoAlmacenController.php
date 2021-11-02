@@ -101,7 +101,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
 
         //validacion si hay prductos en el almacen
         if(!isset($prod)){
-            return "no hay prodcutos en el almacen seleccionado";
+            return redirect()->route('kardex-entrada-Traslado-almacen.index')->with('repite', 'No hay productos en el almacen seleccionado!');
         }
 
         $lista=array_values(array_unique($prod));
@@ -169,7 +169,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                 }else {
                     $articulo_comparacion=$request->get('articulo')[$a];
                     if ($articulo_comparacion_inicial==$articulo_comparacion) {
-                        return "dobles articulos error";
+                        return redirect()->route('kardex-entrada-Traslado-almacen.index')->with('repite', 'Error por la insercion doble de articulos!');
                     }
                 }
             }
@@ -192,14 +192,15 @@ class KardexEntradaTrasladoAlmacenController extends Controller
 
             if ($cantidad_c > $consulta_cantidad) {
                 // return "redirect()->route('kardex-salida.create')->with('cantidad', 'no hay cantidad deseada para el articulos');"
-                return "LA CANTIDAD REQUERIDA EXCEDE AL STOCK";
+                return redirect()->back('kardex-entrada-Traslado-almacen.index')->with('repite', 'La cantidad excede al stock!');
+                // return "LA CANTIDAD REQUERIDA EXCEDE AL STOCK";
             }
         }
 
         //buscador al cambio
         $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
         if(!$cambio){
-            return "error por no hacer el cambio diario";
+            return redirect()->route('kardex-entrada-Traslado-almacen.index')->with('repite', 'Error por no hacer el cambio diario!');
         }
 
 
@@ -301,14 +302,16 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     if(isset($comparacion)){
                         $var_cantidad_entrada=$request->get('cantidad')[$i];
                         $contador=0;
+
                         foreach ($comparacion as $p) {
-                            if($p->cantidad+$cantidad<=$p->cantidad_inicial){
-                                $p->cantidad=$logica;
+                            if($p->cantidad+$cantidad<$p->cantidad_inicial){
+                                // return $logica;
+                                $p->cantidad=$p->cantidad+$logica;
                                 $p->estado=1;
                                 $p->save();
                                 break;
                             }else{
-                                $logica=$logica-$p->cantidad_inicial+$p->cantidad;
+                                $logica=($logica-$p->cantidad_inicial)+$p->cantidad;
                                 $p->cantidad=$p->cantidad_inicial;
                                 $p->estado=1;
                                 $p->save();
@@ -331,7 +334,7 @@ class KardexEntradaTrasladoAlmacenController extends Controller
                     }
 
                     $comparacion2=$nueva2;
-
+                    // return $comparacion2."b";
                     $cantidad2=0;
                     foreach($comparacion2 as $comparaciones2){
                         $cantidad2=$comparaciones2->cantidad+$cantidad2;

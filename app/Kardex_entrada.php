@@ -19,6 +19,12 @@ class Kardex_entrada extends Model
     public function almacen(){
         return $this->belongsTo(Almacen::class,'almacen_id');
     }
+    public function almacen_emisor(){
+        return $this->belongsTo(Almacen::class,'almacen_emisor_id');
+    }
+    public function almacen_receptor(){
+        return $this->belongsTo(Almacen::class,'almacen_receptor_id');
+    }
      public function motivo(){
         return $this->belongsTo(Motivo::class,'motivo_id');
     }
