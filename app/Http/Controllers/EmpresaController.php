@@ -39,6 +39,9 @@ class EmpresaController extends Controller
     public function store(Request $request)
     {
 
+<<<<<<< HEAD
+
+=======
     //     $nombre="74894537";
     //     $nombre= (string)$nombre;
     // //1- Crear directorio de Laravel
@@ -141,6 +144,7 @@ class EmpresaController extends Controller
         // return json_encode(array('result'=>$r)).json_encode(array('result'=>$a));
 
     //2- Cambiar Nombre del ".env"
+>>>>>>> 61420a9a791f52e23790743017b76db833b1fab6
 
     }
 
