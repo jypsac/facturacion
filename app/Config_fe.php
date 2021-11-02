@@ -46,16 +46,16 @@ class Config_fe extends Model
 
     public static function facturacion_electronica(){
         $see = new See();
-    //    $pfx = file_get_contents(public_path('certificado/certificado.p12'));
-        //$password = '@Claveso1';
+       $pfx = file_get_contents(public_path('certificado/certificado.p12'));
+        $password = 'Ndalmaten81';
 
-       // $certificate = new X509Certificate($pfx, $password);
-
-        //$see->setCertificate($certificate->export(X509ContentType::PEM));
-     $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
+        $certificate = new X509Certificate($pfx, $password);
+        
+        $see->setCertificate($certificate->export(X509ContentType::PEM));
+    //  $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
         $see->setService(SunatEndpoints::FE_BETA);
-         $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
-        //$see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
+        //  $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
+            $see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
         return $see;
     }
 
@@ -236,7 +236,7 @@ class Config_fe extends Model
             ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($factura->created_at)
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
             ->setCuotas(
                 $cuotas_credito
@@ -371,7 +371,7 @@ class Config_fe extends Model
             ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($factura->created_at)
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
 
             ->setTipoMoneda($factura->moneda->codigo) // Sol - Catalog. 02
@@ -420,7 +420,7 @@ class Config_fe extends Model
             ->setTipoDoc('01') // Factura - Catalog. 01  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($factura->created_at)
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
             ->setCuotas(
                 $cuotas_credito
@@ -552,7 +552,7 @@ class Config_fe extends Model
             ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($boleta->created_at)
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
 
             ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
@@ -590,7 +590,7 @@ class Config_fe extends Model
             ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($boleta->created_at)
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
             ->setCuotas([
                 // $cuotas_credito
@@ -695,7 +695,7 @@ class Config_fe extends Model
             ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($boleta->created_at)
             ->setFormaPago(new FormaPagoContado()) // FormaPago: Contado
 
             ->setTipoMoneda($boleta->moneda->codigo) // Sol - Catalog. 02
@@ -733,7 +733,7 @@ class Config_fe extends Model
             ->setTipoDoc('03') // boleta - Catalog. 03  // pagina 33 del pdf sunat 2.1
             ->setSerie($serie)// numero de serie
             ->setCorrelativo($correlativo) // y numero correlativo  // ejemplo en seccion 2.2 pagina 20 del pdf sunat 2.1 infomracion precisa pagina 30 pdf sunat 2.1
-            ->setFechaEmision(new DateTime('2020-08-24 13:05:00-05:00')) // Zona horaria: Lima
+            ->setFechaEmision($boleta->created_at)
             ->setFormaPago(new FormaPagoCredito()) // FormaPago: credito
             ->setCuotas([
                 // $cuotas_credito

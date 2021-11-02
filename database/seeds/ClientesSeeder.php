@@ -13,15 +13,15 @@ class ClientesSeeder extends Seeder
     {
     	DB::table('clientes')->insert([
     		'id' => 1 ,
-    		'nombre' => 'Cliente',
+    		'nombre' => 'JyP perifericos SAC',
     		'direccion' =>"Av" ,
     		'email' => 'example@example.com',
     		'telefono' => "111-0000 " ,
     		'anexo' => "0",
     		'celular' => "9999999",
-    		'empresa' => "J&P SAC" ,
+    		'empresa' => "JyP perifericos SAC" ,
     		'documento_identificacion' => 'RUC',
-    		'numero_documento' => "20000000001",
+    		'numero_documento' => "20545122520",
     		'ciudad' => "Lima",
     		'departamento' => "Lima",
     		'pais' => "Peru",
