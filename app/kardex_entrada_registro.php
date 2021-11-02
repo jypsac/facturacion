@@ -79,8 +79,16 @@ class kardex_entrada_registro extends Model
 
             $stock_producto=Stock_producto::where('producto_id',$prod[$x])->first();
             $stock_producto->stock=$kardex_entrada_registros_stock;
-            $stock_producto->precio_nacional=round($precio_nacional,2);
-            $stock_producto->precio_extranjero=round($precio_extranjero,2);
+            if($precio_nacional == 0.00){
+                // $stock_producto->precio_nacional=round($precio_nacional,2);
+            }else{
+                $stock_producto->precio_nacional=round($precio_nacional,2);
+            }
+            if($precio_extranjero == 0.00){
+                // $stock_producto->precio_extranjero=round($precio_extranjero,2);
+            }else{
+                $stock_producto->precio_extranjero=round($precio_extranjero,2);
+            }
             $stock_producto->save();
             unset($array_registros);
             unset($contador);

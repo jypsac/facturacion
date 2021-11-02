@@ -85,8 +85,8 @@ class KardexSalidaController extends Controller
         }
 
         for($x=0;$x<$kardex_entrada_count;$x++){
-            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get()){
-                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->get();
+            if(Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','!=','0')->get()){
+                $nueva=Kardex_entrada_registro::where('kardex_entrada_id',$kadex_entrada_id[$x])->where('estado','!=','0')->get();
                 foreach( $nueva as $nuevas){
                     $prod[]=$nuevas->producto_id;
                 }
