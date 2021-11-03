@@ -52,6 +52,10 @@ class CotizacionController extends Controller
      */
     public function index()
     {
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=Kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
         $cotizacion=Cotizacion::all();
         $user_login =auth()->user();
         $conteo_almacen=Almacen::where('estado',0)->count();
@@ -74,6 +78,13 @@ class CotizacionController extends Controller
 
     public function create_factura(Request $request)
     {
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
+
         //CODIGO N° DE  COTIZACION
         $almacen=$request->get('almacen');
         $sucursal=Almacen::where('id',$almacen)->first();
@@ -168,7 +179,13 @@ class CotizacionController extends Controller
 
     public function create_factura_ms(Request $request)
     {
-    //CODIGO N° DE  COTIZACION
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
+        //CODIGO N° DE  COTIZACION
         $sucursal_p=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal_p)->first();
         /*Codigo Cotizacion Factura*/
@@ -531,7 +548,13 @@ class CotizacionController extends Controller
 
     public function create_boleta(Request $request)
     {
-    //CODIGO N° DE  COTIZACION
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
+        //CODIGO N° DE  COTIZACION
         $almacen=$request->get('almacen');
         $sucursal=Almacen::where('id',$almacen)->first();
         /*Codigo Cotizacion Factura*/
@@ -629,9 +652,13 @@ class CotizacionController extends Controller
     //agregamiento de una nueva funcion create_boleta a monde secundaria comnetado
 public function create_boleta_ms(Request $request)
 {
-
-
-      //CODIGO N° DE  COTIZACION
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
+        //CODIGO N° DE  COTIZACION
         $almacen=$request->get('almacen');
         $sucursal=Almacen::where('id',$almacen)->first();
         /*Codigo Cotizacion Factura*/
@@ -1005,6 +1032,14 @@ return redirect()->route('cotizacion.show',$cotizacion->id);
 
 public function show($id)
 {
+    // REDIRECCION PARA MOSTRAR EL inventario_inicial
+    $existe_id=kardex_entrada::where('estado',2)->first();
+    if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+    //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+    $existe_id=Cotizacion::where('id',$id)->first();
+    if(empty($existe_id)){ return redirect()->route('cotizacion.index'); }
+
     $banco=Banco::where('estado','0')->get();
     $banco_count=Banco::where('estado','0')->count();
     $cotizacion=Cotizacion::find($id);
@@ -1057,6 +1092,15 @@ public function show($id)
 }
 
 public function print($id){
+
+    // REDIRECCION PARA MOSTRAR EL inventario_inicial
+    $existe_id=kardex_entrada::where('estado',2)->first();
+    if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+    //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+    $existe_id=Cotizacion::where('id',$id)->first();
+    if(empty($existe_id)){ return redirect()->route('cotizacion.index'); }
+
     $banco=Banco::where('estado','0')->get();
     $banco_count=Banco::where('estado','0')->count();
     $cotizacion=Cotizacion::find($id);
@@ -1134,6 +1178,14 @@ public function pdf(Request $request,$id){
     //envio hacia facturar cambiar en caso incluya algo
 public function facturar(Request $request,$id)
 {
+    // REDIRECCION PARA MOSTRAR EL inventario_inicial
+    $existe_id=kardex_entrada::where('estado',2)->first();
+    if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+    //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+    $existe_id=Cotizacion::where('id',$id)->first();
+    if(empty($existe_id)){ return redirect()->route('cotizacion.index'); }
+
     $cotizacion=Cotizacion::where('id',$id)->first();
     $cotizacion_moneda=$cotizacion->moneda_id;
 

@@ -46,6 +46,10 @@ class BoletaController extends Controller
      */
     public function index()
     {
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
         $boletas=Boleta::all();
         $user_login =auth()->user();
         $conteo_almacen=Almacen::where('estado',0)->count();
@@ -61,6 +65,13 @@ class BoletaController extends Controller
      */
     public function create(Request $request)
     {
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
+
         // $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
         $almacen_p=$request->get('almacen');
         $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
@@ -165,6 +176,12 @@ class BoletaController extends Controller
 
     public function create_ms(Request $request)
     {
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
 
         $almacen_p=$request->get('almacen');
         $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
@@ -654,6 +671,14 @@ class BoletaController extends Controller
      */
     public function show($id)
     {
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+        //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+        $existe_id=Boleta::where('id',$id)->first();
+        if(empty($existe_id)){ return redirect()->route('boleta.index'); }
+
         $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
         $igv=Igv::first();
         $banco=Banco::all();
@@ -664,6 +689,14 @@ class BoletaController extends Controller
     }
 
     public function print($id){
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+        //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+        $existe_id=Boleta::where('id',$id)->first();
+        if(empty($existe_id)){ return redirect()->route('boleta.index'); }
+
         $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
         $igv=Igv::first();
         $banco=Banco::all();

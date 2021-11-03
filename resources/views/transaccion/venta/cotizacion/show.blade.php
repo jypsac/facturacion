@@ -35,13 +35,13 @@
                 @else
                 {{-- SIN PROCESAR --}}
                     @if($cotizacion->tipo=='factura')
-                        <form action="{{route('cotizacion.facturar' , $cotizacion->id)}}" method="post">
+                        <form action="{{route('cotizacion.facturar' , $cotizacion->id)}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="almacen" value="{{$almacen}}" />
                             <button type="submit" class="btn btn-info" href="">Facturar</button>
                         </form>
                     @else
-                        <form action="{{route('cotizacion.boletear', $cotizacion->id)}}" method="post">
+                        <form action="{{route('cotizacion.boletear', $cotizacion->id)}}" method="post" enctype="multipart/form-data">
                             @csrf
                             <input type="hidden" name="almacen" value="{{$almacen}}" />
                             <button type="submit" class="btn btn-info" href="">Boletear</button>

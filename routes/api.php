@@ -27,7 +27,7 @@ use App\Providers\RouteServiceProvider;
 });
 */
 // PRODUCTOS
-Route::group(['middleware' => ['auth:api']], function () {
+Route::group(['middleware' =>  ['auth','api','cambio_diario']], function () {
         // your protected routes.
 });
 Route::get('productos',function(){

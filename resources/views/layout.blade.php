@@ -78,38 +78,47 @@ text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_s
                     @can('inicio')
                     <li><a href="{{route('inicio')}}"><img src="{{ asset('/archivos/imagenes/layout/inicio.svg')}}" class="iconos"> <span class="nav-label">Inicio</span></a></li>
                     @endcan
-
+                    {{-- REGLA PHP PARA LLAMADA DE KARDEX ENTRADA PARA CONDICIONAL --}}
+                    <?php use App\Kardex_entrada ; ?>
+                    <span hidden="">{{$inventario_inicial=Kardex_entrada::first()}} </span>
                     @can('transacciones')
                     <li>
                         <a href="#"><img src="{{ asset('/archivos/imagenes/layout/comercializacion.svg')}}" class="iconos"> <span class="nav-label">Comercialización</span></a>
                         <ul class="nav nav-second-level collapse">
                             @can('transacciones-ventas')
-                            <li>
-                                <a href="#">Ventas</a>
-                                <ul class="nav nav-third-level">
-                                    @can('transacciones-ventas-cotizaciones.index')
-                                    {{-- <li><a href="{{route('cotizacion.index')}}">Cotizaciones</a></li> --}}
-                                    <li><a href="#"><span  class="nav-label">Cotizaciones</span></a>
-                                        <ul class="nav nav-second-level collapse">
-                                            <li><a href="{{route('cotizacion.index')}}"  style="padding-left: 80px;">C.Productos</a></li>
-                                            <li><a href="{{route('cotizacion_servicio.index')}}"  style="padding-left: 80px;">C.Servicios</a></li>
-                                            <li><a href="{{route('otros.index')}}"  style="padding-left: 80px;">C.Manual</a></li>
-                                        </ul></li>
+                                @if(empty($inventario_inicial))
+                                @elseif($inventario_inicial->estado==1)
+                                @else
+                                <li>
+                                    <a href="#">Ventas</a>
+                                    <ul class="nav nav-third-level">
+                                        @can('transacciones-ventas-cotizaciones.index')
+                                        {{-- <li><a href="{{route('cotizacion.index')}}">Cotizaciones</a></li> --}}
+                                            <li>
+                                                <a href="#"><span  class="nav-label">Cotizaciones</span></a>
+                                                <ul class="nav nav-second-level collapse">
+                                                    <li><a href="{{route('cotizacion.index')}}"  style="padding-left: 80px;">C.Productos</a></li>
+                                                    <li><a href="{{route('cotizacion_servicio.index')}}"  style="padding-left: 80px;">C.Servicios</a></li>
+                                                    <li><a href="{{route('otros.index')}}"  style="padding-left: 80px;">C.Manual</a></li>
+                                                </ul>
+                                            </li>
                                         @endcan
                                         @can('transacciones-ventas-facturacion.index')
-                                        <li><a href="{{route('facturacion.index')}}">Facturacion</a></li>
+                                            <li><a href="{{route('facturacion.index')}}">Facturacion</a></li>
                                         @endcan
                                         @can('transacciones-ventas-boleta.index')
-                                        <li><a href="{{route('boleta.index')}}">Boleta</a></li>
+                                            <li><a href="{{route('boleta.index')}}">Boleta</a></li>
                                         @endcan
                                         @can('transacciones-ventas-guia_remision.index')
-                                        <li><a href="{{route('guia_remision.index')}}">Guia Remision</a></li>
+                                            <li><a href="{{route('guia_remision.index')}}">Guia Remision</a></li>
                                         @endcan
-                                        <li><a href="{{route('nota-credito.index')}}">Nota Credito</a></li>
-                                        <li><a href="{{route('nota-credito.index')}}">Nota Debito</a></li>
+                                            <li><a href="{{route('nota-credito.index')}}">Nota Credito</a></li>
+                                            <li><a href="{{route('nota-credito.index')}}">Nota Debito</a></li>
                                     </ul>
                                 </li>
-                                @endcan
+                                @endif
+                            @endcan
+
                                 {{-- <li><a href="{{route('transaccion-compra.index')}}">Compras</a></li> --}}
                                 @can('transacciones-garantias')
                                 <li>
@@ -131,8 +140,7 @@ text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_s
                         </li>
                         @endcan
 
-                        <?php use App\Kardex_entrada ; ?>
-                        <span hidden="">{{$inventario_inicial=Kardex_entrada::first()}} </span>
+
                         @if(empty($inventario_inicial))
                         <li>
                             <a href="{{route('kardex-entrada.create')}}"><img src="{{ asset('/archivos/imagenes/layout/inventario.svg')}}" class="iconos">  <span class="nav-label">Inventario Inicial</span></a>

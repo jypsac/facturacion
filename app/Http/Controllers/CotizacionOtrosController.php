@@ -29,6 +29,10 @@ class CotizacionOtrosController extends Controller
      */
     public function index()
     {
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=Kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
         $clientes=Cliente::all();
         $moneda=Moneda::all();
         $forma_pagos= Forma_pago::all();
