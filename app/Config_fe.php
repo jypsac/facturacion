@@ -30,6 +30,8 @@ use App\Cuotas_Credito;
 use App\Guia_remision;
 use App\TransportePublico;
 
+use App\config_acceso_sunat;
+
 use Greenter\XMLSecLibs\Certificate\X509Certificate;
 use Greenter\XMLSecLibs\Certificate\X509ContentType;
 
@@ -44,40 +46,40 @@ class Config_fe extends Model
 
     protected $guarded = [];
 
-    public static function facturacion_electronica(){
+    // public static function facturacion_electronica(){
 
-        $see = new See();
-        $pfx = file_get_contents(public_path('certificado/certificado.p12'));
-        $password = 'Ndalmaten81';
+    //     $see = new See();
+    //     $pfx = file_get_contents(public_path('certificado/certificado.p12'));
+    //     $password = 'Ndalmaten81';
 
-        $certificate = new X509Certificate($pfx, $password);
+    //     $certificate = new X509Certificate($pfx, $password);
         
-        $see->setCertificate($certificate->export(X509ContentType::PEM));
-        //  $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
-        $see->setService(SunatEndpoints::FE_BETA);
-        //  $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
-        $see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
-        return $see;
+    //     $see->setCertificate($certificate->export(X509ContentType::PEM));
+    //     //  $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
+    //     $see->setService(SunatEndpoints::FE_BETA);
+    //     //  $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
+    //     $see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
+    //     return $see;
 
-    }
+    // }
 
-    public static function guia_electronica(){
+    // public static function guia_electronica(){
 
-        $see = new See();
-        //$see->setCertificate(file_get_contents(public_path('certificado/certificado.p12')));
+    //     $see = new See();
+    //     //$see->setCertificate(file_get_contents(public_path('certificado/certificado.p12')));
 
-        $pfx = file_get_contents(public_path('certificado/certificado.p12')); 
-        $password = 'Tecnologia20';
+    //     $pfx = file_get_contents(public_path('certificado/certificado.p12')); 
+    //     $password = 'Tecnologia20';
 
-        $certificate = new X509Certificate($pfx, $password);
+    //     $certificate = new X509Certificate($pfx, $password);
 
-        $see->setCertificate($certificate->export(X509ContentType::PEM));
+    //     $see->setCertificate($certificate->export(X509ContentType::PEM));
 
-        // $see->setService(SunatEndpoints::GUIA_PRODUCCION);
-        $see->setService(SunatEndpoints::GUIA_BETA);
-        $see->setClaveSOL('20545122520', 'JYPSACFA', 'P@@@W0RDs');
-        return $see;
-    }
+    //     // $see->setService(SunatEndpoints::GUIA_PRODUCCION);
+    //     $see->setService(SunatEndpoints::GUIA_BETA);
+    //     $see->setClaveSOL('20545122520', 'JYPSACFA', 'P@@@W0RDs');
+    //     return $see;
+    // }
 
     public static function factura($factura,$facturas_registros,$guia){
 
@@ -807,7 +809,7 @@ class Config_fe extends Model
                 ->setRznSocial($empresa->razon_social) //nombre de la conduccion
                 ->setPlaca($guia->vehiculo->placa)
                 ->setChoferTipoDoc('1')     //ayuda
-                ->setChoferDoc($empleado->numero_documento);         //doc chofer
+                ->setChoferDoc($empleado->numero_documento);    //doc chofer
             }
 
 
@@ -1389,46 +1391,46 @@ class Config_fe extends Model
         return $note;
     }
 
-    public static function send($see, $invoice){
+    // public static function send($see, $invoice){
 
-        $result = $see->send($invoice);
+    //     $result = $see->send($invoice);
 
-        // Guardar XML firmado digitalmente.
-        Storage::disk('facturas_electronicas')->put($invoice->getName().'.xml',$see->getFactory()->getLastXml());
+    //     // Guardar XML firmado digitalmente.
+    //     Storage::disk('facturas_electronicas')->put($invoice->getName().'.xml',$see->getFactory()->getLastXml());
 
-        // Verificamos que la conexión con SUNAT fue exitosa.
-        if (!$result->isSuccess()) {
-            // Mostrar error al conectarse a SUNAT.
-            echo 'Codigo Error: '.$result->getError()->getCode();
-            echo 'Mensaje Error: '.$result->getError()->getMessage();
-            exit();
-        }
+    //     // Verificamos que la conexión con SUNAT fue exitosa.
+    //     if (!$result->isSuccess()) {
+    //         // Mostrar error al conectarse a SUNAT.
+    //         echo 'Codigo Error: '.$result->getError()->getCode();
+    //         echo 'Mensaje Error: '.$result->getError()->getMessage();
+    //         exit();
+    //     }
 
-        // Guardamos el CDR [pregunats si se guardan las boletas]
-        Storage::disk('facturas_electronicas')->put('R-'.$invoice->getName().'.zip', $result->getCdrZip());
+    //     // Guardamos el CDR [pregunats si se guardan las boletas]
+    //     Storage::disk('facturas_electronicas')->put('R-'.$invoice->getName().'.zip', $result->getCdrZip());
 
-        return $result;
-    }
+    //     return $result;
+    // }
 
-    public static function lectura_cdr($cdr){
+    // public static function lectura_cdr($cdr){
 
-        $code = (int)$cdr->getCode();
+    //     $code = (int)$cdr->getCode();
 
-        if ($code === 0) {
-            echo 'ESTADO: ACEPTADA'.PHP_EOL;
-            if (count($cdr->getNotes()) > 0) {
-                echo 'OBSERVACIONES:'.PHP_EOL;
-            // Corregir estas observaciones en siguientes emisiones.
-                var_dump($cdr->getNotes());
-            }
-        }else if ($code >= 2000 && $code <= 3999) {
-            echo 'ESTADO: RECHAZADA'.PHP_EOL;
-        }else{
-            /* Esto no debería darse, pero si ocurre, es un CDR inválido que debería tratarse como un error-excepción. */
-            /*code: 0100 a 1999 */
-            echo 'Excepción';
-        }
+    //     if ($code === 0) {
+    //         echo 'ESTADO: ACEPTADA'.PHP_EOL;
+    //         if (count($cdr->getNotes()) > 0) {
+    //             echo 'OBSERVACIONES:'.PHP_EOL;
+    //         // Corregir estas observaciones en siguientes emisiones.
+    //             var_dump($cdr->getNotes());
+    //         }
+    //     }else if ($code >= 2000 && $code <= 3999) {
+    //         echo 'ESTADO: RECHAZADA'.PHP_EOL;
+    //     }else{
+    //         /* Esto no debería darse, pero si ocurre, es un CDR inválido que debería tratarse como un error-excepción. */
+    //         /*code: 0100 a 1999 */
+    //         echo 'Excepción';
+    //     }
 
-        return $cdr->getDescription().PHP_EOL;
-    }
+    //     return $cdr->getDescription().PHP_EOL;
+    // }
 }

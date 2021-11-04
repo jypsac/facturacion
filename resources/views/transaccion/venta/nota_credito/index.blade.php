@@ -47,8 +47,7 @@
                             <thead>
                                 <tr>
                                     <th>ID</th>
-                                    <th>Factura</th>
-                                    <th>Boleta</th>
+                                    <th>DOC</th>
                                     <th>Tipo</th>
                                     <th>Fecha emision</th>
                                     <th>Ver</th>
@@ -59,8 +58,15 @@
                                 @foreach($notas_creditos as $nota_credito)
                                 <tr class="gradeX">
                                     <td>{{$nota_credito->id}}</td>
-                                    <td>{{$nota_credito->facturacion_id}}</td>
-                                    <td>{{$nota_credito->boleta_id}}</td>
+                                    <td>
+                                        @if($nota_credito->facturacion_id==NULL)
+                                            Boleta
+                                        @else
+                                            Factura
+                                        @endif
+                                        
+                                    </td>
+                                    
                                     <td>{{$nota_credito->tipo}}</td>
                                     <td>{{$nota_credito->created_at}}</td>
                                     {{-- <td><center><a href="{{route('nota-credito-create-nc' , $nota_credito->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td> --}}

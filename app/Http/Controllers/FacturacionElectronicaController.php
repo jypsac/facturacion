@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Config_fe;
+use App\config_acceso_sunat;
+
 use App\Facturacion;
 use App\Facturacion_registro;
 use App\Boleta;
@@ -71,7 +73,7 @@ class FacturacionElectronicaController extends Controller
         }
         
         //configuracion de conexion
-        $see=Config_fe::facturacion_electronica();
+        $see=config_acceso_sunat::facturacion_electronica();
 
         if($factura->tipo=="producto"){
             //factura
@@ -84,10 +86,10 @@ class FacturacionElectronicaController extends Controller
         }
         
         //envio a SUNAT    
-        $result=Config_fe::send($see, $invoice);
+        $result=config_acceso_sunat::send($see, $invoice);
 
         //lectura CDR
-        $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+        $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
 
         //cambio de factura electronica - en caso sea todo exitoso
         $factura->f_electronica=1;
@@ -104,7 +106,7 @@ class FacturacionElectronicaController extends Controller
         $boleta_registro=Boleta_registro::where('boleta_id',$request->factura_id)->get();
         
         //configuracion
-        $see=Config_fe::facturacion_electronica();
+        $see=config_acceso_sunat::facturacion_electronica();
 
         //boleta
         
@@ -121,10 +123,10 @@ class FacturacionElectronicaController extends Controller
         }
         
         //envio a SUNAT    
-        $result=Config_fe::send($see, $invoice);
+        $result=config_acceso_sunat::send($see, $invoice);
 
         //lectura CDR
-        $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+        $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
 
         //cambio de boleta electronica - en caso sea todo exitoso
         $boleta->b_electronica=1;
@@ -142,7 +144,7 @@ class FacturacionElectronicaController extends Controller
         $tipo_transporte=$guia->tipo_transporte;
 
         //configuracion
-        $see=Config_fe::guia_electronica();
+        $see=config_acceso_sunat::guia_electronica();
 
         //guia
         $invoice=Config_fe::guia_remision($guia,$guias_registros,$tipo_transporte);
@@ -150,10 +152,10 @@ class FacturacionElectronicaController extends Controller
         // return response()->json($invoice);
         
         //envio a SUNAT    
-        $result=Config_fe::send($see, $invoice);
+        $result=config_acceso_sunat::send($see, $invoice);
 
         //lectura CDR
-        $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+        $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
 
         //cambio de guia electronica - en caso sea exitodo
         $guia->g_electronica=1;
@@ -171,7 +173,7 @@ class FacturacionElectronicaController extends Controller
         $tipo_transporte=$guia->tipo_transporte;
 
         //configuracion
-        $see=Config_fe::guia_electronica();
+        $see=config_acceso_sunat::guia_electronica();
 
         //guia
         $invoice=Config_fe::guia_remision_baja($guia,$guias_registros,$tipo_transporte);
@@ -179,9 +181,9 @@ class FacturacionElectronicaController extends Controller
         // return response()->json($invoice);
         
         //envio a SUNAT    
-        $result=Config_fe::send($see, $invoice);
+        $result=config_acceso_sunat::send($see, $invoice);
         //lectura CDR
-        $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+        $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
         // return $msg;
 
 
@@ -201,15 +203,15 @@ class FacturacionElectronicaController extends Controller
         $factura=Facturacion::where('id',$id)->first();
         $factura_registro=Facturacion_registro::where('facturacion_id',$id)->get();
         //configuracion
-        $see=Config_fe::facturacion_electronica();
+        $see=config_acceso_sunat::facturacion_electronica();
 
         if($factura->tipo=="producto"){
             
             $invoice=Config_fe::nota_credito($factura,$factura_registro,$request,$notas_creditos_count);
             //envio a SUNAT    
-            $result=Config_fe::send($see, $invoice);
+            $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
-            $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+            $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
 
             $nota_credito=new Nota_Credito();
             $nota_credito->facturacion_id=$factura->id;
@@ -235,9 +237,9 @@ class FacturacionElectronicaController extends Controller
             
             $invoice=Config_fe::nota_credito_servicio($factura,$factura_registro,$request,$notas_creditos_count);
             //envio a SUNAT    
-            $result=Config_fe::send($see, $invoice);
+            $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
-            $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+            $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
             
             $nota_credito=new Nota_Credito();
             $nota_credito->facturacion_id=$factura->id;
@@ -272,15 +274,15 @@ class FacturacionElectronicaController extends Controller
         $boleta=Boleta::where('id',$id)->first();
         $boleta_registro=Boleta_registro::where('boleta_id',$id)->get();
         //configuracion
-        $see=Config_fe::facturacion_electronica();
+        $see=config_acceso_sunat::facturacion_electronica();
 
         if($boleta->tipo=="producto"){
             
             $invoice=Config_fe::nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count);
             //envio a SUNAT    
-            $result=Config_fe::send($see, $invoice);
+            $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
-            $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+            $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
 
             $nota_credito=new Nota_Credito();
             $nota_credito->boleta_id=$boleta->id;
@@ -306,9 +308,9 @@ class FacturacionElectronicaController extends Controller
             
             $invoice=Config_fe::nota_credito_boleta_servicio($boleta,$boleta_registro,$request,$notas_creditos_count);
             //envio a SUNAT    
-            $result=Config_fe::send($see, $invoice);
+            $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
-            $msg=Config_fe::lectura_cdr($result->getCdrResponse());
+            $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
             
             $nota_credito=new Nota_Credito();
             $nota_credito->boleta_id=$boleta->id;
