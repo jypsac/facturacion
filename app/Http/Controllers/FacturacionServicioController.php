@@ -13,6 +13,7 @@ use App\Igv;
 use App\Moneda;
 use App\Personal;
 use App\Personal_venta;
+use App\Kardex_entrada;
 use App\Servicios;
 use App\TipoCambio;
 use App\Ventas_registro;
@@ -38,6 +39,12 @@ class FacturacionServicioController extends Controller
      */
     public function create(Request $request)
     {
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
 
         $servicios=Servicios::where('estado_anular',0)->get();
 
@@ -138,6 +145,12 @@ class FacturacionServicioController extends Controller
 
     public function create_ms(Request $request)
     {
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
 
         $servicios=Servicios::where('estado_anular',0)->get();
 
@@ -470,6 +483,13 @@ class FacturacionServicioController extends Controller
      */
     public function show($id)
     {
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+        //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+        $existe_id=Facturacion::where('id',$id)->first();
+        if(empty($existe_id)){ return redirect()->route('facturacion.index'); }
 
         $empresa=Empresa::first();
         $facturacion=Facturacion::find($id);

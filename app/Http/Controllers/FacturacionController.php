@@ -46,6 +46,10 @@ class FacturacionController extends Controller
      */
     public function index()
     {
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
         $facturacion=Facturacion::all();
         $user_login =auth()->user();
         $conteo_almacen=Almacen::where('estado',0)->count();
@@ -68,6 +72,13 @@ class FacturacionController extends Controller
 
 // creacion para productos
     public function create(Request $request){
+
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
 
         // $kardex_prod=kardex_entrada_registro::join("productos","kardex_entrada_registro.producto_id","productos.id")
         // ->where('estado',1)->get();
@@ -186,6 +197,14 @@ class FacturacionController extends Controller
     }
 
     public function create_ms(Request $request){
+
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
+
         $almacen_p=$request->get('almacen');
         $kardex_entrada=Kardex_entrada::where('almacen_id',$almacen_p)->get();
         $kardex_entrada_count=Kardex_entrada::where('almacen_id',$almacen_p)->count();
@@ -673,6 +692,14 @@ class FacturacionController extends Controller
      */
     public function show($id)
     {
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+        //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+        $existe_id=Facturacion::where('id',$id)->first();
+        if(empty($existe_id)){ return redirect()->route('facturacion.index'); }
+
         $empresa=Empresa::first();
         $facturacion=Facturacion::find($id);
         $facturacion_registro=Facturacion_registro::where('facturacion_id',$id)->get();
@@ -689,6 +716,14 @@ class FacturacionController extends Controller
     }
 
     function print($id){
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+        //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+        $existe_id=Facturacion::where('id',$id)->first();
+        if(empty($existe_id)){ return redirect()->route('facturacion.index'); }
+
         $empresa=Empresa::first();
         $facturacion=Facturacion::find($id);
         $facturacion_registro=Facturacion_registro::where('facturacion_id',$id)->get();

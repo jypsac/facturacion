@@ -20,6 +20,7 @@ use App\g_remision_registro;
 use App\Stock_almacen;
 use App\Stock_producto;
 use App\Kardex_entrada;
+use App\moneda;
 use App\kardex_entrada_registro;
 use Barryvdh\DomPDF\Facade as PDF;
 use Illuminate\Http\Request;
@@ -32,6 +33,10 @@ class GuiaRemisionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function index(){
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=Kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
         $user_login =auth()->user();
         $guia_remision=Guia_remision::all();
         $almacen=Almacen::where('estado',0)->get();
@@ -47,6 +52,14 @@ class GuiaRemisionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function create(Request $request){
+
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
+
         // return "a";
         /*Codigo*/
         //Guardado de almacen para inventario-inicial
@@ -107,6 +120,7 @@ class GuiaRemisionController extends Controller
 
         /*Codigo*/
         //Guardado de almacen para inventario-inicial
+        // return $request;
         $almacen=$request->get('almacen');
         $id_almacen=Almacen::where('id',$almacen)->first();
         $almacen_serie_remision=$id_almacen->serie_remision;/*Codigo que brinda sunat a cada sucursal*/
@@ -319,6 +333,14 @@ class GuiaRemisionController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function print($id){
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+        //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+        $existe_id=Guia_remision::where('id',$id)->first();
+        if(empty($existe_id)){ return redirect()->route('guia_remision.index'); }
+
         $banco_count=Banco::where('estado','0')->count();
         $guia_remision=Guia_remision::find($id);
         $guia_registro=g_remision_registro::where('guia_remision_id',$guia_remision->id)->get();
@@ -341,6 +363,15 @@ class GuiaRemisionController extends Controller
     }
 
     public function show($id){
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+        //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+        $existe_id=Guia_remision::where('id',$id)->first();
+        if(empty($existe_id)){ return redirect()->route('guia_remision.index'); }
+
+
         $user_login =auth()->user();
         $almacen=Almacen::where('estado',0)->get();
         $almacen_primero=Almacen::where('estado',0)->first();
@@ -395,6 +426,10 @@ class GuiaRemisionController extends Controller
 
     public function seleccionar(){
 
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=Kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
         $activos=Cotizacion::where('estado_aprovar','1')->get();
         return view('transaccion.venta.guia_remision.selecionar_cotizacion',compact('activos'));
 
@@ -406,13 +441,51 @@ class GuiaRemisionController extends Controller
         $cotizacion_registro_boleta=Cotizacion_boleta_registro::where('cotizacion_id',$id)->get();
 
         $productos=Producto::where('estado_anular',1)->where('estado_id','!=',2)->get();
-        foreach ($productos as $index => $producto) {
-            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')*($producto->utilidad-$producto->descuento1)/100;
-            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio')+$utilidad[$index];
-            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
-            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio');
-        }
 
+        // SEPÁRADO POR MONEDAS TOMADO DE COTIZACION FACTURAR
+        // $moneda1=Moneda::where('principal',1)->first();
+        // $moneda2=Moneda::where('principal',0)->first();
+        // $cotizacion_moneda = $cotizacion->moneda_id;
+        // if($cotizacion_moneda==$moneda1->id){
+        //     if ($moneda1->tipo == 'nacional') {
+        //         foreach ($productos as $index => $producto) {
+        //             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+        //             $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
+        //             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+        //             $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+        //         }
+        //     }else{
+        //         foreach ($productos as $index => $producto) {
+        //             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+        //             $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
+        //             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+        //             $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
+        //         }
+        //     }
+        // }elseif($cotizacion_moneda==$moneda2->id){
+        //     if ($moneda2->tipo == 'extranjera'){
+        //         foreach ($productos as $index => $producto) {
+        //             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+        //             $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
+        //             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+        //             $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+        //         }
+        //     }else{
+        //         foreach ($productos as $index => $producto) {
+        //             $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
+        //             $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero')+$utilidad[$index];
+        //             $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+        //             $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_extranjero');
+        //         }
+        //     }
+        // }
+
+        foreach ($productos as $index => $producto) {
+            $utilidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')*($producto->utilidad-$producto->descuento1)/100;
+            $array[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional')+$utilidad[$index];
+            $array_cantidad[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->sum('cantidad');
+            $array_promedio[]=kardex_entrada_registro::where('producto_id',$producto->id)->where('estado',1)->avg('precio_nacional');
+        }
         $clientes=Cliente::all();
         $vehiculo=Vehiculo::where('estado_activo',0)->get();
         $empresa=Empresa::first();

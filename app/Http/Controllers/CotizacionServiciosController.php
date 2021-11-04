@@ -27,6 +27,7 @@ use App\Servicios;
 use App\TipoCambio;
 use App\Ventas_registro;
 use App\kardex_entrada_registro;
+use App\Kardex_entrada;
 use Barryvdh\DomPDF\Facade as PDF;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Storage;
@@ -45,6 +46,10 @@ class CotizacionServiciosController extends Controller
      */
     public function index()
     {
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
         $cotizaciones_servicios=Cotizacion_Servicios::all();
         $user_login =auth()->user();
         $conteo_almacen=Almacen::where('estado',0)->count();
@@ -69,6 +74,13 @@ class CotizacionServiciosController extends Controller
 
     public function create_factura(Request $request)
     {
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
+
         $sucursal=$request->get('almacen');
         $sucursal=Almacen::where('id',$sucursal)->first();
 
@@ -133,6 +145,13 @@ class CotizacionServiciosController extends Controller
 
     public function create_factura_ms(Request $request)
     {
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
+
         $servicios=Servicios::where('estado_anular',0)->get();
 
         $sucursal=$request->get('almacen');
@@ -399,6 +418,12 @@ class CotizacionServiciosController extends Controller
      */
     public function create_boleta(Request $request)
     {
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
 
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
@@ -462,6 +487,13 @@ class CotizacionServiciosController extends Controller
 
     public function create_boleta_ms(Request $request)
     {
+        $inventario_inicial=Kardex_entrada::first();
+        if (isset($inventario_inicial)) {
+            if ( $inventario_inicial->estado==1) {
+                return redirect()->route('kardex-entrada.show',$inventario_inicial->id);
+            }
+        }
+
         $servicios=Servicios::where('estado_anular',0)->get();
         $tipo_cambio=TipoCambio::latest('created_at')->first();
         $moneda=Moneda::where('principal','0')->first();
@@ -739,6 +771,13 @@ class CotizacionServiciosController extends Controller
 
     public function show($id)
     {
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+        //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+        $existe_id=Cotizacion_Servicios::where('id',$id)->first();
+        if(empty($existe_id)){ return redirect()->route('cotizacion_servicio.index'); }
 
         $facturacion=Facturacion::where('id_cotizador_servicio',$id)->first();
         $boleta=Boleta::where('id_cotizador_servicio',$id)->first();
@@ -1145,6 +1184,14 @@ elseif ($cotizacion->estado==1) {
         //
     }
     public function print($id){
+        // REDIRECCION PARA MOSTRAR EL inventario_inicial
+        $existe_id=kardex_entrada::where('estado',2)->first();
+        if(empty($existe_id)){ return redirect()->route('kardex-entrada.index'); }
+
+        //REDIRECCION PARA NO MOSTRAR ERROR LARAVEL DE ID SHOW
+        $existe_id=Cotizacion_Servicios::where('id',$id)->first();
+        if(empty($existe_id)){ return redirect()->route('cotizacion_servicio.index'); }
+
         $banco=Banco::where('estado','0')->get();
         $moneda=Moneda::where('principal',1)->first();
         $cotizacion_registro=Cotizacion_Servicios_factura_registro::where('cotizacion_servicio_id',$id)->get();
