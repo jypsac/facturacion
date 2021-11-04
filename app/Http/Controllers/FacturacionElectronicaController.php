@@ -260,6 +260,8 @@ class FacturacionElectronicaController extends Controller
             }
         }
 
+        return redirect()->route('nota-credito.show',$nota_credito->id);
+
     }
 
     public function nota_credito_boleta(Request $request, $id)

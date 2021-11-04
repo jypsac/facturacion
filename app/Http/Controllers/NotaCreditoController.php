@@ -92,7 +92,18 @@ class NotaCreditoController extends Controller
      */
     public function show($id)
     {
-        //
+        $notas_credito=Nota_Credito::where('id',$id)->first();
+        $notas_credito_registros=Nota_Credito_registro::where('nota_credito_id',$id)->get();
+
+        $empresa=Empresa::first();
+
+        if($notas_credito->boleta_id==NULL){
+            $estado=0;
+        }else{
+            $estado=1;
+        }
+
+        return view('transaccion.venta.nota_credito.show',compact('notas_credito','notas_credito_registros','empresa','estado'));
     }
 
     /**
