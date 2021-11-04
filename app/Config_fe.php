@@ -45,24 +45,26 @@ class Config_fe extends Model
     protected $guarded = [];
 
     public static function facturacion_electronica(){
+
         $see = new See();
-       $pfx = file_get_contents(public_path('certificado/certificado.p12'));
+        $pfx = file_get_contents(public_path('certificado/certificado.p12'));
         $password = 'Ndalmaten81';
 
         $certificate = new X509Certificate($pfx, $password);
         
         $see->setCertificate($certificate->export(X509ContentType::PEM));
-    //  $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
+        //  $see->setCertificate(file_get_contents(public_path('certificado\certificate.pem')));
         $see->setService(SunatEndpoints::FE_BETA);
         //  $see->setClaveSOL('20000000001', 'MODDATOS', 'moddatos');
-            $see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
+        $see->setClaveSOL('20601021081', 'JYPSACPE', '@Claveso1');
         return $see;
+
     }
 
     public static function guia_electronica(){
 
         $see = new See();
-            //$see->setCertificate(file_get_contents(public_path('certificado/certificado.p12')));
+        //$see->setCertificate(file_get_contents(public_path('certificado/certificado.p12')));
 
         $pfx = file_get_contents(public_path('certificado/certificado.p12')); 
         $password = 'Tecnologia20';
