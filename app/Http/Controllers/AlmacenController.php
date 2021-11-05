@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 use App\Almacen;
 use App\Personal;
+use App\Codigo_guia_almacen;
 use App\Stock_producto;
 use App\Stock_almacen;
 use App\Producto;
@@ -31,7 +32,8 @@ class AlmacenController extends Controller
         $almacenes=Almacen::all();
         $conteo_almacen=Almacen::where('estado',0)->count();
         $personal=Personal::where('estado',1)->get();
-        return view('configuracion_general.almacen.index',compact('almacenes','personal','conteo_almacen'));
+        $cod_guia_almacen = Codigo_guia_almacen::all();
+        return view('configuracion_general.almacen.index',compact('almacenes','personal','conteo_almacen','cod_guia_almacen'));
     }
 
     /**
@@ -90,6 +92,26 @@ class AlmacenController extends Controller
         $almacen->estado='0';
         $almacen->principal='0';
         $almacen->save();
+        //INSERCION EN LA NUEVA TABLA PARA CODIGOS
+        $cod_guia_almacen= new Codigo_guia_almacen;
+        $cod_guia_almacen->almacen_id = $almacen->id;
+        $cod_guia_almacen->cod_sunat = $request->get('codigo_sunat');
+        //factura
+        $cod_guia_almacen->serie_factura = $request->get('serie_factura');
+        $cod_guia_almacen->cod_factura = $request->get('cod_fac');
+        ///boleta
+        $cod_guia_almacen->serie_boleta = $request->get('serie_boleta');
+        $cod_guia_almacen->cod_boleta = $request->get('cod_bol');
+        //remision
+        $cod_guia_almacen->serie_remision = $request->get('serie_remision');
+        $cod_guia_almacen->cod_remision = $request->get('cod_guia');
+        //nota de credito
+        $cod_guia_almacen->serie_nota_credito = $request->get('serie_credito');
+        $cod_guia_almacen->cod_nota_credito = $request->get('cod_credito');
+        //nota de debito
+        $cod_guia_almacen->serie_nota_debito = $request->get('serie_debito');
+        $cod_guia_almacen->cod_nota_debito = $request->get('cod_debito');
+        $cod_guia_almacen->save();
 
         $productos= Producto::get();
         foreach($productos as $producto){

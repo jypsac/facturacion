@@ -31,26 +31,43 @@ class AlmacenTableSeeder extends Seeder
       'created_at' => date('2019-08-01 00:00:00'),
       'updated_at' => date('2019-08-01 00:00:00')
       ]);
-      DB::table('almacen')->insert([
-      'id' => 2 ,
-      'nombre' => 'Almacen 2',
-      'abreviatura' => 'ALM2',
+      DB::table('cod_guia_almacen')->insert([
+      'id' => 1 ,
+      'almacen_id' => 1,
+      'cod_sunat' => '1',
       'serie_factura' => '1',
+      'cod_factura' => '0',
       'serie_boleta' => '1',
+      'cod_boleta' => '0',
       'serie_remision' => '1',
-      'codigo_sunat' => '2',
-      'direccion' => 'Calle Cuzco nr1 Lima-Lima',
-      'responsable' => '1',
-      'cod_postal' => '154545',
-      'descripcion' => 'Almacen de impresoras',
-      'cod_fac' => '4',
-      'cod_bol' => '21',
-      'cod_guia' => '23',
-      'estado' => '0',
-      'principal' => '0',
+      'cod_remision' => '0',
+      'serie_nota_credito' => '1',
+      'cod_nota_credito' => '0',
+      'serie_nota_debito' => '1',
+      'cod_nota_debito' => '0',
       'created_at' => date('2019-08-01 00:00:00'),
       'updated_at' => date('2019-08-01 00:00:00')
       ]);
+      // DB::table('almacen')->insert([
+      // 'id' => 2 ,
+      // 'nombre' => 'Almacen 2',
+      // 'abreviatura' => 'ALM2',
+      // 'serie_factura' => '1',
+      // 'serie_boleta' => '1',
+      // 'serie_remision' => '1',
+      // 'codigo_sunat' => '2',
+      // 'direccion' => 'Calle Cuzco nr1 Lima-Lima',
+      // 'responsable' => '1',
+      // 'cod_postal' => '154545',
+      // 'descripcion' => 'Almacen de impresoras',
+      // 'cod_fac' => '4',
+      // 'cod_bol' => '21',
+      // 'cod_guia' => '23',
+      // 'estado' => '0',
+      // 'principal' => '0',
+      // 'created_at' => date('2019-08-01 00:00:00'),
+      // 'updated_at' => date('2019-08-01 00:00:00')
+      // ]);
     //   DB::table('almacen')->insert([
     //   'id' => 3 ,
     //   'nombre' => 'Almacen 3',
