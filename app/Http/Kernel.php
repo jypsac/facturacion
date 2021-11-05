@@ -63,6 +63,7 @@ class Kernel extends HttpKernel
         'role' => \Spatie\Permission\Middlewares\RoleMiddleware::class,
         'permission' => \Spatie\Permission\Middlewares\PermissionMiddleware::class,
         'cambio_diario' =>\App\Http\Middleware\CheckTipoCambio::class,
+        'api.validate' => \App\Http\Middleware\ApiValidate::class,
     ];
 
     /**
