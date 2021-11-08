@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Almacen;
+use App\Codigo_guia_almacen;
 use App\Categoria;
 use App\Empresa;
 use App\Kardex_entrada;
@@ -183,7 +184,8 @@ class KardexEntradaController extends Controller
         //Guardado de almacen para inventario-inicial
         $almacen=$request->get('almacen');
         $almacen_id_buscador=Almacen::where('id',$almacen)->first();
-        $almacen_codigo_sunat=$almacen_id_buscador->codigo_sunat;/*Codigo que brinda sunat a cada sucursal*/
+        $codigo_sunat_alamcen = Codigo_guia_almacen::where('almacen_id',$almacen_id_buscador->id)->first();
+        $almacen_codigo_sunat = $codigo_sunat_alamcen->cod_sunat;/*Codigo que brinda sunat a cada sucursal*/
 
         $agrupar_almacen=Kardex_entrada::where('almacen_id',$almacen)->get()->last();
         if (isset($agrupar_almacen)) {

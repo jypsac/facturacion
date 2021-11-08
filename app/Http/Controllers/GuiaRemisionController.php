@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Almacen;
+use App\Codigo_guia_almacen;
 use App\Banco;
 use App\Cliente;
 use App\Cotizacion;
@@ -65,20 +66,20 @@ class GuiaRemisionController extends Controller
         //Guardado de almacen para inventario-inicial
         $almacen=$request->get('almacen');
         $id_almacen=Almacen::where('id',$almacen)->first();
-        $almacen_serie_remision=$id_almacen->serie_remision;/*Codigo que brinda sunat a cada sucursal*/
-        $almacen_codigo = Almacen::orderBy('serie_remision','DESC')->latest()->first(); // NUYMERO SERIE DE REMISIONMAS ALTO PARA EL CAMBIO
-        if ($id_almacen->cod_guia=='NN'){
+        $almacen_serie_remision=Codigo_guia_almacen::where('almacen_id',$id_almacen->id)->first();/*Codigo que brinda sunat a cada sucursal*/
+        $almacen_codigo = Codigo_guia_almacen::orderBy('serie_remision','DESC')->latest()->first(); // NUYMERO SERIE DE REMISIONMAS ALTO PARA EL CAMBIO
+        if ($almacen_serie_remision->cod_remision=='NN'){
             $agrupar_almacen=Guia_remision::where('almacen_id',$almacen)->get()->last();
             $numero = substr(strstr($agrupar_almacen->cod_guia, '-'), 1);
             if($numero == 99999999){
                 $ultima_serie = $almacen_codigo->serie_remision+1;
                 $numero = 00000000;
             }else{
-                $ultima_serie = $almacen_serie_remision;
+                $ultima_serie = $almacen_serie_remision->serie_remision;
             }
         }else{
-            $numero=$id_almacen->cod_guia;
-            $ultima_serie = $almacen_serie_remision;
+            $numero=$almacen_serie_remision->cod_remision;
+            $ultima_serie = $almacen_serie_remision->serie_remision;
         }
 
         $numero++;
@@ -123,24 +124,24 @@ class GuiaRemisionController extends Controller
         // return $request;
         $almacen=$request->get('almacen');
         $id_almacen=Almacen::where('id',$almacen)->first();
-        $almacen_serie_remision=$id_almacen->serie_remision;/*Codigo que brinda sunat a cada sucursal*/
-        $almacen_codigo = Almacen::orderBy('serie_remision','DESC')->latest()->first(); // NUYMERO SERIE DE REMISIONMAS ALTO PARA EL CAMBIO
+        $almacen_serie_remision= Codigo_guia_almacen::where('almacen_id',$id_almacen->id)->first();/*Codigo que brinda sunat a cada sucursal*/
+        $almacen_codigo = Codigo_guia_almacen::orderBy('serie_remision','DESC')->latest()->first(); // NUYMERO SERIE DE REMISIONMAS ALTO PARA EL CAMBIO
         
-        if ($id_almacen->cod_guia=='NN') {
+        if ($almacen_serie_remision->cod_remision=='NN') {
             $agrupar_almacen=Guia_remision::where('almacen_id',$almacen)->get()->last();
             $numero = substr(strstr($agrupar_almacen->cod_guia, '-'), 1);
             if($numero == 99999999){
                 $ultima_serie = $almacen_codigo->serie_remision+1;
-                $almacen_update = Almacen::find($id_almacen->id);
+                $almacen_update = Codigo_guia_almacen::find($almacen_serie_remision->id);
                 $almacen_update->serie_remision = $ultima_serie;
                 $almacen_update->save();
                 $numero = 00000000;
             }else{
-                $ultima_serie = $almacen_serie_remision;
+                $ultima_serie = $almacen_serie_remision->serie_remision;
             }
         }else{
-            $numero = $id_almacen->cod_guia;
-            $ultima_serie = $almacen_serie_remision;
+            $numero = $almacen_serie_remision->cod_remision;
+            $ultima_serie = $almacen_serie_remision->serie_remision;
         }
 
         $numero++;
@@ -232,9 +233,11 @@ class GuiaRemisionController extends Controller
     $guia_remision->user_id=auth()->user()->id;
     $guia_remision->save();
 
-    $almacen=Almacen::find($id_almacen->id);
-    $almacen->cod_guia='NN';
-    $almacen->save();
+    $almacen=Codigo_guia_almacen::find($almacen_serie_remision->id);
+    if(is_numeric($almacen->cod_remision)){
+        $almacen->cod_remision='NN';
+        $almacen->save();
+    }
 
     if (isset($id_cliente)) {
         $cotizacion_estado_aprobado=Cotizacion::find($id_cotizacion);

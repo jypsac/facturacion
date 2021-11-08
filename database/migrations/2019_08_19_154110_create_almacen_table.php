@@ -18,19 +18,19 @@ class CreateAlmacenTable extends Migration
             $table->string('nombre');
             $table->string('abreviatura');
             //codigo sunat hara que los codigos de las boleta y facturas sean de diferenstes sucusrsales -> ANEXO SUNAT
-            $table->integer('codigo_sunat');
-            // para numero de serie por tipo de documento
-            $table->integer('serie_factura')->nullable();
-            $table->integer('serie_boleta')->nullable();
-            $table->integer('serie_remision')->nullable();
+            // $table->integer('codigo_sunat');
+            // // para numero de serie por tipo de documento
+            // $table->integer('serie_factura')->nullable();
+            // $table->integer('serie_boleta')->nullable();
+            // $table->integer('serie_remision')->nullable();
             // F001 - B001 - GR001
             $table->string('cod_postal');
             $table->text('direccion');
             // $table->string('responsable');
             $table->text('descripcion');
-            $table->string('cod_fac');
-            $table->string('cod_bol');
-            $table->string('cod_guia');
+            // $table->string('cod_fac');
+            // $table->string('cod_bol');
+            // $table->string('cod_guia');
             $table->boolean('estado');
             $table->boolean('principal');
             $table->unsignedBigInteger('responsable')->nullable();

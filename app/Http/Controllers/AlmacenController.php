@@ -59,43 +59,43 @@ class AlmacenController extends Controller
         $this->validate($request,[
             'nombre' => ['required'],
             'abreviatura' => ['required','unique:almacen'],
-            'serie_factura' => ['required','unique:almacen'],
-            'serie_boleta' => ['required','unique:almacen'],
-            'serie_remision' => ['required','unique:almacen'],
+            'serie_factura' => ['required','unique:cod_guia_almacen'],
+            'serie_boleta' => ['required','unique:cod_guia_almacen'],
+            'serie_remision' => ['required','unique:cod_guia_almacen'],
             'responsable' => ['required'],
             'direccion' => ['required'],
             'descripcion' => ['required'],
             'cod_fac' => ['required','integer'],
             'cod_bol' => ['required','integer'],
             'cod_guia' => ['required','integer'],
-            'codigo_sunat' => ['required','unique:almacen'],
+            'cod_sunat' => ['required','unique:cod_guia_almacen'],
             'ubigeo' => ['required', 'max:6', 'min:6'],
         ]);
 
         $almacen=new Almacen;
         $almacen->nombre=$request->get('nombre');
         // $serie_fact_last = Almacen::orderBy('serie_factura','DESC')->latest()->first();
-        $almacen->serie_factura=$request->get('serie_factura');
+        // $almacen->serie_factura=$request->get('serie_factura');
         // $serie_bol_last = Almacen::orderBy('serie_boleta','DESC')->latest()->first();
-        $almacen->serie_boleta=$request->get('serie_boleta');;
+        // $almacen->serie_boleta=$request->get('serie_boleta');
         // $serie_guia_last = Almacen::orderBy('serie_remision','DESC')->latest()->first();
-        $almacen->serie_remision=$request->get('serie_remision');;
+        // $almacen->serie_remision=$request->get('serie_remision');;
         $almacen->abreviatura=$request->get('abreviatura');
         $almacen->responsable=$request->get('responsable');
         $almacen->direccion=$request->get('direccion');
         $almacen->cod_postal=$request->get('ubigeo');
         $almacen->descripcion=$request->get('descripcion');
-        $almacen->cod_fac=$request->get('cod_fac');
-        $almacen->cod_bol=$request->get('cod_bol');
-        $almacen->cod_guia=$request->get('cod_guia');
-        $almacen->codigo_sunat=$request->get('codigo_sunat');
+        // $almacen->cod_fac=$request->get('cod_fac');
+        // $almacen->cod_bol=$request->get('cod_bol');
+        // $almacen->cod_guia=$request->get('cod_guia');
+        // $almacen->codigo_sunat=$request->get('codigo_sunat');
         $almacen->estado='0';
         $almacen->principal='0';
         $almacen->save();
         //INSERCION EN LA NUEVA TABLA PARA CODIGOS
         $cod_guia_almacen= new Codigo_guia_almacen;
         $cod_guia_almacen->almacen_id = $almacen->id;
-        $cod_guia_almacen->cod_sunat = $request->get('codigo_sunat');
+        $cod_guia_almacen->cod_sunat = $request->get('cod_sunat');
         //factura
         $cod_guia_almacen->serie_factura = $request->get('serie_factura');
         $cod_guia_almacen->cod_factura = $request->get('cod_fac');

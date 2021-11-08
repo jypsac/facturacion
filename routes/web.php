@@ -135,7 +135,7 @@ Route::group(
 		Route::get('/guia_remision/print/{id}' , 'GuiaRemisionController@print')->name('guia_remision.print');
 
 		Route::resource('/guia_remision','GuiaRemisionController');
-		// Route::post('/guia_remision/create','GuiaRemisionController@create')->name('guia_remision.create');
+		Route::post('/guia_remision/create','GuiaRemisionController@create')->name('guia_remision.create');
 
 
 		Route::post('stock_ajax', 'KardexSalidaController@stock_ajax')->name('stock_ajax');

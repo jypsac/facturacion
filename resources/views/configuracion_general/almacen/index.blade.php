@@ -57,7 +57,7 @@
                           </div>
                           <label class="col-sm-2 col-form-label">Codigo Sunat:</label>
                           <div class="col-sm-4">
-                            <input  type="number" class="form-control" name="codigo_sunat" autocomplete="off" required="required" placeholder="Numero de sucursal">
+                            <input  type="number" class="form-control" name="cod_sunat" autocomplete="off" required="required" placeholder="Numero de sucursal">
                         </div>
                         <label class="col-sm-2 col-form-label">Dirección:</label>
                         <div class="col-sm-4">
@@ -82,7 +82,7 @@
                             <label class="col-sm-12 col-form-label">Cod.Facturacion:</label>
                             <div class="input-group m-b">
                                 <div class="input-group-prepend">
-                                    <span class="input-group-addon">B00 &nbsp;</span>
+                                    <span class="input-group-addon">F00 &nbsp;</span>
                                 </div>
                                 <input type="text" value="" class="form-control write_button" name="serie_factura" autocomplete="off"  required="required">
                                 <div class="input-group-append">

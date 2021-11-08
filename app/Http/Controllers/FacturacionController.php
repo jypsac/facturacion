@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Almacen;
+Use App\Codigo_guia_almacen;
 use App\Banco;
 use App\Cliente;
 use App\Cotizacion;
@@ -157,13 +158,14 @@ class FacturacionController extends Controller
         $almacen=$request->get('almacen');
 
         //obtencion del almacen
-        $sucursal=Almacen::where('id', $almacen)->first();
-
-        $factura_cod_fac=$sucursal->cod_fac;
+        $sucursal =Almacen::where('id', $almacen)->first();
+        $cod_guia= Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+        // return $sucursal;
+        $factura_cod_fac=$cod_guia->cod_factura;
         if (is_numeric($factura_cod_fac)) {
             // exprecion del numero de fatura
             $factura_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->serie_factura, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($cod_guia->serie_factura, 3, "0", STR_PAD_LEFT);
             $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
@@ -174,17 +176,14 @@ class FacturacionController extends Controller
             $factura_num_string=$factura_num_string_porcion[1];
             $factura_num=(int)$factura_num_string;
 
-            $almacen_codigo = Almacen::orderBy('serie_factura','DESC')->latest()->first();
+            $almacen_codigo = Codigo_guia_almacen::orderBy('serie_factura','DESC')->latest()->first();
             //CONDICIONAL PARA QUE EMPIEZE DE NUEVO EN 0001 PARA EL NUMERO DE SERIE Y EL CORRELATIVO -> FALTA PULIR/IDEA GENERAL
             if($factura_num == 99999999){
                 $ultima_factura = $almacen_codigo->serie_factura+1;
-                // $almacen_l = Almacen::find($almacen_codigo->id);
-                // $almacen_l->serie_factura = $ultima_factura;
-                // $almacen_l->save();
                 $factura_num = 00000000;
 
             }else{
-                $ultima_factura = $sucursal->serie_factura;
+                $ultima_factura = $cod_guia->serie_factura;
             }
             $factura_num++;
             $sucursal_nr = str_pad($ultima_factura, 3, "0", STR_PAD_LEFT);
@@ -275,13 +274,13 @@ class FacturacionController extends Controller
        $almacen=$request->get('almacen');
 
        //obtencion del almacen
-       $sucursal=Almacen::where('id', $almacen)->first();
-
-       $factura_cod_fac=$sucursal->cod_fac;
+       $sucursal =Almacen::where('id', $almacen)->first();
+        $cod_guia= Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+       $factura_cod_fac=$cod_guia->cod_factura;
        if (is_numeric($factura_cod_fac)) {
            // exprecion del numero de fatura
            $factura_cod_fac++;
-           $sucursal_nr = str_pad($sucursal->serie_factura, 3, "0", STR_PAD_LEFT);
+           $sucursal_nr = str_pad($cod_guia->serie_factura, 3, "0", STR_PAD_LEFT);
            $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
        }else{
            // exprecion del numero de fatura
@@ -292,16 +291,13 @@ class FacturacionController extends Controller
            $factura_num_string=$factura_num_string_porcion[1];
            $factura_num=(int)$factura_num_string;
            //CONDICIONAL PARA QUE EMPIEZE DE NUEVO EN 0001 PARA EL NUMERO DE SERIE Y EL CORRELATIVO -> FALTA PULIR/IDEA GENERAL
-           $almacen_codigo = Almacen::orderBy('serie_factura','DESC')->latest()->first();
+           $almacen_codigo = Codigo_guia_almacen::orderBy('serie_factura','DESC')->latest()->first();
             if($factura_num == 99999999){
                 $ultima_factura = $almacen_codigo->serie_factura+1;
-                // $almacen_codigo = Almacen::latest()->first();
-                // $almacen_codigo->serie_factura = $ultima_factura;
-                // $almacen_codigo->save();
                 $factura_num = 00000000;
 
             }else{
-                $ultima_factura = $sucursal->serie_factura;
+                $ultima_factura = $cod_guia->serie_factura;
             }
            $factura_num++;
            $sucursal_nr = str_pad($ultima_factura, 3, "0", STR_PAD_LEFT);
@@ -398,9 +394,9 @@ class FacturacionController extends Controller
        $almacen=$request->get('almacen');
 
        //obtencion del almacen
-       $sucursal=Almacen::where('id', $almacen)->first();
-
-       $factura_cod_fac=$sucursal->cod_fac;
+       $almacen_id =Almacen::where('id', $almacen)->first();
+        $sucursal = Codigo_guia_almacen::where('almacen_id',$almacen_id->id)->first();
+       $factura_cod_fac=$sucursal->cod_factura;
        if (is_numeric($factura_cod_fac)) {
            // exprecion del numero de fatura
            $factura_cod_fac++;
@@ -409,16 +405,16 @@ class FacturacionController extends Controller
        }else{
            // exprecion del numero de fatura
            // GENERACION DE NUMERO DE FACTURA
-           $ultima_factura=Facturacion::where('almacen_id',$sucursal->id)->latest()->first();
+           $ultima_factura=Facturacion::where('almacen_id',$almacen_id->id)->latest()->first();
            $factura_num=$ultima_factura->codigo_fac;
            $factura_num_string_porcion= explode("-", $factura_num);
            $factura_num_string=$factura_num_string_porcion[1];
            $factura_num=(int)$factura_num_string;
            //CONDICIONAL PARA QUE EMPIEZE DE NUEVO EN 0001 PARA EL NUMERO DE SERIE Y EL CORRELATIVO -> FALTA PULIR/IDEA GENERAL --> SOLO PARA STORE
-           $almacen_codigo = Almacen::orderBy('serie_factura','DESC')->latest()->first();
+           $almacen_codigo = Codigo_guia_almacen::orderBy('serie_factura','DESC')->latest()->first();
             if($factura_num == 99999999){
                 $ultima_factura = $almacen_codigo->serie_factura+1;
-                $almacen_save_last = Almacen::find($sucursal->id);
+                $almacen_save_last = Codigo_guia_almacen::find($sucursal->id);
                 $almacen_save_last->serie_factura = $almacen_codigo->serie_factura+1;
                 $almacen_save_last->save();
                 $factura_num = 00000000;
@@ -508,12 +504,11 @@ class FacturacionController extends Controller
             $comisionista->save();
         }
         // modificacion para que se cierre el codigo en almacen
-        // obtencion de la sucursal
-        // $sucursal=Almacen::where('id',$);
-        //obtencion del almacen
-        $factura_primera=Almacen::where('id', $sucursal->id)->first();
-        $factura_primera->cod_fac='NN';
-        $factura_primera->save();
+        $factura_primera=Codigo_guia_almacen::where('id', $sucursal->id)->first();
+        if(is_numeric($factura_primera->cod_factura)){
+            $factura_primera->cod_factura='NN';
+            $factura_primera->save();
+        }
         //FORMA DE PAGO
         if($facturacion->forma_pago_id == 2){
 

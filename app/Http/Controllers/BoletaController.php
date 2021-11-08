@@ -31,6 +31,7 @@ use App\Stock_producto;
 use Carbon\Carbon;
 use Barryvdh\DomPDF\Facade as PDF;
 use App\Almacen;
+use App\Codigo_guia_almacen;
 use Illuminate\Http\Request;
 use Mike42\Escpos\Printer;
 use Mike42\Escpos\EscposImage;
@@ -142,11 +143,12 @@ class BoletaController extends Controller
         $almacen=$request->get('almacen');
         //obtencion del almacen
         $sucursal=Almacen::where('id', $almacen)->first();
-        $boleta_cod_fac=$sucursal->cod_bol;
+        $cod_guias = Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+        $boleta_cod_fac=$cod_guias->cod_boleta;
         if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
             $boleta_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->serie_boleta, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($cod_guias->serie_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
@@ -157,12 +159,12 @@ class BoletaController extends Controller
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
             //CONDICIONAL PARA SERIE BOLETA
-            $almacen_codigo = Almacen::orderBy('serie_boleta','DESC')->latest()->first();
+            $almacen_codigo = Codigo_guia_almacen::orderBy('serie_boleta','DESC')->latest()->first();
             if($boleta_num == 99999999){
                 $ultima_boleta = $almacen_codigo->serie_boleta+1;
                 $boleta_num = 00000000;
             }else{
-                $ultima_boleta = $sucursal->serie_boleta;
+                $ultima_boleta = $cod_guias->serie_boleta;
             }
             $boleta_num++;
             $sucursal_nr = str_pad($ultima_boleta, 3, "0", STR_PAD_LEFT);
@@ -249,27 +251,28 @@ class BoletaController extends Controller
         $almacen=$request->get('almacen');
         //obtencion del almacen
         $sucursal=Almacen::where('id', $almacen)->first();
-        $boleta_cod_fac=$sucursal->cod_fac;
+        $cod_guias = Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+        $boleta_cod_fac=$cod_guias->cod_boleta;
         if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
             $boleta_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->serie_boleta, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($cod_guias->serie_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
             // GENERACION DE NUMERO DE FACTURA
-            $ultima_factura=Facturacion::where('almacen_id',$sucursal->id)->latest()->first();
-            $boleta_num=$ultima_factura->codigo_fac;
+            $ultima_factura=Boleta::where('almacen_id',$sucursal->id)->latest()->first();
+            $boleta_num=$ultima_factura->codigo_boleta;
             $boleta_num_string_porcion= explode("-", $boleta_num);
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
             //CONDICIONAL PARA SERIE BOLETA
-            $almacen_codigo = Almacen::orderBy('serie_boleta','DESC')->latest()->first();
+            $almacen_codigo = Codigo_guia_almacen::orderBy('serie_boleta','DESC')->latest()->first();
             if($boleta_num == 99999999){
                 $ultima_boleta = $almacen_codigo->serie_boleta+1;
                 $boleta_num = 00000000;
             }else{
-                $ultima_boleta = $sucursal->serie_boleta;
+                $ultima_boleta = $cod_guias->serie_boleta;
             }
             $boleta_num++;
             $sucursal_nr = str_pad($ultima_boleta, 3, "0", STR_PAD_LEFT);
@@ -369,11 +372,12 @@ class BoletaController extends Controller
         $almacen=$request->get('almacen');
         //obtencion del almacen
         $sucursal=Almacen::where('id', $almacen)->first();
-        $boleta_cod_fac=$sucursal->cod_bol;
+        $cod_guias = Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+        $boleta_cod_fac=$cod_guias->cod_boleta;
         if (is_numeric($boleta_cod_fac)) {
             // exprecion del numero de fatura
             $boleta_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->serie_boleta, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($cod_guias->serie_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
             // exprecion del numero de fatura
@@ -384,15 +388,15 @@ class BoletaController extends Controller
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
             //CONDICIONAL PARA SERIE BOLETA
-            $almacen_codigo = Almacen::orderBy('serie_boleta','DESC')->latest()->first();
+            $almacen_codigo = Codigo_guia_almacen::orderBy('serie_boleta','DESC')->latest()->first();
             if($boleta_num == 99999999){
                 $ultima_boleta = $almacen_codigo->serie_boleta+1;
-                $almacen_save_last = Almacen::find($sucursal->id);
+                $almacen_save_last = Codigo_guia_almacen::find($cod_guias->id);
                 $almacen_save_last->serie_boleta = $almacen_codigo->serie_boleta+1;
                 $almacen_save_last->save();
                 $boleta_num = 00000000;
             }else{
-                $ultima_boleta = $sucursal->serie_boleta;
+                $ultima_boleta = $cod_guias->serie_boleta;
             }
             $boleta_num++;
             $sucursal_nr = str_pad($ultima_boleta, 3, "0", STR_PAD_LEFT);
@@ -494,9 +498,12 @@ class BoletaController extends Controller
         // obtencion de la sucursal
         // $sucursal=auth()->user()->almacen->serie_boleta;
         //obtencion del almacen
-        $factura_primera=Almacen::where('id', $sucursal->id)->first();
-        $factura_primera->cod_bol='NN';
-        $factura_primera->save();
+        $boleta_primera=Codigo_guia_almacen::where('almacen_id', $sucursal->id)->first();
+        if(is_numeric($boleta_primera->cod_boleta)){
+            $boleta_primera->cod_boleta='NN';
+            $boleta_primera->save();
+        }
+
 
 
         //contador de valores de cantidad
