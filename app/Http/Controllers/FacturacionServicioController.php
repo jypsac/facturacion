@@ -402,7 +402,7 @@ class FacturacionServicioController extends Controller
 
         //cambio de almacen para factura
         $factura_primera=Codigo_guia_almacen::where('almacen_id', $sucursal->id)->first();
-        if(is_numeric($factura_num)){
+        if(is_numeric($factura_primera->cod_factura)){
             $factura_primera->cod_factura='NN';
             $factura_primera->save();
         }
