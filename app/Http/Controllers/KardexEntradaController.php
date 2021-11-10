@@ -266,7 +266,7 @@ class KardexEntradaController extends Controller
 
 
         //convertido a moneda principal
-        $moneda_principal=Moneda::where('principal','1')->first();
+        $moneda_principal=Moneda::where('tipo','nacional')->first();
         $moneda_principal_id=$moneda_principal->id;
 
 
@@ -394,7 +394,8 @@ class KardexEntradaController extends Controller
     {
      $accion=$request->get('accion');
      $submit=$request->get('submit');
-
+     $kardex_entrada=Kardex_entrada::first();
+     $moneda = Moneda::where('tipo','nacional')->first();
     if ($accion=='delete'){
       $registros = kardex_entrada_registro::all();
       $count_regis = count($registros);
@@ -404,8 +405,7 @@ class KardexEntradaController extends Controller
       $delete_regis = kardex_entrada_registro::findOrFail($id);
       $delete_regis->delete();
       return response()->json(['mensaje'=>'<div class="alert alert-success">Se Eliminó Correctamente el Registro</div> ']);
-    }
-    else{
+    }else{
       // return $request;
       if ($request->get('id_registro')==true) {
         $id_registro= $request->get('id_registro');
@@ -415,8 +415,13 @@ class KardexEntradaController extends Controller
          $update_kardx_regis=kardex_entrada_registro::find($id_registro[$i]);
          $update_kardx_regis->cantidad_inicial=$request->get('cantidad')[$i];
          $update_kardx_regis->cantidad=$request->get('cantidad')[$i];
-         $update_kardx_regis->precio_nacional=$request->get('precio')[$i];
-         $update_kardx_regis->precio_extranjero=$request->get('precio')[$i]/$cambio->venta;
+         if($kardex_entrada->moneda->id == $moneda->id){
+            $update_kardx_regis->precio_nacional=$request->get('precio')[$i];
+            $update_kardx_regis->precio_extranjero=$request->get('precio')[$i]/$cambio->venta;
+         }else{
+            $update_kardx_regis->precio_extranjero=$request->get('precio')[$i];
+            $update_kardx_regis->precio_nacional=$request->get('precio')[$i]*$cambio->venta;
+         }
          $update_kardx_regis->save();}
        }
 
@@ -424,7 +429,7 @@ class KardexEntradaController extends Controller
          $articulo_nuevo=$request->get('articulo_nuevo');
          $coun_articulo_nuevo=count($articulo_nuevo);
 
-         $kardex_entrada=Kardex_entrada::first();
+
          $cambio=TipoCambio::where('fecha',Carbon::now()->format('Y-m-d'))->first();
 
          for($i=0;$i<$coun_articulo_nuevo;$i++){
@@ -436,13 +441,13 @@ class KardexEntradaController extends Controller
           $kardex_entrada_registro->almacen_id=$kardex_entrada->almacen_id;
           $kardex_entrada_registro->cantidad=$request->get('cantidad_nuevo')[$i];
           $kardex_entrada_registro->cambio= $cambio->compra;
-        // if ($moneda_principal->id==1) {
+        if($kardex_entrada->moneda->id == $moneda->id){
           $kardex_entrada_registro->precio_nacional= $request->get('precio_nuevo')[$i];
           $kardex_entrada_registro->precio_extranjero= $request->get('precio_nuevo')[$i]/$cambio->venta;
-        // }elseif($moneda_principal->id==2){
-        //   $kardex_entrada_registro->precio_nacional= $request->get('precio_nuevo')[$i]*$cambio->compra;
-        //   $kardex_entrada_registro->precio_extranjero= $request->get('precio_nuevo')[$i];
-        // }
+        }else{
+            $kardex_entrada_registro->precio_extranjero= $request->get('precio_nuevo')[$i];
+            $kardex_entrada_registro->precio_nacional= $request->get('precio_nuevo')[$i]*$cambio->venta;
+        }
           $kardex_entrada_registro->estado=1;
           $kardex_entrada_registro->save();
         }

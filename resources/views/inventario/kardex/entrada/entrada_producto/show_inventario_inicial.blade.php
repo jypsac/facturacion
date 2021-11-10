@@ -46,7 +46,7 @@
                     <label class="col-sm-1 col-form-label" >Moneda:</label>
                     <div class="col-sm-3">
                        <div class="tooltip-demo">
-                        <input type="text" class="form-control" disabled="" value="{{$inventario_inicial->moneda->nombre}} ({{$inventario_inicial->moneda->simbolo}})"  data-toggle="tooltip" data-placement="top" title="Si Deseas cambiar la Moneda, Puedes cambiarla en 'Monedas'">
+                        <input type="text" class="form-control" disabled="" value="{{$inventario_inicial->moneda->nombre}} ({{$inventario_inicial->moneda->simbolo}})"  data-toggle="tooltip" data-placement="top" title="Si Deseas cambiar la Moneda, Puedes cambiarla en 'Monedas'" >
                     </div>
                 </div>
             </div>
@@ -79,10 +79,18 @@
                     <input type='text'  name='cantidad[]' class="monto{{$kardex_entradas_registro->id}} form-control" value="{{$kardex_entradas_registro->cantidad_inicial}}"  onkeyup="multi({{$kardex_entradas_registro->id}});"  required/>
                 </td>
                 <td>
-                    <input type='text' name='precio[]' class="monto{{$kardex_entradas_registro->id}} form-control" onkeyup="multi({{$kardex_entradas_registro->id}});" value="{{$kardex_entradas_registro->precio_nacional}}" required/>
+                    @if($inventario_inicial->moneda->id == $moneda_nacional->id)
+                        <input type='text' name='precio[]' class="monto{{$kardex_entradas_registro->id}} form-control" onkeyup="multi({{$kardex_entradas_registro->id}});" value="{{$kardex_entradas_registro->precio_nacional}}" required/>
+                    @else
+                        <input type='text' name='precio[]' class="monto{{$kardex_entradas_registro->id}} form-control" onkeyup="multi({{$kardex_entradas_registro->id}});" value="{{$kardex_entradas_registro->precio_extranjero}}" required/>
+                    @endif
                 </td>
                 <td>
-                    <input disabled="disabled"  value="{{$kardex_entradas_registro->cantidad_inicial*$kardex_entradas_registro->precio_nacional}}" type='text' id='total{{$kardex_entradas_registro->id}}' name='total[]' class="form-control" required/>
+                    @if($inventario_inicial->moneda->id == $moneda_nacional->id)
+                        <input disabled="disabled"  value="{{$kardex_entradas_registro->cantidad_inicial*$kardex_entradas_registro->precio_nacional}}" type='text' id='total{{$kardex_entradas_registro->id}}' name='total[]' class="form-control" required/>
+                    @else
+                        <input disabled="disabled"  value="{{$kardex_entradas_registro->cantidad_inicial*$kardex_entradas_registro->precio_extranjero}}" type='text' id='total{{$kardex_entradas_registro->id}}' name='total[]' class="form-control" required/>
+                    @endif
                 </td>
                 <span id="spTotal"></span>
             </tr>
