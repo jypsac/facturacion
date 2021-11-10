@@ -160,7 +160,7 @@ class AlmacenController extends Controller
             'responsable' => ['required'],
             'direccion' => ['required'],
             'descripcion' => ['required'],
-            'codigo_sunat' => ['required','unique:almacen,codigo_sunat,'.$id],
+            'cod_sunat' => ['required','unique:cod_guia_almacen,cod_sunat,'.$id],
         ]);
 
         $estado=$request->get('estado');
@@ -175,36 +175,29 @@ class AlmacenController extends Controller
         $nr_fac=$request->get('cod_fac');
         $nr_bol=$request->get('cod_bol');
         $nr_guia=$request->get('cod_guia');
-
-        $almacen=Almacen::where('id', $id)->first();
+        // $almacen=Almacen::where('id', $id)->first();
         $almacen=Almacen::find($id);
         $almacen->nombre=$request->get('nombre');
         $almacen->abreviatura=$request->get('abreviatura');
         $almacen->responsable=$request->get('responsable');
         $almacen->direccion=$request->get('direccion');
-        $almacen->codigo_sunat=$request->get('codigo_sunat');
+
         $almacen->descripcion=$request->get('descripcion');
         $almacen->estado=$estado_numero;
-        if(is_numeric($almacen->cod_fac) and is_numeric($nr_fac)){
-            $almacen->cod_fac=$request->get('cod_fac');
-        }
-        // VALIDACION EXTRA SI RECIVE UN TEXTO DENTRO DEL IF,PARA ENVIARLO COMO ALERTA
-        // else{
-        //     return  redirect()->route('almacen.index')->with('campo', 'Los campos numericos de factura no pueden ser modificados');
-        // }
-        if(is_numeric($almacen->cod_bol) and is_numeric($nr_bol)){
-            $almacen->cod_bol=$request->get('cod_bol');
-        }
-        // else{
-        //     return  redirect()->route('almacen.index')->with('campo', 'Los campos numericos de boleta no pueden ser modificados');
-        // }
-        if(is_numeric($almacen->cod_guia) and is_numeric($nr_guia)){
-            $almacen->cod_guia=$request->get('cod_guia');
-        }
-        // else{
-        //     return  redirect()->route('almacen.index')->with('campo', 'Los campos numericos de guia no pueden ser modificados');
-        // }
         $almacen->save();
+        //INSERCION EL LA TABLA DE CODGIGO
+        $cod_guia_almacen = Codigo_guia_almacen::where('almacen_id',$id)->first();
+        $cod_guia_almacen->cod_sunat=$request->get('cod_sunat');
+        if(is_numeric($cod_guia_almacen->cod_factura) and is_numeric($nr_fac)){
+            $cod_guia_almacen->cod_factura=$request->get('cod_fac');
+        }
+        if(is_numeric($cod_guia_almacen->cod_boleta) and is_numeric($nr_bol)){
+            $cod_guia_almacen->cod_boleta=$request->get('cod_bol');
+        }
+        if(is_numeric($cod_guia_almacen->cod_remision) and is_numeric($nr_guia)){
+            $cod_guia_almacen->cod_remision=$request->get('cod_guia');
+        }
+        $cod_guia_almacen->save();
         return redirect()->route('almacen.index');
 
   }

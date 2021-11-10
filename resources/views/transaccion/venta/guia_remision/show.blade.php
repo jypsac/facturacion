@@ -5,9 +5,9 @@
  @section('breadcrumb2', 'Guia Remision')
  @section('href_accion', route('guia_remision.index'))
  @section('value_accion', 'Atras')
- @section('data-toggle', 'modal')
+{{--  @section('data-toggle', 'modal')
 @section('href_accion', '#modal-form')
-@section('value_accion', 'Agregar')
+@section('value_accion', 'Agregar') --}}
 
  @section('content')
 

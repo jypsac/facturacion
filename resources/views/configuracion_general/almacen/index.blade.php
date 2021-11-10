@@ -88,7 +88,7 @@
                                 <div class="input-group-append">
                                     <span class="input-group-addon">- 000</span>
                                 </div>
-                                <input type="text" value="" name="cod_fac" class="form-control write_button">
+                                <input type="text" value="" required name="cod_fac" class="form-control write_button">
                             </div>
                         </div>
                         <div class="col-lg-4 ">
@@ -101,7 +101,7 @@
                                 <div class="input-group-append">
                                     <span class="input-group-addon">- 000</span>
                                 </div>
-                                <input type="text" value="" name="cod_bol" class="form-control write_button">
+                                <input type="text" value="" required name="cod_bol" class="form-control write_button">
                             </div>
 
                         </div>
@@ -116,7 +116,7 @@
                                 <div class="input-group-append">
                                     <span class="input-group-addon">- 000</span>
                                 </div>
-                                <input type="text" value="" name="cod_guia" class="form-control write_button">
+                                <input type="text" value="" required name="cod_guia" class="form-control write_button">
                             </div>
                         </div>
                         <div class="form-group row">
@@ -133,7 +133,7 @@
                                         <span class="input-group-addon">- 000</span>
                                     </div>
                                     {{-- @if(is_numeric($almacen->cod_fac)) --}}
-                                    <input type="text" value="" name="cod_credito" class="form-control write_button">
+                                    <input type="text" value="" required name="cod_credito" class="form-control write_button">
                                     {{-- @endif --}}
                                 </div>
                             </div>
@@ -148,7 +148,7 @@
                                         <span class="input-group-addon">- 000</span>
                                     </div>
                                     {{-- @if(is_numeric($almacen->cod_fac)) --}}
-                                    <input type="text" value="" name="cod_debito" class="form-control write_button">
+                                    <input type="text" value="" required name="cod_debito" class="form-control write_button">
                                     {{-- @endif --}}
                                 </div>
                             </div>
@@ -228,7 +228,7 @@
                                                                     </div>
                                                                     <label class="col-sm-2 col-form-label">Codigo Sunat:</label>
                                                                     <div class="col-sm-4">
-                                                                        <input style="padding-right: 0;padding-left:  7px"  type="text" class="form-control"  value="{{$almacen->codigo_sunat}}" name="codigo_sunat">
+                                                                        <input style="padding-right: 0;padding-left:  7px"  type="text" class="form-control"  value="{{$cod_guia_almacen->where('almacen_id',$almacen->id)->pluck('cod_sunat')->first()}}" name="cod_sunat">
                                                                     </div>
 
                                                                     <label class="col-sm-2 col-form-label">Dirección:</label>

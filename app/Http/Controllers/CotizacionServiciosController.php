@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Almacen;
+use App\Codigo_guia_almacen;
 use App\Banco;
 use App\Boleta;
 use App\Boleta_registro;
@@ -831,24 +832,32 @@ public function facturar($id){
     $almacen=$cotizacion->almacen_id;
            //obtencion del almacen
     $sucursal=Almacen::where('id', $almacen)->first();
-
-    $factura_cod_fac=$sucursal->cod_fac;
+    $codigo_guia = Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+    $factura_cod_fac=$codigo_guia->cod_factura;
     if (is_numeric($factura_cod_fac)) {
                // exprecion del numero de fatura
        $factura_cod_fac++;
-       $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+       $sucursal_nr = str_pad($codigo_guia->serie_factura, 3, "0", STR_PAD_LEFT);
        $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
 
    }else{
-               // exprecion del numero de fatura
-               // GENERACION DE NUMERO DE FACTURA
-       $ultima_factura=Facturacion::latest()->first();
+       // exprecion del numero de fatura
+       // GENERACION DE NUMERO DE FACTURA
+       $ultima_factura=Facturacion::where('almacen_id',$sucursal->id)->latest()->first();
        $factura_num=$ultima_factura->codigo_fac;
        $factura_num_string_porcion= explode("-", $factura_num);
        $factura_num_string=$factura_num_string_porcion[1];
        $factura_num=(int)$factura_num_string;
+
+       $almacen_codigo = Codigo_guia_almacen::orderBy('serie_factura','DESC')->latest()->first();
+       if($factura_num == 99999999){
+            $ultima_factura = $almacen_codigo->serie_factura+1;
+            $factura_num = 00000000;
+       }else{
+            $ultima_factura = $codigo_guia->serie_factura;
+       }
        $factura_num++;
-       $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+       $sucursal_nr = str_pad($ultima_factura, 3, "0", STR_PAD_LEFT);
        $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
    }
    $cod_fac="F".$sucursal_nr."-".$factura_nr;
@@ -886,12 +895,12 @@ elseif ($cotizacion->estado==1) {
         $almacen=$cotizacion->almacen_id;
                //obtencion del almacen
         $sucursal=Almacen::where('id', $almacen)->first();
-
-        $factura_cod_fac=$sucursal->cod_fac;
+        $codigo_guia = Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+        $factura_cod_fac=$codigo_guia->cod_factura;
         if (is_numeric($factura_cod_fac)) {
                 // exprecion del numero de fatura
             $factura_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->codigo_sunat, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($codigo_guia->serie_factura, 3, "0", STR_PAD_LEFT);
             $factura_nr=str_pad($factura_cod_fac, 8, "0", STR_PAD_LEFT);
         }else{
                // exprecion del numero de fatura
@@ -901,8 +910,17 @@ elseif ($cotizacion->estado==1) {
             $factura_num_string_porcion= explode("-", $factura_num);
             $factura_num_string=$factura_num_string_porcion[1];
             $factura_num=(int)$factura_num_string;
+            $almacen_codigo = Codigo_guia_almacen::where('almacen_id',$sucursal->id)->latest()->first();
+            if($factura_num == 99999999){
+                $ultima_factura = $almacen_codigo->serie_factura+1;
+                $almacen_fac_ser = Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+                $almacen_fac_ser->serie_factura = $ultima_factura;
+                $almacen_fac_ser->save();
+            }else{
+                $ultima_factura= $codigo_guia->serie_factura;
+            }
             $factura_num++;
-            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($ultima_factura, 3, "0", STR_PAD_LEFT);
             $factura_nr=str_pad($factura_num, 8, "0", STR_PAD_LEFT);
         }
         $factura_numero="F".$sucursal_nr."-".$factura_nr;
@@ -937,6 +955,12 @@ elseif ($cotizacion->estado==1) {
         $cotizacion->save();
         /* cambio de estado del cotizador*/
 
+
+        $factura_primera=Codigo_guia_almacen::where('almacen_id', $sucursal->id)->first();
+        if(is_numeric($factura_primera->cod_factura)){
+            $factura_primera->cod_factura='NN';
+            $factura_primera->save();
+        }
 
 
         $buscador_id=Cotizacion_Servicios::where('id',$facturar->id_cotizador_servicio)->first();
@@ -1008,24 +1032,32 @@ elseif ($cotizacion->estado==1) {
         $cotizacion_almacen=Cotizacion_Servicios::where('id',$id)->first();
         $almacen=$cotizacion_almacen->almacen_id;
             //obtencion del almacen
-        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-        $boleta_cod_fac=$sucursal->cod_bol;
+        $sucursal=Almacen::where('id', $almacen)->first();
+        $codigo_guia = Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+        $boleta_cod_fac=$codigo_guia->cod_boleta;
         if (is_numeric($boleta_cod_fac)) {
                 // exprecion del numero de fatura
             $boleta_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($codigo_guia->serie_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
 
         }else{
                 // exprecion del numero de fatura
                 // GENERACION DE NUMERO DE FACTURA
-            $ultima_boleta=Boleta::latest()->first();
+            $ultima_boleta=Boleta::where('almacen_id',$sucursal->id)->latest()->first();
             $boleta_num=$ultima_boleta->codigo_boleta;
             $boleta_num_string_porcion= explode("-", $boleta_num);
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
+            $almacen_codigo = Codigo_guia_almacen::orderBy('serie_boleta','DESC')->latest()->first();
+            if($boleta_num == 99999999){
+                $ultima_boleta = $almacen_codigo->serie_boleta+1;
+                $boleta_num =00000000;
+            }else{
+                $ultima_boleta = $codigo_guia->serie_boleta;
+            }
             $boleta_num++;
-            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($ultima_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $boleta_codigo="B".$sucursal_nr."-".$boleta_nr;
@@ -1061,29 +1093,35 @@ elseif ($cotizacion->estado==1) {
         $cotizacion_almacen=Cotizacion_Servicios::where('id',$id)->first();
         $almacen=$cotizacion_almacen->almacen_id;
             //obtencion del almacen
-        $sucursal=Almacen::where('codigo_sunat', $almacen)->first();
-        $boleta_cod_fac=$sucursal->cod_bol;
+        $sucursal=Almacen::where('id', $almacen)->first();
+        $codigo_guia = Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+        $boleta_cod_fac=$codigo_guia->cod_boleta;
         if (is_numeric($boleta_cod_fac)) {
                 // exprecion del numero de fatura
             $boleta_cod_fac++;
-            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($codigo_guia->serie_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_cod_fac, 8, "0", STR_PAD_LEFT);
 
-            $sucursal=auth()->user()->almacen->codigo_sunat;
-            //obtencion del almacen
-            $factura_primera=Almacen::where('codigo_sunat', $sucursal)->first();
-            $factura_primera->cod_bol='NN';
-            $factura_primera->save();
         }else{
                 // exprecion del numero de fatura
                 // GENERACION DE NUMERO DE FACTURA
-            $ultima_boleta=Boleta::latest()->first();
+            $ultima_boleta=Boleta::where('almacen_id',$sucursal->id)->latest()->first();
             $boleta_num=$ultima_boleta->codigo_boleta;
             $boleta_num_string_porcion= explode("-", $boleta_num);
             $boleta_num_string=$boleta_num_string_porcion[1];
             $boleta_num=(int)$boleta_num_string;
+            $almacen_codigo = Codigo_guia_almacen::orderBy('serie_boleta','DESC')->latest()->first();
+            if($boleta_num == 99999999){
+                $ultima_boleta = $almacen_codigo->serie_boleta+1;
+                $almacen_bol_ser = Codigo_guia_almacen::where('almacen_id',$sucursal->id)->first();
+                $almacen_bol_ser->serie_boleta = $ultima_boleta;
+                $almacen_bol_ser->save();
+                $boleta_num = 00000000;
+            }else{
+                $ultima_boleta = $codigo_guia->serie_boleta;
+            }
             $boleta_num++;
-            $sucursal_nr = str_pad($sucursal->id, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($ultima_boleta, 3, "0", STR_PAD_LEFT);
             $boleta_nr=str_pad($boleta_num, 8, "0", STR_PAD_LEFT);
         }
         $cod_bol="B".$sucursal_nr."-".$boleta_nr;
@@ -1120,6 +1158,11 @@ elseif ($cotizacion->estado==1) {
         elseif ($cotizacion->estado==1) {
            return redirect()->route('cotizacion_servicio.show',$cotizacion->id);
        }
+       $boleta_primera=Codigo_guia_almacen::where('almacen_id', $sucursal->id)->first();
+        if(is_numeric($boleta_primera->cod_boleta)){
+            $boleta_primera->cod_boleta='NN';
+            $boleta_primera->save();
+        }
 
        $cotizacions=Cotizacion_Servicios::where('id',$id_cotizador)->first();
        $cotizacions->estado=1;
