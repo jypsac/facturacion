@@ -70,7 +70,7 @@
                                     <td>{{$nota_credito->tipo}}</td>
                                     <td>{{$nota_credito->created_at}}</td>
                                     {{-- <td><center><a href="{{route('nota-credito-create-nc' , $nota_credito->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td> --}}
-                                    <td><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                    <td><a href="{{route('nota-credito.show',$nota_credito->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
                                 </tr>
                                 @endforeach 
                             </tbody>

@@ -1001,9 +1001,7 @@ class Config_fe extends Model
         return $despatch;
     }
 
-    
-
-//NOTA DE CREDITO - FACTURA
+    //NOTA DE CREDITO - FACTURA
 
     public static function nota_credito($factura, $factura_registro, $request,$notas_creditos_count){
 
@@ -1199,7 +1197,8 @@ class Config_fe extends Model
         return $note;
     }
 
-//NOTA DE CREDITO - BOLETA
+    //NOTA DE CREDITO - BOLETA
+
     public static function nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count){
         $empresa=Empresa::first();
         $igv=Igv::first();
@@ -1366,7 +1365,7 @@ class Config_fe extends Model
             ->setCorrelativo($notas_creditos_count)
             ->setFechaEmision($boleta->created_at)
             ->setTipDocAfectado('03') // Tipo Doc: boleta
-            ->setNumDocfectado($boleta->codigo_bol) // boleta: Serie-Correlativo
+            ->setNumDocfectado($boleta->codigo_boleta) // boleta: Serie-Correlativo
             ->setCodMotivo('07') // Catalogo. 09
             ->setDesMotivo('DEVOLUCION POR ITEM')
             ->setTipoMoneda($boleta->moneda->codigo)
@@ -1390,143 +1389,6 @@ class Config_fe extends Model
         
         return $note;
     }
-
-    // public static function nota_credito_boleta_servicio($boleta,$boleta_registro,$request,$notas_creditos_count){
-    //     $empresa=Empresa::first();
-    //     $igv=Igv::first();
-
-    //     // Cliente
-    //     $client = (new Client())
-    //         ->setTipoDoc('6')   //pagina 42 del pdf sunat 2.1
-    //         ->setNumDoc($boleta->cliente->numero_documento) //ruc del receptor
-    //         ->setRznSocial($boleta->cliente->empresa); //nombre empresa
-
-    //     // Emisor
-    //     $address = (new Address())
-    //         ->setUbigueo('150101')
-    //         ->setDepartamento($empresa->region_provincia)
-    //         ->setProvincia($empresa->region_provincia)
-    //         ->setDistrito($empresa->ciudad)
-    //         ->setUrbanizacion('-')
-    //         ->setDireccion($empresa->calle)
-    //         ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.
-
-    //     $company = (new Company())
-    //         ->setRuc($empresa->ruc)
-    //         ->setRazonSocial($empresa->razon_social)
-    //         ->setNombreComercial($empresa->nombre)
-    //         ->setAddress($address);
-
-    //     $contador=count($boleta_registro);
-            
-    //     $cont=0;
-    //     $igv_f=0;
-    //     $precio=0;
-    //     $op_g=0;
-
-    //     for($p=0;$p<$contador;$p++){
-    //         $string=(string)$p;
-            
-    //         $nombre="input_disabled_".$string;
-            
-    //         if($request->$nombre==NULL){
-    //         }else{
-    //             $item[$cont]=new SaleDetail();
-    //             $item[$cont]
-    //             ->setCodProducto($boleta_registro[$p]->servicio->codigo_servicio)
-    //             ->setUnidad('ZZ')
-    //             ->setCantidad($request->$nombre)
-    //             ->setDescripcion($boleta_registro[$p]->servicio->nombre)
-    //             ->setMtoBaseIgv($boleta_registro[$p]->precio*$request->$nombre)
-    //             ->setPorcentajeIgv($igv->igv_total)
-    //             ->setIgv($boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
-    //             ->setTipAfeIgv($boleta_registro[$p]->servicio->tipo_afec_i_serv->codigo)
-    //             ->setTotalImpuestos($boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
-    //             ->setMtoValorVenta($boleta_registro[$p]->precio*$request->$nombre)
-    //             ->setMtoValorUnitario($boleta_registro[$p]->precio)
-    //             ->setMtoPrecioUnitario($boleta_registro[$p]->precio+($boleta_registro[$p]->precio*(($igv->igv_total)/100)));
-
-    //             $igv_f=$boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100)+$igv_f;
-    //             $precio=$boleta_registro[$p]->precio*$request->$nombre+$precio;
-    //         }
-    //     }
-
-    //     $total=$igv_f+$precio;
-
-    //     $note = new Note();
-    //     $note
-    //         ->setUblVersion('2.1')
-    //         ->setTipoDoc('07')
-    //         ->setSerie('BB01')
-    //         ->setCorrelativo($notas_creditos_count)
-    //         ->setFechaEmision($boleta->created_at)
-    //         ->setTipDocAfectado('03') // Tipo Doc: boleta
-    //         ->setNumDocfectado($boleta->codigo_bol) // boleta: Serie-Correlativo
-    //         ->setCodMotivo('07') // Catalogo. 09
-    //         ->setDesMotivo('DEVOLUCION POR ITEM')
-    //         ->setTipoMoneda($boleta->moneda->codigo)
-    //         ->setCompany($company)
-    //         ->setClient($client)
-    //         ->setMtoOperGravadas($precio)
-    //         ->setMtoIGV($igv_f)
-    //         ->setTotalImpuestos($igv_f)
-    //         ->setMtoImpVenta($total)
-    //         ;
-
-    //     $formatter = new NumeroALetras();
-    //     $valor=$formatter->toInvoice($total, 2, 'soles');
-        
-    //     $legend = new Legend();
-    //     $legend->setCode('1000')
-    //         ->setValue($valor);
-
-    //     $note->setDetails($item)
-    //         ->setLegends([$legend]);
-        
-    //     return $note;
-    // }
-    // public static function send($see, $invoice){
-
-    //     $result = $see->send($invoice);
-
-    //     // Guardar XML firmado digitalmente.
-    //     Storage::disk('facturas_electronicas')->put($invoice->getName().'.xml',$see->getFactory()->getLastXml());
-
-    //     // Verificamos que la conexión con SUNAT fue exitosa.
-    //     if (!$result->isSuccess()) {
-    //         // Mostrar error al conectarse a SUNAT.
-    //         echo 'Codigo Error: '.$result->getError()->getCode();
-    //         echo 'Mensaje Error: '.$result->getError()->getMessage();
-    //         exit();
-    //     }
-
-    //     // Guardamos el CDR [pregunats si se guardan las boletas]
-    //     Storage::disk('facturas_electronicas')->put('R-'.$invoice->getName().'.zip', $result->getCdrZip());
-
-    //     return $result;
-    // }
-
-    // public static function lectura_cdr($cdr){
-
-    //     $code = (int)$cdr->getCode();
-
-    //     if ($code === 0) {
-    //         echo 'ESTADO: ACEPTADA'.PHP_EOL;
-    //         if (count($cdr->getNotes()) > 0) {
-    //             echo 'OBSERVACIONES:'.PHP_EOL;
-    //         // Corregir estas observaciones en siguientes emisiones.
-    //             var_dump($cdr->getNotes());
-    //         }
-    //     }else if ($code >= 2000 && $code <= 3999) {
-    //         echo 'ESTADO: RECHAZADA'.PHP_EOL;
-    //     }else{
-    //         /* Esto no debería darse, pero si ocurre, es un CDR inválido que debería tratarse como un error-excepción. */
-    //         /*code: 0100 a 1999 */
-    //         echo 'Excepción';
-    //     }
-
-    //     return $cdr->getDescription().PHP_EOL;
-    // }
 
     // public static function send($see, $invoice){
 

@@ -56,7 +56,12 @@ class NotaCreditoController extends Controller
         $igv=Igv::first();
         $sub_total=0;
         $banco=Banco::where('estado',0)->get();
-        return view('transaccion.venta.nota_credito.create',compact('facturacion','facturacion_registro','empresa','igv','sub_total','banco'));
+        if($facturacion->tipo=="producto"){
+            return view('transaccion.venta.nota_credito.create',compact('facturacion','facturacion_registro','empresa','igv','sub_total','banco'));
+        }else{
+            return view('transaccion.venta.nota_credito.create_servicio',compact('facturacion','facturacion_registro','empresa','igv','sub_total','banco'));
+        }
+        
     }
 
     public function create_boleta_nota_credito(Request $request){
@@ -69,8 +74,11 @@ class NotaCreditoController extends Controller
         $igv=Igv::first();
         $sub_total=0;
         $banco=Banco::where('estado',0)->get();
-        // return $boleta;
-        return view('transaccion.venta.nota_credito.create_boleta',compact('boleta','boleta_registro','empresa','igv','sub_total','banco'));
+        if($boleta->tipo=="producto"){
+            return view('transaccion.venta.nota_credito.create_boleta',compact('boleta','boleta_registro','empresa','igv','sub_total','banco'));
+        }else{
+            return view('transaccion.venta.nota_credito.create_servicio_boleta',compact('boleta','boleta_registro','empresa','igv','sub_total','banco'));
+        }
     }
 
     /**
@@ -103,7 +111,12 @@ class NotaCreditoController extends Controller
             $estado=1;
         }
 
-        return view('transaccion.venta.nota_credito.show',compact('notas_credito','notas_credito_registros','empresa','estado'));
+        if($notas_credito->tipo=="producto"){
+            return view('transaccion.venta.nota_credito.show',compact('notas_credito','notas_credito_registros','empresa','estado'));
+        }else{
+            return view('transaccion.venta.nota_credito.show_servicio',compact('notas_credito','notas_credito_registros','empresa','estado'));
+        }
+
     }
 
     /**

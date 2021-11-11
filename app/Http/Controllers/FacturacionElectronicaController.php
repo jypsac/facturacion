@@ -276,6 +276,8 @@ class FacturacionElectronicaController extends Controller
         //configuracion
         $see=config_acceso_sunat::facturacion_electronica();
 
+        
+
         if($boleta->tipo=="producto"){
             
             $invoice=Config_fe::nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count);
@@ -305,7 +307,7 @@ class FacturacionElectronicaController extends Controller
             }
 
         }else if($boleta->tipo=="servicio"){
-            
+            // return $boleta_registro[0]->servicio_id;
             $invoice=Config_fe::nota_credito_boleta_servicio($boleta,$boleta_registro,$request,$notas_creditos_count);
             //envio a SUNAT    
             $result=config_acceso_sunat::send($see, $invoice);
@@ -332,9 +334,15 @@ class FacturacionElectronicaController extends Controller
                 }
             }
         }
+
+        return redirect()->route('nota-credito.show',$nota_credito->id);
     }
 
     /**
+     * 
+
+
+     
      * Store a newly created resource in storage.
      *
      * @param  \Illuminate\Http\Request  $request

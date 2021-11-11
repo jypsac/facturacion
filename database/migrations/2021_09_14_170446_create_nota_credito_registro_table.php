@@ -20,7 +20,7 @@ class CreateNotaCreditoRegistroTable extends Migration
             $table->unsignedBigInteger('producto_id')->nullable();
             $table->foreign('producto_id')->references('id')->on('productos')->onDelete('cascade');
             $table->unsignedBigInteger('servicio_id')->nullable();
-            $table->foreign('servicio_id')->references('id')->on('facturacion')->onDelete('cascade');
+            $table->foreign('servicio_id')->references('id')->on('servicios')->onDelete('cascade');
             $table->double('precio',17,2);
             $table->integer('cantidad');
             $table->timestamps();
