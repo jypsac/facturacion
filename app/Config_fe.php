@@ -1391,6 +1391,100 @@ class Config_fe extends Model
         return $note;
     }
 
+    // public static function nota_credito_boleta_servicio($boleta,$boleta_registro,$request,$notas_creditos_count){
+    //     $empresa=Empresa::first();
+    //     $igv=Igv::first();
+
+    //     // Cliente
+    //     $client = (new Client())
+    //         ->setTipoDoc('6')   //pagina 42 del pdf sunat 2.1
+    //         ->setNumDoc($boleta->cliente->numero_documento) //ruc del receptor
+    //         ->setRznSocial($boleta->cliente->empresa); //nombre empresa
+
+    //     // Emisor
+    //     $address = (new Address())
+    //         ->setUbigueo('150101')
+    //         ->setDepartamento($empresa->region_provincia)
+    //         ->setProvincia($empresa->region_provincia)
+    //         ->setDistrito($empresa->ciudad)
+    //         ->setUrbanizacion('-')
+    //         ->setDireccion($empresa->calle)
+    //         ->setCodLocal('0000'); // Codigo de establecimiento asignado por SUNAT, 0000 por defecto.
+
+    //     $company = (new Company())
+    //         ->setRuc($empresa->ruc)
+    //         ->setRazonSocial($empresa->razon_social)
+    //         ->setNombreComercial($empresa->nombre)
+    //         ->setAddress($address);
+
+    //     $contador=count($boleta_registro);
+            
+    //     $cont=0;
+    //     $igv_f=0;
+    //     $precio=0;
+    //     $op_g=0;
+
+    //     for($p=0;$p<$contador;$p++){
+    //         $string=(string)$p;
+            
+    //         $nombre="input_disabled_".$string;
+            
+    //         if($request->$nombre==NULL){
+    //         }else{
+    //             $item[$cont]=new SaleDetail();
+    //             $item[$cont]
+    //             ->setCodProducto($boleta_registro[$p]->servicio->codigo_servicio)
+    //             ->setUnidad('ZZ')
+    //             ->setCantidad($request->$nombre)
+    //             ->setDescripcion($boleta_registro[$p]->servicio->nombre)
+    //             ->setMtoBaseIgv($boleta_registro[$p]->precio*$request->$nombre)
+    //             ->setPorcentajeIgv($igv->igv_total)
+    //             ->setIgv($boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
+    //             ->setTipAfeIgv($boleta_registro[$p]->servicio->tipo_afec_i_serv->codigo)
+    //             ->setTotalImpuestos($boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100))
+    //             ->setMtoValorVenta($boleta_registro[$p]->precio*$request->$nombre)
+    //             ->setMtoValorUnitario($boleta_registro[$p]->precio)
+    //             ->setMtoPrecioUnitario($boleta_registro[$p]->precio+($boleta_registro[$p]->precio*(($igv->igv_total)/100)));
+
+    //             $igv_f=$boleta_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100)+$igv_f;
+    //             $precio=$boleta_registro[$p]->precio*$request->$nombre+$precio;
+    //         }
+    //     }
+
+    //     $total=$igv_f+$precio;
+
+    //     $note = new Note();
+    //     $note
+    //         ->setUblVersion('2.1')
+    //         ->setTipoDoc('07')
+    //         ->setSerie('BB01')
+    //         ->setCorrelativo($notas_creditos_count)
+    //         ->setFechaEmision($boleta->created_at)
+    //         ->setTipDocAfectado('03') // Tipo Doc: boleta
+    //         ->setNumDocfectado($boleta->codigo_bol) // boleta: Serie-Correlativo
+    //         ->setCodMotivo('07') // Catalogo. 09
+    //         ->setDesMotivo('DEVOLUCION POR ITEM')
+    //         ->setTipoMoneda($boleta->moneda->codigo)
+    //         ->setCompany($company)
+    //         ->setClient($client)
+    //         ->setMtoOperGravadas($precio)
+    //         ->setMtoIGV($igv_f)
+    //         ->setTotalImpuestos($igv_f)
+    //         ->setMtoImpVenta($total)
+    //         ;
+
+    //     $formatter = new NumeroALetras();
+    //     $valor=$formatter->toInvoice($total, 2, 'soles');
+        
+    //     $legend = new Legend();
+    //     $legend->setCode('1000')
+    //         ->setValue($valor);
+
+    //     $note->setDetails($item)
+    //         ->setLegends([$legend]);
+        
+    //     return $note;
+    // }
     // public static function send($see, $invoice){
 
     //     $result = $see->send($invoice);
