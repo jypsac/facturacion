@@ -57,12 +57,12 @@
                 <th >Proveedor</th>
                 <th >R.U.C</th>
                 <th >Doc. Prov.</th>
-                <th >Sub Total </th>
-                <th >I.G.V</th>
-                <th >Importe total</th>
-                <th >Sub Total </th>
-                <th >I.G.V</th>
-                <th >Importe total</th>
+                <th >Sub Total ({{$moneda_nac->simbolo}}) </th>
+                <th >I.G.V ({{$moneda_nac->simbolo}})</th>
+                <th >Importe total ({{$moneda_nac->simbolo}})</th>
+                <th >Sub Total ({{$moneda_ex->simbolo}})</th>
+                <th >I.G.V ({{$moneda_ex->simbolo}})</th>
+                <th >Importe total ({{$moneda_ex->simbolo}})</th>
             </tr>
         </thead>
         <tbody  >

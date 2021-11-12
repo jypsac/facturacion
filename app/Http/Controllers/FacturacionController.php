@@ -794,13 +794,16 @@ class FacturacionController extends Controller
      */
     public function destroy($id)
     {
-        $venta_registro=Ventas_registro::where('id_facturacion',$id)->first();
-        $id_venta_r=$venta_registro->id;
+        // return $id;
+        $factura = Facturacion::where('id',$id)->first();
+        if($factura->comisionista != 0){
+            $venta_registro=Ventas_registro::where('id_facturacion',$id)->first();
+            $id_venta_r=$venta_registro->id;
 
-        $venta=Ventas_registro::where('id',$id_venta_r)->first();
-        $venta->estado_fac=1;
-        $venta->save();
-
+            $venta=Ventas_registro::where('id',$id_venta_r)->first();
+            $venta->estado_fac=1;
+            $venta->save();
+        }
         $fac=Facturacion::where('id',$id)->first();
         $fac->estado=1;
         $fac->save();

@@ -333,7 +333,7 @@ class PeriodoConsultaController extends Controller
             }else{
                 $kardex_entrada_registros=kardex_entrada_registro::where('almacen_id',$almacen)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->where('tipo_registro_id',1)->get();
             }
-            // return $kardex_entrada_registros;
+
             if (count($kardex_entrada_registros) == 0) {
                 
                 goto salto_kard_ent;
@@ -371,21 +371,25 @@ class PeriodoConsultaController extends Controller
             }
             
             $productos=$kardex_entrada_r;
+            // return $productos;
             salto_kard_ent:
         }
         if($consulta == "2" or $consulta == "3" ){
+
             $cantidad_inicial=0;
             $precio_nacional=0;
             $precio_extranjero=0;
             // if($almacen == 0){
-                $productos = Producto::whereBetween('tipo_afectacion_id', [1,8])->pluck('id');
-                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('producto_id',$productos)->get();
-                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('producto_id',$productos)->get();
+                $prod_k_e = Producto::whereBetween('tipo_afectacion_id', [1,8])->pluck('id');
+                $factura_registro =Facturacion_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('producto_id',$prod_k_e)->get();
+                $boleta_registro = Boleta_registro::whereBetween('created_at',[$fecha_inicio,$fecha_final])->whereIn('producto_id',$prod_k_e)->get();
+                // return count($boleta_registro);
+            if (count($factura_registro) == 0 && count($boleta_registro) == 0  ) {
 
-            if (count($factura_registro) == 0 or count($boleta_registro) == 0  ) {
-                
-                goto salto_fc_ent;
+                goto salto_fc_factura;
             }
+
+
             //FACTURA
             foreach ($factura_registro as $f_reg) {
                 if($almacen == 0){
@@ -425,11 +429,16 @@ class PeriodoConsultaController extends Controller
                 unset($precio_ex_total_fac);
                 unset($cantidad_fac);
             }
-            $data_final_fac = $data_final_fac;
-            
+            $data_final_fac= $data_final_fac;
+            salto_fc_factura:
             // return $data_final_fac;
 
             //BOLETA
+            if (count($boleta_registro) == 0  ) {
+
+                goto salto_fc_boleta;
+            }
+
             foreach ($boleta_registro as $b_reg) {
                 if($almacen == 0){
                     $boleta = Boleta::where('id',$b_reg->boleta_id)->whereBetween('created_at',[$fecha_inicio,$fecha_final])->first();
@@ -469,8 +478,9 @@ class PeriodoConsultaController extends Controller
                 unset($cantidad_bol);
             }
             $data_final_bol = $data_final_bol;
-            salto_fc_ent:
+            salto_fc_boleta:
         }
+
         // return view('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','productos','consulta','data_final_fac','data_final_bol','moneda_ex','moneda_nac','total_producto_k_e'));
         $archivo="Periodo - Consulta";
         $pdf=PDF::loadView('inventario.periodo-consulta.show_pdf',compact('fecha_inicio','fecha_final','almacen','empresa','igv','productos','consulta','data_final_fac','data_final_bol','moneda_ex','moneda_nac','total_producto_k_e'));

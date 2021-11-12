@@ -22,12 +22,14 @@ class CantidadPrecioController extends Controller
      */
     public function index()
     {
+
         $igv = Igv::get()->first();
         $stock_producto = Stock_producto::get();
         $count_stock_prod = count($stock_producto);
         foreach ($stock_producto as $stock_productos) {
             $stock_produ[] = $stock_productos->id;
         }
+
         // return $stock_producto;
         // for ($x=0; $x < $count_stock_prod ; $x++) {
         //     // foreach ($producto as $prod) {
@@ -74,7 +76,7 @@ class CantidadPrecioController extends Controller
             foreach ($producto as $index => $producto) {
                 //precio_nacional
                 $utilidad_precio_nac[] = Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
-                $precio_nacional[] = round((Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')+$utilidad[$index]),2);
+                $precio_nacional[] = round((Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')+$utilidad_precio_nac[$index]),2);
                 //precio_extranjero
                 $utilidad_precio_ext[] = Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')*($producto->utilidad-$producto->descuento1)/100;
                 $precio_extranjero[] = round((Stock_producto::where('producto_id',$producto->id)->avg('precio_extranjero')+$utilidad_precio_ext[$index])*$tipo_cambio->paralelo,2);
