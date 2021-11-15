@@ -418,7 +418,6 @@ class FacturacionController extends Controller
                 $almacen_save_last->serie_factura = $almacen_codigo->serie_factura+1;
                 $almacen_save_last->save();
                 $factura_num = 00000000;
-
             }else{
                 $ultima_factura = $sucursal->serie_factura;
             }
