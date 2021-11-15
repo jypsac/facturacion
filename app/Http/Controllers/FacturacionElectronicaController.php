@@ -219,7 +219,7 @@ class FacturacionElectronicaController extends Controller
         if (is_numeric($nota_cod_n_credito)) {
             // exprecion del numero de la nota de credito
             $nota_cod_n_credito++;
-            $sucursal_nr = str_pad($sucursal->serie_nota_credito, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->serie_nota_credito, 2, "0", STR_PAD_LEFT);
             $nota_credito_nr=str_pad($nota_cod_n_credito, 8, "0", STR_PAD_LEFT);
         }else{
                 // exprecion del numero de Nota de credito
@@ -241,7 +241,7 @@ class FacturacionElectronicaController extends Controller
                     $ultima_nota_c = $sucursal->serie_nota_credito;
                 }
                 $nota_credito_num++;
-                $sucursal_nr = str_pad($ultima_nota_c, 3, "0", STR_PAD_LEFT);
+                $sucursal_nr = str_pad($ultima_nota_c, 2, "0", STR_PAD_LEFT);
                 $nota_credito_nr=str_pad($nota_credito_num, 8, "0", STR_PAD_LEFT);
         }
 
@@ -250,7 +250,7 @@ class FacturacionElectronicaController extends Controller
 
         if($factura->tipo=="producto"){
             
-            $invoice=Config_fe::nota_credito($factura,$factura_registro,$request,$notas_creditos_count,$nota_credito_numero);
+             $invoice=Config_fe::nota_credito($factura,$factura_registro,$request,$notas_creditos_count,$nota_credito_numero);
             //envio a SUNAT    
             $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
@@ -344,7 +344,7 @@ class FacturacionElectronicaController extends Controller
         if (is_numeric($nota_cod_n_credito)) {
             // exprecion del numero de la nota de credito
             $nota_cod_n_credito++;
-            $sucursal_nr = str_pad($sucursal->serie_nota_credito, 3, "0", STR_PAD_LEFT);
+            $sucursal_nr = str_pad($sucursal->serie_nota_credito, 2, "0", STR_PAD_LEFT);
             $nota_credito_nr=str_pad($nota_cod_n_credito, 8, "0", STR_PAD_LEFT);
         }else{
                 // exprecion del numero de Nota de credito
@@ -366,7 +366,7 @@ class FacturacionElectronicaController extends Controller
                     $ultima_nota_c = $sucursal->serie_nota_credito;
                 }
                 $nota_credito_num++;
-                $sucursal_nr = str_pad($ultima_nota_c, 3, "0", STR_PAD_LEFT);
+                $sucursal_nr = str_pad($ultima_nota_c, 2, "0", STR_PAD_LEFT);
                 $nota_credito_nr=str_pad($nota_credito_num, 8, "0", STR_PAD_LEFT);
         }
 

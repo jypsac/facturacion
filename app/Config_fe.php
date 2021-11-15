@@ -1072,7 +1072,7 @@ class Config_fe extends Model
 
         $correlativo=$serie[1];
         $serie=$serie[0];
-
+        // $serie;
         $note = new Note();
         $note
             ->setUblVersion('2.1')
