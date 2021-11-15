@@ -10,6 +10,9 @@ use App\Facturacion_registro;
 use App\Boleta;
 use App\Boleta_registro; 
 use App\Guia_remision;
+use App\Codigo_guia_almacen;
+use App\Almacen;
+
 use App\g_remision_registro;
 use App\Nota_Credito;
 use App\Nota_Credito_registro;
@@ -205,17 +208,84 @@ class FacturacionElectronicaController extends Controller
         //configuracion
         $see=config_acceso_sunat::facturacion_electronica();
 
+        $gravada=0;
+        $exonerada=0;
+        $inafecta=0;
+
+        $contadores=count($factura_registro);
+            for($a=0;$a<$contadores;$a++){
+                $string=(string)$a;
+                $nombre="input_disabled_".$string;
+                if($request->$nombre==NULL){
+                }else{
+                    if(strpos($factura_registro[$a]->producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
+                        $gravada += round($factura_registro[$a]->precio_unitario_comi*$request->$nombre,2);
+                    }
+                    if(strpos($factura_registro[$a]->producto->tipo_afec_i_producto->informacion,'Exonerado') !== false){
+                        $exonerada += round($factura_registro[$a]->precio_unitario_comi*$request->$nombre,2);
+                    }
+                    if(strpos($factura_registro[$a]->producto->tipo_afec_i_producto->informacion,'Inafecto') !== false){
+                        $inafecta += round($factura_registro[$a]->precio_unitario_comi*$request->$nombre,2);
+                    }
+                }
+            }
+
+        // code nota_c
+        // obtencion de la sucursal
+        $almacen=$factura->almacen_id;
+
+        //obtencion del almacen
+        $almacen_id =Almacen::where('id', $almacen)->first();
+        $sucursal = Codigo_guia_almacen::where('almacen_id',$almacen_id->id)->first();
+        $nota_cod_n_credito=$sucursal->cod_nota_credito;
+        if (is_numeric($nota_cod_n_credito)) {
+            // exprecion del numero de la nota de credito
+            $nota_cod_n_credito++;
+            $sucursal_nr = str_pad($sucursal->serie_nota_credito, 2, "0", STR_PAD_LEFT);
+            $nota_credito_nr=str_pad($nota_cod_n_credito, 8, "0", STR_PAD_LEFT);
+        }else{
+                // exprecion del numero de Nota de credito
+                // GENERACION DE NUMERO DE Nota de credito
+                $ultima_nota_c=Nota_Credito::where('almacen_id',$almacen_id->id)->latest()->first();
+                $nota_credito_num=$ultima_nota_c->codigo_n_c;
+                $nota_credito_num_string_porcion= explode("-", $nota_credito_num);
+                $nota_credito_num_string=$nota_credito_num_string_porcion[1];
+                $nota_credito_num=(int)$nota_credito_num_string;
+                
+                $almacen_codigo = Codigo_guia_almacen::orderBy('serie_nota_credito','DESC')->latest()->first();
+                if($nota_credito_num == 99999999){
+                    $ultima_nota_c = $almacen_codigo->serie_nota_credito+1;
+                    $almacen_save_last = Codigo_guia_almacen::find($sucursal->id);
+                    $almacen_save_last->serie_nota_credito = $almacen_codigo->serie_nota_credito+1;
+                    $almacen_save_last->save();
+                    $nota_credito_num = 00000000;
+                }else{
+                    $ultima_nota_c = $sucursal->serie_nota_credito;
+                }
+                $nota_credito_num++;
+                $sucursal_nr = str_pad($ultima_nota_c, 2, "0", STR_PAD_LEFT);
+                $nota_credito_nr=str_pad($nota_credito_num, 8, "0", STR_PAD_LEFT);
+        }
+
+        $nota_credito_numero="FF".$sucursal_nr."-".$nota_credito_nr;
+
+
         if($factura->tipo=="producto"){
             
-            $invoice=Config_fe::nota_credito($factura,$factura_registro,$request,$notas_creditos_count);
+             $invoice=Config_fe::nota_credito($factura,$factura_registro,$request,$notas_creditos_count,$nota_credito_numero,$gravada,$exonerada,$inafecta);
             //envio a SUNAT    
             $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
             $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
 
             $nota_credito=new Nota_Credito();
+            $nota_credito->codigo_n_c=$nota_credito_numero;
             $nota_credito->facturacion_id=$factura->id;
             $nota_credito->tipo="producto";
+            $nota_credito->almacen_id=$factura->almacen_id;
+            $nota_credito->op_gravada=$gravada;
+            $nota_credito->op_inafecta=$inafecta;
+            $nota_credito->op_exonerada=$exonerada;
             $nota_credito->save();
 
             $contador=count($factura_registro);
@@ -235,15 +305,18 @@ class FacturacionElectronicaController extends Controller
 
         }else if($factura->tipo=="servicio"){
             
-            $invoice=Config_fe::nota_credito_servicio($factura,$factura_registro,$request,$notas_creditos_count);
+            $invoice=Config_fe::nota_credito_servicio($factura,$factura_registro,$request,$notas_creditos_count,$nota_credito_numero);
             //envio a SUNAT    
             $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
             $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
             
+            
             $nota_credito=new Nota_Credito();
+            $nota_credito->codigo_n_c=$nota_credito_numero;
             $nota_credito->facturacion_id=$factura->id;
             $nota_credito->tipo="servicio";
+            $nota_credito->almacen_id=$factura->almacen_id;
             $nota_credito->save();
 
             $contador=count($factura_registro);
@@ -262,6 +335,13 @@ class FacturacionElectronicaController extends Controller
             }
         }
 
+        // modificacion para que se cierre el codigo en almacen
+        $nc_primera=Codigo_guia_almacen::where('id', $sucursal->id)->first();
+        if(is_numeric($nc_primera->cod_nota_credito)){
+            $nc_primera->cod_nota_credito='NN';
+            $nc_primera->save();
+        }
+
         return redirect()->route('nota-credito.show',$nota_credito->id);
 
     }
@@ -278,18 +358,61 @@ class FacturacionElectronicaController extends Controller
 
         
 
+        // code nota_c
+        // obtencion de la sucursal
+        $almacen=$factura->almacen_id;
+
+        //obtencion del almacen
+        $almacen_id =Almacen::where('id', $almacen)->first();
+        $sucursal = Codigo_guia_almacen::where('almacen_id',$almacen_id->id)->first();
+        $nota_cod_n_credito=$sucursal->cod_nota_credito;
+        if (is_numeric($nota_cod_n_credito)) {
+            // exprecion del numero de la nota de credito
+            $nota_cod_n_credito++;
+            $sucursal_nr = str_pad($sucursal->serie_nota_credito, 2, "0", STR_PAD_LEFT);
+            $nota_credito_nr=str_pad($nota_cod_n_credito, 8, "0", STR_PAD_LEFT);
+        }else{
+                // exprecion del numero de Nota de credito
+                // GENERACION DE NUMERO DE Nota de credito
+                $ultima_nota_c=Nota_Credito::where('almacen_id',$almacen_id->id)->latest()->first();
+                $nota_credito_num=$ultima_nota_c->codigo_n_c;
+                $nota_credito_num_string_porcion= explode("-", $nota_credito_num);
+                $nota_credito_num_string=$nota_credito_num_string_porcion[1];
+                $nota_credito_num=(int)$nota_credito_num_string;
+                
+                $almacen_codigo = Codigo_guia_almacen::orderBy('serie_nota_credito','DESC')->latest()->first();
+                if($nota_credito_num == 99999999){
+                    $ultima_nota_c = $almacen_codigo->serie_nota_credito+1;
+                    $almacen_save_last = Codigo_guia_almacen::find($sucursal->id);
+                    $almacen_save_last->serie_nota_credito = $almacen_codigo->serie_nota_credito+1;
+                    $almacen_save_last->save();
+                    $nota_credito_num = 00000000;
+                }else{
+                    $ultima_nota_c = $sucursal->serie_nota_credito;
+                }
+                $nota_credito_num++;
+                $sucursal_nr = str_pad($ultima_nota_c, 2, "0", STR_PAD_LEFT);
+                $nota_credito_nr=str_pad($nota_credito_num, 8, "0", STR_PAD_LEFT);
+        }
+
+        $nota_credito_numero="BB".$sucursal_nr."-".$nota_credito_nr;
+
+        
+
         if($boleta->tipo=="producto"){
+
+            $nota_credito=new Nota_Credito();
+            $nota_credito->codigo_n_c=$nota_credito_numero;
+            $nota_credito->boleta_id=$boleta->id;
+            $nota_credito->tipo="producto";
+            $nota_credito->almacen_id=$boleta->almacen_id;
+            $nota_credito->save();
             
-            $invoice=Config_fe::nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count);
+            $invoice=Config_fe::nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count,$nota_credito_numero);
             //envio a SUNAT    
             $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
             $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
-
-            $nota_credito=new Nota_Credito();
-            $nota_credito->boleta_id=$boleta->id;
-            $nota_credito->tipo="producto";
-            $nota_credito->save();
 
             $contador=count($boleta_registro);
             for($p=0;$p<$contador;$p++){
@@ -307,17 +430,19 @@ class FacturacionElectronicaController extends Controller
             }
 
         }else if($boleta->tipo=="servicio"){
-            // return $boleta_registro[0]->servicio_id;
-            $invoice=Config_fe::nota_credito_boleta_servicio($boleta,$boleta_registro,$request,$notas_creditos_count);
+
+            $nota_credito=new Nota_Credito();
+            $nota_credito->codigo_n_c=$nota_credito_numero;
+            $nota_credito->boleta_id=$boleta->id;
+            $nota_credito->tipo="servicio";
+            $nota_credito->almacen_id=$boleta->almacen_id;
+            $nota_credito->save();
+            
+            $invoice=Config_fe::nota_credito_boleta_servicio($boleta,$boleta_registro,$request,$notas_creditos_count,$nota_credito_numero);
             //envio a SUNAT    
             $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
             $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
-            
-            $nota_credito=new Nota_Credito();
-            $nota_credito->boleta_id=$boleta->id;
-            $nota_credito->tipo="servicio";
-            $nota_credito->save();
 
             $contador=count($boleta_registro);
             for($p=0;$p<$contador;$p++){
@@ -333,6 +458,13 @@ class FacturacionElectronicaController extends Controller
                     $nota_creditos_r->save();
                 }
             }
+        }
+
+        // modificacion para que se cierre el codigo en almacen
+        $nc_primera=Codigo_guia_almacen::where('id', $sucursal->id)->first();
+        if(is_numeric($nc_primera->cod_nota_credito)){
+            $nc_primera->cod_nota_credito='NN';
+            $nc_primera->save();
         }
 
         return redirect()->route('nota-credito.show',$nota_credito->id);

@@ -1003,7 +1003,7 @@ class Config_fe extends Model
 
     //NOTA DE CREDITO - FACTURA
 
-    public static function nota_credito($factura, $factura_registro, $request,$notas_creditos_count){
+    public static function nota_credito($factura, $factura_registro, $request,$notas_creditos_count,$nota_credito_code,$gravada,$exonerada,$inafecta){
 
         $empresa=Empresa::first();
         $igv=Igv::first();
@@ -1036,6 +1036,8 @@ class Config_fe extends Model
         $igv_f=0;
         $precio=0;
         $op_g=0;
+
+        // return $request;
 
         for($p=0;$p<$contador;$p++){
             $string=(string)$p;
@@ -1061,19 +1063,26 @@ class Config_fe extends Model
 
                 $igv_f=$factura_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100)+$igv_f;
                 $precio=$factura_registro[$p]->precio*$request->$nombre+$precio;
+
+                $cont++;
             }
         }
 
-        
-
         $total=$igv_f+$precio;
 
+        //CODIGO NOTA
+        $codigo_nota=$nota_credito_code;
+        $serie=explode("-",$codigo_nota);
+
+        $correlativo=$serie[1];
+        $serie=$serie[0];
+        // $serie;
         $note = new Note();
         $note
             ->setUblVersion('2.1')
             ->setTipoDoc('07')
-            ->setSerie('FF01')
-            ->setCorrelativo($notas_creditos_count)
+            ->setSerie($serie)
+            ->setCorrelativo($correlativo)
             ->setFechaEmision($factura->created_at)
             ->setTipDocAfectado('01') // Tipo Doc: Factura
             ->setNumDocfectado($factura->codigo_fac) // Factura: Serie-Correlativo
@@ -1082,7 +1091,7 @@ class Config_fe extends Model
             ->setTipoMoneda($factura->moneda->codigo)
             ->setCompany($company)
             ->setClient($client)
-            ->setMtoOperGravadas($precio)
+            ->setMtoOperGravadas($gravada)
             ->setMtoIGV($igv_f)
             ->setTotalImpuestos($igv_f)
             ->setMtoImpVenta($total)
@@ -1101,7 +1110,7 @@ class Config_fe extends Model
         return $note;
     }
 
-    public static function nota_credito_servicio($factura, $factura_registro, $request,$notas_creditos_count){
+    public static function nota_credito_servicio($factura, $factura_registro, $request,$notas_creditos_count,$nota_credito_code){
 
         $empresa=Empresa::first();
         $igv=Igv::first();
@@ -1135,6 +1144,7 @@ class Config_fe extends Model
         $precio=0;
         $op_g=0;
 
+        
         for($p=0;$p<$contador;$p++){
             $string=(string)$p;
             
@@ -1164,12 +1174,19 @@ class Config_fe extends Model
 
         $total=$igv_f+$precio;
 
+        //CODIGO NOTA
+        $codigo_nota=$nota_credito_code;
+        $serie=explode("-",$codigo_nota);
+
+        $correlativo=$serie[1];
+        $serie=$serie[0];
+
         $note = new Note();
         $note
             ->setUblVersion('2.1')
             ->setTipoDoc('07')
-            ->setSerie('FF01')
-            ->setCorrelativo($notas_creditos_count)
+            ->setSerie($serie)
+            ->setCorrelativo($correlativo)
             ->setFechaEmision($factura->created_at)
             ->setTipDocAfectado('01') // Tipo Doc: Factura
             ->setNumDocfectado($factura->codigo_fac) // Factura: Serie-Correlativo
@@ -1199,7 +1216,7 @@ class Config_fe extends Model
 
     //NOTA DE CREDITO - BOLETA
 
-    public static function nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count){
+    public static function nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count,$nota_credito_code){
         $empresa=Empresa::first();
         $igv=Igv::first();
 
@@ -1261,12 +1278,19 @@ class Config_fe extends Model
 
         $total=$igv_f+$precio;
 
+        //CODIGO NOTA
+        $codigo_nota=$nota_credito_code;
+        $serie=explode("-",$codigo_nota);
+
+        $correlativo=$serie[1];
+        $serie=$serie[0];
+
         $note = new Note();
         $note
             ->setUblVersion('2.1')
             ->setTipoDoc('07')
-            ->setSerie('BB01')
-            ->setCorrelativo($notas_creditos_count)
+            ->setSerie($serie)
+            ->setCorrelativo($correlativo)
             ->setFechaEmision($boleta->created_at)
             ->setTipDocAfectado('03') // Tipo Doc: boleta
             ->setNumDocfectado($boleta->codigo_boleta) // boleta: Serie-Correlativo
@@ -1295,7 +1319,7 @@ class Config_fe extends Model
 
     }
 
-    public static function nota_credito_boleta_servicio($boleta,$boleta_registro,$request,$notas_creditos_count){
+    public static function nota_credito_boleta_servicio($boleta,$boleta_registro,$request,$notas_creditos_count,$nota_credito_code){
         $empresa=Empresa::first();
         $igv=Igv::first();
 
@@ -1357,12 +1381,19 @@ class Config_fe extends Model
 
         $total=$igv_f+$precio;
 
+        //CODIGO NOTA
+        $codigo_nota=$nota_credito_code;
+        $serie=explode("-",$codigo_nota);
+
+        $correlativo=$serie[1];
+        $serie=$serie[0];
+
         $note = new Note();
         $note
             ->setUblVersion('2.1')
             ->setTipoDoc('07')
-            ->setSerie('BB01')
-            ->setCorrelativo($notas_creditos_count)
+            ->setSerie($serie)
+            ->setCorrelativo($correlativo)
             ->setFechaEmision($boleta->created_at)
             ->setTipDocAfectado('03') // Tipo Doc: boleta
             ->setNumDocfectado($boleta->codigo_boleta) // boleta: Serie-Correlativo
