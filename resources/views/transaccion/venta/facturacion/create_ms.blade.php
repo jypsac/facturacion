@@ -265,7 +265,7 @@
                                         <table cellspacing="0" class="table tables  " >
                                             <thead>
                                                 <tr>
-                                                    <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+                                                    <th style="width: 10px"></th>
                                                     <th style="width: 500px">Articulo</th>
                                                     <th>Stock</th>
                                                     <th>Cantidad</th>
@@ -279,7 +279,7 @@
                                             <tbody>
                                                 <tr>
                                                     <td>
-                                                        <input type='checkbox' class="case">
+                                                        <button type="button" class='delete e borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
                                                     </td>
                                                     <td>
                                                         <select class="monto0 select2_demo_3 select_change" name="articulo[]" required="" id="articulo"  onchange="calcular(this,0);multi(0);selet_one()"  autocomplete="off">
@@ -455,7 +455,7 @@
                             var data = `[
                             <tr>
                             <td>
-                            <input type='checkbox' class='case'/>
+                            <button type="button" class='delete e borrar btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
                             </td>";
                             <td>
                             <select class="monto0 select2_demo_3 select_change" id='articulo${i}' onchange="calcular(this,${i});multi(${i});ajax(${i});seleccion_options(${i})"  autocomplete="off">
@@ -519,6 +519,7 @@
                                 placeholder: "Seleccionar Producto",
                             });
                             $(".addmore").prop("disabled", true);
+                            $(".borrar").prop("disabled", false);
                         });
                     </script>
                     <script>
@@ -806,9 +807,11 @@
     </script>
 
     <script>
-        $(".delete").on('click', function () {
+        $(document).on('click', '.borrar', function (event) {
+            event.preventDefault();
+            var e = document.getElementsByClassName("e").length;
             // DESACTIVAR OPTIONS
-            var fila = $('.case:checkbox:checked').parents("tr");
+            var fila = $(this).parents("tr");
             var input_text_opt = fila.find('input[class="celda"]').val();
             $('option[value="'+input_text_opt+'"]').prop("disabled", false);
             $(".addmore").prop("disabled", false);
@@ -816,7 +819,14 @@
                 placeholder: "Seleccionar Producto",
             });
             // ELIMINAR TR
-           fila.remove();
+           if (e>1) {
+                fila.closest('tr').remove();
+                $(".borrar").prop("disabled", true);
+                $(".addmore").prop("disabled", false);
+            }else{
+                $(".borrar").prop("disabled", false);
+                $(".addmore").prop("disabled", false);
+            }
             var totalInp = $('[name="total"]');
             var total_t = 0;
 
@@ -848,7 +858,7 @@
         });
     </script>
 
-    <script>
+<!--     <script>
         function select_all() {
             $('input[class=case]:checkbox').each(function () {
                 if ($('input[class=check_all]:checkbox:checked').length == 0) {
@@ -858,7 +868,7 @@
                 }
             });
         }
-    </script>
+    </script> -->
 
     <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
 

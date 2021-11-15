@@ -69,6 +69,7 @@
                                     <input  class="form-control m-b"   value="{{$cotizacion->cliente->numero_documento}}" readonly="readonly">
                                     <input type="text" value="{{$cotizacion->cliente->id}}" name="cliente_id" hidden="hidden">
                                     <input type="text" value="{{$cotizacion->id}}" name="id" hidden="hidden">
+                                    <input type="text" value="{{$cotizacion->almacen_id}}" name="almacen" hidden="hidden">
                                 </div>
                             </div>
                         </div>
@@ -135,26 +136,38 @@
                     </thead>
                     <tbody>
                         @if($cotizacion->tipo == 'boleta')
-                        @foreach($cotizacion_registro_boleta as $cotizacion_registro_boletas)
+                        @foreach($cotizacion_registro_boleta as $index => $cotizacion_registro_boletas)
                         <tr>
                             <td>{{$cotizacion_registro_boletas->producto->codigo_producto}}</td>
+                            <input type="hidden" name="articulo[]" value="{{$cotizacion_registro_boletas->producto->id}}  | " id='articulo'>
                             <td><b>{{$cotizacion_registro_boletas->producto->marcas_i_producto->nombre}}</b> {{$cotizacion_registro_boletas->producto->nombre}}</td>
-                            <td><textarea name="numero_serie" class="form-control" style="width: 180px;font-size: 12px"></textarea></td>
+                            <td><textarea name="series[]" class="form-control" style="width: 180px;font-size: 12px"></textarea></td>
                             <td>{{$cotizacion_registro_boletas->producto->unidad_i_producto->medida}}</td>
                             <td>{{$cotizacion_registro_boletas->cantidad}}</td>
-                            <td>{{$cotizacion_registro_boletas->producto->unidad_i_producto->peso}}</td>
+                            <input type="hidden" name="cantidad[]" value="{{$cotizacion_registro_boletas->cantidad}}" id='cantidad'>
+                            <input type="hidden" name="stock[]" value="{{$array_cantidad[$index]}}" id='articulo'>
+                            <p style="display: none">{{$peso = strstr($cotizacion_registro_boletas->producto->peso, ' ', true)}}</p>
+                            <td>{{$cotizacion_registro_boletas->producto->peso}}</td>
+                            <input type="hidden" name="peso[]" value="{{$peso}}" id='peso'>
+
                         </tr>
                         @endforeach                                      
 
                         @else
-                        @foreach($cotizacion_registro as $cotizacion_registros)
+                        @foreach($cotizacion_registro as $index => $cotizacion_registros)
                         <tr>
                             <td>{{$cotizacion_registros->producto->codigo_producto}}</td>
+                            <input type="hidden" name="articulo[]" value="{{$cotizacion_registros->producto->id}} | " id='articulo'>
                             <td><b>{{$cotizacion_registros->producto->marcas_i_producto->nombre}}</b> {{$cotizacion_registros->producto->nombre}}</td>
-                            <td><textarea name="numero_serie" class="form-control" style="width: 180px;font-size: 12px"></textarea></td>
+                            <td><textarea name="series[]" class="form-control" style="width: 180px;font-size: 12px"></textarea></td>
                             <td>{{$cotizacion_registros->producto->unidad_i_producto->medida}}</td>
                             <td>{{$cotizacion_registros->cantidad}}</td>
-                            <td>{{$cotizacion_registros->producto->unidad_i_producto->peso}}</td>
+                            <input type="hidden" name="cantidad[]" value="{{$cotizacion_registros->cantidad}}" id='cantidad'>
+                            <input type="hidden" name="stock[]" value="{{$array_cantidad[$index]}}" id='stock'>
+                            <td>{{$cotizacion_registros->producto->peso}}</td>
+                            <p style="display: none">{{$peso = strstr($cotizacion_registros->producto->peso, ' ', true)}}</p>
+                            <input type="hidden" name="peso[]" value="{{$peso}}" id='peso'>
+
                         </tr>
                         @endforeach   
                         @endif                                   

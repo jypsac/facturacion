@@ -174,7 +174,7 @@ class GuiaRemisionController extends Controller
             $articulos_val[$i]= $request->input('articulo')[$i];
             $producto_id_val[$i]=strstr($articulos_val[$i], ' ', true);
         }
-
+        // return $articulos_val;
         //validacion
         //calculo para el stock del producto
         $almacen_producto_validacion=$id_almacen->id;
@@ -258,7 +258,7 @@ class GuiaRemisionController extends Controller
 
     $peso = $request->input('peso');
     $count_peso=count($peso);
-
+    // return $peso;
     for($i=0 ; $i<$count_articulo;$i++){
         $articulos[$i]= $request->input('articulo')[$i];
         $producto_id[$i]=strstr($articulos[$i], ' ', true);

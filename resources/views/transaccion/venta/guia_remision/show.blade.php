@@ -226,7 +226,7 @@
                         </tr>
                         <tr>
                             <td colspan="4" align="right">Peso Total:</td>
-                            <td>{{$guia_registro->sum('peso')}}KL</td>
+                            <!-- <td>{{$guia_registro->sum('peso')}}KL</td> -->
                         </tr>
                     </tbody>
                 </table>
