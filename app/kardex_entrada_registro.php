@@ -25,7 +25,7 @@ class kardex_entrada_registro extends Model
         $stock_productos=Stock_producto::get();
         $stocks_activos = kardex_entrada_registro::where('estado',1)->get();
 
-        if(count($stocks_activos > 0)){
+        if(count($stocks_activos )> 0){
             foreach ($stocks_activos as $stocks_activo) {
                $productos[]=$stocks_activo->producto->id;
             }
