@@ -1003,7 +1003,7 @@ class Config_fe extends Model
 
     //NOTA DE CREDITO - FACTURA
 
-    public static function nota_credito($factura, $factura_registro, $request,$notas_creditos_count,$nota_credito_code){
+    public static function nota_credito($factura, $factura_registro, $request,$notas_creditos_count,$nota_credito_code,$gravada,$exonerada,$inafecta){
 
         $empresa=Empresa::first();
         $igv=Igv::first();
@@ -1037,6 +1037,8 @@ class Config_fe extends Model
         $precio=0;
         $op_g=0;
 
+        // return $request;
+
         for($p=0;$p<$contador;$p++){
             $string=(string)$p;
             
@@ -1061,6 +1063,8 @@ class Config_fe extends Model
 
                 $igv_f=$factura_registro[$p]->precio*$request->$nombre*(($igv->igv_total)/100)+$igv_f;
                 $precio=$factura_registro[$p]->precio*$request->$nombre+$precio;
+
+                $cont++;
             }
         }
 
@@ -1087,7 +1091,7 @@ class Config_fe extends Model
             ->setTipoMoneda($factura->moneda->codigo)
             ->setCompany($company)
             ->setClient($client)
-            ->setMtoOperGravadas($precio)
+            ->setMtoOperGravadas($gravada)
             ->setMtoIGV($igv_f)
             ->setTotalImpuestos($igv_f)
             ->setMtoImpVenta($total)
@@ -1140,6 +1144,7 @@ class Config_fe extends Model
         $precio=0;
         $op_g=0;
 
+        
         for($p=0;$p<$contador;$p++){
             $string=(string)$p;
             

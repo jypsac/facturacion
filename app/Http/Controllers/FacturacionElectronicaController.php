@@ -208,6 +208,28 @@ class FacturacionElectronicaController extends Controller
         //configuracion
         $see=config_acceso_sunat::facturacion_electronica();
 
+        $gravada=0;
+        $exonerada=0;
+        $inafecta=0;
+
+        $contadores=count($factura_registro);
+            for($a=0;$a<$contadores;$a++){
+                $string=(string)$a;
+                $nombre="input_disabled_".$string;
+                if($request->$nombre==NULL){
+                }else{
+                    if(strpos($factura_registro[$a]->producto->tipo_afec_i_producto->informacion,'Gravado') !== false){
+                        $gravada += round($factura_registro[$a]->precio_unitario_comi*$request->$nombre,2);
+                    }
+                    if(strpos($factura_registro[$a]->producto->tipo_afec_i_producto->informacion,'Exonerado') !== false){
+                        $exonerada += round($factura_registro[$a]->precio_unitario_comi*$request->$nombre,2);
+                    }
+                    if(strpos($factura_registro[$a]->producto->tipo_afec_i_producto->informacion,'Inafecto') !== false){
+                        $inafecta += round($factura_registro[$a]->precio_unitario_comi*$request->$nombre,2);
+                    }
+                }
+            }
+
         // code nota_c
         // obtencion de la sucursal
         $almacen=$factura->almacen_id;
@@ -250,7 +272,7 @@ class FacturacionElectronicaController extends Controller
 
         if($factura->tipo=="producto"){
             
-             $invoice=Config_fe::nota_credito($factura,$factura_registro,$request,$notas_creditos_count,$nota_credito_numero);
+             $invoice=Config_fe::nota_credito($factura,$factura_registro,$request,$notas_creditos_count,$nota_credito_numero,$gravada,$exonerada,$inafecta);
             //envio a SUNAT    
             $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
@@ -261,6 +283,9 @@ class FacturacionElectronicaController extends Controller
             $nota_credito->facturacion_id=$factura->id;
             $nota_credito->tipo="producto";
             $nota_credito->almacen_id=$factura->almacen_id;
+            $nota_credito->op_gravada=$gravada;
+            $nota_credito->op_inafecta=$inafecta;
+            $nota_credito->op_exonerada=$exonerada;
             $nota_credito->save();
 
             $contador=count($factura_registro);
@@ -331,7 +356,7 @@ class FacturacionElectronicaController extends Controller
         //configuracion
         $see=config_acceso_sunat::facturacion_electronica();
 
-
+        
 
         // code nota_c
         // obtencion de la sucursal
