@@ -18,10 +18,10 @@
                         <div class="row" align="center">
                             <div class="col-sm-12 b-r"><h3 class="m-t-none m-b">Crear Guia Remision</h3>
                             </div>
-                            <div class="col-sm-6">
-                                <a href="{{route('guia_remision.seleccionar') }}"><button class="btn btn-sm btn-info" type="submit"><strong>Ver Aprobadas</strong></button></a>
-                            </div>
-                            <div class="col-sm-6">
+                            <!-- <div class="col-sm-12"> -->
+                               <!--  <a href="{{route('guia_remision.seleccionar') }}"><button class="btn btn-sm btn-info" type="submit"><strong>Ver Aprobadas</strong></button></a> -->
+                            <!-- </div> -->
+                            <div class="col-sm-12">
                                 @if($conteo_almacen==1 and $user_login->name=='Administrador' )
                                 <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" method="post">
                                     @csrf

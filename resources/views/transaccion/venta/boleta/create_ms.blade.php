@@ -257,7 +257,15 @@
                                                 <input type='checkbox' class="case">
                                             </td>
                                             <td>
-                                                <input list="browsers2" class="form-control " name="articulo[]"
+                                                <select class="monto0 select2_demo_3 select_change" name="articulo[]" required="" id="articulo"  onchange="calcular(this,0);multi(0);selet_one()"  autocomplete="off">
+                                                    <option></option>
+                                                    @foreach($productos as $index => $producto)
+                                                        <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
+                                                                {{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                                {{-- <input list="browsers2" class="form-control " name="articulo[]"
                                                 class="monto0 form-control" required id='articulo'
                                                 onkeyup="calcular(this,0);multi(0)" autocomplete="off">
                                                 <datalist id="browsers2">
@@ -265,7 +273,7 @@
                                                     <option
                                                     value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
                                                     @endforeach
-                                                </datalist>
+                                                </datalist> --}}
                                                 <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                                 <textarea id='numero_serie0'  name='numero_serie[]' class="form-control"   autocomplete="off" style="margin-top: 5px"></textarea>
                                                 <input style="width: 76px" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" hidden="" required  autocomplete="off"  />
@@ -348,6 +356,24 @@
         }
 
         input[type=number] { -moz-appearance:textfield; }
+        label.col-form-label::marker{
+                            list-style:none;
+                        }
+                        .select2-container--default .select2-selection--single .select2-selection__rendered {
+                            font-size: 12px;
+                        }
+                        .select2-container--default .select2-selection--single {
+                            border: none;
+                        }
+                        span.select2.select2-container.select2-container--default{
+                            width: 100%!important;
+                            background-color: #FFFFFF;
+                            background-image: none;
+                            border-radius: 1px;
+                            display: block;
+                            padding: 3px 12px;
+                            border: 1px solid #e5e6e7;
+                        }
     </style>
 
     <!-- Mainly scripts -->
@@ -367,6 +393,12 @@
 
     <!-- Steps -->
     <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
+    <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
+    <script type="text/javascript">
+        $(".select2_demo_3").select2({
+            placeholder: "Seleccionar Producto",
+        });
+    </script>
     {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
     <script>
         function valida(f) {
