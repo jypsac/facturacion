@@ -192,7 +192,7 @@
                                 <table   cellspacing="0" class="table tables  " {{-- style="width: 1150px" --}}>
                                     <thead>
                                         <tr>
-                                            <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+                                            <th style="width: 10px">{{-- <input class='check_all' type='checkbox' onclick="select_all()" /> --}}</th>
                                             <th style="width: 400px;font-size: 13px">Articulo</th>
                                             <th style="width: 100px;font-size: 13px">Precio</th>
                                             <th style="width: 100px;font-size: 13px">Cantidad</th>
@@ -205,15 +205,23 @@
                                     <tbody>
                                         <tr>
                                             <td>
-                                                <input type='checkbox' class="case">
+                                                <button type="button" class='delete borrar e btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
                                             </td>
                                             <td>
-                                                <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)" onclick="Clear(this);" autocomplete="off">
+                                                <select class="monto0 select2_demo_3 select_change" name="articulo[]" required="" id="articulo"  onchange="calcular(this,0);multi(0);selet_one()"  autocomplete="off">
+                                                    <option value=""></option>
+                                                    @foreach($servicios as $index => $servicio)
+                                                        <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($servicio->tipo_afec_i_serv->informacion," ")}} {{$igv_precio[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
+                                                            {{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}}
+                                                        </option>
+                                                    @endforeach
+                                                </select>
+                                               {{--  <input list="browsers2" class="form-control " name="articulo[]" class="monto0 form-control" required id='articulo' onkeyup="calcular(this,0);multi(0)" onclick="Clear(this);" autocomplete="off">
                                                 <datalist id="browsers2" >
                                                     @foreach($servicios as $index => $servicio)
                                                     <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($servicio->tipo_afec_i_serv->informacion," ")}} {{$igv_precio[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
                                                         @endforeach
-                                                    </datalist>
+                                                    </datalist> --}}
                                                     <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                                     <input style="width: 76px" hidden="" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off"  />
                                                 </td>
@@ -283,6 +291,24 @@
             .check{-webkit-appearance: none;height: 34px;background-color: #ffffff00;-moz-appearance: none;border: none;appearance: none;width: 80px;border-radius: 10px;}
             .div_check{position: relative;top: -33px;left: 0px;background-color: #ffffff00;  top: -35;}
             .check:checked {background: #0375bd6b;}
+            label.col-form-label::marker{
+                list-style:none;
+            }
+            .select2-container--default .select2-selection--single .select2-selection__rendered {
+                font-size: 12px;
+            }
+            .select2-container--default .select2-selection--single {
+                border: none;
+            }
+            span.select2.select2-container.select2-container--default{
+                width: 100%!important;
+                background-color: #FFFFFF;
+                background-image: none;
+                border-radius: 1px;
+                display: block;
+                padding: 3px 12px;
+                border: 1px solid #e5e6e7;
+            }
         </style>
 
                 <!-- Mainly scripts -->
@@ -304,7 +330,11 @@
                 <!-- Steps -->
                 <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
                 {{-- scritp de modal agregar --}}
-
+                <script type="text/javascript">
+                    $(".select2_demo_3").select2({
+                        placeholder: "Seleccionar Producto",
+                    });
+                </script>
     {{-- / --}}
         {{-- Validar Formulario / No doble insercion de datos(Gente desdesperada) --}}
         <script>
