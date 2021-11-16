@@ -373,7 +373,7 @@
                                                     </tbody>
                                                 </table>
                                             </div>
-                                            <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
+                                            &nbsp;
                                             <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
                                             <button class="btn btn-primary float-right" type="submit" id="boton" name="boton" onsubmit="valida()"><i class="fa fa-cloud-upload" aria-hidden="true"> Guardar</i></button>&nbsp;
                                         </form>
@@ -827,6 +827,7 @@
                 $(".borrar").prop("disabled", false);
                 $(".addmore").prop("disabled", false);
             }
+            var multiplier2 = 100;
             var totalInp = $('[name="total"]');
             var total_t = 0;
 
@@ -842,12 +843,12 @@
 
             // console.log(typeof igv);
             // console.log(typeof end);
-            document.getElementById("igv").value = igv;
-            document.getElementById("total_final").value = end;
+            document.getElementById("igv").value = Math.round(igv * multiplier2)/multiplier2;
+            document.getElementById("total_final").value = Math.round(end * multiplier2)/multiplier2;
             // $(`#monto_pago0`).attr('max', end);
             var inp_mont = document.getElementsByClassName('monto_pago').length;
             var monto_c = document.getElementsByClassName('monto_pago');
-            var multiplier2 = 100;
+            
 
             for (var i = 0; i < inp_mont; i++) {
                 var monto = monto_c[i].id;
