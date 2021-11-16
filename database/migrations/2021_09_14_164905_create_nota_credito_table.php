@@ -27,6 +27,7 @@ class CreateNotaCreditoTable extends Migration
             $table->string('op_inafecta')->default('0');
             $table->string('op_exonerada')->default('0');
             $table->string('op_gratuita')->default('0');
+            $table->string('motivo');
             $table->timestamps();
         });
     }

@@ -29,6 +29,24 @@
                         </div>
                     </div>
                 </div><br>
+
+                <form action="{{route('facturacion_electronica.nota_credito',$facturacion->id)}}"  enctype="multipart/form-data" method="post" >
+                    @csrf
+                <div class="row">
+                    <div class="col-sm-12">
+                        <strong>Motivo:</strong>
+                        <td><select class="form-control" name="motivo">
+                            <option >Devolucion por Item</option>
+                            <option >Descuento por Item</option>
+                            <option >Anulacion de la operacion</option>
+                            <option >Anulacion por error en el RUC</option>
+                            <option >Descuento Global</option>
+                            <option >Devolucion Ttotal</option>
+                            <option >Correcion por error en la descripcion</option>
+                            <option >Ajustes - montos y/o fechas de pago</option>
+                        </select></td>
+                    </div>
+                </div>
                 <div class="row" align="center" style="padding-bottom: 5px">
                     <div class="col-sm-6" align="center">
                         <div class="form-control">
@@ -82,8 +100,6 @@
                     </div>
                 </div>
                 <br>
-                <form action="{{route('facturacion_electronica.nota_credito',$facturacion->id)}}"  enctype="multipart/form-data" method="post" >
-                    @csrf
                     <div class="table-responsive">
                         <table class="table ">
                             <thead>
