@@ -30,8 +30,11 @@ class CreateUsersTable extends Migration
             $table->boolean('estado');
             $table->boolean('email_creado');
 
+
             $table->unsignedBigInteger('almacen_id')->nullable();
             $table->foreign('almacen_id')->references('id')->on('almacen')->onDelete('cascade');
+
+            $table->string('avatar')->default('defecto_avatar.jpg');
             $table->timestamps();
         });
     }
