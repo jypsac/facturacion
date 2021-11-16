@@ -28,7 +28,7 @@ class DatabaseSeeder extends Seeder
         // $this->call(ProvedorTableSeeder::class);        //innecesario
         $this->call(CategoriasTableSeeder::class);      //innecesario
         // $this->call(FamiliasTableSeeder::class);        //innecesario
-        $this->call(MarcasTableSeeder::class);          //inncesario
+        // $this->call(MarcasTableSeeder::class);          //inncesario
         
         $this->call(TipoOperacionFSeeder::class);
         $this->call(Tipo_afectacionSeeder::class);
