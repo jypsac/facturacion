@@ -437,22 +437,22 @@
                 e.preventDefault();
 
                 var articulo = $('[id="articulo"]').val();
-                            // var data={articulo:articulo,_token:token};
-                            $.ajax({
-                                type: "post",
-                                url: "{{ route('descripcion_ajax_serv') }}",
-                                data: {
-                                    '_token': $('input[name=_token]').val(),
-                                    'articulo': articulo
-                                },
-                                success: function (msg) {
+                // var data={articulo:articulo,_token:token};
+                $.ajax({
+                    type: "post",
+                    url: "{{ route('descripcion_ajax_serv') }}",
+                    data: {
+                        '_token': $('input[name=_token]').val(),
+                        'articulo': articulo
+                    },
+                    success: function (msg) {
 
-                                            // console.log(msg);
-                                            const msg2 = msg.slice(2);
-                                            $('#descripcion0').val(msg2);
-                                        }
-                                    });
-                        });
+                        // console.log(msg);
+                        const msg2 = msg.slice(2);
+                        $('#descripcion0').val(msg2);
+                    }
+                });
+            });
 
 
             function ajax (a){
@@ -465,11 +465,11 @@
                         'articulo': articulo2
                     },
                     success: function (msg) {
-                                            // console.log(msg);
-
-                                            $(`#descripcion${a}`).val(msg);
-                                        }
-                                    });
+                    // console.log(msg);
+                      const msg2 = msg.slice(2);
+                    $(`#descripcion${a}`).val(msg2);
+                }
+            });
             }
         </script>
         <script>
@@ -714,8 +714,28 @@
     </script>
 
     <script>
-        $(".delete").on('click', function () {
-            $('.case:checkbox:checked').parents("tr").remove();
+        $(document).on('click', '.borrar', function (event) {
+             event.preventDefault();
+            var e = document.getElementsByClassName("e").length;
+            // DESACTIVAR OPTIONS
+            var fila = $(this).parents("tr");
+            var input_text_opt = fila.find('input[class="celda"]').val();
+            $('option[value="'+input_text_opt+'"]').prop("disabled", false);
+            $(".addmore").prop("disabled", false);
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Servicio",
+            });
+            // ELIMINAR TR
+           // fila.remove();
+           if (e>1) {
+                fila.closest('tr').remove();
+                $(".borrar").prop("disabled", true);
+                $(".addmore").prop("disabled", false);
+            }else{
+                $(".borrar").prop("disabled", false);
+                $(".addmore").prop("disabled", false);
+            }
+
             var multiplier = 100;
             var totalInpG = $('[name="afectacion"]');
             var total_tg = 0;
@@ -723,7 +743,7 @@
             totalInpG.each(function(){
                 total_tg += parseFloat($(this).val());
             });
-            var total_ttg = Math.round(total_tg * multiplier2) / multiplier2;
+            var total_ttg = Math.round(total_tg * multiplier) / multiplier;
             $('#subtotal_gravado').val(total_ttg);
 
             var totalInp = $('[name="total"]');
@@ -732,7 +752,7 @@
             totalInp.each(function(){
                 total_t += parseFloat($(this).val());
             });
-            var total_tttg = Math.round(total_t * multiplier2) / multiplier2;
+            var total_tttg = Math.round(total_t * multiplier) / multiplier;
             $('#sub_total').val(total_tttg);
 
             var igv_valor={{$igv->renta}};
@@ -750,7 +770,7 @@
         });
     </script>
 
-    <script>
+{{--     <script>
         function select_all() {
             $('input[class=case]:checkbox').each(function () {
                 if ($('input[class=check_all]:checkbox:checked').length == 0) {
@@ -766,7 +786,67 @@
             elem.value='';
         }
     </script>
+ --}}
+ <script>
 
+        function seleccion_options(b){
+            var cant_opt = document.getElementById(`articulo${b}`).length;
+            var count_input = document.getElementsByClassName('celda').length;
+
+            var option = document.getElementById(`articulo${b}`);
+            var valor_select = option.value;
+            if(valor_select == ""){
+                document.getElementById(`input_prod${b}`).value = valor_select;
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+            }else{
+                var ant_val = document.getElementById(`input_prod${b}`).value;
+                $('option[value="'+ant_val+'"]').prop( "disabled", false);
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+                document.getElementById(`input_prod${b}`).value = valor_select;
+
+                $(".addmore").prop("disabled", false);
+            }
+            if(cant_opt-1 == count_input ){
+                    $(".addmore").prop("disabled", true);
+                }else{
+                    $(".addmore").prop("disabled", false);
+                }
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Servicio",
+            });
+        }
+  </script>
+
+    {{-- @endif --}}
+
+    <script  >
+        function selet_one(){
+            var cant_opt = document.getElementById(`articulo`).length;
+            var count_input = document.getElementsByClassName('celda').length;
+            var option = document.getElementById(`articulo`);
+            var valor_select = option.value;
+            if(valor_select == ""){
+                document.getElementById(`input_prod1`).value = valor_select;
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+            }else{
+                var ant_val = document.getElementById(`input_prod1`).value;
+                $('option[value="'+ant_val+'"]').prop( "disabled", false);
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+                document.getElementById(`input_prod1`).value = valor_select;
+                $(".addmore").prop("disabled", false);
+                if(cant_opt-1 == count_input ){
+                    $(".addmore").prop("disabled", true);
+                }else{
+                    $(".addmore").prop("disabled", false);
+                }
+
+            }
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Servicio",
+            });
+        }
+
+    </script>
     <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
 
     <script>

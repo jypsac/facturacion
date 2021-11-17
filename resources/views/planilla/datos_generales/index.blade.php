@@ -31,7 +31,7 @@
                                     <tbody>
                                         @foreach($personales as $personal)
                                             <tr class="gradeX">
-                                                <td>{{$personal->id}}</td>
+                                                <td>{{$i++}}</td>
                                                 <td>{{$personal->nombres}}</td>
                                                 <td>{{$personal->apellidos}}</td>
                                                 <td>{{$personal->numero_documento}}</td>

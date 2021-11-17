@@ -23,10 +23,10 @@ class PersonalVentaController extends Controller
       $moneda_extranjera=Moneda::where('id',2)->first();
       $lista=Ventas_registro::all();
 
-      $personal_contador= Personal_venta::all()->count();
+      $personal_contador= Personal_venta::where('id' ,'!=',1)->count();
       $suma=$personal_contador+1;
 
-      $personal=Personal_datos_laborales::where('estado_trabajador','Activo')->get();
+      $personal=Personal_datos_laborales::where('estado_trabajador','Activo')->where('id' ,'!=',1)->get();
       $vendedores=Personal_venta::all();
       return view('planilla.vendedores.index', compact('vendedores','lista','moneda_nacional','moneda_extranjera','suma','personal'));
   }

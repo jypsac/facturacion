@@ -99,7 +99,7 @@ class GuiaRemisionController extends Controller
         }
 
         $clientes=Cliente::all();
-        $personal=Personal::all();
+        $personal=Personal::where('id','!=',1)->get();
         $motivo_traslado=MotivoTraslado::all();
         $vehiculo=Vehiculo::where('estado_activo',0)->get();
         $transporte_publico=TransportePublico::where('estado',0)->get();

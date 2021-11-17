@@ -537,7 +537,7 @@
                                             },
                                         success: function (msg) {
                                             // console.log(msg);
-
+                                            const msg2 = msg.slice(2);
                                             $('#descripcion0').val(msg);
                                         }
                                     });
@@ -555,7 +555,7 @@
                                             },
                                         success: function (msg) {
                                             // console.log(msg);
-
+                                            const msg2 = msg.slice(2);
                                             $(`#descripcion${a}`).val(msg);
                                         }
                                     });

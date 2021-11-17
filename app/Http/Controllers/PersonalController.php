@@ -16,8 +16,9 @@ class PersonalController extends Controller
      */
     public function index()
     {
-        $personales=Personal::all();
-        return view('planilla.datos_generales.index',compact('personales'));
+        $personales=Personal::where('id','!=',1)->get();
+        $i = 1;
+        return view('planilla.datos_generales.index',compact('personales','i'));
     }
 
     /**
