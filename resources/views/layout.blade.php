@@ -25,6 +25,9 @@
     <link rel="icon" type="image/svg+xml" href="{{ asset('img/icono.svg') }}" sizes="any">
 
 </head>
+
+ <?php use App\Empresa;
+$empresa=Empresa::first(); ?>
 <style type="text/css">
 body {font:@yield('tamano_letra', auth()->user()->config->tamano_letra) @yield('Letra', auth()->user()->config->letra);}
 .spans{color:@yield('color_nombre', auth()->user()->config->color_nombre) !important;
@@ -298,7 +301,7 @@ text-shadow: 2px  2px 2px @yield('color_sombra', auth()->user()->config->color_s
                 </div>
                 <ul class="nav navbar-top-links navbar-right">
                     <li>
-                        <span class="m-r-sm text-muted welcome-message">Bienvenido :@yield('nombres',auth()->user()->personal->nombres)</span>
+                        <span class="m-r-sm text-muted welcome-message">Empresa: {{$empresa->nombre}} </span>
                     </li>
                     <li>
                         {{-- <a href="{{route('home')}}">
