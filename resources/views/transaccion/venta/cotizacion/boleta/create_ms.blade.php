@@ -184,7 +184,7 @@
                                     <table   cellspacing="0" class="table tables  " >
                                         <thead>
                                             <tr>
-                                                <th style="width: 10px"><input class='check_all' type='checkbox' onclick="select_all()" /></th>
+                                                <th style="width: 10px">{{-- <input class='check_all' type='checkbox' onclick="select_all()" /> --}}</th>
                                                 <th style="width: 500px;font-size: 13px">Articulo</th>
                                                 <th>Stock</th>
                                                 <th>Cantidad</th>
@@ -198,21 +198,20 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <input type='checkbox' class="case">
+                                                    <button type="button" class='delete borrar e btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
                                                 </td>
                                                 <td>
-                                                    <input list="browsers2" class="form-control " name="articulo[]"
-                                                    class="monto0 form-control" required id='articulo'
-                                                    onkeyup="calcular(this,0);multi(0)" autocomplete="off">
-                                                    <datalist id="browsers2">
+                                                    <select class="monto0 select2_demo_3 select_change" name="articulo[]" required="" id="articulo"  onchange="calcular(this,0);multi(0);selet_one()"  autocomplete="off">
+                                                        <option></option>
                                                         @foreach($productos as $index => $producto)
-                                                        <option
-                                                        value="{{$producto->id}} | {{$producto->nombre}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}}  / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
+                                                        <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
+                                                            {{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}
+                                                        </option>
                                                         @endforeach
-                                                    </datalist>
+                                                    </select>
                                                     <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                                     <input style="width: 76px" hidden="" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off"  />
-
+                                                     <input type="hidden" class="celda"  name="articulo[]" id="input_prod1" >
                                                 </td>
                                                 <td>
                                                     <input type='text' id='stock0' disabled="disabled" name='stock[]' class="form-control" required  autocomplete="off"/>
@@ -267,7 +266,7 @@
                                             </tbody>
                                         </table>
                                     </div>
-                                    <button type="button" class='delete btn btn-danger'><i class="fa fa-trash" aria-hidden="true"></i></button>&nbsp;
+                                    &nbsp;
                                     <button type="button" class='addmore btn btn-success'><i class="fa fa-plus-square" aria-hidden="true"></i></button>&nbsp;
                                     <button class="btn btn-primary float-right"  id="boton" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true">Guardar</i></button>&nbsp;
 
@@ -291,6 +290,24 @@
                     }
 
                     input[type=number] { -moz-appearance:textfield; }
+                    label.col-form-label::marker{
+                        list-style:none;
+                    }
+                    .select2-container--default .select2-selection--single .select2-selection__rendered {
+                        font-size: 12px;
+                    }
+                    .select2-container--default .select2-selection--single {
+                        border: none;
+                    }
+                    span.select2.select2-container.select2-container--default{
+                        width: 100%!important;
+                        background-color: #FFFFFF;
+                        background-image: none;
+                        border-radius: 1px;
+                        display: block;
+                        padding: 3px 12px;
+                        border: 1px solid #e5e6e7;
+                    }
             </style>
 
             <!-- Mainly scripts -->
@@ -311,6 +328,12 @@
 
             <!-- Steps -->
             <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
+            <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
+            <script type="text/javascript">
+                $(".select2_demo_3").select2({
+                    placeholder: "Seleccionar Producto",
+                });
+            </script>
             {{-- scritp de modal agregar --}}
 
     {{-- / --}}
@@ -332,19 +355,20 @@
         var data = `[
         <tr>
         <td>
-        <input type='checkbox' class='case'/>
+        <button type="button" class='delete borrar e btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
         </td>";
         <td>
-
-        <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i});ajax(${i})" autocomplete="off">
-        <datalist id="browsers" >
+        <select class="monto0 select2_demo_3 select_change" id='articulo${i}' onchange="calcular(this,${i});multi(${i});ajax(${i});seleccion_options(${i})"  autocomplete="off">
+        <option></option>
         @foreach($productos as $index => $producto)
-        <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}" >
+        <option value="{{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($producto->tipo_afec_i_producto->informacion," ")}} {{$array_promedio[$index]}} {{$array_cantidad[$index]}} {{$producto->descuento2}} {{$array[$index]}}">
+            {{$producto->id}} | {{$producto->codigo_producto}} | {{$producto->codigo_original}} | {{$producto->nombre}}
+        </option>
         @endforeach
-        </datalist>
+        </select>
         <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
         <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required hidden  autocomplete="off" />
-
+        <input type="hidden"    class="celda"  name="articulo[]" id="input_prod${i}">
         </td>
         <td>
         <input type='text' id='stock${i}' name='stock[]' disabled="disabled" class="form-control" required  autocomplete="off"/>
@@ -384,6 +408,17 @@
         </tr>`;
         $('.tables').append(data);
         i++;
+        var input_ds = [];
+        var number_tot = document.getElementsByName('articulo[]').length;
+        for( j = 0; j < number_tot; j++){
+            input_ds[j]  = document.getElementsByName('articulo[]')[j].value;
+            $('option[value="'+input_ds[j]+'"]').prop("disabled", true);
+        };
+        $(".select2_demo_3").select2({
+            placeholder: "Seleccionar Producto",
+        });
+        $(".addmore").prop("disabled", true);
+        $(".borrar").prop("disabled", false);
     });
 </script>
 <script>
@@ -401,8 +436,8 @@
             },
             success: function (msg) {
                         // console.log(msg);
-
-                        $('#descripcion0').val(msg);
+                        const msg2 = msg.slice(2);
+                        $('#descripcion0').val(msg2);
                     }
                 });
     });
@@ -419,8 +454,8 @@
             },
             success: function (msg) {
                         // console.log(msg);
-
-                        $(`#descripcion${a}`).val(msg);
+                        const msg2 = msg.slice(2);
+                        $(`#descripcion${a}`).val(msg2);
                     }
                 });
     }
@@ -656,8 +691,27 @@
     </script>
 
     <script>
-        $(".delete").on('click', function () {
-            $('.case:checkbox:checked').parents("tr").remove();
+        $(document).on('click', '.borrar', function (event) {
+           event.preventDefault();
+            var e = document.getElementsByClassName("e").length;
+            
+            var fila = $(this).parents("tr");
+            var input_text_opt = fila.find('input[class="celda"]').val();
+            $('option[value="'+input_text_opt+'"]').prop("disabled", false);
+            $(".addmore").prop("disabled", false);
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Producto",
+            });
+            // ELIMINAR TR
+           // fila.remove();
+           if (e>1) {
+                fila.closest('tr').remove();
+                $(".borrar").prop("disabled", true);
+                $(".addmore").prop("disabled", false);
+            }else{
+                $(".borrar").prop("disabled", false);
+                $(".addmore").prop("disabled", false);
+            }
             var totalInp = $('[name="total"]');
             var total_t = 0;
 
@@ -677,7 +731,7 @@
             document.getElementById("total_final").value = end;
         });
     </script>
-
+{{-- 
     <script>
         function select_all() {
             $('input[class=case]:checkbox').each(function () {
@@ -689,9 +743,63 @@
             });
         }
     </script>
-
+ --}}
     <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
+    <script>
+        function seleccion_options(b){
+            var cant_opt = document.getElementById(`articulo${b}`).length;
+            var count_input = document.getElementsByClassName('celda').length;
 
+            var option = document.getElementById(`articulo${b}`);
+            var valor_select = option.value;
+            if(valor_select == ""){
+                document.getElementById(`input_prod${b}`).value = valor_select;
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+            }else{
+                var ant_val = document.getElementById(`input_prod${b}`).value;
+                $('option[value="'+ant_val+'"]').prop( "disabled", false);
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+                document.getElementById(`input_prod${b}`).value = valor_select;
+
+                $(".addmore").prop("disabled", false);
+            }
+            if(cant_opt-1 == count_input ){
+                    $(".addmore").prop("disabled", true);
+                }else{
+                    $(".addmore").prop("disabled", false);
+                }
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Producto",
+            });
+        }
+  </script>
+  <script  >
+        function selet_one(){
+            var cant_opt = document.getElementById(`articulo`).length;
+            var count_input = document.getElementsByClassName('celda').length;
+            var option = document.getElementById(`articulo`);
+            var valor_select = option.value;
+            if(valor_select == ""){
+                document.getElementById(`input_prod1`).value = valor_select;
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+            }else{
+                var ant_val = document.getElementById(`input_prod1`).value;
+                $('option[value="'+ant_val+'"]').prop( "disabled", false);
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+                document.getElementById(`input_prod1`).value = valor_select;
+                $(".addmore").prop("disabled", false);
+                if(cant_opt-1 == count_input ){
+                    $(".addmore").prop("disabled", true);
+                }else{
+                    $(".addmore").prop("disabled", false);
+                }
+
+            }
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Producto",
+            });
+        }
+    </script>
     <script>
         $(document).ready(function () {
             $('.i-checks').iCheck({

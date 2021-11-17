@@ -1013,8 +1013,7 @@
             document.getElementById('suma_campos').style.display = "none";
         }
     </script>
-        <script>
-
+    <script>
         function seleccion_options(b){
             var cant_opt = document.getElementById(`articulo${b}`).length;
             var count_input = document.getElementsByClassName('celda').length;
@@ -1043,31 +1042,30 @@
         }
   </script>
     <script  >
-    function selet_one(){
-        var cant_opt = document.getElementById(`articulo`).length;
-        var count_input = document.getElementsByClassName('celda').length;
-        var option = document.getElementById(`articulo`);
-        var valor_select = option.value;
-        if(valor_select == ""){
-            document.getElementById(`input_prod1`).value = valor_select;
-            $('option[value="'+valor_select+'"]').prop( "disabled", true);
-        }else{
-            var ant_val = document.getElementById(`input_prod1`).value;
-            $('option[value="'+ant_val+'"]').prop( "disabled", false);
-            $('option[value="'+valor_select+'"]').prop( "disabled", true);
-            document.getElementById(`input_prod1`).value = valor_select;
-            $(".addmore").prop("disabled", false);
-            if(cant_opt-1 == count_input ){
-                $(".addmore").prop("disabled", true);
+        function selet_one(){
+            var cant_opt = document.getElementById(`articulo`).length;
+            var count_input = document.getElementsByClassName('celda').length;
+            var option = document.getElementById(`articulo`);
+            var valor_select = option.value;
+            if(valor_select == ""){
+                document.getElementById(`input_prod1`).value = valor_select;
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
             }else{
+                var ant_val = document.getElementById(`input_prod1`).value;
+                $('option[value="'+ant_val+'"]').prop( "disabled", false);
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+                document.getElementById(`input_prod1`).value = valor_select;
                 $(".addmore").prop("disabled", false);
+                if(cant_opt-1 == count_input ){
+                    $(".addmore").prop("disabled", true);
+                }else{
+                    $(".addmore").prop("disabled", false);
+                }
+
             }
-
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Producto",
+            });
         }
-        $(".select2_demo_3").select2({
-            placeholder: "Seleccionar Producto",
-        });
-    }
-
     </script>
     @stop

@@ -224,6 +224,7 @@
                                                     </datalist> --}}
                                                     <textarea  type='text' id='descripcion0'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
                                                     <input style="width: 76px" hidden="" type='text' id='tipo_afec0' name='tipo_afec[]' readonly="readonly" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off"  />
+                                                    <input type="hidden" class="celda"  name="articulo[]" id="input_prod1" >
                                                 </td>
                                                 <td>
                                                     <input type='text' id='precio0' name='precio[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" />
@@ -273,7 +274,7 @@
                                     </tbody>
                                 </table>
 
-                                <button type="button" class='delete btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>&nbsp;
+                                &nbsp;
                                 <button type="button" class='addmore btn btn-success' > <i class="fa fa-plus-square" aria-hidden="true"></i> </button>&nbsp;
 
                                 <button class="btn btn-primary float-right" id="boton" type="submit"><i class="fa fa-cloud-upload" aria-hidden="true" > Guardar</i></button>&nbsp;
@@ -329,10 +330,11 @@
 
                 <!-- Steps -->
                 <script src="{{asset('js/plugins/steps/jquery.steps.min.js')}}"></script>
+                <script src="{{ asset('js/plugins/select2/select2.full.min.js') }}"></script>
                 {{-- scritp de modal agregar --}}
                 <script type="text/javascript">
                     $(".select2_demo_3").select2({
-                        placeholder: "Seleccionar Producto",
+                        placeholder: "Seleccionar Servicio",
                     });
                 </script>
     {{-- / --}}
@@ -355,17 +357,20 @@
             var data = `[
             <tr>
             <td>
-            <input type='checkbox' class='case'/>
-            </td>";
+            <button type="button" class='delete borrar e btn btn-danger'  > <i class="fa fa-trash" aria-hidden="true"></i> </button>
+            </td>
             <td>
-            <input list="browsers" class="form-control " name="articulo[]" required id='articulo${i}' onkeyup="calcular(this,${i});multi(${i});ajax(${i})" onclick="Clear(this);" autocomplete="off" >
-            <datalist id="browsers" >
-            @foreach($servicios as $index => $servicio)
-            <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($servicio->tipo_afec_i_serv->informacion," ")}} {{$igv_precio[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
-            @endforeach
-            </datalist>
+            <select class="monto0 select2_demo_3 select_change" id='articulo${i}' onchange="calcular(this,${i});multi(${i});ajax(${i});seleccion_options(${i})"  autocomplete="off">
+                <option ></option>
+                @foreach($servicios as $index => $servicio)
+                    <option value="{{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} / &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp {{$prc_afec[$index] = strtok($servicio->tipo_afec_i_serv->informacion," ")}} {{$igv_precio[$index]}} 0 {{$servicio->descuento}} {{$array[$index]}}">
+                        {{$servicio->id}} | {{$servicio->codigo_servicio}} | {{$servicio->codigo_original}} | {{$servicio->nombre}} 
+                    </option>
+                @endforeach
+            </select>
             <textarea type='text' id='descripcion${i}'  name='descripcion[]' class="form-control"   autocomplete="off" style="margin-top: 5px;"></textarea>
             <input type='text' style="width: 76px"  id='tipo_afec${i}' name='tipo_afec[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required hidden  autocomplete="off" />
+             <input type="hidden"    class="celda"  name="articulo[]" id="input_prod${i}">
             </td>
             <td>
             <input type='text' id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
@@ -402,6 +407,17 @@
             </tr>`;
             $('.tables').append(data);
             i++;
+            var input_ds = [];
+            var number_tot = document.getElementsByName('articulo[]').length;
+            for( j = 0; j < number_tot; j++){
+                input_ds[j]  = document.getElementsByName('articulo[]')[j].value;
+                $('option[value="'+input_ds[j]+'"]').prop("disabled", true);
+            };
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Servicio",
+            });
+            $(".addmore").prop("disabled", true);
+            $(".borrar").prop("disabled", false);
         });
     </script>
     <script>
@@ -409,21 +425,21 @@
             e.preventDefault();
 
             var articulo = $('[id="articulo"]').val();
-                            // var data={articulo:articulo,_token:token};
-                            $.ajax({
-                                type: "post",
-                                url: "{{ route('descripcion_ajax_serv') }}",
-                                data: {
-                                    '_token': $('input[name=_token]').val(),
-                                    'articulo': articulo
-                                },
-                                success: function (msg) {
-                                            // console.log(msg);
-
-                                            $('#descripcion0').val(msg);
-                                        }
-                                    });
-                        });
+            // var data={articulo:articulo,_token:token};
+            $.ajax({
+                type: "post",
+                url: "{{ route('descripcion_ajax_serv') }}",
+                data: {
+                    '_token': $('input[name=_token]').val(),
+                    'articulo': articulo
+                },
+                success: function (msg) {
+                    // console.log(msg);
+                    const msg2 = msg.slice(2);
+                    $('#descripcion0').val(msg2);
+                }
+            });
+        });
 
 
         function ajax (a){
@@ -436,11 +452,12 @@
                     'articulo': articulo2
                 },
                 success: function (msg) {
-                                            // console.log(msg);
+                // console.log(msg);
+                 const msg2 = msg.slice(2);
+                $(`#descripcion${a}`).val(msg2);
+            }
+        });
 
-                                            $(`#descripcion${a}`).val(msg);
-                                        }
-                                    });
         }
     </script>
     <script>
@@ -677,8 +694,28 @@
     </script>
 
     <script>
-        $(".delete").on('click', function () {
-            $('.case:checkbox:checked').parents("tr").remove();
+        $(document).on('click', '.borrar', function (event) {
+           event.preventDefault();
+            var e = document.getElementsByClassName("e").length;
+            
+            var fila = $(this).parents("tr");
+            var input_text_opt = fila.find('input[class="celda"]').val();
+            $('option[value="'+input_text_opt+'"]').prop("disabled", false);
+            $(".addmore").prop("disabled", false);
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Servicio",
+            });
+            // ELIMINAR TR
+           // fila.remove();
+           if (e>1) {
+                fila.closest('tr').remove();
+                $(".borrar").prop("disabled", true);
+                $(".addmore").prop("disabled", false);
+            }else{
+                $(".borrar").prop("disabled", false);
+                $(".addmore").prop("disabled", false);
+            }
+
             var multiplier = 100;
             var totalInp = $('[name="afectacion"]');
             var total_t = 0;
@@ -703,7 +740,7 @@
         });
     </script>
 
-    <script>
+{{--     <script>
         function select_all() {
             $('input[class=case]:checkbox').each(function () {
                 if ($('input[class=check_all]:checkbox:checked').length == 0) {
@@ -718,7 +755,7 @@
         {
             elem.value='';
         }
-    </script>
+    </script> --}}
 
     <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
 
@@ -733,6 +770,62 @@
     <style type="text/css">
         .a{color: red}
     </style>
+    <script>
 
+        function seleccion_options(b){
+            var cant_opt = document.getElementById(`articulo${b}`).length;
+            var count_input = document.getElementsByClassName('celda').length;
+
+            var option = document.getElementById(`articulo${b}`);
+            var valor_select = option.value;
+            if(valor_select == ""){
+                document.getElementById(`input_prod${b}`).value = valor_select;
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+            }else{
+                var ant_val = document.getElementById(`input_prod${b}`).value;
+                $('option[value="'+ant_val+'"]').prop( "disabled", false);
+                $('option[value="'+valor_select+'"]').prop( "disabled", true);
+                document.getElementById(`input_prod${b}`).value = valor_select;
+
+                $(".addmore").prop("disabled", false);
+            }
+            if(cant_opt-1 == count_input ){
+                    $(".addmore").prop("disabled", true);
+                }else{
+                    $(".addmore").prop("disabled", false);
+                }
+            $(".select2_demo_3").select2({
+                placeholder: "Seleccionar Servicio",
+            });
+        }
+  </script>
+    <script  >
+    function selet_one(){
+        var cant_opt = document.getElementById(`articulo`).length;
+        var count_input = document.getElementsByClassName('celda').length;
+        var option = document.getElementById(`articulo`);
+        var valor_select = option.value;
+        if(valor_select == ""){
+            document.getElementById(`input_prod1`).value = valor_select;
+            $('option[value="'+valor_select+'"]').prop( "disabled", true);
+        }else{
+            var ant_val = document.getElementById(`input_prod1`).value;
+            $('option[value="'+ant_val+'"]').prop( "disabled", false);
+            $('option[value="'+valor_select+'"]').prop( "disabled", true);
+            document.getElementById(`input_prod1`).value = valor_select;
+            $(".addmore").prop("disabled", false);
+            if(cant_opt-1 == count_input ){
+                $(".addmore").prop("disabled", true);
+            }else{
+                $(".addmore").prop("disabled", false);
+            }
+
+        }
+        $(".select2_demo_3").select2({
+            placeholder: "Seleccionar Servicio",
+        });
+    }
+
+    </script>
 
     @stop

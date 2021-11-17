@@ -22,25 +22,29 @@
                                <!--  <a href="{{route('guia_remision.seleccionar') }}"><button class="btn btn-sm btn-info" type="submit"><strong>Ver Aprobadas</strong></button></a> -->
                             <!-- </div> -->
                             <div class="col-sm-12">
-                                @if($conteo_almacen==1 and $user_login->name=='Administrador' )
+                                {{-- @if($conteo_almacen==1 and $user_login->name=='Administrador' ) --}}
+                                @if($conteo_almacen==1 )
                                 <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" method="post">
                                     @csrf
                                     <input type="text" value="{{$almacen_primero->id}}" hidden="hidden" name="almacen">
                                     <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
                                 </form>
-                                @elseif($conteo_almacen==1 and $user_login->almacen->estado==1 and $user_login->name=='Colaborador' )
+                                {{-- @elseif($conteo_almacen==1 and $user_login->almacen->estado==1 and $user_login->name=='Colaborador' ) --}}
+                                @elseif($conteo_almacen==1 and $user_login->almacen->estado==1  )
                                 <input id="auto" onclick="divAuto()" type="submit" class="btn btn-sm btn-info"  value="Crear una Nueva Guia">
                                 <div id="div-mostrar" style="color: black">
                                     <div id="texto" style="opacity:0;transition: .4s ;text-align: center;padding-top: 10px;" >Almacen Asignado esta Desactivado, Activelo o cambie de Almacen.</div>
                                 </div>
-                                @elseif($conteo_almacen==1 and $user_login->almacen->estado==0 and $user_login->name=='Colaborador' )
+                                {{-- @elseif($conteo_almacen==1 and $user_login->almacen->estado==0 and $user_login->name=='Colaborador' ) --}}
+                                @elseif($conteo_almacen==1 and $user_login->almacen->estado==0  )
                                 <form action="{{ route('guia_remision.create')}}" enctype="multipart/form-data" >
                                     @csrf
                                     <input type="text" value="{{$user_login->almacen_id}}" hidden="hidden" name="almacen">
                                     <input class="btn btn-sm btn-info"  type="submit" value="Crear una nueva Guia" >
                                 </form>
 
-                                @elseif($conteo_almacen > 1 and $user_login->name =='Administrador')
+                                {{-- @elseif($conteo_almacen > 1 and $user_login->name =='Administrador') --}}
+                                @elseif($conteo_almacen > 1 )
                                 <div class="dropdown">
                                   <button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">Crear una Nueva Guia</button>
                                   <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
@@ -52,7 +56,8 @@
                                     </form>
                                 </div>
                             </div>
-                            @elseif($conteo_almacen > 1 and $user_login->name=='Colaborador')
+                            {{-- @elseif($conteo_almacen > 1 and $user_login->name=='Colaborador') --}}
+                            @elseif($conteo_almacen > 1 )
                             @if($user_login->almacen->estado==1  )
                             <input id="auto" onclick="divAuto()" type="submit" class="btn btn-sm btn-info"  value="Crear una Nueva Guia">
                             <div id="div-mostrar" style="color: black">

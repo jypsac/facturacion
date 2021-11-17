@@ -445,8 +445,6 @@
         });
         $(".addmore").prop("disabled", true);
         $(".borrar").prop("disabled", false);
-
-    
     });
 </script>
 
@@ -772,7 +770,7 @@
         });
     </script>
 
-    <script>
+{{--     <script>
         function select_all() {
             $('input[class=case]:checkbox').each(function () {
                 if ($('input[class=check_all]:checkbox:checked').length == 0) {
@@ -787,7 +785,7 @@
         {
             elem.value='';
         }
-    </script>
+    </script> --}}
 
     <script src="{{ asset('js/plugins/iCheck/icheck.min.js') }}"></script>
 

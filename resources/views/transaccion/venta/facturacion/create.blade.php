@@ -512,8 +512,8 @@
                                             },
                                         success: function (msg) {
                                             // console.log(msg);
-
-                                            $('#descripcion0').val(msg);
+                                            const msg2 = msg.slice(2);
+                                            $('#descripcion0').val(msg2);
                                         }
                                     });
                                 });
@@ -522,18 +522,18 @@
                         function ajax (a){
                             var articulo2 = $(`[id='articulo${a}']`).val();
                             $.ajax({
-                                        type: "post",
-                                        url: "{{ route('descripcion_ajax') }}",
-                                        data: {
-                                            '_token': $('input[name=_token]').val(),
-                                            'articulo': articulo2
-                                            },
-                                        success: function (msg) {
-                                            // console.log(msg);
-
-                                            $(`#descripcion${a}`).val(msg);
-                                        }
-                                    });
+                                type: "post",
+                                url: "{{ route('descripcion_ajax') }}",
+                                data: {
+                                    '_token': $('input[name=_token]').val(),
+                                    'articulo': articulo2
+                                    },
+                                success: function (msg) {
+                                    // console.log(msg);
+                                    const msg2 = msg.slice(2);
+                                    $(`#descripcion${a}`).val(msg2);
+                                }
+                            });
                         }
                     </script>
                     <script>
