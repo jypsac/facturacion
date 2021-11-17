@@ -266,13 +266,7 @@
          </p>
        </div>
        @endforeach
-
      </div>
-
-<form action="{{route('empresa.store')}}"  enctype="multipart/form-data" method="post" >
-    @csrf
-    <button type="submit" class="btn btn-w-m btn-primary">Enviar</button>
-</form>
    </div>
    @foreach($banco as $bancos)
    <script type="text/javascript">
