@@ -38,7 +38,7 @@
                     </div>
                     <div class="row align-items-center remember">
                         <!-- <input type="checkbox">Recuérdame -->
-                         <input  type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>{{ __('Remember Me') }}
+                         {{-- <input  type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>{{ __('Remember Me') }} --}}
 
                                    <!--  <label class="form-check-label" for="remember">
                                         
@@ -46,29 +46,9 @@
                     </div>
 
                     <center><div class="form-group " >
-                        <!-- <input type="submit" value="Iniciar" class="btn  login_btn cwhite"> -->
-                        <button type="submit" class=" btn login_btn cwhite">
-                                    {{ __('Login') }}
-                                </button><br>
-
-                                @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
-                                        {{ __('Forgot Your Password?') }}
-                                    </a>
-                                @endif
+                        <button type="submit" class=" btn login_btn cwhite">Ingresar</button><br>
                     </div></center>
                 </form>
-            </div>
-            <div class="card-footer">
-                <div class="d-flex justify-content-center links">
-                    No tienes una Cuenta?<!-- <a href="">Registrate</a> -->
-                      <a  href="{{ route('register') }}">{{ __('Register') }}</a>
-                </div>
-                <div class="d-flex justify-content-center">
-                    <!-- <a href="#">Olvidaste tu contraseña?</a>- -->
-                    <!-- <a href="index.html"> Regresar</a> -->
-                </div>
-
             </div>
         </div>
     </div>
@@ -96,7 +76,7 @@ align-content: center;
 }
 
 .card{
-height: 370px;
+/*height: 370px;*/
 margin-top: auto;
 margin-bottom: auto;
 width: 400px;
