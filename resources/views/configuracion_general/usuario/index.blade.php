@@ -75,7 +75,7 @@
                         <tbody>
                             @foreach($usuarios as $usuario)
                             <tr class="gradeX">
-                                <td>{{$usuario->id}}</td>
+                                <td>{{$i++}}</td>
                                 <td>{{$usuario->personal->nombres}}</td>
                                 <td>{{$usuario->name}}</td>
                                 <td>{{$usuario->email}}</td>
