@@ -250,7 +250,7 @@
                                                         <input type="text" hidden="" id='prom_ori0' name='prom_ori[]' onclick="multi(0)">
 
                                                     <td>
-                                                        <input type='text' id='cantidad0' name='cantidad[]' class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
+                                                        <input type='text' id='cantidad0' name='cantidad[]' min="1" class="monto0 form-control" onkeyup="multi(0)" required  autocomplete="off" />
                                                         </td>
                                                     <td>
                                                         {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}
@@ -417,7 +417,7 @@
                 </td>
                      <input type="hidden" hidden="" id="prom_ori${i}" name="prom_ori[]" onclick="multi(${i})">
                 <td>
-                <input type='text' id='cantidad${i}' name='cantidad[]' class="monto0 form-control" onkeyup="multi(${i})" required  autocomplete="off" />
+                <input type='text' id='cantidad${i}' name='cantidad[]' min="1" class="monto0 form-control" onkeyup="multi(${i})" required  autocomplete="off" />
                 </td>
                 <td>
                 {{-- <input type='text' id='descuento0' name='descuento[]' readonly="readonly" class="monto0 form-control" required  autocomplete="off" /> --}}

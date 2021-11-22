@@ -27,9 +27,10 @@ class UsuarioController extends Controller
      */
     public function index()
     {
-        $usuarios=User::all();
+        $usuarios=User::where('id','!=',1)->get();
         $almacen=Almacen::where('estado',0)->get();
-        return view('configuracion_general.usuario.index',compact('usuarios','almacen'));
+        $i = 1;
+        return view('configuracion_general.usuario.index',compact('usuarios','almacen','i'));
     }
 
     /**
@@ -40,8 +41,9 @@ class UsuarioController extends Controller
     public function lista()
     {
         $almacen=Almacen::where('estado','0')->get();
+        $i = 1;
         $personales=Personal::where('usuario_registrado',0)->where('estado',1)->get();
-        return view('configuracion_general.usuario.lista',compact('personales','almacen'));
+        return view('configuracion_general.usuario.lista',compact('personales','almacen','i'));
     }
 
 

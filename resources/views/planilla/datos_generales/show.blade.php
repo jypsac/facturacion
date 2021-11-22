@@ -145,8 +145,34 @@
         </select>
         <hr>
       </div>
-      <div class="col-lg-4"><h4>Carrera Profesional</h4><input type="text" name="profesion" class="form-control"  value=" {{$personales->profesion}}"><hr></div>
-      <div class="col-lg-4"><h4>Estado Civil</h4><input type="text" name="estado_civil" class="form-control"  value=" {{$personales->estado_civil}}"><hr></div>
+      <div class="col-lg-4"><h4>Carrera Profesional</h4>
+
+        <select class="form-control" name="profesion">
+          <option >{{$personales->profesion}}</option>
+          <option disabled="">------------------</option>
+          <option value="sin carrera">Sin carrera</option>
+          <option value="Contabilidad">Contabilidad</option>
+          <option value="Administracion">Administracion</option>
+          <option value="Ingenieria">Ingenieria</option>
+          <option value="Ciencias de la comunicación">Ciencias de la comunicación</option>
+          <option value="Marketing y Mercadotecnia">Marketing y Mercadotecnia</option>
+          <option value="Economia">Economia</option>
+          <option value="Derecho">Derecho</option>
+          <option value="Medicina">Medicina</option>
+        </select>
+
+        <hr></div>
+      <div class="col-lg-4"><h4>Estado Civil</h4>
+        <select class="form-control m-b" name="estado_civil">
+          <option >{{$personales->estado_civil}}</option>
+          <option disabled="">------------------</option>
+           <option value="Soltero">Soltero</option>
+           <option value="Casado">Casado</option>
+           <option value="Viudo con hijos">Viudo con hijos</option>
+           <option value="Viudo sin hijos">Viudo sin hijos</option>
+         </select>
+
+        <hr></div>
       <div class="col-lg-4"><h4>Foto Perfil</h4><input style="display: none;"  type="file" id="archivoInput"  name="foto" onchange="return validarExt()"  /><label for="archivoInput" class="btn btn-info " style="display: inline-block;  cursor: pointer; ">Seleccionar Foto</label><hr></div>
 
       <div class="col-lg-4"><h4>Guardar</h4> <input type="submit" name="" class="btn btn-success"  value="Guardar"><hr></div>
@@ -193,7 +219,7 @@
 
     <div class="col-lg-4"><h4>Tipo Contrato</h4>{{$persona->tipo_contrato}}<hr></div>
     <div class="col-lg-4"><h4>Regimen Pensionario</h4>{{$persona->regimen_pensionario}}<hr></div>
-    <div class="col-lg-4"><h4>Estado Del Trbajador</h4>{{$persona->estado_trabajador}}<hr></div>
+    <div class="col-lg-4"><h4>Estado Del Trabajador</h4>{{$persona->estado_trabajador}}<hr></div>
   </div>
   {{--Fin Vista de Datos Laborables --}}
 

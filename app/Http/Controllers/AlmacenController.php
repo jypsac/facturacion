@@ -31,7 +31,7 @@ class AlmacenController extends Controller
     {
         $almacenes=Almacen::all();
         $conteo_almacen=Almacen::where('estado',0)->count();
-        $personal=Personal::where('estado',1)->get();
+        $personal=Personal::where('estado',1)->where('estado','!=',1)->get();
         $cod_guia_almacen = Codigo_guia_almacen::all();
         return view('configuracion_general.almacen.index',compact('almacenes','personal','conteo_almacen','cod_guia_almacen'));
     }
