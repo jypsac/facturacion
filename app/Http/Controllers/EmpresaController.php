@@ -92,7 +92,6 @@ class EmpresaController extends Controller
         $empresa->descripcion=$request->get('descripcion');
         $empresa->pagina_web=$request->get('pagina_web');
         $empresa->foto=$name;
-        $empresa->background=$request->get('background');
         $empresa->save();
         return back();
     }
