@@ -474,7 +474,7 @@
                             <input type='text' style="width: 76px"  id='stock${i}' name='stock[]' readonly="readonly" class="form-control" required  autocomplete="off"/>
                             </td>
                             <td>
-                            <input type='number' style="width: 76px"  id='cantidad${i}' name='cantidad[]' max="" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
+                            <input type='number' style="width: 76px"  id='cantidad${i}' name='cantidad[]' min="1" max="" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
                             </td>
                             <td>
                             <input type='text' style="width: 76px"  id='precio${i}' name='precio[]' readonly="readonly" class="monto${i} form-control" onkeyup="multi(${i})" required  autocomplete="off"/>
@@ -787,6 +787,7 @@
             document.getElementById(`check_descuento${a}`).value =0;
             var msg2 = parseInt(stock_v) ;
             $(`#cantidad${a}`).attr('max', stock_v );
+            $(`#cantidad`).attr('max', stock_v );
             //comision
             var comision=document.querySelector(`#comisionista`).value;
             //revirtiendo la cadena
