@@ -75,6 +75,7 @@ class FacturacionElectronicaController extends Controller
             $guia=1;
         }
         
+
         //configuracion de conexion
         $see=config_acceso_sunat::facturacion_electronica();
 
@@ -293,6 +294,8 @@ class FacturacionElectronicaController extends Controller
             $nota_credito->op_exonerada=$exonerada;
             $nota_credito->save();
 
+            $codigo=$factura->codigo_fac;
+
             $contador=count($factura_registro);
             for($p=0;$p<$contador;$p++){
                 $string=(string)$p;
@@ -307,6 +310,8 @@ class FacturacionElectronicaController extends Controller
                     $nota_creditos_r->save();
                 }
             }
+
+            nota_credito::kardex_devolucion($nota_credito,$contador,$codigo);
 
         }else if($factura->tipo=="servicio"){
 
@@ -347,6 +352,8 @@ class FacturacionElectronicaController extends Controller
             $nota_credito->op_exonerada=$exonerada;
             $nota_credito->save();
 
+            // $codigo=$factura->cod_fac;
+
             $contador=count($factura_registro);
             for($p=0;$p<$contador;$p++){
                 $string=(string)$p;
@@ -369,6 +376,11 @@ class FacturacionElectronicaController extends Controller
             $nc_primera->cod_nota_credito='NN';
             $nc_primera->save();
         }
+
+
+        
+
+        // return "listo";
 
         return redirect()->route('nota-credito.show',$nota_credito->id);
 
@@ -395,7 +407,7 @@ class FacturacionElectronicaController extends Controller
 
         // code nota_c
         // obtencion de la sucursal
-        $almacen=$factura->almacen_id;
+        $almacen=$boleta->almacen_id;
 
         //obtencion del almacen
         $almacen_id =Almacen::where('id', $almacen)->first();
@@ -466,7 +478,10 @@ class FacturacionElectronicaController extends Controller
             $nota_credito->op_exonerada=$exonerada;
             $nota_credito->save();
             
-            $invoice=Config_fe::nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count,$nota_credito_numero,$gravada_s,$exonerada_s,$inafecta_s,$request->motivo);
+            $codigo=$boleta->codigo_boleta;
+
+            
+            $invoice=Config_fe::nota_credito_boleta($boleta,$boleta_registro,$request,$notas_creditos_count,$nota_credito_numero,$gravada,$exonerada,$inafecta,$request->motivo);
             //envio a SUNAT    
             $result=config_acceso_sunat::send($see, $invoice);
             //lectura CDR
@@ -487,6 +502,8 @@ class FacturacionElectronicaController extends Controller
                 }
             }
 
+            nota_credito::kardex_devolucion($nota_credito,$contador,$codigo);
+
         }else if($boleta->tipo=="servicio"){
 
             $contadores=count($boleta_registro);
@@ -495,7 +512,6 @@ class FacturacionElectronicaController extends Controller
                 $nombre="input_disabled_".$string;
                 if($request->$nombre==NULL){
                 }else{
-
                     if(strpos($boleta_registro[$a]->servicio->tipo_afec_i_serv->informacion,'Gravado') !== false){
                         $gravada_s += round($boleta_registro[$a]->precio_unitario_comi*$request->$nombre,2);
                     }
