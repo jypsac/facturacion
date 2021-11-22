@@ -28,7 +28,7 @@ class EmpresaSeeder extends Seeder
 			'moneda_principal' => '1',
 			'descripcion' => 'Descripcion',
 			'pagina_web' => 'https://www.sitioweb.com/',
-			'foto' => 'logo.png',
+			'foto' => 'logo_defecto.png',
 			'background' => 'https://images4.alphacoders.com/113/thumb-1920-1133047.jpg',
 			'created_at' => date('2019-08-01 00:00:00'),
            	'updated_at' => date('2019-08-01 00:00:00')
