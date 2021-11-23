@@ -1,11 +1,5 @@
 @extends('layout')
 
-{{-- @section('title', 'Nota Credito')
-@section('breadcrumb', 'Nota Credito')
-@section('breadcrumb2', 'Nota Credito')
-@section('href_accion', route('nota-credito.create'))
-@section('value_accion', 'Agregar') --}}
-
 @section('title', 'Nota Credito')
 @section('breadcrumb', 'Nota Credito')
 @section('breadcrumb2', 'Nota Credito')
@@ -13,21 +7,21 @@
 @section('href_accion', '#modal-form')
 @section('value_accion', 'Agregar')
 
-<div class="row">
-    <div class="col-lg-12">
-        <div id="modal-form" class="modal fade" aria-hidden="true">
-            <div class="modal-dialog">
-                <div class="modal-content">
-                    <div class="modal-body">
-                        <div class="row" align="center">
-                            <!--FACTURA-->
-                            <div class="col-sm-6">
-                                <a href="{{route('nota-credito.create')}}"><button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" >Factura</button></a> 
-                            </div>
-                            <!--BOLETA-->
-                            <div class="col-sm-6">
-                                <a href="{{route('nota-credito.create_boleta')}}"><button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" >Boleta</button></a>
-                            </div>
+@section('content')
+
+<div class="col-lg-12">
+    <div id="modal-form" class="modal fade" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <div class="row" align="center">
+                        <!--FACTURA-->
+                        <div class="col-sm-6">
+                            <a href="{{route('nota-credito.create')}}"><button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" >Factura</button></a> 
+                        </div>
+                        <!--BOLETA-->
+                        <div class="col-sm-6">
+                            <a href="{{route('nota-credito.create_boleta')}}"><button class="btn btn-sm btn-info" type="button" id="dropdownMenuButton" >Boleta</button></a>
                         </div>
                     </div>
                 </div>
@@ -36,7 +30,6 @@
     </div>
 </div>
 
-@section('content')
 <div class="wrapper wrapper-content animated fadeInRight">
     <div class="row">
         <div class="col-lg-12">
@@ -64,13 +57,10 @@
                                         @else
                                             Factura
                                         @endif
-                                        
                                     </td>
-                                    
                                     <td>{{$nota_credito->tipo}}</td>
                                     <td>{{$nota_credito->created_at}}</td>
-                                    {{-- <td><center><a href="{{route('nota-credito-create-nc' , $nota_credito->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td> --}}
-                                    <td><a href="{{route('nota-credito.show',$nota_credito->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></center></td>
+                                    <td><a href="{{route('nota-credito.show',$nota_credito->id)}}"><button type="button" class="btn btn-w-m btn-primary">VER</button></a></td>
                                 </tr>
                                 @endforeach 
                             </tbody>
@@ -101,9 +91,25 @@
             pageLength: 25,
             responsive: true,
             dom: '<"html5buttons"B>lTfgitp',
-            buttons: []
+            buttons: [
+            { extend: 'copy'},
+            {extend: 'csv'},
+            {extend: 'excel', title: 'ExampleFile'},
+            {extend: 'pdf', title: 'ExampleFile'},
 
-        });
+            {extend: 'print',
+            customize: function (win){
+                $(win.document.body).addClass('white-bg');
+                $(win.document.body).css('font-size', '10px');
+
+                $(win.document.body).find('table')
+                .addClass('compact')
+                .css('font-size', 'inherit');
+            }
+        }
+        ]
+
+    });
 
     });
 

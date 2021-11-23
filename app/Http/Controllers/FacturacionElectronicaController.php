@@ -377,10 +377,8 @@ class FacturacionElectronicaController extends Controller
             $nc_primera->save();
         }
 
-
-        
-
-        // return "listo";
+        $factura->nota_credito=1;
+        $factura->save();
 
         return redirect()->route('nota-credito.show',$nota_credito->id);
 
@@ -564,6 +562,9 @@ class FacturacionElectronicaController extends Controller
             $nc_primera->cod_nota_credito='NN';
             $nc_primera->save();
         }
+
+        $boleta->nota_credito=1;
+        $boleta->save();
 
         return redirect()->route('nota-credito.show',$nota_credito->id);
     }
