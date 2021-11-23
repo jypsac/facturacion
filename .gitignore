@@ -16,3 +16,4 @@ yarn-error.log
 /.idea
 /.vscode
 /public/facturas_electronicas
+/app/config_acceso_sunat
