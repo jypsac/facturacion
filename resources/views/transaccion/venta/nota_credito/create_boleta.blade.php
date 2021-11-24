@@ -31,21 +31,6 @@
                 </div><br>
                 <form action="{{route('facturacion_electronica.nota_credito_bol',$boleta->id)}}"  enctype="multipart/form-data" method="post" >
                 @csrf
-                <div class="row">
-                    <div class="col-sm-12">
-                        <strong>Motivo:</strong>
-                        <td><select class="form-control" name="motivo">
-                            <option >Devolucion por Item</option>
-                            <option >Descuento por Item</option>
-                            <option >Anulacion de la operacion</option>
-                            <option >Anulacion por error en el RUC</option>
-                            <option >Descuento Global</option>
-                            <option >Devolucion Ttotal</option>
-                            <option >Correcion por error en la descripcion</option>
-                            <option >Ajustes - montos y/o fechas de pago</option>
-                        </select></td>
-                    </div>
-                </div>
                 <div class="row" align="center" style="padding-bottom: 5px">
                     <div class="col-sm-6" align="center">
                         <div class="form-control">
@@ -66,7 +51,7 @@
                                 <strong>Condiciones de Pago:</strong>
                                 @if(isset($boleta->cliente_id)){{$boleta->forma_pago->nombre }}
                                 @else{{$boleta->cotizacion->forma_pago->nombre }}
-                                @endif  &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+                                @endif  <br>
                                 <strong>Tipo de Moneda:</strong>
                                 @if(isset($boleta->cliente_id)){{$boleta->moneda->nombre }}
                                 @else{{$boleta->cotizacion->moneda->nombre }}
@@ -83,11 +68,33 @@
                                 {{$boleta->orden_compra}} <br>
                                 <strong>Guia de Remision:</strong>
                                 {{$boleta->guia_remision}} <br>
-                                <strong>Fecha Emision:</strong>
-                                {{$boleta->fecha_emision}} <br>
-                                <strong>Fecha de Vencimiento:</strong>
-                                {{$boleta->fecha_vencimiento }} <br>
-
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <strong>Fecha Emision:</strong>
+                                        {{$boleta->fecha_emision}} 
+                                    </div>
+                                    <div class="col-sm-6">
+                                        <strong>Fecha de Vencimiento:</strong> 
+                                        {{$boleta->fecha_vencimiento }}
+                                    </div>
+                                </div>
+                                <div class="row" style="margin-top: 10px ;margin-bottom: 10px">
+                                    <div class="col-sm-2" style="padding-right: 0px">
+                                        <strong>Motivo:</strong>
+                                    </div>
+                                    <div class="col-sm-10" style="padding-left: 0px">
+                                        <select class="form-control" name="motivo">
+                                            <option >Devolucion por Item</option>
+                                            <option >Descuento por Item</option>
+                                            <option >Anulacion de la operacion</option>
+                                            <option >Anulacion por error en el RUC</option>
+                                            <option >Descuento Global</option>
+                                            <option >Devolucion Ttotal</option>
+                                            <option >Correcion por error en la descripcion</option>
+                                            <option >Ajustes - montos y/o fechas de pago</option>
+                                        </select>
+                                    </div>
+                                </div>
                             </div>
                         </div>
                     </div>
