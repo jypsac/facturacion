@@ -295,7 +295,7 @@ class FacturacionElectronicaController extends Controller
             $nota_credito->save();
 
             $codigo=$factura->codigo_fac;
-
+            $contar=0;
             $contador=count($factura_registro);
             for($p=0;$p<$contador;$p++){
                 $string=(string)$p;
@@ -308,8 +308,11 @@ class FacturacionElectronicaController extends Controller
                     $nota_creditos_r->precio=$factura_registro[$p]->precio;
                     $nota_creditos_r->cantidad=$request->$nombre;
                     $nota_creditos_r->save();
+                    $contar++;
                 }
             }
+
+            $contador=$contar;
 
             nota_credito::kardex_devolucion($nota_credito,$contador,$codigo);
 
@@ -353,8 +356,9 @@ class FacturacionElectronicaController extends Controller
             $nota_credito->save();
 
             // $codigo=$factura->cod_fac;
-
+            $contar=0;
             $contador=count($factura_registro);
+            
             for($p=0;$p<$contador;$p++){
                 $string=(string)$p;
                 $nombre="input_disabled_".$string;
@@ -366,8 +370,11 @@ class FacturacionElectronicaController extends Controller
                     $nota_creditos_r->precio=$factura_registro[$p]->precio;
                     $nota_creditos_r->cantidad=$request->$nombre;
                     $nota_creditos_r->save();
+                    $contar++;
                 }
             }
+
+            $contador=$contar;
         }
 
         // modificacion para que se cierre el codigo en almacen
@@ -485,6 +492,7 @@ class FacturacionElectronicaController extends Controller
             //lectura CDR
             $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
 
+            $contar=0;
             $contador=count($boleta_registro);
             for($p=0;$p<$contador;$p++){
                 $string=(string)$p;
@@ -497,9 +505,10 @@ class FacturacionElectronicaController extends Controller
                     $nota_creditos_r->precio=$boleta_registro[$p]->precio;
                     $nota_creditos_r->cantidad=$request->$nombre;
                     $nota_creditos_r->save();
+                    $contar++;
                 }
             }
-
+            $contador=$contar;
             nota_credito::kardex_devolucion($nota_credito,$contador,$codigo);
 
         }else if($boleta->tipo=="servicio"){
@@ -540,6 +549,7 @@ class FacturacionElectronicaController extends Controller
             //lectura CDR
             $msg=config_acceso_sunat::lectura_cdr($result->getCdrResponse());
 
+            $contar=0;
             $contador=count($boleta_registro);
             for($p=0;$p<$contador;$p++){
                 $string=(string)$p;
@@ -552,8 +562,10 @@ class FacturacionElectronicaController extends Controller
                     $nota_creditos_r->precio=$boleta_registro[$p]->precio;
                     $nota_creditos_r->cantidad=$request->$nombre;
                     $nota_creditos_r->save();
+                    $contar++;
                 }
             }
+            $contador=$contar;
         }
 
         // modificacion para que se cierre el codigo en almacen
