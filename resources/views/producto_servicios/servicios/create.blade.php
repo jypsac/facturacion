@@ -126,7 +126,7 @@
       @endforeach
     </select>
     </div>
-    <input type="number" min="1" class="form-control" name="precio" required="required" value="0">
+    <input type="number" min="1" step="0.01" class="form-control" name="precio" required="required" value="0">
   </div>
 </div>
 <label class="col-sm-2 col-form-label">Afectacion:</label>
