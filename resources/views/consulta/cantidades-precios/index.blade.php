@@ -45,7 +45,7 @@
                     </thead>
                     <tbody>
                      @foreach($stock_producto as $index => $producto_min)
-                        @if($producto_min->stock < $producto_min->producto->stock_minimo)
+                        @if($producto_min->stock < $producto_min->producto->stock_minimo || $producto_min->stock == 0)
                         <tr class="gradeX">
                             <td><input type="checkbox" class="case" name="producto_id[]" id="producto_id{{$producto_min->id}}" value="{{$producto_min->id}}" onclick="mostrar_check()" d1|qq></td>
                             <td>{{$id_t2++}}</td>

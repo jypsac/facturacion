@@ -28,7 +28,7 @@
                                 @foreach($boletas as $boleta)
                                 <tr class="gradeX">
                                     <td>{{$boleta->id}}</td>
-                                    <td>{{$boleta->codigo_bol}}</td>
+                                    <td>{{$boleta->codigo_boleta}}</td>
                                     <td>{{$boleta->cliente->nombre}}</td>
                                     <td>{{$boleta->cliente->numero_documento}}</td>
                                     <td>{{$boleta->fecha_emision}}</td>
